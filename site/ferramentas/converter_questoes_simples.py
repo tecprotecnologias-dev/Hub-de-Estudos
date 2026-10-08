@@ -9,9 +9,10 @@ Os Words não trazem explicação do gabarito: ela vem de ferramentas/explicacoe
 (chave = id da questão). As questões entram com nivel "facil".
 
 Uso:
-    python ferramentas/converter_questoes_simples.py <Capitulo.docx> <disciplinaId> <capituloId> <saida.json>
-As questões são acrescentadas às do capítulo já existentes no arquivo, com ids "<capituloId>-f<N>";
-rodar de novo substitui apenas as questões "-f" daquele capítulo.
+    python ferramentas/converter_questoes_simples.py <Capitulo.docx> <disciplinaId> <capituloId> <saida.json> [nivel]
+nivel: facil (padrão) ou medio. As questões são acrescentadas às do capítulo já existentes no arquivo, com ids
+"<capituloId>-f<N>" (fácil) ou "<capituloId>-m<N>" (médio); rodar de novo substitui apenas as questões com esse
+prefixo naquele capítulo.
 As questões listadas em REPETIDAS ficam de fora (o id das demais mantém o número do Word).
 """
 import json
@@ -35,6 +36,18 @@ REPETIDAS = {
     'legislacao-cap5': {1: 'cap5-q1', 3: 'cap5-q2'},
     'legislacao-cap6': {2: 'cap2-f1', 8: 'cap2-f2', 9: 'cap6-q4'},
     'legislacao-cap7': {1: 'cap7-q2', 6: 'cap7-q8'},
+    'qualidade-cap6': {6: 'cap6-m5'},  # "perguntas novas": a questão 6 repete a 5 palavra por palavra
+}
+
+# questões coladas no Word com restos de markdown: a certa veio entre ** (sem o vermelho) e a letra às vezes
+# perdeu o parêntese ("c REST ..."); (capítulo, número no Word) -> letra da alternativa correta
+MARCACAO_MANUAL = {
+    ('gestaoweb-cap1', 6): 'c',
+    ('gestaoweb-cap1', 8): 'b',
+    ('gestaoweb-cap1', 10): 'b',
+    ('gestaoweb-cap4', 7): 'b',
+    ('gestaoweb-cap4', 10): 'b',
+    ('gestaoweb-cap5', 6): 'b',
 }
 
 # correções em relação ao Word: (capítulo, número no Word, letra da alternativa ou 'enunciado') ->
@@ -64,6 +77,8 @@ CORRECOES = {
     ('legislacao-cap7', 7, 'c'): 'Imposto de Importação de 60% sobre o valor total, com desconto de US$ 20 no imposto '
     '(60% de US$ 120 = US$ 72; menos US$ 20 = US$ 52), além do ICMS estadual cobrado à parte, conforme as regras em '
     'vigor desde agosto de 2024 (Lei nº 14.902/2024).',
+    # o markdown do texto colado apagou o asterisco do valor do cabeçalho
+    ('gestaoweb-cap5', 6, 'b'): ('Access-Control-Allow-Origin: )', 'Access-Control-Allow-Origin: *)'),
     ('legislacao-cap7', 7, 'd'): 'Isenção de Imposto de Importação sobre os primeiros US$ 50 e 20% de II apenas sobre os '
     'US$ 70 que excedem essa faixa, sem incidência de ICMS em compras feitas pelo Programa Remessa Conforme.',
 }
@@ -100,10 +115,14 @@ def paragrafos(caminho):
 
 
 def limpar(t):
+    # "**" é resto de markdown em texto colado (um "*" sozinho é conteúdo, como em SELECT *)
+    t = t.replace('**', '')
+    # nos Words os travessões foram apagados e deixaram dois espaços no lugar ("sprint  o risco")
+    t = re.sub(r'(?<=[^\s—–-])  +(?=[^\s—–-])', ' — ', t)
     return re.sub(r'\s+', ' ', t).strip()
 
 
-def converter(caminho):
+def converter(caminho, capitulo=None):
     questoes = []
     atual = None
     for chars in paragrafos(caminho):
@@ -121,9 +140,17 @@ def converter(caminho):
         if atual is None:
             continue
         # pontos onde começa cada alternativa, na ordem a), b), c)...
+        certa_manual = MARCACAO_MANUAL.get((capitulo, len(questoes)))
+        manual = certa_manual is not None
         inicios = []
-        for letra in 'abcde'[len(atual['alts']):]:
-            m = re.compile(r'(?:^|(?<=\s))' + letra + r'\)\s').search(texto, inicios[-1][1] if inicios else 0)
+        for letra in ('abcd' if manual else 'abcde')[len(atual['alts']):]:
+            if not manual:
+                padrao = r'(?:^|(?<=\s))' + letra + r'\)\s*(?=\S)'
+            elif letra == certa_manual:  # a certa pode ter perdido o parêntese: "**c) ..." virou "c ..."
+                padrao = r'(?:^|(?<=\s))\*{0,2}' + letra + r'\)?\s'
+            else:
+                padrao = r'(?:^|(?<=\s))\*{0,2}' + letra + r'\)\s'
+            m = re.compile(padrao).search(texto, inicios[-1][1] if inicios else 0)
             if not m:
                 break
             inicios.append((m.start(), m.end()))
@@ -136,10 +163,14 @@ def converter(caminho):
             ate = inicios[i + 1][0] if i + 1 < len(inicios) else len(chars)
             trecho = chars[fim:ate]
             letras = [m for c, m in trecho if not c.isspace()]
-            atual['alts'].append((limpar(''.join(c for c, _ in trecho)), sum(letras) / max(len(letras), 1)))
+            alt = limpar(''.join(c for c, _ in trecho))
+            atual['alts'].append((alt.strip('* ') if manual else alt, sum(letras) / max(len(letras), 1)))
     saida = []
     for n, q in enumerate(questoes, 1):
         notas = [f for _, f in q['alts']]
+        certa = MARCACAO_MANUAL.get((capitulo, n))
+        if certa:
+            notas = [float(i == 'abcde'.index(certa)) for i in range(len(notas))]
         corretas = [i for i, f in enumerate(notas) if f > 0.5]
         if len(q['alts']) < 4 or len(corretas) != 1:
             raise SystemExit(f'questão {n}: {len(q["alts"])} alternativas, marcação {notas}')
@@ -149,12 +180,13 @@ def converter(caminho):
 
 if __name__ == '__main__':
     docx, disciplina, capitulo, arq = sys.argv[1:5]
+    nivel = sys.argv[5] if len(sys.argv) > 5 else 'facil'
     arq = Path(arq)
     banco = json.loads(arq.read_text(encoding='utf-8')) if arq.exists() else []
     explicacoes = json.loads((Path(__file__).parent / 'explicacoes_questoes_simples.json').read_text(encoding='utf-8'))
-    prefixo = f'{capitulo}-f'
+    prefixo = f'{capitulo}-{nivel[0]}'
     banco = [q for q in banco if not q['id'].startswith(prefixo)]
-    questoes = converter(docx)
+    questoes = converter(docx, capitulo)
     for (cap, n, campo), texto in CORRECOES.items():
         if cap != capitulo:
             continue
@@ -173,7 +205,7 @@ if __name__ == '__main__':
         'disciplinaId': disciplina,
         'capituloId': capitulo,
         'tipo': 'objetiva',
-        'nivel': 'facil',
+        'nivel': nivel,
         'enunciado': enunciado,
         'alternativas': alternativas,
         'correta': correta,
@@ -185,7 +217,7 @@ if __name__ == '__main__':
     pos = max((i + 1 for i, q in enumerate(banco) if q['capituloId'] == capitulo), default=len(banco))
     banco[pos:pos] = novas
     arq.write_text(json.dumps(banco, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
-    print(f'{capitulo}: {len(novas)} questões fáceis, gabarito', ''.join('ABCDE'[q['correta']] for q in novas),
+    print(f'{capitulo}: {len(novas)} questões ({nivel}), gabarito', ''.join('ABCDE'[q['correta']] for q in novas),
           '| sem explicação:', [q['id'] for q in novas if 'resolucao' not in q])
     # reaplica as alternativas reescritas (correta não pode ser sempre a mais longa)
     from aplicar_ajustes_alternativas import main as aplicar_ajustes

@@ -158,6 +158,156 @@
     "resolucao": "o próprio texto motivador define fatores de transição exatamente como a previsão de desempenho do software ao mudar de ambiente de hardware ou sistema, que é precisamente o risco identificado pela equipe técnica ao migrar para a nuvem. {{B}} tenta encaixar o cenário em revisão (modificação de código), mas o problema descrito é de portabilidade entre ambientes, não de alterar uma funcionalidade. {{D}} ignora que decisões de negócio frequentemente escondem riscos técnicos de qualidade, que é exatamente o papel da equipe técnica apontar. {{E}} dilui a resposta ao tentar combinar duas categorias que o modelo trata como distintas."
   },
   {
+    "id": "qualidade-cap2-m1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema bancário processa corretamente todas as transações, mas apresenta falhas intermitentes que derrubam o serviço por 20 minutos a cada 48 horas e leva 45 segundos para processar cada operação. Quais características da ISO/IEC 9126 estão comprometidas e quais métricas evidenciam os problemas?",
+    "alternativas": [
+      "Apenas a funcionalidade está comprometida, pois falhas que interrompem o serviço indicam que o sistema não atende adequadamente às necessidades dos usuários — as demais características são secundárias quando a função principal está prejudicada.",
+      "Usabilidade e portabilidade: as quedas frustram o usuário, e a lentidão indica hardware incompatível.",
+      "Confiabilidade (queda a cada 48 h, com 20 minutos para recuperar, indicando MTBF baixo) e eficiência (45 s por operação ferem o comportamento no tempo).",
+      "Manutenibilidade e confiabilidade estão comprometidas: falhas frequentes indicam código de baixa qualidade (manutenibilidade) e a lentidão de 45 segundos sugere ausência de testes de regressão adequados após manutenções recentes."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap2-m2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe avalia a qualidade de um software antes de sua execução, analisando métricas de código como complexidade ciclomática, cobertura de comentários e acoplamento entre módulos. Qual perspectiva da ISO/IEC 9126 está sendo avaliada e o que ela representa?",
+    "alternativas": [
+      "Qualidade em uso, pois métricas de código refletem diretamente a experiência do usuário final — desenvolvedores são usuários do código-fonte e sua produtividade ao modificá-lo é o resultado real que importa avaliar.",
+      "Qualidade externa: mede o comportamento do sistema em execução.",
+      "Qualidade interna: avalia o software sem executá-lo, e complexidade, acoplamento e comentários antecipam problemas de manutenção e confiabilidade.",
+      "Qualidade de processo, pois a análise de métricas de código é uma prática de desenvolvimento que avalia a metodologia da equipe — não uma característica do produto em si segundo a estrutura da ISO/IEC 9126."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap2-m3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um aplicativo de acessibilidade para pessoas com deficiência visual funciona corretamente e tem ótimo desempenho, mas não é compatível com leitores de tela e não segue as diretrizes WCAG 2.1. Qual característica da ISO/IEC 9126 e da ISO/IEC 25010 está mais diretamente violada?",
+    "alternativas": [
+      "Portabilidade está violada em ambas as normas, pois a incompatibilidade com leitores de tela configura incapacidade de operar em diferentes ambientes de execução — o leitor de tela é um componente do ambiente que o sistema deveria suportar.",
+      "Funcionalidade está violada em ambas as normas, pois a subcaracterística de conformidade exige que o software atenda a regulamentos e normas do setor — WCAG 2.1 é norma técnica obrigatória para qualquer aplicativo destinado a pessoas com deficiência.",
+      "Usabilidade, nas duas normas: na 9126, pela conformidade com padrões de acessibilidade; na 25010, a acessibilidade virou subcaracterística explícita da usabilidade.",
+      "Compatibilidade está violada exclusivamente na ISO/IEC 25010, pois essa característica — inexistente na 9126 — foi criada especificamente para avaliar a capacidade de coexistência com tecnologias assistivas como leitores de tela e ampliadores de tela."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap2-m4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema ERP legado tem código altamente acoplado, sem testes automatizados e documentação desatualizada. Cada nova funcionalidade introduz em média 3 novos defeitos. A empresa gasta 70% do orçamento de TI em manutenção. Qual característica da ISO/IEC 9126 explica esse cenário e como o conceito de débito técnico se relaciona?",
+    "alternativas": [
+      "Confiabilidade explica o cenário: um sistema que introduz defeitos a cada modificação tem baixo MTBF e alta taxa de falhas, e o débito técnico representa o custo acumulado dessas falhas que deveriam ter sido corrigidas em versões anteriores do sistema.",
+      "Manutenibilidade: alto acoplamento, falta de testes e documentação ruim prejudicam analisabilidade, modificabilidade e testabilidade, e o débito técnico encarece cada mudança.",
+      "Eficiência explica o cenário: sistemas com alto acoplamento consomem mais recursos computacionais a cada nova funcionalidade, e o débito técnico representa o custo de infraestrutura adicional necessário para compensar o desperdício de recursos pelo código mal estruturado.",
+      "Portabilidade: código acoplado não migra para outras plataformas."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap2-m5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "A ISO/IEC 25010 adicionou Segurança e Compatibilidade como novas características em relação à ISO/IEC 9126. Por que essas adições refletem as demandas do desenvolvimento de software moderno?",
+    "alternativas": [
+      "Vieram da pressão do GDPR europeu e de demandas dos mercados asiáticos.",
+      "Segurança foi adicionada porque a ISO/IEC 9126 considerava segurança parte da funcionalidade, o que gerava confusão; compatibilidade foi adicionada porque portabilidade foi removida na 25010 e substituída por um conceito mais amplo de coexistência entre sistemas.",
+      "Segurança reflete ameaças cibernéticas diárias, e proteger dados é tão básico quanto funcionar; compatibilidade reflete sistemas integrados, que precisam coexistir e interoperar via APIs.",
+      "As adições refletem exclusivamente demandas acadêmicas — pesquisadores identificaram lacunas teóricas no modelo original e propuseram as duas novas características, que têm impacto prático limitado pois a maioria das empresas ainda adota a ISO/IEC 9126 em seus processos de avaliação."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap2-m6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor afirma que seu sistema tem \"altíssima funcionalidade\" porque possui mais de 300 funções disponíveis. Um arquiteto discorda, afirmando que várias funções não atendem às necessidades reais dos usuários. Quem tem razão segundo a ISO/IEC 9126?",
+    "alternativas": [
+      "O desenvolvedor tem razão: a subcaracterística de adequação da funcionalidade avalia a amplitude do conjunto de funções disponíveis — sistemas com mais funções têm maior pontuação de funcionalidade segundo os critérios quantitativos da norma.",
+      "Os dois, em parte: a norma soma quantidade e qualidade das funções.",
+      "O arquiteto: para a norma, funcionalidade é atender às necessidades do usuário, não ter muitas funções; 300 funções inadequadas são baixa funcionalidade.",
+      "Nenhum tem razão completamente: a ISO/IEC 9126 avalia funcionalidade exclusivamente pela subcaracterística de conformidade com normas e regulamentos do setor — nem a quantidade nem a adequação das funções são critérios diretos de avaliação segundo a estrutura da norma."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap2-m7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma aplicação mobile consome 85% da bateria do dispositivo em 2 horas de uso normal e ocupa 4GB de armazenamento para funções básicas. Qual característica da ISO/IEC 9126 está violada e qual subcaracterística específica evidencia o problema?",
+    "alternativas": [
+      "Portabilidade está violada, pois o alto consumo de bateria e armazenamento indica que o aplicativo não foi adaptado adequadamente para diferentes modelos de dispositivos móveis com capacidades de hardware distintas.",
+      "Confiabilidade está violada, pois o consumo excessivo de bateria pode causar desligamento inesperado do dispositivo, configurando falha do sistema — a subcaracterística de tolerância a falhas é a mais diretamente impactada pelo esgotamento de recursos.",
+      "Eficiência, na subcaracterística utilização de recursos: bateria e armazenamento consumidos devem ser proporcionais ao que o app faz.",
+      "Manutenibilidade está violada, pois consumo excessivo de recursos indica código mal estruturado com alto débito técnico — a subcaracterística de modificabilidade é a mais impactada, pois otimizações de desempenho exigirão refatoração profunda do código existente."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap2-m8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa precisa migrar seu sistema de gestão de um servidor Windows Server 2012 para contêineres Docker em Linux. O sistema foi desenvolvido sem preocupação com portabilidade. Quais subcaracterísticas da portabilidade (ISO/IEC 9126) serão mais críticas nessa migração?",
+    "alternativas": [
+      "Substituibilidade e conformidade serão as subcaracterísticas mais críticas: o sistema precisará substituir funcionalidades nativas do Windows e conformar-se com padrões abertos para operar em ambiente Linux sem reescrita significativa do código.",
+      "Coexistência e estabilidade, para conviver com outros contêineres no mesmo host.",
+      "Adaptabilidade (rodar em Linux sem depender de APIs do Windows ou caminhos fixos) e instalabilidade (facilidade de empacotar em contêiner e implantar).",
+      "Substituibilidade e adaptabilidade serão as subcaracterísticas mais críticas: substituibilidade avalia se o sistema Docker pode substituir o servidor Windows sem perda de dados, e adaptabilidade avalia se o código foi escrito de forma suficientemente genérica para executar em qualquer sistema operacional."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap2-m9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma norma interna de desenvolvimento exige que toda nova funcionalidade seja acompanhada de testes unitários com cobertura mínima de 80%, documentação técnica atualizada e aprovação em code review. Quais subcaracterísticas da manutenibilidade essa prática fortalece diretamente?",
+    "alternativas": [
+      "Analisabilidade e conformidade, pelo diagnóstico e pelo padrão de código.",
+      "Modificabilidade e estabilidade são fortalecidas: o code review previne a introdução de modificações inadequadas, e a documentação técnica facilita futuras alterações sem comprometer a estabilidade do sistema existente.",
+      "Testabilidade (cobertura de 80%), analisabilidade (documentação que facilita diagnosticar) e estabilidade (testes que pegam efeitos colaterais das mudanças).",
+      "Modificabilidade e conformidade são fortalecidas exclusivamente: o code review garante que modificações seguem padrões estabelecidos (conformidade) e a cobertura de testes confirma que novas funções foram implementadas corretamente (modificabilidade)."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap2-m10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "A família SQuaRE (ISO/IEC 25000) é composta por mais de 20 normas organizadas em divisões. Uma empresa quer definir critérios mensuráveis de qualidade para um novo sistema, executar sua avaliação formal e garantir conformidade com requisitos de clientes. Quais divisões da família SQuaRE ela deve utilizar e em qual ordem?",
+    "alternativas": [
+      "A empresa deve utilizar primeiro a divisão de Avaliação (2504n) para definir o método de avaliação, depois a divisão de Modelo de Qualidade (2501n) para identificar as características relevantes e por fim a divisão de Requisitos (2503n) para formalizar os critérios junto ao cliente.",
+      "Modelo de Qualidade (2501n) para escolher as características; Requisitos (2503n) para os critérios; Medição (2502n) para as métricas; e Avaliação (2504n) para a avaliação formal.",
+      "Só a de Gerenciamento (2500n), que reúne tudo num único documento.",
+      "A ordem correta é: Medição da Qualidade (2502n) para definir as métricas do sistema; Modelo de Qualidade (2501n) para mapear as características; Avaliação da Qualidade (2504n) para executar os testes; e Gerenciamento da Qualidade (2500n) para garantir a conformidade contratual com os requisitos do cliente."
+    ],
+    "correta": 1
+  },
+  {
     "id": "qualidade-cap1-q6",
     "disciplinaId": "qualidade-e-testes-de-software",
     "capituloId": "qualidade-cap1",
@@ -357,6 +507,156 @@
     ],
     "correta": 1,
     "resolucao": "o próprio texto motivador afirma que desenvolvedores poderiam eliminar mais da metade dos custos associados a testes inadequados adotando técnicas de teste mais cedo no ciclo de vida — exatamente o argumento técnico que sustenta o pedido da equipe de engenharia, e que se conecta diretamente à regra geral do Custo da Qualidade (prevenir é mais barato que corrigir depois). {{A}} e {{D}} repetem a intuição da diretoria, mas contrariam tanto o texto motivador quanto o princípio de custo crescente por fase, apresentado no capítulo. {{C}} é factualmente incorreto: o relatório explicitamente recomenda testes mais cedo no ciclo de vida. {{E}} ignora todo o raciocínio econômico apresentado no capítulo sobre custo da qualidade."
+  },
+  {
+    "id": "qualidade-cap1-m1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa lança um software que atende 100% dos requisitos especificados no contrato, mas os usuários o consideram difícil de usar e frequentemente abandonam as tarefas. Com base nas definições clássicas de qualidade, qual é a análise correta?",
+    "alternativas": [
+      "O software tem qualidade plena, pois a definição do IEEE determina que qualidade é exclusivamente a conformidade com os requisitos especificados — a dificuldade de uso é responsabilidade dos usuários, não da equipe de desenvolvimento.",
+      "Só falha para Juran, cuja adequação ao uso é critério secundário.",
+      "Atende à definição de Crosby (conformidade), mas não à de Juran (adequação ao uso) nem à qualidade em uso da 25010; conformidade e satisfação se complementam.",
+      "O software não tem qualidade sob nenhuma definição, pois a ISO/IEC 25010 determina que usabilidade é o fator primário de qualidade, sobrepondo-se a todos os demais requisitos funcionais especificados em contrato."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap1-m2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um defeito crítico é descoberto em produção em um sistema bancário, exigindo intervenção de emergência, rollback e notificação de 500 mil clientes. Se o mesmo defeito tivesse sido detectado na fase de análise de requisitos, o custo seria 80 vezes menor. Qual conceito explica essa diferença e o que ela implica para a estratégia de qualidade?",
+    "alternativas": [
+      "O conceito de débito técnico explica a diferença — acumular problemas não resolvidos nas fases iniciais gera juros crescentes que só podem ser quitados com refatoração completa do sistema em produção.",
+      "Qualidade de processo: com CMMI 5, defeitos nunca chegam à produção.",
+      "O Custo da Qualidade: falhas externas, achadas depois da entrega, custam muito mais do que as evitadas no início, o que justifica investir em prevenção e avaliação.",
+      "O conceito de qualidade em uso explica a diferença — sistemas bancários têm requisitos de usabilidade tão elevados que qualquer defeito descoberto pelo usuário final gera automaticamente custos 80 vezes maiores do que os detectados internamente."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap1-m3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup de healthtech desenvolve software para monitoramento cardíaco em UTIs. A equipe argumenta que, por ser ágil e ter ciclos curtos, pode reduzir os testes para entregar mais rápido. Com base nos fatores que afetam a qualidade, qual é o risco central dessa decisão?",
+    "alternativas": [
+      "O risco central é a perda de competitividade no mercado, pois ciclos mais longos de entrega permitem que concorrentes lancem produtos similares antes, comprometendo a participação de mercado da startup independentemente da qualidade técnica do software.",
+      "O domínio médico exige confiabilidade muito maior: cortar testes num monitor cardíaco de UTI põe vidas em risco, como no caso Therac-25.",
+      "O risco central é regulatório: a ANVISA exige certificação ISO 9001 para qualquer software médico, e a redução de testes invalida automaticamente o processo de certificação, impedindo a comercialização do produto.",
+      "O risco central é financeiro: o NIST estima que defeitos em software médico custam em média 200 vezes mais para corrigir do que defeitos em software comercial, tornando a economia de prazo financeiramente inviável a longo prazo."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap1-m4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Segundo o Modelo de McCall, um sistema precisa ser modificado para rodar em novo sistema operacional, integrar-se a uma API de terceiros e ter seu código compreendido por novos desenvolvedores. Em qual perspectiva cada necessidade se enquadra?",
+    "alternativas": [
+      "As três são Revisão do Produto, pois todas mudam o código.",
+      "Migração para novo SO enquadra-se em Operação do Produto; integração com API em Transição do Produto; e compreensão do código em Revisão do Produto — pois operação trata de execução, transição de adaptação e revisão de mudança.",
+      "Novo SO e API de terceiros são Transição do Produto (portabilidade e interoperabilidade); entender o código é Revisão do Produto (manutenibilidade).",
+      "Migração para novo SO enquadra-se em Revisão do Produto (flexibilidade); integração com API em Operação do Produto (eficiência); e compreensão do código em Transição do Produto (reusabilidade) — pois o modelo de McCall classifica mudanças técnicas pela sua origem, não pelo seu impacto."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap1-m5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe adota processo rigoroso com CMMI nível 3, code reviews obrigatórios e CI/CD, mas os requisitos foram levantados superficialmente com stakeholders. O produto entregue não resolve os problemas reais dos usuários. Qual princípio de qualidade essa situação ilustra?",
+    "alternativas": [
+      "Ilustra que qualidade de processo garante automaticamente qualidade de produto — o problema descrito é exceção estatística que ocorre em menos de 5% dos projetos com CMMI nível 3, sendo irrelevante para a teoria geral de qualidade.",
+      "Bom processo não garante bom produto: qualidade de processo e de produto se complementam, e requisitos mal levantados comprometem o resultado.",
+      "Que só a qualidade em uso importa, e processos são burocracia.",
+      "Ilustra que a ISO/IEC 25010 é superior ao CMMI como modelo de qualidade — organizações que adotam a norma ISO para produto em vez de modelos de processo evitam sistematicamente o problema de produtos tecnicamente corretos mas funcionalmente inadequados."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap1-m6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um gerente de projeto argumenta que investir em testes automatizados e revisões de código aumenta o custo do projeto em 30% e propõe cortar essas atividades para cumprir o orçamento. Com base no conceito de CoQ, qual é o contra-argumento mais sólido?",
+    "alternativas": [
+      "O contra-argumento mais sólido é que testes automatizados são exigência obrigatória da ISO/IEC 25010, e sua ausência invalida legalmente qualquer certificação de qualidade, expondo a empresa a sanções regulatórias superiores aos 30% de economia projetada.",
+      "Sem testes, o código sai 50% mais lento, anulando a economia.",
+      "Testes e revisões são prevenção e avaliação, a parte mais barata do Custo da Qualidade; cortá-los faz crescer as falhas internas e externas, muito mais caras.",
+      "O contra-argumento é reputacional: a ausência de testes automatizados sinaliza ao mercado que a empresa não adota boas práticas, reduzindo a percepção de valor do produto e comprometendo futuras vendas independentemente do impacto financeiro direto no projeto atual."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap1-m7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "A equipe de desenvolvimento usa bibliotecas de terceiros desatualizadas com vulnerabilidades conhecidas e depende de uma API externa que apresenta instabilidade recorrente. Qual categoria de fatores que afetam a qualidade está sendo negligenciada?",
+    "alternativas": [
+      "Fatores internos ao processo — especificamente a competência da equipe, que deveria ter conhecimento técnico suficiente para identificar e substituir bibliotecas vulneráveis sem necessidade de orientação externa ou processo formal.",
+      "Fatores internos ao processo — especificamente a gestão de configuração, que deveria rastrear todas as versões de dependências e garantir que apenas bibliotecas aprovadas e auditadas sejam utilizadas no projeto.",
+      "Fatores externos, como dependências que a equipe não controla totalmente, somados a uma falha interna: ninguém verifica vulnerabilidades no pipeline.",
+      "Fatores externos ao processo — especificamente complexidade do domínio, pois sistemas que dependem de APIs externas são inerentemente mais complexos e essa complexidade justifica a aceitação de riscos adicionais de qualidade como trade-off necessário de desenvolvimento."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap1-m8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um software de gestão hospitalar funciona perfeitamente no ambiente de desenvolvimento, mas apresenta falhas intermitentes em produção devido a diferenças de configuração de rede e variações de hardware nos hospitais clientes. Qual fator externo de qualidade explica esse cenário?",
+    "alternativas": [
+      "Pressão de prazo, que é um fator interno do processo.",
+      "Complexidade do domínio hospitalar — sistemas médicos são inerentemente mais complexos que outros domínios, e falhas intermitentes em produção são esperadas e aceitas como comportamento normal nesse tipo de aplicação crítica.",
+      "O ambiente de execução: hardware, redes e configurações diferentes revelam falhas não vistas no teste, e a solução é testar em ambientes variados.",
+      "Mudanças de requisitos — os hospitais clientes alteraram suas configurações de rede após a entrega do software, caracterizando mudança de escopo pós-contratual que transfere a responsabilidade pelas falhas ao cliente, não à equipe de desenvolvimento."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap1-m9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "A norma ISO/IEC 25010 define oito características de qualidade de produto. Um sistema de pagamentos online apresenta excelente funcionalidade e desempenho, mas falha em segurança e manutenibilidade. Como isso impacta a avaliação de qualidade do produto?",
+    "alternativas": [
+      "O sistema tem qualidade aceitável: a ISO/IEC 25010 define que funcionalidade e desempenho são características primárias com peso dobrado na avaliação, compensando matematicamente as deficiências em segurança e manutenibilidade.",
+      "É qualidade parcial, pois a empresa pode tornar segurança opcional.",
+      "Qualidade é multidimensional: falha de segurança num sistema de pagamentos é risco grave, e pouca manutenibilidade trava a evolução; excelência em uma área não compensa outra.",
+      "O sistema tem qualidade plena sob a perspectiva da ISO/IEC 25010, pois a norma avalia cada característica independentemente e o resultado final é a média aritmética das oito dimensões — com excelência em funcionalidade e desempenho, o sistema atinge nota mínima aprovada mesmo com falhas em segurança."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap1-m10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Philip Crosby afirma que \"qualidade é gratuita\" (Quality is Free). Qual é o raciocínio por trás dessa afirmação e como ela se relaciona com o conceito de Custo da Qualidade?",
+    "alternativas": [
+      "Crosby afirma que qualidade é gratuita porque processos ágeis modernos, como Scrum e Kanban, eliminam o custo das atividades de verificação ao integrar qualidade naturalmente ao fluxo de trabalho, sem necessidade de investimento adicional em testes ou revisões formais.",
+      "Porque a ISO 9001 subsidia a certificação de pequenas empresas.",
+      "Para Crosby, prevenir sai \"de graça\" porque elimina custos de falhas maiores que o investimento; o que custa é a não qualidade: retrabalho, suporte, clientes perdidos.",
+      "Crosby afirma que qualidade é gratuita porque defeitos de software são inevitáveis e seu custo já está precificado nos contratos de desenvolvimento — a qualidade portanto não representa custo adicional, mas sim parte do custo padrão de qualquer projeto de software bem gerenciado."
+    ],
+    "correta": 2
   },
   {
     "id": "qualidade-cap3-q1",
@@ -709,6 +1009,156 @@
     "resolucao": "segundo a equivalência aproximada apresentada no capítulo (CMM/CMMI nível 3 ≈ MPS.BR nível C), o Fornecedor A, certificado no nível C do MPS.BR, corresponde a uma maturidade aproximadamente equivalente ao Nível 3 do CMMI — superior, portanto, ao Nível 2 do Fornecedor B. {{A}} nega, sem fundamento, qualquer possibilidade de comparação entre os modelos, contrariando o próprio propósito do quadro de equivalência estudado. {{B}} assume uma superioridade automática do CMMI sobre o MPS.BR que não corresponde à lógica de equivalência de níveis. {{D}} ignora completamente a diferença de patamar entre as duas certificações específicas mencionadas. {{E}} é uma afirmação infundada sobre reconhecimento internacional, que contraria inclusive o próprio cenário do caso, em que a multinacional está avaliando seriamente o fornecedor certificado no modelo brasileiro."
   },
   {
+    "id": "qualidade-cap3-m1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa de software ganha contratos por ter desenvolvedores talentosos, mas os resultados variam drasticamente entre projetos: alguns entregam no prazo com boa qualidade, outros atrasam meses e chegam cheios de defeitos. Qual nível de maturidade do CMM essa organização demonstra e qual é o risco central desse estágio?",
+    "alternativas": [
+      "Nível 2 — Repetível, pois a empresa já demonstra capacidade de repetir sucessos anteriores em alguns projetos, indicando que processos básicos de gerenciamento foram parcialmente estabelecidos em pelo menos parte das equipes.",
+      "Nível 1, Inicial: o sucesso depende de talentos individuais, e os resultados variam; o risco é a saída de pessoas-chave derrubar a capacidade de entrega.",
+      "Nível 2 — Repetível, pois a variação entre projetos é característica esperada desse nível, onde processos básicos existem mas ainda não foram padronizados para toda a organização, gerando resultados heterogêneos entre equipes distintas.",
+      "Nível 3 — Definido, pois a empresa possui processos documentados informalmente em cada equipe, e a variação de resultados reflete diferenças de implementação local — não ausência de processos, que é característica exclusiva do nível 1."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap3-m2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma organização certificada no CMMI nível 3 decide implementar diretamente práticas do nível 5 — otimização e gestão causal de defeitos — sem consolidar as práticas de medição quantitativa do nível 4. Qual é a consequência esperada segundo o modelo?",
+    "alternativas": [
+      "A organização pode avançar diretamente ao nível 5 desde que demonstre resultados mensuráveis de melhoria contínua — o CMMI v2.0 eliminou a obrigatoriedade de progressão sequencial para permitir integração com práticas ágeis modernas.",
+      "Recebe certificação parcial no nível 5, num perfil híbrido aceito.",
+      "Os níveis são cumulativos e não dá para pular: sem a base quantitativa do nível 4, faltam dados para a otimização do nível 5, e os resultados tendem a regredir.",
+      "A organização pode implementar práticas do nível 5 em projetos-piloto enquanto consolida o nível 4 nos demais, estratégia reconhecida pelo CMMI como \"implementação paralela por estágios\" para organizações com recursos limitados."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap3-m3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma multinacional americana de defesa precisa contratar uma fornecedora de software e exige certificação em modelo de maturidade reconhecido internacionalmente. Uma startup brasileira de 25 funcionários deseja concorrer ao contrato. Qual estratégia de certificação é mais adequada e por quê?",
+    "alternativas": [
+      "A startup deve buscar certificação MPS.BR nível A, equivalente ao CMMI nível 5 — essa equivalência é reconhecida internacionalmente pelo SEI e pelo ISACA, sendo aceita por contratantes americanos como substituta direta do CMMI em processos licitatórios do Departamento de Defesa dos EUA.",
+      "CMMI nível 2, o único aceito pelo governo americano.",
+      "CMMI: tem prestígio global e é exigido em contratos internacionais; o MPS.BR é mais acessível, mas reconhecido sobretudo no Brasil.",
+      "A startup deve buscar certificação ISO/IEC 15504 (SPICE), pois é o único modelo de maturidade com reconhecimento simultâneo pelo governo americano e pelo governo brasileiro, sendo compatível tanto com o CMMI quanto com o MPS.BR por derivação técnica direta."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap3-m4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa certificada no MPS.BR nível D deseja migrar para o CMMI. Em qual nível CMMI ela se enquadraria aproximadamente e quais esforços adicionais seriam necessários?",
+    "alternativas": [
+      "Ela se enquadraria no CMMI nível 2, pois o MPS.BR nível D corresponde às práticas básicas de gerenciamento de projetos e requisitos — equivalentes às KPAs do nível 2 do CMMI — sem cobertura das práticas de definição e padronização de processos do nível 3.",
+      "Aproximadamente ao nível 3 do CMMI, pois os níveis E, D e C do MPS.BR correspondem a ele; faltaria cobrir as áreas restantes do nível 3, adaptar a documentação e passar pela avaliação SCAMPI.",
+      "Ao nível 4, bastando adaptar a documentação ao formato do ISACA.",
+      "Ela se enquadraria no CMMI nível 2, pois a equivalência entre MPS.BR e CMMI é conservadora: apenas os níveis A e B do MPS.BR têm correspondência com os níveis 4 e 5 do CMMI, e todos os demais níveis do MPS.BR são considerados equivalentes ao nível 2 pelos avaliadores internacionais."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap3-m5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa pública brasileira de TI precisa contratar fornecedoras de software e deseja exigir certificação em modelo de maturidade nos editais de licitação. Qual modelo é mais adequado para essa exigência e por quê?",
+    "alternativas": [
+      "O CMMI é o modelo mais adequado para licitações públicas brasileiras, pois seu reconhecimento internacional garante maior número de fornecedoras aptas a participar dos editais, aumentando a competitividade e reduzindo o risco de direcionamento a poucos fornecedores.",
+      "O CMM original é o modelo mais adequado, pois foi o modelo pioneiro criado pelo SEI e ainda é o único com reconhecimento formal pelo Tribunal de Contas da União (TCU) para avaliação de qualidade de fornecedores de software em contratos públicos brasileiros.",
+      "O MPS.BR: é aceito em licitações de TI no Brasil, está em português e custa menos que o CMMI, o que amplia a participação de pequenas e médias fornecedoras.",
+      "A ISO/IEC 25010 é mais adequada que modelos de maturidade para licitações públicas, pois avalia a qualidade do produto entregue — não apenas a maturidade do processo da fornecedora — garantindo que o software adquirido atenda diretamente às necessidades do órgão público contratante."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap3-m6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "O CMMI v2.0 introduziu integração explícita com práticas ágeis como Scrum e Kanban. Como isso impacta a percepção de que CMMI e agilidade são incompatíveis?",
+    "alternativas": [
+      "A integração é só de fachada, e a incompatibilidade continua.",
+      "A incompatibilidade foi completamente eliminada: o CMMI v2.0 adotou o Scrum como metodologia de implementação oficial, e organizações que seguem o framework Scrum rigorosamente são automaticamente consideradas no nível 3 de maturidade sem necessidade de avaliação formal.",
+      "Mostra que maturidade e agilidade não se opõem: práticas ágeis podem implementar as áreas do CMMI, e uma organização pode usar Scrum com medição e melhoria estruturadas.",
+      "A integração beneficia exclusivamente organizações no nível 1 do CMMI, que podem usar Scrum como substituto dos processos formais exigidos pelo modelo — nos níveis superiores, a documentação e o controle quantitativo exigidos pelo CMMI são incompatíveis com a velocidade e flexibilidade do desenvolvimento ágil."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap3-m7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "A representação contínua do CMMI permite que uma organização evolua em áreas de processo específicas de forma independente. Em qual situação essa abordagem é mais vantajosa do que a representação por estágios?",
+    "alternativas": [
+      "Sempre; a por estágios só existe por compatibilidade histórica.",
+      "A representação contínua é mais vantajosa para organizações que buscam certificação e benchmarking com o mercado, pois o nível de capacidade por área de processo é mais informativo para clientes externos do que o nível de maturidade geral obtido pela representação por estágios.",
+      "Quando se quer melhorar áreas específicas, como uma empresa boa em projetos e fraca em riscos, sem ter de cumprir todos os requisitos de um nível.",
+      "A representação contínua é mais vantajosa exclusivamente para organizações no setor de serviços que utilizam a constelação CMMI-SVC, pois a representação por estágios foi projetada especificamente para desenvolvimento de produtos e não se adapta adequadamente às características dos processos de entrega de serviços."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap3-m8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa implementou as KPAs do CMM nível 2 — incluindo gerência de requisitos, planejamento e controle de projetos — mas os processos variam entre equipes e não estão documentados de forma padronizada para toda a organização. Qual é a limitação identificada e qual seria o próximo passo segundo o modelo?",
+    "alternativas": [
+      "Já cumpre o nível 2, e padronizar só é exigido no nível 4.",
+      "Está no nível 2, mas sem padronização organizacional não chega ao 3; o próximo passo é foco no processo organizacional, definição do processo e treinamento.",
+      "A empresa está no nível 3, pois as KPAs de planejamento e controle de projetos já implicam definição e documentação de processos — a variação entre equipes é problema de implementação que não afeta a classificação formal do nível de maturidade obtido pela organização.",
+      "A empresa precisa retornar ao nível 1 para reconstruir sua base processual, pois o CMM exige que as KPAs de cada nível sejam implementadas de forma idêntica em 100% das equipes antes de qualquer progressão — variações entre equipes invalidam a certificação já obtida."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap3-m9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "O MPS.BR possui 7 níveis de maturidade, enquanto o CMM e o CMMI possuem 5. Qual é a vantagem prática dessa granularidade maior para empresas brasileiras de pequeno porte?",
+    "alternativas": [
+      "A granularidade maior é uma desvantagem disfarçada: 7 níveis tornam o processo de certificação mais longo e custoso, pois a empresa precisa ser avaliada em mais etapas — o que contradiz o objetivo do MPS.BR de ser mais acessível do que o CMMI para MPMEs brasileiras.",
+      "A granularidade maior permite que empresas brasileiras obtenham múltiplas certificações em menos tempo, pois cada nível do MPS.BR exige menos esforço de implementação do que um nível do CMMI — empresas que buscam volume de certificações para fins de marketing se beneficiam dessa estrutura.",
+      "Permite evoluir em degraus menores (G, F, E, D, C) em vez de um salto grande, com reconhecimento a cada etapa e investimento diluído.",
+      "A granularidade maior beneficia exclusivamente as Instituições Implementadoras (IIs) credenciadas pela SOFTEX, que podem cobrar por mais avaliações intermediárias — do ponto de vista da empresa certificanda, 7 níveis representam apenas custo adicional sem benefício prático em relação aos 5 níveis do CMMI."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap3-m10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa de desenvolvimento de software, uma empresa de suporte e manutenção de sistemas e uma empresa de aquisição de tecnologia desejam cada uma adotar o CMMI. Qual constelação do CMMI é mais adequada para cada uma e por quê?",
+    "alternativas": [
+      "Todas as três devem adotar o CMMI-DEV, pois é a constelação mais completa e abrange implicitamente os processos de serviços e aquisição — as constelações CMMI-SVC e CMMI-ACQ são simplificações do CMMI-DEV criadas apenas para reduzir o custo de certificação de organizações menores.",
+      "Desenvolvimento usa CMMI-DEV; suporte e manutenção, CMMI-SVC (serviços); aquisição, CMMI-ACQ (gestão de fornecedores), pois cada constelação serve a um tipo de organização.",
+      "A empresa de desenvolvimento deve adotar o CMMI-DEV; as demais devem adotar o CMMI-SVC, pois tanto suporte quanto aquisição são atividades de prestação de serviço — o CMMI-ACQ foi descontinuado na versão 2.0 do modelo e suas práticas foram incorporadas ao CMMI-SVC atualizado.",
+      "Tanto faz: as três constelações avaliam os mesmos processos."
+    ],
+    "correta": 1
+  },
+  {
     "id": "qualidade-cap4-q1",
     "disciplinaId": "qualidade-e-testes-de-software",
     "capituloId": "qualidade-cap4",
@@ -1037,6 +1487,156 @@
     "resolucao": "os seis valores propostos cobrem exatamente as classes de equivalência relevantes (idade inválida abaixo da faixa, válida, inválida acima) e os valores de fronteira mais propensos a revelar erros de comparação (17/18 e 65/66) — a aplicação mais precisa possível das duas técnicas de caixa preta estudadas no capítulo, com uma fração do esforço da suíte original. {{A}} repete o erro de assumir que mais testes é sempre melhor, ignorando a qualidade da cobertura. {{C}} ignora uma diferença de cobertura real e significativa entre as duas suítes. {{D}} exige valores intermediários que, segundo a própria lógica de particionamento de equivalência, são redundantes quando já se tem um representante de cada classe. {{E}} introduz uma exigência (teste de performance) fora do escopo da técnica discutida no texto motivador."
   },
   {
+    "id": "qualidade-cap4-m1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe de desenvolvimento executa uma bateria completa de testes unitários e de integração em um sistema de e-commerce, obtendo 95% de cobertura de código e zero defeitos reportados. Na semana seguinte, o sistema entra em produção e apresenta falhas críticas relatadas por usuários. Qual princípio do ISTQB explica essa situação?",
+    "alternativas": [
+      "Paradoxo do pesticida — os mesmos testes foram executados repetidamente sem atualização, fazendo com que parassem de detectar novos defeitos introduzidos nas últimas modificações do sistema antes do lançamento.",
+      "A cobertura deveria ser de 100%, o que garante zero defeitos.",
+      "Testes mostram a presença de defeitos, não a ausência: 95% de cobertura sem falhas não garante um sistema livre de erros nem adequado às necessidades reais.",
+      "Agrupamento de defeitos — a equipe concentrou os testes nos módulos considerados críticos e negligenciou os módulos secundários, onde 80% dos defeitos que apareceram em produção estavam localizados, conforme prevê a lei de Pareto aplicada a testes."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap4-m2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um testador recebe a especificação de um campo de cadastro que aceita idades entre 18 e 65 anos. Aplicando Particionamento de Equivalência e Análise de Valor Limite, quais são os casos de teste mínimos e mais eficazes?",
+    "alternativas": [
+      "Só 2 casos (30 e 70), e os limites já estão cobertos.",
+      "Particionamento de equivalência gera 3 casos: um abaixo do limite (ex: 10), um dentro (ex: 40) e um acima (ex: 80). Análise de valor limite exige apenas testar os extremos exatos de 18 e 65, totalizando 5 casos no conjunto combinado das duas técnicas.",
+      "Três partições: inválida abaixo (10), válida (40) e inválida acima (70); e os limites 17, 18, 19, 64, 65 e 66, onde os defeitos mais aparecem.",
+      "Particionamento de equivalência gera apenas 2 partições — válida e inválida — e um único caso de teste por partição é suficiente. Análise de valor limite exige testar todos os valores entre 15 e 20 e entre 63 e 68 para garantir cobertura completa das fronteiras."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap4-m3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa desenvolve software embarcado para controle de voo de aeronaves. A norma DO-178C exige 100% de cobertura MC/DC. Por que esse critério é exigido nesse contexto e por que statement coverage seria insuficiente?",
+    "alternativas": [
+      "Statement coverage seria insuficiente apenas porque exige menos esforço de implementação — em sistemas de aviação, a exigência de MC/DC é regulatória e burocrática, sem impacto técnico real na detecção de defeitos em comparação com cobertura de declarações de 100%.",
+      "MC/DC é exigido porque sistemas de aviação precisam que cada condição booleana seja testada em todos os valores possíveis simultaneamente — enquanto statement coverage testa apenas se cada linha foi executada, sem verificar se as condições dentro das expressões foram avaliadas corretamente.",
+      "Statement coverage só garante que cada linha rodou, não que cada condição afeta a decisão sozinha; em sistemas críticos, uma condição errada passa despercebida, daí o MC/DC.",
+      "MC/DC é exigido exclusivamente por questões legais de responsabilidade civil — a norma DO-178C foi criada após acidentes aéreos causados por erros de cobertura de testes, e a exigência de MC/DC transfere a responsabilidade por defeitos para a equipe de desenvolvimento caso a cobertura não seja atingida."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap4-m4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um módulo de cálculo de frete funciona perfeitamente nos testes unitários, mas quando integrado ao módulo de carrinho de compras, os valores calculados chegam incorretos. Qual nível de teste detectaria esse problema e qual estratégia de integração seria mais indicada para um sistema com múltiplas dependências?",
+    "alternativas": [
+      "O teste de sistema detectaria o problema, pois é o único nível que avalia o comportamento do software em ambiente próximo ao de produção — testes de integração são desnecessários quando os módulos individuais já passaram nos testes unitários com alta cobertura de código.",
+      "O teste de integração, que verifica a comunicação entre módulos; com muitas dependências, a estratégia bottom-up valida primeiro a base (frete) e depois integra os módulos de cima.",
+      "O teste de aceitação, pois só usuários reais percebem o erro.",
+      "O teste unitário detectaria o problema se tivesse sido planejado adequadamente — a falha na integração indica que os mocks utilizados nos testes unitários do módulo de carrinho não representavam fielmente a interface real do módulo de cálculo de frete."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap4-m5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup lança um produto SaaS e decide pular o teste alfa para economizar tempo, indo diretamente para o teste beta com 10.000 usuários externos. Quais são os riscos específicos dessa decisão?",
+    "alternativas": [
+      "Não há risco significativo: o teste beta com grande volume de usuários externos é mais eficaz que o teste alfa controlado, pois expõe o software a cenários de uso real que testadores internos jamais simulariam em ambiente de laboratório controlado.",
+      "Só reputação, pois usuários beta toleram bugs.",
+      "Defeitos que o alfa pegaria em ambiente controlado chegam a 10.000 usuários reais, com falhas de estabilidade e segurança em escala e dano à reputação.",
+      "O risco é exclusivamente técnico de escalabilidade: o teste beta com 10.000 usuários simultâneos pode derrubar os servidores da startup, pois sem o teste alfa não há validação prévia da infraestrutura — esse é o único problema que a ausência do teste alfa introduz."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap4-m6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema de concessão de crédito possui a seguinte regra: clientes premium com renda acima de R$5.000 recebem 20% de desconto; clientes premium com renda até R$5.000 recebem 10%; clientes não premium com renda acima de R$5.000 recebem 5%; demais clientes não recebem desconto. Qual técnica de caixa preta é mais adequada e quantas regras de teste são necessárias?",
+    "alternativas": [
+      "Particionamento: 2 partições, premium e não premium.",
+      "Análise de valor limite é a técnica mais adequada, pois a renda de R$5.000 é um valor de fronteira crítico — são necessários apenas 4 casos de teste: R$4.999 e R$5.000 para clientes premium, e os mesmos valores para não premium.",
+      "Tabela de decisão, por combinar condições: 4 regras, de premium ou não com renda acima ou até R$ 5.000, cada uma ligada ao seu desconto.",
+      "Teste baseado em estado é a técnica mais adequada, pois o sistema de crédito muda de estado conforme a renda e o perfil do cliente — são necessárias 6 transições de estado para cobrir todos os caminhos possíveis entre os estados de desconto definidos pelas regras de negócio."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap4-m7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor escreve testes unitários após codificar um módulo e obtém 85% de branch coverage. Seu colega pratica TDD e escreve os testes antes do código. Qual é a diferença fundamental entre as duas abordagens e qual oferece maior garantia de qualidade?",
+    "alternativas": [
+      "As abordagens são equivalentes em qualidade: a ordem de escrita dos testes (antes ou depois do código) não afeta a cobertura obtida nem a capacidade de detecção de defeitos — o que importa é atingir o percentual mínimo de cobertura estabelecido como padrão pela equipe.",
+      "O desenvolvedor que testa após codificar obtém maior qualidade, pois conhece a implementação completa e pode projetar casos de teste mais precisos e abrangentes — o TDD limita o testador a testar apenas o que foi planejado antes da implementação, perdendo cenários descobertos durante a codificação.",
+      "No TDD, o teste vem antes e define o comportamento esperado, o que leva a um design testável e evita testar só o que já se sabe que funciona.",
+      "A diferença é exclusivamente de ordem burocrática no processo de desenvolvimento — ambas as abordagens produzem o mesmo conjunto de casos de teste e a mesma cobertura de código quando aplicadas por desenvolvedores com nível técnico equivalente."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap4-m8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa de jogos online usa Canary Release para lançar uma nova funcionalidade, ativando-a primeiro para 1% dos usuários, depois expandindo progressivamente. Como isso se relaciona com os conceitos de teste beta e qual é a vantagem sobre um lançamento tradicional?",
+    "alternativas": [
+      "Canary Release é uma alternativa ao teste beta que o substitui completamente — empresas que adotam essa prática eliminam a necessidade de qualquer fase de teste antes do lançamento, pois o monitoramento em produção detecta problemas com a mesma eficácia dos testes formais.",
+      "É um teste alfa moderno com usuários internos.",
+      "É uma evolução do beta aberto: expõe a novidade aos poucos a usuários reais, detecta problemas em escala pequena e permite rollback rápido.",
+      "Canary Release elimina a necessidade de testes de integração e sistema, pois a exposição progressiva a usuários reais valida todas as integrações e comportamentos do sistema em condições de produção — tornando as fases anteriores de teste redundantes para equipes com cultura DevOps madura."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap4-m9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um testador usando técnica de caixa preta identifica que um sistema de login não trata corretamente senhas com caracteres especiais como ', \" e --. Qual é a limitação da caixa preta que esse caso ilustra e como a caixa branca complementaria a investigação?",
+    "alternativas": [
+      "O caso ilustra que a caixa preta é incapaz de detectar vulnerabilidades de segurança — apenas a caixa branca pode identificar falhas como injeção de SQL, pois o testador precisa conhecer o código para saber quais caracteres representam risco na implementação específica do sistema.",
+      "Não há limitação: a caixa preta basta para garantir a segurança.",
+      "A caixa preta achou o sintoma, mas não a causa; a caixa branca examinaria o tratamento da entrada para confirmar a injeção de SQL e localizar a falha.",
+      "O caso ilustra o paradoxo do pesticida aplicado à caixa preta — os mesmos casos de teste com caracteres especiais foram executados repetidamente e deixaram de detectar defeitos, sendo necessário revisar e atualizar os casos de teste para incluir novos caracteres especiais não utilizados anteriormente."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap4-m10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Segundo a pirâmide de testes de Mike Cohn, a distribuição recomendada é 70% unitários, 20% integração e 10% sistema/aceitação. Uma empresa inverte essa pirâmide — 10% unitários, 20% integração e 70% sistema/aceitação via testes manuais de interface. Quais são as consequências práticas dessa inversão?",
+    "alternativas": [
+      "A inversão não causa problemas práticos: testes de sistema e aceitação oferecem maior confiança do usuário e cobertura de requisitos de negócio — a pirâmide de Mike Cohn é uma recomendação teórica que não se aplica a equipes com testadores experientes em testes manuais de interface.",
+      "A empresa ganha, pois os testes de aceitação validam o negócio.",
+      "Vira o \"cone de sorvete\": testes manuais de interface são lentos, caros e frágeis, o feedback demora, e erros simples chegam caros às camadas de cima.",
+      "A inversão é aceitável apenas em contextos de desenvolvimento ágil com sprints curtos, onde testes de aceitação automatizados substituem funcionalmente os testes unitários — o problema ocorre exclusivamente quando os 70% de testes de sistema são manuais e não automatizados via ferramentas como Selenium ou Cypress."
+    ],
+    "correta": 2
+  },
+  {
     "id": "qualidade-cap5-q12",
     "disciplinaId": "qualidade-e-testes-de-software",
     "capituloId": "qualidade-cap5",
@@ -1062,6 +1662,156 @@
     ],
     "correta": 1,
     "resolucao": "a citação da IEEE 829 define explicitamente critérios de suspensão e retomada como componentes do plano de teste, exatamente o elemento ausente no caso e a causa mais direta da decisão improvisada e sem consenso da equipe. {{A}} minimiza um problema estrutural do documento como se fosse um incidente pontual de comunicação. {{C}} afirma incorretamente que o plano estava completo, ignorando a lacuna específica apontada pela norma citada. {{D}} restringe, sem base na citação, a aplicabilidade desses critérios a sistemas ‘críticos’ — a norma não faz essa distinção, e um sistema de folha de pagamento lida com dados financeiros sensíveis. {{E}} propõe uma solução (mais pessoas) que não resolve a causa raiz identificada: a ausência de critérios formais e claros no plano."
+  },
+  {
+    "id": "qualidade-cap5-m1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe de desenvolvimento recebe um novo projeto de sistema bancário e decide criar um único documento chamado \"Plano de Estratégia de Testes\" para cobrir tanto a abordagem geral quanto os detalhes de execução. Um consultor aponta que essa unificação é problemática. Por quê?",
+    "alternativas": [
+      "Não há problema na unificação: a norma IEEE 829 permite documentos híbridos que combinam estratégia e plano de teste, sendo essa inclusive a abordagem recomendada para projetos ágeis onde a separação burocrática entre documentos reduz a velocidade de entrega.",
+      "O problema é apenas de nomenclatura: estratégia e plano de teste são documentos sinônimos na norma IEEE 829, e o consultor está aplicando uma distinção acadêmica sem impacto prático no processo de qualidade do projeto bancário.",
+      "Têm propósitos diferentes: a estratégia é a abordagem geral e reutilizável; o plano detalha quem, quando, onde e com que recursos se testa num projeto.",
+      "O problema é exclusivamente de governança: a norma IEEE 829 exige que os dois documentos tenham identificadores diferentes e sejam aprovados por responsáveis distintos — a unificação viola esse requisito formal, podendo invalidar auditorias de qualidade independentemente do conteúdo do documento produzido."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap5-m2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um gerente de testes aplica a Matriz de Priorização (Probabilidade × Impacto) a um sistema de e-commerce e obtém: módulo de pagamento (9), módulo de login (6), módulo de relatórios (2) e módulo de exportação CSV (1). Como essa análise deve influenciar a alocação do esforço de teste?",
+    "alternativas": [
+      "O esforço deve ser distribuído igualmente entre todos os módulos: a matriz de risco é apenas uma ferramenta de comunicação com stakeholders, sem implicação direta na quantidade de casos de teste ou tempo dedicado a cada módulo.",
+      "Pagamento e login (6 a 9) recebem teste prioritário e profundo; relatórios (2), teste normal; e a exportação CSV (1), teste leve, levando o esforço aonde a falha custa mais.",
+      "Pagamento recebe 90% do esforço, e o resto é dividido.",
+      "Módulos com pontuação baixa (1 e 2) devem receber mais atenção, pois são os mais negligenciados pelas equipes de desenvolvimento — a estratégia de risco inverte a prioridade para compensar o viés natural de desenvolvedores que testam mais os módulos que consideram críticos."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap5-m3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe ágil trabalha em sprints de duas semanas e adota BDD com Gherkin para escrever critérios de aceitação. Um desenvolvedor questiona por que os critérios são escritos antes do código. Qual é o fundamento estratégico dessa prática?",
+    "alternativas": [
+      "Os critérios em Gherkin são escritos antes do código exclusivamente por razões contratuais: documentar o comportamento esperado antes da implementação protege a empresa legalmente em caso de disputas com o cliente sobre funcionalidades entregues.",
+      "É só formalidade, e os critérios são ajustados depois.",
+      "É Shift-Left e ATDD: alinha cliente, desenvolvedor e testador antes do código, evita retrabalho e gera testes de aceitação que guiam a implementação.",
+      "A prática é válida apenas para histórias de usuário com alta complexidade de negócio — para funcionalidades técnicas simples, escrever critérios Gherkin antes do código aumenta o overhead sem benefício proporcional de qualidade ou alinhamento entre as partes envolvidas."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap5-m4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema de controle de tráfego aéreo está sendo desenvolvido. A equipe precisa definir o critério mínimo de cobertura para os módulos de cálculo de trajetória e alertas de colisão. Com base na estratégia de cobertura progressiva da Caixa Branca, qual critério é adequado e por quê?",
+    "alternativas": [
+      "Branch coverage de 80%, padrão de mercado que basta.",
+      "MC/DC com 100%, pela criticidade máxima, como exigem as normas aeronáuticas (DO-178C e, para sistemas de solo, DO-278A): cada condição deve afetar a decisão de forma independente.",
+      "Path Coverage completo é o único critério aceitável para sistemas aviônicos, pois todos os caminhos possíveis de execução devem ser percorridos — o MC/DC é uma simplificação inadequada para sistemas onde qualquer falha pode resultar em perda de vidas humanas.",
+      "Statement Coverage de 100% é o critério mínimo adequado para módulos críticos de aviação, pois garante que cada linha de código foi executada pelo menos uma vez — critérios mais complexos como MC/DC e Path Coverage são excessivos e inviabilizam economicamente o desenvolvimento."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap5-m5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa de software legado tem 500.000 linhas de código sem testes automatizados. A nova estratégia de qualidade exige 80% de branch coverage. O arquiteto propõe usar \"cobertura diferencial\" como abordagem transitória. O que isso significa e por que é estrategicamente adequado?",
+    "alternativas": [
+      "Cobertura diferencial significa cobrir apenas os módulos com maior número de defeitos históricos registrados — os 20% do código com mais bugs recebem 80% do esforço de cobertura, aplicando o princípio de Pareto à estratégia de testes do sistema legado.",
+      "Cobertura diferencial significa dividir o código legado em módulos e atingir 80% de cobertura em cada módulo individualmente antes de avançar para o próximo — é uma abordagem sequencial que garante cobertura completa sem sobrecarregar a equipe com todas as 500.000 linhas simultaneamente.",
+      "Exigir cobertura só do código novo ou alterado: em vez de 80% de todo o legado de uma vez, cada mudança cumpre a meta, e a cobertura cresce sem parar o desenvolvimento.",
+      "Cobertura diferencial significa medir a diferença entre a cobertura atual (0%) e a meta (80%) e criar um plano de metas intermediárias trimestrais — é uma abordagem de gestão de projetos que transforma o gap de cobertura em backlog de testes priorizados por valor de negócio."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap5-m6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um time de QA recebe uma história de usuário para testar um sistema de reserva de passagens aéreas com as seguintes regras: passageiros com mais de 60 anos recebem 15% de desconto; passageiros com cartão fidelidade recebem 10%; passageiros com ambos recebem 20%; demais não recebem desconto. Qual técnica de Caixa Preta e quantos casos de teste mínimos são necessários?",
+    "alternativas": [
+      "Análise de Valor Limite é a técnica mais adequada, gerando 4 casos de teste: um para cada valor de fronteira da idade (59 e 60 anos) combinado com a presença ou ausência do cartão fidelidade — total de 4 casos suficientes para cobrir todas as regras de desconto.",
+      "Particionamento: 2 partições, com e sem desconto.",
+      "Tabela de decisão: 4 casos, com mais de 60 e cartão (20%), mais de 60 sem cartão (15%), até 60 com cartão (10%) e até 60 sem cartão (0%).",
+      "Teste Baseado em Estado é a técnica mais adequada, pois o sistema transita entre estados de desconto conforme as características do passageiro — são necessários 6 casos de teste para cobrir todas as transições de estado entre os quatro níveis de desconto definidos pelas regras de negócio."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap5-m7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um quality gate no pipeline CI/CD está configurado para bloquear merges quando a cobertura de branches cai abaixo de 80%. Um desenvolvedor argumenta que isso atrasa entregas e propõe remover o quality gate. Qual é o contra-argumento estratégico mais sólido?",
+    "alternativas": [
+      "Não pode sair por razões contratuais com clientes financeiros.",
+      "O quality gate pode ser removido desde que a equipe compense com maior volume de testes manuais de sistema — a cobertura automatizada de branches e os testes manuais são tecnicamente equivalentes em termos de detecção de defeitos quando executados por testadores experientes.",
+      "O quality gate testa cedo: barra regressões no commit, onde corrigir é mais barato, e o pequeno atraso custa menos que o retrabalho em produção.",
+      "O quality gate deve ser mantido exclusivamente por razões de auditoria: sem evidência documentada de cobertura mínima a cada commit, a empresa não consegue obter ou manter certificações CMMI e MPS.BR — o impacto na velocidade de entrega é o preço necessário para manter a conformidade com modelos de maturidade."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap5-m8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma estratégia de teste define critérios de suspensão como \"mais de 30% dos casos de teste bloqueados por defeito de ambiente\". Durante a execução, 35% dos testes ficam bloqueados. O gerente decide continuar os testes ignorando o critério. Quais são as consequências dessa decisão?",
+    "alternativas": [
+      "A decisão é acertada: critérios de suspensão são diretrizes conservadoras criadas para projetos inexperientes — equipes maduras devem ter autonomia para avaliá-los contextualmente e continuar os testes quando julgarem que os resultados ainda são confiáveis apesar do bloqueio.",
+      "Só gera uma não conformidade no relatório de auditoria.",
+      "Com 35% bloqueado, os resultados perdem confiabilidade: o ambiente instável gera falsos positivos e negativos e uma falsa sensação de qualidade.",
+      "A consequência é operacional: ignorar o critério sobrecarrega a equipe de teste com retrabalho, pois os casos bloqueados precisarão ser reexecutados após a correção do ambiente — o único problema é o aumento do esforço total, sem impacto na qualidade ou confiabilidade dos resultados dos casos que foram executados com sucesso."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap5-m9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup desenvolve um aplicativo de telemedicina e precisa definir a estratégia de Caixa Preta para o módulo de prescrição médica, que possui regras complexas baseadas em diagnóstico, histórico do paciente e interações medicamentosas. Qual técnica é mais adequada e como ela seria aplicada?",
+    "alternativas": [
+      "Análise de Valor Limite é a técnica mais adequada, pois o módulo de prescrição processa dosagens de medicamentos com valores numéricos — testar os limites mínimo e máximo de cada dosagem cobre as situações de maior risco de erro de prescrição médica.",
+      "Teste Exploratório é a técnica mais adequada para módulos de alta complexidade de domínio: a intuição e experiência de testadores com conhecimento médico são mais eficazes do que técnicas formais para descobrir defeitos em sistemas de prescrição com regras não totalmente documentadas.",
+      "Tabela de decisão: diagnóstico, histórico e interações combinados exigem cobrir sistematicamente todas as combinações, já que uma esquecida pode prejudicar o paciente.",
+      "Particionamento de Equivalência é a técnica mais adequada: dividir os pacientes em classes equivalentes por diagnóstico (crônico, agudo, preventivo) reduz o número de casos de teste mantendo cobertura adequada — em sistemas de saúde, a redução do volume de testes é prioritária para agilizar a homologação regulatória junto à ANVISA."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap5-m10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma organização implementa simultaneamente TDD para desenvolvimento de código e BDD para critérios de aceitação. Um analista questiona se as duas práticas não são redundantes. Como elas se complementam estrategicamente na visão integrada de testes?",
+    "alternativas": [
+      "São redundantes: TDD e BDD produzem essencialmente o mesmo conjunto de testes automatizados — equipes que adotam BDD podem abandonar o TDD, pois os cenários Gherkin de aceitação cobrem automaticamente a lógica interna que o TDD verificaria nos testes unitários.",
+      "Só se complementam em equipes grandes; nas pequenas, escolha uma.",
+      "Atuam em camadas diferentes: TDD gera testes unitários de caixa branca (cada função correta); BDD, testes de aceitação de caixa preta (o comportamento de negócio).",
+      "São complementares apenas quando combinadas com ATDD: TDD sozinho garante qualidade técnica interna e BDD sozinho garante alinhamento com o negócio, mas apenas a combinação das três práticas — TDD + BDD + ATDD — produz uma estratégia de testes completa segundo as recomendações do ISTQB para equipes ágeis de alta maturidade."
+    ],
+    "correta": 2
   },
   {
     "id": "qualidade-cap6-q1",
@@ -1419,6 +2169,156 @@
     "resolucao": "a citação de Beck e Gamma descreve a cultura e a confiança geradas pela prática de testes automatizados, um espírito que se aplica independentemente da ferramenta específica; já a escolha técnica entre JUnit e TestNG deve considerar as características de cada uma — e o requisito descrito (paralelismo, agrupamento por categoria, dependências entre grupos) é justamente o ponto forte do TestNG destacado no capítulo. {{A}} transforma uma citação sobre cultura de testes em uma recomendação de ferramenta específica, o que o texto não afirma. {{C}} nega diferenças técnicas reais e documentadas entre as duas ferramentas, estudadas no capítulo. {{D}} é uma inversão factual: a citação é de 1998, ano de popularização do próprio JUnit, e não menciona o TestNG, criado posteriormente. {{E}} distorce completamente o sentido da citação, que defende exatamente o oposto: testes bem escritos aceleram o desenvolvimento."
   },
   {
+    "id": "qualidade-cap6-m1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa investe R$20.000 no desenvolvimento de scripts de automação para 400 casos de teste. Cada caso levava 8 minutos para ser executado manualmente por um testador com custo de R$60/hora. O sistema tem 15 releases por ano. Após 6 meses, o gerente questiona se o investimento valeu a pena. Qual é a análise correta de ROI?",
+    "alternativas": [
+      "O investimento não valeu a pena: automação de testes só apresenta ROI positivo após 24 meses em projetos com menos de 500 casos de teste abaixo desse prazo, o custo de desenvolvimento dos scripts supera qualquer economia gerada pela redução de esforço manual.",
+      "Impossível calcular sem o custo de manutenção dos scripts.",
+      "Manual: 400 × 8 min × R$ 1/min × 15 releases = R$ 48.000 por ano; com R$ 20.000 investidos, a automação se paga antes de 6 meses e segue economizando.",
+      "O ROI é irrelevante para a decisão: a automação deve ser implementada independentemente do retorno financeiro, pois a consistência e a eliminação de erros humanos na execução são benefícios intangíveis que superam qualquer análise quantitativa de custo-benefício."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap6-m2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe de QA automatizou 800 testes de interface com Selenium sem usar o padrão Page Object Model. Após uma atualização de layout que alterou 30 elementos da UI, 600 scripts quebraram e precisaram ser corrigidos individualmente. Como o POM teria mitigado esse problema?",
+    "alternativas": [
+      "O POM não teria mitigado o problema: a atualização de 30 elementos da UI exigiria a mesma quantidade de alterações independentemente do padrão adotado, pois cada elemento é referenciado individualmente em cada teste que o utiliza, seja com ou sem POM.",
+      "Com POM, cada página é uma classe com os localizadores centralizados: mudar 30 elementos exige alterar 30 localizadores, não 600 scripts.",
+      "Só ajudaria nos testes desses 30 elementos; os outros seguiriam quebrados.",
+      "O POM teria agravado o problema: centralizar os localizadores em classes de Page Object cria um ponto único de falha — a alteração de qualquer elemento na classe de página propaga o impacto para todos os testes que a utilizam, aumentando o risco em comparação com localizadores distribuídos individualmente."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap6-m3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um gerente de projeto propõe automatizar testes exploratórios para acelerar a detecção de defeitos inesperados. Um engenheiro de qualidade discorda. Qual é o fundamento técnico da discordância?",
+    "alternativas": [
+      "O engenheiro discorda por razões de custo: testes exploratórios automatizados exigem ferramentas especializadas de IA que custam mais do que o orçamento disponível — a discordância é financeira, não técnica, e seria resolvida com ferramentas open source adequadas.",
+      "O engenheiro discorda porque testes exploratórios já são executados automaticamente pelo framework de análise estática SonarQube, tornando a proposta redundante — automatizar o que já é feito pela análise estática desperdiça recursos sem agregar valor ao processo de qualidade.",
+      "Testes exploratórios dependem de criatividade, intuição e adaptação ao que se descobre na hora; um script só executa o que foi programado.",
+      "O engenheiro discorda porque testes exploratórios já são cobertos pelos testes de caixa preta automatizados com Selenium — qualquer funcionalidade alcançável pela interface pode ser testada exploratoriamente por scripts, tornando a participação humana desnecessária em projetos com alta cobertura de automação de UI."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap6-m4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe Java precisa escolher entre JUnit 5 e TestNG para um projeto que inclui testes de integração com dependências entre cenários, execução paralela nativa e relatórios HTML sem dependências externas. Qual é a escolha mais adequada e por quê?",
+    "alternativas": [
+      "JUnit 5 é a escolha mais adequada: sua arquitetura modular com JUnit Platform, Jupiter e Vintage oferece maior flexibilidade para todas as necessidades descritas, e plugins Maven de terceiros suprem nativamente as lacunas de paralelismo e relatórios sem configuração adicional.",
+      "Tanto faz: as duas fazem o mesmo, e decide a familiaridade.",
+      "TestNG: tem dependência entre testes (dependsOnMethods), paralelismo no testng.xml e relatório HTML nativos, os três requisitos pedidos.",
+      "JUnit 5 é a escolha mais adequada exclusivamente pela integração superior com IDEs Java: IntelliJ IDEA e Eclipse têm suporte nativo completo ao JUnit 5, enquanto o TestNG exige instalação de plugins adicionais que podem introduzir incompatibilidades com versões recentes das IDEs utilizadas pela equipe."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap6-m5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema de e-commerce tem os seguintes testes automatizados: 5% unitários, 10% integração e 85% de testes de interface com Selenium. A suíte leva 4 horas para executar e quebra frequentemente por pequenas mudanças de UI. Qual padrão anti-qualidade isso representa e como corrigi-lo?",
+    "alternativas": [
+      "Representa o paradoxo do pesticida aplicado à automação: os mesmos testes de UI são executados repetidamente e param de detectar novos defeitos, exigindo renovação constante dos scripts — a solução é substituir os testes de interface por novos cenários exploratórios automatizados a cada sprint.",
+      "É o \"cone de sorvete\", a pirâmide invertida: muitos testes de UI lentos e frágeis e poucos unitários; a correção é ter a maioria unitária, parte de integração e UI só nos fluxos críticos.",
+      "Falta de Page Object Model; com POM, as quebras e as 4 horas somem.",
+      "Representa o problema de ambiente instável descrito nas limitações da automação: testes de UI que quebram frequentemente indicam infraestrutura de execução inadequada — a solução é migrar para Selenium Grid na nuvem com BrowserStack ou Sauce Labs, sem necessidade de rebalancear a distribuição dos testes."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap6-m7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup de fintech implementa um pipeline CI/CD e precisa garantir feedback ao desenvolvedor em menos de 5 minutos após o commit, com verificação completa antes do deploy em produção. Como distribuir os testes automatizados pelas etapas do pipeline para atingir esse objetivo?",
+    "alternativas": [
+      "Todos os testes devem ser executados na etapa de commit para garantir feedback completo e imediato — dividir os testes em etapas cria gaps de cobertura entre os estágios do pipeline, aumentando o risco de defeitos chegarem à produção sem detecção antecipada.",
+      "Começar pelos testes completos de desempenho com JMeter.",
+      "Commit (até 5 min): análise estática e unitários; build: integração e contratos de API; staging: regressão de UI, desempenho e segurança; pré-produção: aceitação, carga e aprovação humana.",
+      "A fintech deve ter apenas duas etapas: commit com testes unitários (< 5min) e deploy direto em produção com monitoramento via APM — etapas intermediárias de staging e pré-produção são desnecessárias em equipes ágeis com cultura DevOps madura e alta cobertura de testes unitários."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap6-m8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor escreve o seguinte teste JUnit 5: o método setUp() inicializa uma conexão com banco de dados real, o teste verifica o cadastro de usuário e o tearDown() fecha a conexão. Durante a execução paralela, os testes falham aleatoriamente. Qual princípio FIRST está sendo violado e como corrigir?",
+    "alternativas": [
+      "O princípio Fast está sendo violado: conexões com banco de dados real tornam os testes lentos — a solução é usar banco de dados em memória (H2) para aumentar a velocidade de execução e eliminar as falhas aleatórias causadas pela lentidão das consultas ao banco externo.",
+      "O princípio Independent está sendo violado: testes que compartilham estado via banco de dados real criam dependências entre si — em execução paralela, um teste pode modificar dados que outro teste espera encontrar em estado inicial; a solução é usar mocks, stubs ou transações com rollback para isolar cada teste completamente.",
+      "Viola Independent: os testes compartilham estado no banco real, e um altera o que o outro espera; a solução é isolar com mocks, stubs ou transações com rollback.",
+      "Viola Timely, pois o teste foi escrito depois do código."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap6-m9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe precisa automatizar testes para um aplicativo que deve funcionar em iOS, Android e web browser. Qual combinação de ferramentas do ecossistema estudado cobre todas as três plataformas e qual é o principal desafio dessa estratégia?",
+    "alternativas": [
+      "Cypress cobre as três plataformas nativamente: sua arquitetura baseada em navegador executa testes em Chrome mobile (Android), Safari mobile (iOS) e qualquer navegador desktop — é a solução mais simples e econômica para projetos multiplataforma sem necessidade de ferramentas adicionais.",
+      "Selenium WebDriver cobre as três plataformas com o mesmo script: usando Selenium Grid configurado com drivers para Android, iOS e browsers desktop, a equipe mantém um único conjunto de scripts para todas as plataformas sem necessidade de ferramentas especializadas para mobile.",
+      "Appium para iOS e Android e Selenium, Cypress ou Playwright para a web; o desafio é manter bases de automação distintas, gerenciar os dispositivos e sincronizar tudo no pipeline.",
+      "Robot Framework cobre as três plataformas com uma única biblioteca de palavras-chave: sua arquitetura agnóstica de plataforma permite automatizar iOS, Android e browsers com os mesmos scripts em linguagem natural, eliminando a necessidade de frameworks especializados para cada plataforma."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap6-m10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um time adota Cucumber com Gherkin para escrever cenários de aceitação antes do desenvolvimento. O analista de negócios escreve: \"Dado que o usuário está logado, Quando ele adiciona um produto ao carrinho, Então o total deve ser atualizado\". Como esse cenário se posiciona na pirâmide de automação e qual ferramenta seria mais adequada para sua execução?",
+    "alternativas": [
+      "O cenário Gherkin deve ser executado no nível unitário da pirâmide: por ser escrito em linguagem de negócio, ele substitui os testes unitários técnicos — a ferramenta adequada é JUnit 5 com extensão Cucumber, executando o cenário diretamente contra os métodos Java sem interação com a interface do usuário.",
+      "No nível de integração, com RestAssured na API do carrinho.",
+      "Fica no topo da pirâmide, como teste de aceitação; o adequado é Cucumber com Selenium, Playwright ou Cypress, executando na interface real.",
+      "O cenário deve ser executado em todos os três níveis da pirâmide simultaneamente: Cucumber com JUnit no nível unitário, Cucumber com RestAssured no nível de integração e Cucumber com Selenium no nível de UI — a redundância é desejável pois garante cobertura máxima do comportamento descrito pelo analista de negócios."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap6-m11",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa migra seus testes de Selenium para Playwright após avaliar as ferramentas modernas. Quais são as vantagens técnicas do Playwright sobre o Selenium que justificam a migração e em qual cenário o Selenium ainda seria preferível?",
+    "alternativas": [
+      "O Playwright não oferece vantagens técnicas reais sobre o Selenium: ambas as ferramentas usam o mesmo protocolo WebDriver e produzem resultados idênticos a migração é justificada apenas por preferência estética da equipe pela API mais moderna do Playwright.",
+      "O Playwright é superior ao Selenium em todos os cenários sem exceção: sua arquitetura baseada no protocolo CDP (Chrome DevTools Protocol) elimina completamente as instabilidades do WebDriver — equipes que ainda usam Selenium em 2026 estão adotando tecnologia obsoleta sem justificativa técnica válida.",
+      "O Playwright tem Chrome, Firefox e Safari numa só API, mais estabilidade, interceptação de rede e paralelismo nativo; o Selenium ainda compensa com muitos scripts Java legados.",
+      "A única vantagem é o suporte a vários navegadores, e o Grid já faz isso."
+    ],
+    "correta": 2
+  },
+  {
     "id": "qualidade-cap7-q1",
     "disciplinaId": "qualidade-e-testes-de-software",
     "capituloId": "qualidade-cap7",
@@ -1772,5 +2672,755 @@
     ],
     "correta": 1,
     "resolucao": "a citação descreve precisamente essa lógica de defesa em profundidade: cada estágio é um portão de qualidade, e o valor do pipeline está justamente em oferecer múltiplas oportunidades de detecção, de modo que uma lacuna pontual em um estágio (como a falha de cobertura na integração) não signifique necessariamente que o defeito chegará à produção, pois estágios seguintes (E2E, no caso) ainda podem capturá-lo. {{A}} trata uma exceção pontual como falha total do sistema, ignorando que o valor do pipeline está na redundância entre camadas, não na infalibilidade de uma única camada. {{C}} contraria a citação, que descreve estágios sequenciais como portões progressivos, não execuções simultâneas desconectadas. {{D}} comete um erro lógico grave: o fato de o estágio 3 ter capturado esse defeito específico não implica que os estágios 1 e 2 sejam redundantes para os inúmeros outros tipos de defeito que eles capturam rotineiramente, muito mais rapidamente e a menor custo. {{E}} restringe indevidamente o conceito de pipeline de implantação, que a própria citação relaciona diretamente a estágios de teste, não apenas de build."
+  },
+  {
+    "id": "qualidade-cap7-m1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe corrige um bug crítico no módulo de cálculo de impostos de um sistema fiscal. O desenvolvedor testa apenas a função corrigida e faz o deploy. Na semana seguinte, usuários reportam que a geração de notas fiscais — módulo aparentemente não relacionado — passou a calcular valores incorretos. Qual conceito explica esse cenário e o que deveria ter sido feito?",
+    "alternativas": [
+      "O cenário ilustra o paradoxo do pesticida: os testes existentes para o módulo de impostos foram executados repetidamente e pararam de detectar defeitos, tornando necessária a criação de novos casos de teste antes de qualquer correção de bug crítico.",
+      "É regressão: a correção nos impostos afetou as notas fiscais por acoplamento; faltou ao menos um sanity test nas áreas relacionadas e regressão no que depende do cálculo.",
+      "O cenário ilustra falha de verificação: o desenvolvedor realizou validação sem fazer validação testou se o código estava correto tecnicamente, mas não verificou se o sistema como um todo continuava atendendo às necessidades dos usuários fiscais após a correção.",
+      "É débito técnico: o módulo de notas já tinha defeitos ocultos."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap7-m2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema de e-commerce tem 3.000 casos de teste automatizados que levam 6 horas para executar completamente. A equipe precisa de feedback em menos de 10 minutos após cada commit. Qual estratégia de regressão e arquitetura resolvem esse problema sem comprometer a cobertura total?",
+    "alternativas": [
+      "A solução é substituir todos os testes de sistema e UI por testes unitários equivalentes cada teste de interface pode ser convertido em teste unitário que executa em milissegundos, reduzindo o tempo total de 6 horas para menos de 5 minutos sem perda de cobertura funcional.",
+      "A solução é executar apenas 10% dos casos de teste aleatoriamente a cada commit — a seleção aleatória garante estatisticamente que defeitos serão detectados na maioria dos commits sem necessidade de planejamento estratégico da suíte de regressão.",
+      "Regressão em camadas com paralelismo: smoke test dos 150 casos críticos a cada commit, sanity das áreas alteradas no pull request e regressão completa paralela antes do release.",
+      "A solução é aumentar o hardware do servidor de CI/CD para que os 3.000 casos executem em menos de 10 minutos — o problema descrito é exclusivamente de infraestrutura, e o investimento em servidores mais rápidos resolve o desafio sem necessidade de alterar a estratégia de seleção de casos de teste."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap7-m3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Após uma refatoração de código que não alterou nenhuma funcionalidade visível, a equipe decide pular os testes de regressão para economizar tempo. Qual é o risco técnico dessa decisão?",
+    "alternativas": [
+      "Não há risco técnico significativo: refatorações por definição não alteram o comportamento externo do sistema — pular a regressão após refatoração é uma prática aceitável e recomendada em metodologias ágeis para evitar desperdício de tempo em verificações desnecessárias.",
+      "O risco é só político, diante dos stakeholders.",
+      "Refatoração é gatilho de regressão: mesmo sem querer mudar o comportamento, ela pode alterar ordens de execução, casos de borda e módulos acoplados.",
+      "O risco é apenas de auditoria: modelos de maturidade como CMMI e MPS.BR exigem evidência documentada de testes de regressão após qualquer modificação de código — o impacto técnico real de pular a regressão após refatoração é negligenciável, mas a ausência de documentação pode comprometer certificações da organização."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap7-m4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma suíte de regressão tem 15% de flaky tests — testes que passam e falham intermitentemente sem mudança no código. A equipe começa a ignorar falhas no pipeline por considerar que \"provavelmente é flaky\". Qual é a consequência mais grave desse comportamento?",
+    "alternativas": [
+      "A consequência mais grave é o aumento do tempo de execução: flaky tests precisam ser re-executados múltiplas vezes para confirmar se a falha é real ou instabilidade — o impacto é exclusivamente operacional, sem risco para a qualidade do produto entregue aos usuários.",
+      "É financeira: reexecutar testes encarece a nuvem.",
+      "Perde-se a confiança na suíte: ao ignorar falhas como \"flaky\", regressões reais passam, e defeitos críticos chegam à produção.",
+      "A consequência mais grave é de processo: 15% de flaky tests viola os critérios mínimos de qualidade do ISTQB para suítes de regressão, podendo invalidar a certificação de qualidade da equipe e comprometer contratos que exigem conformidade com padrões internacionais de teste."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap7-m5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um time Scrum define sua Definition of Done para histórias de usuário. O QA propõe incluir critérios de regressão na DoD. Quais critérios são mais adequados e em qual momento da sprint cada um deve ser executado?",
+    "alternativas": [
+      "A DoD deve incluir apenas o critério de que todos os testes unitários da história passam — regressão completa é responsabilidade da fase de release, não de histórias individuais, e incluí-la na DoD de cada história criaria overhead excessivo que inviabilizaria entregas nos prazos das sprints.",
+      "Regressão completa da suíte para cada história concluída.",
+      "Unitários e de integração passando (no desenvolvimento), sanity test nas áreas relacionadas (ao concluir a história) e smoke test do sistema (antes da Sprint Review).",
+      "A DoD deve incluir apenas critérios de testes manuais exploratórios realizados pelo QA — automação de regressão é responsabilidade do time de DevOps e não deve ser incluída nos critérios de aceitação de histórias de usuário, pois cria dependência entre o time de desenvolvimento e a infraestrutura de CI/CD."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap7-m6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa realiza um release mensal para um sistema bancário crítico com 5.000 casos de regressão automatizados. Dois dias antes do release, uma atualização urgente de segurança é aplicada a uma biblioteca de criptografia. Qual estratégia de regressão deve ser aplicada e por quê?",
+    "alternativas": [
+      "Regressão Seletiva por Impacto é suficiente: como a atualização afeta apenas a biblioteca de criptografia, basta executar os testes relacionados à autenticação e criptografia — não há necessidade de regressão completa para uma mudança de escopo tão bem delimitado.",
+      "Smoke Test é suficiente: atualizações de bibliotecas de segurança são fornecidas por especialistas que garantem compatibilidade retroativa — verificar que as funções básicas do sistema operam é suficiente para autorizar o release após uma atualização de segurança urgente.",
+      "Regressão total, priorizando por risco: criptografia atravessa autenticação, transações e dados sensíveis, e num banco crítico isso justifica a suíte completa.",
+      "Regressão Progressiva é a estratégia adequada: adicionar os novos testes da atualização de segurança ao conjunto incremental e executar apenas o subconjunto mais recente permite validar a mudança sem o overhead da regressão completa, mantendo o cronograma do release mensal sem comprometer a qualidade."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap7-m7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe monitora suas métricas de regressão e identifica: Pass Rate de 78%, Flakiness Rate de 18%, tempo médio de execução da suíte completa de 9 horas e 5 defeitos críticos escapados para produção no último trimestre. Comparando com as metas saudáveis, qual é o diagnóstico e as ações prioritárias?",
+    "alternativas": [
+      "As métricas indicam suíte saudável: Pass Rate de 78% está dentro do intervalo aceitável para sistemas complexos, Flakiness Rate de 18% é esperado em ambientes de nuvem com infraestrutura variável, e o tempo de 9 horas é adequado para suítes com 5.000+ casos de teste executados sequencialmente.",
+      "Só os 5 defeitos escapados importam; o resto é secundário.",
+      "Tudo está crítico: pass rate de 78% (meta de 95%), 18% de flaky (meta de 2%), 9 horas de execução e 5 defeitos escapados; as ações são quarentena dos flaky, paralelização e análise de cobertura.",
+      "O diagnóstico indica que a equipe precisa adotar o modelo CMMI nível 4 para implementar gerenciamento quantitativo de processos: somente com métricas de maturidade de processo formalmente gerenciadas é possível identificar e corrigir as causas raiz dos problemas observados na suíte de regressão."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap7-m8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema de streaming lança novas funcionalidades a cada duas semanas. A equipe adota Canary Release, enviando cada deploy para 5% dos usuários antes da expansão total. Como os testes de regressão se integram a essa prática e qual é sua vantagem sobre a regressão tradicional pré-release?",
+    "alternativas": [
+      "Os dois se somam: antes do canary, a regressão automatizada valida em ambiente controlado; durante ele, smoke tests e monitoramento sintético vigiam os 5%, com rollback rápido se algo escapar.",
+      "O canary substitui toda a regressão automatizada.",
+      "Canary Release e regressão automatizada são práticas mutuamente exclusivas: equipes que adotam entrega contínua com Canary Release não precisam de testes de regressão formais, pois o monitoramento de produção em tempo real detecta defeitos antes que impactem a base completa de usuários.",
+      "A vantagem do Canary sobre a regressão tradicional é exclusivamente de velocidade de entrega: ao eliminar a necessidade de regressão completa pré-release, o Canary Release permite que a equipe entregue funcionalidades duas semanas mais rápido — o risco de defeitos é mitigado pelo rollback automático disponível na infraestrutura de nuvem."
+    ],
+    "correta": 0
+  },
+  {
+    "id": "qualidade-cap7-m9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe tem 2.000 testes de regressão e descobre que 600 deles verificam funcionalidades que foram removidas do sistema há seis meses. Outros 300 são duplicatas de cenários já cobertos por outros testes. Qual é o impacto desse cenário e como a gestão adequada da suíte preveniria esse problema?",
+    "alternativas": [
+      "Afeta só o tempo; a limpeza é opcional.",
+      "O impacto é de cobertura: com 900 testes inúteis consumindo recursos, a equipe tem recursos insuficientes para criar testes para funcionalidades novas — o problema é de priorização de esforço, não de confiabilidade dos resultados da suíte existente.",
+      "O impacto é legal e regulatório: testes que verificam funcionalidades removidas podem gerar evidências contraditórias em auditorias de qualidade — a principal consequência é a invalidade da documentação de testes para certificações ISO e CMMI, sendo a limpeza da suíte obrigatória antes de qualquer processo formal de avaliação de maturidade.",
+      "Testes obsoletos e duplicados inflam a cobertura, alongam a execução e confundem a equipe; previne-se com rastreabilidade entre testes e requisitos e revisão periódica da suíte."
+    ],
+    "correta": 3
+  },
+  {
+    "id": "qualidade-cap7-m10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma organização implementa testes de regressão em produção (Production Testing) com smoke tests pós-deploy e synthetic monitoring. Um arquiteto questiona os riscos dessa prática. Quais são os benefícios e os cuidados necessários para implementá-la com segurança?",
+    "alternativas": [
+      "Benefício: verificar no ambiente real e pegar falhas logo após o deploy; cuidados: dados sintéticos, nada irreversível (pagamentos, e-mails), só fluxos críticos e rollback automático.",
+      "Production Testing é uma prática irresponsável que nunca deve ser adotada: executar scripts automatizados em produção cria risco de corrupção de dados reais de usuários, sendo proibida por normas de segurança da informação e por regulamentações do setor financeiro e de saúde.",
+      "O único benefício é de marketing; o staging faz o mesmo.",
+      "Production Testing só é seguro em sistemas com arquitetura de microsserviços: a separação de serviços garante que scripts de teste não afetem outros componentes em sistemas monolíticos, a prática é tecnicamente inviável pois qualquer ação de teste propaga-se para toda a base de dados compartilhada do sistema."
+    ],
+    "correta": 0
+  },
+  {
+    "id": "qualidade-cap10-m1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor comete um erro ao usar o operador < em vez de <= na validação de limite de crédito. O código é commitado e, em produção, clientes conseguem aprovar empréstimos exatamente no valor do limite sem a devida verificação. Mapeando os três conceitos fundamentais, qual é a distinção correta entre erro, defeito e falha nesse cenário?",
+    "alternativas": [
+      "O erro é o comportamento incorreto observado em produção (clientes aprovando empréstimos indevidos); o defeito é a ação equivocada do desenvolvedor ao digitar <; e a falha é o código resultante presente no repositório aguardando execução no ambiente de produção.",
+      "Erro: o desenvolvedor usar < em vez de <=; defeito: a condição errada que ficou no código; falha: aprovar em produção empréstimos no valor exato do limite.",
+      "São sinônimos aqui, e a distinção é só acadêmica.",
+      "O erro é a aprovação indevida de empréstimos pelo sistema; o defeito é a ausência de testes unitários que deveriam ter detectado a condição incorreta; e a falha é a decisão de negócio de colocar o código em produção sem revisão adequada da lógica de validação de crédito."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap10-m2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um defeito em sistema bancário permite que usuários visualizem o saldo de outras contas, mas apenas quando dois usuários fazem login simultâneo no mesmo milissegundo — condição extremamente rara e difícil de reproduzir. Como classificar severidade e prioridade?",
+    "alternativas": [
+      "Severidade Baixa e Prioridade Baixa: como a condição de reprodução é extremamente rara e difícil de ocorrer naturalmente, o impacto real é mínimo e o defeito pode aguardar ciclos futuros de manutenção sem risco significativo para o negócio ou para os clientes do banco.",
+      "Média e média: a raridade já funciona como contorno natural.",
+      "Severidade crítica (S1), pois expõe dados financeiros, com impacto legal e regulatório; prioridade alta, pois, mesmo rara, a condição de corrida pode ser forçada por um atacante.",
+      "Severidade Alta e Prioridade Baixa: o impacto técnico é alto pois viola a confidencialidade dos dados, mas a raridade da condição de reprodução reduz a urgência de negócio — o defeito deve ser incluído no backlog para correção no próximo sprint regular, sem necessidade de hotfix."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap10-m3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um testador escreve o seguinte bug report: \"Sistema com erro no PDF. Quando exporto não funciona direito. Já tentei várias vezes.\" O desenvolvedor marca como \"Não Reproduzível\". Quais antipadrões estão presentes e como reescrever o relatório adequadamente?",
+    "alternativas": [
+      "O único antipadrão é a ausência de prints: bug reports de problemas de exportação são auto-explicativos para desenvolvedores experientes — bastaria anexar o arquivo PDF gerado incorretamente para tornar o defeito completamente reproduzível sem necessidade de mais informações.",
+      "O bug report está adequado para problemas de exportação: a descrição \"não funciona direito\" é terminologia técnica padrão aceita pela indústria para problemas de renderização de documentos, e \"já tentei várias vezes\" confirma que o defeito é reproduzível — o desenvolvedor deveria ter investigado em vez de marcar como não reproduzível.",
+      "Título vago, sem passos numerados, resultado obtido impreciso, sem resultado esperado, sem ambiente (SO, navegador, versão) e sem evidências; a reescrita preenche cada campo com precisão.",
+      "O principal antipadrão é misturar múltiplos defeitos em um único report: \"exporto não funciona direito\" sugere problemas em várias etapas do processo de exportação — o testador deveria ter criado um ticket separado para cada etapa do fluxo de exportação onde identificou comportamento incorreto, mesmo sem descrever detalhadamente cada problema."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap10-m4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um defeito crítico S1 é reportado na sexta-feira à tarde. O desenvolvedor corrige, commita e muda o status para \"Fechado\" sem notificar o testador. Na segunda-feira, o release é feito para produção e o defeito reaparece. Qual boa prática foi violada e quais são as consequências para as métricas?",
+    "alternativas": [
+      "A boa prática violada é a integração com controle de versão: o desenvolvedor deveria ter referenciado o ID do defeito no commit, criando rastreabilidade bidirecional — sem essa referência, é impossível determinar qual commit contém a correção, impedindo a verificação adequada pelo testador.",
+      "Só o QA deve fechar um defeito, depois de verificar a correção; ele deveria ir para \"Em verificação\"; isso distorce o DDE, esconde reaberturas e quebra a rastreabilidade.",
+      "Faltou o template: o desenvolvedor não documentou como corrigiu.",
+      "A boa prática violada é a triagem regular: o defeito S1 reportado na sexta não passou por sessão de triagem com QA Lead e Tech Lead antes de ser corrigido — sem triagem, a prioridade pode ter sido mal avaliada e a abordagem de correção pode ter sido inadequada, causando o reaparecimento em produção."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap10-m5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Ao final de uma sprint, a equipe registra: 150 defeitos detectados internamente, 20 defeitos reportados por usuários em produção, 12 defeitos reabertos de 100 correções verificadas e 5 defeitos críticos ainda abertos. Calcule o DDE e avalie se o produto está pronto para release segundo os critérios padrão.",
+    "alternativas": [
+      "DDE = 150/170 × 100 = 88,2%; o produto está pronto para release pois DDE de 88% está próximo do critério de 90% e a diferença é marginal — a equipe deve documentar o gap e monitorar mais de perto na próxima sprint sem bloquear o release por 1,8%.",
+      "DDE = 150/20 = 750%, acima de 100%, então está pronto.",
+      "DDE = 150/170 = 88,2%, abaixo de 90%; reabertura de 12%, acima de 10%; e 5 críticos abertos, quando o critério é zero: não está pronto, por três motivos.",
+      "DDE = 20/150 × 100 = 13,3%; o produto não está pronto pois DDE abaixo de 90% indica que 86,7% dos defeitos estão chegando aos usuários — a equipe deve triplicar os esforços de teste antes de qualquer novo release para reduzir drasticamente o volume de defeitos que chegam à produção."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap10-m6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um defeito de severidade \"Baixa\" (erro de ortografia no título da página principal) recebe prioridade \"Alta\" porque o cliente é uma grande varejista e o lançamento é amanhã. Um defeito de severidade \"Alta\" (crash em condição de importação de arquivo raramente usada) recebe prioridade \"Baixa\". Esse cenário é correto segundo os conceitos estudados?",
+    "alternativas": [
+      "Não é correto: severidade e prioridade devem sempre ter o mesmo nível — um defeito de baixa severidade jamais pode ter alta prioridade, pois a prioridade é derivada diretamente do impacto técnico mensurado pela severidade; a decisão descrita configura gerenciamento incorreto do backlog de defeitos.",
+      "Só o segundo caso está errado: severidade alta exige prioridade alta.",
+      "É correto: severidade (impacto técnico) e prioridade (urgência de negócio) são eixos independentes; o erro de grafia na home antes do lançamento é urgente, e o crash raro, não.",
+      "É correto apenas para o segundo caso: crash de severidade Alta com prioridade Baixa é aceitável quando o cenário tem baixo volume de uso; porém, erro de ortografia com prioridade Alta é incorreto pois problemas cosméticos não podem receber prioridade Alta independentemente do contexto de negócio ou da proximidade do lançamento."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap10-m7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe usa GitHub Issues para gerenciamento de defeitos em um projeto open source com 50 contribuidores. O QA Lead questiona se a ferramenta é suficiente para as necessidades de um projeto de médio porte. Quais são as limitações do GitHub Issues em comparação com o Jira?",
+    "alternativas": [
+      "GitHub Issues não tem limitações relevantes em relação ao Jira para projetos de qualquer porte: a simplicidade é uma vantagem para times ágeis — ferramentas mais complexas como Jira criam burocracia desnecessária que reduz a velocidade de desenvolvimento sem agregar valor proporcional ao gerenciamento de defeitos.",
+      "A única limitação do GitHub Issues é o custo: o Jira oferece funcionalidades idênticas gratuitamente para projetos open source, tornando o GitHub Issues economicamente desvantajoso para a maioria dos projetos sem benefício técnico que justifique o investimento adicional.",
+      "Status só por labels, sem transições condicionais; sem campos obrigatórios; relatórios básicos (sem burn down ou aging); e sem dependências, SLA por severidade ou automações complexas, como no Jira.",
+      "O GitHub Issues é tecnicamente superior ao Jira para projetos open source: integração nativa com o repositório, pull requests e GitHub Actions cria rastreabilidade automática que o Jira só consegue via plugins pagos — a única desvantagem é a interface menos customizável, que pode ser compensada com o uso de GitHub Projects como camada de visualização."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap10-m8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Durante a triagem de defeitos, o QA Lead encontra três tickets distintos reportando comportamentos diferentes do mesmo módulo de exportação: um sobre truncamento de nomes, outro sobre formatação incorreta de datas e outro sobre falha ao exportar mais de 1.000 registros. O dev sugere unificar os três em um único ticket. Por que essa decisão viola boas práticas?",
+    "alternativas": [
+      "A unificação é correta e recomendada: múltiplos defeitos no mesmo módulo compartilham a mesma causa raiz e devem ser agrupados para que o desenvolvedor corrija o componente integralmente em uma única intervenção — separar defeitos do mesmo módulo fragmenta o esforço de correção desnecessariamente.",
+      "Só é errado se as severidades forem diferentes.",
+      "Um defeito por ticket: cada problema pode ter causa diferente (formatação, fuso horário, limite de memória); juntos, uma correção fecha tudo, distorce as métricas e impede verificar cada uma.",
+      "A unificação só é incorreta do ponto de vista de métricas: ao criar um único ticket, a densidade de defeitos do módulo de exportação será artificialmente reduzida de 3 para 1, mascarando a real fragilidade do componente nas análises de qualidade — tecnicamente, a correção de todos os problemas em uma única intervenção é mais eficiente do que três ciclos separados de correção e verificação."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap10-m9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "O Defect Burn Down de uma sprint mostra que nas primeiras duas semanas a curva caiu de 80 para 40 defeitos abertos (progresso saudável), mas na terceira semana voltou para 65 defeitos abertos. Quais hipóteses explicam esse comportamento e quais métricas complementares deveriam ser analisadas?",
+    "alternativas": [
+      "O comportamento indica apenas flutuação estatística normal em sprints de três semanas: variações de até 30% no burn down são esperadas e não requerem análise adicional — a equipe deve aguardar o final da sprint para avaliar o resultado final sem interpretações precipitadas de dados intermediários.",
+      "Reaberturas por correções incompletas, regressões criadas pelas próprias correções ou novos defeitos de integração; veja reabertura, defeitos novos por dia, correção versus detecção e distribuição por módulo.",
+      "Os 25 a mais já existiam e só foram registrados depois.",
+      "O comportamento indica que a equipe está alocando recursos insuficientes para testes na terceira semana: a curva ascendente é sempre causada por redução da taxa de detecção, não por aumento na criação de defeitos — a solução é aumentar o número de testadores ativos na terceira semana para retomar a inclinação descendente do burn down."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap10-m10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma retrospectiva analisa os defeitos da última release e identifica: 35% dos defeitos S1 e S2 originaram-se de requisitos ambíguos, 40% de erros de integração entre microserviços e 25% de regressões por ausência de testes unitários. Como o Root Cause Analysis deve transformar esses dados em melhorias de processo?",
+    "alternativas": [
+      "O RCA deve resultar em exclusivamente mais testes: a solução para qualquer distribuição de causa de defeitos é sempre aumentar a cobertura de testes automatizados — independentemente da origem dos defeitos, mais testes detectariam os problemas antes da produção, tornando desnecessária qualquer mudança em outros processos.",
+      "Atacar só os 40% de integração, e o resto se resolve depois.",
+      "Uma ação por causa: requisitos ambíguos pedem refinamento com critérios testáveis e revisão do QA; integração, testes de contrato e ambientes realistas; regressão, cobertura unitária mínima na DoD.",
+      "O RCA deve resultar em realocação de responsabilidades: 35% de requisitos indicam falha do PO, 40% de integração indicam falha dos desenvolvedores de backend e 25% de regressão indicam falha dos desenvolvedores que não escrevem testes — identificar os responsáveis individuais e criar KPIs de performance por pessoa é a ação correta para reduzir defeitos nas próximas sprints."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap11-m1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa contrata 10 testadores dedicados exclusivamente a encontrar defeitos no produto final antes do release, mas não investe em revisão de requisitos, code review nem automação. Os defeitos continuam chegando em alta quantidade a cada release. Qual é o diagnóstico correto e o que está faltando na abordagem?",
+    "alternativas": [
+      "O diagnóstico é de quantidade insuficiente de testadores: com mais 10 testadores adicionais e ferramentas de teste manual mais sofisticadas, a equipe conseguiria inspecionar o produto com a profundidade necessária para eliminar os defeitos antes de cada release sem necessidade de mudanças processuais.",
+      "Há só QC (reativo, no produto) e nenhum QA (preventivo, no processo): os testadores acham defeitos já criados; faltam revisão de requisitos, critérios de aceitação, code review e automação.",
+      "O diagnóstico é correto e a abordagem é adequada: QC com testadores dedicados é o modelo recomendado pelo ISTQB para projetos de alta qualidade — o problema descrito é transitório e será resolvido naturalmente conforme a equipe de QC acumula conhecimento do sistema ao longo dos releases.",
+      "O problema é de ferramentas: testadores manuais sem ferramentas de automação têm eficiência reduzida — basta investir em Selenium e JMeter para automatizar o trabalho dos 10 testadores existentes, eliminando os defeitos que chegam ao release sem necessidade de mudanças na estratégia ou na cultura da equipe."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap11-m2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um gerente de projeto afirma que, após 3.000 casos de teste executados sem nenhuma falha, o software está \"comprovadamente livre de defeitos\" e pode ser lançado com total confiança. Qual princípio do ISTQB ele está violando e quais são as implicações dessa conclusão?",
+    "alternativas": [
+      "Ele está violando o Princípio 5 (Paradoxo do Pesticida): os 3.000 testes foram executados repetidamente e pararam de encontrar defeitos — a solução é criar 3.000 novos casos de teste diferentes para confirmar a ausência de defeitos antes de autorizar o lançamento com confiança.",
+      "O Princípio 2; basta dobrar para 6.000 casos.",
+      "O Princípio 1: testes mostram a presença, não a ausência de defeitos; e, pelo Princípio 7, um software sem defeitos ainda pode falhar se não atender ao usuário.",
+      "Ele está violando o Princípio 6 (Teste Depende do Contexto): 3.000 casos de teste podem ser suficientes para um aplicativo simples mas insuficientes para um sistema crítico — a conclusão de \"livre de defeitos\" é válida apenas se o contexto do sistema justificar esse volume de testes como cobertura completa dos requisitos."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap11-m3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe tem 2.000 testes automatizados distribuídos assim: 200 unitários (10%), 400 de integração (20%) e 1.400 E2E via Selenium (70%). A suíte leva 4 horas para executar e quebra frequentemente. Qual é o problema e como a Pirâmide de Testes orienta a solução?",
+    "alternativas": [
+      "É a ferramenta; o Playwright resolveria sem mudar a distribuição.",
+      "O problema é de paralelização: executar os 1.400 testes E2E em paralelo no Selenium Grid resolveria o tempo de execução sem necessidade de alterar a estratégia — a distribuição atual é correta pois testes E2E validam fluxos reais de usuário que unitários e integração não conseguem cobrir.",
+      "É o \"cone de sorvete\": E2E lentos, frágeis e caros; a pirâmide pede a maioria unitária, uma parte de integração e poucos E2E para fluxos críticos.",
+      "O problema é exclusivamente a ausência de Quality Gates: sem critérios mínimos definidos no pipeline, todos os 2.000 testes executam desnecessariamente a cada commit — implementar quality gates que executam apenas os testes relevantes para cada mudança reduziria o tempo de 4 horas para menos de 15 minutos sem alterar a distribuição atual."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap11-m4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe de alto desempenho apresenta as seguintes métricas DORA: Deployment Frequency = múltiplos deploys por dia, Lead Time = 45 minutos, Change Failure Rate = 3% e MTTR = 25 minutos. Um diretor questiona se \"tanto deploy\" não compromete a qualidade. Como responder com base nas pesquisas DORA?",
+    "alternativas": [
+      "O diretor tem razão: alta frequência de deploy é inversamente proporcional à qualidade — equipes que fazem múltiplos deploys por dia não têm tempo suficiente para executar testes completos, e o Change Failure Rate de 3% confirma que 3 em cada 100 deploys causam incidentes, evidenciando problemas de qualidade.",
+      "45 minutos de lead time provam que a equipe pula testes.",
+      "Para o DORA, velocidade e qualidade andam juntas: deploys diários, lead time curto, falhas abaixo de 5% e MTTR abaixo de uma hora são o perfil de elite, com CI/CD e automação.",
+      "O diretor tem razão parcialmente: alta frequência de deploy é aceitável apenas para sistemas não críticos — para sistemas financeiros, médicos ou de infraestrutura, o padrão DORA de elite recomenda no máximo um deploy por dia para garantir tempo suficiente de teste manual entre cada release em produção."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap11-m5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um time Scrum decide que qualidade é \"responsabilidade do QA\" e os desenvolvedores não escrevem testes unitários. O QA realiza todos os testes ao final da sprint, causando gargalo e atrasos constantes nas entregas. Como resolver essa situação segundo as práticas ágeis de qualidade?",
+    "alternativas": [
+      "A solução é contratar mais QAs: o gargalo existe porque o volume de trabalho de teste supera a capacidade individual do QA existente — com dois ou três QAs adicionais, o time conseguiria executar todos os testes ao final da sprint dentro do prazo sem necessidade de mudanças culturais ou de processo.",
+      "A solução é aumentar a duração das sprints de 2 para 4 semanas: o gargalo existe porque o tempo de sprint é insuficiente para desenvolvimento E teste completo — sprints mais longas dariam ao QA tempo adequado para testar todas as histórias sem comprometer a qualidade das verificações realizadas.",
+      "Qualidade é de todos: desenvolvedores fazem testes unitários (TDD), critérios vêm antes (BDD), teste acontece junto do desenvolvimento, o QA orienta e automatiza, e a DoD exige cobertura mínima.",
+      "A solução é eliminar o papel de QA dedicado: times ágeis maduros não têm QAs separados — cada desenvolvedor é responsável pela qualidade de seu próprio código, e a ausência de papel dedicado força naturalmente a cultura de qualidade distribuída que o time precisa cultivar para eliminar o gargalo identificado."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap11-m6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma organização implementa o ciclo PDCA para melhorar seu processo de qualidade. Na fase Check, os dados mostram que a taxa de defeitos críticos em produção aumentou de 2% para 5% após a mudança implementada na fase Do (adição de testes de integração automatizados). Como o PDCA orienta a resposta a esse resultado inesperado?",
+    "alternativas": [
+      "O resultado indica que a mudança deve ser imediatamente revertida e o ciclo encerrado: aumento de defeitos críticos após implementação de testes de integração prova que a automação de testes é contraproducente — a organização deve retornar às práticas manuais anteriores e não reiniciar o ciclo PDCA para evitar mais regressões no processo.",
+      "Confirma o sucesso, pois agora mais defeitos aparecem.",
+      "O PDCA leva ao Act: o resultado contrariou a hipótese; deve-se investigar a causa (flakiness, falsos positivos?), ajustar e recomeçar com nova hipótese, registrando o aprendizado.",
+      "O resultado deve ser ignorado pois 3 sprints são insuficientes para avaliar o impacto de mudanças de processo: métricas de qualidade têm latência natural de 6 a 12 meses antes de refletir melhorias de processo — a fase Check deve ser adiada para o próximo semestre, e a mudança deve ser mantida e expandida durante esse período de maturação."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap11-m7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um post-mortem após incidente crítico em produção identifica que o desenvolvedor responsável pela mudança não seguiu o processo de code review por pressão de prazo. O gerente propõe registrar formalmente a falha do desenvolvedor e incluir isso em sua avaliação de desempenho. Por que essa abordagem é contrária às boas práticas e qual alternativa é recomendada?",
+    "alternativas": [
+      "A abordagem do gerente é correta: responsabilização individual é o mecanismo mais eficaz para prevenir incidentes futuros — quando desenvolvedores sabem que desvios de processo têm consequências na avaliação de desempenho, a adesão ao processo aumenta naturalmente e incidentes similares são prevenidos de forma sustentável.",
+      "É errada só por risco legal de assédio moral.",
+      "Post-mortems são sem culpa: a pergunta não é quem errou, mas por que o processo deixou o prazo pular o code review; corrige-se o sistema para que o atalho não seja possível.",
+      "A abordagem é parcialmente correta: o desenvolvedor deve ser responsabilizado, mas o gerente também deve ser incluído na avaliação formal por ter criado pressão de prazo que levou ao desvio — a culpabilização deve ser distribuída proporcionalmente entre todos os envolvidos na cadeia de decisão que resultou no incidente crítico."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap11-m8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe adota BDD com Gherkin, escrevendo cenários Given-When-Then colaborativamente entre dev, QA e Product Owner. Um desenvolvedor questiona se BDD e TDD são redundantes, sugerindo manter apenas o TDD. Qual é a diferença fundamental entre as duas práticas?",
+    "alternativas": [
+      "São redundantes: BDD é simplesmente TDD com sintaxe diferente — ambos resultam nos mesmos testes automatizados com a mesma cobertura; equipes com TDD bem implementado não precisam de BDD, e manter as duas práticas simultaneamente dobra o esforço de escrita de testes sem benefício adicional.",
+      "TDD é superior ao BDD em todos os aspectos: TDD produz testes mais precisos e tecnicamente robustos pois é escrito por desenvolvedores com conhecimento do código interno — BDD sacrifica precisão técnica por legibilidade para não-técnicos, um trade-off que raramente justifica o overhead de manutenção dos cenários Gherkin.",
+      "Atuam em níveis diferentes: TDD é design de código no nível unitário (Red-Green-Refactor), feito pelo desenvolvedor; BDD alinha o comportamento no nível de aceitação, escrito por dev, QA e PO.",
+      "A diferença é só de ferramenta: JUnit contra Cucumber."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap11-m9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup implementa Shift-Right testing com feature flags, canary releases e monitoramento com Sentry em produção. Um arquiteto questiona se isso não torna desnecessários os testes pré-produção (Shift-Left). Como as duas abordagens se relacionam estrategicamente?",
+    "alternativas": [
+      "O arquiteto tem razão: Shift-Right com canary releases e monitoramento em produção é suficiente para sistemas modernos — os canary releases expõem o software a usuários reais em escala controlada, tornando testes pré-produção redundantes e economicamente injustificáveis para startups com recursos limitados.",
+      "Shift-Right substitui apenas os testes de aceitação e sistema: com monitoramento avançado em produção, a startup pode eliminar as camadas superiores da pirâmide de testes (E2E e aceitação), mantendo apenas testes unitários e de integração como proteção contra regressões de lógica de negócio.",
+      "São complementares: o Shift-Left evita que defeitos cheguem à produção, o que é mais barato; o Shift-Right aprende com o uso real e pega o que escapou; um programa maduro usa os dois.",
+      "Shift-Right é superior ao Shift-Left para startups porque a velocidade de iteração é mais importante que a prevenção de defeitos: usuários de startups toleram bugs em troca de funcionalidades frequentes, e monitoramento em produção com rollback rápido via feature flags é mais eficiente que investimento em testes extensivos pré-produção que atrasariam o time-to-market."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap11-m10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe analisa suas métricas do último trimestre: cobertura de testes = 85%, taxa de build bem-sucedido = 72%, Change Failure Rate = 18% e MTTR = 6 horas. O gerente foca exclusivamente em aumentar a cobertura para 95%. Por que essa priorização é equivocada e qual métrica deveria receber atenção prioritária?",
+    "alternativas": [
+      "A priorização é correta: cobertura de testes é a métrica mais fundamental de qualidade — aumentar de 85% para 95% automaticamente melhorará todas as outras métricas, pois mais testes detectam mais defeitos antes do deploy, reduzindo naturalmente o Change Failure Rate e o MTTR nas sprints subsequentes.",
+      "É errada só porque 95% é irreal; o certo seria 87 ou 88%.",
+      "Cobertura de 85% já é boa; preocupam o change failure rate de 18% (elite fica abaixo de 5%) e 28% de builds falhando, sinal de testes que não verificam o que importa.",
+      "Todas as quatro métricas estão dentro dos parâmetros aceitáveis para equipes de desenvolvimento de médio porte: taxa de build de 72% e Change Failure Rate de 18% são normais para times em crescimento — o foco em cobertura é correto pois é a única métrica com gap mensurável em relação ao benchmark de 90% recomendado pelo ISTQB para sistemas de médio porte."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap8-m1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema de e-commerce apresenta tempo de resposta médio de 800ms sob carga de 5.000 usuários simultâneos. No entanto, análise mais detalhada revela P50=400ms, P95=3.200ms e P99=8.500ms. O gerente afirma que \"a média está ótima\". Por que essa conclusão é equivocada e o que os percentis revelam?",
+    "alternativas": [
+      "A conclusão é equivocada apenas para sistemas financeiros: em e-commerce, a média de 800ms é a métrica padrão de mercado para avaliação de SLA — percentis são ferramentas analíticas avançadas sem aplicação prática em contratos comerciais de varejo digital.",
+      "A média esconde a cauda: com P95 de 3.200 ms, 250 de cada 5.000 usuários esperam mais de 3 s, e com P99 de 8.500 ms alguns passam de 8 s, justamente quem abandona o carrinho.",
+      "A conclusão é correta: a média de 800ms é a métrica mais representativa pois pondera igualmente todas as requisições os percentis P95 e P99 representam casos extremos estatisticamente irrelevantes que não devem influenciar decisões de capacidade ou SLA em sistemas de e-commerce.",
+      "Só é equivocada se o contrato citar percentis."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap8-m2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe executa teste de carga com banco de dados vazio em ambiente com 25% da capacidade de produção. Os resultados mostram P95=1.200ms com 10.000 usuários. O gerente aprova o sistema para a Black Friday. Qual é o erro crítico dessa decisão?",
+    "alternativas": [
+      "O único erro é o ambiente subproporcional: se o ambiente tiver 25% da capacidade, basta multiplicar o tempo de resposta por 4 para obter o valor real em produção — P95 estimado seria 4.800ms, ainda dentro do limite aceitável de 5 segundos para e-commerce em pico de demanda.",
+      "Basta documentar o fator 4x no relatório.",
+      "O único erro crítico é o banco vazio: o ambiente com 25% de capacidade é adequado pois sistemas de e-commerce modernos com auto-scaling na nuvem compensam automaticamente a diferença de recursos durante o teste — o banco de dados vazio é o único fator que invalida os resultados obtidos.",
+      "Dois erros: banco vazio não reproduz milhões de registros (cache, índices, planos de execução), e um ambiente com 25% da capacidade não escala de forma linear; a aprovação não vale."
+    ],
+    "correta": 3
+  },
+  {
+    "id": "qualidade-cap8-m3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema financeiro apresenta o seguinte comportamento no teste de estresse: de 0 a 8.000 usuários, o tempo de resposta aumenta linearmente de 200ms para 1.800ms; de 8.001 a 8.500 usuários, o sistema trava completamente e não responde. Esse comportamento é aceitável segundo os conceitos de graceful degradation?",
+    "alternativas": [
+      "Sim, é aceitável: o sistema demonstrou graceful degradation na faixa de 0 a 8.000 usuários com degradação linear previsível — o colapso acima de 8.000 é o ponto de falha natural identificado pelo teste de estresse, que por definição deve encontrar o limite do sistema.",
+      "Não: o colapso abrupto é o oposto de degradação graciosa; ao passar do limite, o sistema deveria recusar conexões com aviso, manter o essencial e se recuperar sozinho.",
+      "É parcialmente aceitável: a degradação linear até 8.000 usuários demonstra boa arquitetura, e o colapso acima desse limite é esperado em testes de estresse — o critério de graceful degradation se aplica apenas à fase de carga dentro dos limites operacionais, não ao comportamento além do ponto de falha identificado.",
+      "Sim, é aceitável para sistemas financeiros: regulamentações do setor bancário permitem downtime completo de até 30 minutos quando o volume excede 100% da capacidade contratada — o comportamento observado está dentro dos parâmetros regulatórios e não configura falha de graceful degradation."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap8-m4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe precisa detectar memory leak em um serviço Java que processa transações financeiras. O sistema responde normalmente nas primeiras horas mas degrada progressivamente após 8 horas de operação contínua. Qual tipo de teste identifica esse problema e quais métricas e ferramentas são específicas para esse diagnóstico?",
+    "alternativas": [
+      "Teste de Estresse identifica o problema: empurrando o sistema além dos limites com carga extrema por 30 minutos, o memory leak se manifesta rapidamente devido à pressão sobre o garbage collector — ferramentas como JMeter com 50.000 usuários simultâneos são suficientes para reproduzir o vazamento em ambiente de teste.",
+      "O teste de pico, pois o vazamento só aparece em picos.",
+      "O teste de resistência (soak), com carga normal por 24 horas ou mais, observando a memória, a frequência do garbage collection e erros OutOfMemory, usando JMeter e VisualVM ou YourKit.",
+      "Teste de Volume identifica o problema: memory leaks em sistemas de transações financeiras são causados exclusivamente pelo volume de dados processados — executar um batch com 500 milhões de transações em 30 minutos é mais eficaz do que 24 horas de carga normal para diagnosticar o vazamento de memória identificado."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap8-m5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um time DevOps precisa integrar testes de performance ao pipeline CI/CD sem atrasar o ciclo de feedback do desenvolvedor (menos de 10 minutos após commit) e garantir testes completos antes do release. Como distribuir os diferentes tipos de testes de performance pelo pipeline?",
+    "alternativas": [
+      "Todos os testes de performance incluindo testes de carga completos com 50.000 usuários devem ser executados a cada commit para garantir feedback imediato e completo; investir em infraestrutura de nuvem poderosa elimina o conflito entre velocidade e profundidade nos testes de performance.",
+      "Testes de performance não devem ser integrados ao pipeline CI/CD: a natureza variável dos ambientes de integração contínua (recursos compartilhados, variação de latência de rede) invalida os resultados — testes de performance confiáveis só podem ser executados em ambientes dedicados e isolados, exclusivamente antes de releases.",
+      "Micro-benchmarks a cada commit (menos de 5 min); carga básica com k6 ou Gatling a cada merge; carga completa com JMeter antes dos releases; e APM em produção o tempo todo.",
+      "Só testes de estresse no pipeline; os outros são redundantes."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap8-m6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma plataforma de streaming espera 200.000 usuários simultâneos durante o lançamento de uma série muito aguardada — 20x a carga normal de 10.000 usuários. Qual sequência de tipos de testes de performance deve ser executada antes do lançamento e qual é o objetivo específico de cada um?",
+    "alternativas": [
+      "Só o teste de carga com 200 mil usuários basta.",
+      "A sequência correta é Teste de Pico seguido de Teste de Estresse: o pico de 200.000 usuários simultâneos no lançamento é por definição um evento de spike, e o estresse é necessário para encontrar o limite além dos 200.000 — os demais tipos de testes são desnecessários para esse cenário específico.",
+      "Carga (os 200 mil esperados dentro do SLA), pico (o salto de 10 mil para 200 mil em minutos), estresse (a margem além de 200 mil) e resistência (estabilidade nas horas seguintes).",
+      "A sequência correta é: Teste de Escalabilidade primeiro (para dimensionar a infraestrutura necessária), depois Teste de Volume (para validar o banco de dados com dados de 200.000 usuários), e finalmente Teste de Carga (para confirmar a capacidade) — Testes de Pico e Estresse são desnecessários pois o auto-scaling da nuvem elimina esses riscos automaticamente."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap8-m7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um engenheiro analisa os resultados de um teste de carga e observa: throughput estagna em 800 req/s mesmo com aumento de usuários de 1.000 para 5.000, tempo de resposta aumenta de 500ms para 8.000ms e CPU está em 45%. O que esses sintomas indicam e onde investigar?",
+    "alternativas": [
+      "Os sintomas indicam gargalo de CPU: apesar do uso aparente de 45%, o sistema pode estar sofrendo de contenção de threads no nível de núcleo individual — investigar distribuição de CPU por core e configuração de thread affinity no sistema operacional é a ação prioritária.",
+      "Saturação de rede: confira a interface e o balanceador.",
+      "Os sintomas indicam memory leak: quando o throughput estagna antes do limite de CPU, a aplicação está desperdiçando ciclos em garbage collection excessivo causado por acúmulo de objetos na heap — investigar crescimento de memória com heap dump e profiler é a ação prioritária antes de qualquer análise de banco de dados.",
+      "O gargalo está em outro recurso: com CPU em 45% e throughput travado, as suspeitas são pool de conexões esgotado, filas saturadas ou locks no banco; vale olhar thread dump, pool e logs."
+    ],
+    "correta": 3
+  },
+  {
+    "id": "qualidade-cap8-m8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe compara JMeter e k6 para implementar testes de performance em um projeto cloud-native com microserviços, equipe com forte background em JavaScript e integração com dashboards Grafana. Qual é a escolha mais adequada e por quê?",
+    "alternativas": [
+      "JMeter, cuja interface gráfica dispensa programação.",
+      "Gatling é a escolha mais adequada: sua eficiência superior em recursos é o fator determinante para ambientes cloud-native onde o custo de infraestrutura de teste é crítico — o background da equipe em JavaScript e a integração com Grafana são secundários em relação à eficiência de simulação de usuários virtuais.",
+      "k6: scripts em JavaScript, como a equipe já usa, integração nativa com Grafana e Prometheus, motor eficiente em Go e suporte a gRPC para microsserviços.",
+      "Locust é a escolha mais adequada: embora a equipe use JavaScript, Python tem sintaxe mais limpa para definição de cenários de carga complexos — a migração de JavaScript para Python é rápida para desenvolvedores experientes, e a interface web em tempo real do Locust oferece monitoramento superior ao dashboard do Grafana para análise durante a execução dos testes."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap8-m9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um SLA define P95 < 1.500ms, error rate < 0,5% e disponibilidade > 99,9% para um sistema de pagamentos. Durante o teste de carga com 15.000 usuários simultâneos, os resultados são: P95=1.800ms, error rate=0,3% e uptime=99,95%. O sistema deve ser aprovado para produção?",
+    "alternativas": [
+      "Sim, deve ser aprovado: dois dos três critérios do SLA foram atendidos — error rate e disponibilidade estão dentro das metas — e a violação do P95 é marginal (apenas 20% acima do limite), dentro da margem de tolerância padrão de 25% aceita pela indústria para testes de performance.",
+      "Sim, deve ser aprovado: o critério mais crítico para sistemas de pagamento é a taxa de erros, que está dentro do SLA com 0,3% — tempo de resposta de 1.800ms é marginalmente acima do limite mas aceitável para transações financeiras onde segurança e integridade são prioritárias sobre velocidade.",
+      "Não: o SLA exige todos os critérios ao mesmo tempo, e o P95 de 1.800 ms passa do limite de 1.500 ms; 5% das transações ficam lentas demais, e é preciso otimizar antes.",
+      "Adiar e deixar a decisão para o product owner."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap8-m10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa realiza teste de escalabilidade horizontal com 1, 2, 4 e 8 instâncias de servidor e obtém os seguintes throughputs: 1 instância=1.000 req/s, 2 instâncias=1.800 req/s, 4 instâncias=3.200 req/s, 8 instâncias=4.500 req/s. O que esses resultados revelam sobre a escalabilidade do sistema e quais são as implicações arquiteturais?",
+    "alternativas": [
+      "Os resultados revelam escalabilidade linear perfeita: dobrando as instâncias, o throughput praticamente dobra em todas as etapas — 1→2 (+80%), 2→4 (+78%), 4→8 (+41%); a queda final de 41% é normal e esperada devido ao overhead de gerenciamento de instâncias no Kubernetes, sem implicação arquitetural relevante.",
+      "A escalabilidade piora: +80% e +78% nas primeiras duplicações, mas só +41% de 4 para 8; há um gargalo compartilhado, como o banco central, um lock de cache ou um serviço externo.",
+      "Os resultados revelam que o sistema não escala horizontalmente: um sistema verdadeiramente escalável deveria dobrar o throughput a cada duplicação de instâncias — qualquer resultado abaixo de 95% do throughput esperado (dobrando) indica falha de arquitetura que só pode ser resolvida com refatoração completa para arquitetura stateless pura.",
+      "É inconclusivo: repita cada configuração 5 vezes."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap9-m1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor concatena diretamente a entrada do usuário em uma query SQL: SELECT * FROM users WHERE id = + userId. Um atacante insere 1 OR 1=1 -- e obtém todos os registros da tabela. Qual vulnerabilidade do OWASP Top 10 2021 está sendo explorada, qual propriedade da tríade CIA é violada e qual é a correção técnica adequada?",
+    "alternativas": [
+      "A vulnerabilidade é A07 (Authentication Failures), pois o atacante obteve acesso não autorizado aos dados sem credenciais válidas — a propriedade violada é a Disponibilidade, pois todos os registros foram retornados sobrecarregando o banco; a correção é implementar autenticação multifator antes de qualquer consulta.",
+      "A03 (Injection): o input entra na query como código SQL; viola a confidencialidade (e talvez a integridade), e a correção são queries parametrizadas, que tratam o input como dado.",
+      "A vulnerabilidade é A01 (Broken Access Control), pois o atacante acessou registros de outros usuários sem permissão — a propriedade violada é a Integridade; a correção é implementar verificação de autorização no servidor antes de retornar qualquer resultado de consulta ao banco de dados.",
+      "A vulnerabilidade é A05 (Security Misconfiguration), pois o banco de dados está configurado para retornar todos os registros quando não há filtro adequado — a correção é configurar o banco para limitar o número de resultados retornados por consulta independentemente da cláusula WHERE utilizada."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap9-m2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe de segurança realiza SAST, encontra 0 vulnerabilidades de SQL Injection no código, e conclui que o sistema está seguro contra esse ataque. Semanas depois, um ataque de SQL Injection bem-sucedido é reportado. Como isso é possível e o que deveria ter sido feito complementarmente?",
+    "alternativas": [
+      "O SAST falhou porque não foi configurado corretamente: ferramentas SAST de qualidade como Checkmarx e SonarQube têm 100% de taxa de detecção para SQL Injection quando as regras corretas são habilitadas — o problema é exclusivamente de configuração inadequada da ferramenta pela equipe de segurança.",
+      "Estava numa biblioteca externa; troque o SAST pelo SCA.",
+      "O SAST olha o código parado e não simula a execução nem a interação entre componentes; o DAST testa a aplicação rodando, e SAST, DAST e pentest manual se completam.",
+      "A conclusão \"0 vulnerabilidades = sistema seguro\" está correta tecnicamente: se o SAST não encontrou SQL Injection, o ataque reportado é um falso positivo — o sistema não foi realmente comprometido por SQL Injection, e a investigação deveria focar em outras categorias do OWASP Top 10 não cobertas pela varredura estática."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap9-m3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um pen tester Black Box está testando um sistema bancário e, na fase de exploração, identifica uma vulnerabilidade crítica de RCE (Remote Code Execution) com CVSS 9.8. Quais são as ações corretas e incorretas a partir desse ponto segundo a ética e metodologia de pentest?",
+    "alternativas": [
+      "O pen tester deve explorar completamente a vulnerabilidade RCE, comprometer o servidor de produção, exfiltrar dados de clientes como prova de conceito e incluir amostras dos dados no relatório final — a demonstração completa do impacto real é o que justifica a classificação CVSS 9.8 e a prioridade de correção pelo cliente.",
+      "Documentar com a prova de conceito mínima, avisar o cliente na hora, não explorar além do necessário e nunca acessar dados reais; sair do escopo é crime, mesmo com boa intenção.",
+      "Parar tudo e só anotar, sem confirmar se é explorável.",
+      "O pen tester deve explorar a vulnerabilidade completamente para demonstrar o impacto máximo, mas deve usar apenas dados sintéticos criados especificamente para o teste — a criação de novos dados no sistema de produção do cliente durante a exploração é permitida pela metodologia de pentest desde que os dados sejam removidos após o relatório."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap9-m4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma aplicação web exibe mensagens de erro detalhadas como \"ORA-00942: table or view does not exist\" e tem o modo DEBUG ativo em produção com stack traces visíveis. Qual vulnerabilidade do OWASP Top 10 2021 está presente e como ela facilita outros ataques?",
+    "alternativas": [
+      "A vulnerabilidade é A09 (Security Logging and Monitoring Failures): a aplicação está logando informações excessivas que ficam visíveis para atacantes — a correção é desativar todos os logs em produção para eliminar o vazamento de informações técnicas sensíveis sobre a arquitetura do sistema.",
+      "A04: é falha de design, que exige redesenhar a aplicação.",
+      "A05 (Security Misconfiguration): DEBUG e erros detalhados revelam tecnologias, versões e estrutura do banco, facilitando o reconhecimento e ataques à versão do Oracle exposta.",
+      "A vulnerabilidade é A02 (Cryptographic Failures): mensagens de erro detalhadas transmitem dados técnicos sem criptografia adequada — a correção é implementar TLS/HTTPS para garantir que as mensagens de erro, mesmo que detalhadas, só sejam visíveis para o usuário autorizado que fez a requisição original."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap9-m5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup de saúde digital armazena prontuários médicos. A equipe identifica que: senhas são armazenadas em MD5, dados trafegam via HTTP e o sistema não implementa expiração de sessão. Quais categorias do OWASP Top 10 2021 estão presentes e quais são as correções prioritárias?",
+    "alternativas": [
+      "Apenas A07 (Authentication Failures) está presente: as três vulnerabilidades descritas — armazenamento inseguro de senhas, tráfego HTTP e sessões sem expiração — são subproblemas do mesmo mecanismo de autenticação quebrado, exigindo uma única correção estrutural na camada de autenticação da aplicação.",
+      "A02 (falhas criptográficas), pelo MD5 e pelo HTTP sem TLS, e A07 (falhas de autenticação), pela sessão sem expiração; as prioridades são bcrypt ou Argon2, HTTPS obrigatório e timeout de sessão.",
+      "A01 (Broken Access Control) é a vulnerabilidade mais crítica: sessões sem expiração permitem que qualquer pessoa com acesso físico ao dispositivo do médico acesse os prontuários — MD5 e HTTP são problemas secundários que não comprometem diretamente o controle de acesso ao sistema de prontuários médicos.",
+      "As três vulnerabilidades se enquadram em A04 (Insecure Design): senhas em MD5, HTTP e sessões sem expiração são decisões de design que não consideraram segurança desde o início — como são problemas de design, não podem ser corrigidos com patches ou configuração, exigindo redesign completo da aplicação antes de qualquer deploy em produção."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap9-m6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa integra o OWASP ZAP ao pipeline CI/CD para varredura automática em staging antes de cada release. O pipeline é configurado para falhar se vulnerabilidades de alta ou crítica severidade forem encontradas. Quais são as vantagens e limitações dessa abordagem?",
+    "alternativas": [
+      "A abordagem não tem limitações relevantes: o OWASP ZAP com varredura ativa detecta 100% das vulnerabilidades do OWASP Top 10 quando configurado corretamente — pipelines que falham em vulnerabilidades críticas garantem que nenhum sistema inseguro chegue à produção, tornando pentests manuais desnecessários.",
+      "O ZAP não roda sem interface gráfica no pipeline.",
+      "Vantagem: pegar injeção, XSS e más configurações a cada release, sem esforço manual; limite: o DAST não acha falhas de lógica de negócio, controles de acesso complexos nem falhas de design, que pedem pentest manual.",
+      "A abordagem é válida apenas para sistemas sem autenticação: o OWASP ZAP não consegue testar endpoints autenticados automaticamente no pipeline, limitando a varredura às páginas públicas da aplicação — sistemas com login obrigatório precisam de ferramentas pagas como Burp Suite Professional para integração eficaz com CI/CD."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "qualidade-cap9-m7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um atacante acessa a URL https://app.com/api/users/1234/documents e altera o ID para 1235, obtendo documentos de outro usuário sem qualquer erro de autorização. Qual vulnerabilidade do OWASP Top 10 2021 está sendo explorada, qual é o nome técnico específico desse ataque e qual é a correção adequada?",
+    "alternativas": [
+      "A vulnerabilidade é A03 (Injection): o atacante está injetando um ID diferente na URL para manipular a query do banco de dados — a correção é usar Prepared Statements para que o ID na URL seja tratado como parâmetro parametrizado e não como parte da lógica de consulta ao banco.",
+      "A01 (Broken Access Control), no caso IDOR: o sistema expõe IDs diretos sem checar se o usuário pode ver aquele objeto; a correção é verificar a autorização no servidor a cada acesso.",
+      "A vulnerabilidade é A05 (Security Misconfiguration): a API está configurada para aceitar qualquer ID na URL sem restrição — a correção é configurar o servidor web para bloquear requisições com IDs diferentes do usuário autenticado na sessão ativa, implementando esse controle na camada de infraestrutura sem modificar o código da aplicação.",
+      "A07: falta MFA para acessar documentos."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap9-m8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma aplicação usa a biblioteca Log4j versão 2.14.0 em produção. Em dezembro de 2021, a vulnerabilidade Log4Shell (CVE-2021-44228, CVSS 10.0) é divulgada publicamente. Qual categoria do OWASP Top 10 2021 se aplica, qual é a técnica de teste preventivo que teria identificado esse risco antes da divulgação e qual é a resposta imediata recomendada?",
+    "alternativas": [
+      "A categoria é A03 (Injection), pois Log4Shell é uma vulnerabilidade de injeção de código através de mensagens de log — a técnica preventiva é DAST com OWASP ZAP, que detectaria a vulnerabilidade ao enviar payloads de JNDI nos campos de entrada; a resposta imediata é desativar o logging da aplicação até que a correção seja aplicada.",
+      "A06 (componentes vulneráveis); o SCA no pipeline (Dependency-Check, Snyk) teria alertado assim que a CVE fosse publicada; a resposta é atualizar para o Log4j 2.17.1 ou superior, ou aplicar mitigações.",
+      "A08: houve atualização maliciosa; volte para a versão anterior.",
+      "A categoria é A05 (Security Misconfiguration): Log4Shell só é explorável quando o Log4j está configurado com lookup de JNDI habilitado, que é uma configuração padrão insegura — a técnica preventiva é hardening das configurações do Log4j para desabilitar JNDI desde a instalação; a vulnerabilidade não seria um problema se a equipe tivesse seguido guias de configuração segura do framework."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap9-m9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe DevSecOps recebe no pipeline: SAST reporta 3 vulnerabilidades de média severidade no commit, SCA detecta 1 dependência com vulnerabilidade crítica no build e DAST encontra XSS refletido de alta severidade no staging. Como priorizar as respostas segundo o CVSS e o contexto de cada achado?",
+    "alternativas": [
+      "A prioridade deve seguir a ordem cronológica do pipeline: corrigir primeiro as vulnerabilidades SAST (encontradas no commit), depois a SCA (no build) e por último o DAST (no staging) — a sequência do pipeline define a prioridade de correção independentemente da severidade de cada achado.",
+      "Por severidade: primeiro a dependência crítica (horas, bloqueando o pipeline), depois o XSS alto (dias) e por fim as médias do SAST (semanas, com planejamento).",
+      "Todas as três devem ser corrigidas simultaneamente antes de qualquer deploy: vulnerabilidades identificadas por ferramentas automatizadas no pipeline têm a mesma prioridade independentemente da severidade — qualquer distinção criaria um processo de priorização burocrático que atrasaria as entregas sem benefício proporcional para a postura de segurança.",
+      "A dependência crítica do SCA deve ser ignorada temporariamente se a biblioteca não for diretamente chamada pelo código da aplicação — vulnerabilidades em dependências transitivas raramente são exploráveis na prática; a equipe deve focar exclusivamente no XSS de alta severidade do DAST, que representa um risco real e imediato para os usuários da aplicação."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "qualidade-cap9-m10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa implementa programa de Bug Bounty, contrata pentest anual e integra SAST/DAST/SCA no CI/CD. Um gerente argumenta que com essas medidas o sistema está completamente seguro. Por que essa conclusão é incorreta e quais dimensões de segurança ainda precisam ser endereçadas?",
+    "alternativas": [
+      "A conclusão é incorreta apenas para sistemas legados: a combinação de Bug Bounty, pentest anual e automação no pipeline garante segurança completa para sistemas desenvolvidos com práticas modernas de DevSecOps — o gerente está correto para a parcela do portfólio desenvolvida após a implementação das medidas descritas.",
+      "Falta só um pentest semestral para a segurança ficar completa.",
+      "Ferramentas e pentests têm lacunas, inclusive entre uma avaliação e outra; faltam treinamento em código seguro, gestão de segredos, hardening, monitoramento de anomalias, WAF, resposta a incidentes e gestão de patches.",
+      "A conclusão é incorreta exclusivamente porque o programa de Bug Bounty não deve ser usado como substituto de controles preventivos: Bug Bounty é uma medida reativa que identifica vulnerabilidades após o sistema estar em produção — substituindo o Bug Bounty por um segundo ciclo de DAST, a combinação de medidas descrita pelo gerente garantiria segurança completa sem exposição a pesquisadores externos."
+    ],
+    "correta": 2
   }
 ]

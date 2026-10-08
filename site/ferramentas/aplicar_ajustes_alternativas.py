@@ -67,10 +67,10 @@ def main():
             if novo:
                 usados.add(q['id'])
             for letra, texto in novo.items():
-                if letra == 'resolucao':
-                    # resolução reescrita (correção de texto ou citação pelo conteúdo)
-                    if q.get('resolucao') != texto:
-                        q['resolucao'] = texto
+                if letra in ('resolucao', 'enunciado'):
+                    # resolução ou enunciado reescrito (correção de conteúdo ou citação pelo conteúdo)
+                    if q.get(letra) != texto:
+                        q[letra] = texto
                         mudou = True
                     continue
                 i = LETRAS.index(letra)

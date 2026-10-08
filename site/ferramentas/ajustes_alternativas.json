@@ -1139,5 +1139,982 @@
   "D": "Passados 30 dias sem solução, ele escolhe entre troca, restituição do valor ou abatimento do preço (art. 18 do CDC).",
   "A": "O consumidor só pode exigir o reparo do produto, pois o CDC determina que a substituição e o reembolso são medidas subsidiárias, aplicáveis apenas após duas tentativas frustradas de reparo pelo fornecedor.",
   "C": "Ele só pode pedir abatimento do preço ou troca por similar."
+ },
+ "engsoft-cap7-m1": {
+  "B": "Sem GCS surgem três problemas: trabalho sobrescrito (resolvido por merge e controle de versões), bug sem origem rastreável (resolvido pelo histórico de commits) e ambientes impossíveis de reproduzir (resolvido versionando Dockerfiles e scripts de IaC).",
+  "A": "A GCS só resolve edições simultâneas, com locks de arquivo; rastrear bugs e reproduzir ambientes cabe à equipe de QA."
+ },
+ "engsoft-cap7-m2": {
+  "B": "A) 2.4.2 (PATCH: correção retrocompatível); B) 2.5.0 (MINOR: funcionalidade nova sem remover nada); C) 3.0.0 (MAJOR: remover o TLSv1.0 quebra integrações existentes).",
+  "A": "A) 2.4.2, B) 2.4.3, C) 2.4.4 — todas são PATCH, pois não mudam a interface pública."
+ },
+ "engsoft-cap7-m3": {
+  "B": "Mais branches significam mais complexidade, não mais profissionalismo; o Git Flow serve a releases planejadas com várias versões em produção, e para deploy diário com uma única versão o GitHub Flow (main sempre deployável e PRs curtos) é o adequado."
+ },
+ "engsoft-cap7-m4": {
+  "B": "Feature flags permitem integrar código incompleto na main com a funcionalidade desligada em produção, ligando-a só quando estiver pronta; com CI rodando testes a cada commit, a main continua sempre deployável.",
+  "A": "Usando branches de no máximo 1 dia com merge no fim do expediente; commits diretos na main não fazem parte da estratégia."
+ },
+ "engsoft-cap7-m5": {
+  "B": "São estágios de maturidade: alpha é instável e interna, beta vai a usuários externos com bugs conhecidos e RC é candidata à versão final; o RC1 passa por validação e, se surgir bug crítico, vira RC2 antes do 1.0.0.",
+  "C": "RC1 e 1.0.0 têm o mesmo código; muda só a licença, de teste gratuito para comercial."
+ },
+ "engsoft-cap7-m6": {
+  "B": "Backup é uma cópia para recuperar desastres, sem papel no processo; baseline é um retrato formal e aprovado de itens de configuração definidos, usado como referência estável para voltar ou avançar, como a Baseline de Release.",
+  "A": "O gerente está certo: baseline e backup são a mesma coisa, só com nomes diferentes em metodologias formais e ágeis."
+ },
+ "engsoft-cap7-m7": {
+  "B": "O caminho backward vai do bug ao commit, depois ao Pull Request e à solicitação de mudança, até o requisito de origem; a forward parte dos requisitos para o código, mas aqui o ponto de partida é o código defeituoso."
+ },
+ "engsoft-cap7-m8": {
+  "B": "Sem PR, a mudança vai à main sem code review, sem testes obrigatórios antes do merge, sem registro de quem aprovou e sem análise de impacto, pulando as etapas de registro, análise, aprovação e revisão do controle de mudanças.",
+  "D": "Push direto na main é o recomendado no Trunk-Based Development, e o tech lead acerta ao priorizar a velocidade."
+ },
+ "engsoft-cap7-m9": {
+  "B": "Itens de configuração vão além do código: sem versionar o docker-compose.yml, uma mudança de ambiente quebra o sistema mesmo com código certo; sem versionar a especificação, perde-se a ligação entre o prometido e o entregue.",
+  "A": "O desenvolvedor está certo: no ágil, especificações em PDF são obsoletas, e arquivos Docker não são itens de configuração."
+ },
+ "engsoft-cap7-m10": {
+  "B": "Remover código pode afetar consumidores não documentados, dependências ocultas e clientes que ainda usam a função; o fluxo garante análise de impacto, comunicação, testes de regressão e atualização da baseline antes da mudança.",
+  "A": "O CCB só aprova adições de funcionalidade; remover código reduz complexidade e dispensa aprovação formal."
+ },
+ "engsoft-cap8-m1": {
+  "B": "Escopo, prazo e custo são interdependentes: aumentar o escopo sem mexer nos outros dois compromete a qualidade; o gerente deveria ter oferecido mais prazo, mais custo ou a troca de outras funcionalidades pelas novas."
+ },
+ "engsoft-cap8-m2": {
+  "B": "SV = EV − PV = −R$ 30.000 (atrasado); CV = EV − AC = −R$ 20.000 (acima do orçamento); SPI = 0,80; CPI ≈ 0,86 — o projeto está atrasado e caro ao mesmo tempo e precisa de intervenção.",
+  "A": "SV = R$ 30.000, CV = R$ 20.000, SPI = 1,25 e CPI = 1,17: o projeto está adiantado e econômico."
+ },
+ "engsoft-cap8-m3": {
+  "B": "O Scrum Master é líder-servo e não atribui tarefas, e o Time é auto-organizado e decide quem faz o quê; o Product Owner define o que e a prioridade, não como o trabalho técnico é feito.",
+  "A": "Nenhum: distribuir tarefas no Sprint Planning é papel do Scrum Master, e o PO aprovou."
+ },
+ "engsoft-cap8-m4": {
+  "B": "O Scrum Master: durante a sprint, nada que ameace o Sprint Goal entra, e o Sprint Backlog é do Time; o pedido vai para o Product Backlog e é priorizado no próximo Sprint Planning.",
+  "A": "O Product Owner: ele manda no backlog e pode alterar o Sprint Backlog a qualquer momento."
+ },
+ "engsoft-cap8-m5": {
+  "B": "Kanban: com demanda imprevisível e urgências a qualquer hora, o fluxo contínuo atende tickets críticos na hora, o WIP limit revela gargalos e Lead Time e Cycle Time medem o atendimento; no Scrum, a urgência esperaria a próxima sprint."
+ },
+ "engsoft-cap8-m6": {
+  "B": "Limitar o WIP é a prática central do Kanban: furar o limite esconde o gargalo; o certo é parar de puxar itens e descobrir por que os 3 atuais não fluem, ajudando a concluir ou desbloquear um deles.",
+  "A": "O líder está certo: o WIP limit é só uma diretriz, e urgências justificam passar dele por pouco tempo."
+ },
+ "engsoft-cap8-m7": {
+  "B": "O Product Owner: a Definition of Done define quando um item está pronto, e itens fora dela não entram no Incremento nem contam como entregues; esforço não é entrega.",
+  "A": "O Scrum Master: a DoD é só uma meta, e o esforço deve contar para preservar a velocity."
+ },
+ "engsoft-cap8-m8": {
+  "B": "Viés de ancoragem: o primeiro número revelado puxa os demais; no Planning Poker todos revelam as cartas ao mesmo tempo, e as divergências viram discussão técnica até chegar a um consenso real.",
+  "A": "Viés de confirmação: os outros já pensavam em 40, e revelar as cartas juntos é só uma convenção."
+ },
+ "engsoft-cap8-m9": {
+  "B": "O desenvolvedor tem razão: Velocity e Burndown são naturais do Scrum, mas Lead Time (da solicitação à entrega) e Cycle Time (do início à entrega) continuam válidos e complementares, e times maduros usam todas."
+ },
+ "engsoft-cap8-m10": {
+  "B": "A Retrospective existe para melhorar o processo com ações concretas: o Time escolhe poucas melhorias (de 1 a 3), com responsável e prazo, e as executa na sprint seguinte; listar 10 e não fazer nenhuma só gera frustração.",
+  "A": "O Scrum Master está certo: a Retrospective serve para criar consciência, e as melhorias acontecem naturalmente depois."
+ },
+ "engsoft-cap9-m1": {
+  "B": "UI bonita e UX ruim podem coexistir, pois são dimensões independentes: 7 cliques numa tarefa simples prejudicam a eficiência, e \"ERR_AUTH_403\" viola a heurística de ajudar o usuário a reconhecer e corrigir erros; prêmio visual não valida a experiência de uso.",
+  "D": "É falta de onboarding: com um tutorial na primeira abertura, os 7 cliques ficam automáticos."
+ },
+ "engsoft-cap9-m2": {
+  "B": "Viola a heurística 3 (Controle e Liberdade do Usuário), que exige saídas claras como desfazer e voltar; o usuário fica preso, e o negócio perde com abandono de carrinho, desconfiança e avaliações negativas.",
+  "C": "Só tirar o \"Desfazer\" viola Nielsen; tirar o \"Voltar\" é justificado para reduzir o abandono."
+ },
+ "engsoft-cap9-m3": {
+  "B": "A Lei de Fitts: o tempo para atingir um alvo cresce com a distância e cai com o tamanho; o redesenho usa um botão grande, ao alcance do polegar (centro ou parte de baixo) e com contraste adequado (WCAG AA)."
+ },
+ "engsoft-cap9-m4": {
+  "B": "Os dois métodos se complementam: especialistas apontam violações de princípios, mas não agem como usuários reais, que podem não achar o que o especialista acha óbvio; o próprio Nielsen diz que a avaliação heurística não substitui testes com usuários.",
+  "A": "A decisão é correta: 3 especialistas equivalem a 15 usuários reais, com custo menor."
+ },
+ "engsoft-cap9-m5": {
+  "B": "A Lei de Hick e a carga cognitiva: 15 campos de uma vez sobrecarregam e alongam a decisão; em etapas, a tarefa parece menor, há sensação de progresso e a taxa de conclusão tende a subir.",
+  "A": "A Lei de Fitts: menos rolagem por tela reduz o esforço físico de preencher."
+ },
+ "engsoft-cap9-m6": {
+  "B": "Violam-se as heurísticas 7 (Flexibilidade e Eficiência de Uso) e 8 (Estética e Design Minimalista), e a Lei de Hick explica a demora para decidir entre 12 opções; a solução é separar modo básico e avançado ou recolher opções raras em categorias.",
+  "A": "Viola só a heurística 4: bastam ícones padronizados e agrupar as 12 opções, sem esconder nenhuma."
+ },
+ "engsoft-cap9-m7": {
+  "B": "O teste remoto com 5 usuários: problemas de compreensão no primeiro contato só aparecem com quem não conhece o sistema, e 5 usuários já revelam a maior parte deles; a avaliação heurística complementa, mas não substitui."
+ },
+ "engsoft-cap9-m8": {
+  "enunciado": "Um sistema de gestão hospitalar exibe a mesma terminologia técnica do banco de dados para os médicos: PROC_COD_217, PAT_ADM_DT, DIAG_ICD10. Os médicos precisam de um dicionário interno para usar o sistema. Qual heurística de Nielsen é violada e como corrigir o problema?",
+  "B": "Viola a heurística 2 (Correspondência entre o Sistema e o Mundo Real): a tela usa o jargão do banco de dados em vez da linguagem clínica; a solução é exibir termos do médico, como PAT_ADM_DT → Data de Admissão do Paciente.",
+  "C": "Heurística 6 (Reconhecimento em vez de Lembrança): bastam tooltips explicando cada código, que deve ser mantido."
+ },
+ "engsoft-cap9-m9": {
+  "B": "Personas bem feitas vêm de pesquisa real (entrevistas, observação, analytics); no DCU, alinham a equipe às necessidades do usuário e evitam projetar para si mesmo, e \"aprovar férias em menos de 2 minutos\" é uma meta mensurável.",
+  "A": "Ele tem razão em parte: personas sem pesquisa são ficção, e o melhor é trocá-las por dados de analytics."
+ },
+ "engsoft-cap9-m10": {
+  "B": "O especialista: o SUS não é uma porcentagem, e a média de mercado fica em torno de 68, então 62 está abaixo dela; o certo é ver os itens com pior nota, investigar com testes moderados e melhorar o design antes do lançamento.",
+  "A": "O gerente está certo: a escala vai de 0 a 100, e 62 fica acima do ponto neutro de 50."
+ },
+ "engsoft-cap10-m1": {
+  "B": "Conhecimento tácito: o gerente sabe calcular, mas não consegue explicar as regras; a observação etnográfica, acompanhando um cálculo real com as planilhas e exceções, revelaria o que a entrevista não mostra."
+ },
+ "engsoft-cap10-m2": {
+  "B": "Não é estimável nem testável, pois \"rápido\" não tem medida, e seu valor é vago; reescrita: \"Como usuário da busca, quero resultados em menos de 2 segundos para não perder o foco\", com critério BDD mensurável.",
+  "A": "Viola apenas o critério S (Small): \"ser rápido\" é amplo demais; basta dividir em \"login rápido\", \"busca rápida\" e \"relatório rápido\"."
+ },
+ "engsoft-cap10-m3": {
+  "B": "O CTO está certo: Must Have não deve passar de cerca de 60% do esforço, e 40 de 47 (85%) anula a priorização; para cada um, a pergunta é: dá para lançar sem ele? Se sim, vira Should ou Could.",
+  "A": "O CTO está errado: em saúde, tudo que envolve segurança do paciente é Must Have por exigência da ANVISA, e a regra dos 60% não vale."
+ },
+ "engsoft-cap10-m4": {
+  "B": "Verificabilidade (e clareza): \"amigável\" não tem critério de teste; o certo é algo mensurável, como \"SUS mínimo de 80 com 5 usuários\" ou \"90% concluem o cadastro em menos de 3 minutos sem ajuda\".",
+  "A": "Rastreabilidade: falta dizer quem pediu; basta registrar \"João Silva (Operações) requer um sistema amigável\" e validar com ele."
+ },
+ "engsoft-cap10-m5": {
+  "B": "\"Qualquer botão\" e \"algo deve acontecer\" não são verificáveis; o certo seria: \"Dado que estou no perfil com dados válidos, Quando clico em Salvar, Então as alterações são gravadas e aparece 'Perfil atualizado' em até 2 segundos\"."
+ },
+ "engsoft-cap10-m6": {
+  "B": "A matriz mostra que a mudança atinge mais que o código: o UC-03 precisa de revisão, o PricingEngine pode ter dependências e os testes TC-012 a TC-014 devem falhar; sem análise de impacto, surgem regressões e documentação defasada.",
+  "A": "O gerente está certo: a matriz é documentação e deve ser atualizada depois da mudança, no fim da sprint, e não consultada antes."
+ },
+ "engsoft-cap10-m7": {
+  "B": "Começar pela observação etnográfica, que revela workarounds e exceções de 20 anos que ninguém relata em entrevista; depois, workshops JAD para unificar as práticas dos 5 aeroportos, com entrevistas complementares a gestores.",
+  "A": "Entrevistas bastam: quem tem 20 anos de prática sabe explicar o que faz, e observar procedimentos sigilosos em aeroportos seria inviável."
+ },
+ "engsoft-cap10-m8": {
+  "B": "RNFs moldam a arquitetura e precisam ser acordados antes; em pagamentos, são críticos o desempenho, a disponibilidade (99,9%), a segurança (TLS, PCI-DSS), a conformidade com a LGPD e a confiabilidade (nenhuma transação perdida).",
+  "A": "O gerente está certo: desempenho e segurança vêm prontos nos SDKs de pagamento (Stripe, PagSeguro), e documentá-los seria redundante."
+ },
+ "engsoft-cap10-m9": {
+  "B": "Não é Small nem Estimável, pois junta 6 funções com regras diferentes; a solução é dividir em histórias menores, como \"criar usuário\" e \"desativar usuário\", cada uma com seus critérios BDD e cabendo em uma sprint."
+ },
+ "engsoft-cap10-m10": {
+  "B": "Os requisitos têm naturezas diferentes: os funcionais mudam rápido e cabem no backlog ágil; os regulatórios são estáveis e auditados pelo BACEN e pela ANPD, exigindo especificação formal e rastreável; o híbrido une os dois.",
+  "A": "O híbrido é desnecessário: Jira e Azure DevOps têm campos de conformidade, e BACEN e LGPD aceitam backlogs exportados como evidência."
+ },
+ "engsoft-cap11-m1": {
+  "B": "O Abismo da Avaliação: o sistema não mostrou o resultado da ação, e o usuário não soube se ela funcionou; faltou feedback imediato (desabilitar o botão, mostrar progresso e confirmar o envio), o que teria evitado a proposta duplicada.",
+  "D": "Nenhum abismo foi violado: o clique duplo foi um deslize de atenção do usuário, resolvido com treinamento, não com redesenho."
+ },
+ "engsoft-cap11-m2": {
+  "B": "Manter o ícone com signifier: a affordance existe, mas não é percebida por todos; um rótulo \"Favoritar\" e o coração preenchido ao marcar tornam a função visível para idosos e novatos, sem perder o ícone.",
+  "A": "Remover o ícone e usar só texto: palavras são universais, e ícones mudam de sentido entre culturas e idades."
+ },
+ "engsoft-cap11-m3": {
+  "B": "Há perda real de eficiência (55%): o CLI favorece especialistas com atalhos, e a migração feriu a heurística 7 (Flexibilidade e Eficiência); a solução é uma GUI simples para novatos, com atalhos, macros e modo especialista para os experientes."
+ },
+ "engsoft-cap11-m4": {
+  "B": "Violam-se três princípios WCAG: Perceptível (erro só por cor), Operável (sem acesso por teclado) e Compreensível (placeholder sem rótulo); no Brasil, isso contraria a LBI (Lei 13.146/2015), o Decreto 5.296/2004 e o e-MAG.",
+  "A": "Só o princípio Compreensível é violado; erro em vermelho e navegação por mouse são aceitos no nível A, que basta para sites públicos."
+ },
+ "engsoft-cap11-m5": {
+  "B": "É dark pattern (Roach Motel e Confirmshaming): o cancelamento é difícil de propósito, o botão final é escondido e as mensagens exploram a aversão à perda; manipula em vez de informar, e órgãos de defesa do consumidor tratam isso como prática abusiva.",
+  "A": "É um fluxo de retenção legítimo: a empresa pode mostrar os benefícios antes do cancelamento, e o botão final continua disponível."
+ },
+ "engsoft-cap11-m6": {
+  "B": "Informação na periferia do campo cirúrgico, comando por voz ou gesto (mãos ocupadas), dados só sob demanda para reduzir a carga cognitiva, contraste sobre fundos variados, latência mínima e prevenção de enjoo; a segurança vem antes da quantidade de informação.",
+  "A": "AR em cirurgia é inviável: sobrepor dados ao campo visual distrai e causa enjoo; os dados devem ficar em monitores laterais."
+ },
+ "engsoft-cap11-m7": {
+  "B": "Preço em 8px cinza-claro fere o contraste da WCAG (4,5:1) e a atenção seletiva; botão após 5 telas fere a Lei de Fitts (alvo distante); ícones sem rótulo ferem o reconhecimento em vez da lembrança e sobrecarregam a memória de trabalho."
+ },
+ "engsoft-cap11-m8": {
+  "B": "Falham as Palavras (1D: \"Não entendi\" sem sugestão), o Tempo (4D: tentativas sem adaptação) e o Comportamento (5D: o assistente não muda após falhas); o certo é sugerir opções (\"Você quis dizer X ou Y?\") e oferecer outro canal após 2 erros.",
+  "A": "Só a dimensão 1D falhou, e \"Não entendi\" é adequado; o problema é limitação do reconhecimento de voz, que o design não resolve."
+ },
+ "engsoft-cap11-m9": {
+  "B": "Cadastro não revela deficiência, que pode ser invisível ou temporária; recursos acessíveis ajudam a todos (efeito rampa de calçada); a LBI torna a acessibilidade um direito; e a ausência desse público pode ser efeito da própria falta de acesso.",
+  "A": "O argumento é razoável: sem usuários com deficiência nos dados, investir em WCAG agora tira recursos de funcionalidades de maior impacto."
+ },
+ "engsoft-cap11-m10": {
+  "B": "A maldição do conhecimento: o especialista sabe onde as coisas ficam e completa lacunas sem perceber, então não reproduz a cabeça de um iniciante; é o limite do método, e por isso testes com usuários reais são insubstituíveis.",
+  "A": "Foi erro de aplicação: um sênior que siga o protocolo do Percurso Cognitivo à risca não teria esse viés."
+ },
+ "engsoft-cap12-m1": {
+  "B": "São três falhas distintas: sem logs (A09), resolvida com SIEM e alertas; biblioteca desatualizada (A06), barrada por SCA no pipeline (Snyk/Dependabot); credencial no código (A02), barrada por detecção de segredos (GitLeaks) a cada commit."
+ },
+ "engsoft-cap12-m2": {
+  "B": "A01 (Broken Access Control): o servidor não verifica se o usuário logado pode ver aquele aluno_id; as contramedidas são checar a autorização no servidor (a defesa principal) e usar identificadores não previsíveis, como UUIDs.",
+  "A": "A03 (Injection): o aluno_id é concatenado na query SQL; prepared statements resolvem o problema."
+ },
+ "engsoft-cap12-m3": {
+  "B": "O MD5 é rápido demais (bilhões de tentativas por segundo em GPU) e, sem salt, a mesma senha gera o mesmo hash, o que permite rainbow tables; o bcrypt tem custo configurável que torna cada tentativa cara e um salt único por senha.",
+  "A": "O problema do MD5 são só as colisões conhecidas; o bcrypt resolve por não ter colisões, e o salt é uma questão à parte."
+ },
+ "engsoft-cap12-m4": {
+  "B": "S: sessão sequestrada (MFA e sessão curta); T: valor alterado em trânsito (TLS e assinatura da transação); R: cliente nega a ordem (log de auditoria imutável); D: robô dispara milhares de pedidos (rate limiting e WAF); E: usuário comum faz transferência em lote (RBAC no servidor).",
+  "A": "S: senha fraca (exigir 8 caracteres); T: valor alterado (HTTPS); R: banco nega a ordem (comprovante em PDF); I: destinatário na tela (asteriscos)."
+ },
+ "engsoft-cap12-m5": {
+  "B": "O WAF é só uma camada e pode ser contornado por payloads ofuscados ou ataques de segunda ordem; a correção está no código: query parametrizada, como cursor.execute(\"SELECT * FROM clientes WHERE nome = %s\", (nome_input,)), que separa comando e dado."
+ },
+ "engsoft-cap12-m6": {
+  "B": "É um caso de A06 (componentes vulneráveis): no Log4j 2.14, um texto logado pode executar código no servidor (RCE); com SCA no pipeline, o build teria acusado a CVE-2021-44228 e bloqueado o deploy até a atualização para a 2.17 ou superior.",
+  "A": "Não há risco em sistemas internos: o Log4Shell só é explorável em servidores que registram requisições HTTP vindas da internet."
+ },
+ "engsoft-cap12-m7": {
+  "B": "É A10 (SSRF): o servidor busca a URL sem validar e acessa o serviço interno de metadados da AWS, devolvendo credenciais IAM; previne-se com allowlist de domínios, bloqueio de IPs privados e link-local e sem seguir redirecionamentos.",
+  "A": "É A03 (Injection): a URL injeta um comando no sistema de arquivos; basta aceitar só URLs terminadas em .jpg, .png ou .webp."
+ },
+ "engsoft-cap12-m8": {
+  "B": "Arquitetura insegura custa muito mais para refazer, e falhas de design (A04) não se corrigem com patch; um vazamento destrói a reputação de uma startup, a LGPD prevê multas, e ferramentas como SAST no IDE custam pouco desde o início.",
+  "D": "O único argumento extra é a LGPD; fora isso, \"segurança depois\" é defensável, pois sistemas sem usuários não correm risco real."
+ },
+ "engsoft-cap12-m9": {
+  "B": "Violou-se \"nunca confie no cliente\" (e a defesa em profundidade): esconder o botão não protege a API, que qualquer um chama via curl; é A01 (Broken Access Control) e talvez A07, pois toda autorização deve ser checada no servidor."
+ },
+ "engsoft-cap12-m10": {
+  "B": "TLS e firewall não barram o que chega pela porta 443: IDOR (A01), SQL Injection (A03), payloads como o do Log4Shell (A06) e credenciais roubadas; a defesa em profundidade soma WAF, autenticação forte, autorização no servidor, validação e monitoramento.",
+  "C": "O engenheiro está errado: mTLS e um firewall NGFW com inspeção de pacotes cobrem todas as camadas, inclusive SQL Injection e SSRF."
+ },
+ "gestaoweb-cap1-m1": {
+  "B": "São diferentes: a internet é a infraestrutura que interliga redes e suporta vários serviços (e-mail, WhatsApp); a web é o conjunto de páginas e aplicações acessadas por HTTP, URL e HTML; um site aberto no navegador é web.",
+  "C": "A distinção é só de protocolo: internet usa TCP/IP e web usa HTTP, então tudo que usa HTTP é internet e web ao mesmo tempo."
+ },
+ "gestaoweb-cap1-m2": {
+  "B": "Manutenção: mudar uma regra de negócio exige reinstalar o software em todos os clientes; com três camadas, a lógica fica num servidor de aplicação e é atualizada uma vez só, para todos.",
+  "D": "Compatibilidade: duas camadas só funcionam no Windows, e três camadas resolvem isso com HTTP e XML."
+ },
+ "gestaoweb-cap1-m3": {
+  "B": "http é o protocolo; virtual, o subdomínio; faculdade.com.br, o domínio; 8080, a porta; /pos/marketing, o caminho; ?turma=2024&turno=noite, os parâmetros; e #cronograma, o fragmento que leva a uma seção da página."
+ },
+ "gestaoweb-cap1-m4": {
+  "B": "O 200 só indica que a requisição foi processada, não que o login deu certo; o corpo pode trazer \"senha incorreta\", e código HTTP e resultado de negócio devem ser verificados separadamente.",
+  "D": "Só está errada em sistemas bancários, que por regra escondem o motivo da falha no corpo da resposta."
+ },
+ "gestaoweb-cap1-m5": {
+  "B": "Por APIs com acoplamento fraco: o carrinho chama os endpoints do catálogo e envia dados ao pagamento, ou usam filas de mensagens; cada serviço conhece só a interface do outro, não sua implementação.",
+  "A": "Não se comunicam: cada serviço guarda uma cópia dos dados dos outros, sincronizada de tempos em tempos."
+ },
+ "gestaoweb-cap1-m6": {
+  "C": "REST usa endpoints fixos com formato predefinido, bom para APIs públicas e CRUD; GraphQL usa um endpoint onde o cliente pede só os campos que quer, bom para frontends que precisam de dados flexíveis de várias fontes.",
+  "D": "A diferença é só de sintaxe: os dois são equivalentes, e a escolha depende apenas da familiaridade da equipe."
+ },
+ "gestaoweb-cap1-m7": {
+  "B": "Cada requisição HTTP é independente, e o protocolo não guarda estado; a sessão é mantida pela aplicação, por exemplo com um cookie que leva o identificador da sessão ou com um token enviado a cada requisição."
+ },
+ "gestaoweb-cap1-m8": {
+  "B": "Sem versão, uma mudança pode quebrar sem aviso as integrações dos parceiros; com /v1 e /v2, a versão antiga continua funcionando enquanto eles migram, o que permite evoluir sem ruptura.",
+  "D": "Quem resolve a compatibilidade é o HTTPS: o certificado de cada versão controla quem pode acessá-la."
+ },
+ "gestaoweb-cap1-m9": {
+  "B": "O gateway liga a rede interna à internet e traduz protocolos; o roteador escolhe o caminho dos pacotes pelo endereço IP; o firewall decide quais conexões passam; ou seja, conecta, direciona e protege.",
+  "C": "Gateway e firewall são o mesmo dispositivo; só o roteador tem função própria, dentro da rede local."
+ },
+ "gestaoweb-cap1-m10": {
+  "B": "Um padrão afeta toda a web: navegadores, ferramentas e milhões de sites existentes; por isso passa por rascunhos, consultas públicas e etapas de recomendação, já que erros num padrão aprovado são caros de corrigir.",
+  "C": "A demora vem só dos navegadores, que levam anos para reescrever o motor de renderização."
+ },
+ "gestaoweb-cap2-m1": {
+  "B": "Custos mal estimados são causa comum de volta para servidores próprios: sem planejar, processamento, armazenamento e tráfego crescem; faltou mapear aplicações antes, monitorar os custos e considerar um modelo híbrido."
+ },
+ "gestaoweb-cap2-m2": {
+  "B": "Gmail é SaaS (aplicação pronta no navegador); Google App Engine é PaaS (ambiente para criar e implantar sem cuidar da infraestrutura); servidores virtuais da AWS são IaaS (recursos que o desenvolvedor configura).",
+  "D": "Todos são SaaS: a divisão em IaaS, PaaS e SaaS só vale em contratos corporativos."
+ },
+ "gestaoweb-cap2-m3": {
+  "B": "Um modelo híbrido: prontuários e dados sensíveis ficam on-premises, por controle e conformidade com a LGPD e as normas do CFM, e serviços escaláveis e não críticos, como análises e sistemas administrativos, vão para a nuvem.",
+  "A": "A nuvem pública é proibida a hospitais, que devem manter todos os dados em servidores próprios."
+ },
+ "gestaoweb-cap2-m4": {
+  "C": "O híbrido: a operação regular e os dados críticos ficam on-premises, e a nuvem absorve os picos sazonais como a Black Friday, sem comprar hardware que ficaria ocioso o resto do ano.",
+  "D": "Usar BaaS, que terceiriza o backend e escala sozinho, sem nenhuma configuração."
+ },
+ "gestaoweb-cap2-m5": {
+  "C": "PaaS gerencia a plataforma (SO, runtime), mas o desenvolvedor ainda cria o backend; BaaS entrega o backend pronto, com banco, autenticação, armazenamento e notificações por API, e o desenvolvedor só consome."
+ },
+ "gestaoweb-cap2-m6": {
+  "B": "É parcialmente verdade: o provedor protege a infraestrutura, mas, pela responsabilidade compartilhada, configuração, acessos e dados são da empresa; dependência de terceiros e regras do setor podem favorecer o híbrido.",
+  "C": "Está errada: na nuvem pública, funcionários do provedor sempre podem ler os dados financeiros."
+ },
+ "gestaoweb-cap2-m7": {
+  "B": "Migrar sem planejar nem refatorar: o monolito não aproveita a elasticidade da nuvem e consome recursos mal, encarecendo a operação; faltaram arquitetura adequada, testes, monitoramento e estimativa de custos.",
+  "A": "O único erro foi o provedor; trocar de fornecedor resolveria, sem refatorar nada."
+ },
+ "gestaoweb-cap2-m8": {
+  "C": "O híbrido é flexibilidade: dados críticos e sistemas sensíveis à latência ficam on-premises, e a nuvem escala o que não é crítico e permite testar novidades, como o banco que processa transações em casa e análises na nuvem.",
+  "A": "O gerente está certo: o híbrido é só transitório, usado durante a migração completa."
+ },
+ "gestaoweb-cap2-m9": {
+  "B": "Datacenter próprio exige alto investimento inicial e tem capacidade fixa; IaaS cobra pelo uso e escala sob demanda; cargas estáveis e longas podem favorecer o próprio, e cargas variáveis ou incertas favorecem o IaaS."
+ },
+ "gestaoweb-cap2-m10": {
+  "C": "Nuvem pública elástica: picos imprevisíveis de 50 milhões de usuários são o caso ideal para escalar e reduzir sob demanda; edge computing reduz a latência e microsserviços escalam partes isoladas, sempre monitorando os custos.",
+  "B": "BaaS: o Firebase gerencia 50 milhões de usuários com picos sem nenhum planejamento."
+ },
+ "gestaoweb-cap3-m1": {
+  "B": "É complexa demais: um portfólio que quase não muda fica melhor em HTML e CSS puros, sem banco nem servidor, mais rápido e barato de manter; Django e PostgreSQL servem a aplicações dinâmicas.",
+  "D": "Não há diferença prática; o desenvolvedor deve usar sempre a tecnologia que conhece melhor."
+ },
+ "gestaoweb-cap3-m2": {
+  "B": "Aplicações dinâmicas processam no servidor: o backend consulta o banco, aplica recomendações pelo perfil e histórico e devolve um conteúdo diferente para cada usuário, enquanto um site estático entrega o mesmo HTML a todos.",
+  "C": "Personalização é exclusiva de apps mobile; na web, o HTTP impede conteúdo diferente por usuário."
+ },
+ "gestaoweb-cap3-m3": {
+  "B": "MongoDB: documentos JSON deixam cada produto ter só os campos de que precisa, sem esquema fixo; no MySQL, seriam necessárias muitas colunas vazias ou uma estrutura complexa de tabelas."
+ },
+ "gestaoweb-cap3-m4": {
+  "C": "jQuery é uma biblioteca de funções (DOM, animações, Ajax), e quem organiza o código é o desenvolvedor; o React também se define como biblioteca, mas impõe um modelo de componentes e estado que estrutura a aplicação, como um framework.",
+  "A": "São a mesma coisa: o React apenas substituiu o jQuery a partir de 2015."
+ },
+ "gestaoweb-cap3-m5": {
+  "B": "Larguras fixas não se adaptam: 1200px em 375px estouram a tela e geram rolagem lateral; o responsivo usa unidades flexíveis (%, rem, vw), media queries e Flexbox ou Grid para reorganizar o layout.",
+  "C": "Falta JavaScript: um window.resize que recalcule os pixels resolve."
+ },
+ "gestaoweb-cap3-m6": {
+  "B": "Mobile First faz sentido quando o acesso móvel é relevante; num sistema interno usado só em desktop, projetar primeiro para o desktop aproveita melhor a tela, o mouse e o teclado.",
+  "A": "Mobile First é obrigatório: o Google e o W3C penalizam qualquer sistema que não o siga."
+ },
+ "gestaoweb-cap3-m7": {
+  "C": "\"Mais fácil\" não basta: Spring Boot traz tipagem estática, ecossistema maduro e uso consolidado em sistemas financeiros; trocar exigiria avaliar desempenho, conformidade, experiência da equipe e suporte."
+ },
+ "gestaoweb-cap3-m8": {
+  "B": "O Firebase sincroniza em tempo real: quem está inscrito nos dados recebe a atualização sem pedir; no MySQL o cliente precisa consultar, e o chat exigiria WebSockets ou polling no backend.",
+  "A": "É só por estar nos servidores do Google; qualquer banco hospedado lá seria igual."
+ },
+ "gestaoweb-cap3-m9": {
+  "B": "Grid para a estrutura geral, que controla linhas e colunas ao mesmo tempo (sidebar, centro e rodapé); Flexbox para alinhar itens dentro de cada área; eles se complementam.",
+  "C": "Tanto faz: qualquer layout de Grid se faz igual com Flexbox, e vice-versa."
+ },
+ "gestaoweb-cap3-m10": {
+  "B": "Cada banco faz o que faz melhor: MySQL garante integridade e transações ACID em pedidos e pagamentos, e MongoDB dá flexibilidade ao catálogo de atributos variáveis; é a chamada persistência poliglota."
+ },
+ "gestaoweb-cap4-m1": {
+  "B": "É inadequada: o Drupal serve a projetos grandes com equipe técnica; para um site simples com blog, o WordPress tem ecossistema amplo, aprendizado fácil e plugins como Wordfence e Yoast, sem o custo e a complexidade do Drupal.",
+  "C": "Só seria adequada com mais de 50 funcionários; o porte do escritório é o que decide."
+ },
+ "gestaoweb-cap4-m2": {
+  "B": "O Shopify é limitado nesse caso: plataforma fechada, pouca customização, acesso restrito aos dados para integrar com o ERP e taxas por transação em alto volume; Magento (Adobe Commerce) ou solução própria se encaixam melhor.",
+  "C": "Depende só do faturamento: até R$ 1 milhão por mês, Shopify; acima disso, Magento."
+ },
+ "gestaoweb-cap4-m3": {
+  "B": "O Ghost se encaixa bem: membros e assinaturas com Stripe nativos, newsletter integrada, editor focado na escrita e boa performance; resolve sem os vários plugins que o WordPress exigiria."
+ },
+ "gestaoweb-cap4-m4": {
+  "B": "Sem workflow, conteúdo sai sem aprovação, perde-se o histórico e não se sabe quem aprovou; um fluxo com estágios (rascunho, revisão, aprovação, publicação), versões e permissões por papel garante que tudo passe pelas etapas.",
+  "D": "O único risco são erros de ortografia, resolvidos com um corretor automático no CMS."
+ },
+ "gestaoweb-cap4-m5": {
+  "B": "É problema de visibilidade: o botão abaixo da dobra não é visto; o certo é subir o CTA, testar variações com A/B, ver onde o interesse cai e checar a velocidade, decidindo com base nas métricas.",
+  "A": "É só SEO: as campanhas atraem o público errado, e a página não precisa mudar."
+ },
+ "gestaoweb-cap4-m6": {
+  "B": "Os riscos são perder posições no Google com URLs novas, perder funções das extensões próprias e corromper dados; as boas práticas são redirecionamentos 301, auditoria de funções, testes em staging e plano de rollback.",
+  "C": "As URLs mudam, mas o Google reindexa tudo em 24 horas; basta migrar de uma vez no fim de semana."
+ },
+ "gestaoweb-cap4-m7": {
+  "B": "WooCommerce: o desenvolvedor já domina PHP e WordPress, frete e fidelidade podem ser feitos sem apps pagos, não há taxa por venda nem mensalidade fixa, e o controle do código acompanha o crescimento."
+ },
+ "gestaoweb-cap4-m8": {
+  "B": "Confunde taxa de crescimento com tamanho: crescer 1.633% a partir de uma base pequena não supera quem tem 61,3%; além disso, os dois atendem públicos diferentes (customização profunda versus simplicidade) e coexistem.",
+  "C": "Está certo, só erra o prazo: o Wix vai superar o WordPress em cerca de 10 anos."
+ },
+ "gestaoweb-cap4-m9": {
+  "B": "Muito tráfego e pouco tempo sugerem título que promete mais do que o texto entrega; pouco tráfego e 6 minutos indicam conteúdo valioso; melhore o primeiro texto e invista em SEO e divulgação do segundo.",
+  "C": "As métricas se contradizem e não permitem conclusão, pois o tempo varia com o aparelho."
+ },
+ "gestaoweb-cap4-m10": {
+  "B": "O CTO tem razão: o Wix limita o acesso aos dados, a integração com ERP e a customização do código; é o dilema das plataformas fechadas: migrar agora, com custo, ou conviver com limitações crescentes.",
+  "D": "Basta migrar hoje: o Wix exporta tudo para WooCommerce ou Shopify em menos de 24 horas."
+ },
+ "gestaoweb-cap5-m1": {
+  "B": "Confidencialidade (dados de 147 milhões expostos); integridade (não há garantia de que nada foi alterado); disponibilidade (sistemas desligados na contenção); incidentes reais costumam atingir mais de um pilar."
+ },
+ "gestaoweb-cap5-m2": {
+  "B": "A query vira WHERE username='admin' OR '1'='1' --, que é sempre verdadeira, e o -- anula a senha; com prepared statements, o valor vai num placeholder e é tratado como dado, nunca como código SQL.",
+  "C": "Só funciona se o atacante souber o nome exato de um usuário válido no banco."
+ },
+ "gestaoweb-cap5-m3": {
+  "B": "É XSS armazenado: o script fica salvo e roda no navegador de cada visitante do comentário; é pior que o refletido porque ninguém precisa clicar em link, e um único post atinge milhares de pessoas.",
+  "A": "É XSS refletido, e menos grave, pois só afeta quem postou o comentário."
+ },
+ "gestaoweb-cap5-m4": {
+  "B": "HttpOnly impede que JavaScript leia o cookie (barra o roubo por XSS); Secure só envia o cookie por HTTPS (evita captura na rede); SameSite bloqueia o envio em requisições de outros sites (barra CSRF).",
+  "C": "Só HttpOnly importa: bancos já usam HTTPS, e SameSite atrapalha links de e-mail."
+ },
+ "gestaoweb-cap5-m5": {
+  "B": "Backup no mesmo servidor é criptografado junto; ele precisa ficar isolado (nuvem externa, outro provedor ou mídia offline), de preferência imutável, e a restauração deve ser testada com frequência."
+ },
+ "gestaoweb-cap5-m6": {
+  "B": "É incompleto: JSON entre origens exige preflight, mas um CORS permissivo (Access-Control-Allow-Origin: *) ou APIs que aceitam text/plain abrem brecha; tokens CSRF, SameSite e checagem do Origin formam defesa em camadas.",
+  "C": "Está errado: APIs JSON são mais vulneráveis a CSRF do que formulários HTML comuns."
+ },
+ "gestaoweb-cap5-m7": {
+  "B": "Scanners acham padrões conhecidos, mas não falhas de lógica de negócio, como preço negativo ou etapa de aprovação pulada; no Burp Suite (Repeater, Intruder), o pentester manipula requisições e encontra o que a automação não vê.",
+  "A": "Está correta: o ZAP basta, e o Burp Suite faz exatamente as mesmas verificações."
+ },
+ "gestaoweb-cap5-m8": {
+  "B": "SPF diz quais servidores podem enviar pelo domínio; DKIM assina a mensagem; DMARC manda rejeitar o que falha nesses testes, mesmo com o From correto; a aparência é justamente o que o spoofing falsifica.",
+  "C": "Só o DMARC funciona, e sozinho dispensa SPF e DKIM, bloqueando 100% dos casos."
+ },
+ "gestaoweb-cap5-m9": {
+  "B": "Menos incidentes pode ser melhora ou detecção pior; faltam o MTTD (tempo para detectar), a taxa de correções aplicadas e a adoção de MFA, ou a empresa terá falsa sensação de segurança."
+ },
+ "gestaoweb-cap5-m10": {
+  "B": "O MD5 é rápido (força bruta em GPU) e, sem salt, a mesma senha gera o mesmo hash (rainbow tables); bcrypt tem custo ajustável e salt por senha, e o Argon2 ainda exige memória, dificultando hardware especializado.",
+  "A": "Basta aplicar o MD5 três vezes seguidas, o que já impede as rainbow tables."
+ },
+ "gestaoweb-cap6-m1": {
+  "C": "Por n×(n−1)/2: eram 28 conexões e passam a 45, 17 a mais por só 2 sistemas; é a \"arquitetura espaguete\", que justifica um hub ou middleware.",
+  "B": "Eram 16 e passam a 20; um hub só se justifica acima de 20 sistemas."
+ },
+ "gestaoweb-cap6-m2": {
+  "B": "O sistema de vendas não muda: o de fidelidade só se inscreve no evento; o desacoplamento deixa incluir consumidores sem mexer no publicador."
+ },
+ "gestaoweb-cap6-m3": {
+  "C": "Fixar a versão da API nas chamadas, acompanhar avisos de depreciação e criar uma camada interna de abstração, para que uma mudança no Stripe afete só essa camada.",
+  "B": "Adotar cada breaking change logo que for anunciada, antes de todo mundo."
+ },
+ "gestaoweb-cap6-m4": {
+  "B": "A chave fica visível para quem inspecionar o JavaScript e pode ser usada por terceiros, gerando custos; o certo é guardá-la em variável de ambiente no backend e chamar a API pelo servidor.",
+  "A": "Performance: a chave aumenta o bundle; basta minificar o código para escondê-la."
+ },
+ "gestaoweb-cap6-m5": {
+  "B": "400: requisição malformada (JSON quebrado, campo faltando), corrige-se a requisição; 422: formato certo, mas regra de negócio violada (sem estoque, sem limite), resolve-se a condição.",
+  "C": "400 é erro de autenticação, e 422, de autorização."
+ },
+ "gestaoweb-cap6-m6": {
+  "C": "O OAuth 2.0 existe para isso: o usuário autoriza o acesso sem entregar a senha do Google; a autenticação fica com o Google, e as permissões podem ser revogadas."
+ },
+ "gestaoweb-cap6-m7": {
+  "B": "Um hub com adaptadores por parceiro: se o PagSeguro muda, só o adaptador dele é atualizado, e o delivery não é tocado; o hub também centraliza o monitoramento.",
+  "A": "Eventos: cada parceiro publica no barramento, e nenhum código específico é necessário."
+ },
+ "gestaoweb-cap6-m8": {
+  "B": "Filtragem colaborativa: o sistema acha usuários com comportamento parecido e usa o histórico deles para prever o que o novo usuário vai gostar (\"quem é como você também gostou\").",
+  "D": "Monitoramento em tempo real com Datadog, que dispara sugestões na hora."
+ },
+ "gestaoweb-cap6-m9": {
+  "B": "É o optimistic update: a tela muda na hora, mas, se vier o erro 500, a curtida deve ser desfeita na tela, o usuário avisado e o envio tentado de novo.",
+  "A": "A tela nunca deve mudar antes da resposta; fazer isso é enganar o usuário."
+ },
+ "gestaoweb-cap6-m10": {
+  "C": "O abandono acontece no próprio checkout, depois do carrinho: indica formulário longo, poucas formas de pagamento, frete revelado tarde ou desconfiança; o certo é otimizar o checkout."
+ },
+ "gestaoweb-cap7-m1": {
+  "B": "O LCP: 4,2 s está bem acima do ideal de 2,5 s e mede quando o conteúdo principal aparece; o FCP (2,1 s) está um pouco acima de 1,8 s, e o CLS (0,08) já está dentro do limite de 0,1.",
+  "C": "As três estão aceitáveis para mobile, que tem padrões próprios; nada é urgente."
+ },
+ "gestaoweb-cap7-m2": {
+  "B": "Os 950 ms passam do ideal de 600 ms: o DNS (400 ms) melhora com prefetch e TTL adequado; o handshake (200 ms), com TLS 1.3 e retomada de sessão; e o processamento (350 ms), com queries, cache e código otimizados.",
+  "A": "O único problema é o certificado SSL; renová-lo para TLS 1.3 resolve tudo."
+ },
+ "gestaoweb-cap7-m3": {
+  "B": "Foi violado: 99,9% em 30 dias permite cerca de 43 minutos fora do ar, e foram 52; o error budget estourou, e pela prática de SRE os deploys de novidades param até a confiabilidade melhorar."
+ },
+ "gestaoweb-cap7-m4": {
+  "B": "É vazamento de memória: a memória só cresce, com CPU estável, porque objetos seguem referenciados e o garbage collector não os libera; heap dumps (Chrome DevTools, --inspect) e monitoramento mostram o que acumula.",
+  "D": "Falta RAM: basta subir o servidor de 1 GB para 4 GB."
+ },
+ "gestaoweb-cap7-m5": {
+  "B": "O banco lento é a causa provável: queries de 250 ms prendem threads esperando resposta e elevam a CPU a 85%; o diagnóstico começa pelo slow query log, pelos planos de execução e pelo pool de conexões.",
+  "D": "É um ataque DDoS: ative o rate limiting e bloqueie IPs antes de investigar."
+ },
+ "gestaoweb-cap7-m6": {
+  "B": "Uma fila de mensagens: o pedido é enfileirado e o usuário recebe a confirmação na hora, enquanto um worker fala com a logística em segundo plano; as threads não ficam presas 3 segundos, e o sistema aguenta o pico.",
+  "A": "Escalar verticalmente: mais CPU e memória eliminam o gargalo síncrono."
+ },
+ "gestaoweb-cap7-m7": {
+  "C": "Por 180 ms o thread principal fica bloqueado e não responde ao usuário, o que piora o INP (que substituiu o FID nos Core Web Vitals em 2024); a solução é quebrar a tarefa ou levá-la a um web worker."
+ },
+ "gestaoweb-cap7-m8": {
+  "B": "150 req/min pode ser uso ineficiente; antes de subir o limite, é melhor analisar o padrão de uso, adotar cache no cliente e endpoints em lote, informar o limite restante nos headers e só escalar se o uso for legítimo.",
+  "C": "O 429 indica servidor à beira do colapso; o cliente deve ser bloqueado de vez."
+ },
+ "gestaoweb-cap7-m9": {
+  "B": "É um hot shard: dividir por faixa de ID concentrou usuários mais ativos no shard1; a solução é particionar por hash (ou consistent hashing), rebalancear os dados e monitorar a distribuição de carga.",
+  "A": "Falta replicação: basta criar mais réplicas de leitura para o shard1."
+ },
+ "gestaoweb-cap7-m10": {
+  "B": "Das 3,6 horas, 2,5 já foram usadas e restam 1,1 hora; a equipe deve reduzir a frequência e o risco dos deploys, priorizar estabilidade e investigar a causa do deploy problemático.",
+  "A": "Nada muda: cada semana é independente e não consome o budget das seguintes."
+ },
+ "gestaoweb-cap8-m1": {
+  "B": "O gerente está certo: operações são repetitivas e seguem procedimentos fixos; projetos são temporários e únicos; confundi-los leva a burocratizar rotinas ou a planejar mal iniciativas realmente novas."
+ },
+ "gestaoweb-cap8-m2": {
+  "B": "Não é específico nem mensurável e não tem prazo; reescrita: \"Treinar 15 funcionários do financeiro em Excel básico, 16 horas, até 30 de agosto, com aprovação mínima de 70%\".",
+  "C": "Só falta o prazo; com uma data, o objetivo já fica SMART."
+ },
+ "gestaoweb-cap8-m3": {
+  "B": "Faltou completude: a EAP deve ter todo o trabalho necessário, e a rede elétrica era essencial; especialistas, comparação com reformas parecidas e lições aprendidas teriam revelado isso.",
+  "D": "Foi problema de cronograma: bastava uma tarefa de \"verificação elétrica\"."
+ },
+ "gestaoweb-cap8-m4": {
+  "B": "Com 12 pessoas e 8 meses, a planilha não dá controle de versões nem visão compartilhada, e e-mails espalhados perdem decisões; o projeto pede quadros colaborativos e documentação centralizada na nuvem.",
+  "C": "O único problema é o e-mail; troque por WhatsApp e mantenha a planilha."
+ },
+ "gestaoweb-cap8-m5": {
+  "C": "Faltou controle de mudanças: o pedido deveria ser registrado, avaliado quanto a escopo, prazo, custo e riscos, comparado com a justificativa do projeto e só então aprovado e replanejado, ou recusado."
+ },
+ "gestaoweb-cap8-m6": {
+  "B": "Faltaram o aceite formal dos usuários, a transição (treinamento e documentação), a comunicação de encerramento a todos e o registro de lições aprendidas; encerrar é concluir com propósito.",
+  "C": "Só faltaram as lições aprendidas; entregar o sistema já é o aceite."
+ },
+ "gestaoweb-cap8-m7": {
+  "B": "Cada projeto é único, com equipe, orçamento e stakeholders próprios; o termo de abertura autoriza o projeto, nomeia responsáveis e registra o objetivo, servindo de base se a justificativa mudar.",
+  "D": "Eventos pequenos, abaixo de R$ 50 mil, dispensam o termo de abertura."
+ },
+ "gestaoweb-cap8-m8": {
+  "B": "Vermelho: 40% de atraso e 25% acima do custo são desvios críticos, e riscos sem resposta mostram falha na gestão de riscos; pedem reunião de crise, análise de causa, replanejamento, contingências e comunicação ao patrocinador.",
+  "C": "Amarelo no prazo e vermelho só nos riscos; os 25% de custo extra são normais, e só os riscos sem resposta preparada exigem atenção."
+ },
+ "gestaoweb-cap8-m9": {
+  "B": "Só a ausência do instrutor é um risco válido: é futura, incerta e afeta a entrega; chuva só importa se o evento for ao ar livre, e a gasolina, se o deslocamento estiver no orçamento; sem impacto não há risco."
+ },
+ "gestaoweb-cap8-m10": {
+  "C": "O padrão vira melhoria de processo: os próximos projetos já incluem gestão da mudança no escopo, comunicação no plano, usuários resistentes nos riscos e requisitos de engajamento.",
+  "B": "Basta incluir uma tarefa de treinamento no cronograma do próximo projeto."
+ },
+ "gestaoweb-cap9-m1": {
+  "B": "WebTransport ainda é emergente, com suporte parcial e especificação sujeita a mudanças; o certo é checar o suporte, fazer um piloto controlado, manter WebSockets como alternativa e migrar só depois de validar.",
+  "C": "Não há risco: para chat, os dois são equivalentes, e é só preferência."
+ },
+ "gestaoweb-cap9-m2": {
+  "B": "Os Service Workers fazem cache dos recursos estáticos e evitam baixá-los de novo, o que explica os 70% de dados a menos; com tudo mais rápido em rede lenta, as sessões rendem mais páginas, o que pesa em mercados com 3G e planos limitados.",
+  "A": "Só o Manifest, que permite instalar sem loja; Service Workers só servem para push."
+ },
+ "gestaoweb-cap9-m3": {
+  "C": "Em B, as imagens não saem do aparelho, o que preserva a privacidade; em A, dados pessoais vão a terceiros, com obrigações de LGPD e risco de vazamento; B depende do hardware e pode ser menos preciso."
+ },
+ "gestaoweb-cap9-m4": {
+  "B": "\"Estático\" é o HTML pré-gerado servido por CDN; o dinâmico vem de APIs chamadas por JavaScript, como preço e estoque em tempo real e carrinho em funções serverless, unindo performance e dados atuais.",
+  "C": "A cada mudança de preço o site inteiro é reconstruído, e o usuário nem percebe."
+ },
+ "gestaoweb-cap9-m5": {
+  "C": "O Shadow DOM isola nos dois sentidos: o CSS da página não quebra o componente, e o dele não vaza para a página; com classes, um reset global pode quebrá-lo, e assim o componente funciona igual em qualquer projeto.",
+  "B": "A vantagem é só semântica, pois variáveis CSS furam o isolamento."
+ },
+ "gestaoweb-cap9-m6": {
+  "B": "A mídia vai P2P, mas a conexão precisa de servidores: STUN descobre o IP público, e TURN repassa a mídia quando a conexão direta falha (firewalls, NAT simétrico, comuns em hospitais); sem TURN, parte das consultas cai.",
+  "D": "Não faz falta, pois médicos e pacientes sempre usam redes domésticas simples."
+ },
+ "gestaoweb-cap9-m7": {
+  "C": "Wasm complementa o JavaScript: não acessa o DOM direto e depende do JS como ponte; JS cuida da interface e dos eventos, e Wasm, dos cálculos pesados da planilha."
+ },
+ "gestaoweb-cap9-m8": {
+  "B": "Tecnologias emergentes se apoiam nos fundamentos: WebGPU exige JS avançado, WebXR pede base em WebGL e 3D, e WebTransport, redes e código assíncrono; sem HTML, CSS e JS, o estudante não consegue depurar nem construir.",
+  "A": "É válida para quem já programa em Python ou Java, que pode pular os fundamentos."
+ },
+ "gestaoweb-cap9-m9": {
+  "B": "Cache First mostra saldo e extrato desatualizados; use Network First para dados dinâmicos, Cache First só para estáticos (CSS, JS, ícones) e Stale While Revalidate para o que tolera atraso.",
+  "C": "O problema é só regulatório; com cache criptografado, Cache First vale para tudo."
+ },
+ "gestaoweb-cap9-m10": {
+  "C": "Depende de critérios: Container Queries tem amplo suporte desde 2023; vale checar o suporte, ver se resolve um problema real, usar fallback e fazer piloto; a fase do ciclo é indicador, não regra."
+ },
+ "qualidade-cap2-m1": {
+  "C": "Confiabilidade (queda a cada 48 h, com 20 minutos para recuperar, indicando MTBF baixo) e eficiência (45 s por operação ferem o comportamento no tempo).",
+  "B": "Usabilidade e portabilidade: as quedas frustram o usuário, e a lentidão indica hardware incompatível."
+ },
+ "qualidade-cap2-m2": {
+  "C": "Qualidade interna: avalia o software sem executá-lo, e complexidade, acoplamento e comentários antecipam problemas de manutenção e confiabilidade.",
+  "B": "Qualidade externa: mede o comportamento do sistema em execução."
+ },
+ "qualidade-cap2-m3": {
+  "C": "Usabilidade, nas duas normas: na 9126, pela conformidade com padrões de acessibilidade; na 25010, a acessibilidade virou subcaracterística explícita da usabilidade."
+ },
+ "qualidade-cap2-m4": {
+  "B": "Manutenibilidade: alto acoplamento, falta de testes e documentação ruim prejudicam analisabilidade, modificabilidade e testabilidade, e o débito técnico encarece cada mudança.",
+  "D": "Portabilidade: código acoplado não migra para outras plataformas."
+ },
+ "qualidade-cap2-m5": {
+  "C": "Segurança reflete ameaças cibernéticas diárias, e proteger dados é tão básico quanto funcionar; compatibilidade reflete sistemas integrados, que precisam coexistir e interoperar via APIs.",
+  "A": "Vieram da pressão do GDPR europeu e de demandas dos mercados asiáticos."
+ },
+ "qualidade-cap2-m6": {
+  "C": "O arquiteto: para a norma, funcionalidade é atender às necessidades do usuário, não ter muitas funções; 300 funções inadequadas são baixa funcionalidade.",
+  "B": "Os dois, em parte: a norma soma quantidade e qualidade das funções."
+ },
+ "qualidade-cap2-m7": {
+  "C": "Eficiência, na subcaracterística utilização de recursos: bateria e armazenamento consumidos devem ser proporcionais ao que o app faz."
+ },
+ "qualidade-cap2-m8": {
+  "C": "Adaptabilidade (rodar em Linux sem depender de APIs do Windows ou caminhos fixos) e instalabilidade (facilidade de empacotar em contêiner e implantar).",
+  "B": "Coexistência e estabilidade, para conviver com outros contêineres no mesmo host."
+ },
+ "qualidade-cap2-m9": {
+  "C": "Testabilidade (cobertura de 80%), analisabilidade (documentação que facilita diagnosticar) e estabilidade (testes que pegam efeitos colaterais das mudanças).",
+  "A": "Analisabilidade e conformidade, pelo diagnóstico e pelo padrão de código."
+ },
+ "qualidade-cap2-m10": {
+  "B": "Modelo de Qualidade (2501n) para escolher as características; Requisitos (2503n) para os critérios; Medição (2502n) para as métricas; e Avaliação (2504n) para a avaliação formal.",
+  "C": "Só a de Gerenciamento (2500n), que reúne tudo num único documento."
+ },
+ "qualidade-cap1-m1": {
+  "C": "Atende à definição de Crosby (conformidade), mas não à de Juran (adequação ao uso) nem à qualidade em uso da 25010; conformidade e satisfação se complementam.",
+  "B": "Só falha para Juran, cuja adequação ao uso é critério secundário."
+ },
+ "qualidade-cap1-m2": {
+  "C": "O Custo da Qualidade: falhas externas, achadas depois da entrega, custam muito mais do que as evitadas no início, o que justifica investir em prevenção e avaliação.",
+  "B": "Qualidade de processo: com CMMI 5, defeitos nunca chegam à produção."
+ },
+ "qualidade-cap1-m3": {
+  "B": "O domínio médico exige confiabilidade muito maior: cortar testes num monitor cardíaco de UTI põe vidas em risco, como no caso Therac-25."
+ },
+ "qualidade-cap1-m4": {
+  "C": "Novo SO e API de terceiros são Transição do Produto (portabilidade e interoperabilidade); entender o código é Revisão do Produto (manutenibilidade).",
+  "A": "As três são Revisão do Produto, pois todas mudam o código."
+ },
+ "qualidade-cap1-m5": {
+  "B": "Bom processo não garante bom produto: qualidade de processo e de produto se complementam, e requisitos mal levantados comprometem o resultado.",
+  "C": "Que só a qualidade em uso importa, e processos são burocracia."
+ },
+ "qualidade-cap1-m6": {
+  "C": "Testes e revisões são prevenção e avaliação, a parte mais barata do Custo da Qualidade; cortá-los faz crescer as falhas internas e externas, muito mais caras.",
+  "B": "Sem testes, o código sai 50% mais lento, anulando a economia."
+ },
+ "qualidade-cap1-m7": {
+  "C": "Fatores externos, como dependências que a equipe não controla totalmente, somados a uma falha interna: ninguém verifica vulnerabilidades no pipeline."
+ },
+ "qualidade-cap1-m8": {
+  "C": "O ambiente de execução: hardware, redes e configurações diferentes revelam falhas não vistas no teste, e a solução é testar em ambientes variados.",
+  "A": "Pressão de prazo, que é um fator interno do processo."
+ },
+ "qualidade-cap1-m9": {
+  "C": "Qualidade é multidimensional: falha de segurança num sistema de pagamentos é risco grave, e pouca manutenibilidade trava a evolução; excelência em uma área não compensa outra.",
+  "B": "É qualidade parcial, pois a empresa pode tornar segurança opcional."
+ },
+ "qualidade-cap1-m10": {
+  "C": "Para Crosby, prevenir sai \"de graça\" porque elimina custos de falhas maiores que o investimento; o que custa é a não qualidade: retrabalho, suporte, clientes perdidos.",
+  "B": "Porque a ISO 9001 subsidia a certificação de pequenas empresas."
+ },
+ "qualidade-cap3-m1": {
+  "B": "Nível 1, Inicial: o sucesso depende de talentos individuais, e os resultados variam; o risco é a saída de pessoas-chave derrubar a capacidade de entrega."
+ },
+ "qualidade-cap3-m2": {
+  "C": "Os níveis são cumulativos e não dá para pular: sem a base quantitativa do nível 4, faltam dados para a otimização do nível 5, e os resultados tendem a regredir.",
+  "B": "Recebe certificação parcial no nível 5, num perfil híbrido aceito."
+ },
+ "qualidade-cap3-m3": {
+  "C": "CMMI: tem prestígio global e é exigido em contratos internacionais; o MPS.BR é mais acessível, mas reconhecido sobretudo no Brasil.",
+  "B": "CMMI nível 2, o único aceito pelo governo americano."
+ },
+ "qualidade-cap3-m4": {
+  "B": "Aproximadamente ao nível 3 do CMMI, pois os níveis E, D e C do MPS.BR correspondem a ele; faltaria cobrir as áreas restantes do nível 3, adaptar a documentação e passar pela avaliação SCAMPI.",
+  "C": "Ao nível 4, bastando adaptar a documentação ao formato do ISACA."
+ },
+ "qualidade-cap3-m5": {
+  "C": "O MPS.BR: é aceito em licitações de TI no Brasil, está em português e custa menos que o CMMI, o que amplia a participação de pequenas e médias fornecedoras."
+ },
+ "qualidade-cap3-m6": {
+  "C": "Mostra que maturidade e agilidade não se opõem: práticas ágeis podem implementar as áreas do CMMI, e uma organização pode usar Scrum com medição e melhoria estruturadas.",
+  "A": "A integração é só de fachada, e a incompatibilidade continua."
+ },
+ "qualidade-cap3-m7": {
+  "C": "Quando se quer melhorar áreas específicas, como uma empresa boa em projetos e fraca em riscos, sem ter de cumprir todos os requisitos de um nível.",
+  "A": "Sempre; a por estágios só existe por compatibilidade histórica."
+ },
+ "qualidade-cap3-m8": {
+  "B": "Está no nível 2, mas sem padronização organizacional não chega ao 3; o próximo passo é foco no processo organizacional, definição do processo e treinamento.",
+  "A": "Já cumpre o nível 2, e padronizar só é exigido no nível 4."
+ },
+ "qualidade-cap3-m9": {
+  "C": "Permite evoluir em degraus menores (G, F, E, D, C) em vez de um salto grande, com reconhecimento a cada etapa e investimento diluído."
+ },
+ "qualidade-cap3-m10": {
+  "B": "Desenvolvimento usa CMMI-DEV; suporte e manutenção, CMMI-SVC (serviços); aquisição, CMMI-ACQ (gestão de fornecedores), pois cada constelação serve a um tipo de organização.",
+  "D": "Tanto faz: as três constelações avaliam os mesmos processos."
+ },
+ "qualidade-cap4-m1": {
+  "C": "Testes mostram a presença de defeitos, não a ausência: 95% de cobertura sem falhas não garante um sistema livre de erros nem adequado às necessidades reais.",
+  "B": "A cobertura deveria ser de 100%, o que garante zero defeitos."
+ },
+ "qualidade-cap4-m2": {
+  "C": "Três partições: inválida abaixo (10), válida (40) e inválida acima (70); e os limites 17, 18, 19, 64, 65 e 66, onde os defeitos mais aparecem.",
+  "A": "Só 2 casos (30 e 70), e os limites já estão cobertos."
+ },
+ "qualidade-cap4-m3": {
+  "C": "Statement coverage só garante que cada linha rodou, não que cada condição afeta a decisão sozinha; em sistemas críticos, uma condição errada passa despercebida, daí o MC/DC."
+ },
+ "qualidade-cap4-m4": {
+  "B": "O teste de integração, que verifica a comunicação entre módulos; com muitas dependências, a estratégia bottom-up valida primeiro a base (frete) e depois integra os módulos de cima.",
+  "C": "O teste de aceitação, pois só usuários reais percebem o erro."
+ },
+ "qualidade-cap4-m5": {
+  "C": "Defeitos que o alfa pegaria em ambiente controlado chegam a 10.000 usuários reais, com falhas de estabilidade e segurança em escala e dano à reputação.",
+  "B": "Só reputação, pois usuários beta toleram bugs."
+ },
+ "qualidade-cap4-m6": {
+  "C": "Tabela de decisão, por combinar condições: 4 regras, de premium ou não com renda acima ou até R$ 5.000, cada uma ligada ao seu desconto.",
+  "A": "Particionamento: 2 partições, premium e não premium."
+ },
+ "qualidade-cap4-m7": {
+  "C": "No TDD, o teste vem antes e define o comportamento esperado, o que leva a um design testável e evita testar só o que já se sabe que funciona."
+ },
+ "qualidade-cap4-m8": {
+  "C": "É uma evolução do beta aberto: expõe a novidade aos poucos a usuários reais, detecta problemas em escala pequena e permite rollback rápido.",
+  "B": "É um teste alfa moderno com usuários internos."
+ },
+ "qualidade-cap4-m9": {
+  "C": "A caixa preta achou o sintoma, mas não a causa; a caixa branca examinaria o tratamento da entrada para confirmar a injeção de SQL e localizar a falha.",
+  "B": "Não há limitação: a caixa preta basta para garantir a segurança."
+ },
+ "qualidade-cap4-m10": {
+  "C": "Vira o \"cone de sorvete\": testes manuais de interface são lentos, caros e frágeis, o feedback demora, e erros simples chegam caros às camadas de cima.",
+  "B": "A empresa ganha, pois os testes de aceitação validam o negócio."
+ },
+ "qualidade-cap5-m1": {
+  "C": "Têm propósitos diferentes: a estratégia é a abordagem geral e reutilizável; o plano detalha quem, quando, onde e com que recursos se testa num projeto."
+ },
+ "qualidade-cap5-m2": {
+  "B": "Pagamento e login (6 a 9) recebem teste prioritário e profundo; relatórios (2), teste normal; e a exportação CSV (1), teste leve, levando o esforço aonde a falha custa mais.",
+  "C": "Pagamento recebe 90% do esforço, e o resto é dividido."
+ },
+ "qualidade-cap5-m3": {
+  "C": "É Shift-Left e ATDD: alinha cliente, desenvolvedor e testador antes do código, evita retrabalho e gera testes de aceitação que guiam a implementação.",
+  "B": "É só formalidade, e os critérios são ajustados depois."
+ },
+ "qualidade-cap5-m4": {
+  "B": "MC/DC com 100%, pela criticidade máxima, como exigem as normas aeronáuticas (DO-178C e, para sistemas de solo, DO-278A): cada condição deve afetar a decisão de forma independente.",
+  "A": "Branch coverage de 80%, padrão de mercado que basta."
+ },
+ "qualidade-cap5-m5": {
+  "C": "Exigir cobertura só do código novo ou alterado: em vez de 80% de todo o legado de uma vez, cada mudança cumpre a meta, e a cobertura cresce sem parar o desenvolvimento."
+ },
+ "qualidade-cap5-m6": {
+  "C": "Tabela de decisão: 4 casos, com mais de 60 e cartão (20%), mais de 60 sem cartão (15%), até 60 com cartão (10%) e até 60 sem cartão (0%).",
+  "B": "Particionamento: 2 partições, com e sem desconto."
+ },
+ "qualidade-cap5-m7": {
+  "C": "O quality gate testa cedo: barra regressões no commit, onde corrigir é mais barato, e o pequeno atraso custa menos que o retrabalho em produção.",
+  "A": "Não pode sair por razões contratuais com clientes financeiros."
+ },
+ "qualidade-cap5-m8": {
+  "C": "Com 35% bloqueado, os resultados perdem confiabilidade: o ambiente instável gera falsos positivos e negativos e uma falsa sensação de qualidade.",
+  "B": "Só gera uma não conformidade no relatório de auditoria."
+ },
+ "qualidade-cap5-m9": {
+  "C": "Tabela de decisão: diagnóstico, histórico e interações combinados exigem cobrir sistematicamente todas as combinações, já que uma esquecida pode prejudicar o paciente."
+ },
+ "qualidade-cap5-m10": {
+  "C": "Atuam em camadas diferentes: TDD gera testes unitários de caixa branca (cada função correta); BDD, testes de aceitação de caixa preta (o comportamento de negócio).",
+  "B": "Só se complementam em equipes grandes; nas pequenas, escolha uma."
+ },
+ "qualidade-cap6-m1": {
+  "C": "Manual: 400 × 8 min × R$ 1/min × 15 releases = R$ 48.000 por ano; com R$ 20.000 investidos, a automação se paga antes de 6 meses e segue economizando.",
+  "B": "Impossível calcular sem o custo de manutenção dos scripts."
+ },
+ "qualidade-cap6-m2": {
+  "B": "Com POM, cada página é uma classe com os localizadores centralizados: mudar 30 elementos exige alterar 30 localizadores, não 600 scripts.",
+  "C": "Só ajudaria nos testes desses 30 elementos; os outros seguiriam quebrados."
+ },
+ "qualidade-cap6-m3": {
+  "C": "Testes exploratórios dependem de criatividade, intuição e adaptação ao que se descobre na hora; um script só executa o que foi programado."
+ },
+ "qualidade-cap6-m4": {
+  "C": "TestNG: tem dependência entre testes (dependsOnMethods), paralelismo no testng.xml e relatório HTML nativos, os três requisitos pedidos.",
+  "B": "Tanto faz: as duas fazem o mesmo, e decide a familiaridade."
+ },
+ "qualidade-cap6-m5": {
+  "B": "É o \"cone de sorvete\", a pirâmide invertida: muitos testes de UI lentos e frágeis e poucos unitários; a correção é ter a maioria unitária, parte de integração e UI só nos fluxos críticos.",
+  "C": "Falta de Page Object Model; com POM, as quebras e as 4 horas somem."
+ },
+ "qualidade-cap6-m7": {
+  "C": "Commit (até 5 min): análise estática e unitários; build: integração e contratos de API; staging: regressão de UI, desempenho e segurança; pré-produção: aceitação, carga e aprovação humana.",
+  "B": "Começar pelos testes completos de desempenho com JMeter."
+ },
+ "qualidade-cap6-m8": {
+  "C": "Viola Independent: os testes compartilham estado no banco real, e um altera o que o outro espera; a solução é isolar com mocks, stubs ou transações com rollback.",
+  "D": "Viola Timely, pois o teste foi escrito depois do código."
+ },
+ "qualidade-cap6-m9": {
+  "C": "Appium para iOS e Android e Selenium, Cypress ou Playwright para a web; o desafio é manter bases de automação distintas, gerenciar os dispositivos e sincronizar tudo no pipeline."
+ },
+ "qualidade-cap6-m10": {
+  "C": "Fica no topo da pirâmide, como teste de aceitação; o adequado é Cucumber com Selenium, Playwright ou Cypress, executando na interface real.",
+  "B": "No nível de integração, com RestAssured na API do carrinho."
+ },
+ "qualidade-cap6-m11": {
+  "C": "O Playwright tem Chrome, Firefox e Safari numa só API, mais estabilidade, interceptação de rede e paralelismo nativo; o Selenium ainda compensa com muitos scripts Java legados.",
+  "D": "A única vantagem é o suporte a vários navegadores, e o Grid já faz isso."
+ },
+ "qualidade-cap7-m1": {
+  "B": "É regressão: a correção nos impostos afetou as notas fiscais por acoplamento; faltou ao menos um sanity test nas áreas relacionadas e regressão no que depende do cálculo.",
+  "D": "É débito técnico: o módulo de notas já tinha defeitos ocultos."
+ },
+ "qualidade-cap7-m2": {
+  "C": "Regressão em camadas com paralelismo: smoke test dos 150 casos críticos a cada commit, sanity das áreas alteradas no pull request e regressão completa paralela antes do release."
+ },
+ "qualidade-cap7-m3": {
+  "C": "Refatoração é gatilho de regressão: mesmo sem querer mudar o comportamento, ela pode alterar ordens de execução, casos de borda e módulos acoplados.",
+  "B": "O risco é só político, diante dos stakeholders."
+ },
+ "qualidade-cap7-m4": {
+  "C": "Perde-se a confiança na suíte: ao ignorar falhas como \"flaky\", regressões reais passam, e defeitos críticos chegam à produção.",
+  "B": "É financeira: reexecutar testes encarece a nuvem."
+ },
+ "qualidade-cap7-m5": {
+  "C": "Unitários e de integração passando (no desenvolvimento), sanity test nas áreas relacionadas (ao concluir a história) e smoke test do sistema (antes da Sprint Review).",
+  "B": "Regressão completa da suíte para cada história concluída."
+ },
+ "qualidade-cap7-m6": {
+  "C": "Regressão total, priorizando por risco: criptografia atravessa autenticação, transações e dados sensíveis, e num banco crítico isso justifica a suíte completa."
+ },
+ "qualidade-cap7-m7": {
+  "C": "Tudo está crítico: pass rate de 78% (meta de 95%), 18% de flaky (meta de 2%), 9 horas de execução e 5 defeitos escapados; as ações são quarentena dos flaky, paralelização e análise de cobertura.",
+  "B": "Só os 5 defeitos escapados importam; o resto é secundário."
+ },
+ "qualidade-cap7-m8": {
+  "A": "Os dois se somam: antes do canary, a regressão automatizada valida em ambiente controlado; durante ele, smoke tests e monitoramento sintético vigiam os 5%, com rollback rápido se algo escapar.",
+  "B": "O canary substitui toda a regressão automatizada."
+ },
+ "qualidade-cap7-m9": {
+  "D": "Testes obsoletos e duplicados inflam a cobertura, alongam a execução e confundem a equipe; previne-se com rastreabilidade entre testes e requisitos e revisão periódica da suíte.",
+  "A": "Afeta só o tempo; a limpeza é opcional."
+ },
+ "qualidade-cap7-m10": {
+  "A": "Benefício: verificar no ambiente real e pegar falhas logo após o deploy; cuidados: dados sintéticos, nada irreversível (pagamentos, e-mails), só fluxos críticos e rollback automático.",
+  "C": "O único benefício é de marketing; o staging faz o mesmo."
+ },
+ "qualidade-cap10-m1": {
+  "B": "Erro: o desenvolvedor usar < em vez de <=; defeito: a condição errada que ficou no código; falha: aprovar em produção empréstimos no valor exato do limite.",
+  "C": "São sinônimos aqui, e a distinção é só acadêmica."
+ },
+ "qualidade-cap10-m2": {
+  "C": "Severidade crítica (S1), pois expõe dados financeiros, com impacto legal e regulatório; prioridade alta, pois, mesmo rara, a condição de corrida pode ser forçada por um atacante.",
+  "B": "Média e média: a raridade já funciona como contorno natural."
+ },
+ "qualidade-cap10-m3": {
+  "C": "Título vago, sem passos numerados, resultado obtido impreciso, sem resultado esperado, sem ambiente (SO, navegador, versão) e sem evidências; a reescrita preenche cada campo com precisão."
+ },
+ "qualidade-cap10-m4": {
+  "B": "Só o QA deve fechar um defeito, depois de verificar a correção; ele deveria ir para \"Em verificação\"; isso distorce o DDE, esconde reaberturas e quebra a rastreabilidade.",
+  "C": "Faltou o template: o desenvolvedor não documentou como corrigiu."
+ },
+ "qualidade-cap10-m5": {
+  "C": "DDE = 150/170 = 88,2%, abaixo de 90%; reabertura de 12%, acima de 10%; e 5 críticos abertos, quando o critério é zero: não está pronto, por três motivos.",
+  "B": "DDE = 150/20 = 750%, acima de 100%, então está pronto."
+ },
+ "qualidade-cap10-m6": {
+  "C": "É correto: severidade (impacto técnico) e prioridade (urgência de negócio) são eixos independentes; o erro de grafia na home antes do lançamento é urgente, e o crash raro, não.",
+  "B": "Só o segundo caso está errado: severidade alta exige prioridade alta."
+ },
+ "qualidade-cap10-m7": {
+  "C": "Status só por labels, sem transições condicionais; sem campos obrigatórios; relatórios básicos (sem burn down ou aging); e sem dependências, SLA por severidade ou automações complexas, como no Jira."
+ },
+ "qualidade-cap10-m8": {
+  "C": "Um defeito por ticket: cada problema pode ter causa diferente (formatação, fuso horário, limite de memória); juntos, uma correção fecha tudo, distorce as métricas e impede verificar cada uma.",
+  "B": "Só é errado se as severidades forem diferentes."
+ },
+ "qualidade-cap10-m9": {
+  "B": "Reaberturas por correções incompletas, regressões criadas pelas próprias correções ou novos defeitos de integração; veja reabertura, defeitos novos por dia, correção versus detecção e distribuição por módulo.",
+  "C": "Os 25 a mais já existiam e só foram registrados depois."
+ },
+ "qualidade-cap10-m10": {
+  "C": "Uma ação por causa: requisitos ambíguos pedem refinamento com critérios testáveis e revisão do QA; integração, testes de contrato e ambientes realistas; regressão, cobertura unitária mínima na DoD.",
+  "B": "Atacar só os 40% de integração, e o resto se resolve depois."
+ },
+ "qualidade-cap11-m1": {
+  "B": "Há só QC (reativo, no produto) e nenhum QA (preventivo, no processo): os testadores acham defeitos já criados; faltam revisão de requisitos, critérios de aceitação, code review e automação."
+ },
+ "qualidade-cap11-m2": {
+  "C": "O Princípio 1: testes mostram a presença, não a ausência de defeitos; e, pelo Princípio 7, um software sem defeitos ainda pode falhar se não atender ao usuário.",
+  "B": "O Princípio 2; basta dobrar para 6.000 casos."
+ },
+ "qualidade-cap11-m3": {
+  "C": "É o \"cone de sorvete\": E2E lentos, frágeis e caros; a pirâmide pede a maioria unitária, uma parte de integração e poucos E2E para fluxos críticos.",
+  "A": "É a ferramenta; o Playwright resolveria sem mudar a distribuição."
+ },
+ "qualidade-cap11-m4": {
+  "C": "Para o DORA, velocidade e qualidade andam juntas: deploys diários, lead time curto, falhas abaixo de 5% e MTTR abaixo de uma hora são o perfil de elite, com CI/CD e automação.",
+  "B": "45 minutos de lead time provam que a equipe pula testes."
+ },
+ "qualidade-cap11-m5": {
+  "C": "Qualidade é de todos: desenvolvedores fazem testes unitários (TDD), critérios vêm antes (BDD), teste acontece junto do desenvolvimento, o QA orienta e automatiza, e a DoD exige cobertura mínima."
+ },
+ "qualidade-cap11-m6": {
+  "C": "O PDCA leva ao Act: o resultado contrariou a hipótese; deve-se investigar a causa (flakiness, falsos positivos?), ajustar e recomeçar com nova hipótese, registrando o aprendizado.",
+  "B": "Confirma o sucesso, pois agora mais defeitos aparecem."
+ },
+ "qualidade-cap11-m7": {
+  "C": "Post-mortems são sem culpa: a pergunta não é quem errou, mas por que o processo deixou o prazo pular o code review; corrige-se o sistema para que o atalho não seja possível.",
+  "B": "É errada só por risco legal de assédio moral."
+ },
+ "qualidade-cap11-m8": {
+  "C": "Atuam em níveis diferentes: TDD é design de código no nível unitário (Red-Green-Refactor), feito pelo desenvolvedor; BDD alinha o comportamento no nível de aceitação, escrito por dev, QA e PO.",
+  "D": "A diferença é só de ferramenta: JUnit contra Cucumber."
+ },
+ "qualidade-cap11-m9": {
+  "C": "São complementares: o Shift-Left evita que defeitos cheguem à produção, o que é mais barato; o Shift-Right aprende com o uso real e pega o que escapou; um programa maduro usa os dois."
+ },
+ "qualidade-cap11-m10": {
+  "C": "Cobertura de 85% já é boa; preocupam o change failure rate de 18% (elite fica abaixo de 5%) e 28% de builds falhando, sinal de testes que não verificam o que importa.",
+  "B": "É errada só porque 95% é irreal; o certo seria 87 ou 88%."
+ },
+ "qualidade-cap8-m1": {
+  "B": "A média esconde a cauda: com P95 de 3.200 ms, 250 de cada 5.000 usuários esperam mais de 3 s, e com P99 de 8.500 ms alguns passam de 8 s, justamente quem abandona o carrinho.",
+  "D": "Só é equivocada se o contrato citar percentis."
+ },
+ "qualidade-cap8-m2": {
+  "D": "Dois erros: banco vazio não reproduz milhões de registros (cache, índices, planos de execução), e um ambiente com 25% da capacidade não escala de forma linear; a aprovação não vale.",
+  "B": "Basta documentar o fator 4x no relatório."
+ },
+ "qualidade-cap8-m3": {
+  "B": "Não: o colapso abrupto é o oposto de degradação graciosa; ao passar do limite, o sistema deveria recusar conexões com aviso, manter o essencial e se recuperar sozinho."
+ },
+ "qualidade-cap8-m4": {
+  "C": "O teste de resistência (soak), com carga normal por 24 horas ou mais, observando a memória, a frequência do garbage collection e erros OutOfMemory, usando JMeter e VisualVM ou YourKit.",
+  "B": "O teste de pico, pois o vazamento só aparece em picos."
+ },
+ "qualidade-cap8-m5": {
+  "C": "Micro-benchmarks a cada commit (menos de 5 min); carga básica com k6 ou Gatling a cada merge; carga completa com JMeter antes dos releases; e APM em produção o tempo todo.",
+  "D": "Só testes de estresse no pipeline; os outros são redundantes."
+ },
+ "qualidade-cap8-m6": {
+  "C": "Carga (os 200 mil esperados dentro do SLA), pico (o salto de 10 mil para 200 mil em minutos), estresse (a margem além de 200 mil) e resistência (estabilidade nas horas seguintes).",
+  "A": "Só o teste de carga com 200 mil usuários basta."
+ },
+ "qualidade-cap8-m7": {
+  "D": "O gargalo está em outro recurso: com CPU em 45% e throughput travado, as suspeitas são pool de conexões esgotado, filas saturadas ou locks no banco; vale olhar thread dump, pool e logs.",
+  "B": "Saturação de rede: confira a interface e o balanceador."
+ },
+ "qualidade-cap8-m8": {
+  "C": "k6: scripts em JavaScript, como a equipe já usa, integração nativa com Grafana e Prometheus, motor eficiente em Go e suporte a gRPC para microsserviços.",
+  "A": "JMeter, cuja interface gráfica dispensa programação."
+ },
+ "qualidade-cap8-m9": {
+  "C": "Não: o SLA exige todos os critérios ao mesmo tempo, e o P95 de 1.800 ms passa do limite de 1.500 ms; 5% das transações ficam lentas demais, e é preciso otimizar antes.",
+  "D": "Adiar e deixar a decisão para o product owner."
+ },
+ "qualidade-cap8-m10": {
+  "B": "A escalabilidade piora: +80% e +78% nas primeiras duplicações, mas só +41% de 4 para 8; há um gargalo compartilhado, como o banco central, um lock de cache ou um serviço externo.",
+  "D": "É inconclusivo: repita cada configuração 5 vezes."
+ },
+ "qualidade-cap9-m1": {
+  "B": "A03 (Injection): o input entra na query como código SQL; viola a confidencialidade (e talvez a integridade), e a correção são queries parametrizadas, que tratam o input como dado."
+ },
+ "qualidade-cap9-m2": {
+  "C": "O SAST olha o código parado e não simula a execução nem a interação entre componentes; o DAST testa a aplicação rodando, e SAST, DAST e pentest manual se completam.",
+  "B": "Estava numa biblioteca externa; troque o SAST pelo SCA."
+ },
+ "qualidade-cap9-m3": {
+  "B": "Documentar com a prova de conceito mínima, avisar o cliente na hora, não explorar além do necessário e nunca acessar dados reais; sair do escopo é crime, mesmo com boa intenção.",
+  "C": "Parar tudo e só anotar, sem confirmar se é explorável."
+ },
+ "qualidade-cap9-m4": {
+  "C": "A05 (Security Misconfiguration): DEBUG e erros detalhados revelam tecnologias, versões e estrutura do banco, facilitando o reconhecimento e ataques à versão do Oracle exposta.",
+  "B": "A04: é falha de design, que exige redesenhar a aplicação."
+ },
+ "qualidade-cap9-m5": {
+  "B": "A02 (falhas criptográficas), pelo MD5 e pelo HTTP sem TLS, e A07 (falhas de autenticação), pela sessão sem expiração; as prioridades são bcrypt ou Argon2, HTTPS obrigatório e timeout de sessão."
+ },
+ "qualidade-cap9-m6": {
+  "C": "Vantagem: pegar injeção, XSS e más configurações a cada release, sem esforço manual; limite: o DAST não acha falhas de lógica de negócio, controles de acesso complexos nem falhas de design, que pedem pentest manual.",
+  "B": "O ZAP não roda sem interface gráfica no pipeline."
+ },
+ "qualidade-cap9-m7": {
+  "B": "A01 (Broken Access Control), no caso IDOR: o sistema expõe IDs diretos sem checar se o usuário pode ver aquele objeto; a correção é verificar a autorização no servidor a cada acesso.",
+  "D": "A07: falta MFA para acessar documentos."
+ },
+ "qualidade-cap9-m8": {
+  "B": "A06 (componentes vulneráveis); o SCA no pipeline (Dependency-Check, Snyk) teria alertado assim que a CVE fosse publicada; a resposta é atualizar para o Log4j 2.17.1 ou superior, ou aplicar mitigações.",
+  "C": "A08: houve atualização maliciosa; volte para a versão anterior."
+ },
+ "qualidade-cap9-m9": {
+  "B": "Por severidade: primeiro a dependência crítica (horas, bloqueando o pipeline), depois o XSS alto (dias) e por fim as médias do SAST (semanas, com planejamento)."
+ },
+ "qualidade-cap9-m10": {
+  "C": "Ferramentas e pentests têm lacunas, inclusive entre uma avaliação e outra; faltam treinamento em código seguro, gestão de segredos, hardening, monitoramento de anomalias, WAF, resposta a incidentes e gestão de patches.",
+  "B": "Falta só um pentest semestral para a segurança ficar completa."
  }
 }

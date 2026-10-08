@@ -1190,5 +1190,905 @@
     ],
     "correta": 3,
     "resolucao": "Devem ser automatizados os testes repetitivos executados a cada build, a regressão de funcionalidades estáveis e os testes unitários e de integração (I, IV e V). Testes exploratórios (II) dependem de aprendizado e criatividade humana — como mostra a definição de Bach — e testes de usabilidade e percepção estética com usuários reais (III) exigem julgamento humano subjetivo."
+  },
+  {
+    "id": "engsoft-cap10-m1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um analista entrevista o gerente de vendas sobre um novo sistema de comissões. O gerente responde: \"a gente sempre calculou assim, é automático\". O analista documenta \"calcular comissões automaticamente\" e segue em frente. Qual desafio de elicitação ocorreu e qual técnica teria revelado os requisitos reais?",
+    "alternativas": [
+      "O desafio é de conflitos de interesse: o gerente está omitindo intencionalmente detalhes do cálculo para manter controle sobre o processo; a técnica adequada é o Workshop JAD com múltiplos stakeholders para forçar o gerente a revelar as regras de cálculo na presença de outros interessados que podem contradizê-lo.",
+      "Conhecimento tácito: o gerente sabe calcular, mas não consegue explicar as regras; a observação etnográfica, acompanhando um cálculo real com as planilhas e exceções, revelaria o que a entrevista não mostra.",
+      "O desafio é de escopo inflado: \"calcular comissões automaticamente\" é um requisito vago que pode ser expandido indefinidamente; a técnica adequada é aplicar MoSCoW imediatamente após a entrevista para classificar o cálculo de comissões como Must Have e forçar o gerente a especificar apenas os elementos obrigatórios, deixando os detalhes para versões futuras do sistema.",
+      "Não há desafio de elicitação: \"calcular comissões automaticamente\" é um requisito válido e suficiente para iniciar o desenvolvimento; os detalhes de implementação são responsabilidade da equipe técnica, não do analista de requisitos; o gerente respondeu corretamente e o analista documentou adequadamente — os desenvolvedores descobrirão as regras de negócio durante a implementação e validarão com o gerente conforme necessário."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap10-m2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe recebe a história: \"Como usuário, quero que o sistema seja rápido\". O Product Owner aceita e adiciona ao backlog. Quais critérios do INVEST essa história viola e como reescrevê-la corretamente?",
+    "alternativas": [
+      "Viola apenas o critério S (Small): \"ser rápido\" é amplo demais; basta dividir em \"login rápido\", \"busca rápida\" e \"relatório rápido\".",
+      "Não é estimável nem testável, pois \"rápido\" não tem medida, e seu valor é vago; reescrita: \"Como usuário da busca, quero resultados em menos de 2 segundos para não perder o foco\", com critério BDD mensurável.",
+      "A história viola apenas o critério T (Testável): adicionar um critério de aceitação como \"tempo de resposta aceitável\" resolve o problema; os demais critérios são atendidos pois histórias sobre performance são independentes de funcionalidades específicas, negociáveis com o time técnico, altamente valiosas para retenção de usuários e estimáveis com base em benchmarks de mercado para sistemas similares.",
+      "A história não viola nenhum critério INVEST: histórias de usuário em contextos ágeis são intencionalmente concisas e vagas — são \"início de uma conversa, não especificação completa\"; os detalhes de performance serão definidos durante o Sprint Planning quando a equipe negociará com o Product Owner; aceitar histórias vagas no backlog é a prática recomendada pelo Scrum Guide para maximizar a flexibilidade do time."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap10-m3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup de saúde lista 47 requisitos para o MVP do seu aplicativo. Aplicando MoSCoW, classifica 40 deles como \"Must Have\". O CTO alerta que isso está errado. Por que e qual é a regra prática?",
+    "alternativas": [
+      "O CTO está errado: em saúde, tudo que envolve segurança do paciente é Must Have por exigência da ANVISA, e a regra dos 60% não vale.",
+      "O CTO está certo: Must Have não deve passar de cerca de 60% do esforço, e 40 de 47 (85%) anula a priorização; para cada um, a pergunta é: dá para lançar sem ele? Se sim, vira Should ou Could.",
+      "O problema não é a quantidade de Must Have mas a ausência de Won't Have: MoSCoW é inválido se não tiver itens explicitamente excluídos do escopo; a regra é ter pelo menos 20% dos requisitos como Won't Have para documentar o que ficará para versões futuras; o CTO deveria exigir que a equipe identifique 10 requisitos para mover para Won't Have independentemente de sua importância funcional.",
+      "40 Must Have em 47 requisitos é aceitável para MVP: a definição de MVP (Minimum Viable Product) implica que todos os requisitos foram previamente filtrados como essenciais antes da aplicação do MoSCoW; se a equipe chegou a 47 requisitos para o MVP, já fez a triagem e todos têm justificativa de negócio; aplicar MoSCoW dentro de um MVP é redundante e cria conflito entre a filosofia ágil de MVP e a técnica de priorização tradicional."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap10-m4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor recebe o requisito: \"O sistema deve ser amigável e ter boa usabilidade\". Ele implementa uma interface e o cliente rejeita dizendo que \"não é o que esperava\". Qual atributo de qualidade de requisito foi violado e como especificar corretamente?",
+    "alternativas": [
+      "Rastreabilidade: falta dizer quem pediu; basta registrar \"João Silva (Operações) requer um sistema amigável\" e validar com ele.",
+      "Verificabilidade (e clareza): \"amigável\" não tem critério de teste; o certo é algo mensurável, como \"SUS mínimo de 80 com 5 usuários\" ou \"90% concluem o cadastro em menos de 3 minutos sem ajuda\".",
+      "O atributo violado é Completude: o requisito descreve o objetivo (amigabilidade) mas não especifica em quais telas ou funcionalidades; a solução é listar todas as telas do sistema e para cada uma adicionar o adjetivo \"amigável\": \"Login deve ser amigável\", \"Cadastro deve ser amigável\", \"Dashboard deve ser amigável\" — a especificação por tela torna o requisito completo sem necessidade de critérios mensuráveis que adicionam burocracia desnecessária ao processo ágil.",
+      "O atributo violado é Viabilidade: \"boa usabilidade\" é um requisito inviável de implementar pois depende da percepção subjetiva de cada usuário — nenhum sistema consegue ser considerado usável por 100% dos usuários; requisitos subjetivos como usabilidade devem ser removidos do SRS e substituídos por referências a normas internacionais: \"o sistema deve estar em conformidade com a ISO 9241-210\" que estabelece os critérios objetivos sem necessidade de especificação adicional."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap10-m5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe usa BDD para especificar critérios de aceitação. Um analista escreve: \"Dado que o usuário está logado, Quando clicar em qualquer botão, Então algo deve acontecer\". O Scrum Master rejeita. Por que e como reescrever corretamente?",
+    "alternativas": [
+      "O Scrum Master está errado ao rejeitar: BDD é uma técnica de comunicação entre negócio e técnica, não uma especificação formal — critérios vagos como esse são intencionais para deixar flexibilidade de implementação para o time técnico; restringir critérios de aceitação com muita especificidade viola o princípio Negociável do INVEST e engessa o desenvolvimento ágil.",
+      "\"Qualquer botão\" e \"algo deve acontecer\" não são verificáveis; o certo seria: \"Dado que estou no perfil com dados válidos, Quando clico em Salvar, Então as alterações são gravadas e aparece 'Perfil atualizado' em até 2 segundos\".",
+      "O critério está correto estruturalmente (Dado/Quando/Então) mas violou apenas o padrão de nomenclatura: \"clicar em qualquer botão\" deveria ser \"pressionar qualquer elemento interativo\" para incluir gestos touch em mobile; o Scrum Master deveria solicitar apenas ajuste de terminologia para abranger todos os tipos de dispositivo, não rejeitar o critério inteiro que está bem estruturado no formato BDD.",
+      "O problema é que BDD não deve ser usado para requisitos de interface: critérios Dado/Quando/Então são adequados apenas para regras de negócio complexas como cálculos financeiros e fluxos de aprovação; para comportamentos de interface como cliques em botões, o formato correto é o Caso de Uso UML com fluxo principal e fluxos alternativos; o Scrum Master deveria orientar o analista a migrar critérios de interface para diagramas de sequência UML."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap10-m6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um cliente solicita mudança em RF-005 (Cálculo de Desconto) que já está implementado. A matriz de rastreabilidade mostra que RF-005 está vinculado a UC-03, ao componente PricingEngine, e aos casos de teste TC-012, TC-013 e TC-014. O gerente diz \"é só mudar o código\". Por que essa visão é perigosa?",
+    "alternativas": [
+      "O gerente está certo: a matriz é documentação e deve ser atualizada depois da mudança, no fim da sprint, e não consultada antes.",
+      "A matriz mostra que a mudança atinge mais que o código: o UC-03 precisa de revisão, o PricingEngine pode ter dependências e os testes TC-012 a TC-014 devem falhar; sem análise de impacto, surgem regressões e documentação defasada.",
+      "O perigo é exclusivamente de segurança: RF-005 com cálculo de desconto pode ter implicações fiscais e tributárias; qualquer mudança em regras de desconto sem análise jurídica viola o Código Tributário Nacional; a matriz de rastreabilidade existe para identificar quais requisitos têm implicações legais — não para mapear impactos técnicos que são responsabilidade dos desenvolvedores durante o code review.",
+      "A visão do gerente é perigosa apenas se o sistema não tiver testes automatizados: com cobertura de testes adequada, o pipeline de CI identificará automaticamente todos os impactos da mudança em RF-005; a matriz de rastreabilidade é redundante quando existe suite de testes completa — equipes com TDD e cobertura acima de 80% não precisam de rastreabilidade manual pois os testes quebrados revelam todos os componentes impactados."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap10-m7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe debate qual técnica usar para levantar requisitos de um sistema de controle aduaneiro que substituirá um processo manual de 20 anos com 80 funcionários espalhados por 5 aeroportos. Entrevistas ou Observação Etnográfica? Qual combinação é mais adequada e por quê?",
+    "alternativas": [
+      "Entrevistas bastam: quem tem 20 anos de prática sabe explicar o que faz, e observar procedimentos sigilosos em aeroportos seria inviável.",
+      "Começar pela observação etnográfica, que revela workarounds e exceções de 20 anos que ninguém relata em entrevista; depois, workshops JAD para unificar as práticas dos 5 aeroportos, com entrevistas complementares a gestores.",
+      "Workshops JAD são a única técnica adequada: com 80 funcionários em 5 locais, entrevistas individuais são logisticamente inviáveis e Observação Etnográfica em aeroportos viola protocolos de segurança da ANAC; o JAD virtual com representantes de cada aeroporto é a única abordagem que combina viabilidade logística, consenso entre locais diferentes e eficiência de tempo para um projeto de substituição de sistema crítico.",
+      "Prototipagem de baixa fidelidade é a técnica principal para esse contexto: funcionários de processos manuais de longa data não conseguem especificar requisitos em linguagem abstrata — precisam reagir a algo concreto; a equipe deve criar wireframes do novo sistema antes de qualquer elicitação e apresentar aos 80 funcionários para coletar reações; essa abordagem é mais eficiente que observação ou entrevistas pois comprime o ciclo de feedback e revela rapidamente o que funciona e o que não funciona."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap10-m8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "O documento SRS de um sistema de pagamentos tem a seção de Requisitos Não Funcionais vazia. O gerente justifica: \"RNF são detalhes técnicos que a equipe decide na implementação\". Por que essa visão compromete o projeto e quais RNFs são críticos para um sistema de pagamentos?",
+    "alternativas": [
+      "O gerente está certo: desempenho e segurança vêm prontos nos SDKs de pagamento (Stripe, PagSeguro), e documentá-los seria redundante.",
+      "RNFs moldam a arquitetura e precisam ser acordados antes; em pagamentos, são críticos o desempenho, a disponibilidade (99,9%), a segurança (TLS, PCI-DSS), a conformidade com a LGPD e a confiabilidade (nenhuma transação perdida).",
+      "RNFs são responsabilidade exclusiva da equipe de operações e infraestrutura, não do analista de requisitos: SLA de disponibilidade é definido pelo contrato de hospedagem, segurança é responsabilidade do time de DevSecOps e performance é ajustada após os testes de carga; o SRS deve focar exclusivamente nos requisitos funcionais que descrevem o comportamento do sistema do ponto de vista do usuário final.",
+      "A visão do gerente é problemática apenas para requisitos de segurança: performance, disponibilidade e confiabilidade são características emergentes que só podem ser medidas em produção com usuários reais; documentar RNFs de performance no SRS cria expectativas irrealistas que nunca se confirmam em ambiente real; apenas RNFs de segurança devem estar no SRS pois são verificáveis durante o desenvolvimento através de testes de penetração."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap10-m9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um Product Owner recebe a história: \"Como administrador, quero gerenciar usuários\". Durante o refinement, a equipe descobre que \"gerenciar\" inclui criar, editar, desativar, resetar senha, alterar permissões e exportar lista — cada um com regras diferentes. Qual problema INVEST isso representa e como resolver?",
+    "alternativas": [
+      "A história viola apenas o critério I (Independente): as 6 funcionalidades de \"gerenciar usuários\" dependem umas das outras — não é possível resetar senha de um usuário que não foi criado; a solução é implementar as histórias em ordem sequencial respeitando as dependências; a história pode permanecer como está no backlog e ser decomposta em tarefas durante o Sprint Planning conforme a ordem de implementação.",
+      "Não é Small nem Estimável, pois junta 6 funções com regras diferentes; a solução é dividir em histórias menores, como \"criar usuário\" e \"desativar usuário\", cada uma com seus critérios BDD e cabendo em uma sprint.",
+      "A história viola todos os critérios INVEST simultaneamente: histórias compostas com múltiplas funcionalidades nunca atendem a nenhum critério; a solução não é decompor em histórias menores mas reescrever como Caso de Uso UML que acomoda naturalmente múltiplos fluxos dentro de um único documento; em contextos ágeis com funcionalidades administrativas complexas, Casos de Uso são superiores às histórias de usuário por sua capacidade de documentar fluxos alternativos.",
+      "Não há problema INVEST: \"gerenciar usuários\" é um épico adequadamente documentado no backlog — épicos são intencionalmente grandes e vagos para serem decompostos no futuro; o Product Owner deveria manter a história como está até a sprint em que será implementada, quando o time a decompõe em tarefas técnicas; decompor épicos antes da sprint desperdiça esforço de refinement em histórias que podem ser descartadas conforme o produto evolui."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap10-m10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma fintech usa abordagem ágil mas tem requisitos de conformidade com BACEN e LGPD. O time quer usar apenas backlog sem SRS formal. Um arquiteto propõe abordagem híbrida. Qual é a justificativa técnica para a abordagem híbrida nesse contexto?",
+    "alternativas": [
+      "O híbrido é desnecessário: Jira e Azure DevOps têm campos de conformidade, e BACEN e LGPD aceitam backlogs exportados como evidência.",
+      "Os requisitos têm naturezas diferentes: os funcionais mudam rápido e cabem no backlog ágil; os regulatórios são estáveis e auditados pelo BACEN e pela ANPD, exigindo especificação formal e rastreável; o híbrido une os dois.",
+      "A abordagem híbrida é inadequada para fintechs: reguladores como BACEN e LGPD exigem exclusivamente documentação tradicional waterfall com SRS completo aprovado antes de qualquer desenvolvimento; fintechs que adotam Scrum precisam manter dois projetos paralelos — um ágil para desenvolvimento e um waterfall para documentação regulatória — o que duplica o esforço mas é obrigatório por lei; a proposta do arquiteto de \"melhor dos dois mundos\" não tem respaldo nas regulamentações brasileiras do setor financeiro.",
+      "O backlog ágil é suficiente para conformidade regulatória se complementado por testes automatizados: BACEN e LGPD se preocupam com o comportamento do sistema em produção, não com como os requisitos foram documentados; um backlog com critérios de aceitação BDD e suite de testes automatizados com 100% de cobertura das regras regulatórias é juridicamente equivalente a um SRS formal; a abordagem híbrida proposta pelo arquiteto é conservadora e desnecessária para equipes com maturidade técnica em testes automatizados."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap11-m1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um usuário clica em \"Enviar Proposta\" em um sistema de licitações. Não aparece nenhuma mensagem, spinner ou mudança visual. Após 30 segundos, o usuário clica novamente — criando duas propostas duplicadas. Qual Abismo de Norman foi violado, qual conceito de feedback está ausente e como corrigir?",
+    "alternativas": [
+      "O Abismo da Execução foi violado: o usuário não conseguiu encontrar o botão \"Enviar Proposta\" na interface — a ação desejada estava invisível ou mal posicionada; a correção é tornar o botão mais visível com cor de destaque e posicioná-lo acima da dobra segundo a Lei de Fitts; o problema das propostas duplicadas é consequência da má visibilidade do botão, não da ausência de feedback.",
+      "O Abismo da Avaliação: o sistema não mostrou o resultado da ação, e o usuário não soube se ela funcionou; faltou feedback imediato (desabilitar o botão, mostrar progresso e confirmar o envio), o que teria evitado a proposta duplicada.",
+      "Ambos os abismos foram violados simultaneamente: o Abismo da Execução porque o botão não deixou claro que \"Enviar\" significa submeter definitivamente (affordance ambígua), e o Abismo da Avaliação pela ausência de confirmação; a correção principal é adicionar uma caixa de diálogo de confirmação antes do envio (\"Tem certeza que deseja enviar?\") que resolve os dois abismos com uma única intervenção de design.",
+      "Nenhum abismo foi violado: o clique duplo foi um deslize de atenção do usuário, resolvido com treinamento, não com redesenho."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap11-m2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um aplicativo de delivery tem ícone de \"coração\" para favoritar restaurantes mas não tem rótulo textual. Usuários idosos relatam não entender a função. Um designer propõe remover o ícone e usar apenas texto. Outro sugere manter o ícone com signifier. Qual solução é mais alinhada com os conceitos de Norman e por quê?",
+    "alternativas": [
+      "Remover o ícone e usar só texto: palavras são universais, e ícones mudam de sentido entre culturas e idades.",
+      "Manter o ícone com signifier: a affordance existe, mas não é percebida por todos; um rótulo \"Favoritar\" e o coração preenchido ao marcar tornam a função visível para idosos e novatos, sem perder o ícone.",
+      "A melhor solução é substituir o coração por um ícone de estrela que é universalmente reconhecido como \"favorito\" em qualquer cultura e faixa etária — o problema não é a ausência de signifier mas a escolha do ícone errado; estrela é um signifier intrínseco que dispensa rótulo textual; corações têm conotação emocional que confunde usuários que não associam afeto com a ação de salvar um restaurante preferido.",
+      "O problema não é de affordance ou signifier mas de carga cognitiva extrínseca: a interface tem muitos elementos que competem pela atenção do usuário, fazendo com que o coração passe despercebido; a solução correta segundo os princípios de atenção seletiva é remover outros elementos da tela para destacar o ícone de favoritar, sem necessidade de rótulo textual que aumentaria a densidade informacional e pioraria a experiência dos usuários jovens familiarizados com a interface."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap11-m3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma interface de terminal bancário (CLI) é substituída por GUI touch. Caixas experientes que operavam 200 transações/hora no CLI agora fazem apenas 90/hora no GUI touch. A gerência comemora dizendo que \"a interface ficou mais moderna\". Por que os dados indicam um problema e como equilibrar os dois paradigmas?",
+    "alternativas": [
+      "Os dados não indicam problema: a redução de 200 para 90 transações/hora é esperada e aceitável em qualquer migração de CLI para GUI — usuários levam em média 6 meses para atingir a mesma produtividade em um novo paradigma; a gerência está correta ao priorizar modernização pois interfaces CLI são insustentáveis para recrutamento de novos funcionários que não têm treinamento em linha de comando.",
+      "Há perda real de eficiência (55%): o CLI favorece especialistas com atalhos, e a migração feriu a heurística 7 (Flexibilidade e Eficiência); a solução é uma GUI simples para novatos, com atalhos, macros e modo especialista para os experientes.",
+      "O problema é que o GUI touch foi mal implementado: 90 transações/hora é resultado de design ruim da nova interface, não da limitação inerente do paradigma touch; uma GUI touch bem projetada supera CLI em velocidade pois elimina a necessidade de memorização de comandos; a solução é contratar consultores de UX para redesenhar a GUI touch com targets maiores, fluxos otimizados e zero erros de toque — após o redesign, a produtividade superará as 200 transações/hora do CLI.",
+      "A redução de produtividade é consequência da resistência dos funcionários à mudança, não de limitações do paradigma touch: caixas experientes em CLI desenvolvem resistência psicológica a novas interfaces por conforto com o familiar; com treinamento adequado de 30 horas e incentivos financeiros para adoção, a produtividade no GUI touch igualará e superará o CLI em 3 meses; dados de produtividade coletados nas primeiras semanas pós-migração não representam o desempenho real do novo paradigma."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap11-m4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um site governamental de declaração de imposto de renda tem formulários sem rótulos visíveis (apenas placeholder), erros identificados apenas por cor vermelha, e navegação impossível sem mouse. Quais princípios WCAG são violados e quais são as implicações legais no Brasil?",
+    "alternativas": [
+      "Só o princípio Compreensível é violado; erro em vermelho e navegação por mouse são aceitos no nível A, que basta para sites públicos.",
+      "Violam-se três princípios WCAG: Perceptível (erro só por cor), Operável (sem acesso por teclado) e Compreensível (placeholder sem rótulo); no Brasil, isso contraria a LBI (Lei 13.146/2015), o Decreto 5.296/2004 e o e-MAG.",
+      "O site viola apenas o princípio Robusto: HTML semântico incorreto nos formulários impede que leitores de tela interpretem os campos — esse é o único problema técnico que constitui violação formal das WCAG; placeholders e navegação por mouse são padrões aceitos pelas WCAG AA para sites governamentais segundo as adaptações do e-MAG para o contexto brasileiro onde 90% dos usuários usam mouse.",
+      "As violações descritas não têm implicações legais no Brasil: a LBI 13.146/2015 estabelece o direito à acessibilidade mas não define penalidades específicas para sites com problemas de usabilidade; o Decreto 5.296/2004 aplica-se apenas a sites criados após 2004 e isentas reformulações de sistemas legados; na prática, não existe órgão fiscalizador ativo de acessibilidade digital no Brasil e nenhum site governamental foi multado por violação das WCAG desde a promulgação da LBI."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap11-m5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um usuário tenta cancelar uma assinatura de streaming. O caminho é: Conta → Configurações → Planos → Gerenciar → Cancelar → \"Você tem certeza?\" → \"Mas você vai perder esses benefícios...\" → \"Última chance...\" → \"Confirmar cancelamento\" (botão pequeno, baixo contraste). Classifique isso segundo IHC ética e quais conceitos são violados.",
+    "alternativas": [
+      "É um fluxo de retenção legítimo: a empresa pode mostrar os benefícios antes do cancelamento, e o botão final continua disponível.",
+      "É dark pattern (Roach Motel e Confirmshaming): o cancelamento é difícil de propósito, o botão final é escondido e as mensagens exploram a aversão à perda; manipula em vez de informar, e órgãos de defesa do consumidor tratam isso como prática abusiva.",
+      "O fluxo de cancelamento descrito é inadequado apenas por questões técnicas de acessibilidade: o botão com baixo contraste viola WCAG AA e deve ser corrigido; as múltiplas telas de confirmação são uma boa prática de UX que previne cancelamentos acidentais seguindo a heurística 5 de Prevenção de Erros; a IHC ética não tem posição sobre quantas confirmações um fluxo de cancelamento pode ter desde que o botão final seja visível e acessível.",
+      "O problema é exclusivamente de arquitetura da informação: o caminho \"Conta → Configurações → Planos → Gerenciar → Cancelar\" viola o princípio de navegação por ter 5 níveis de profundidade quando 2 seriam suficientes; as mensagens de retenção são eticamente neutras e a questão do botão com baixo contraste é um erro técnico de CSS, não uma escolha de design intencional; IHC ética se preocupa com estrutura de navegação, não com o conteúdo persuasivo das mensagens apresentadas durante os fluxos de cancelamento."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap11-m6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe projeta interface para óculos de realidade aumentada para cirurgiões exibirem dados do paciente durante operações. Quais características específicas do paradigma AR devem guiar o design e quais desafios únicos esse contexto apresenta?",
+    "alternativas": [
+      "AR em cirurgia é inviável: sobrepor dados ao campo visual distrai e causa enjoo; os dados devem ficar em monitores laterais.",
+      "Informação na periferia do campo cirúrgico, comando por voz ou gesto (mãos ocupadas), dados só sob demanda para reduzir a carga cognitiva, contraste sobre fundos variados, latência mínima e prevenção de enjoo; a segurança vem antes da quantidade de informação.",
+      "O principal desafio do AR para cirurgiões é o custo do hardware: óculos de AR médicos custam entre R$50.000 e R$200.000 por unidade; a equipe deve projetar para o hardware mais barato disponível para maximizar adoção; as diretrizes de design são as mesmas da GUI convencional adaptadas para resolução menor dos displays AR; os desafios únicos do contexto cirúrgico (mãos ocupadas, ambiente estéril, precisão crítica) são resolvidos com treinamento intensivo dos cirurgiões, não com decisões de design específicas.",
+      "AR para cirurgiões deve seguir exatamente o mesmo design de smartphones touch: os usuários já estão familiarizados com interfaces touch de tablets médicos amplamente usados em hospitais; transferir os padrões de interação do touch para AR reduz a curva de aprendizado; o único ajuste necessário é aumentar o tamanho dos elementos interativos para 88x88px (dobro do padrão mobile de 44x44px) para compensar a imprecisão dos gestos com luvas cirúrgicas."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap11-m7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema de e-commerce exibe preços com fonte tamanho 8px em cinza claro sobre fundo branco, coloca o botão \"Adicionar ao Carrinho\" no rodapé da página após 5 telas de scroll, e usa ícones sem rótulo para as principais ações. Analise cada decisão à luz das leis cognitivas e princípios de IHC.",
+    "alternativas": [
+      "As três decisões são aceitáveis para usuários jovens familiarizados com e-commerce: fonte pequena é estética minimalista que deixa o produto em destaque, botão no rodapé segue o padrão de \"leitura completa antes da compra\" que aumenta a conversão, e ícones sem rótulo são modernos e universalmente reconhecidos pela geração Z que é o público-alvo do e-commerce contemporâneo.",
+      "Preço em 8px cinza-claro fere o contraste da WCAG (4,5:1) e a atenção seletiva; botão após 5 telas fere a Lei de Fitts (alvo distante); ícones sem rótulo ferem o reconhecimento em vez da lembrança e sobrecarregam a memória de trabalho.",
+      "O único problema real é o contraste do preço: fonte 8px cinza claro sobre branco viola WCAG AA (contraste mínimo 4,5:1) e deve ser corrigido; a posição do botão no rodapé e ícones sem rótulo são decisões de design legítimas — o padrão de \"long-form sales page\" com CTA no final é amplamente usado e validado por dados de conversão em e-commerce; ícones modernos em sistemas de compras são auto-explicativos para 95% dos usuários conforme estudos de eye tracking em plataformas como Amazon e Shopify.",
+      "As três decisões violam exclusivamente a heurística 8 de Nielsen (Estética e Design Minimalista): cada elemento de interface compete com os outros pela atenção; a solução é aplicar hierarquia visual mais agressiva sem alterar posição ou tamanho dos elementos — usando apenas variações de peso tipográfico, o usuário naturalmente identificará o preço, o botão e os ícones na ordem correta de importância."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap11-m8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um assistente de voz responde \"Não entendi o que você disse\" sem sugerir o que o usuário deveria ter dito. Em seguida, o usuário tenta três vezes com variações e desiste. Quais dimensões do Design de Interação (Crampton Smith) foram mal projetadas e como o design conversacional deveria tratar esse cenário?",
+    "alternativas": [
+      "Só a dimensão 1D falhou, e \"Não entendi\" é adequado; o problema é limitação do reconhecimento de voz, que o design não resolve.",
+      "Falham as Palavras (1D: \"Não entendi\" sem sugestão), o Tempo (4D: tentativas sem adaptação) e o Comportamento (5D: o assistente não muda após falhas); o certo é sugerir opções (\"Você quis dizer X ou Y?\") e oferecer outro canal após 2 erros.",
+      "A dimensão violada é exclusivamente 3D (Espaço Físico): o assistente de voz foi projetado para ambientes silenciosos mas está sendo usado em contexto ruidoso; o design deveria detectar o nível de ruído ambiente e ajustar automaticamente o threshold de reconhecimento; as dimensões 1D, 4D e 5D estão adequadamente implementadas — \"Não entendi\" é a resposta padrão recomendada pelas diretrizes de design conversacional do Google Assistant e Amazon Alexa.",
+      "A dimensão 2D (Representações Visuais) é a única falha: assistentes de voz sem interface visual deixam o usuário sem referência do que o sistema está esperando; a solução é sempre combinar VUI com GUI mostrando na tela o que o assistente está aguardando e sugestões de comandos válidos; assistentes de voz puramente auditivos são inadequados para qualquer uso prático e deveriam ser substituídos por interfaces multimodais em todos os produtos comerciais."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap11-m9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor argumenta que \"acessibilidade é para deficientes e nosso produto tem 0% de usuários com deficiência segundo nossos dados de cadastro\". Por que esse argumento é equivocado segundo a IHC e a legislação brasileira?",
+    "alternativas": [
+      "O argumento é razoável: sem usuários com deficiência nos dados, investir em WCAG agora tira recursos de funcionalidades de maior impacto.",
+      "Cadastro não revela deficiência, que pode ser invisível ou temporária; recursos acessíveis ajudam a todos (efeito rampa de calçada); a LBI torna a acessibilidade um direito; e a ausência desse público pode ser efeito da própria falta de acesso.",
+      "O argumento é completamente correto do ponto de vista de engenharia de software: requisitos de acessibilidade WCAG AA aumentam em média 30% o custo de desenvolvimento sem benefício mensurável quando não há usuários com deficiência identificados; a LBI 13.146/2015 aplica-se apenas a produtos comercializados para o governo federal — produtos B2C e B2B privados não têm obrigação legal de implementar WCAG segundo a interpretação atual dos tribunais brasileiros de propriedade intelectual.",
+      "O desenvolvedor está parcialmente correto: dados de 0% de usuários com deficiência justificam postergação da acessibilidade para versões futuras, mas não eliminação permanente; o prazo legal segundo a LBI é de 2 anos após o lançamento para implementar WCAG A (mínimo); produtos que implementam apenas WCAG A estão em conformidade legal no Brasil independentemente de quantos usuários com deficiência utilizam o serviço; WCAG AA e AAA são recomendações sem força legal para produtos privados."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap11-m10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe de design usa Percurso Cognitivo para avaliar o fluxo de cadastro de um novo aplicativo. O avaliador, que é designer sênior com 10 anos de experiência, conclui que \"o fluxo está intuitivo e sem problemas\". Na semana seguinte, testes com usuários iniciantes revelam 7 problemas críticos. O que explica essa discrepância e qual é a limitação do método?",
+    "alternativas": [
+      "Foi erro de aplicação: um sênior que siga o protocolo do Percurso Cognitivo à risca não teria esse viés.",
+      "A maldição do conhecimento: o especialista sabe onde as coisas ficam e completa lacunas sem perceber, então não reproduz a cabeça de um iniciante; é o limite do método, e por isso testes com usuários reais são insubstituíveis.",
+      "A discrepância indica que os usuários nos testes não eram representativos do público-alvo: 7 problemas críticos em testes com \"usuários iniciantes\" sugere que o recrutamento foi inadequado — foram selecionadas pessoas sem familiaridade com smartphones quando o produto é para pessoas com experiência digital básica; o Percurso Cognitivo do designer sênior é mais confiável que testes com usuários mal recrutados; a equipe deve refazer os testes com personas mais alinhadas ao perfil real do produto.",
+      "A discrepância prova que Percurso Cognitivo e testes com usuários medem aspectos completamente diferentes e incomparáveis: Percurso Cognitivo avalia conformidade com princípios de design, enquanto testes com usuários medem preferência subjetiva; os 7 \"problemas críticos\" identificados com usuários podem não ser problemas reais de usabilidade mas apenas preferências pessoais; o designer sênior usando Percurso Cognitivo tem avaliação tecnicamente mais precisa do que 5 a 10 usuários leigos cuja opinião sobre interfaces é influenciada por exposição prévia a outros produtos."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap12-m1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap12",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa descobre uma violação de dados 9 meses após ela ocorrer. A investigação revela que logs de autenticação não existiam, a vulnerabilidade estava em uma biblioteca desatualizada e o código tinha credenciais hardcoded. Mapeie cada falha no OWASP Top 10 e explique como o pipeline DevSecOps teria prevenido cada uma.",
+    "alternativas": [
+      "Todas as três falhas são instâncias da mesma vulnerabilidade OWASP A05 (Security Misconfiguration) — ausência de logs, bibliotecas desatualizadas e credenciais hardcoded são todas consequências de configuração incorreta do ambiente; o pipeline DevSecOps preveniria com IaC Security Scanning que detecta automaticamente todas as configurações inseguras antes do deploy em produção.",
+      "São três falhas distintas: sem logs (A09), resolvida com SIEM e alertas; biblioteca desatualizada (A06), barrada por SCA no pipeline (Snyk/Dependabot); credencial no código (A02), barrada por detecção de segredos (GitLeaks) a cada commit.",
+      "As falhas mapeiam para A07 (Auth Failures), A08 (Integrity Failures) e A04 (Insecure Design): ausência de logs indica falha de autenticação; biblioteca desatualizada indica falha de integridade do supply chain; credenciais hardcoded indicam design inseguro desde a arquitetura; o pipeline DevSecOps preveniria com DAST em staging que simularia ataques reais e detectaria as três vulnerabilidades simultaneamente antes do deploy.",
+      "O tempo de 9 meses para detecção é o único problema real — as outras três falhas são riscos toleráveis em sistemas de médio porte; biblioteca desatualizada só é crítica se a CVE específica for explorável no contexto do sistema; credenciais hardcoded são problema apenas se o repositório for público; ausência de logs de autenticação é aceitável se o sistema tiver monitoramento de rede (IDS/IPS) que compensaria a falta de logs de aplicação."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap12-m2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap12",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor cria um sistema de consulta de notas universitárias onde a URL é sistema.edu.br/nota?aluno_id=1042. Um aluno malicioso muda para aluno_id=1043 e vê as notas de outro estudante. Qual vulnerabilidade OWASP está em ação, como funciona o ataque e quais são as duas principais contramedidas?",
+    "alternativas": [
+      "A03 (Injection): o aluno_id é concatenado na query SQL; prepared statements resolvem o problema.",
+      "A01 (Broken Access Control): o servidor não verifica se o usuário logado pode ver aquele aluno_id; as contramedidas são checar a autorização no servidor (a defesa principal) e usar identificadores não previsíveis, como UUIDs.",
+      "A vulnerabilidade é A04 (Insecure Design): o design do sistema não considerou o controle de acesso desde o início — IDs sequenciais na URL são uma decisão arquitetural que cria exposição sistêmica; a contramedida é redesenhar completamente a arquitetura usando tokens JWT com claims do usuário que eliminam a necessidade de IDs na URL; sistemas bem projetados nunca expõem identificadores de outros recursos em parâmetros de URL acessíveis ao usuário.",
+      "A vulnerabilidade é A10 (SSRF): o parâmetro aluno_id na URL permite que o atacante force o servidor a acessar recursos internos do sistema acadêmico; mudando o ID, o atacante está fazendo o servidor consultar dados de outro usuário usando as credenciais do servidor — esse padrão é exatamente o Server-Side Request Forgery onde o servidor acessa recursos em nome do atacante; a contramedida é implementar allowlist de IDs válidos para o usuário autenticado."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap12-m3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap12",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema financeiro usa MD5 para armazenar senhas. Um atacante obtém o banco de dados e em 2 horas recupera 80% das senhas usando rainbow tables. Por que MD5 é inadequado para senhas e como bcrypt resolve os dois problemas fundamentais?",
+    "alternativas": [
+      "O problema do MD5 são só as colisões conhecidas; o bcrypt resolve por não ter colisões, e o salt é uma questão à parte.",
+      "O MD5 é rápido demais (bilhões de tentativas por segundo em GPU) e, sem salt, a mesma senha gera o mesmo hash, o que permite rainbow tables; o bcrypt tem custo configurável que torna cada tentativa cara e um salt único por senha.",
+      "O problema do MD5 é exclusivamente o determinismo: a mesma senha sempre gera o mesmo hash, permitindo que atacantes usem tabelas de lookup; adicionar um salt aleatório ao MD5 antes do hash resolve completamente o problema de rainbow tables tornando MD5 com salt tão seguro quanto bcrypt para armazenamento de senhas; bcrypt é preferido apenas por convenção da indústria, não por vantagem técnica mensurável sobre MD5 com salt adequado.",
+      "MD5 é inadequado porque usa apenas 128 bits de saída: hashes curtos têm espaço de colisão menor que facilita ataques de força bruta; bcrypt usa 184 bits de saída que aumenta exponencialmente o espaço de busca; a recuperação de 80% das senhas em 2 horas indica ataques de força bruta por tamanho de hash, não uso de rainbow tables que são ineficazes contra qualquer algoritmo moderno independentemente do tamanho do hash."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap12-m4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap12",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe realiza Threat Modeling com STRIDE para um sistema de transferência bancária online. Para a ação \"usuário envia transferência de R$5.000\", identifique uma ameaça específica e contramedida para pelo menos 4 das 6 categorias STRIDE.",
+    "alternativas": [
+      "S: senha fraca (exigir 8 caracteres); T: valor alterado (HTTPS); R: banco nega a ordem (comprovante em PDF); I: destinatário na tela (asteriscos).",
+      "S: sessão sequestrada (MFA e sessão curta); T: valor alterado em trânsito (TLS e assinatura da transação); R: cliente nega a ordem (log de auditoria imutável); D: robô dispara milhares de pedidos (rate limiting e WAF); E: usuário comum faz transferência em lote (RBAC no servidor).",
+      "STRIDE não se aplica adequadamente a transações financeiras: foi desenvolvido pela Microsoft para ameaças em sistemas operacionais e APIs corporativas; bancos usam frameworks específicos como PASTA (Process Attack Simulation and Threat Analysis) ou OCTAVE que foram desenvolvidos para o setor financeiro e incluem categorias de ameaça específicas como fraude, lavagem de dinheiro e engenharia social que o STRIDE não cobre adequadamente.",
+      "Para transferência bancária, apenas S e E do STRIDE são relevantes: Spoofing (autenticação fraca) e Elevation of Privilege (acesso não autorizado) são as únicas ameaças realistas em sistemas bancários modernos com TLS; T (Tampering) é impossível com HTTPS ativo; R (Repudiation) é resolvido automaticamente pelos logs do banco central (BACEN); I (Info Disclosure) é coberto pela LGPD que responsabiliza o banco; D (DoS) é tratado pela infraestrutura cloud com auto-scaling automático."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap12-m5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap12",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor recebe código legado com a query: query = \"SELECT * FROM clientes WHERE nome = '\" + nome_input + \"'\". Um colega diz \"não precisa mudar, temos WAF na frente\". Por que essa resposta é tecnicamente insuficiente e qual é a correção correta?",
+    "alternativas": [
+      "O colega está correto: WAF moderno com regras OWASP CoreRuleSet bloqueia 100% dos ataques de SQL Injection conhecidos — é uma camada de proteção comprovadamente eficaz que elimina a necessidade de refatorar código legado; a regra de Defesa em Profundidade não obriga que cada camada seja perfeita, apenas que existam múltiplas camadas; o WAF é a camada adequada para mitigar vulnerabilidades de injection no código de produção.",
+      "O WAF é só uma camada e pode ser contornado por payloads ofuscados ou ataques de segunda ordem; a correção está no código: query parametrizada, como cursor.execute(\"SELECT * FROM clientes WHERE nome = %s\", (nome_input,)), que separa comando e dado.",
+      "A query só é vulnerável se nome_input vier diretamente do usuário: se vier de uma fonte interna confiável (outro sistema da empresa, valor calculado pelo backend), a concatenação é segura; WAF é suficiente para inputs externos ao sistema; a regra de validação de entradas do OWASP define \"fonte externa\" como qualquer input vindo de fora do processo atual — valores de outra API interna são considerados confiáveis e dispensam prepared statements segundo as diretrizes de segurança do NIST.",
+      "O problema não é SQL Injection mas A01 (Broken Access Control): a query usa SELECT * que retorna todos os campos incluindo dados sensíveis que o usuário pode não ter permissão de ver; a correção correta é substituir SELECT * por seleção explícita dos campos autorizados para aquele tipo de usuário; prepared statements não resolvem o problema de acesso a campos não autorizados que é a vulnerabilidade real nesse código."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap12-m6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap12",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "A empresa Acme usa a biblioteca Log4j versão 2.14 em seu sistema Java. Em dezembro de 2021, a CVE-2021-44228 (Log4Shell) é publicada permitindo execução remota de código. O time de segurança não tem SCA no pipeline. Quais são os riscos e como o DevSecOps teria prevenido?",
+    "alternativas": [
+      "Não há risco em sistemas internos: o Log4Shell só é explorável em servidores que registram requisições HTTP vindas da internet.",
+      "É um caso de A06 (componentes vulneráveis): no Log4j 2.14, um texto logado pode executar código no servidor (RCE); com SCA no pipeline, o build teria acusado a CVE-2021-44228 e bloqueado o deploy até a atualização para a 2.17 ou superior.",
+      "O risco do Log4Shell é exagerado pela mídia: a CVE-2021-44228 requer que o atacante consiga injetar a string ${jndi:ldap://...} nos logs do sistema — isso só é possível em sistemas com validação de entrada completamente ausente; sistemas com qualquer validação básica de input não são vulneráveis; o SCA teria identificado a versão mas a avaliação de risco contextual revelaria que o sistema não é explorável na prática.",
+      "A prevenção correta seria DAST, não SCA: o DAST testa a aplicação em execução e detectaria comportamentos anômalos do Log4j durante os testes de staging antes do deploy em produção; o SCA apenas verifica números de versão de dependências — não valida se a vulnerabilidade é explorável no contexto específico da aplicação; para CVEs de execução remota como Log4Shell, apenas testes dinâmicos com payloads reais confirmam se o sistema é vulnerável."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap12-m7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap12",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema de e-commerce permite que usuários forneçam URLs de imagens de produtos: POST /produto { \"imagem_url\": \"https://cdn.loja.com/img.jpg\" }. Um atacante envia \"imagem_url\": \"http://169.254.169.254/latest/meta-data/iam/credentials\". O que acontece e qual vulnerabilidade OWASP está sendo explorada?",
+    "alternativas": [
+      "É A03 (Injection): a URL injeta um comando no sistema de arquivos; basta aceitar só URLs terminadas em .jpg, .png ou .webp.",
+      "É A10 (SSRF): o servidor busca a URL sem validar e acessa o serviço interno de metadados da AWS, devolvendo credenciais IAM; previne-se com allowlist de domínios, bloqueio de IPs privados e link-local e sem seguir redirecionamentos.",
+      "O endereço 169.254.169.254 é o IP de loopback IPv6 equivalente ao 127.0.0.1 IPv4 — o atacante está tentando acessar serviços locais do servidor (A01 — Broken Access Control); a prevenção é bloquear URLs que apontam para localhost e IPs de loopback; endereços de metadados cloud são IPs públicos da AWS que o servidor nunca conseguiria acessar por estarem fora da rede interna da empresa.",
+      "A vulnerabilidade é A05 (Security Misconfiguration): o servidor de e-commerce não deveria processar URLs de imagens externas — essa funcionalidade deveria estar desabilitada por configuração padrão segura; aceitar URLs arbitrárias de usuários é uma configuração incorreta independentemente de validação; a solução correta é redesenhar o sistema para aceitar apenas upload direto de arquivos de imagem, eliminando completamente o processamento de URLs externas."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap12-m8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap12",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup defende que \"segurança pode ser adicionada depois, quando tivermos usuários e receita\". O CTO apresenta dados: vulnerabilidade encontrada em requisitos custa $100 para corrigir; a mesma vulnerabilidade em produção custa $10.000. Além do custo financeiro, quais outros argumentos técnicos refutam a postura da startup?",
+    "alternativas": [
+      "O argumento financeiro do CTO está correto mas exagerado: a proporção 1:100 (requisitos vs. produção) é válida apenas para sistemas de grande escala com milhões de usuários; para startups com menos de 10.000 usuários, o custo de correção em produção é proporcionalmente menor pois o impacto é limitado; adicionar segurança depois é estratégica válida para startups em fase de validação de produto que não podem se dar ao luxo de investir em segurança antes de confirmar product-market fit.",
+      "Arquitetura insegura custa muito mais para refazer, e falhas de design (A04) não se corrigem com patch; um vazamento destrói a reputação de uma startup, a LGPD prevê multas, e ferramentas como SAST no IDE custam pouco desde o início.",
+      "A startup está correta: Shift Left Security é adequado para empresas com maturidade em DevOps; startups em fase inicial sem pipeline de CI/CD estruturado não têm como implementar SAST, DAST e SCA de forma eficaz; a sequência correta é: validar produto → escalar usuários → implementar CI/CD → integrar segurança; tentar implementar DevSecOps antes de ter produto estável desperdiça recursos e atrasa o time-to-market que é o fator crítico de sobrevivência de startups.",
+      "O único argumento extra é a LGPD; fora isso, \"segurança depois\" é defensável, pois sistemas sem usuários não correm risco real."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap12-m9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap12",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema implementa verificação de permissões apenas no frontend JavaScript: o botão \"Deletar Usuário\" fica oculto para perfis não-admin. Um desenvolvedor encontra a API DELETE /api/usuario/42 e chama diretamente via curl sem estar autenticado como admin. Qual princípio fundamental de segurança foi violado e quais vulnerabilidades OWASP estão envolvidas?",
+    "alternativas": [
+      "O princípio violado é Validação de Entradas: o endpoint DELETE aceita qualquer ID sem validar se o formato está correto; a prevenção é implementar regex de validação no servidor que aceite apenas IDs numéricos em formato esperado; a vulnerabilidade OWASP é A03 (Injection) pois o atacante injeta um ID arbitrário na URL para executar deleção não autorizada.",
+      "Violou-se \"nunca confie no cliente\" (e a defesa em profundidade): esconder o botão não protege a API, que qualquer um chama via curl; é A01 (Broken Access Control) e talvez A07, pois toda autorização deve ser checada no servidor.",
+      "O princípio violado é Menor Privilégio: o desenvolvedor que descobriu a vulnerabilidade tem acesso ao ambiente de produção e às APIs internas — usuários de desenvolvimento não deveriam ter visibilidade dos endpoints de produção; a prevenção é segregar ambientes (dev/staging/prod) com redes separadas e credenciais diferentes; a vulnerabilidade OWASP é A05 (Security Misconfiguration) pois APIs de administração não deveriam ser acessíveis fora da rede interna.",
+      "Não há violação de princípio de segurança: esconder botões no frontend é uma prática de UX, não uma medida de segurança — desenvolvedores e testadores precisam ter acesso direto às APIs para realizar seu trabalho; o acesso via curl sem autenticação admin indica que o desenvolvedor usou suas próprias credenciais de admin para teste legítimo; APIs RESTful são por design acessíveis a qualquer cliente HTTP e a segurança é garantida pelos tokens de autenticação que o desenvolvedor apresentou na requisição curl."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap12-m10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap12",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe implementa todos os controles de segurança em uma única camada: firewall de rede bloqueia tudo exceto porta 443. O CTO diz \"com TLS e firewall, estamos seguros\". Um engenheiro de segurança discorda citando o princípio de Defesa em Profundidade. Como o engenheiro justificaria sua posição com exemplos de ameaças que o firewall + TLS não previnem?",
+    "alternativas": [
+      "O CTO está correto para sistemas modernos: TLS 1.3 + firewall de perímetro com regras corretamente configuradas é suficiente para bloquear 99,9% dos ataques conhecidos; Defesa em Profundidade é um princípio do NIST para sistemas críticos de infraestrutura (usinas nucleares, sistemas militares) que gera overhead desnecessário para aplicações web comerciais; o único risco real não coberto pelo TLS + firewall são ataques de engenharia social que são um problema de treinamento, não de arquitetura de segurança.",
+      "TLS e firewall não barram o que chega pela porta 443: IDOR (A01), SQL Injection (A03), payloads como o do Log4Shell (A06) e credenciais roubadas; a defesa em profundidade soma WAF, autenticação forte, autorização no servidor, validação e monitoramento.",
+      "O engenheiro está errado: mTLS e um firewall NGFW com inspeção de pacotes cobrem todas as camadas, inclusive SQL Injection e SSRF.",
+      "Firewall + TLS protege contra ameaças externas mas não contra ameaças internas: o único gap real é o insider threat — funcionário malicioso na rede interna que tem acesso às APIs sem passar pelo firewall; a Defesa em Profundidade nesse contexto significa adicionar uma segunda camada de firewall interno entre os serviços para segmentar a rede; ameaças externas que passam pelo firewall e TLS como SQL Injection e SSRF são detectadas automaticamente pelo HTTPS inspection do firewall moderno sem necessidade de camadas adicionais de segurança na aplicação."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap7-m1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe de 20 desenvolvedores trabalha sem GCS. Dois desenvolvedores modificam o mesmo arquivo simultaneamente, um bug crítico aparece em produção e ninguém consegue identificar qual mudança o introduziu. Qual é a consequência direta da ausência de GCS e como ela resolveria cada um desses problemas?",
+    "alternativas": [
+      "A GCS só resolve edições simultâneas, com locks de arquivo; rastrear bugs e reproduzir ambientes cabe à equipe de QA.",
+      "Sem GCS surgem três problemas: trabalho sobrescrito (resolvido por merge e controle de versões), bug sem origem rastreável (resolvido pelo histórico de commits) e ambientes impossíveis de reproduzir (resolvido versionando Dockerfiles e scripts de IaC).",
+      "A GCS resolve o problema de bugs em produção através de testes automatizados obrigatórios — sem GCS, testes não são executados antes do deploy; com GCS, o pipeline de CI/CD garante que todo commit passa por testes antes de chegar à produção; o problema de dois desenvolvedores modificarem o mesmo arquivo é resolvido pelo pair programming, não pela GCS.",
+      "Esses problemas são resolvidos exclusivamente por ferramentas, não pela disciplina de GCS — instalar o Git resolve automaticamente todos os conflitos de código, ferramentas de APM como Datadog identificam bugs em produção, e Docker resolve reprodução de ambientes; GCS é apenas a formalização burocrática dessas ferramentas sem valor prático adicional."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap7-m2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema bancário está na versão 2.4.1. A equipe planeja: (A) corrigir um bug de arredondamento em transferências, (B) adicionar autenticação por biometria, e (C) remover o suporte ao protocolo legado TLSv1.0 quebrando integrações antigas. Qual seria a nova versão para cada mudança segundo o SemVer?",
+    "alternativas": [
+      "A) 2.4.2, B) 2.4.3, C) 2.4.4 — todas são PATCH, pois não mudam a interface pública.",
+      "A) 2.4.2 (PATCH: correção retrocompatível); B) 2.5.0 (MINOR: funcionalidade nova sem remover nada); C) 3.0.0 (MAJOR: remover o TLSv1.0 quebra integrações existentes).",
+      "A) 2.4.2, B) 3.0.0, C) 2.5.0 — autenticação por biometria é sempre MAJOR pois altera o fluxo de autenticação do sistema; remoção do TLSv1.0 é MINOR pois apenas remove uma feature obsoleta sem adicionar nada novo; correção do bug de arredondamento é PATCH conforme definição do SemVer.",
+      "Todas as três mudanças resultariam em 3.0.0 — qualquer mudança em sistema bancário que afeta transações financeiras é automaticamente classificada como MAJOR pelo SemVer pois o impacto para o usuário final é crítico; a especificação SemVer tem regras especiais para sistemas financeiros que sobrepõem as regras gerais de MAJOR.MINOR.PATCH."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap7-m3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup de SaaS faz deploy várias vezes ao dia com equipe de 5 desenvolvedores. Eles estão avaliando entre Git Flow e GitHub Flow. O CTO argumenta que Git Flow é mais \"profissional\" por ter mais branches. Por que esse argumento é equivocado?",
+    "alternativas": [
+      "O CTO está correto: mais branches significa mais controle e profissionalismo — Git Flow com branches main, develop, feature/*, release/* e hotfix/* é sempre superior ao GitHub Flow independentemente do contexto; equipes menores devem adotar estratégias mais complexas para se prepararem para o crescimento futuro da empresa.",
+      "Mais branches significam mais complexidade, não mais profissionalismo; o Git Flow serve a releases planejadas com várias versões em produção, e para deploy diário com uma única versão o GitHub Flow (main sempre deployável e PRs curtos) é o adequado.",
+      "O argumento do CTO é parcialmente correto: Git Flow é mais profissional mas pode ser simplificado removendo a branch release/* para startups; manter main, develop, feature/* e hotfix/* é o mínimo para qualquer equipe que se considera profissional; GitHub Flow sem branch develop é adequado apenas para projetos pessoais e open source de pequeno porte.",
+      "A escolha entre Git Flow e GitHub Flow não impacta a velocidade de deploy — ambas as estratégias suportam deploy várias vezes ao dia com a mesma eficiência; a decisão deve ser baseada exclusivamente na preferência da equipe e na ferramenta de hospedagem utilizada; GitHub Flow é obrigatório para repositórios no GitHub e Git Flow para repositórios no GitLab ou Azure DevOps."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap7-m4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um desenvolvedor sênior defende Trunk-Based Development para uma equipe, mas um colega questiona: \"Se todos commitam direto na main, como evitamos que código incompleto quebre a produção?\" Qual é a resposta técnica correta?",
+    "alternativas": [
+      "Usando branches de no máximo 1 dia com merge no fim do expediente; commits diretos na main não fazem parte da estratégia.",
+      "Feature flags permitem integrar código incompleto na main com a funcionalidade desligada em produção, ligando-a só quando estiver pronta; com CI rodando testes a cada commit, a main continua sempre deployável.",
+      "Trunk-Based Development só é viável quando a equipe tem 100% de cobertura de testes — sem cobertura completa, código defeituoso inevitavelmente chegará à produção através da main; por isso a estratégia é usada apenas por Google e Netflix que têm infraestrutura de testes impossível de replicar; para equipes normais, Git Flow é sempre mais seguro pois isola código incompleto em branches.",
+      "O problema levantado pelo colega é válido e sem solução adequada no Trunk-Based Development — a estratégia assume que todos os desenvolvedores são seniores que nunca commitam código com bugs; para equipes com desenvolvedores juniores ou médios, commits diários na main invariavelmente quebram a produção; a solução é usar Git Flow até que toda a equipe atinja nível sênior."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap7-m5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe está prestes a lançar a versão 1.0.0 de uma biblioteca. O histórico mostra versões 1.0.0-alpha, 1.0.0-beta e 1.0.0-RC1. Um desenvolvedor pergunta qual a diferença entre esses rótulos e por que 1.0.0-RC1 não foi direto para 1.0.0. Qual é a explicação correta?",
+    "alternativas": [
+      "Os três rótulos são sinônimos utilizados por preferência da equipe: alpha, beta e RC representam o mesmo estado de instabilidade do software; a diferença entre RC1 e 1.0.0 é apenas burocrática — se o software funciona em RC1, pode ser renomeado para 1.0.0 sem nenhum teste adicional, sendo a progressão apenas uma formalidade de nomenclatura sem impacto técnico real.",
+      "São estágios de maturidade: alpha é instável e interna, beta vai a usuários externos com bugs conhecidos e RC é candidata à versão final; o RC1 passa por validação e, se surgir bug crítico, vira RC2 antes do 1.0.0.",
+      "RC1 e 1.0.0 têm o mesmo código; muda só a licença, de teste gratuito para comercial.",
+      "A progressão alpha → beta → RC → release é obrigatória por norma ISO para qualquer software comercial — pular etapas resulta em invalidação da certificação ISO 9001; RC1 não pode ser renomeado para 1.0.0 sem aprovação formal do comitê de certificação; a duração mínima de cada fase é de 30 dias segundo as especificações internacionais de qualidade de software."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap7-m6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um gerente de projeto afirma que \"baseline é apenas um backup do projeto\". Um arquiteto discorda. Qual é a distinção técnica correta entre uma baseline e um backup comum?",
+    "alternativas": [
+      "O gerente está certo: baseline e backup são a mesma coisa, só com nomes diferentes em metodologias formais e ágeis.",
+      "Backup é uma cópia para recuperar desastres, sem papel no processo; baseline é um retrato formal e aprovado de itens de configuração definidos, usado como referência estável para voltar ou avançar, como a Baseline de Release.",
+      "A principal diferença é técnica: backup usa compressão de arquivos (ZIP, TAR) enquanto baseline usa hash SHA-1 do Git; qualquer commit no Git é automaticamente uma baseline formal aprovada — a aprovação acontece no momento do push para o repositório remoto; a distinção que o arquiteto menciona é relevante apenas para projetos que não usam Git como sistema de controle de versão.",
+      "Baseline é superior ao backup por incluir criptografia AES-256 — backups comuns armazenam arquivos sem proteção, tornando-os vulneráveis a adulteração; baselines são armazenadas em repositórios com criptografia end-to-end garantindo integridade; a aprovação formal mencionada pelo arquiteto refere-se apenas ao processo de geração da chave criptográfica, não a uma revisão técnica dos artefatos."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap7-m7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um bug crítico é reportado em produção. O gerente pede para rastrear \"de onde veio esse problema\". A equipe usa rastreabilidade bidirecional. Descreva o percurso backward traceability nesse cenário e por que forward traceability sozinha seria insuficiente.",
+    "alternativas": [
+      "Forward traceability é suficiente para rastrear bugs em produção: partindo dos requisitos, é possível identificar qual código os implementa e qual teste os valida — se um bug existe, significa que o teste falhou, e o forward traceability leva diretamente ao ponto de falha sem necessidade de percorrer o caminho inverso de código para requisito.",
+      "O caminho backward vai do bug ao commit, depois ao Pull Request e à solicitação de mudança, até o requisito de origem; a forward parte dos requisitos para o código, mas aqui o ponto de partida é o código defeituoso.",
+      "Backward traceability em GCS funciona apenas com ferramentas especializadas como Jira ou Azure DevOps que integram automaticamente commits a requisitos — sem essas ferramentas, a rastreabilidade bidirecional é impossível na prática; equipes que usam apenas Git sem integração com ferramentas de gestão de requisitos não conseguem implementar rastreabilidade backward mesmo com boa disciplina de commits.",
+      "A rastreabilidade bidirecional é desnecessária para rastrear bugs em produção — ferramentas de APM como New Relic e Datadog identificam automaticamente qual linha de código causou o bug através de stack traces; o conceito de backward traceability é relevante apenas para projetos militares e aeroespaciais que exigem conformidade com normas DO-178C ou MIL-STD-882 inaplicáveis a software comercial."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap7-m8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe decide que qualquer desenvolvedor pode fazer push diretamente na branch main sem Pull Request. O tech lead justifica que \"isso é mais rápido\". Quais são os riscos concretos dessa decisão à luz do controle de mudanças?",
+    "alternativas": [
+      "Não há risco relevante em pushes diretos para main em equipes pequenas de até 10 pessoas — Pull Requests são overhead burocrático justificado apenas em projetos open source com contribuidores desconhecidos; equipes internas com desenvolvedores de confiança mútua não precisam de revisão de código pois todos conhecem o sistema e têm responsabilidade profissional pelo que commitam.",
+      "Sem PR, a mudança vai à main sem code review, sem testes obrigatórios antes do merge, sem registro de quem aprovou e sem análise de impacto, pulando as etapas de registro, análise, aprovação e revisão do controle de mudanças.",
+      "O único risco real é de conflitos de merge — múltiplos desenvolvedores fazendo push simultâneo na main causam conflitos que o Git não consegue resolver automaticamente; o Pull Request resolve esse problema técnico de concorrência; as demais etapas do controle de mudanças (análise de impacto, aprovação do CCB) são opcionais e adequadas apenas para projetos com mais de 50 desenvolvedores.",
+      "Push direto na main é o recomendado no Trunk-Based Development, e o tech lead acerta ao priorizar a velocidade."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap7-m9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um projeto tem três tipos de artefatos: código-fonte Python, arquivo docker-compose.yml e especificação de requisitos em PDF. Um desenvolvedor argumenta que \"só o código precisa de controle de versão\". Por que essa visão está incompleta segundo a GCS?",
+    "alternativas": [
+      "O desenvolvedor está certo: no ágil, especificações em PDF são obsoletas, e arquivos Docker não são itens de configuração.",
+      "Itens de configuração vão além do código: sem versionar o docker-compose.yml, uma mudança de ambiente quebra o sistema mesmo com código certo; sem versionar a especificação, perde-se a ligação entre o prometido e o entregue.",
+      "O docker-compose.yml não precisa de controle de versão pois é regenerado automaticamente pelo Docker em cada build — arquivos de orquestração são artefatos efêmeros sem valor histórico; apenas o Dockerfile precisa ser versionado como artefato de configuração de ambiente; especificações de requisitos em PDF devem ser armazenadas em ferramentas de gestão de requisitos como Jira, não no repositório Git que é exclusivo para artefatos técnicos.",
+      "Versionar especificações de requisitos em PDF no Git é tecnicamente inviável: o Git é otimizado para arquivos texto e trata PDFs como binários sem capacidade de diff ou merge — tentar versionar PDFs no Git corrompe o repositório e aumenta desnecessariamente seu tamanho; documentação deve usar ferramentas como SharePoint ou Confluence com versionamento próprio, completamente separado do repositório de código."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap7-m10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um Change Control Board (CCB) recebe uma solicitação de mudança para remover uma funcionalidade legada de um sistema em produção. O desenvolvedor responsável quer implementar imediatamente pois \"é só deletar código\". Por que o fluxo de controle de mudanças deve ser seguido mesmo nesse caso aparentemente simples?",
+    "alternativas": [
+      "O CCB só aprova adições de funcionalidade; remover código reduz complexidade e dispensa aprovação formal.",
+      "Remover código pode afetar consumidores não documentados, dependências ocultas e clientes que ainda usam a função; o fluxo garante análise de impacto, comunicação, testes de regressão e atualização da baseline antes da mudança.",
+      "O CCB deve aprovar a mudança imediatamente pois remoção de código reduz a superfície de ataque de segurança — qualquer mudança que melhora a postura de segurança do sistema tem aprovação automática segundo as melhores práticas de DevSecOps; o fluxo completo de controle de mudanças só é obrigatório para adição de código novo, não para remoções que são sempre operações de menor risco.",
+      "O fluxo de controle de mudanças é desnecessário para equipes que usam Git: o histórico de commits garante que qualquer remoção pode ser revertida com git revert em segundos, tornando a análise de impacto prévia desnecessária; o CCB existe apenas para projetos sem controle de versão onde mudanças são irreversíveis; com Git, a aprovação formal é substituída pelo Pull Request que já captura todos os benefícios do processo formal de mudança."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap8-m1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um cliente exige que sua equipe aumente o escopo do projeto adicionando 5 novas funcionalidades sem aumentar o prazo nem o custo. O gerente de projetos aceita sem negociar. Qual é a consequência direta segundo o Triângulo de Ferro e como o gerente deveria ter respondido?",
+    "alternativas": [
+      "O gerente agiu corretamente: equipes ágeis modernas conseguem absorver escopo adicional através de sprints extras sem impacto em prazo ou custo — o Triângulo de Ferro é um conceito desatualizado do gerenciamento tradicional (waterfall) que não se aplica a projetos ágeis com times auto organizados e metodologia Scrum.",
+      "Escopo, prazo e custo são interdependentes: aumentar o escopo sem mexer nos outros dois compromete a qualidade; o gerente deveria ter oferecido mais prazo, mais custo ou a troca de outras funcionalidades pelas novas.",
+      "A consequência é apenas de prazo: aumentar escopo sem mais recursos cria atraso proporcional às novas funcionalidades, mas custo e qualidade permanecem inalterados pois a equipe já está alocada e paga; o gerente deveria ter negociado apenas mais tempo, não mais dinheiro, pois contratar novos desenvolvedores nunca resolve atrasos em projetos de software conforme a Lei de Brooks.",
+      "Não há consequência negativa se o scope creep for gerenciado com reuniões diárias mais longas: o Triângulo de Ferro assume equipes sem comunicação eficiente; times que praticam Daily Scrum conseguem absorver qualquer quantidade de escopo adicional sem impacto em prazo, custo ou qualidade pois o alinhamento diário compensa o trabalho extra."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap8-m2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um projeto tem PV = R$150.000, EV = R$120.000 e AC = R$140.000. Calcule SV, CV, SPI e CPI e determine a situação real do projeto.",
+    "alternativas": [
+      "SV = R$ 30.000, CV = R$ 20.000, SPI = 1,25 e CPI = 1,17: o projeto está adiantado e econômico.",
+      "SV = EV − PV = −R$ 30.000 (atrasado); CV = EV − AC = −R$ 20.000 (acima do orçamento); SPI = 0,80; CPI ≈ 0,86 — o projeto está atrasado e caro ao mesmo tempo e precisa de intervenção.",
+      "SV = PV - EV = R$30.000 (atrasado), CV = AC - EV = R$20.000 (acima do orçamento), SPI = PV/EV = 1,25, CPI = AC/EV = 1,17 — o projeto está atrasado e caro; SPI e CPI acima de 1 confirmam problemas graves pois índices maiores que 1 indicam desperdício quando calculados como PV/EV e AC/EV respectivamente.",
+      "Não é possível calcular SPI e CPI com esses valores: SPI e CPI só são calculáveis quando EV é maior que PV e AC respectivamente; quando EV é menor que PV ou AC, as fórmulas geram resultados inválidos e o EVM não se aplica; nesses casos, o monitoramento deve ser feito apenas por Burndown Chart no Scrum ou Cycle Time no Kanban."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap8-m3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um Scrum Master começa a atribuir tarefas específicas para cada desenvolvedor durante o Sprint Planning, dizendo \"você faz o back-end, você faz o front-end\". O Product Owner aprova. Quais princípios do Scrum estão sendo violados?",
+    "alternativas": [
+      "Nenhum: distribuir tarefas no Sprint Planning é papel do Scrum Master, e o PO aprovou.",
+      "O Scrum Master é líder-servo e não atribui tarefas, e o Time é auto-organizado e decide quem faz o quê; o Product Owner define o que e a prioridade, não como o trabalho técnico é feito.",
+      "Apenas o papel do Product Owner está sendo violado: o PO não deveria aprovar decisões técnicas de distribuição de tarefas; o Scrum Master tem autoridade para atribuir tarefas ao Time pois é responsável pela eficiência do processo; a auto-organização do Time refere-se apenas à escolha de ferramentas e tecnologias, não à distribuição de responsabilidades entre os membros.",
+      "O problema é exclusivamente de nomenclatura: atribuir back-end e front-end não viola a auto-organização pois são especialidades técnicas distintas — cada desenvolvedor é responsável pela sua área de expertise; a auto-organização do Scrum se aplica apenas a decisões de arquitetura de software, não à divisão de trabalho por camada técnica que é uma prática padrão em times de produto."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap8-m4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe Scrum está na terceira Sprint. O Product Owner recebe feedback urgente de um cliente importante no dia 8 da sprint de 2 semanas e quer adicionar uma nova funcionalidade imediatamente ao Sprint Backlog. O Scrum Master se recusa. Quem está correto e por que?",
+    "alternativas": [
+      "O Product Owner: ele manda no backlog e pode alterar o Sprint Backlog a qualquer momento.",
+      "O Scrum Master: durante a sprint, nada que ameace o Sprint Goal entra, e o Sprint Backlog é do Time; o pedido vai para o Product Backlog e é priorizado no próximo Sprint Planning.",
+      "Ambos estão parcialmente corretos: o PO pode adicionar a funcionalidade desde que remova outra de escopo equivalente para manter o Sprint Goal viável — a regra do Scrum é preservar o Sprint Goal, não o Sprint Backlog específico; se a troca mantiver o objetivo da sprint intacto, a modificação é permitida e o Scrum Master deveria facilitar a negociação em vez de simplesmente recusar.",
+      "A situação depende da urgência: se o cliente é estratégico e a funcionalidade é crítica para o negócio, o Product Owner tem autoridade para cancelar a sprint atual e iniciar uma nova sprint com o novo item priorizado — cancelar sprints é um mecanismo previsto no Scrum para situações de mudança significativa de contexto e o Scrum Master deveria apoiar essa decisão."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap8-m5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe de suporte técnico recebe tickets imprevisíveis ao longo do dia — bugs críticos, dúvidas de usuários e solicitações de melhoria misturados. O gerente propõe implementar Scrum com sprints de 2 semanas. Um analista sugere Kanban. Qual é a recomendação mais adequada e por quê?",
+    "alternativas": [
+      "Scrum é mais adequado para equipes de suporte: sprints de 2 semanas criam previsibilidade e disciplina necessárias para priorizar os tickets mais importantes; sem o ritmo de sprints, equipes de suporte tendem a reagir sempre ao ticket mais recente ignorando itens importantes mais antigos; o Sprint Planning obriga a equipe a planejar e comprometer com um volume de tickets por semana.",
+      "Kanban: com demanda imprevisível e urgências a qualquer hora, o fluxo contínuo atende tickets críticos na hora, o WIP limit revela gargalos e Lead Time e Cycle Time medem o atendimento; no Scrum, a urgência esperaria a próxima sprint.",
+      "Nenhum dos dois é adequado para suporte técnico: Scrum e Kanban foram criados para desenvolvimento de software, não para operações de suporte — a equipe deveria usar ITIL (Information Technology Infrastructure Library) que é a metodologia específica para gestão de serviços de TI; tentar adaptar frameworks de desenvolvimento para suporte sempre gera atrito e baixa adoção pela equipe.",
+      "A melhor solução é Scrumban: combinar sprints semanais do Scrum com o quadro visual do Kanban; tickets urgentes entram no Sprint Backlog imediatamente via processo de emergência aprovado pelo Scrum Master; a combinação garante tanto a previsibilidade das sprints quanto a flexibilidade do Kanban; equipes que usam apenas Kanban ou apenas Scrum para suporte sempre têm resultados piores que equipes que adotam Scrumban."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap8-m6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe implementa Kanban e define WIP limit de 3 para a coluna \"Em Desenvolvimento\". Um desenvolvedor tem um item urgente mas a coluna já tem 3 itens. O líder técnico manda \"só adicionar mais um, não tem problema\". Por que essa decisão contradiz o princípio central do Kanban?",
+    "alternativas": [
+      "O líder está certo: o WIP limit é só uma diretriz, e urgências justificam passar dele por pouco tempo.",
+      "Limitar o WIP é a prática central do Kanban: furar o limite esconde o gargalo; o certo é parar de puxar itens e descobrir por que os 3 atuais não fluem, ajudando a concluir ou desbloquear um deles.",
+      "O problema do WIP limit de 3 é que ele é muito baixo para uma coluna de desenvolvimento: o Kanban recomenda WIP limit igual ao número de desenvolvedores da equipe multiplicado por 1,5; se a equipe tem 4 desenvolvedores, o limite correto seria 6; limites abaixo do número de desenvolvedores sempre criam gargalos artificiais que não existiriam com limites adequadamente calibrados.",
+      "WIP limits se aplicam apenas a equipes que usam Kanban físico com post-its — em ferramentas digitais como Jira ou Trello, o WIP limit é uma sugestão visual sem impacto real no processo; o líder técnico está correto ao flexibilizar o limite no Jira pois a ferramenta digital não tem as mesmas restrições físicas de espaço do quadro tradicional que motivaram a criação dos WIP limits na Toyota."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap8-m7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Ao final de uma Sprint, o Time demonstra 8 funcionalidades na Sprint Review. O Product Owner aprova 6 mas rejeita 2 porque \"não atendem à Definition of Done\". O Scrum Master diz que as 2 rejeitadas \"contam como entregues pois o Time se esforçou\". Quem está correto?",
+    "alternativas": [
+      "O Scrum Master: a DoD é só uma meta, e o esforço deve contar para preservar a velocity.",
+      "O Product Owner: a Definition of Done define quando um item está pronto, e itens fora dela não entram no Incremento nem contam como entregues; esforço não é entrega.",
+      "Ambos estão errados: a decisão final sobre o que foi entregue cabe exclusivamente ao cliente final, não ao Product Owner nem ao Scrum Master — o Product Owner representa o negócio mas não tem autoridade para rejeitar itens sem a validação direta do usuário que usará a funcionalidade; a Sprint Review deve incluir obrigatoriamente usuários finais cuja aprovação é o único critério válido de aceitação.",
+      "O Time de Desenvolvimento deveria ter a palavra final sobre a DoD: são eles que definem os critérios técnicos de \"concluído\" e sabem melhor do que o Product Owner se um item atende aos padrões de qualidade; o PO tem conhecimento de negócio mas não de engenharia; rejeitar itens técnicos sem expertise técnica do Product Owner é uma prática que desmoraliza a equipe e viola o princípio de auto-organização do Scrum."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap8-m8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma empresa usa Planning Poker para estimativas. Um desenvolvedor sênior revela imediatamente sua estimativa (40 story points) antes dos outros. Os demais mudam suas estimativas para 40 por deferência. Qual viés isso demonstra e como o Planning Poker deveria funcionar para evitá-lo?",
+    "alternativas": [
+      "Viés de confirmação: os outros já pensavam em 40, e revelar as cartas juntos é só uma convenção.",
+      "Viés de ancoragem: o primeiro número revelado puxa os demais; no Planning Poker todos revelam as cartas ao mesmo tempo, e as divergências viram discussão técnica até chegar a um consenso real.",
+      "O problema não é o Planning Poker mas a composição da equipe: ter um desenvolvedor sênior junto com juniores sempre cria viés hierárquico independentemente da técnica; a solução é fazer estimativas separadas por nível de experiência e depois calcular a média ponderada; Planning Poker com equipes heterogêneas produz estimativas tendenciosas por design e deveria ser substituído por COCOMO para projetos com desenvolvedores de diferentes níveis.",
+      "O comportamento é esperado e desejável no Planning Poker: o desenvolvedor sênior tem mais experiência e sua estimativa deve servir como referência para alinhar o Time; a técnica funciona melhor quando o mais experiente revela primeiro e os outros confirmam ou questionam com justificativa técnica; Planning Poker com revelação simultânea desperdiça tempo em divergências que a hierarquia natural da equipe resolveria mais rapidamente."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap8-m9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe migra de Kanban para Scrum. No Kanban, usavam Lead Time e Cycle Time como métricas. No Scrum, o Scrum Master diz para abandonar essas métricas e usar apenas Velocity e Burndown Chart. Um desenvolvedor questiona se isso está correto. Qual é a análise adequada?",
+    "alternativas": [
+      "O Scrum Master está correto: Lead Time e Cycle Time são métricas exclusivas do Kanban e tecnicamente incompatíveis com o Scrum — o modelo de sprints fixas invalida o conceito de Lead Time que pressupõe fluxo contínuo; tentar medir Lead Time em sprints gera dados inconsistentes que confundem mais do que informam a equipe sobre seu desempenho.",
+      "O desenvolvedor tem razão: Velocity e Burndown são naturais do Scrum, mas Lead Time (da solicitação à entrega) e Cycle Time (do início à entrega) continuam válidos e complementares, e times maduros usam todas.",
+      "Ambas as abordagens estão corretas dependendo da maturidade da equipe: times que estão começando com Scrum devem usar apenas Velocity e Burndown para não sobrecarregar com métricas; times avançados podem adicionar Lead Time e Cycle Time; a decisão do Scrum Master de simplificar as métricas na transição é pedagogicamente correta e alinhada com as recomendações do Scrum Guide para equipes em formação.",
+      "Velocity é a única métrica necessária em qualquer metodologia ágil: Lead Time, Cycle Time e Burndown Chart são métricas secundárias que adicionam complexidade sem valor real para a gestão; equipes que medem muitas métricas passam mais tempo analisando dados do que desenvolvendo software; o Scrum Guide oficial recomenda uma única métrica de produtividade para equipes com menos de 9 pessoas."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap8-m10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "A Sprint Retrospective de uma equipe sempre termina com uma lista de 10 melhorias identificadas, mas na sprint seguinte nenhuma é implementada. O Scrum Master diz que \"o importante é identificar os problemas\". Por que essa postura viola o propósito da Retrospective?",
+    "alternativas": [
+      "O Scrum Master está certo: a Retrospective serve para criar consciência, e as melhorias acontecem naturalmente depois.",
+      "A Retrospective existe para melhorar o processo com ações concretas: o Time escolhe poucas melhorias (de 1 a 3), com responsável e prazo, e as executa na sprint seguinte; listar 10 e não fazer nenhuma só gera frustração.",
+      "O problema não é a Retrospective mas o Sprint Planning: as melhorias identificadas deveriam ser adicionadas ao Product Backlog pelo Product Owner e priorizadas junto com as funcionalidades do produto nas sprints seguintes; como o PO não está incluindo as melhorias técnicas no backlog, elas nunca são implementadas; a solução é envolver o Product Owner na Retrospective para que ele priorize as melhorias de processo junto com as melhorias de produto.",
+      "Identificar 10 melhorias por sprint é sinal de processo imaturo: times maduros não encontram problemas em todas as sprints pois resolveram os fundamentais nas primeiras retrospectives; o Scrum Master deveria reduzir a duração da Retrospective para 30 minutos quando o time não consegue implementar as melhorias identificadas — menos tempo de reflexão forçaria o time a identificar apenas os problemas realmente críticos e aumentaria a taxa de implementação."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap9-m1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um aplicativo bancário tem interface visualmente premiada com animações sofisticadas e paleta de cores elegante, mas os usuários precisam de 7 cliques para realizar uma transferência simples e as mensagens de erro exibem códigos como \"ERR_AUTH_403\". Um designer defende que \"o app é excelente pois ganhou prêmio de design\". Por que essa afirmação está tecnicamente equivocada?",
+    "alternativas": [
+      "O designer está correto: prêmios de design reconhecem tanto UI quanto UX — se o app ganhou premiação, significa que foi avaliado por especialistas que validaram tanto a aparência visual quanto a facilidade de uso; 7 cliques para transferência é aceitável em sistemas bancários que exigem múltiplas confirmações de segurança por regulamentação do Banco Central.",
+      "UI bonita e UX ruim podem coexistir, pois são dimensões independentes: 7 cliques numa tarefa simples prejudicam a eficiência, e \"ERR_AUTH_403\" viola a heurística de ajudar o usuário a reconhecer e corrigir erros; prêmio visual não valida a experiência de uso.",
+      "A crítica aos 7 cliques é inválida para apps bancários: regulamentações de segurança financeira obrigam múltiplas confirmações em cada etapa de transação — reduzir cliques em banking compromete a segurança e viola normas do BACEN; o único problema real é o código de erro técnico que poderia ser substituído por mensagem em português sem alterar a lógica de segurança do aplicativo.",
+      "É falta de onboarding: com um tutorial na primeira abertura, os 7 cliques ficam automáticos."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap9-m2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um e-commerce remove o botão \"Desfazer\" após exclusão de itens do carrinho e o botão \"Voltar\" some durante o processo de checkout. Quais heurísticas de Nielsen são violadas e quais são as consequências para o negócio?",
+    "alternativas": [
+      "Nenhuma heurística é violada: remover o botão \"Voltar\" durante o checkout é uma prática deliberada de UX conhecida como \"checkout sem distrações\" amplamente recomendada por especialistas de conversão — impedir que o usuário saia do fluxo aumenta a taxa de conclusão de compras; a ausência de \"Desfazer\" em carrinhos é padrão de mercado pois a remoção de itens é uma ação intencional.",
+      "Viola a heurística 3 (Controle e Liberdade do Usuário), que exige saídas claras como desfazer e voltar; o usuário fica preso, e o negócio perde com abandono de carrinho, desconfiança e avaliações negativas.",
+      "Só tirar o \"Desfazer\" viola Nielsen; tirar o \"Voltar\" é justificado para reduzir o abandono.",
+      "As heurísticas violadas são a 5 (Prevenção de Erros) e a 9 (Ajudar a Reconhecer e Recuperar Erros): sem feedback visual após remover um item do carrinho, o usuário não sabe se a ação foi concluída (viola heurística 1); a solução correta não é adicionar \"Desfazer\" mas implementar uma mensagem de confirmação antes da exclusão que previne o erro antes que aconteça."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap9-m3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um designer posiciona o botão \"Confirmar Pagamento\" no canto superior esquerdo de uma tela mobile, pequeno e com baixo contraste. Um usuário idoso reclama que não consegue clicar. Quais leis cognitivas explicam esse problema e como redesenhar?",
+    "alternativas": [
+      "O problema é exclusivamente de acessibilidade visual: o baixo contraste viola as diretrizes WCAG para usuários com deficiência visual; a posição e o tamanho do botão são decisões estéticas do designer que não têm fundamento em leis cognitivas — leis como Fitts e Hick descrevem comportamento de mouse em desktop e não se aplicam a interfaces touch de dispositivos móveis.",
+      "A Lei de Fitts: o tempo para atingir um alvo cresce com a distância e cai com o tamanho; o redesenho usa um botão grande, ao alcance do polegar (centro ou parte de baixo) e com contraste adequado (WCAG AA).",
+      "O problema é da Lei de Hick: o usuário idoso está confuso pela quantidade excessiva de opções na tela, não pelo tamanho ou posição do botão — a solução é reduzir o número de elementos na tela para que o \"Confirmar Pagamento\" se destaque naturalmente; o tamanho do botão é secundário pois usuários experientes com tecnologia encontram qualquer elemento independentemente do tamanho.",
+      "Leis cognitivas não se aplicam a usuários idosos: o comportamento desta população é governado por fatores sociológicos de adoção tecnológica, não por princípios de psicologia cognitiva universal; a solução correta é criar uma versão separada do aplicativo especificamente para idosos com interface simplificada, em vez de redesenhar o produto principal baseando-se em leis cognitivas desenvolvidas para usuários jovens e familiarizados com tecnologia."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap9-m4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe aplica Avaliação Heurística com 3 especialistas e conclui que o sistema \"não tem problemas de usabilidade\". O gerente cancela os testes com usuários reais baseado nessa conclusão. Por que essa decisão é metodologicamente equivocada?",
+    "alternativas": [
+      "A decisão é correta: 3 especialistas equivalem a 15 usuários reais, com custo menor.",
+      "Os dois métodos se complementam: especialistas apontam violações de princípios, mas não agem como usuários reais, que podem não achar o que o especialista acha óbvio; o próprio Nielsen diz que a avaliação heurística não substitui testes com usuários.",
+      "O problema é o número de especialistas: com 3 avaliadores, a cobertura de problemas é de apenas 60% segundo as pesquisas de Nielsen — usar 5 especialistas aumentaria a cobertura para 85%, eliminando a necessidade de testes com usuários reais; o gerente deveria contratar mais 2 especialistas em vez de cancelar a avaliação heurística e partir para testes caros com usuários.",
+      "A decisão é equivocada apenas para sistemas com mais de 10.000 usuários: avaliação heurística é suficiente para validar sistemas pequenos e internos; para produtos de consumo em larga escala, testes com usuários são obrigatórios; como o material não especifica o porte do sistema, não é possível afirmar que a decisão do gerente está metodologicamente errada sem mais contexto sobre o número de usuários finais."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap9-m5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um formulário de cadastro tem 15 campos em uma única tela: nome, sobrenome, CPF, RG, data de nascimento, endereço, CEP, cidade, estado, telefone, e-mail, senha, confirmar senha, foto e aceitar termos. Um analista propõe dividir em 3 etapas de 5 campos cada. Qual lei cognitiva justifica essa divisão e como isso impacta a taxa de conclusão?",
+    "alternativas": [
+      "A Lei de Fitts: menos rolagem por tela reduz o esforço físico de preencher.",
+      "A Lei de Hick e a carga cognitiva: 15 campos de uma vez sobrecarregam e alongam a decisão; em etapas, a tarefa parece menor, há sensação de progresso e a taxa de conclusão tende a subir.",
+      "O princípio de Gestalt de Proximidade justifica a divisão: agrupar campos relacionados em etapas separadas aplica o princípio de que elementos próximos são percebidos como relacionados; entretanto, dividir em etapas não impacta a taxa de conclusão pois usuários que abandona formulários longos também abandonam formulários divididos em etapas — o problema real é o número total de campos, não sua distribuição em páginas.",
+      "Nenhuma lei cognitiva justifica a divisão: pesquisas de UX mostram que formulários de múltiplas etapas têm taxa de abandono maior que formulários de etapa única porque cada transição entre etapas é um ponto adicional de desistência; a solução correta segundo a heurística de Estética e Design Minimalista é remover campos desnecessários, não redistributi-los em etapas que apenas aumentam a fricção do processo de cadastro."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap9-m6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema exibe para todos os usuários o mesmo menu principal com 12 opções: configurações avançadas, relatórios técnicos, importação de dados, logs do sistema, entre outras. Um usuário iniciante reclama de confusão. Qual heurística de Nielsen e qual lei cognitiva identificam esse problema e como resolvê-lo?",
+    "alternativas": [
+      "Viola só a heurística 4: bastam ícones padronizados e agrupar as 12 opções, sem esconder nenhuma.",
+      "Violam-se as heurísticas 7 (Flexibilidade e Eficiência de Uso) e 8 (Estética e Design Minimalista), e a Lei de Hick explica a demora para decidir entre 12 opções; a solução é separar modo básico e avançado ou recolher opções raras em categorias.",
+      "O problema é exclusivamente de arquitetura da informação, não de heurísticas de Nielsen: o sistema de navegação está mal estruturado com excesso de itens no primeiro nível; a solução é aplicar Card Sorting com usuários para reorganizar as 12 opções em grupos que façam sentido para eles; após o Card Sorting, manter todas as 12 opções mas reorganizadas em categorias resolve o problema sem remover funcionalidades que usuários avançados precisam.",
+      "12 opções em um menu não viola nenhuma heurística: a heurística de Design Minimalista refere-se ao conteúdo das telas individuais, não ao número de itens de navegação; estudos de eye tracking mostram que usuários escaneiam menus em padrão F e encontram qualquer opção independentemente do número total; a reclamação do usuário iniciante é um problema de onboarding que deve ser resolvido com tutorial, não com redesign do menu principal."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap9-m7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma startup com orçamento limitado quer validar o novo fluxo de onboarding de seu aplicativo antes do lançamento. Dois designers debatem: um defende Avaliação Heurística, outro defende Teste Não Moderado Remoto com 5 usuários. Qual recomendação é mais adequada e por quê?",
+    "alternativas": [
+      "Avaliação Heurística é sempre superior para startups com orçamento limitado: é gratuita se feita internamente, não requer recrutamento de usuários, pode ser concluída em horas e detecta praticamente todos os problemas que testes com usuários identificariam; a pesquisa de Nielsen comprova que 3 especialistas identificam mais problemas que 5 usuários reais em qualquer tipo de interface.",
+      "O teste remoto com 5 usuários: problemas de compreensão no primeiro contato só aparecem com quem não conhece o sistema, e 5 usuários já revelam a maior parte deles; a avaliação heurística complementa, mas não substitui.",
+      "Nem Avaliação Heurística nem Teste Não Moderado são adequados para onboarding: o método correto para validar onboarding é o Teste A/B em produção — apenas dados reais de comportamento de milhares de usuários revelam qual fluxo de onboarding tem maior taxa de ativação; para uma startup pré-lançamento, a recomendação é lançar primeiro e otimizar depois com dados reais, pois testes pré-lançamento nunca replicam fielmente o comportamento de usuários reais em ambiente de produção.",
+      "A melhor opção é Eye Tracking: onboarding depende de onde o usuário olha primeiro e quais elementos atraem atenção — só o rastreamento ocular revela se o usuário está vendo as instruções de cadastro ou ignorando-as; tanto Avaliação Heurística quanto Teste Remoto são métodos subjetivos que dependem de verbalização do usuário; dados objetivos de movimento ocular são superiores para validar fluxos de onboarding pois eliminam o viés de resposta socialmente desejável."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap9-m8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema de gestão hospitalar exibe a mesma terminologia técnica do banco de dados para os médicos: PROC_COD_217, PAT_ADM_DT, DIAG_ICD10. Os médicos precisam de um dicionário interno para usar o sistema. Qual heurística de Nielsen é violada e como corrigir o problema?",
+    "alternativas": [
+      "A heurística violada é a 10 (Ajuda e Documentação): o problema é que o sistema não tem documentação suficiente para explicar os códigos técnicos; a solução é criar um manual completo e um glossário integrado ao sistema; médicos são profissionais altamente qualificados que conseguem memorizar códigos técnicos após um período de adaptação, o que torna a necessidade de dicionário temporária e não um problema de design.",
+      "Viola a heurística 2 (Correspondência entre o Sistema e o Mundo Real): a tela usa o jargão do banco de dados em vez da linguagem clínica; a solução é exibir termos do médico, como PAT_ADM_DT → Data de Admissão do Paciente.",
+      "Heurística 6 (Reconhecimento em vez de Lembrança): bastam tooltips explicando cada código, que deve ser mantido.",
+      "Não há violação de heurística: sistemas B2B para profissionais especializados como médicos usam terminologia técnica por design deliberado — médicos que operam sistemas de gestão hospitalar são usuários avançados que preferem códigos precisos a descrições longas que ocupam mais espaço na interface; a heurística de Correspondência com o Mundo Real aplica-se apenas a sistemas de consumo (B2C), não a sistemas profissionais corporativos."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap9-m9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Uma equipe cria a persona \"Ana, 34 anos, gerente de RH, usa smartphone Android, frustra-se com sistemas lentos e quer aprovar férias em menos de 2 minutos\". Um desenvolvedor diz que \"personas são ficção e perda de tempo\". Como refutar essa crítica com argumentos técnicos do DCU?",
+    "alternativas": [
+      "Ele tem razão em parte: personas sem pesquisa são ficção, e o melhor é trocá-las por dados de analytics.",
+      "Personas bem feitas vêm de pesquisa real (entrevistas, observação, analytics); no DCU, alinham a equipe às necessidades do usuário e evitam projetar para si mesmo, e \"aprovar férias em menos de 2 minutos\" é uma meta mensurável.",
+      "A crítica do desenvolvedor é válida para projetos ágeis: personas são artefatos do processo de Design Thinking waterfall incompatíveis com Scrum e Kanban; em metodologias ágeis modernas, personas são substituídas por histórias de usuário que capturam as mesmas informações de forma mais objetiva e diretamente vinculada ao backlog; equipes que usam Scrum não precisam de personas pois o Product Owner já representa os usuários junto ao Time.",
+      "Personas são úteis apenas na fase inicial do projeto: após a primeira sprint, a equipe já conhece bem os usuários e as personas tornam-se documentos obsoletos que ninguém mais consulta; o desenvolvedor está correto ao questionar o investimento contínuo em manutenção de personas; a Jornada do Usuário é uma ferramenta mais valiosa pois se atualiza automaticamente com dados de analytics em tempo real ao contrário das personas que ficam desatualizadas rapidamente."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap9-m10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um sistema recebe SUS Score de 62 pontos após testes com usuários. O gerente comemora dizendo \"aprovado — acima de 50 é positivo\". Um especialista em UX discorda. Qual é a interpretação correta do SUS Score e que ação deveria ser tomada?",
+    "alternativas": [
+      "O gerente está certo: a escala vai de 0 a 100, e 62 fica acima do ponto neutro de 50.",
+      "O especialista: o SUS não é uma porcentagem, e a média de mercado fica em torno de 68, então 62 está abaixo dela; o certo é ver os itens com pior nota, investigar com testes moderados e melhorar o design antes do lançamento.",
+      "O SUS Score de 62 é irrelevante sem contexto de benchmark do setor: sistemas de gestão empresarial tipicamente pontuam entre 55 e 65 pontos pois sua complexidade inerente limita a usabilidade percebida; comparar com o benchmark de 68 (calculado para aplicativos de consumo simples) penaliza injustamente sistemas corporativos complexos; o gerente e o especialista precisam primeiro definir qual é o benchmark correto para o tipo específico de sistema antes de interpretar o score.",
+      "Score de 62 no SUS indica que o sistema precisa ser completamente reescrito: scores abaixo de 70 na escala SUS classificam o sistema como \"Inaceitável\" segundo o método de Bangor et al.; sistemas com score abaixo de 70 não deveriam ser lançados pois causam dano à imagem da empresa e geram altas taxas de abandono; a única ação adequada é suspender o lançamento e redesenhar completamente a interface até atingir pelo menos 85 pontos antes de qualquer exposição a usuários reais."
+    ],
+    "correta": 1
   }
 ]
