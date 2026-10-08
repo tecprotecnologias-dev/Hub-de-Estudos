@@ -1,0 +1,291 @@
+{
+ "numero": 1,
+ "titulo": "Introdução ao Node.js",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "1-1-o-que-e-o-node-js",
+   "texto": "1.1 O que é o Node.js?"
+  },
+  {
+   "t": "p",
+   "html": "O Node.js é um ambiente de execução (<em>runtime</em>) que permite executar código JavaScript fora do navegador. Ele foi criado para que a mesma linguagem utilizada no desenvolvimento da interface de um site também pudesse ser utilizada no desenvolvimento do servidor (<em>backend</em>)."
+  },
+  {
+   "t": "p",
+   "html": "O Node.js utiliza o mecanismo V8, desenvolvido pelo Google para o navegador Chrome, responsável por interpretar e executar o código JavaScript com alto desempenho."
+  },
+  {
+   "t": "h2",
+   "id": "1-2-por-que-o-node-js-foi-criado",
+   "texto": "1.2 Por que o Node.js foi criado?"
+  },
+  {
+   "t": "p",
+   "html": "Antes do Node.js, o JavaScript era utilizado quase exclusivamente para tornar páginas web interativas no navegador. O desenvolvimento do lado do servidor era realizado com linguagens como PHP, Java, C#, Python e Ruby."
+  },
+  {
+   "t": "p",
+   "html": "Em 2009, Ryan Dahl apresentou o Node.js com a proposta de utilizar JavaScript também no servidor, permitindo que o desenvolvedor trabalhasse com uma única linguagem em toda a aplicação."
+  },
+  {
+   "t": "h2",
+   "id": "1-3-o-que-e-um-runtime",
+   "texto": "1.3 O que é um Runtime?"
+  },
+  {
+   "t": "p",
+   "html": "Um <em>runtime</em> é o ambiente responsável por executar um programa."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Linguagem",
+    "Runtime"
+   ],
+   "linhas": [
+    [
+     "Java",
+     "JVM"
+    ],
+    [
+     "C#",
+     "CLR (.NET)"
+    ],
+    [
+     "Python",
+     "Interpretador Python"
+    ],
+    [
+     "JavaScript",
+     "Navegador, Node.js, Deno ou Bun"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O Node.js fornece os recursos necessários para que o JavaScript possa acessar o sistema operacional, manipular arquivos, criar servidores HTTP e conectar-se a bancos de dados."
+  },
+  {
+   "t": "h2",
+   "id": "1-4-arquitetura-simplificada",
+   "texto": "1.4 Arquitetura Simplificada"
+  },
+  {
+   "t": "p",
+   "html": "Por trás da execução do JavaScript, o Node.js utiliza uma biblioteca escrita em C++ chamada <strong>libuv</strong>, responsável por dar acesso ao sistema de arquivos, à rede e por gerenciar as operações que rodam em segundo plano. Não é preciso decorar esse nome agora – ele vai reaparecer no Capítulo 4, quando estudarmos o Event Loop em detalhes. Por enquanto, basta saber que existe uma camada entre o seu código e o sistema operacional que torna tudo isso possível."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/node/capitulo-01_diagrama1.png",
+   "alt": "capitulo 01 diagrama1"
+  },
+  {
+   "t": "h2",
+   "id": "1-5-caracteristicas-e-vantagens",
+   "texto": "1.5 Características e Vantagens"
+  },
+  {
+   "t": "p",
+   "html": "O Node.js reúne um conjunto de características que explicam sua ampla adoção no desenvolvimento de aplicações modernas:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Código aberto e gratuito.",
+    "Baseado no motor V8, com alto desempenho.",
+    "Arquitetura orientada a eventos, com modelo de entrada e saída não bloqueante (<em>non-blocking I/O</em>).",
+    "Executa o código JavaScript em uma única <em>thread</em> principal – mas, graças ao modelo não bloqueante, consegue atender muitas conexões ao mesmo tempo sem travar. Entenderemos exatamente como isso funciona no Capítulo 4, quando estudarmos o Event Loop.",
+    "Permite utilizar JavaScript tanto no <em>frontend</em> quanto no <em>backend</em>, reduzindo a curva de aprendizado da equipe.",
+    "Grande comunidade e ecossistema riquíssimo de bibliotecas, distribuídas por meio do npm.",
+    "Fácil integração com bancos de dados.",
+    "Excelente escalabilidade para aplicações com muitas conexões simultâneas."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-6-onde-o-node-js-e-utilizado",
+   "texto": "1.6 Onde o Node.js é Utilizado?"
+  },
+  {
+   "t": "p",
+   "html": "Entre as aplicações mais comuns estão:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "APIs REST.",
+    "Aplicações em tempo real (chat, notificações).",
+    "Sistemas corporativos e microsserviços.",
+    "Plataformas de streaming.",
+    "Internet das Coisas (IoT).",
+    "Ferramentas de linha de comando (CLI)."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Empresas como Netflix, LinkedIn, PayPal e Uber utilizam Node.js em partes importantes de seus sistemas – um bom indicativo de que o que você vai aprender neste livro tem aplicação real no mercado."
+  },
+  {
+   "t": "h2",
+   "id": "1-7-limitacoes",
+   "texto": "1.7 Limitações"
+  },
+  {
+   "t": "p",
+   "html": "Embora seja bastante versátil, o Node.js não é a melhor escolha para todas as situações. Aplicações que exigem processamento intensivo de CPU, como renderização de vídeo, simulações científicas ou treinamento de modelos de inteligência artificial, podem exigir estratégias adicionais (como <em>Worker Threads</em> ou serviços especializados) para evitar bloquear a execução principal."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Curiosidade – Outros runtimes",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Nos últimos anos surgiram alternativas ao Node.js, como o <strong>Deno</strong> (criado pelo próprio Ryan Dahl, buscando corrigir decisões antigas de design) e o <strong>Bun</strong> (focado em velocidade). Ambos executam JavaScript fora do navegador, mas o Node.js continua sendo, disparado, o mais utilizado no mercado – e é nele que vamos nos concentrar neste livro."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-8-o-que-e-uma-api",
+   "texto": "1.8 O que é uma API?"
+  },
+  {
+   "t": "p",
+   "html": "O objetivo final deste livro é te ensinar a construir uma <strong>API</strong> – então vale a pena entender, já neste primeiro capítulo, o que essa palavra significa antes de começarmos a programar."
+  },
+  {
+   "t": "p",
+   "html": "<strong>API</strong> é a sigla para <em>Application Programming Interface</em> (Interface de Programação de Aplicações). É um conjunto de regras que permite que dois sistemas diferentes conversem entre si de forma organizada."
+  },
+  {
+   "t": "p",
+   "html": "Uma analogia simples: pense em um restaurante. Você (o cliente) não entra na cozinha para preparar seu próprio prato. Você faz o pedido ao garçom, que leva até a cozinha, e depois traz o prato pronto de volta. O garçom é a API: ele sabe como pedir à cozinha e como entregar a resposta, sem que você precise conhecer o funcionamento interno dela."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/node/capitulo-01_diagrama2.png",
+   "alt": "capitulo 01 diagrama2"
+  },
+  {
+   "t": "p",
+   "html": "Esse ciclo – <strong>requisição</strong> indo do cliente ao servidor, e <strong>resposta</strong> voltando do servidor ao cliente – é a base de tudo que faremos neste livro, e é chamado de modelo <strong>cliente-servidor</strong>."
+  },
+  {
+   "t": "h3",
+   "texto": "JSON: o \"idioma\" da conversa"
+  },
+  {
+   "t": "p",
+   "html": "Quando o cliente e o servidor trocam informações, eles precisam de um formato combinado. O mais usado em APIs modernas é o <strong>JSON</strong> (<em>JavaScript Object Notation</em>):"
+  },
+  {
+   "t": "codigo",
+   "texto": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"autor\": \"Machado de Assis\",\n  \"ano\": 1899\n}"
+  },
+  {
+   "t": "p",
+   "html": "É um formato leve, fácil de ler e suportado por praticamente todas as linguagens de programação – por isso se tornou o padrão de fato para APIs REST."
+  },
+  {
+   "t": "h3",
+   "texto": "Métodos HTTP"
+  },
+  {
+   "t": "p",
+   "html": "Toda requisição informa também qual <strong>ação</strong> o cliente deseja realizar. Isso é feito por meio dos métodos HTTP:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Método",
+    "Finalidade"
+   ],
+   "linhas": [
+    [
+     "GET",
+     "Consultar informações"
+    ],
+    [
+     "POST",
+     "Criar um novo registro"
+    ],
+    [
+     "PUT",
+     "Atualizar um registro existente por completo"
+    ],
+    [
+     "PATCH",
+     "Atualizar parcialmente um registro"
+    ],
+    [
+     "DELETE",
+     "Remover um registro"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Vamos usar esses métodos na prática a partir do Capítulo 6."
+  },
+  {
+   "t": "h3",
+   "texto": "Códigos de status HTTP"
+  },
+  {
+   "t": "p",
+   "html": "Toda resposta do servidor vem acompanhada de um código numérico que indica o resultado da operação:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Código",
+    "Significado"
+   ],
+   "linhas": [
+    [
+     "200 OK",
+     "Requisição bem-sucedida"
+    ],
+    [
+     "201 Created",
+     "Recurso criado com sucesso"
+    ],
+    [
+     "400 Bad Request",
+     "Dados inválidos enviados pelo cliente"
+    ],
+    [
+     "401 Unauthorized",
+     "Cliente não autenticado"
+    ],
+    [
+     "404 Not Found",
+     "Recurso não encontrado"
+    ],
+    [
+     "500 Internal Server Error",
+     "Erro interno do servidor"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Vamos usar esses códigos ativamente a partir dos próximos capítulos, então não se preocupe em decorá-los agora – volte a esta tabela sempre que precisar."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Glossário",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Runtime</strong>: ambiente responsável por executar um programa.<br> <strong>V8</strong>: motor de execução JavaScript desenvolvido pelo Google.<br> <strong>libuv</strong>: biblioteca em C++ que dá ao Node.js acesso ao sistema de arquivos, à rede e ao gerenciamento de tarefas em segundo plano.<br> <strong>Non-blocking I/O</strong>: modelo em que operações de entrada/saída não bloqueiam a execução do restante do programa.<br> <strong>API</strong>: conjunto de regras que permite a comunicação entre dois sistemas.<br> <strong>Cliente-servidor</strong>: modelo em que um cliente envia requisições e um servidor as processa, devolvendo respostas.<br> <strong>JSON</strong>: formato leve de troca de dados baseado em texto.<br> <strong>Método HTTP</strong>: indica a ação desejada em uma requisição (GET, POST, PUT, PATCH, DELETE).<br> <strong>Código de status HTTP</strong>: número que indica o resultado de uma requisição."
+    }
+   ]
+  }
+ ]
+}

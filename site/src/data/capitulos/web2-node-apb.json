@@ -1,0 +1,474 @@
+{
+ "numero": null,
+ "titulo": "Guia de Arquivos e Pacotes da BibliotecaAPI",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Ao longo do livro, cada arquivo do projeto foi apresentado no momento em que fazia sentido – espalhado por vários capítulos. Este apêndice reúne tudo em um único lugar, no formato <strong>5W1H</strong> (<em>What, Why, When, Where, Who, How</em>): o quê, por quê, quando, onde, quem e como. É uma referência para consulta, não para leitura sequencial – volte a ela sempre que precisar relembrar o papel de um arquivo específico."
+  },
+  {
+   "t": "h2",
+   "id": "b-1-arquivos-da-raiz-do-projeto",
+   "texto": "B.1 Arquivos da Raiz do Projeto"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "server.js",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Arquivo principal do servidor Node.js. Inicializa o Express, registra os <em>middlewares</em> globais, importa e monta todas as rotas, e inicia o servidor na porta definida.<br> <strong>Por quê:</strong> É o ponto de entrada da aplicação – sem ele, o servidor não sobe e nenhuma rota funciona.<br> <strong>Quando:</strong> Sempre que o projeto é iniciado com <code>npm run dev</code> ou <code>npm start</code>. É o primeiro e único arquivo executado diretamente pelo Node.js.<br> <strong>Onde:</strong> Raiz do projeto. Referenciado em <code>package.json</code>, no campo <code>main</code> e nos <em>scripts</em>.<br> <strong>Quem usa:</strong> O Node.js, ao executar o projeto. Nunca é importado por outros arquivos.<br> <strong>Como funciona:</strong> <code>require(\"express\")</code> cria o <code>app</code> → <code>app.use(express.json())</code> habilita a leitura de JSON → cada módulo de rota é importado e registrado com <code>app.use(\"/rota\", router)</code> → <code>app.listen(PORT)</code> sobe o servidor."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": ".env",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Arquivo de configuração com variáveis de ambiente sensíveis – credenciais do banco, chave JWT, porta do servidor.<br> <strong>Por quê:</strong> Separa configurações do código-fonte, permitindo usar senhas diferentes em desenvolvimento e produção sem alterar uma linha de código.<br> <strong>Quando:</strong> Carregado na inicialização, pelo <code>dotenv.config()</code> no topo de <code>db.js</code> (Capítulo 8), antes de qualquer outro código rodar.<br> <strong>Onde:</strong> Raiz do projeto. <strong>Nunca</strong> deve entrar no repositório Git.<br> <strong>Quem usa:</strong> O desenvolvedor, ao configurar o ambiente local; a equipe de infraestrutura, ao configurar o servidor de produção.<br> <strong>Como funciona:</strong> Formato <code>CHAVE=valor</code>, sem espaços nem aspas (<code>DB_HOST=localhost</code>). Acessado no código via <code>process.env.DB_HOST</code>."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": ".gitignore",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Lista de arquivos e pastas que o Git deve ignorar, nunca versionando.<br> <strong>Por quê:</strong> Evita enviar arquivos sensíveis (<code>.env</code>), gerados automaticamente (<code>node_modules/</code>) ou temporários para o repositório.<br> <strong>Quando:</strong> Consultado automaticamente pelo Git a cada <code>git add</code> ou <code>git commit</code>.<br> <strong>Onde:</strong> Raiz do projeto – deve ser o primeiro arquivo criado, antes do primeiro <em>commit</em>.<br> <strong>Quem usa:</strong> O desenvolvedor, ao criar o projeto; o Git, ao decidir quais arquivos rastrear.<br> <strong>Como funciona:</strong> Cada linha é um padrão a ignorar: <code>node_modules/</code> ignora a pasta inteira; <code>.env</code> ignora o arquivo de credenciais; <code>logs/</code> ignora os arquivos de log do Capítulo 12."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "package.json",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Manifesto do projeto Node.js – nome, versão, <em>scripts</em> de execução, dependências e <em>devDependencies</em> (Capítulo 5).<br> <strong>Por quê:</strong> Permite que qualquer desenvolvedor baixe o código e execute <code>npm install</code> para reconstruir o ambiente completo.<br> <strong>Quando:</strong> Consultado a cada <code>npm install</code>, <code>npm run dev</code> ou <code>npm test</code>.<br> <strong>Onde:</strong> Raiz do projeto. Criado com <code>npm init -y</code> e atualizado automaticamente pelo npm.<br> <strong>Quem usa:</strong> O desenvolvedor, ao configurar <em>scripts</em>; o npm, ao instalar pacotes; o servidor de produção, ao fazer o <em>deploy</em>.<br> <strong>Como funciona:</strong> Campos principais: <code>name</code>, <code>version</code>, <code>main</code> (o <code>server.js</code>), <code>scripts</code>, <code>dependencies</code> e <code>devDependencies</code>."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "package-lock.json",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Registro exato de todas as versões instaladas, incluindo dependências indiretas (Capítulo 2).<br> <strong>Por quê:</strong> Garante que todos os desenvolvedores e servidores instalem exatamente as mesmas versões – evita o clássico \"funciona na minha máquina\".<br> <strong>Quando:</strong> Gerado e atualizado automaticamente a cada <code>npm install</code>.<br> <strong>Onde:</strong> Raiz do projeto.<br> <strong>Quem usa:</strong> Apenas o npm – nunca é editado manualmente pelo desenvolvedor.<br> <strong>Como funciona:</strong> Para cada pacote, registra a versão exata, um hash de integridade e suas dependências aninhadas. O comando <code>npm ci</code> instala usando exatamente esse arquivo, sem margem para divergência."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Ciclo de Vida: quando cada arquivo entra em cena"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "#",
+    "Momento"
+   ],
+   "linhas": [
+    [
+     "1",
+     "<code>npm init -y</code> → cria o <code>package.json</code>"
+    ],
+    [
+     "2",
+     "Criar o <code>.gitignore</code>, antes do primeiro <em>commit</em>"
+    ],
+    [
+     "3",
+     "<code>npm install express mysql2 dotenv ...</code> → gera o <code>package-lock.json</code>"
+    ],
+    [
+     "4",
+     "Criar o <code>.env</code> manualmente, com as credenciais reais"
+    ],
+    [
+     "5",
+     "Escrever <code>server.js</code> e a estrutura de <code>src/</code>"
+    ],
+    [
+     "6",
+     "<code>npm run dev</code> → o servidor sobe"
+    ],
+    [
+     "7",
+     "<code>git add . &amp;&amp; git commit</code> → tudo exceto o que está no <code>.gitignore</code>"
+    ],
+    [
+     "8",
+     "<em>Deploy</em> → <code>npm ci</code> + variáveis de ambiente do servidor"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "b-2-estrutura-da-pasta-src",
+   "texto": "B.2 Estrutura da Pasta src/"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "src/config/db.js",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Cria e exporta o <em>pool</em> de conexões com o MySQL, usando <code>mysql2/promise</code> (Capítulo 8).<br> <strong>Por quê:</strong> Centraliza a configuração do banco em um único lugar – todos os Models importam daqui.<br> <strong>Quando:</strong> Carregado assim que qualquer Model precisa consultar o banco.<br> <strong>Onde:</strong> Camada de dados, entre os Models e o MySQL.<br> <strong>Quem usa:</strong> Todos os arquivos de <code>src/models/</code>, via <code>require(\"../config/db\")</code>.<br> <strong>Como funciona:</strong> Lê as variáveis do <code>.env</code> → cria o <em>pool</em> com <code>mysql.createPool()</code> → exporta para uso com <code>await db.query(...)</code>."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "src/middlewares/autenticar.js",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Middleware que verifica se o token JWT enviado no cabeçalho <code>Authorization</code> é válido (Capítulo 11).<br> <strong>Por quê:</strong> Protege rotas privadas – sem ele, qualquer pessoa poderia cadastrar ou remover livros.<br> <strong>Quando:</strong> Antes de executar qualquer rota protegida, sempre aplicado explicitamente na rota (nunca globalmente).<br> <strong>Onde:</strong> Camada de segurança, entre a requisição HTTP e o Controller.<br> <strong>Quem usa:</strong> Toda rota que exige login – por exemplo, <code>POST /livros</code> e <code>POST /emprestimos</code>.<br> <strong>Como funciona:</strong> Lê o cabeçalho <code>Authorization</code> → extrai o token → <code>jwt.verify()</code> → preenche <code>req.usuario</code> → chama <code>next()</code>, ou retorna <code>401</code>."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "src/middlewares/autorizar.js",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Middleware que restringe uma rota a determinados perfis de usuário (Capítulo 11).<br> <strong>Por quê:</strong> Nem todo usuário autenticado pode fazer tudo – um <code>LEITOR</code> não deveria conseguir remover um livro do acervo.<br> <strong>Quando:</strong> Sempre depois de <code>autenticar</code>, nunca antes – ele depende de <code>req.usuario</code> já estar preenchido.<br> <strong>Onde:</strong> Camada de segurança, logo após a autenticação.<br> <strong>Quem usa:</strong> Rotas administrativas, como <code>DELETE /livros/:id</code> (restrita a <code>ADMIN</code>).<br> <strong>Como funciona:</strong> Recebe uma lista de perfis permitidos → verifica se <code>req.usuario.perfil</code> está na lista → chama <code>next()</code>, ou retorna <code>403</code>."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "src/routes/authRoutes.js",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Gerencia o login do usuário com autenticação JWT (Capítulo 11).<br> <strong>Por quê:</strong> É a porta de entrada da autenticação – sem essa rota, ninguém consegue obter um token.<br> <strong>Quando:</strong> Em toda tentativa de acesso ao sistema, via <code>POST /login</code>.<br> <strong>Onde:</strong> Camada de rota, conectando o cliente ao <code>authService</code>.<br> <strong>Quem usa:</strong> Qualquer cliente da API – navegador, aplicativo, Postman.<br> <strong>Como funciona:</strong> <code>POST /login</code> → busca o usuário pelo e-mail → <code>bcrypt.compare()</code> → <code>jwt.sign()</code> → retorna o token."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "src/routes/livroRoutes.js",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> CRUD completo de livros, incluindo listagem com <code>JOIN</code>, paginação e filtros (Capítulos 9 e 10).<br> <strong>Por quê:</strong> É o recurso central da BibliotecaAPI – expõe o acervo para consulta e gestão.<br> <strong>Quando:</strong> Em toda listagem, cadastro, atualização ou remoção de livros.<br> <strong>Onde:</strong> Camada de rota, operando sobre a tabela <code>livros</code> através do <code>livroModel</code>.<br> <strong>Quem usa:</strong> Leitores (consulta) e bibliotecários/administradores (cadastro e gestão).<br> <strong>Como funciona:</strong> <code>GET</code> → <code>SELECT</code> com <code>INNER JOIN</code> em autores/editoras/categorias; <code>POST</code> → <code>INSERT</code> parametrizado; <code>DELETE</code> → restrito a <code>ADMIN</code>."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "src/routes/emprestimoRoutes.js",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Registro e devolução de empréstimos, com verificação de disponibilidade do livro (Capítulo 10, seção 10.9).<br> <strong>Por quê:</strong> Gerencia o ciclo de vida do empréstimo – a funcionalidade que faz da BibliotecaAPI um sistema de biblioteca de verdade, não só um catálogo.<br> <strong>Quando:</strong> Ao registrar um novo empréstimo ou processar uma devolução.<br> <strong>Onde:</strong> Camada de rota, coordenando <code>livros</code> e <code>emprestimos</code> através do <code>emprestimoService</code>.<br> <strong>Quem usa:</strong> Usuários autenticados (para emprestar) e bibliotecários/administradores (para registrar devoluções).<br> <strong>Como funciona:</strong> <code>POST</code> → verifica <code>disponivel</code> → insere o empréstimo → marca o livro como indisponível. <code>PATCH .../devolver</code> → inverte o processo."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "b-3-fluxo-de-uma-requisicao-completa",
+   "texto": "B.3 Fluxo de uma Requisição Completa"
+  },
+  {
+   "t": "p",
+   "html": "Acompanhe o caminho de uma requisição real: um usuário autenticado solicita o empréstimo de um livro."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Etapa",
+    "Camada",
+    "O que acontece"
+   ],
+   "linhas": [
+    [
+     "1",
+     "Cliente",
+     "<code>fetch(\"/emprestimos\", { method: \"POST\", ... })</code>, com o token no cabeçalho <code>Authorization</code> (Capítulo 13)."
+    ],
+    [
+     "2",
+     "<code>server.js</code>",
+     "O Express recebe <code>POST /emprestimos</code> e localiza a rota registrada."
+    ],
+    [
+     "3",
+     "<code>autenticar.js</code>",
+     "Intercepta antes da rota: valida o token, preenche <code>req.usuario</code>."
+    ],
+    [
+     "4",
+     "<code>emprestimoRoutes.js</code>",
+     "O Controller recebe a requisição com <code>req.usuario.id</code> já disponível."
+    ],
+    [
+     "5",
+     "<code>emprestimoService.js</code>",
+     "Verifica se o livro está disponível – a regra de negócio real (10.9)."
+    ],
+    [
+     "6",
+     "<code>emprestimoModel.js</code>",
+     "Executa o <code>INSERT</code> e o <code>UPDATE</code> de disponibilidade via <code>db.execute()</code>."
+    ],
+    [
+     "7",
+     "MySQL",
+     "Grava as alterações e confirma o sucesso da operação."
+    ],
+    [
+     "8",
+     "Controller",
+     "Recebe a confirmação e chama <code>res.status(201).json(...)</code>."
+    ],
+    [
+     "9",
+     "Cliente",
+     "Recebe o JSON e atualiza a interface – exatamente como no Capítulo 13."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "b-4-responsabilidade-de-cada-pasta",
+   "texto": "B.4 Responsabilidade de Cada Pasta"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Pasta",
+    "Deve conter",
+    "Nunca deve conter"
+   ],
+   "linhas": [
+    [
+     "<code>config/</code>",
+     "Conexão com o banco, <em>logger</em>",
+     "Regras de negócio, rotas HTTP"
+    ],
+    [
+     "<code>middlewares/</code>",
+     "Autenticação, autorização, validação",
+     "Consultas SQL, regras de negócio"
+    ],
+    [
+     "<code>routes/</code>",
+     "Encaminhar a requisição ao Controller",
+     "Consultas SQL diretas"
+    ],
+    [
+     "<code>controllers/</code>",
+     "Receber <code>req</code>, chamar a Service, responder",
+     "Consultas SQL, regras de negócio"
+    ],
+    [
+     "<code>services/</code>",
+     "Regras de negócio",
+     "Consultas SQL diretas, resposta HTTP"
+    ],
+    [
+     "<code>models/</code>",
+     "Consultas SQL",
+     "Regras de negócio, resposta HTTP"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Essa tabela é, na prática, o Capítulo 7 (arquitetura em camadas) resumido em uma única página – volte a ela sempre que tiver dúvida sobre \"onde esse código deveria morar\"."
+  },
+  {
+   "t": "h2",
+   "id": "b-5-pacotes-utilizados-no-projeto",
+   "texto": "B.5 Pacotes Utilizados no Projeto"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "express",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Framework web para Node.js (Capítulo 9).<br> <strong>Por quê:</strong> Facilita a criação de rotas, <em>middlewares</em> e tratamento de requisições HTTP.<br> <strong>Quando:</strong> Em todo o servidor – é a base da BibliotecaAPI.<br> <strong>Como funciona:</strong> <code>const app = require(\"express\")()</code> → <code>app.get(\"/rota\", handler)</code> → <code>app.listen(porta)</code>."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "mysql2",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Driver que conecta o Node.js ao MySQL, com suporte a <em>Promises</em> (Capítulo 8).<br> <strong>Por quê:</strong> Permite executar SQL com <code>async</code>/<code>await</code> e gerenciar um <em>pool</em> de conexões.<br> <strong>Quando:</strong> Em toda operação que lê ou grava dados no banco.<br> <strong>Como funciona:</strong> <code>createPool({...})</code> → <code>await pool.execute(sql, valores)</code>."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "dotenv",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Carrega variáveis de ambiente a partir do arquivo <code>.env</code> (Capítulo 8).<br> <strong>Por quê:</strong> Mantém credenciais fora do código-fonte e do repositório Git.<br> <strong>Quando:</strong> No início de <code>db.js</code>, antes de qualquer outra configuração.<br> <strong>Como funciona:</strong> <code>require(\"dotenv\").config()</code> → variáveis disponíveis em <code>process.env</code>."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "bcrypt",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Gera <em>hashes</em> seguros e irreversíveis de senhas (Capítulo 11).<br> <strong>Por quê:</strong> Senhas nunca devem ser armazenadas em texto puro.<br> <strong>Quando:</strong> No cadastro (gera o <em>hash</em>) e no login (compara).<br> <strong>Como funciona:</strong> <code>bcrypt.hash(senha, 10)</code> → grava; <code>bcrypt.compare(senha, hash)</code> → retorna <code>true</code>/<code>false</code>."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "jsonwebtoken",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Gera e valida tokens JWT (Capítulo 11).<br> <strong>Por quê:</strong> Permite manter um usuário autenticado sem sessão armazenada no servidor.<br> <strong>Quando:</strong> No login (gera) e em toda rota protegida (valida).<br> <strong>Como funciona:</strong> <code>jwt.sign(payload, chave, opções)</code> → token; <code>jwt.verify(token, chave)</code> → dados decodificados."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "express-validator",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Middleware de validação e sanitização de dados de entrada (Capítulo 10).<br> <strong>Por quê:</strong> Impede que dados inválidos cheguem ao Controller ou ao banco.<br> <strong>Quando:</strong> Antes do Controller, em rotas que recebem dados do cliente (<code>POST</code>, <code>PUT</code>, <code>PATCH</code>).<br> <strong>Como funciona:</strong> Define regras com <code>body(\"campo\").notEmpty()...</code> → <code>validationResult(req)</code> verifica os erros acumulados."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "winston",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Biblioteca de <em>logging</em> estruturado (Capítulo 12).<br> <strong>Por quê:</strong> Registra erros com data, hora e contexto – vai além do que o <code>console.log</code> oferece.<br> <strong>Quando:</strong> No middleware global de erros, a cada exceção capturada.<br> <strong>Como funciona:</strong> <code>winston.createLogger({...})</code> → <code>logger.error(mensagem, contexto)</code>."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "nodemon (devDependency)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Reinicia o servidor automaticamente a cada alteração salva (Capítulo 5).<br> <strong>Por quê:</strong> Elimina a necessidade de parar e reiniciar manualmente durante o desenvolvimento.<br> <strong>Quando:</strong> Apenas em desenvolvimento – nunca em produção.<br> <strong>Como funciona:</strong> <code>npm install nodemon --save-dev</code> → script <code>\"dev\": \"nodemon server.js\"</code>."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "jest e supertest (devDependencies)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Framework de testes automatizados e biblioteca para simular requisições HTTP (Capítulo 12).<br> <strong>Por quê:</strong> Garante que alterações futuras não quebrem funcionalidades já prontas.<br> <strong>Quando:</strong> A cada execução de <code>npm test</code>.<br> <strong>Como funciona:</strong> <code>request(app).get(\"/livros\")</code> simula uma requisição real, sem precisar do servidor rodando de fato."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Dependências indiretas"
+  },
+  {
+   "t": "p",
+   "html": "Ao instalar apenas os pacotes acima, o npm resolve automaticamente dezenas de outras bibliotecas das quais eles dependem (Capítulo 2). O Express sozinho traz consigo mais de vinte:"
+  },
+  {
+   "t": "codigo",
+   "texto": "accepts, body-parser, cookie, debug, encodeurl, escape-html, etag,\nfinalhandler, fresh, merge-descriptors, methods, mime-types, ms,\non-finished, parseurl, path-to-regexp, proxy-addr, qs, range-parser,\nrouter, send, serve-static, setprototypeof, statuses, toidentifier,\ntype-is, vary"
+  },
+  {
+   "t": "p",
+   "html": "Você nunca precisa instalar essas bibliotecas manualmente, nem interagir com elas diretamente – mas é útil saber que elas existem na próxima vez que abrir a pasta <code>node_modules</code> e se perguntar de onde vieram tantos arquivos."
+  },
+  {
+   "t": "h2",
+   "id": "b-6-regras-de-ouro-o-que-nunca-fazer",
+   "texto": "B.6 Regras de Ouro: O que Nunca Fazer"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Arquivo",
+    "Gravidade",
+    "Nunca faça isso – e por quê"
+   ],
+   "linhas": [
+    [
+     "<code>.env</code>",
+     "CRÍTICO",
+     "Nunca <em>commitar</em> no Git. Se for para o GitHub, qualquer pessoa vê a senha do banco e pode apagar todos os dados."
+    ],
+    [
+     "<code>.env</code>",
+     "CRÍTICO",
+     "Nunca compartilhar por WhatsApp ou e-mail. Use um gerenciador de senhas ou um canal seguro."
+    ],
+    [
+     "<code>package-lock.json</code>",
+     "CUIDADO",
+     "Nunca editar manualmente. Toda alteração deve vir de <code>npm install</code> ou <code>npm uninstall</code>."
+    ],
+    [
+     "<code>package.json</code>",
+     "CUIDADO",
+     "Nunca colocar senhas ou chaves em <code>scripts</code>. Esses dados ficam visíveis no repositório – use o <code>.env</code>."
+    ],
+    [
+     "<code>server.js</code>",
+     "ATENÇÃO",
+     "Nunca colocar consultas SQL diretamente aqui. Use as camadas Model e Service (Capítulo 7)."
+    ],
+    [
+     "<code>server.js</code>",
+     "ATENÇÃO",
+     "Nunca escrever chaves diretamente no código (<code>const SECRET = \"...\"</code>). Sempre <code>process.env.JWT_SECRET</code>."
+    ],
+    [
+     "<code>.gitignore</code>",
+     "ATENÇÃO",
+     "Nunca deixar de criá-lo antes do primeiro <em>commit</em> – sem ele, <code>node_modules/</code> pode ir para o repositório inteiro."
+    ]
+   ]
+  }
+ ]
+}

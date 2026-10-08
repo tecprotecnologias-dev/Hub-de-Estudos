@@ -1,0 +1,368 @@
+{
+ "numero": 2,
+ "titulo": "Preparando o Ambiente de Desenvolvimento Node.js",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "2-1-introducao",
+   "texto": "2.1 Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Antes de desenvolver qualquer aplicação, é necessário preparar o ambiente de desenvolvimento."
+  },
+  {
+   "t": "p",
+   "html": "O ambiente de desenvolvimento é o conjunto de ferramentas que permite criar, testar e executar programas. No ecossistema Node.js, esse ambiente é composto por:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Node.js",
+    "npm (<em>Node Package Manager</em>)",
+    "Editor de código (Visual Studio Code)",
+    "Terminal (Prompt de Comando, PowerShell ou Bash)",
+    "Git (opcional, mas altamente recomendado)"
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A Figura 2.1 apresenta a relação entre essas ferramentas."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/node/capitulo-02_diagrama1.png",
+   "alt": "capitulo 02 diagrama1"
+  },
+  {
+   "t": "h2",
+   "id": "2-2-instalando-o-node-js",
+   "texto": "2.2 Instalando o Node.js"
+  },
+  {
+   "t": "p",
+   "html": "O Node.js pode ser obtido gratuitamente no site oficial (<a href=\"https://nodejs.org\" target=\"_blank\" rel=\"noreferrer\">https://nodejs.org</a>). Durante a instalação, também é instalado automaticamente o npm, responsável pelo gerenciamento das bibliotecas do projeto."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "LTS ou Current: qual versão escolher?",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "No site oficial você vai encontrar duas opções de download:"
+    },
+    {
+     "t": "p",
+     "html": "<strong>LTS</strong> (<em>Long Term Support</em>) – versão estável, com suporte prolongado e correções de segurança por mais tempo. É a recomendada para aprender e para projetos em produção."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Current</strong> – versão mais recente, com os últimos recursos da linguagem, mas menos testada em produção e com suporte mais curto."
+    },
+    {
+     "t": "p",
+     "html": "Ao longo deste livro, sempre utilizaremos a versão <strong>LTS</strong>."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Após concluir a instalação, é importante verificar se tudo ocorreu corretamente. No terminal, execute:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ node -v\nv22.18.0"
+  },
+  {
+   "t": "p",
+   "html": "Depois verifique o npm:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm -v\n10.9.3"
+  },
+  {
+   "t": "p",
+   "html": "Esses números podem variar conforme a versão instalada – o importante é que ambos os comandos retornem uma versão, sem erro."
+  },
+  {
+   "t": "h2",
+   "id": "2-3-o-visual-studio-code",
+   "texto": "2.3 O Visual Studio Code"
+  },
+  {
+   "t": "p",
+   "html": "Embora existam diversos editores, o Visual Studio Code tornou-se uma das ferramentas mais utilizadas para desenvolvimento Node.js. Entre suas principais características destacam-se:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Destaque de sintaxe.",
+    "Autocompletar código.",
+    "Integração com Git.",
+    "Terminal integrado.",
+    "Grande quantidade de extensões."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-4-criando-o-primeiro-projeto",
+   "texto": "2.4 Criando o Primeiro Projeto"
+  },
+  {
+   "t": "p",
+   "html": "Crie uma pasta denominada:"
+  },
+  {
+   "t": "codigo",
+   "texto": "MeuPrimeiroProjeto"
+  },
+  {
+   "t": "p",
+   "html": "Abra essa pasta no Visual Studio Code. Em seguida, abra o terminal integrado e execute:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm init"
+  },
+  {
+   "t": "p",
+   "html": "O npm fará algumas perguntas, uma de cada vez, diretamente no terminal:"
+  },
+  {
+   "t": "codigo",
+   "texto": "package name: (meuprimeiroprojeto)\nversion: (1.0.0)\ndescription:\nentry point: (index.js)\ntest command:\ngit repository:\nkeywords:\nauthor:\nlicense: (ISC)"
+  },
+  {
+   "t": "p",
+   "html": "Basta pressionar <code>Enter</code> em cada linha para aceitar o valor padrão (mostrado entre parênteses), ou digitar sua própria resposta."
+  },
+  {
+   "t": "p",
+   "html": "Caso queira aceitar os valores padrão, utilize:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm init -y"
+  },
+  {
+   "t": "p",
+   "html": "O comando criará automaticamente o arquivo <code>package.json</code>."
+  },
+  {
+   "t": "h2",
+   "id": "2-5-entendendo-o-package-json",
+   "texto": "2.5 Entendendo o package.json"
+  },
+  {
+   "t": "p",
+   "html": "O arquivo <code>package.json</code> é considerado o coração de um projeto Node.js, pois descreve suas configurações, dependências e scripts."
+  },
+  {
+   "t": "codigo",
+   "texto": "{\n  \"name\": \"meuprojeto\",\n  \"version\": \"1.0.0\",\n  \"description\": \"Projeto exemplo\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"start\": \"node index.js\"\n  },\n  \"author\": \"Seu Nome\",\n  \"license\": \"MIT\"\n}"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Campo",
+    "Função"
+   ],
+   "linhas": [
+    [
+     "name",
+     "Nome do projeto"
+    ],
+    [
+     "version",
+     "Versão atual"
+    ],
+    [
+     "description",
+     "Descrição do projeto"
+    ],
+    [
+     "main",
+     "Arquivo principal"
+    ],
+    [
+     "scripts",
+     "Comandos executáveis"
+    ],
+    [
+     "dependencies",
+     "Bibliotecas utilizadas em produção"
+    ],
+    [
+     "devDependencies",
+     "Bibliotecas usadas apenas no desenvolvimento"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-6-o-package-lock-json",
+   "texto": "2.6 O package-lock.json"
+  },
+  {
+   "t": "p",
+   "html": "Sempre que uma biblioteca é instalada, o npm cria ou atualiza o arquivo <code>package-lock.json</code>. Esse arquivo registra exatamente quais versões das dependências foram instaladas, garantindo que outros desenvolvedores obtenham o mesmo ambiente ao executar:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "package.json",
+    "package-lock.json"
+   ],
+   "linhas": [
+    [
+     "Lista as dependências principais",
+     "Registra todas as dependências e suas versões exatas"
+    ],
+    [
+     "Editado pelo desenvolvedor",
+     "Gerado automaticamente pelo npm"
+    ],
+    [
+     "Deve ser compartilhado",
+     "Também deve ser compartilhado"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-7-instalando-bibliotecas",
+   "texto": "2.7 Instalando Bibliotecas"
+  },
+  {
+   "t": "p",
+   "html": "Uma das grandes vantagens do Node.js é a facilidade para reutilizar bibliotecas. Por exemplo, para instalar o Express:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install express"
+  },
+  {
+   "t": "p",
+   "html": "Após esse comando, o npm realiza automaticamente várias tarefas:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Localiza a biblioteca no repositório do npm.",
+    "Baixa os arquivos necessários.",
+    "Instala todas as dependências exigidas pelo Express.",
+    "Atualiza o <code>package.json</code>.",
+    "Atualiza o <code>package-lock.json</code>.",
+    "Cria (ou atualiza) a pasta <code>node_modules</code>."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-8-entendendo-a-pasta-node-modules",
+   "texto": "2.8 Entendendo a Pasta node_modules"
+  },
+  {
+   "t": "p",
+   "html": "A pasta <code>node_modules</code> contém todas as bibliotecas necessárias para o funcionamento da aplicação. Ao instalar apenas uma biblioteca, como o Express, dezenas de outras dependências são instaladas automaticamente. Esse comportamento ocorre porque o Express depende de diversas bibliotecas auxiliares para oferecer funcionalidades como roteamento, tratamento de requisições HTTP, manipulação de cookies e envio de arquivos."
+  },
+  {
+   "t": "h2",
+   "id": "2-9-dependencias-diretas-e-indiretas",
+   "texto": "2.9 Dependências Diretas e Indiretas"
+  },
+  {
+   "t": "p",
+   "html": "Considere o comando:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install express"
+  },
+  {
+   "t": "p",
+   "html": "Você instalou diretamente apenas o Express. Entretanto, o npm instala automaticamente diversas dependências indiretas – bibliotecas das quais o Express depende para funcionar, como <code>body-parser</code>, <code>cookie</code> e <code>send</code>."
+  },
+  {
+   "t": "p",
+   "html": "Essa estrutura em árvore facilita o gerenciamento de bibliotecas e evita duplicação de código."
+  },
+  {
+   "t": "h2",
+   "id": "2-10-primeiro-programa-node-js",
+   "texto": "2.10 Primeiro Programa Node.js"
+  },
+  {
+   "t": "p",
+   "html": "Crie um arquivo chamado <code>index.js</code> com o seguinte conteúdo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "console.log(\"Olá, Mundo!\");"
+  },
+  {
+   "t": "p",
+   "html": "Agora execute-o no terminal:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ node index.js\nOlá, Mundo!"
+  },
+  {
+   "t": "p",
+   "html": "Esse é o programa mais simples em Node.js e demonstra como executar um arquivo JavaScript diretamente no ambiente Node."
+  },
+  {
+   "t": "h2",
+   "id": "2-11-boas-praticas",
+   "texto": "2.11 Boas Práticas"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Utilize sempre a versão LTS do Node.js em projetos de produção.",
+    "Não altere manualmente a pasta <code>node_modules</code>.",
+    "Mantenha o <code>package-lock.json</code> versionado junto ao projeto.",
+    "Organize os arquivos em pastas desde o início do desenvolvimento.",
+    "Utilize nomes significativos para os <em>scripts</em> definidos no <code>package.json</code>."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "p",
+   "html": "<strong><code>'node' não é reconhecido como um comando</code></strong> – o Node.js não foi instalado corretamente, ou não foi adicionado ao PATH do sistema. Solução: reinstale o Node.js e reinicie o terminal."
+  },
+  {
+   "t": "p",
+   "html": "<strong><code>npm ERR! Missing script: \"start\"</code></strong> – o <code>package.json</code> não possui um script com esse nome na seção <code>scripts</code>. Verifique se ele foi definido corretamente."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Esquecer de executar <code>npm init</code></strong> – sem o <code>package.json</code>, o npm não sabe onde registrar as dependências instaladas, e o projeto fica sem um \"documento de identidade\"."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Glossário",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>npm</strong>: gerenciador oficial de pacotes do Node.js.<br> <strong>Pacote (<em>package</em>)</strong>: conjunto de arquivos que implementa uma funcionalidade reutilizável.<br> <strong>Dependência</strong>: biblioteca necessária para o funcionamento da aplicação.<br> <strong>LTS (<em>Long Term Support</em>)</strong>: versão do Node.js com suporte prolongado, recomendada para produção.<br> <strong>node_modules</strong>: pasta onde o npm instala todas as bibliotecas de um projeto.<br> <strong>package.json</strong>: arquivo que descreve as configurações, dependências e scripts de um projeto Node.js."
+    }
+   ]
+  }
+ ]
+}

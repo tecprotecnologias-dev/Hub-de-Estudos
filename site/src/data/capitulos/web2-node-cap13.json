@@ -1,0 +1,354 @@
+{
+ "numero": 13,
+ "titulo": "Projeto Integrador",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Chegamos ao último capítulo desta jornada. Ao longo de doze capítulos, construímos a BibliotecaAPI peça por peça – dos fundamentos do Node.js até uma API REST completa, protegida por autenticação e organizada seguindo práticas profissionais. Este capítulo final reúne tudo em um único projeto, e aponta caminhos para você continuar a partir daqui."
+  },
+  {
+   "t": "h2",
+   "id": "13-1-o-projeto-completo-bibliotecaapi",
+   "texto": "13.1 O Projeto Completo: BibliotecaAPI"
+  },
+  {
+   "t": "p",
+   "html": "Vale relembrar, em uma única frase, o que cada parte do livro construiu:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Capítulos",
+    "O que construímos"
+   ],
+   "linhas": [
+    [
+     "1 – 5",
+     "Fundamentos: Node.js, JavaScript moderno, assincronia, npm"
+    ],
+    [
+     "6",
+     "O banco de dados relacional, do zero até JOIN"
+    ],
+    [
+     "7 – 9",
+     "Arquitetura da API e o primeiro servidor Express"
+    ],
+    [
+     "10",
+     "CRUD completo das seis entidades da BibliotecaAPI"
+    ],
+    [
+     "11",
+     "Autenticação e autorização com JWT"
+    ],
+    [
+     "12",
+     "Padronização, <em>logging</em>, testes e boas práticas"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O resultado é uma aplicação real: um sistema de biblioteca digital, com autores, editoras, categorias, usuários, livros e empréstimos – protegido por login, organizado em camadas, e pronto para ser estendido."
+  },
+  {
+   "t": "h2",
+   "id": "13-2-estrutura-final-de-pastas",
+   "texto": "13.2 Estrutura Final de Pastas"
+  },
+  {
+   "t": "p",
+   "html": "Reunindo tudo o que foi criado ao longo do livro, a BibliotecaAPI completa tem a seguinte estrutura:"
+  },
+  {
+   "t": "codigo",
+   "texto": "BibliotecaAPI/\n|-- src/\n|   |-- config/\n|   |   |-- db.js\n|   |   `-- logger.js\n|   |-- controllers/\n|   |   |-- livroController.js\n|   |   |-- autorController.js\n|   |   |-- editoraController.js\n|   |   |-- categoriaController.js\n|   |   |-- usuarioController.js\n|   |   |-- emprestimoController.js\n|   |   `-- authController.js\n|   |-- services/\n|   |   `-- (um Service para cada Controller acima)\n|   |-- models/\n|   |   `-- (um Model para cada entidade)\n|   |-- routes/\n|   |   `-- (um arquivo de rotas para cada recurso)\n|   |-- middlewares/\n|   |   |-- autenticar.js\n|   |   |-- autorizar.js\n|   |   `-- errorHandler.js\n|   |-- validators/\n|   |   `-- (um validador por entidade)\n|   |-- utils/\n|   |   `-- resposta.js\n|   `-- app.js\n|-- tests/\n|   `-- (testes automatizados, Capítulo 12)\n|-- logs/\n|-- .env.development\n|-- .env.example\n|-- .gitignore\n|-- package.json\n|-- package-lock.json\n`-- server.js"
+  },
+  {
+   "t": "p",
+   "html": "Repare que essa estrutura é, essencialmente, a mesma que planejamos no Capítulo 7 – só que agora completamente preenchida."
+  },
+  {
+   "t": "h2",
+   "id": "13-3-todos-os-endpoints-da-api",
+   "texto": "13.3 Todos os Endpoints da API"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Método",
+    "Rota",
+    "Proteção"
+   ],
+   "linhas": [
+    [
+     "POST",
+     "<code>/login</code>",
+     "Pública"
+    ],
+    [
+     "GET",
+     "<code>/autores</code>",
+     "Autenticado"
+    ],
+    [
+     "POST",
+     "<code>/autores</code>",
+     "ADMIN, BIBLIOTECARIO"
+    ],
+    [
+     "GET",
+     "<code>/editoras</code>",
+     "Autenticado"
+    ],
+    [
+     "POST",
+     "<code>/editoras</code>",
+     "ADMIN, BIBLIOTECARIO"
+    ],
+    [
+     "GET",
+     "<code>/categorias</code>",
+     "Autenticado"
+    ],
+    [
+     "POST",
+     "<code>/categorias</code>",
+     "ADMIN, BIBLIOTECARIO"
+    ],
+    [
+     "GET",
+     "<code>/usuarios</code>",
+     "ADMIN"
+    ],
+    [
+     "GET",
+     "<code>/livros</code>",
+     "Autenticado"
+    ],
+    [
+     "GET",
+     "<code>/livros/:id</code>",
+     "Autenticado"
+    ],
+    [
+     "POST",
+     "<code>/livros</code>",
+     "ADMIN, BIBLIOTECARIO"
+    ],
+    [
+     "PUT / PATCH",
+     "<code>/livros/:id</code>",
+     "ADMIN, BIBLIOTECARIO"
+    ],
+    [
+     "DELETE",
+     "<code>/livros/:id</code>",
+     "ADMIN"
+    ],
+    [
+     "POST",
+     "<code>/emprestimos</code>",
+     "Autenticado"
+    ],
+    [
+     "PATCH",
+     "<code>/emprestimos/:id/devolver</code>",
+     "ADMIN, BIBLIOTECARIO"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Essa tabela é, na prática, a documentação mínima de qualquer API – e um excelente ponto de partida caso você queira, no futuro, gerar documentação automática com Swagger/OpenAPI."
+  },
+  {
+   "t": "h2",
+   "id": "13-4-o-outro-lado-da-api-consumindo-com-html-e-fetch",
+   "texto": "13.4 O Outro Lado da API: Consumindo com HTML e fetch()"
+  },
+  {
+   "t": "p",
+   "html": "Ao longo de todo o livro, testamos a BibliotecaAPI pelo Postman – uma ferramenta indispensável durante o desenvolvimento, mas que nenhum usuário final jamais vai usar. É hora de ver a API sendo consumida da forma como ela realmente será, no mundo real: por uma página web."
+  },
+  {
+   "t": "p",
+   "html": "Não é preciso nenhum <em>framework</em> de <em>frontend</em> para isso – HTML puro e a função <code>fetch()</code>, nativa do navegador, já são suficientes para demonstrar o ciclo completo."
+  },
+  {
+   "t": "codigo",
+   "texto": "<!DOCTYPE html>\n<html lang=\"pt-br\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>BibliotecaAPI -- Cliente de Teste</title>\n</head>\n<body>\n\n    <h1>Livros cadastrados</h1>\n    <ul id=\"lista-livros\"></ul>\n\n    <script>\n        async function carregarLivros() {\n            const resposta = await fetch(\"http://localhost:3000/livros\", {\n                headers: {\n                    \"Authorization\": \"Bearer \" + localStorage.getItem(\"token\")\n                }\n            });\n\n            const { dados } = await resposta.json();\n\n            const lista = document.getElementById(\"lista-livros\");\n            lista.innerHTML = \"\";\n\n            dados.forEach(livro => {\n                const item = document.createElement(\"li\");\n                item.textContent = `${livro.titulo} -- ${livro.autor}`;\n                lista.appendChild(item);\n            });\n        }\n\n        carregarLivros();\n    </script>\n\n</body>\n</html>"
+  },
+  {
+   "t": "p",
+   "html": "Observe como cada peça deste HTML se conecta diretamente a algo que já construímos:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<code>fetch(\"http://localhost:3000/livros\")</code> envia uma requisição <code>GET</code> – exatamente a rota do Capítulo 10.",
+    "O cabeçalho <code>Authorization</code> carrega o token JWT gerado no login (Capítulo 11).",
+    "<code>await resposta.json()</code> converte a resposta em um objeto JavaScript – e repare que acessamos <code>dados</code>, o mesmo formato padronizado que definimos no Capítulo 12.",
+    "O restante é JavaScript puro manipulando o HTML da página, sem nenhuma mágica adicional."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Um segundo exemplo, agora enviando dados – o formulário de login:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<form id=\"form-login\">\n    <input type=\"email\" id=\"email\" placeholder=\"E-mail\" required>\n    <input type=\"password\" id=\"senha\" placeholder=\"Senha\" required>\n    <button type=\"submit\">Entrar</button>\n</form>\n\n<script>\n    document.getElementById(\"form-login\").addEventListener(\"submit\", async (evento) => {\n        evento.preventDefault();\n\n        const resposta = await fetch(\"http://localhost:3000/login\", {\n            method: \"POST\",\n            headers: { \"Content-Type\": \"application/json\" },\n            body: JSON.stringify({\n                email: document.getElementById(\"email\").value,\n                senha: document.getElementById(\"senha\").value\n            })\n        });\n\n        const dados = await resposta.json();\n\n        if (resposta.ok) {\n            localStorage.setItem(\"token\", dados.token);\n            alert(\"Login realizado com sucesso!\");\n        } else {\n            alert(dados.mensagem);\n        }\n    });\n</script>"
+  },
+  {
+   "t": "p",
+   "html": "Esse é o ciclo completo que sustenta praticamente qualquer aplicação web moderna: uma interface (aqui, HTML simples; em um projeto maior, poderia ser React, Vue ou um aplicativo móvel) conversando com a API que você construiu, usando exatamente os mesmos conceitos de requisição, resposta, <em>header</em> e JSON que estudamos desde o Capítulo 1."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Boas práticas",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Nunca armazene o token JWT em um lugar acessível por qualquer script de terceiros sem cuidado – <code>localStorage</code> é aceitável para fins de estudo, como neste exemplo, mas aplicações em produção costumam preferir <em>cookies</em> com a flag <code>HttpOnly</code>, que impedem que o próprio JavaScript da página leia o token, reduzindo o risco de roubo de sessão por ataques de <em>Cross-Site Scripting</em> (XSS)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "13-5-rodando-o-projeto-completo-do-zero",
+   "texto": "13.5 Rodando o Projeto Completo do Zero"
+  },
+  {
+   "t": "p",
+   "html": "Depois de treze capítulos, vale um checklist único, do início ao fim, reunindo tudo o que foi feito em separado ao longo do livro – exatamente os passos que você (ou qualquer outra pessoa) seguiria para colocar a BibliotecaAPI para funcionar em uma máquina nova, sem nada instalado além do essencial."
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. <strong>Instale as ferramentas de base</strong> – Node.js LTS, MySQL e um editor de código (Capítulos 2 e 6).",
+    "2. <strong>Clone ou copie o projeto</strong>, e instale as dependências: <pre class=\"bloco-codigo\"><code>$ npm install</code></pre>",
+    "3. <strong>Crie o arquivo <code>.env</code></strong> a partir do <code>.env.example</code>, preenchendo suas próprias credenciais de banco e uma chave JWT (Capítulos 8 e 11): <pre class=\"bloco-codigo\"><code>DB_HOST=localhost\nDB_PORT=3306\nDB_USER=root\nDB_PASSWORD=sua_senha\nDB_NAME=biblioteca_api\nJWT_SECRET=uma-chave-bem-longa-e-dificil-de-adivinhar</code></pre>",
+    "4. <strong>Crie o banco e as tabelas</strong>, executando os scripts SQL do Capítulo 6 (criação do banco) e do Capítulo 10 (as seis tabelas da BibliotecaAPI, na ordem correta de dependência).",
+    "5. <strong>Popule o banco</strong> com o <em>seed</em> de dados iniciais (seção 10.3) – lembrando de gerar hashes reais com bcrypt para as senhas (Capítulo 11), em vez dos hashes fictícios usados durante o desenvolvimento.",
+    "6. <strong>Inicie o servidor</strong>: <pre class=\"bloco-codigo\"><code>$ npm run dev</code></pre>",
+    "7. <strong>Teste o fluxo completo no Postman</strong>: primeiro <code>POST /login</code> para obter um token; depois use esse token no cabeçalho <code>Authorization</code> para testar as demais rotas – listar livros, cadastrar um autor, registrar um empréstimo.",
+    "8. <strong>(Opcional) Rode os testes automatizados</strong> do Capítulo 12: <pre class=\"bloco-codigo\"><code>$ npm test</code></pre>"
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Se todos esses passos funcionarem em sequência, sem erros, a BibliotecaAPI está completa e funcional – exatamente o sistema que construímos, um capítulo de cada vez, ao longo deste livro."
+  },
+  {
+   "t": "h2",
+   "id": "13-6-preparando-o-projeto-para-o-portfolio",
+   "texto": "13.6 Preparando o Projeto para o Portfólio"
+  },
+  {
+   "t": "p",
+   "html": "Antes de publicar a BibliotecaAPI no GitHub, alguns últimos ajustes fazem diferença:"
+  },
+  {
+   "t": "h3",
+   "texto": ".gitignore"
+  },
+  {
+   "t": "codigo",
+   "texto": "node_modules/\n.env\n.env.*\n!.env.example\nlogs/"
+  },
+  {
+   "t": "h3",
+   "texto": "Um README que conta a história do projeto"
+  },
+  {
+   "t": "p",
+   "html": "Um bom <code>README.md</code> não é só uma lista de comandos – é a primeira impressão que qualquer recrutador ou colega desenvolvedor vai ter do seu trabalho. Vale incluir: o que a API faz, as tecnologias utilizadas, como instalar e rodar o projeto localmente, e a lista de endpoints da seção 13.3."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Boas práticas",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Nunca envie o arquivo <code>.env</code> para o GitHub – mesmo em um projeto de portfólio. Publique apenas o <code>.env.example</code>, com nomes de variáveis e valores fictícios, e garanta que o <code>.gitignore</code> está configurado <strong>antes</strong> do primeiro <code>git add</code>."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "13-7-para-onde-ir-daqui",
+   "texto": "13.7 Para Onde Ir Daqui"
+  },
+  {
+   "t": "p",
+   "html": "A BibliotecaAPI que você construiu está funcional, mas nenhum sistema real fica \"pronto\" para sempre – ele evolui. Algumas direções naturais para continuar praticando:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Reservas</strong>: permitir que um leitor reserve um livro emprestado, sendo notificado quando ele for devolvido.",
+    "<strong>Multas</strong>: calcular automaticamente multas por atraso na devolução (revisite a seção 12.6 sobre <code>data_prevista</code> e <code>CURDATE()</code>).",
+    "<strong>Múltiplos autores por livro</strong>: implementar a tabela intermediária <code>livros_autores</code>, resolvendo o relacionamento N:N que mencionamos brevemente no Capítulo 10.",
+    "<strong>Documentação automática</strong> com Swagger/OpenAPI, gerando uma interface interativa a partir da tabela da seção 13.3.",
+    "<strong>Deploy</strong>: publicar a API em um serviço como Render, Railway ou um VPS, tornando-a acessível publicamente – o passo que transforma um projeto de estudo em algo que você pode de fato compartilhar."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Nenhuma dessas extensões exige conceitos além dos que você já aprendeu neste livro – todas são combinações do que já foi construído: mais uma tabela, mais uma rota, mais uma regra de negócio na Service."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Encerramento",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Você começou este livro aprendendo o que é um <em>runtime</em>. Termina construindo uma API REST completa, com banco de dados relacional, autenticação segura e arquitetura profissional em camadas – exatamente o tipo de sistema que sustenta aplicações reais no mercado."
+    },
+    {
+     "t": "p",
+     "html": "O caminho de quem programa nunca termina em um \"pronto\" definitivo – e é assim mesmo que deve ser. Continue construindo, continue quebrando coisas e consertando, e volte a este livro sempre que precisar relembrar um conceito. Ele vai continuar aqui."
+    },
+    {
+     "t": "p",
+     "html": "Parabéns por ter chegado até aqui."
+    },
+    {
+     "t": "p",
+     "html": "<em>TecPro Tecnologia</em>"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Desafio Final",
+   "blocos": [
+    {
+     "t": "lista",
+     "numerada": true,
+     "itens": [
+      "1. Reúna todo o código desenvolvido ao longo dos três volumes em um único repositório Git, seguindo a estrutura da seção 13.2.",
+      "2. Escreva o README completo do projeto, incluindo a tabela de endpoints da seção 13.3.",
+      "3. Implemente pelo menos uma das extensões sugeridas na seção 13.7.",
+      "4. Publique o projeto no GitHub, com o <code>.env</code> corretamente ignorado e um <code>.env.example</code> no lugar.",
+      "5. (Opcional, para quem quiser ir além) Faça o <em>deploy</em> da BibliotecaAPI em um serviço gratuito, e compartilhe o link – essa é a diferença entre um projeto de estudo e um projeto de portfólio."
+     ]
+    }
+   ]
+  }
+ ]
+}

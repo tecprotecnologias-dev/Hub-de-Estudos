@@ -1,0 +1,330 @@
+{
+ "numero": 9,
+ "titulo": "Construindo a Primeira API REST",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "9-1-instalando-o-express",
+   "texto": "9.1 Instalando o Express"
+  },
+  {
+   "t": "p",
+   "html": "O Node.js sozinho já é capaz de criar um servidor HTTP, usando seu módulo nativo <code>http</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const http = require(\"http\");\n\nconst servidor = http.createServer((req, res) => {\n    res.write(\"Olá, Mundo!\");\n    res.end();\n});\n\nservidor.listen(3000);"
+  },
+  {
+   "t": "p",
+   "html": "Esse código funciona, mas em uma aplicação real – com dezenas de rotas, autenticação, tratamento de erros e integração com banco de dados – escrever tudo isso manualmente se torna extremamente trabalhoso. Foi para simplificar esse processo que surgiu o <strong>Express</strong>: um <em>framework</em> construído sobre o Node.js que oferece rotas, <em>middlewares</em> e uma forma muito mais organizada de estruturar uma aplicação web."
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install express"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Node.js",
+    "Express"
+   ],
+   "linhas": [
+    [
+     "Runtime JavaScript",
+     "Framework Web"
+    ],
+    [
+     "Executa o código",
+     "Organiza aplicações Web"
+    ],
+    [
+     "Fornece APIs nativas",
+     "Simplifica o desenvolvimento"
+    ],
+    [
+     "Pode funcionar sem Express",
+     "Depende do Node.js"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Uma analogia simples: o Node.js é o motor do automóvel; o Express é a carroceria, o volante e os controles que tornam esse motor utilizável no dia a dia."
+  },
+  {
+   "t": "h2",
+   "id": "9-2-o-primeiro-servidor",
+   "texto": "9.2 O Primeiro Servidor"
+  },
+  {
+   "t": "codigo",
+   "texto": "// server.js\nconst express = require(\"express\");\nconst app = express();\n\nconst PORT = process.env.PORT || 3000;\n\napp.listen(PORT, () => {\n    console.log(`Servidor executando na porta ${PORT}`);\n});"
+  },
+  {
+   "t": "p",
+   "html": "Repare no uso de <code>process.env.PORT</code> – assim como fizemos com as credenciais do banco no Capítulo 8, a porta do servidor também deve vir de uma variável de ambiente, permitindo trocar de porta sem alterar o código."
+  },
+  {
+   "t": "p",
+   "html": "Ainda não existe nenhuma rota, então acessar o servidor no navegador retorna um erro <code>Cannot GET /</code>. Vamos resolver isso agora."
+  },
+  {
+   "t": "h2",
+   "id": "9-3-criando-a-primeira-rota",
+   "texto": "9.3 Criando a Primeira Rota"
+  },
+  {
+   "t": "codigo",
+   "texto": "app.get(\"/\", (req, res) => {\n    res.send(\"Bem-vindo à BibliotecaAPI!\");\n});"
+  },
+  {
+   "t": "p",
+   "html": "Os parâmetros <code>req</code> (<em>request</em>) e <code>res</code> (<em>response</em>) já apareceram na nossa discussão sobre HTTP, no Capítulo 7 – <code>req</code> representa tudo o que o cliente enviou; <code>res</code> é usado para construir a resposta."
+  },
+  {
+   "t": "p",
+   "html": "Para retornar dados estruturados – o formato que vamos usar em praticamente toda a API –, utilizamos <code>res.json()</code> em vez de <code>res.send()</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "app.get(\"/status\", (req, res) => {\n    res.json({ mensagem: \"API funcionando\" });\n});"
+  },
+  {
+   "t": "h2",
+   "id": "9-4-organizando-rotas-com-express-router",
+   "texto": "9.4 Organizando Rotas com Express Router"
+  },
+  {
+   "t": "p",
+   "html": "Centralizar todas as rotas em <code>server.js</code> funciona para um exemplo pequeno, mas rapidamente se torna inviável em uma API com dezenas de recursos. O <strong>Express Router</strong> permite dividir as rotas em módulos independentes – exatamente a pasta <code>routes/</code> que planejamos na arquitetura do Capítulo 7."
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/routes/livroRoutes.js\nconst express = require(\"express\");\nconst router = express.Router();\n\nrouter.get(\"/\", (req, res) => {\n    res.json({ mensagem: \"Lista de livros\" });\n});\n\nmodule.exports = router;"
+  },
+  {
+   "t": "p",
+   "html": "E registramos esse módulo no <code>server.js</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const livroRoutes = require(\"./src/routes/livroRoutes\");\napp.use(\"/livros\", livroRoutes);"
+  },
+  {
+   "t": "p",
+   "html": "Repare que o prefixo <code>/livros</code> é definido <strong>uma única vez</strong>, no registro – todas as rotas dentro de <code>livroRoutes.js</code> já nascem prefixadas automaticamente. A rota <code>router.get(\"/\")</code> deste arquivo corresponde, na prática, a <code>GET /livros</code>."
+  },
+  {
+   "t": "h2",
+   "id": "9-5-controllers",
+   "texto": "9.5 Controllers"
+  },
+  {
+   "t": "p",
+   "html": "Assim como fizemos com o Model e o Service no Capítulo 8, vamos manter a rota o mais enxuta possível – toda a lógica de resposta fica no <strong>Controller</strong>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/controllers/livroController.js\nconst livroService = require(\"../services/livroService\");\n\nasync function listar(req, res) {\n    try {\n        const livros = await livroService.listarLivros();\n        res.json(livros);\n    } catch (erro) {\n        res.status(500).json({ erro: \"Erro ao consultar livros.\" });\n    }\n}\n\nasync function cadastrar(req, res) {\n    try {\n        const livro = await livroService.cadastrarLivro(req.body);\n        res.status(201).json(livro);\n    } catch (erro) {\n        res.status(400).json({ erro: erro.message });\n    }\n}\n\nmodule.exports = { listar, cadastrar };"
+  },
+  {
+   "t": "p",
+   "html": "E a rota passa a apenas encaminhar para o Controller:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/routes/livroRoutes.js\nconst router = require(\"express\").Router();\nconst livroController = require(\"../controllers/livroController\");\n\nrouter.get(\"/\", livroController.listar);\nrouter.post(\"/\", livroController.cadastrar);\n\nmodule.exports = router;"
+  },
+  {
+   "t": "p",
+   "html": "Agora o fluxo completo de uma requisição percorre exatamente as camadas que planejamos no Capítulo 7:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/node/capitulo-09_diagrama1.png",
+   "alt": "capitulo 09 diagrama1"
+  },
+  {
+   "t": "h2",
+   "id": "9-6-recebendo-dados-req-body-req-params-e-req-query",
+   "texto": "9.6 Recebendo Dados: req.body, req.params e req.query"
+  },
+  {
+   "t": "h3",
+   "texto": "req.body – dados enviados no corpo da requisição"
+  },
+  {
+   "t": "p",
+   "html": "Antes de conseguir ler dados enviados em JSON (como no <code>cadastrar()</code> da seção anterior), o Express precisa de um <em>middleware</em> que interprete o corpo da requisição:"
+  },
+  {
+   "t": "codigo",
+   "texto": "app.use(express.json());"
+  },
+  {
+   "t": "p",
+   "html": "Sem essa linha, <code>req.body</code> sempre será <code>undefined</code>, mesmo que o cliente envie um JSON perfeitamente válido."
+  },
+  {
+   "t": "h3",
+   "texto": "req.params – parâmetros na própria URL"
+  },
+  {
+   "t": "p",
+   "html": "Usados para identificar um recurso específico, como <code>GET /livros/10</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "router.get(\"/:id\", async (req, res) => {\n    const id = req.params.id;\n    const livro = await livroService.buscarPorId(id);\n\n    if (!livro) {\n        return res.status(404).json({ erro: \"Livro não encontrado.\" });\n    }\n\n    res.json(livro);\n});"
+  },
+  {
+   "t": "h3",
+   "texto": "req.query – parâmetros de consulta (após o ?)"
+  },
+  {
+   "t": "p",
+   "html": "Usados para filtros e paginação, como <code>GET /livros?autor=Machado&amp;page=2</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "router.get(\"/\", async (req, res) => {\n    const { autor, page } = req.query;\n    // autor = \"Machado\", page = \"2\"\n});"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Recurso",
+    "Utilização"
+   ],
+   "linhas": [
+    [
+     "<code>req.params</code>",
+     "Identificar um recurso específico (<code>/livros/10</code>)"
+    ],
+    [
+     "<code>req.query</code>",
+     "Filtrar ou paginar resultados (<code>/livros?autor=Machado</code>)"
+    ],
+    [
+     "<code>req.body</code>",
+     "Enviar dados para criação ou atualização"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "9-7-middlewares",
+   "texto": "9.7 Middlewares"
+  },
+  {
+   "t": "p",
+   "html": "Antes que uma requisição chegue à rota, muitas vezes é necessário executar tarefas intermediárias – verificar autenticação, registrar um log, validar dados. Um <strong>middleware</strong> é uma função que intercepta a requisição nesse meio-tempo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "function logger(req, res, next) {\n    console.log(`${req.method} ${req.url}`);\n    next();\n}"
+  },
+  {
+   "t": "p",
+   "html": "Todo <em>middleware</em> recebe três parâmetros: <code>req</code>, <code>res</code>, e <code>next</code> – uma função que precisa ser chamada para que o processamento continue. Se <code>next()</code> nunca for chamado (e nenhuma resposta for enviada), a requisição fica presa, \"carregando\" para sempre."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Uma convenção importante deste livro",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "É possível registrar um <em>middleware</em> <strong>globalmente</strong>, com <code>app.use(logger)</code> – ele passaria a rodar em <strong>todas</strong> as rotas da aplicação. Mas, na BibliotecaAPI, vamos preferir aplicar <em>middlewares</em> <strong>por rota</strong>, de forma explícita:"
+    },
+    {
+     "t": "codigo",
+     "texto": "router.get(\"/admin\", autenticar, (req, res) => {\n    res.json({ mensagem: \"Área administrativa\" });\n});"
+    },
+    {
+     "t": "p",
+     "html": "Essa abordagem deixa claro, só de olhar a rota, exatamente quais proteções ela tem – em vez de precisar caçar, em outro arquivo, quais <em>middlewares</em> globais afetam aquele endpoint. Vamos seguir esse padrão a partir de agora, inclusive quando implementarmos autenticação com JWT, no Capítulo 11."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Um exemplo de <em>middleware</em> de autenticação simples, que será a base do que faremos com JWT mais adiante:"
+  },
+  {
+   "t": "codigo",
+   "texto": "function autenticar(req, res, next) {\n    const token = req.headers.authorization;\n\n    if (!token) {\n        return res.status(401).json({ erro: \"Acesso negado.\" });\n    }\n\n    next();\n}"
+  },
+  {
+   "t": "h2",
+   "id": "9-8-codigos-de-status-na-pratica",
+   "texto": "9.8 Códigos de Status na Prática"
+  },
+  {
+   "t": "p",
+   "html": "O Capítulo 1 já apresentou os códigos de status HTTP mais comuns. Vamos agora aplicá-los de forma consistente em toda a BibliotecaAPI:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Situação",
+    "Código"
+   ],
+   "linhas": [
+    [
+     "Consulta bem-sucedida",
+     "<code>200 OK</code>"
+    ],
+    [
+     "Registro criado com sucesso",
+     "<code>201 Created</code>"
+    ],
+    [
+     "Exclusão bem-sucedida, sem corpo de resposta",
+     "<code>204 No Content</code>"
+    ],
+    [
+     "Dados inválidos enviados pelo cliente",
+     "<code>400 Bad Request</code>"
+    ],
+    [
+     "Cliente não autenticado",
+     "<code>401 Unauthorized</code>"
+    ],
+    [
+     "Recurso não encontrado",
+     "<code>404 Not Found</code>"
+    ],
+    [
+     "Erro interno do servidor",
+     "<code>500 Internal Server Error</code>"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "9-9-tratamento-de-erros",
+   "texto": "9.9 Tratamento de Erros"
+  },
+  {
+   "t": "p",
+   "html": "Envolver cada Controller em <code>try/catch</code> funciona, mas repete o mesmo padrão em toda rota da aplicação. Uma alternativa mais limpa é centralizar o tratamento de erros em um único <em>middleware</em>, registrado por último no <code>server.js</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/middlewares/errorHandler.js\nfunction errorHandler(err, req, res, next) {\n    console.error(err);\n    res.status(err.status || 500).json({\n        sucesso: false,\n        mensagem: err.message || \"Erro interno do servidor.\"\n    });\n}\n\nmodule.exports = errorHandler;"
+  },
+  {
+   "t": "codigo",
+   "texto": "// server.js -- sempre DEPOIS de todas as rotas\nconst errorHandler = require(\"./src/middlewares/errorHandler\");\napp.use(errorHandler);"
+  },
+  {
+   "t": "p",
+   "html": "Com esse middleware registrado, os Controllers passam a apenas encaminhar o erro com <code>next(erro)</code>, em vez de tratar cada exceção individualmente:"
+  },
+  {
+   "t": "codigo",
+   "texto": "async function listar(req, res, next) {\n    try {\n        const livros = await livroService.listarLivros();\n        res.json(livros);\n    } catch (erro) {\n        next(erro);\n    }\n}"
+  }
+ ]
+}

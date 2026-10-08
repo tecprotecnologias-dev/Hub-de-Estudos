@@ -62,6 +62,13 @@ def main():
         mudou = False
         for q in questoes:
             if q.get('tipo') != 'objetiva':
+                # discursivas: só o padrão de resposta (vindo, por exemplo, de um gabarito comentado)
+                texto = ajustes.get(q['id'], {}).get('respostaEsperada')
+                if texto:
+                    usados.add(q['id'])
+                    if q.get('respostaEsperada') != texto:
+                        q['respostaEsperada'] = texto
+                        mudou = True
                 continue
             novo = ajustes.get(q['id'], {})
             if novo:

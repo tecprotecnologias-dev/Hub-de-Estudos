@@ -1,0 +1,843 @@
+{
+ "numero": 6,
+ "titulo": "MySQL: Fundamentos e Linguagem SQL",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "6-1-o-que-e-um-banco-de-dados-relacional",
+   "texto": "6.1 O que é um Banco de Dados Relacional?"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, todo dado que criamos em nossos programas Node.js existia apenas enquanto o programa estava rodando – assim que o processo terminava, tudo se perdia. Para que uma aplicação real guarde informações de forma permanente (usuários cadastrados, produtos, pedidos), ela precisa de um <strong>banco de dados</strong>."
+  },
+  {
+   "t": "p",
+   "html": "Um <strong>banco de dados relacional</strong> organiza as informações em <strong>tabelas</strong>, onde cada linha representa um registro e cada coluna representa um atributo desse registro – de forma bem parecida com uma planilha eletrônica. A grande vantagem é que essas tabelas podem se <strong>relacionar</strong> entre si: um livro pode apontar para o autor que o escreveu, um pedido pode apontar para o cliente que o fez, e assim por diante. Veremos esses relacionamentos em detalhe na seção 6.15."
+  },
+  {
+   "t": "p",
+   "html": "O <strong>MySQL</strong> é um dos sistemas gerenciadores de banco de dados relacionais (SGBDR) mais utilizados do mundo, gratuito e de código aberto. A linguagem utilizada para conversar com ele – criar tabelas, inserir dados, consultar informações – é o <strong>SQL</strong> (<em>Structured Query Language</em>), e é essa linguagem que vamos aprender ao longo deste capítulo."
+  },
+  {
+   "t": "h2",
+   "id": "6-2-instalando-o-mysql",
+   "texto": "6.2 Instalando o MySQL"
+  },
+  {
+   "t": "p",
+   "html": "O MySQL pode ser obtido gratuitamente no site oficial (<a href=\"https://dev.mysql.com/downloads/\" target=\"_blank\" rel=\"noreferrer\">https://dev.mysql.com/downloads/</a>). Durante a instalação, você vai definir uma senha para o usuário administrador (<code>root</code>) – guarde essa senha, pois vamos utilizá-la em breve."
+  },
+  {
+   "t": "p",
+   "html": "Junto com o MySQL Server, recomendamos instalar também o <strong>MySQL Workbench</strong>, uma ferramenta gráfica que facilita escrever e executar comandos SQL, visualizar tabelas e criar diagramas do banco."
+  },
+  {
+   "t": "p",
+   "html": "Após a instalação, verifique se tudo funcionou abrindo o terminal:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ mysql --version\nmysql  Ver 8.0.40 for Win64 on x86_64"
+  },
+  {
+   "t": "p",
+   "html": "Para se conectar ao servidor pelo terminal:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ mysql -u root -p"
+  },
+  {
+   "t": "p",
+   "html": "O terminal vai pedir a senha definida na instalação. Depois de digitá-la, o prompt muda para <code>mysql&gt;</code> – sinal de que você já pode executar comandos SQL."
+  },
+  {
+   "t": "h2",
+   "id": "6-3-criando-o-banco-de-dados",
+   "texto": "6.3 Criando o Banco de Dados"
+  },
+  {
+   "t": "p",
+   "html": "Um servidor MySQL pode hospedar vários bancos de dados diferentes ao mesmo tempo (um para cada projeto, por exemplo). Para criar o banco que usaremos ao longo deste livro:"
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE DATABASE biblioteca_api\nCHARACTER SET utf8mb4\nCOLLATE utf8mb4_unicode_ci;"
+  },
+  {
+   "t": "p",
+   "html": "O trecho <code>CHARACTER SET utf8mb4</code> garante que o banco armazene corretamente acentos, caracteres especiais e até emojis – sem ele, nomes como \"José\" ou \"Conceição\" podem ser salvos incorretamente."
+  },
+  {
+   "t": "p",
+   "html": "Criar o banco não significa que ele já está \"selecionado\" para uso. Antes de criar qualquer tabela, é preciso informar ao MySQL qual banco será utilizado na sessão atual:"
+  },
+  {
+   "t": "codigo",
+   "texto": "USE biblioteca_api;"
+  },
+  {
+   "t": "p",
+   "html": "A partir daqui, todos os comandos deste capítulo serão executados dentro do banco <code>biblioteca_api</code>."
+  },
+  {
+   "t": "h2",
+   "id": "6-4-tipos-de-dados-no-mysql",
+   "texto": "6.4 Tipos de Dados no MySQL"
+  },
+  {
+   "t": "p",
+   "html": "Sempre que criamos uma tabela, precisamos informar ao MySQL qual tipo de informação cada coluna irá armazenar. Considere a tabela a seguir:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "id",
+    "título",
+    "autor",
+    "ano",
+    "preço"
+   ],
+   "linhas": [
+    [
+     "1",
+     "Dom Casmurro",
+     "Machado de Assis",
+     "1899",
+     "39,90"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Cada coluna tem uma natureza diferente: <code>id</code> e <code>ano</code> são números inteiros, <code>título</code> e <code>autor</code> são texto, <code>preço</code> é um valor decimal. A escolha correta do tipo influencia diretamente o desempenho das consultas, o espaço ocupado em disco e a integridade dos dados armazenados."
+  },
+  {
+   "t": "h3",
+   "texto": "Tipos numéricos"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo",
+    "Indicação"
+   ],
+   "linhas": [
+    [
+     "<code>INT</code>",
+     "Números inteiros (o mais utilizado)"
+    ],
+    [
+     "<code>BIGINT</code>",
+     "Inteiros muito grandes (sistemas bancários, IDs globais)"
+    ],
+    [
+     "<code>DECIMAL(10,2)</code>",
+     "Valores monetários – <strong>sempre</strong> use para dinheiro"
+    ],
+    [
+     "<code>FLOAT</code>",
+     "Cálculos científicos (nunca para dinheiro)"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Em <code>DECIMAL(10,2)</code>, o <code>10</code> é o número máximo de dígitos e o <code>2</code> são as casas decimais – ou seja, valores até 99999999,99. Nunca utilize <code>FLOAT</code> para dinheiro: por ser uma representação aproximada, ele pode acumular pequenas imprecisões de arredondamento que, após milhares de operações, geram inconsistências financeiras reais."
+  },
+  {
+   "t": "h3",
+   "texto": "Tipos de texto"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo",
+    "Quando utilizar"
+   ],
+   "linhas": [
+    [
+     "<code>CHAR(n)</code>",
+     "Texto de tamanho <strong>fixo</strong> (ex: <code>UF CHAR(2)</code> para \"RJ\", \"SP\")"
+    ],
+    [
+     "<code>VARCHAR(n)</code>",
+     "Texto de tamanho <strong>variável</strong> – o mais utilizado"
+    ],
+    [
+     "<code>TEXT</code>",
+     "Textos longos (sinopses, descrições, comentários)"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Tipos de data e hora"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo",
+    "Exemplo"
+   ],
+   "linhas": [
+    [
+     "<code>DATE</code>",
+     "<code>2026-07-21</code>"
+    ],
+    [
+     "<code>TIME</code>",
+     "<code>14:30:25</code>"
+    ],
+    [
+     "<code>DATETIME</code>",
+     "<code>2026-07-21 14:30:25</code>"
+    ],
+    [
+     "<code>TIMESTAMP</code>",
+     "Semelhante ao <code>DATETIME</code>, mas pode ser atualizado automaticamente pelo MySQL – muito usado para \"última atualização\""
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "BOOLEAN e ENUM"
+  },
+  {
+   "t": "p",
+   "html": "O tipo <code>BOOLEAN</code> representa valores lógicos (<code>TRUE</code>/<code>FALSE</code>, internamente armazenados como <code>1</code>/<code>0</code>). Já o <code>ENUM</code> restringe uma coluna a um conjunto pré-definido de valores:"
+  },
+  {
+   "t": "codigo",
+   "texto": "status ENUM('Disponível', 'Emprestado', 'Reservado')"
+  },
+  {
+   "t": "p",
+   "html": "Assim, o banco aceitará apenas um desses três valores para essa coluna – qualquer outra tentativa gera erro."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erros comuns",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Usar <code>FLOAT</code> para dinheiro</strong> – prefira sempre <code>DECIMAL(10,2)</code>.<br> <strong>Usar <code>VARCHAR</code> para datas</strong> – prefira <code>DATE</code>, que permite ordenar e comparar corretamente.<br> <strong>Criar <code>VARCHAR</code> pequeno demais</strong> – um <code>VARCHAR(20)</code> para nomes vai truncar \"Maria Aparecida da Silva Santos\"."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-5-criando-tabelas-com-create-table",
+   "texto": "6.5 Criando Tabelas com CREATE TABLE"
+  },
+  {
+   "t": "p",
+   "html": "Em um banco de dados relacional, as informações são armazenadas em tabelas. Uma tabela pode ser comparada a uma planilha eletrônica: cada linha representa um registro, cada coluna representa um atributo."
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE TABLE livros (\n    id INT,\n    titulo VARCHAR(200),\n    autor VARCHAR(150),\n    ano_publicacao INT\n);"
+  },
+  {
+   "t": "p",
+   "html": "Após executar esse comando, a estrutura da tabela estará disponível no banco – mas nenhuma informação foi armazenada ainda, apenas a estrutura foi criada."
+  },
+  {
+   "t": "p",
+   "html": "Para visualizar a estrutura de uma tabela já criada:"
+  },
+  {
+   "t": "codigo",
+   "texto": "DESCRIBE livros;"
+  },
+  {
+   "t": "p",
+   "html": "E, para remover uma tabela por completo (estrutura <strong>e</strong> registros, sem possibilidade de desfazer):"
+  },
+  {
+   "t": "codigo",
+   "texto": "DROP TABLE livros;"
+  },
+  {
+   "t": "p",
+   "html": "Em scripts reutilizáveis, é comum evitar erros de \"tabela já existe\" utilizando:"
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE TABLE IF NOT EXISTS livros (\n    id INT,\n    titulo VARCHAR(200)\n);"
+  },
+  {
+   "t": "h3",
+   "texto": "Convenções de nomenclatura"
+  },
+  {
+   "t": "p",
+   "html": "Um bom projeto utiliza nomes padronizados: letras minúsculas, nomes significativos (<code>livros</code>, <code>usuarios</code>), sem espaços, com <em>underscore</em> quando necessário (<code>data_publicacao</code>). Evite nomes como <code>tb01</code>, <code>dados1</code> ou <code>abc</code> – eles dificultam a manutenção do banco no futuro."
+  },
+  {
+   "t": "h2",
+   "id": "6-6-chaves-primarias-e-auto-increment",
+   "texto": "6.6 Chaves Primárias e AUTO_INCREMENT"
+  },
+  {
+   "t": "p",
+   "html": "Imagine uma biblioteca com três livros diferentes, todos chamados \"Dom Casmurro\" (edições diferentes). Como identificar exatamente qual registro será atualizado ou excluído? Apenas o título não é suficiente – é necessário um identificador único."
+  },
+  {
+   "t": "p",
+   "html": "Uma <strong>chave primária</strong> (<em>Primary Key</em>) é uma coluna que identifica unicamente cada registro de uma tabela. Ela precisa cumprir duas regras: nenhum valor pode se repetir, e nenhum valor pode ser nulo."
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE TABLE livros (\n    id INT PRIMARY KEY,\n    titulo VARCHAR(200),\n    autor VARCHAR(150)\n);"
+  },
+  {
+   "t": "p",
+   "html": "Se tentarmos inserir um segundo registro com o mesmo <code>id</code>, o MySQL rejeita a operação com um erro do tipo <code>Duplicate entry '1' for key 'PRIMARY'</code> – o banco protege automaticamente a integridade dos dados."
+  },
+  {
+   "t": "h3",
+   "texto": "AUTO_INCREMENT"
+  },
+  {
+   "t": "p",
+   "html": "Imagine cadastrar mil livros e ter que informar manualmente o <code>id</code> de cada um – <code>1</code>, <code>2</code>, <code>3</code>... O MySQL resolve esse problema com <code>AUTO_INCREMENT</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE TABLE livros (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    titulo VARCHAR(200),\n    autor VARCHAR(150)\n);"
+  },
+  {
+   "t": "p",
+   "html": "Agora basta inserir título e autor – o <code>id</code> é gerado automaticamente pelo próprio MySQL, de forma sequencial e sem risco de duplicidade."
+  },
+  {
+   "t": "h3",
+   "texto": "Chave natural x chave substituta"
+  },
+  {
+   "t": "p",
+   "html": "Uma <strong>chave natural</strong> é formada por um dado que já existe naturalmente (CPF, ISBN, placa de veículo). Uma <strong>chave substituta</strong> (<em>surrogate key</em>) é criada exclusivamente para identificar registros, sem significado de negócio – é o caso do nosso <code>id</code> com <code>AUTO_INCREMENT</code>. Na maioria dos sistemas modernos, utiliza-se uma chave substituta como identificador principal, mantendo chaves naturais (como o ISBN) em colunas próprias, com a restrição <code>UNIQUE</code> – que veremos já na próxima seção."
+  },
+  {
+   "t": "h2",
+   "id": "6-7-alterando-tabelas-com-alter-table",
+   "texto": "6.7 Alterando Tabelas com ALTER TABLE"
+  },
+  {
+   "t": "p",
+   "html": "Depois que uma tabela já existe (e possivelmente já tem dados), muitas vezes é preciso mudar sua estrutura – adicionar uma nova coluna, remover uma coluna antiga, ou renomear algo. É para isso que serve o comando <code>ALTER TABLE</code>."
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong>Adicionando uma coluna:</strong>"
+  },
+  {
+   "t": "codigo",
+   "texto": "ALTER TABLE livros\nADD quantidade INT DEFAULT 1;"
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong>Removendo uma coluna:</strong>"
+  },
+  {
+   "t": "codigo",
+   "texto": "ALTER TABLE livros\nDROP COLUMN quantidade;"
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong>Modificando o tipo de uma coluna existente:</strong>"
+  },
+  {
+   "t": "codigo",
+   "texto": "ALTER TABLE livros\nMODIFY titulo VARCHAR(250);"
+  },
+  {
+   "t": "p",
+   "html": "<code>ALTER TABLE</code> também é o comando usado para ajustar o próximo valor de um <code>AUTO_INCREMENT</code> – útil em migrações de dados:"
+  },
+  {
+   "t": "codigo",
+   "texto": "ALTER TABLE livros\nAUTO_INCREMENT = 1000;"
+  },
+  {
+   "t": "h2",
+   "id": "6-8-constraints-garantindo-a-integridade-dos-dados",
+   "texto": "6.8 Constraints: Garantindo a Integridade dos Dados"
+  },
+  {
+   "t": "p",
+   "html": "<em>Constraints</em> são regras aplicadas às tabelas para controlar quais dados podem ou não ser armazenados – funcionam como mecanismos de proteção do banco."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Constraint",
+    "Finalidade"
+   ],
+   "linhas": [
+    [
+     "<code>PRIMARY KEY</code>",
+     "Identifica unicamente um registro"
+    ],
+    [
+     "<code>NOT NULL</code>",
+     "Campo obrigatório"
+    ],
+    [
+     "<code>UNIQUE</code>",
+     "Impede valores repetidos"
+    ],
+    [
+     "<code>DEFAULT</code>",
+     "Define um valor padrão"
+    ],
+    [
+     "<code>CHECK</code>",
+     "Restringe valores permitidos"
+    ],
+    [
+     "<code>FOREIGN KEY</code>",
+     "Garante relacionamentos entre tabelas (seção 6.15)"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Colocando tudo em prática:"
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE TABLE livros (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    titulo VARCHAR(200) NOT NULL,\n    isbn CHAR(13) UNIQUE,\n    preco DECIMAL(10,2) CHECK (preco >= 0),\n    disponivel BOOLEAN DEFAULT TRUE\n);"
+  },
+  {
+   "t": "p",
+   "html": "Se tentarmos inserir um livro sem título, o MySQL rejeita a operação (<code>NOT NULL</code>). Se tentarmos repetir um ISBN já cadastrado, também rejeita (<code>UNIQUE</code>). Se tentarmos um preço negativo, rejeita de novo (<code>CHECK</code>). E se não informarmos a disponibilidade, o banco preenche automaticamente com <code>TRUE</code> (<code>DEFAULT</code>)."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Boas práticas",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Sempre aplique regras de integridade no banco, mesmo que a aplicação (Node.js) também as valide – nunca confie apenas na validação do lado da aplicação. Documente cada <em>constraint</em> como o que ela é: uma regra de negócio registrada no nível do banco de dados."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-9-inserindo-dados-com-insert-into",
+   "texto": "6.9 Inserindo Dados com INSERT INTO"
+  },
+  {
+   "t": "p",
+   "html": "O comando <code>INSERT INTO</code> adiciona novos registros a uma tabela. A forma mais recomendada é informar explicitamente as colunas que receberão valores:"
+  },
+  {
+   "t": "codigo",
+   "texto": "INSERT INTO livros (titulo, autor, ano_publicacao, preco)\nVALUES ('Dom Casmurro', 'Machado de Assis', 1899, 39.90);"
+  },
+  {
+   "t": "p",
+   "html": "Repare que o <code>id</code> não foi informado – ele é gerado automaticamente pelo <code>AUTO_INCREMENT</code>. Também é possível inserir vários registros em um único comando:"
+  },
+  {
+   "t": "codigo",
+   "texto": "INSERT INTO livros (titulo, autor, ano_publicacao, preco)\nVALUES\n('Iracema', 'José de Alencar', 1865, 29.90),\n('O Cortiço', 'Aluísio Azevedo', 1890, 44.90),\n('Vidas Secas', 'Graciliano Ramos', 1938, 35.90);"
+  },
+  {
+   "t": "p",
+   "html": "Quando uma coluna possui <code>DEFAULT</code>, ela pode simplesmente ser omitida – o banco preenche o valor padrão automaticamente. E, quando uma informação ainda não está disponível, utiliza-se <code>NULL</code> – que representa <em>ausência</em> de informação, e não deve ser confundido com zero ou texto vazio (<code>''</code>)."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erros comuns",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Informar valores em ordem incorreta</strong> sem especificar as colunas – sempre prefira a forma explícita <code>INSERT INTO tabela (coluna1, coluna2) VALUES (...)</code>.<br> <strong>Esquecer as aspas em textos</strong> – <code>'Dom Casmurro'</code>, não <code>Dom Casmurro</code>.<br> <strong>Inserir um ISBN já existente</strong> em uma coluna <code>UNIQUE</code> – o banco rejeitará a operação."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-10-consultando-dados-com-select",
+   "texto": "6.10 Consultando Dados com SELECT"
+  },
+  {
+   "t": "p",
+   "html": "O comando <code>SELECT</code> é utilizado para recuperar informações armazenadas em uma ou mais tabelas – é, provavelmente, o comando SQL mais utilizado no dia a dia."
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT * FROM livros;"
+  },
+  {
+   "t": "p",
+   "html": "O símbolo <code>*</code> significa \"todas as colunas\". Na prática, porém, raramente precisamos de todas – selecionar apenas o necessário reduz o volume de dados trafegados:"
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT titulo, autor FROM livros;"
+  },
+  {
+   "t": "p",
+   "html": "É possível renomear temporariamente uma coluna no resultado, usando <code>AS</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT titulo AS Livro, autor AS Escritor FROM livros;"
+  },
+  {
+   "t": "p",
+   "html": "E, para eliminar registros duplicados do resultado, usa-se <code>DISTINCT</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT DISTINCT autor FROM livros;"
+  },
+  {
+   "t": "p",
+   "html": "O <code>SELECT</code> também pode realizar cálculos, sem alterar os dados armazenados – muito útil para relatórios:"
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT titulo, preco, preco * 0.90 AS preco_promocional\nFROM livros;"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Boas práticas",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Evite <code>SELECT *</code> em aplicações reais – consulte apenas as colunas necessárias. Utilize <em>aliases</em> descritivos (<code>AS Livro</code>, não <code>AS t</code>). Documente consultas complexas com comentários SQL (<code>-- assim</code> para uma linha, <code>/* assim */</code> para várias)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-11-filtrando-dados-com-where",
+   "texto": "6.11 Filtrando Dados com WHERE"
+  },
+  {
+   "t": "p",
+   "html": "Consultar todos os registros de uma tabela raramente é suficiente. A cláusula <code>WHERE</code> filtra registros, retornando apenas aqueles que atendem a uma condição:"
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT * FROM livros\nWHERE autor = 'Machado de Assis';"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Operador",
+    "Significado"
+   ],
+   "linhas": [
+    [
+     "<code>=</code>",
+     "Igual"
+    ],
+    [
+     "<code>&lt;&gt;</code>",
+     "Diferente"
+    ],
+    [
+     "<code>&gt;</code>   <code>&lt;</code>",
+     "Maior, Menor"
+    ],
+    [
+     "<code>&gt;=</code>   <code>&lt;=</code>",
+     "Maior ou igual, Menor ou igual"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Condições podem ser combinadas com <code>AND</code> (todas precisam ser verdadeiras) e <code>OR</code> (pelo menos uma precisa ser verdadeira):"
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT * FROM livros\nWHERE autor = 'Machado de Assis' AND preco < 45;"
+  },
+  {
+   "t": "p",
+   "html": "Outros operadores muito úteis:"
+  },
+  {
+   "t": "codigo",
+   "texto": "-- BETWEEN: pesquisa em um intervalo\nSELECT * FROM livros WHERE preco BETWEEN 30 AND 50;\n\n-- IN: pesquisa vários valores ao mesmo tempo\nSELECT * FROM livros WHERE autor IN ('Machado de Assis', 'Jorge Amado');\n\n-- LIKE: pesquisa por padrões de texto (% = qualquer sequência)\nSELECT * FROM livros WHERE titulo LIKE 'Dom%';\n\n-- IS NULL / IS NOT NULL: nunca use \"= NULL\"\nSELECT * FROM livros WHERE isbn IS NULL;"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erros comuns",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Utilizar <code>= NULL</code></strong> – o correto é sempre <code>IS NULL</code> ou <code>IS NOT NULL</code>.<br> <strong>Abusar do <code>LIKE '%texto%'</code></strong> – consultas assim podem ficar lentas em tabelas grandes, pois impedem o uso eficiente de índices (seção 6.16)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-12-ordenando-resultados-com-order-by",
+   "texto": "6.12 Ordenando Resultados com ORDER BY"
+  },
+  {
+   "t": "p",
+   "html": "Sem <code>ORDER BY</code>, o MySQL não garante nenhuma ordem específica para os resultados."
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT * FROM livros ORDER BY titulo;          -- crescente (padrão)\nSELECT * FROM livros ORDER BY preco DESC;       -- decrescente\nSELECT * FROM livros ORDER BY autor, titulo;    -- por múltiplas colunas"
+  },
+  {
+   "t": "p",
+   "html": "Quando combinamos vários critérios (como no terceiro exemplo), os autores são ordenados primeiro; dentro de cada autor, os livros são ordenados pelo título."
+  },
+  {
+   "t": "h2",
+   "id": "6-13-limitando-resultados-com-limit",
+   "texto": "6.13 Limitando Resultados com LIMIT"
+  },
+  {
+   "t": "p",
+   "html": "Em sistemas reais, raramente é necessário retornar todos os registros de uma tabela de uma vez. Imagine uma biblioteca com 500 mil livros cadastrados – carregar tudo de uma vez seria inviável."
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT * FROM livros\nORDER BY preco DESC\nLIMIT 3;"
+  },
+  {
+   "t": "p",
+   "html": "Para \"pular\" um bloco de registros e retornar o próximo, combina-se <code>LIMIT</code> com <code>OFFSET</code> – a base da <strong>paginação</strong>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT * FROM livros\nORDER BY titulo\nLIMIT 10 OFFSET 10;   -- pula os 10 primeiros, retorna os 10 seguintes"
+  },
+  {
+   "t": "p",
+   "html": "A fórmula para calcular o <code>OFFSET</code> de qualquer página é:"
+  },
+  {
+   "t": "codigo",
+   "texto": "OFFSET = (página - 1) × quantidade_por_página"
+  },
+  {
+   "t": "p",
+   "html": "Esse padrão é amplamente utilizado em APIs REST – veremos isso na prática mais adiante, quando implementarmos paginação na BibliotecaAPI."
+  },
+  {
+   "t": "h2",
+   "id": "6-14-funcoes-de-agregacao",
+   "texto": "6.14 Funções de Agregação"
+  },
+  {
+   "t": "p",
+   "html": "Funções de agregação realizam cálculos sobre um conjunto de registros e retornam um único valor."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Função",
+    "Finalidade"
+   ],
+   "linhas": [
+    [
+     "<code>COUNT()</code>",
+     "Conta registros"
+    ],
+    [
+     "<code>SUM()</code>",
+     "Soma valores"
+    ],
+    [
+     "<code>AVG()</code>",
+     "Calcula a média"
+    ],
+    [
+     "<code>MIN()</code>   <code>MAX()</code>",
+     "Menor e maior valor"
+    ]
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT\n    COUNT(*) AS TotalLivros,\n    ROUND(AVG(preco), 2) AS PrecoMedio,\n    MAX(preco) AS LivroMaisCaro,\n    MIN(preco) AS LivroMaisBarato\nFROM livros;"
+  },
+  {
+   "t": "p",
+   "html": "Assim como o <code>WHERE</code>, as funções de agregação podem trabalhar sobre apenas parte dos registros:"
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT COUNT(*) FROM livros WHERE autor = 'Machado de Assis';"
+  },
+  {
+   "t": "h2",
+   "id": "6-15-agrupando-dados-com-group-by",
+   "texto": "6.15 Agrupando Dados com GROUP BY"
+  },
+  {
+   "t": "p",
+   "html": "O <code>GROUP BY</code> reúne registros que compartilham o mesmo valor em uma coluna, permitindo aplicar funções de agregação a <strong>cada grupo</strong> separadamente:"
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT autor, COUNT(*) AS QuantidadeLivros\nFROM livros\nGROUP BY autor;"
+  },
+  {
+   "t": "p",
+   "html": "Uma das dúvidas mais comuns de quem está aprendendo SQL é a diferença entre <code>WHERE</code> e <code>HAVING</code>: o <code>WHERE</code> filtra registros <strong>antes</strong> do agrupamento; o <code>HAVING</code> filtra <strong>grupos</strong>, depois que o agrupamento já aconteceu."
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT autor, COUNT(*) AS Livros\nFROM livros\nGROUP BY autor\nHAVING COUNT(*) > 1;   -- só autores com mais de um livro"
+  },
+  {
+   "t": "p",
+   "html": "A ordem real de execução de uma consulta com todas essas cláusulas é: <code>WHERE</code> → <code>GROUP BY</code> → funções de agregação → <code>HAVING</code> → <code>ORDER BY</code>."
+  },
+  {
+   "t": "h2",
+   "id": "6-16-relacionando-tabelas-com-join",
+   "texto": "6.16 Relacionando Tabelas com JOIN"
+  },
+  {
+   "t": "p",
+   "html": "Até agora, trabalhamos com uma única tabela <code>livros</code>, guardando o nome do autor diretamente nela. Mas imagine que o mesmo autor tenha escrito 200 livros – seu nome se repetiria 200 vezes, e uma simples correção ortográfica exigiria atualizar 200 linhas."
+  },
+  {
+   "t": "p",
+   "html": "A solução é separar os dados em tabelas relacionadas:"
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE TABLE autores (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    nome VARCHAR(150)\n);\n\nCREATE TABLE livros (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    titulo VARCHAR(200),\n    autor_id INT,\n    FOREIGN KEY (autor_id) REFERENCES autores(id)\n);"
+  },
+  {
+   "t": "p",
+   "html": "Agora o nome do autor é armazenado em um único lugar, e a tabela <code>livros</code> apenas <strong>referencia</strong> o autor por meio do <code>autor_id</code> – essa técnica é chamada de <strong>normalização</strong>."
+  },
+  {
+   "t": "p",
+   "html": "Para reunir novamente as informações das duas tabelas em uma consulta, utilizamos <code>JOIN</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT l.titulo, a.nome\nFROM livros l\nINNER JOIN autores a ON l.autor_id = a.id;"
+  },
+  {
+   "t": "p",
+   "html": "Repare no uso de <em>aliases</em> (<code>l</code> para <code>livros</code>, <code>a</code> para <code>autores</code>) – prática comum no mercado para deixar consultas com várias tabelas mais legíveis."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "JOIN",
+    "Retorna"
+   ],
+   "linhas": [
+    [
+     "<code>INNER JOIN</code>",
+     "Apenas registros que existem nas duas tabelas"
+    ],
+    [
+     "<code>LEFT JOIN</code>",
+     "Todos os registros da tabela à esquerda, mesmo sem correspondência"
+    ],
+    [
+     "<code>RIGHT JOIN</code>",
+     "Todos os registros da tabela à direita, mesmo sem correspondência"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Um <code>LEFT JOIN</code> é especialmente útil quando você quer ver <em>todos</em> os registros de um lado, mesmo os que ainda não têm relacionamento – por exemplo, listar todos os autores, incluindo os que ainda não têm nenhum livro cadastrado (nesse caso, as colunas de <code>livros</code> aparecem como <code>NULL</code>)."
+  },
+  {
+   "t": "h2",
+   "id": "6-17-atualizando-e-removendo-dados",
+   "texto": "6.17 Atualizando e Removendo Dados"
+  },
+  {
+   "t": "h3",
+   "texto": "UPDATE"
+  },
+  {
+   "t": "p",
+   "html": "O comando <code>UPDATE</code> altera dados já existentes:"
+  },
+  {
+   "t": "codigo",
+   "texto": "UPDATE livros\nSET preco = 34.90\nWHERE id = 2;"
+  },
+  {
+   "t": "p",
+   "html": "É possível atualizar vários campos ao mesmo tempo, e até usar expressões matemáticas – por exemplo, para reajustar todos os preços em 10%:"
+  },
+  {
+   "t": "codigo",
+   "texto": "UPDATE livros\nSET preco = preco * 1.10;"
+  },
+  {
+   "t": "h3",
+   "texto": "DELETE"
+  },
+  {
+   "t": "p",
+   "html": "O comando <code>DELETE</code> remove registros existentes:"
+  },
+  {
+   "t": "codigo",
+   "texto": "DELETE FROM livros\nWHERE id = 3;"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "O erro mais perigoso do SQL",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Assim como no <code>UPDATE</code>, se o <code>WHERE</code> for omitido em um <code>DELETE</code>, <strong>todos</strong> os registros da tabela serão afetados:"
+    },
+    {
+     "t": "codigo",
+     "texto": "DELETE FROM livros;   -- remove TODOS os livros, sem confirmação"
+    },
+    {
+     "t": "p",
+     "html": "Essa é uma das causas mais comuns de perda de dados em ambientes reais. Antes de um <code>UPDATE</code> ou <code>DELETE</code> importante, execute primeiro um <code>SELECT</code> com a mesma condição, para conferir exatamente quais linhas serão afetadas."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-18-indices-acelerando-consultas",
+   "texto": "6.18 Índices: Acelerando Consultas"
+  },
+  {
+   "t": "p",
+   "html": "Conforme uma tabela cresce, consultas que antes eram instantâneas começam a ficar lentas – especialmente em colunas usadas com frequência em <code>WHERE</code>, <code>JOIN</code> ou <code>ORDER BY</code>. Um <strong>índice</strong> é uma estrutura auxiliar que o MySQL usa para localizar registros rapidamente, sem precisar percorrer a tabela inteira linha por linha."
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE INDEX idx_livros_titulo ON livros(titulo);\nCREATE INDEX idx_livros_isbn ON livros(isbn);"
+  },
+  {
+   "t": "p",
+   "html": "Colunas de chave primária já recebem um índice automaticamente. Vale criar índices próprios em colunas que você consulta com frequência – mas não exagere: cada índice ocupa espaço e deixa `INSERT`/`UPDATE` levemente mais lentos, então a regra prática é indexar apenas o que realmente é consultado com frequência."
+  }
+ ]
+}

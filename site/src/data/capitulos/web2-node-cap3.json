@@ -1,0 +1,349 @@
+{
+ "numero": 3,
+ "titulo": "JavaScript Moderno para Node.js",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "antes-de-comecar",
+   "texto": "Antes de começar"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Pré-requisitos deste livro",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Este livro assume que você já tem noção de <strong>lógica de programação</strong> – variáveis, condicionais (<code>if</code>/<code>else</code>), laços de repetição (<code>for</code>, <code>while</code>), e o conceito de função – em alguma linguagem, mesmo que básica. A partir deste capítulo, vamos direto aos recursos modernos do JavaScript, sem reensinar esses fundamentos do zero."
+    },
+    {
+     "t": "p",
+     "html": "Se você nunca programou antes, recomendamos primeiro um curso introdutório de lógica de programação, e depois voltar para cá – o restante do livro vai fazer muito mais sentido."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-1-introducao",
+   "texto": "3.1 Introdução"
+  },
+  {
+   "t": "p",
+   "html": "O JavaScript é uma das linguagens de programação mais utilizadas no mundo. Inicialmente desenvolvido para tornar páginas web interativas, evoluiu significativamente ao longo dos anos e, com o surgimento do Node.js, passou a ser utilizado também no desenvolvimento de aplicações do lado do servidor."
+  },
+  {
+   "t": "p",
+   "html": "As versões mais recentes da linguagem, conhecidas como ECMAScript 6 (ES6) e posteriores, introduziram novos recursos que tornaram o código mais organizado, legível e eficiente."
+  },
+  {
+   "t": "p",
+   "html": "Neste capítulo estudaremos os principais recursos do JavaScript moderno utilizados no desenvolvimento de aplicações Node.js."
+  },
+  {
+   "t": "h2",
+   "id": "3-2-evolucao-do-javascript",
+   "texto": "3.2 Evolução do JavaScript"
+  },
+  {
+   "t": "p",
+   "html": "Desde sua criação em 1995, o JavaScript passou por diversas atualizações importantes."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Versão",
+    "Principais novidades"
+   ],
+   "linhas": [
+    [
+     "ES5",
+     "Melhorias na linguagem e compatibilidade entre navegadores."
+    ],
+    [
+     "ES6 (2015)",
+     "<code>let</code>, <code>const</code>, Arrow Functions, Classes, Modules, Template Strings."
+    ],
+    [
+     "ES7",
+     "Introdução do <code>async</code> e <code>await</code>."
+    ],
+    [
+     "ES8+",
+     "Melhorias em manipulação de objetos, arrays e novas APIs."
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O Node.js acompanha essa evolução, permitindo que os desenvolvedores utilizem recursos modernos sem a necessidade de bibliotecas adicionais."
+  },
+  {
+   "t": "h2",
+   "id": "3-3-declarando-variaveis",
+   "texto": "3.3 Declarando Variáveis"
+  },
+  {
+   "t": "p",
+   "html": "No JavaScript moderno existem três formas de declarar variáveis: <code>var</code>, <code>let</code> e <code>const</code>."
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong>Utilizando <code>var</code></strong>"
+  },
+  {
+   "t": "codigo",
+   "texto": "var nome = \"Maria\";"
+  },
+  {
+   "t": "p",
+   "html": "A palavra-chave <code>var</code> foi utilizada por muitos anos, porém apresenta limitações relacionadas ao escopo e ao comportamento de <em>hoisting</em>, podendo dificultar a manutenção do código."
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong>Utilizando <code>let</code></strong>"
+  },
+  {
+   "t": "codigo",
+   "texto": "let idade = 25;"
+  },
+  {
+   "t": "p",
+   "html": "O <code>let</code> permite alterar o valor da variável ao longo da execução do programa e possui escopo de bloco, tornando o código mais seguro."
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong>Utilizando <code>const</code></strong>"
+  },
+  {
+   "t": "codigo",
+   "texto": "const PI = 3.14159;"
+  },
+  {
+   "t": "p",
+   "html": "O <code>const</code> é utilizado quando o valor da variável não deve ser reatribuído durante a execução do programa."
+  },
+  {
+   "t": "h2",
+   "id": "3-4-boas-praticas-na-declaracao-de-variaveis",
+   "texto": "3.4 Boas Práticas na Declaração de Variáveis"
+  },
+  {
+   "t": "p",
+   "html": "Atualmente recomenda-se:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Utilizar <code>const</code> sempre que possível.",
+    "Utilizar <code>let</code> quando houver necessidade de alterar o valor.",
+    "Evitar o uso de <code>var</code> em novos projetos."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Essa prática contribui para reduzir erros e tornar o código mais previsível."
+  },
+  {
+   "t": "h2",
+   "id": "3-5-funcoes",
+   "texto": "3.5 Funções"
+  },
+  {
+   "t": "p",
+   "html": "As funções permitem organizar o código em blocos reutilizáveis."
+  },
+  {
+   "t": "codigo",
+   "texto": "function somar(a, b) {\n    return a + b;\n}\n\nconsole.log(somar(5, 3));"
+  },
+  {
+   "t": "p",
+   "html": "Saída:"
+  },
+  {
+   "t": "codigo",
+   "texto": "8"
+  },
+  {
+   "t": "h2",
+   "id": "3-6-arrow-functions",
+   "texto": "3.6 Arrow Functions"
+  },
+  {
+   "t": "p",
+   "html": "Uma das principais novidades do ES6 foi a introdução das <em>Arrow Functions</em>, que oferecem uma sintaxe mais concisa para a definição de funções."
+  },
+  {
+   "t": "p",
+   "html": "Exemplo tradicional:"
+  },
+  {
+   "t": "codigo",
+   "texto": "function multiplicar(a, b) {\n    return a * b;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Arrow Function equivalente:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const multiplicar = (a, b) => {\n    return a * b;\n};"
+  },
+  {
+   "t": "p",
+   "html": "Quando a função possui apenas uma instrução de retorno, é possível simplificar ainda mais:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const multiplicar = (a, b) => a * b;"
+  },
+  {
+   "t": "h2",
+   "id": "3-7-template-strings",
+   "texto": "3.7 Template Strings"
+  },
+  {
+   "t": "p",
+   "html": "Antes do ES6, a concatenação de textos era feita utilizando o operador <code>+</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "const nome = \"Ana\";\nconsole.log(\"Olá \" + nome);"
+  },
+  {
+   "t": "p",
+   "html": "Com Template Strings:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const nome = \"Ana\";\nconsole.log(`Olá ${nome}`);"
+  },
+  {
+   "t": "p",
+   "html": "Essa abordagem melhora significativamente a legibilidade do código."
+  },
+  {
+   "t": "h2",
+   "id": "3-8-destructuring",
+   "texto": "3.8 Destructuring"
+  },
+  {
+   "t": "p",
+   "html": "O <em>Destructuring</em> permite extrair valores de objetos ou arrays de forma simples."
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong>Objeto:</strong>"
+  },
+  {
+   "t": "codigo",
+   "texto": "const aluno = {\n    nome: \"Carlos\",\n    idade: 22\n};\n\nconst { nome, idade } = aluno;\n\nconsole.log(nome);\nconsole.log(idade);"
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong>Array:</strong>"
+  },
+  {
+   "t": "codigo",
+   "texto": "const notas = [8, 9, 10];\nconst [n1, n2, n3] = notas;"
+  },
+  {
+   "t": "h2",
+   "id": "3-9-modules",
+   "texto": "3.9 Modules"
+  },
+  {
+   "t": "p",
+   "html": "Projetos Node.js são organizados em módulos."
+  },
+  {
+   "t": "p",
+   "html": "Arquivo <code>calculadora.js</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "function soma(a, b) {\n    return a + b;\n}\n\nmodule.exports = soma;"
+  },
+  {
+   "t": "p",
+   "html": "Arquivo <code>index.js</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const soma = require(\"./calculadora\");\nconsole.log(soma(10, 5));"
+  },
+  {
+   "t": "p",
+   "html": "Essa organização facilita a reutilização e a manutenção do código."
+  },
+  {
+   "t": "h2",
+   "id": "3-10-boas-praticas",
+   "texto": "3.10 Boas Práticas"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Utilize nomes significativos para variáveis e funções.",
+    "Prefira <code>const</code> sempre que possível.",
+    "Organize o código em módulos.",
+    "Evite funções excessivamente longas.",
+    "Mantenha uma padronização de nomenclatura."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong>Erro 1 – Reatribuir um <code>const</code></strong>"
+  },
+  {
+   "t": "codigo",
+   "texto": "const idade = 20;\nidade = 25;"
+  },
+  {
+   "t": "p",
+   "html": "Resultado:"
+  },
+  {
+   "t": "codigo",
+   "texto": "TypeError: Assignment to constant variable."
+  },
+  {
+   "t": "p",
+   "html": "Como resolver: utilize <code>let</code> quando a variável precisar ser modificada."
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong>Erro 2 – Usar a variável antes de declará-la</strong>"
+  },
+  {
+   "t": "codigo",
+   "texto": "console.log(nome);\nlet nome = \"Carlos\";"
+  },
+  {
+   "t": "p",
+   "html": "Resultado:"
+  },
+  {
+   "t": "codigo",
+   "texto": "ReferenceError"
+  },
+  {
+   "t": "p",
+   "html": "Como resolver: declare a variável antes de utilizá-la."
+  }
+ ]
+}

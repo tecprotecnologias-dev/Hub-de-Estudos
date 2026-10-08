@@ -1,0 +1,287 @@
+{
+ "numero": 4,
+ "titulo": "Programação Assíncrona no Node.js",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "4-1-introducao",
+   "texto": "4.1 Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Imagine que você esteja em uma agência bancária. Existem duas formas de atendimento."
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong>Atendimento síncrono</strong>"
+  },
+  {
+   "t": "p",
+   "html": "Há apenas um caixa disponível. Você entra na fila. O cliente da frente demora 30 minutos. Todos aguardam – ninguém pode ser atendido enquanto o primeiro cliente não termina."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/node/capitulo-04_diagrama1.png",
+   "alt": "capitulo 04 diagrama1"
+  },
+  {
+   "t": "p",
+   "html": "Todo mundo fica parado."
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong>Atendimento assíncrono</strong>"
+  },
+  {
+   "t": "p",
+   "html": "Agora imagine que alguns serviços são realizados em paralelo. Enquanto o sistema consulta um documento, outro cliente pode iniciar um novo atendimento."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/node/capitulo-04_diagrama2.png",
+   "alt": "capitulo 04 diagrama2"
+  },
+  {
+   "t": "p",
+   "html": "Todos continuam trabalhando. Essa é exatamente a ideia da programação assíncrona."
+  },
+  {
+   "t": "h2",
+   "id": "4-2-programacao-sincrona",
+   "texto": "4.2 Programação Síncrona"
+  },
+  {
+   "t": "p",
+   "html": "Na programação síncrona, cada instrução precisa terminar antes da próxima começar."
+  },
+  {
+   "t": "codigo",
+   "texto": "console.log(\"Início\");\nconsole.log(\"Processando...\");\nconsole.log(\"Fim\");"
+  },
+  {
+   "t": "p",
+   "html": "Saída:"
+  },
+  {
+   "t": "codigo",
+   "texto": "Início\nProcessando...\nFim"
+  },
+  {
+   "t": "p",
+   "html": "A execução ocorre exatamente na ordem em que o código foi escrito."
+  },
+  {
+   "t": "h2",
+   "id": "4-3-o-problema-da-programacao-sincrona",
+   "texto": "4.3 O Problema da Programação Síncrona"
+  },
+  {
+   "t": "p",
+   "html": "Imagine que seja necessário baixar um arquivo de 5 GB. Se o programa esperar o download terminar para continuar executando, toda a aplicação ficará bloqueada."
+  },
+  {
+   "t": "p",
+   "html": "Em servidores web isso é um problema enorme. Enquanto um usuário faz <em>upload</em> de um arquivo, centenas de outros usuários poderiam estar utilizando o sistema. Foi exatamente para resolver esse problema que o Node.js adotou um modelo de execução assíncrono."
+  },
+  {
+   "t": "h2",
+   "id": "4-4-o-que-e-programacao-assincrona",
+   "texto": "4.4 O que é Programação Assíncrona?"
+  },
+  {
+   "t": "p",
+   "html": "Programação assíncrona é um modelo de execução em que determinadas tarefas são iniciadas e o programa continua executando outras instruções enquanto aguarda sua conclusão. Quando a tarefa termina, o ambiente de execução notifica a aplicação para que o resultado seja processado."
+  },
+  {
+   "t": "p",
+   "html": "Esse modelo aumenta significativamente a capacidade de atender múltiplas operações simultaneamente, especialmente em aplicações que realizam acesso à rede, leitura de arquivos e consultas a bancos de dados."
+  },
+  {
+   "t": "h2",
+   "id": "4-5-o-event-loop",
+   "texto": "4.5 O Event Loop"
+  },
+  {
+   "t": "p",
+   "html": "O Event Loop é o mecanismo responsável por coordenar a execução das tarefas assíncronas no Node.js."
+  },
+  {
+   "t": "p",
+   "html": "Embora o JavaScript execute código em uma única <em>thread</em> principal (como vimos no Capítulo 1), o ambiente Node.js delega operações demoradas – como acesso a disco, rede ou banco de dados – para componentes internos (a <strong>libuv</strong>, também apresentada no Capítulo 1) e continua executando outras instruções."
+  },
+  {
+   "t": "p",
+   "html": "Quando essas operações são concluídas, seus resultados retornam para a fila de execução, sendo processados no momento adequado pelo Event Loop. Em termos simples, o Event Loop verifica continuamente se há novas tarefas prontas para serem executadas e as encaminha para a <em>thread</em> principal quando esta estiver disponível."
+  },
+  {
+   "t": "h2",
+   "id": "4-6-arquitetura-simplificada-do-event-loop",
+   "texto": "4.6 Arquitetura Simplificada do Event Loop"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/node/capitulo-04_diagrama3.png",
+   "alt": "capitulo 04 diagrama3"
+  },
+  {
+   "t": "h2",
+   "id": "4-7-a-call-stack",
+   "texto": "4.7 A Call Stack"
+  },
+  {
+   "t": "p",
+   "html": "A Call Stack é uma estrutura de dados do tipo pilha (<em>Stack</em>), responsável por controlar a execução das funções. Sempre que uma função é chamada, ela é colocada no topo da pilha. Quando termina sua execução, é removida."
+  },
+  {
+   "t": "codigo",
+   "texto": "function primeira() {\n    segunda();\n}\n\nfunction segunda() {\n    console.log(\"Executando...\");\n}\n\nprimeira();"
+  },
+  {
+   "t": "p",
+   "html": "No momento de maior profundidade da execução, a pilha está assim:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/node/capitulo-04_diagrama4.png",
+   "alt": "capitulo 04 diagrama4"
+  },
+  {
+   "t": "p",
+   "html": "Conforme cada função termina, ela é removida do topo da pilha, na ordem inversa em que entrou: primeiro sai <code>console.log()</code>, depois <code>segunda()</code>, e por último <code>primeira()</code> – até a pilha ficar vazia novamente."
+  },
+  {
+   "t": "h2",
+   "id": "4-8-callbacks",
+   "texto": "4.8 Callbacks"
+  },
+  {
+   "t": "p",
+   "html": "Antes do surgimento das Promises, a principal forma de tratar operações assíncronas era utilizando <em>Callbacks</em>."
+  },
+  {
+   "t": "p",
+   "html": "Um <em>callback</em> é uma função passada como argumento para outra função e executada posteriormente, quando uma determinada operação é concluída."
+  },
+  {
+   "t": "codigo",
+   "texto": "function saudacao(nome, callback) {\n    console.log(`Olá, ${nome}!`);\n    callback();\n}\n\nfunction despedida() {\n    console.log(\"Até logo!\");\n}\n\nsaudacao(\"Maria\", despedida);"
+  },
+  {
+   "t": "p",
+   "html": "Saída:"
+  },
+  {
+   "t": "codigo",
+   "texto": "Olá, Maria!\nAté logo!"
+  },
+  {
+   "t": "h2",
+   "id": "4-9-o-problema-do-callback-hell",
+   "texto": "4.9 O Problema do Callback Hell"
+  },
+  {
+   "t": "p",
+   "html": "À medida que aplicações cresciam, o uso excessivo de callbacks resultava em códigos difíceis de compreender e manter."
+  },
+  {
+   "t": "codigo",
+   "texto": "login(usuario, () => {\n    buscarPerfil(() => {\n        buscarPedidos(() => {\n            gerarRelatorio(() => {\n                enviarEmail(() => {\n                    console.log(\"Concluído\");\n                });\n            });\n        });\n    });\n});"
+  },
+  {
+   "t": "p",
+   "html": "Esse padrão ficou conhecido como <strong>Callback Hell</strong>."
+  },
+  {
+   "t": "h2",
+   "id": "4-10-promises",
+   "texto": "4.10 Promises"
+  },
+  {
+   "t": "p",
+   "html": "Para resolver o problema do Callback Hell, o JavaScript introduziu as <em>Promises</em>."
+  },
+  {
+   "t": "p",
+   "html": "Uma <em>Promise</em> representa uma operação que poderá ser concluída com sucesso ou falhar no futuro. Ela pode estar em três estados:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Pending</strong> (Pendente)",
+    "<strong>Fulfilled</strong> (Resolvida)",
+    "<strong>Rejected</strong> (Rejeitada)"
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "const promessa = new Promise((resolve, reject) => {\n    const sucesso = true;\n\n    if (sucesso) {\n        resolve(\"Operação realizada com sucesso.\");\n    } else {\n        reject(\"Ocorreu um erro.\");\n    }\n});\n\npromessa\n    .then(resultado => console.log(resultado))\n    .catch(erro => console.log(erro));"
+  },
+  {
+   "t": "h2",
+   "id": "4-11-async-await",
+   "texto": "4.11 Async/Await"
+  },
+  {
+   "t": "p",
+   "html": "O recurso <code>async</code>/<code>await</code> simplifica ainda mais o trabalho com Promises, permitindo escrever código assíncrono com aparência de código síncrono."
+  },
+  {
+   "t": "codigo",
+   "texto": "function buscarUsuario() {\n    return Promise.resolve(\"Maria\");\n}\n\nasync function mostrarUsuario() {\n    const usuario = await buscarUsuario();\n    console.log(usuario);\n}\n\nmostrarUsuario();"
+  },
+  {
+   "t": "p",
+   "html": "Esse formato torna o código mais legível e facilita o tratamento de erros."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong>Erro 1 – Esquecer o <code>await</code></strong>"
+  },
+  {
+   "t": "codigo",
+   "texto": "async function exemplo() {\n    const resultado = buscarUsuario();\n    console.log(resultado);\n}"
+  },
+  {
+   "t": "p",
+   "html": "Resultado:"
+  },
+  {
+   "t": "codigo",
+   "texto": "Promise { <pending> }"
+  },
+  {
+   "t": "p",
+   "html": "Como resolver:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const resultado = await buscarUsuario();"
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong>Erro 2 – Não Tratar Erros</strong>"
+  },
+  {
+   "t": "codigo",
+   "texto": "await buscarUsuario();"
+  },
+  {
+   "t": "p",
+   "html": "Como resolver:"
+  },
+  {
+   "t": "codigo",
+   "texto": "try {\n    const usuario = await buscarUsuario();\n    console.log(usuario);\n} catch (erro) {\n    console.log(\"Erro:\", erro.message);\n}"
+  }
+ ]
+}

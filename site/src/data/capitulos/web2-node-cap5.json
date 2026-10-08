@@ -1,0 +1,247 @@
+{
+ "numero": 5,
+ "titulo": "NPM e Gerenciamento de Pacotes",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "5-1-introducao",
+   "texto": "5.1 Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Imagine que você precise construir uma casa. Você poderia fabricar todos os materiais: tijolos, cimento, portas, janelas, fios elétricos e telhas. No entanto, isso demandaria muito tempo e esforço."
+  },
+  {
+   "t": "p",
+   "html": "Na prática, você compra esses materiais de fornecedores especializados e concentra seu trabalho na construção da casa. O desenvolvimento de software segue a mesma lógica: em vez de implementar todas as funcionalidades do zero, reutilizamos bibliotecas criadas por outros desenvolvedores. O <strong>npm</strong> (<em>Node Package Manager</em>) é a ferramenta responsável por gerenciar essas bibliotecas no ecossistema Node.js."
+  },
+  {
+   "t": "p",
+   "html": "No Capítulo 2 já instalamos nosso primeiro pacote (o Express) e conhecemos o <code>package.json</code>. Neste capítulo vamos aprofundar o que ainda não vimos: a diferença entre dependências de produção e desenvolvimento, como atualizar e remover pacotes, e como criar <em>scripts</em> personalizados."
+  },
+  {
+   "t": "h2",
+   "id": "5-2-o-que-e-o-npm",
+   "texto": "5.2 O que é o NPM?"
+  },
+  {
+   "t": "p",
+   "html": "O npm é o gerenciador oficial de pacotes do Node.js. Ele permite instalar bibliotecas, atualizar dependências, remover pacotes, compartilhar projetos e executar <em>scripts</em> definidos pelo desenvolvedor. Atualmente, é um dos maiores repositórios de software do mundo, com milhões de pacotes disponíveis."
+  },
+  {
+   "t": "h2",
+   "id": "5-3-o-que-e-um-pacote",
+   "texto": "5.3 O que é um Pacote?"
+  },
+  {
+   "t": "p",
+   "html": "Um pacote (<em>package</em>) é um conjunto de arquivos que implementa uma funcionalidade reutilizável."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Pacote",
+    "Finalidade"
+   ],
+   "linhas": [
+    [
+     "express",
+     "Desenvolvimento de APIs REST"
+    ],
+    [
+     "mysql2",
+     "Comunicação com bancos MySQL"
+    ],
+    [
+     "bcrypt",
+     "Criptografia de senhas"
+    ],
+    [
+     "dotenv",
+     "Gerenciamento de variáveis de ambiente"
+    ],
+    [
+     "jsonwebtoken",
+     "Autenticação baseada em JWT"
+    ],
+    [
+     "multer",
+     "Upload de arquivos"
+    ],
+    [
+     "nodemon",
+     "Reinicialização automática do servidor durante o desenvolvimento"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Cada pacote pode depender de outros pacotes, formando uma árvore de dependências – como vimos no Capítulo 2, ao instalar o Express e observar dezenas de outras bibliotecas sendo instaladas junto."
+  },
+  {
+   "t": "h2",
+   "id": "5-4-dependencias-de-producao-e-desenvolvimento",
+   "texto": "5.4 Dependências de Produção e Desenvolvimento"
+  },
+  {
+   "t": "p",
+   "html": "Nem todas as bibliotecas são utilizadas quando a aplicação está em produção."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Dependências de Produção</strong> são necessárias para que a aplicação funcione. É o que já fizemos até aqui:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install express"
+  },
+  {
+   "t": "p",
+   "html": "Essas bibliotecas são registradas em:"
+  },
+  {
+   "t": "codigo",
+   "texto": "\"dependencies\": {\n   \"express\": \"^5.1.0\"\n}"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Dependências de Desenvolvimento</strong> são utilizadas apenas durante o desenvolvimento – nunca vão para o ambiente de produção. Um exemplo comum é o <code>nodemon</code>, que reinicia o servidor automaticamente a cada alteração no código:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install nodemon --save-dev"
+  },
+  {
+   "t": "p",
+   "html": "No <code>package.json</code>, essa dependência aparece separada, em sua própria seção:"
+  },
+  {
+   "t": "codigo",
+   "texto": "\"devDependencies\": {\n   \"nodemon\": \"^3.0.0\"\n}"
+  },
+  {
+   "t": "p",
+   "html": "Essa separação importa porque, ao colocar uma aplicação em produção, normalmente executamos <code>npm install --production</code>, que instala apenas o que está em <code>dependencies</code>, ignorando ferramentas que só fazem sentido durante o desenvolvimento."
+  },
+  {
+   "t": "h2",
+   "id": "5-5-atualizando-pacotes",
+   "texto": "5.5 Atualizando Pacotes"
+  },
+  {
+   "t": "p",
+   "html": "Para atualizar um pacote específico para a versão mais recente permitida pelo <code>package.json</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm update express"
+  },
+  {
+   "t": "p",
+   "html": "Para verificar quais pacotes estão desatualizados:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm outdated"
+  },
+  {
+   "t": "p",
+   "html": "Esse comando mostra, lado a lado, a versão instalada e a versão mais recente disponível de cada dependência – útil para decidir quando vale a pena atualizar."
+  },
+  {
+   "t": "h2",
+   "id": "5-6-removendo-pacotes",
+   "texto": "5.6 Removendo Pacotes"
+  },
+  {
+   "t": "p",
+   "html": "Para remover uma biblioteca que não é mais utilizada:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm uninstall express"
+  },
+  {
+   "t": "p",
+   "html": "O npm removerá automaticamente:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "a pasta correspondente em <code>node_modules</code>;",
+    "a referência em <code>package.json</code>;",
+    "as entradas relacionadas no <code>package-lock.json</code>."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-7-scripts-do-npm",
+   "texto": "5.7 Scripts do NPM"
+  },
+  {
+   "t": "p",
+   "html": "Além de gerenciar bibliotecas, o npm também permite criar comandos personalizados para o projeto, na seção <code>scripts</code> do <code>package.json</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "\"scripts\": {\n   \"start\": \"node index.js\",\n   \"dev\": \"nodemon index.js\",\n   \"test\": \"node teste.js\"\n}"
+  },
+  {
+   "t": "p",
+   "html": "Esses comandos são executados com:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm run dev"
+  },
+  {
+   "t": "p",
+   "html": "Um caso especial: o script chamado <code>start</code> pode ser executado sem a palavra <code>run</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm start"
+  },
+  {
+   "t": "p",
+   "html": "<em>Scripts</em> são extremamente úteis para padronizar tarefas repetitivas do projeto – iniciar o servidor, rodar testes, gerar builds – sem que cada desenvolvedor precise lembrar o comando exato."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong><code>npm: command not found</code></strong>"
+  },
+  {
+   "t": "p",
+   "html": "Causa: o Node.js não está instalado ou não foi adicionado ao PATH do sistema. Solução: instale o Node.js corretamente e verifique a configuração do ambiente (ver Capítulo 2)."
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong><code>Cannot find module 'express'</code></strong>"
+  },
+  {
+   "t": "p",
+   "html": "Causa: a biblioteca não foi instalada, ou a pasta <code>node_modules</code> foi removida. Solução:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install"
+  },
+  {
+   "t": "p",
+   "estilo": "destaque",
+   "html": "<strong><code>ERESOLVE unable to resolve dependency tree</code></strong>"
+  },
+  {
+   "t": "p",
+   "html": "Causa: conflito entre versões de dependências. Solução: verifique as versões no <code>package.json</code> e atualize os pacotes conforme necessário."
+  }
+ ]
+}

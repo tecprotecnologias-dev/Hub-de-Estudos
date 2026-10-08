@@ -11,9 +11,18 @@ export async function carregarCapitulo(id: string): Promise<ConteudoCapitulo | n
 
 /** Apostilas da disciplina, com os capítulos em ordem. */
 export function apostilasDaDisciplina(disciplinaId: string): Apostila[] {
-  return apostilas
-    .filter((a) => a.disciplinaId === disciplinaId)
-    .sort((a, b) => (a.capitulo ?? 999) - (b.capitulo ?? 999) || a.titulo.localeCompare(b.titulo, 'pt-BR'))
+  // grupos na ordem do cadastro (capítulos principais primeiro), para "Anterior/Próximo" não misturar
+  // o Módulo 1 com o Capítulo 1 de um livro complementar
+  const lista = apostilas.filter((a) => a.disciplinaId === disciplinaId)
+  const grupos = [...new Set(lista.map((a) => a.grupo ?? ''))].filter(Boolean)
+  const ordemGrupo = (a: Apostila) => (a.grupo ? 1 + grupos.indexOf(a.grupo) : 0)
+  // sem número: nos grupos complementares vale a ordem do cadastro (Apêndice A antes do B)
+  return lista.sort(
+    (a, b) =>
+      ordemGrupo(a) - ordemGrupo(b) ||
+      (a.capitulo ?? 999) - (b.capitulo ?? 999) ||
+      (a.grupo ? apostilas.indexOf(a) - apostilas.indexOf(b) : a.titulo.localeCompare(b.titulo, 'pt-BR')),
+  )
 }
 
 export function linkApostila(a: Apostila) {

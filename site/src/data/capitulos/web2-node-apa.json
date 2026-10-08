@@ -1,0 +1,308 @@
+{
+ "numero": null,
+ "titulo": "Referência Rápida",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Esta seção reúne, em poucas páginas, os comandos e conceitos mais usados ao longo do livro – pensada para consulta rápida, não para leitura sequencial."
+  },
+  {
+   "t": "h2",
+   "id": "comandos-sql-capitulo-6",
+   "texto": "Comandos SQL (Capítulo 6)"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Comando",
+    "Finalidade"
+   ],
+   "linhas": [
+    [
+     "<code>CREATE DATABASE nome;</code>",
+     "Cria um banco de dados"
+    ],
+    [
+     "<code>USE nome;</code>",
+     "Seleciona o banco ativo"
+    ],
+    [
+     "<code>CREATE TABLE t (...);</code>",
+     "Cria uma tabela"
+    ],
+    [
+     "<code>ALTER TABLE t ADD col tipo;</code>",
+     "Adiciona uma coluna"
+    ],
+    [
+     "<code>DESCRIBE tabela;</code>",
+     "Mostra a estrutura de uma tabela"
+    ],
+    [
+     "<code>SELECT * FROM t;</code>",
+     "Consulta todos os registros"
+    ],
+    [
+     "<code>SELECT col FROM t WHERE cond;</code>",
+     "Consulta com filtro"
+    ],
+    [
+     "<code>INSERT INTO t (c) VALUES (v);</code>",
+     "Insere um registro"
+    ],
+    [
+     "<code>UPDATE t SET c = v WHERE cond;</code>",
+     "Atualiza registros"
+    ],
+    [
+     "<code>DELETE FROM t WHERE cond;</code>",
+     "Remove registros"
+    ],
+    [
+     "<code>ORDER BY col ASC|DESC</code>",
+     "Ordena resultados"
+    ],
+    [
+     "<code>LIMIT n OFFSET m</code>",
+     "Pagina resultados"
+    ],
+    [
+     "<code>GROUP BY col</code>",
+     "Agrupa registros"
+    ],
+    [
+     "<code>JOIN t2 ON t.id = t2.ref</code>",
+     "Combina tabelas relacionadas"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "metodos-e-status-http-capitulos-1-7-e-9",
+   "texto": "Métodos e Status HTTP (Capítulos 1, 7 e 9)"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Método",
+    "Uso"
+   ],
+   "linhas": [
+    [
+     "<code>GET</code>",
+     "Consultar"
+    ],
+    [
+     "<code>POST</code>",
+     "Criar"
+    ],
+    [
+     "<code>PUT</code>",
+     "Atualizar (completo)"
+    ],
+    [
+     "<code>PATCH</code>",
+     "Atualizar (parcial)"
+    ],
+    [
+     "<code>DELETE</code>",
+     "Remover"
+    ]
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Status",
+    "Significado"
+   ],
+   "linhas": [
+    [
+     "<code>200</code>",
+     "OK"
+    ],
+    [
+     "<code>201</code>",
+     "Criado"
+    ],
+    [
+     "<code>204</code>",
+     "Sem conteúdo"
+    ],
+    [
+     "<code>400</code>",
+     "Requisição inválida"
+    ],
+    [
+     "<code>401</code>",
+     "Não autenticado"
+    ],
+    [
+     "<code>403</code>",
+     "Sem permissão"
+    ],
+    [
+     "<code>404</code>",
+     "Não encontrado"
+    ],
+    [
+     "<code>500</code>",
+     "Erro no servidor"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "comandos-npm-capitulos-2-e-5",
+   "texto": "Comandos npm (Capítulos 2 e 5)"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Comando",
+    "Finalidade"
+   ],
+   "linhas": [
+    [
+     "<code>npm init -y</code>",
+     "Cria o <code>package.json</code>"
+    ],
+    [
+     "<code>npm install pacote</code>",
+     "Instala uma dependência"
+    ],
+    [
+     "<code>npm install pacote --save-dev</code>",
+     "Instala como dependência de desenvolvimento"
+    ],
+    [
+     "<code>npm uninstall pacote</code>",
+     "Remove uma dependência"
+    ],
+    [
+     "<code>npm update pacote</code>",
+     "Atualiza uma dependência"
+    ],
+    [
+     "<code>npm outdated</code>",
+     "Lista dependências desatualizadas"
+    ],
+    [
+     "<code>npm run script</code>",
+     "Executa um script do <code>package.json</code>"
+    ],
+    [
+     "<code>npm start</code>",
+     "Executa o script <code>start</code>"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "javascript-moderno-capitulo-3",
+   "texto": "JavaScript Moderno (Capítulo 3)"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Recurso",
+    "Exemplo"
+   ],
+   "linhas": [
+    [
+     "Arrow Function",
+     "<code>const soma = (a, b) =&gt; a + b;</code>"
+    ],
+    [
+     "Template String",
+     "<code>`Olá, ${nome}`</code>"
+    ],
+    [
+     "Destructuring (objeto)",
+     "<code>const { nome, idade } = pessoa;</code>"
+    ],
+    [
+     "Destructuring (array)",
+     "<code>const [a, b] = lista;</code>"
+    ],
+    [
+     "Módulo (exportar)",
+     "<code>module.exports = funcao;</code>"
+    ],
+    [
+     "Módulo (importar)",
+     "<code>const x = require(\"./arquivo\");</code>"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "mysql2-capitulo-8",
+   "texto": "mysql2 (Capítulo 8)"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Código",
+    "Finalidade"
+   ],
+   "linhas": [
+    [
+     "<code>const [rows] = await db.query(sql);</code>",
+     "Consulta simples"
+    ],
+    [
+     "<code>await db.execute(sql, [valores]);</code>",
+     "Consulta parametrizada (segura)"
+    ],
+    [
+     "<code>resultado.insertId</code>",
+     "ID gerado após <code>INSERT</code>"
+    ],
+    [
+     "<code>resultado.affectedRows</code>",
+     "Registros afetados por <code>UPDATE</code>/<code>DELETE</code>"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "autenticacao-capitulo-11",
+   "texto": "Autenticação (Capítulo 11)"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Código",
+    "Finalidade"
+   ],
+   "linhas": [
+    [
+     "<code>await bcrypt.hash(senha, 10);</code>",
+     "Gera o hash de uma senha"
+    ],
+    [
+     "<code>await bcrypt.compare(s, hash);</code>",
+     "Verifica uma senha"
+    ],
+    [
+     "<code>jwt.sign(payload, chave, opções);</code>",
+     "Gera um token JWT"
+    ],
+    [
+     "<code>jwt.verify(token, chave);</code>",
+     "Valida um token JWT"
+    ],
+    [
+     "<code>Authorization: Bearer &lt;token&gt;</code>",
+     "Cabeçalho de autenticação"
+    ]
+   ]
+  }
+ ]
+}

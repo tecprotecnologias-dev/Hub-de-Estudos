@@ -19,7 +19,8 @@
       "c) Compare como o Modelo Cascata, o Modelo Incremental e o Modelo Ágil teriam tratado a mesma mudança de requisito descoberta na fase de Testes. Qual seria o impacto em cada um?",
       "d) Mesmo com os riscos apontados por Royce, existem cenários onde o Modelo Cascata ainda é adequado. Descreva dois contextos de projeto em que esse modelo seria apropriado, justificando sua escolha com base no Capítulo 1."
     ],
-    "linhas": 12
+    "linhas": 12,
+    "respostaEsperada": "a) O risco é o erro só aparecer tarde, quando já é caro. No Cascata, cada fase só começa quando a anterior termina, e a validação acontece apenas nos Testes. O requisito mal interpretado na primeira fase atravessou Análise, Design e Implementação sem ser percebido, e o modelo não prevê retorno às fases anteriores. Também vale citar a baixa flexibilidade a mudanças e o cliente participando só no início e no fim (Seção 1.3).\nb) A fase de Requisitos é onde os erros são mais baratos de encontrar e mais caros de deixar passar. Aqui o erro nasceu nela e só foi descoberto nos Testes: sobre o entendimento errado já foram construídos modelo, arquitetura, código e casos de teste, e tudo isso precisa ser refeito. Com seis meses gastos, prazo de 18 meses e orçamento fixo, não há folga para o retrabalho.\nc) Cascata: o pior cenário, pois sem retorno entre fases a correção obriga a refazer o caminho desde os Requisitos, com alto impacto em prazo e custo. Incremental: impacto moderado, pois o erro fica contido no incremento em que está e a correção entra num incremento seguinte. Ágil: menor impacto, pois com participação contínua do cliente o erro provavelmente teria aparecido em semanas, e a mudança entraria no backlog da próxima iteração.\nd) 1) Requisitos muito bem definidos e estáveis, com pouca chance de mudança, como um sistema embarcado de escopo fechado: sem mudanças, a fraqueza do modelo pesa pouco, e vale a simplicidade de gerenciamento. 2) Contratos formais rígidos, como projetos governamentais com licitação e preço fechado, que exigem a documentação formal e a estimativa precisa de custo e prazo do Cascata. Projetos pequenos e curtos também servem. Atenção: \"equipe pequena\" sozinha não justifica o Cascata, pois a apostila associa equipes pequenas aos modelos ágeis."
   },
   {
     "id": "engsoft-cap1-q2",
@@ -43,7 +44,7 @@
       "A norma citada trata apenas de hardware, não tendo relação com processos de desenvolvimento de software"
     ],
     "correta": 1,
-    "resolucao": "A ISO/IEC/IEEE 12207 define os processos e atividades fundamentais de ciclo de vida de software que são comuns a todos os modelos de desenvolvimento; cada modelo apenas reorganiza essas atividades de forma diferente conforme o contexto do projeto."
+    "resolucao": "a apostila (Seção 1.1) mostra que todos os modelos de ciclo de vida compartilham as mesmas atividades essenciais (requisitos, análise, design, implementação, testes, implantação e manutenção); o que muda é a ordem no tempo, a intensidade e a flexibilidade. A ISO/IEC/IEEE 12207 formaliza esse conjunto comum, então existe sim um denominador comum, e o gerente está equivocado. {{A}} contraria essa base comum, que é justamente o que permite comparar os modelos; {{C}} está errada porque nada restringe a norma ao Cascata; {{D}} nega a existência da própria norma citada no enunciado; {{E}} confunde: a 12207 trata de software, e sistemas com hardware são tema da ISO/IEC/IEEE 15288."
   },
   {
     "id": "engsoft-cap1-q3",
@@ -67,7 +68,7 @@
       "RAD, pela prototipagem rápida com usuários"
     ],
     "correta": 3,
-    "resolucao": "Royce descreveu em 1970 o modelo sequencial linear (posteriormente chamado de Cascata) com as fases em ordem: requisitos → análise → design → implementação → testes → implantação. Esta é a estrutura presente no caso descrito."
+    "resolucao": "o caso descreve a definição do Cascata na Seção 1.1: requisitos concluídos e aprovados, depois design, código, testes do sistema inteiro e implantação, cada etapa encerrada antes da próxima, com uma única passagem por fase e uma única entrega no fim. {{A}} não serve porque não há iterações; {{B}} não serve porque não há voltas nem análise de riscos; {{C}} não serve porque o sistema é entregue inteiro, e não em partes; {{E}} não serve porque não há protótipos nem participação do usuário durante a construção."
   },
   {
     "id": "engsoft-cap1-q4",
@@ -280,7 +281,7 @@
       "Prototipagem de interfaces para coletar feedback isoladamente"
     ],
     "correta": 3,
-    "resolucao": "JAD é especificamente projetado para situações com múltiplos stakeholders com visões conflitantes. Uma sessão facilitada permite que todas as partes se vejam, discutam conflitos em tempo real e chegem a consenso rapidamente — muito mais eficiente que entrevistas sequenciais ou questionários separados."
+    "resolucao": "o caso reproduz o \"ideal quando\" dos workshops na Seção 2.1: vários stakeholders com visões conflitantes (CEO, analistas de risco e clientes) e necessidade de consenso rápido. O JAD reúne todos numa sessão facilitada para negociar e resolver os conflitos. {{A}}: questionários servem para muitos usuários dispersos, e respostas isoladas não resolvem conflito; {{B}}: entrevistas levantam necessidades individuais, não negociam visões, e o próprio enunciado descarta meses de entrevistas; {{C}}: a observação ajuda quando o usuário não sabe explicar o que precisa, e aqui cada grupo sabe bem o que quer; {{E}}: protótipos servem a requisitos de interface, e feitos \"isoladamente\" não produzem consenso."
   },
   {
     "id": "engsoft-cap2-q3",
@@ -328,7 +329,7 @@
       "Não se enquadra em nenhuma categoria MoSCoW"
     ],
     "correta": 2,
-    "resolucao": "O programa de fidelidade é uma funcionalidade desejável que adiciona valor, mas não é essencial para que o cliente faça sua primeira compra. Ele entra em Could Have — implementado apenas se houver tempo/recursos após completar Must Haves (catálogo, carrinho, pagamento) e Should Haves."
+    "resolucao": "pela tabela da Seção 2.2, Could Have é o desejável de menor impacto, que entra só se sobrar tempo e orçamento; num MVP de dois meses, o cliente compra sem o programa de fidelidade. {{A}}: Must Have é aquilo sem o qual o sistema não pode ser entregue (catálogo, carrinho, pagamento), e \"toda loja tem\" não é critério; {{B}}: é a distratora mais forte, mas Should Have é importante e tem um contorno, e a fidelidade nem faz parte do fluxo de compra; {{D}}: Won't Have é algo adiado e documentado para o futuro, não algo \"desnecessário\"; {{E}}: as quatro categorias do MoSCoW cobrem todos os requisitos."
   },
   {
     "id": "engsoft-cap2-q5",
@@ -400,7 +401,7 @@
       "Conformidade, pois violaria a LGPD"
     ],
     "correta": 2,
-    "resolucao": "O problema descrito (muitos cliques, falta de clareza visual, tempo excessivo para aprender) é típico de usabilidade deficiente. Um RNF de usabilidade deveria ter estabelecido que um usuário sem treinamento deveria conseguir agendar em no máximo 5 minutos com menos de 5 cliques."
+    "resolucao": "o requisito funcional foi atendido (dá para agendar), mas 12 cliques, ícones confusos e 20 minutos de tentativa e erro atingem a Usabilidade, que a Seção 2.4 define como facilidade de aprendizado, eficiência e satisfação; compare com o exemplo da apostila, de uma compra em até 5 minutos sem treinamento. {{A}}: desempenho é tempo de resposta e uso de recursos, e quem demora é o usuário, não o sistema; {{B}}: segurança trata de acesso, criptografia e autenticação, ausentes no caso; {{D}}: confiabilidade é disponibilidade e tolerância a falhas, e o sistema não falha; {{E}}: conformidade é aderência a leis, e o caso não envolve exigência legal."
   },
   {
     "id": "engsoft-cap2-q8",
@@ -472,7 +473,7 @@
       "Problemas que só aparecem em sistemas muito grandes e com muitos usuários, não sendo aplicáveis a startups em fase inicial"
     ],
     "correta": 1,
-    "resolucao": "Conformidade com LGPD é um requisito não funcional crítico que deveria ter sido especificado desde a fase de Requisitos. As violações descobertas (ausência de criptografia, sem consentimento, sem mecanismo de exclusão) são violações legais que expõem a empresa a multas de até 2% do faturamento. Requisitos de conformidade devem ser tratados com a mesma seriedade que requisitos funcionais."
+    "resolucao": "criptografia, registro de consentimento e mecanismo de exclusão são exigências da LGPD, e a Seção 2.4 classifica a aderência à lei como requisito não funcional de Conformidade; ignorar RNFs gera sistemas que funcionam, mas são ilegais, por isso deveriam estar especificados desde os requisitos. {{A}}: não são requisitos funcionais, e corrigi-los tarde é caro, não rotineiro; {{C}}: RNFs nascem na engenharia de requisitos, com a lei como stakeholder, não no projeto do banco; {{D}}: a criptografia é Segurança, mas quem a exige aqui é a LGPD, e as duas categorias estão ligadas; {{E}}: a LGPD vale para qualquer organização que trate dados pessoais, de qualquer porte."
   },
   {
     "id": "engsoft-cap3-q1",
@@ -567,7 +568,7 @@
       "Um problema típico da arquitetura orientada a eventos, causado pelo barramento de mensagens"
     ],
     "correta": 3,
-    "resolucao": "A apostila destaca que as camadas facilitam a separação de responsabilidades, mas podem introduzir latência e camadas que apenas repassam chamadas. Richards lembra que alguns casos de simples repasse são normais; o problema está na proporção — com 80% das requisições nessa situação, a organização das camadas precisa ser revista."
+    "resolucao": "a Seção 3.3 aponta como limitação da arquitetura em camadas o risco de camadas que só repassam chamadas, sem agregar valor, gerando latência: é o antipadrão que Richards chama de \"architecture sinkhole\". {{A}} inverte o conceito, pois a vantagem das camadas é cada uma ter um papel próprio; {{B}} fala de MVC, outro padrão, e o problema não é falta de Controller; {{C}} trata de microsserviços, que não existem no caso; {{E}} trata de arquitetura orientada a eventos, e não há barramento nem fila de mensagens."
   },
   {
     "id": "engsoft-cap3-q5",
@@ -591,7 +592,7 @@
       "Adequada, desde que os doze serviços compartilhem um único banco com as mesmas tabelas, evitando problemas de consistência"
     ],
     "correta": 1,
-    "resolucao": "Microsserviços permitem escalabilidade independente e times autônomos, mas cobram um alto custo operacional. Em um sistema de porte moderado, com equipe pequena e sem infraestrutura dedicada, esse custo não se paga — a mesma conclusão do estudo de caso da apostila. Fazer os doze serviços compartilharem um único banco ainda eliminaria a independência que justifica o estilo."
+    "resolucao": "a Seção 3.3 lista a complexidade operacional dos microsserviços (monitoramento distribuído, consistência entre bancos, infraestrutura), e o estudo de caso do capítulo conclui que, com equipe pequena, a arquitetura em camadas é a mais adequada; a escola também não precisa escalar partes separadamente. {{A}}: nenhum padrão é sempre o melhor, pois depende do contexto; {{C}}: é o contrário, pois microsserviços exigem mais infraestrutura; {{D}}: chega ao veredito certo pelo motivo errado, pois o próprio texto de Lewis e Fowler cita a comunicação por API HTTP; {{E}}: um banco único compartilhado acaba com a independência que define o estilo."
   },
   {
     "id": "engsoft-cap3-q6",
@@ -663,7 +664,7 @@
       "Preventiva, adaptativa, perfectiva e corretiva"
     ],
     "correta": 3,
-    "resolucao": "I corrige um defeito após a implantação (corretiva). II ajusta o sistema a uma mudança no ambiente externo (adaptativa). III atende a uma melhoria solicitada pelos usuários (perfectiva). IV reduz a probabilidade de falhas futuras e facilita manutenções futuras (preventiva). O texto de Lehman explica por que essas mudanças são inevitáveis durante a vida do software."
+    "resolucao": "pela tabela da apostila (Seções 1.2 e 3.4), I é corretiva (defeito encontrado após a implantação), II é adaptativa (mudança no ambiente externo, como um novo sistema operacional), III é perfectiva (funcionalidade pedida pelos usuários) e IV é preventiva (refatoração sem mudar o comportamento, reduzindo o débito técnico). {{A}} acerta I, mas troca II e III; {{B}} inverte I e II; {{C}} acerta I e II, mas troca III e IV; {{E}} inverte as pontas, chamando a correção de preventiva e a refatoração de corretiva."
   },
   {
     "id": "engsoft-cap3-q9",
@@ -1190,6 +1191,81 @@
     ],
     "correta": 3,
     "resolucao": "Devem ser automatizados os testes repetitivos executados a cada build, a regressão de funcionalidades estáveis e os testes unitários e de integração (I, IV e V). Testes exploratórios (II) dependem de aprendizado e criatividade humana — como mostra a definição de Bach — e testes de usabilidade e percepção estética com usuários reais (III) exigem julgamento humano subjetivo."
+  },
+  {
+    "id": "engsoft-cap6-f1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Em relação aos conceitos de QA (Quality Assurance) e QC (Quality Control), qual alternativa descreve corretamente a diferença entre eles?",
+    "alternativas": [
+      "QA é focado na detecção de defeitos no produto, enquanto QC atua na definição de processos organizacionais.",
+      "QA e QC possuem o mesmo objetivo e são utilizados como sinônimos na engenharia de software.",
+      "QC busca prevenir defeitos por meio de melhoria de processos, enquanto QA se concentra na execução de testes no produto.",
+      "QA foca no processo e na prevenção de defeitos; QC foca no produto e na identificação de defeitos."
+    ],
+    "correta": 3
+  },
+  {
+    "id": "engsoft-cap6-f2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "A métrica densidade de defeitos é utilizada para avaliar a qualidade do software. O que essa métrica mede especificamente?",
+    "alternativas": [
+      "A quantidade total de testes executados durante o ciclo de desenvolvimento.",
+      "Os defeitos em relação ao tamanho do software, como defeitos por mil linhas de código.",
+      "O tempo médio necessário para corrigir os defeitos encontrados em produção pela equipe de suporte.",
+      "O percentual de código que foi executado durante os testes automatizados."
+    ],
+    "correta": 1
+  },
+  {
+    "id": "engsoft-cap6-f3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Sobre a complexidade ciclomática, qual alternativa descreve corretamente seu objetivo na análise de qualidade de software?",
+    "alternativas": [
+      "Medir o número de usuários simultâneos que um sistema suporta.",
+      "Avaliar a eficiência do algoritmo em termos de tempo de execução e de consumo de memória.",
+      "O número de caminhos de execução independentes, que indica a complexidade estrutural.",
+      "Calcular a quantidade de defeitos encontrados em um módulo específico."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "engsoft-cap6-f4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "De acordo com o modelo de maturidade CMMI, qual característica define uma organização no nível Gerenciado Quantitativamente (nível 4)?",
+    "alternativas": [
+      "A organização possui processos caóticos e dependentes de esforços individuais.",
+      "A organização possui processos padronizados, mas sem medições quantitativas.",
+      "A organização gerencia os processos com métricas e controle estatístico.",
+      "A organização está focada exclusivamente em inovação tecnológica."
+    ],
+    "correta": 2
+  },
+  {
+    "id": "engsoft-cap6-f5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Considerando o conceito de Custo da Qualidade (Cost of Quality) e a regra clássica dos custos de correção de defeitos, qual afirmação é correta?",
+    "alternativas": [
+      "Corrigir defeitos em produção costuma ser mais barato do que corrigi-los na fase de requisitos.",
+      "O custo de corrigir um defeito cresce quanto mais tarde ele é encontrado no ciclo.",
+      "A prevenção de defeitos geralmente representa o maior custo de qualidade dentro de um projeto de software.",
+      "Falhas externas possuem menor impacto financeiro do que falhas internas."
+    ],
+    "correta": 1
   },
   {
     "id": "engsoft-cap10-m1",

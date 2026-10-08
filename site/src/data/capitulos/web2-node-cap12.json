@@ -1,0 +1,216 @@
+{
+ "numero": 12,
+ "titulo": "Qualidade e Boas Práticas",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "12-1-revisao-da-arquitetura-por-que-camadas-importam",
+   "texto": "12.1 Revisão da Arquitetura: Por que Camadas Importam"
+  },
+  {
+   "t": "p",
+   "html": "Ao longo dos últimos capítulos, a BibliotecaAPI cresceu de um único arquivo com uma rota até uma aplicação completa, organizada em Router, Controller, Service e Model. Antes de seguirmos para o projeto final, vale revisar por que essa organização compensa o esforço extra de criar tantos arquivos pequenos:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Sem camadas",
+    "Com camadas"
+   ],
+   "linhas": [
+    [
+     "Um erro exige ler o arquivo inteiro",
+     "O erro está isolado na camada responsável"
+    ],
+    [
+     "Difícil testar uma parte isoladamente",
+     "Cada camada pode ser testada sozinha"
+    ],
+    [
+     "Duas pessoas mexendo no mesmo arquivo geram conflito",
+     "Cada pessoa trabalha em um arquivo diferente"
+    ],
+    [
+     "Trocar o banco de dados exige reescrever tudo",
+     "Só o Model muda; Service e Controller nem percebem"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Esse último ponto merece destaque: como <strong>apenas</strong> o Model conhece SQL (regra que seguimos desde o Capítulo 8), seria possível trocar o MySQL por outro banco de dados alterando só essa camada – Service, Controller e Route continuariam funcionando exatamente como estão."
+  },
+  {
+   "t": "h2",
+   "id": "12-2-padronizando-respostas-da-api",
+   "texto": "12.2 Padronizando Respostas da API"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, algumas rotas retornam o objeto diretamente (<code>res.json(livro)</code>), enquanto outras retornam mensagens (<code>res.json({ mensagem: ... })</code>). Em uma API profissional, vale adotar um formato <strong>único</strong> para todas as respostas – isso facilita muito a vida de quem consome a API (incluindo você mesma, seis meses depois)."
+  },
+  {
+   "t": "codigo",
+   "texto": "// Sucesso\n{\n    \"sucesso\": true,\n    \"dados\": { \"id\": 1, \"titulo\": \"Dom Casmurro\" }\n}\n\n// Erro\n{\n    \"sucesso\": false,\n    \"mensagem\": \"Livro não encontrado.\"\n}"
+  },
+  {
+   "t": "p",
+   "html": "Uma forma simples de aplicar esse padrão sem reescrever todos os Controllers é criar uma pequena função auxiliar:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/utils/resposta.js\nfunction sucesso(res, dados, status = 200) {\n    return res.status(status).json({ sucesso: true, dados });\n}\n\nfunction erro(res, mensagem, status = 400) {\n    return res.status(status).json({ sucesso: false, mensagem });\n}\n\nmodule.exports = { sucesso, erro };"
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroController.js\nconst { sucesso } = require(\"../utils/resposta\");\n\nasync function listar(req, res, next) {\n    try {\n        const livros = await livroService.listarLivros();\n        sucesso(res, livros);\n    } catch (erro) {\n        next(erro);\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "E o middleware global de erros do Capítulo 9 já pode ser ajustado para seguir o mesmo formato:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/middlewares/errorHandler.js\nfunction errorHandler(err, req, res, next) {\n    console.error(err);\n    res.status(err.status || 500).json({\n        sucesso: false,\n        mensagem: err.message || \"Erro interno do servidor.\"\n    });\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare que esse middleware já seguia exatamente esse formato desde que o criamos – agora apenas alinhamos as respostas de sucesso ao mesmo padrão."
+  },
+  {
+   "t": "h2",
+   "id": "12-3-logs-alem-do-console-log",
+   "texto": "12.3 Logs: Além do console.log"
+  },
+  {
+   "t": "p",
+   "html": "O <code>console.log()</code> funciona bem durante o desenvolvimento, mas tem limitações sérias em produção: não registra data/hora automaticamente, não diferencia um aviso de um erro grave, e desaparece assim que o terminal é fechado. Uma biblioteca de <em>logging</em> resolve isso:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install winston"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/config/logger.js\nconst winston = require(\"winston\");\n\nconst logger = winston.createLogger({\n    level: \"info\",\n    format: winston.format.combine(\n        winston.format.timestamp(),\n        winston.format.json()\n    ),\n    transports: [\n        new winston.transports.Console(),\n        new winston.transports.File({ filename: \"logs/erros.log\", level: \"error\" })\n    ]\n});\n\nmodule.exports = logger;"
+  },
+  {
+   "t": "p",
+   "html": "Usando no middleware de erros:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const logger = require(\"../config/logger\");\n\nfunction errorHandler(err, req, res, next) {\n    logger.error(err.message, { rota: req.originalUrl, metodo: req.method });\n    res.status(err.status || 500).json({ sucesso: false, mensagem: err.message });\n}"
+  },
+  {
+   "t": "p",
+   "html": "Agora, além de aparecer no terminal, todo erro fica registrado em <code>logs/erros.log</code>, com data, hora e a rota exata onde aconteceu – essencial para investigar problemas depois que já ocorreram, especialmente em um servidor rodando sem ninguém olhando o terminal o tempo todo."
+  },
+  {
+   "t": "h2",
+   "id": "12-4-testes-automatizados-uma-introducao",
+   "texto": "12.4 Testes Automatizados: Uma Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, testamos cada rota manualmente no Postman. Isso funciona, mas não escala: a cada nova alteração, seria preciso testar manualmente <em>tudo de novo</em>, para garantir que nada quebrou. Testes automatizados resolvem esse problema."
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install --save-dev jest supertest"
+  },
+  {
+   "t": "p",
+   "html": "Um teste simples para a rota de listagem de livros:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// tests/livros.test.js\nconst request = require(\"supertest\");\nconst app = require(\"../src/app\");\n\ndescribe(\"GET /livros\", () => {\n    it(\"deve retornar status 200 e uma lista de livros\", async () => {\n        const resposta = await request(app).get(\"/livros\");\n\n        expect(resposta.status).toBe(200);\n        expect(Array.isArray(resposta.body.dados)).toBe(true);\n    });\n});"
+  },
+  {
+   "t": "p",
+   "html": "Adicionando um script no <code>package.json</code> (Capítulo 5):"
+  },
+  {
+   "t": "codigo",
+   "texto": "\"scripts\": {\n    \"test\": \"jest\"\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm test"
+  },
+  {
+   "t": "p",
+   "html": "Não é preciso escrever testes para cada rota agora – o objetivo desta seção é só apresentar a ideia. À medida que a BibliotecaAPI crescer, cada nova funcionalidade importante ganha um teste próprio, que passa a rodar automaticamente antes de qualquer alteração ser aceita."
+  },
+  {
+   "t": "h2",
+   "id": "12-5-variaveis-de-ambiente-por-ambiente",
+   "texto": "12.5 Variáveis de Ambiente por Ambiente"
+  },
+  {
+   "t": "p",
+   "html": "Desde o Capítulo 8, guardamos credenciais no <code>.env</code>. Em um projeto real, normalmente existe mais de um ambiente – desenvolvimento (na sua máquina), teste (para rodar os testes automatizados) e produção (o servidor real, com usuários de verdade). Cada um pode precisar de configurações diferentes:"
+  },
+  {
+   "t": "codigo",
+   "texto": ".env.development\n.env.test\n.env.production"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/config/db.js\nrequire(\"dotenv\").config({\n    path: `.env.${process.env.NODE_ENV || \"development\"}`\n});"
+  },
+  {
+   "t": "p",
+   "html": "Assim, rodar <code>NODE_ENV=production node server.js</code> carrega automaticamente as credenciais de produção, sem precisar alterar uma linha de código."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Boas práticas",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Adicione <strong>todos</strong> os arquivos <code>.env*</code> ao <code>.gitignore</code> – exceto, se quiser, um <code>.env.example</code> com nomes de variáveis e valores fictícios, servindo de documentação para outros desenvolvedores."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "12-6-checklist-de-qualidade",
+   "texto": "12.6 Checklist de Qualidade"
+  },
+  {
+   "t": "p",
+   "html": "Antes de considerar uma funcionalidade \"pronta\", vale revisar:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Todas as consultas SQL usam <code>execute()</code> com parâmetros (Capítulo 8) – nunca concatenação.",
+    "As regras de negócio estão na Service, não no Controller nem no Model (Capítulo 7).",
+    "Rotas sensíveis passam por <code>autenticar</code> e, quando necessário, <code>autorizar</code> (Capítulo 11).",
+    "Erros são encaminhados com <code>next(erro)</code> para o middleware global (Capítulo 9), não tratados individualmente em cada Controller.",
+    "Dados de entrada são validados com <code>express-validator</code> antes de chegar ao Controller (Capítulo 10).",
+    "Nenhuma credencial (senha de banco, chave JWT) está escrita diretamente no código.",
+    "As respostas seguem o formato padronizado desta seção (<code>sucesso</code>/<code>dados</code> ou <code>sucesso</code>/<code>mensagem</code>)."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Esse checklist não é burocracia – é exatamente o tipo de revisão que, no mercado, costuma acontecer em um <em>code review</em> antes de qualquer código ir para produção."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Glossário",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Logging</strong>: prática de registrar eventos, avisos e erros de uma aplicação de forma estruturada.<br> <strong>Teste automatizado</strong>: código que verifica automaticamente se outra parte do sistema se comporta como esperado.<br> <strong><em>Code review</em></strong>: revisão do código por outra pessoa (ou por uma checklist) antes de ser integrado ao projeto.<br> <strong>Ambiente (<em>environment</em>)</strong>: conjunto de configurações específico para uma fase do ciclo de vida da aplicação (desenvolvimento, teste, produção)."
+    }
+   ]
+  }
+ ]
+}

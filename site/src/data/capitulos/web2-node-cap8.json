@@ -1,0 +1,332 @@
+{
+ "numero": 8,
+ "titulo": "Conectando o Node.js ao MySQL com mysql2",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "8-1-o-que-e-o-mysql2",
+   "texto": "8.1 O que é o mysql2?"
+  },
+  {
+   "t": "p",
+   "html": "Uma aplicação Node.js não consegue, sozinha, \"conversar\" com um servidor MySQL – é necessário um <strong>driver</strong>: um pacote responsável por traduzir chamadas JavaScript em comandos que o banco entende, e converter os resultados de volta em objetos JavaScript."
+  },
+  {
+   "t": "p",
+   "html": "O <strong>mysql2</strong> é o driver mais utilizado para essa finalidade no ecossistema Node.js atualmente. Ele oferece suporte nativo a <em>Promises</em> (e, portanto, a <code>async</code>/<code>await</code>), <em>Prepared Statements</em> e <em>pool</em> de conexões – tudo o que vamos usar ao longo deste capítulo."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/node/capitulo-08_diagrama1.png",
+   "alt": "capitulo 08 diagrama1"
+  },
+  {
+   "t": "h2",
+   "id": "8-2-instalando-o-mysql2-e-o-dotenv",
+   "texto": "8.2 Instalando o mysql2 e o dotenv"
+  },
+  {
+   "t": "p",
+   "html": "No terminal, dentro do projeto BibliotecaAPI:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install mysql2"
+  },
+  {
+   "t": "p",
+   "html": "Em aplicações profissionais, nunca escrevemos usuário e senha do banco diretamente no código – se o projeto for enviado ao GitHub, qualquer pessoa poderia ver essas credenciais. Para resolver isso, utilizamos o pacote <strong>dotenv</strong>, que carrega variáveis de ambiente a partir de um arquivo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install dotenv"
+  },
+  {
+   "t": "p",
+   "html": "Na raiz do projeto, crie um arquivo chamado <code>.env</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "DB_HOST=localhost\nDB_PORT=3306\nDB_USER=root\nDB_PASSWORD=sua_senha_aqui\nDB_NAME=biblioteca_api"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Boas práticas",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Adicione o arquivo <code>.env</code> ao <code>.gitignore</code> imediatamente – ele nunca deve ser enviado a um repositório Git. Compartilhe apenas um arquivo <code>.env.example</code>, com os nomes das variáveis e valores fictícios, para orientar outros desenvolvedores."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-3-criando-a-conexao-pool",
+   "texto": "8.3 Criando a Conexão (Pool)"
+  },
+  {
+   "t": "p",
+   "html": "Dentro de <code>src/config</code>, crie o arquivo <code>db.js</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const mysql = require(\"mysql2/promise\");\nrequire(\"dotenv\").config();\n\nconst pool = mysql.createPool({\n    host: process.env.DB_HOST,\n    port: process.env.DB_PORT,\n    user: process.env.DB_USER,\n    password: process.env.DB_PASSWORD,\n    database: process.env.DB_NAME,\n    waitForConnections: true,\n    connectionLimit: 10,\n    queueLimit: 0\n});\n\nmodule.exports = pool;"
+  },
+  {
+   "t": "p",
+   "html": "Dois detalhes importantes desse arquivo:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<code>require(\"mysql2/promise\")</code> – importamos a versão do mysql2 baseada em <em>Promises</em>, que nos permitirá usar <code>await</code> em todas as consultas deste livro.",
+    "<code>createPool()</code>, e não <code>createConnection()</code> – em vez de abrir uma única conexão, mantemos um <strong>conjunto</strong> de conexões reutilizáveis. Isso é essencial em uma aplicação web: várias requisições podem chegar ao mesmo tempo, e cada uma pode \"pegar emprestada\" uma conexão do <em>pool</em> em vez de esperar por uma única conexão compartilhada."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-4-testando-a-conexao",
+   "texto": "8.4 Testando a Conexão"
+  },
+  {
+   "t": "codigo",
+   "texto": "const db = require(\"./src/config/db\");\n\nasync function testarConexao() {\n    try {\n        const connection = await db.getConnection();\n        console.log(\"Conexão realizada com sucesso!\");\n        connection.release();\n    } catch (erro) {\n        console.error(\"Erro ao conectar:\", erro.message);\n    }\n}\n\ntestarConexao();"
+  },
+  {
+   "t": "p",
+   "html": "Se tudo estiver correto, o terminal exibirá <code>Conexão realizada com sucesso!</code>. Dois erros comuns nessa etapa:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong><code>Access denied for user</code></strong> – usuário ou senha incorretos no <code>.env</code>.",
+    "<strong><code>ECONNREFUSED</code></strong> – o serviço do MySQL provavelmente não está em execução."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-5-executando-consultas-select",
+   "texto": "8.5 Executando Consultas (SELECT)"
+  },
+  {
+   "t": "p",
+   "html": "Com a conexão pronta, já podemos consultar dados reais do banco criado no Capítulo 6:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const db = require(\"./src/config/db\");\n\nasync function listarLivros() {\n    const [rows] = await db.query(\"SELECT * FROM livros\");\n    console.log(rows);\n}\n\nlistarLivros();"
+  },
+  {
+   "t": "p",
+   "html": "Repare na sintaxe <code>const [rows] = await db.query(...)</code>. O método <code>query()</code> retorna, na verdade, dois valores – os registros encontrados (<code>rows</code>) e informações sobre as colunas (<code>fields</code>) – e usamos <em>destructuring</em> (Capítulo 3) para capturar apenas o que nos interessa."
+  },
+  {
+   "t": "p",
+   "html": "O mysql2 também oferece o método <code>execute()</code>, semelhante ao <code>query()</code>, mas com melhor suporte a <strong>consultas parametrizadas</strong>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const id = 5;\nconst [rows] = await db.execute(\n    \"SELECT * FROM livros WHERE id = ?\",\n    [id]\n);"
+  },
+  {
+   "t": "p",
+   "html": "O símbolo <code>?</code> é um <strong>placeholder</strong>: o valor de <code>id</code> é enviado separadamente do comando SQL, em vez de ser concatenado diretamente na <em>string</em>. Vamos entender por que isso é tão importante na seção 8.9."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "query()",
+    "execute()"
+   ],
+   "linhas": [
+    [
+     "Consultas simples, sem parâmetros do usuário",
+     "Consultas parametrizadas – <strong>recomendado</strong> sempre que houver dado do usuário"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-6-inserindo-dados-insert",
+   "texto": "8.6 Inserindo Dados (INSERT)"
+  },
+  {
+   "t": "codigo",
+   "texto": "async function cadastrarLivro(livro) {\n    const sql = `\n        INSERT INTO livros (titulo, autor_id, ano_publicacao, preco)\n        VALUES (?, ?, ?, ?)\n    `;\n\n    const valores = [livro.titulo, livro.autor_id, livro.ano_publicacao, livro.preco];\n\n    const [resultado] = await db.execute(sql, valores);\n\n    return { id: resultado.insertId, ...livro };\n}"
+  },
+  {
+   "t": "p",
+   "html": "Após um <code>INSERT</code>, o mysql2 devolve um objeto <code>ResultSetHeader</code> contendo, entre outras informações, o <code>insertId</code> – o identificador gerado automaticamente pelo <code>AUTO_INCREMENT</code> (Capítulo 6) para o novo registro. Esse identificador é extremamente útil: pode ser usado para redirecionar o usuário, criar relacionamentos, ou simplesmente confirmar ao cliente qual registro foi criado."
+  },
+  {
+   "t": "h2",
+   "id": "8-7-atualizando-registros-update",
+   "texto": "8.7 Atualizando Registros (UPDATE)"
+  },
+  {
+   "t": "codigo",
+   "texto": "async function atualizarLivro(id, dados) {\n    const sql = `\n        UPDATE livros\n        SET titulo = ?, preco = ?\n        WHERE id = ?\n    `;\n\n    const [resultado] = await db.execute(sql, [dados.titulo, dados.preco, id]);\n\n    return resultado.affectedRows > 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A propriedade <code>affectedRows</code> informa quantos registros foram alterados. Ela é essencial para confirmar se a operação realmente encontrou o registro:"
+  },
+  {
+   "t": "codigo",
+   "texto": "if (resultado.affectedRows === 0) {\n    console.log(\"Nenhum livro encontrado com esse id.\");\n}"
+  },
+  {
+   "t": "h2",
+   "id": "8-8-removendo-registros-delete",
+   "texto": "8.8 Removendo Registros (DELETE)"
+  },
+  {
+   "t": "codigo",
+   "texto": "async function removerLivro(id) {\n    const [resultado] = await db.execute(\n        \"DELETE FROM livros WHERE id = ?\",\n        [id]\n    );\n\n    return resultado.affectedRows > 0;\n}"
+  },
+  {
+   "t": "h3",
+   "texto": "Soft Delete"
+  },
+  {
+   "t": "p",
+   "html": "Em muitos sistemas reais, registros não são removidos fisicamente do banco. Em vez disso, marcamos o registro como inativo – técnica conhecida como <strong>Soft Delete</strong>. Utilizando o <code>ALTER TABLE</code> que vimos no Capítulo 6:"
+  },
+  {
+   "t": "codigo",
+   "texto": "ALTER TABLE livros ADD ativo BOOLEAN DEFAULT TRUE;"
+  },
+  {
+   "t": "p",
+   "html": "E, em vez de <code>DELETE</code>, fazemos:"
+  },
+  {
+   "t": "codigo",
+   "texto": "async function removerLivro(id) {\n    const [resultado] = await db.execute(\n        \"UPDATE livros SET ativo = FALSE WHERE id = ?\",\n        [id]\n    );\n    return resultado.affectedRows > 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Nenhuma informação é perdida – o livro apenas deixa de aparecer nas consultas, que passam a filtrar por <code>WHERE ativo = TRUE</code>. Essa abordagem é amplamente utilizada em sistemas que precisam preservar histórico: hospitais, bancos, universidades e – como é o nosso caso – bibliotecas, onde pode ser importante manter o registro de um livro mesmo depois de retirado de circulação."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Exclusão física (<code>DELETE</code>)",
+    "Soft Delete"
+   ],
+   "linhas": [
+    [
+     "Remove definitivamente",
+     "Mantém o registro, apenas inativo"
+    ],
+    [
+     "Não permite recuperação",
+     "Permite restaurar facilmente"
+    ],
+    [
+     "Mais simples",
+     "Preserva histórico e auditoria"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-9-prepared-statements-e-sql-injection",
+   "texto": "8.9 Prepared Statements e SQL Injection"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>SQL Injection</strong> é uma das vulnerabilidades mais conhecidas em aplicações que utilizam banco de dados. Ela ocorre quando valores fornecidos pelo usuário são inseridos <strong>diretamente</strong> em um comando SQL, sem separação entre código e dado."
+  },
+  {
+   "t": "p",
+   "html": "Imagine uma consulta de login construída por concatenação:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// NUNCA FAÇA ISSO\nconst sql = \"SELECT * FROM usuarios WHERE email='\" + email +\n            \"' AND senha='\" + senha + \"'\";"
+  },
+  {
+   "t": "p",
+   "html": "Se um invasor digitar, no campo de senha, o texto <code>' OR '1'='1</code>, a consulta gerada se torna:"
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT * FROM usuarios WHERE email='...' AND senha='' OR '1'='1';"
+  },
+  {
+   "t": "p",
+   "html": "Como <code>'1'='1'</code> é sempre verdadeiro, o banco pode retornar um usuário mesmo sem senha correta – um acesso indevido completo, causado apenas pela forma como a consulta foi montada."
+  },
+  {
+   "t": "p",
+   "html": "A solução é o que já vínhamos fazendo desde a seção 8.5: consultas parametrizadas, usando <code>?</code> em vez de concatenação:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const [rows] = await db.execute(\n    \"SELECT * FROM usuarios WHERE email = ? AND senha = ?\",\n    [email, senha]\n);"
+  },
+  {
+   "t": "p",
+   "html": "Nessa forma, o MySQL trata o valor recebido sempre como <strong>dado</strong>, nunca como parte do comando SQL – mesmo que o usuário digite algo parecido com um comando, ele será tratado como texto literal. É por isso que, ao longo de todo este livro, <strong>todo</strong> valor vindo do usuário será passado como parâmetro, nunca concatenado."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Boas práticas",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Utilize <code>execute()</code> com <code>?</code> sempre que houver qualquer dado vindo do cliente. Nunca concatene valores recebidos do usuário diretamente em uma <em>string</em> SQL – nem mesmo \"só para testar rápido\"."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-10-organizando-em-camadas-model-e-service",
+   "texto": "8.10 Organizando em Camadas: Model e Service"
+  },
+  {
+   "t": "p",
+   "html": "Seguindo a arquitetura definida no Capítulo 7, vamos separar essas funções em camadas – em vez de deixá-las soltas em um único arquivo."
+  },
+  {
+   "t": "p",
+   "html": "A camada <strong>Model</strong> (ou <em>Repository</em>) é o único lugar do projeto que conhece SQL:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/models/livroModel.js\nconst db = require(\"../config/db\");\n\nasync function listarTodos() {\n    const [rows] = await db.query(\"SELECT * FROM livros\");\n    return rows;\n}\n\nasync function buscarPorId(id) {\n    const [rows] = await db.execute(\"SELECT * FROM livros WHERE id = ?\", [id]);\n    return rows[0];\n}\n\nasync function inserir(livro) {\n    const sql = \"INSERT INTO livros (titulo, autor_id, preco) VALUES (?, ?, ?)\";\n    const [resultado] = await db.execute(sql, [livro.titulo, livro.autor_id, livro.preco]);\n    return { id: resultado.insertId, ...livro };\n}\n\nmodule.exports = { listarTodos, buscarPorId, inserir };"
+  },
+  {
+   "t": "p",
+   "html": "A camada <strong>Service</strong> concentra as regras de negócio, e é ela quem \"conversa\" com o Model:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/services/livroService.js\nconst livroModel = require(\"../models/livroModel\");\n\nasync function listarLivros() {\n    return await livroModel.listarTodos();\n}\n\nasync function cadastrarLivro(dados) {\n    if (!dados.titulo) {\n        throw new Error(\"Título é obrigatório.\");\n    }\n    return await livroModel.inserir(dados);\n}\n\nmodule.exports = { listarLivros, cadastrarLivro };"
+  },
+  {
+   "t": "p",
+   "html": "Por enquanto, a Service apenas repassa os dados e faz uma validação simples – mas é aqui que, mais adiante, vão morar regras mais complexas (como verificar se um livro está disponível antes de permitir um empréstimo). O Model, por sua vez, nunca terá esse tipo de decisão – sua única responsabilidade é conversar com o banco."
+  },
+  {
+   "t": "p",
+   "html": "Essa separação será a base de todo o próximo capítulo, quando finalmente conectarmos essas camadas a rotas HTTP reais, utilizando o Express."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Glossário",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Driver</strong>: pacote responsável pela comunicação entre a aplicação e o banco de dados.<br> <strong>Pool de conexões</strong>: conjunto de conexões reutilizáveis com o banco, que melhora o desempenho em aplicações web.<br> <strong>Prepared Statement</strong>: consulta SQL em que os valores são enviados separadamente do comando, aumentando a segurança.<br> <strong>SQL Injection</strong>: ataque que manipula uma consulta SQL por meio de dados fornecidos pelo usuário.<br> <strong>insertId</strong>: identificador gerado automaticamente para um novo registro após um <code>INSERT</code>.<br> <strong>affectedRows</strong>: quantidade de registros afetados por um <code>UPDATE</code> ou <code>DELETE</code>.<br> <strong>Soft Delete</strong>: técnica que marca um registro como inativo, em vez de removê-lo fisicamente."
+    }
+   ]
+  }
+ ]
+}

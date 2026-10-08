@@ -1,0 +1,245 @@
+{
+ "numero": 11,
+ "titulo": "Autenticação com JWT",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "11-1-por-que-precisamos-de-autenticacao",
+   "texto": "11.1 Por que Precisamos de Autenticação?"
+  },
+  {
+   "t": "p",
+   "html": "Até este ponto, qualquer pessoa que soubesse a URL da nossa API poderia cadastrar livros, remover usuários ou consultar o histórico de empréstimos de qualquer leitor. Em um sistema real, isso é inaceitável – precisamos de um mecanismo que responda a duas perguntas, sempre que uma requisição chega:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Autenticação</strong>: quem é você? (o usuário realmente é quem diz ser?)",
+    "<strong>Autorização</strong>: o que você pode fazer? (esse usuário tem permissão para essa ação específica?)"
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Neste capítulo vamos implementar as duas coisas: login com senha criptografada (bcrypt), tokens de acesso (JWT), e controle de acesso baseado no <code>perfil</code> que já existe na tabela <code>usuarios</code> desde o Capítulo 10 (<code>LEITOR</code>, <code>BIBLIOTECARIO</code>, <code>ADMIN</code>)."
+  },
+  {
+   "t": "h2",
+   "id": "11-2-hash-de-senhas-com-bcrypt",
+   "texto": "11.2 Hash de Senhas com bcrypt"
+  },
+  {
+   "t": "p",
+   "html": "Nunca – em nenhuma hipótese – armazenamos senhas em texto puro em um banco de dados. Se o banco for comprometido, todas as senhas de todos os usuários ficariam expostas imediatamente. Em vez disso, armazenamos um <strong>hash</strong>: o resultado de uma função criptográfica que transforma a senha original em uma sequência de caracteres que não pode ser revertida."
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install bcrypt"
+  },
+  {
+   "t": "h3",
+   "texto": "Gerando o hash no cadastro"
+  },
+  {
+   "t": "codigo",
+   "texto": "const bcrypt = require(\"bcrypt\");\n\nasync function cadastrarUsuario(dados) {\n    const senhaHash = await bcrypt.hash(dados.senha, 10);\n\n    const usuario = {\n        nome: dados.nome,\n        email: dados.email,\n        senha: senhaHash\n    };\n\n    return await usuarioModel.inserir(usuario);\n}"
+  },
+  {
+   "t": "p",
+   "html": "O segundo argumento de <code>bcrypt.hash()</code> (o número <code>10</code>) é o <strong>custo</strong> do algoritmo – quanto maior, mais lento (e mais seguro) o processo. O valor <code>10</code> é um equilíbrio recomendado entre segurança e desempenho para a maioria das aplicações."
+  },
+  {
+   "t": "p",
+   "html": "O resultado é uma <em>string</em> parecida com esta:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$2b$10$Lk92XjN8mQeYp7z.HqR3Ou0F5tD1vB3nC8wKzP2aXyE9mR7sT4uWa"
+  },
+  {
+   "t": "p",
+   "html": "É por isso que, no Capítulo 10, definimos a coluna <code>senha</code> como <code>VARCHAR(255)</code> – espaço suficiente para armazenar esse hash com folga."
+  },
+  {
+   "t": "h3",
+   "texto": "Verificando a senha no login"
+  },
+  {
+   "t": "p",
+   "html": "Note que <code>bcrypt.hash()</code> não pode ser \"desfeito\" para recuperar a senha original. Em vez disso, o <code>bcrypt.compare()</code> verifica se uma senha digitada <strong>corresponde</strong> ao hash armazenado, sem nunca descriptografá-lo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const senhaCorreta = await bcrypt.compare(senhaDigitada, usuario.senha);\n\nif (!senhaCorreta) {\n    throw new Error(\"E-mail ou senha inválidos.\");\n}"
+  },
+  {
+   "t": "h2",
+   "id": "11-3-login-verificando-credenciais",
+   "texto": "11.3 Login: Verificando Credenciais"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/services/authService.js\nconst bcrypt = require(\"bcrypt\");\nconst usuarioModel = require(\"../models/usuarioModel\");\n\nasync function login(email, senha) {\n    const usuario = await usuarioModel.buscarPorEmail(email);\n\n    if (!usuario) {\n        const erro = new Error(\"E-mail ou senha inválidos.\");\n        erro.status = 401;\n        throw erro;\n    }\n\n    const senhaCorreta = await bcrypt.compare(senha, usuario.senha);\n\n    if (!senhaCorreta) {\n        const erro = new Error(\"E-mail ou senha inválidos.\");\n        erro.status = 401;\n        throw erro;\n    }\n\n    return usuario;\n}\n\nmodule.exports = { login };"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Boas práticas",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Repare que a mensagem de erro é exatamente a mesma tanto quando o e-mail não existe quanto quando a senha está errada. Isso é proposital: se a API respondesse \"usuário não encontrado\" para e-mails inexistentes e \"senha incorreta\" para e-mails existentes, um invasor poderia usar essa diferença para descobrir quais e-mails estão cadastrados no sistema – uma técnica conhecida como <em>user enumeration</em>."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "11-4-o-que-e-jwt",
+   "texto": "11.4 O que é JWT?"
+  },
+  {
+   "t": "p",
+   "html": "Depois de validar o login, a API precisa de uma forma de \"lembrar\" que aquele usuário está autenticado nas próximas requisições – sem exigir que ele envie e-mail e senha em toda chamada. É para isso que existe o <strong>JWT</strong> (<em>JSON Web Token</em>)."
+  },
+  {
+   "t": "p",
+   "html": "Um JWT é uma <em>string</em> composta por três partes, separadas por pontos:"
+  },
+  {
+   "t": "codigo",
+   "texto": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwicGVyZmlsIjoiTEVJVE9SIn0.4f8a...\n   |__________________|  |____________________________|  |____|\n        Header                    Payload                Signature"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Header</strong>: informa o algoritmo utilizado para assinar o token.",
+    "<strong>Payload</strong>: os dados que queremos \"lembrar\" – normalmente o <code>id</code> e o <code>perfil</code> do usuário. <strong>Nunca</strong> coloque a senha (nem o hash) no payload – ele não é criptografado, apenas codificado, e qualquer pessoa pode decodificá-lo e ler seu conteúdo.",
+    "<strong>Signature</strong>: uma assinatura digital gerada com uma chave secreta que só o servidor conhece. Ela garante que o token não foi alterado – se alguém tentar editar o payload manualmente, a assinatura deixa de bater."
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install jsonwebtoken"
+  },
+  {
+   "t": "p",
+   "html": "A chave secreta usada para assinar os tokens deve ficar no <code>.env</code> (Capítulo 8), nunca no código:"
+  },
+  {
+   "t": "codigo",
+   "texto": "JWT_SECRET=uma-chave-bem-longa-e-dificil-de-adivinhar"
+  },
+  {
+   "t": "h2",
+   "id": "11-5-gerando-e-validando-tokens",
+   "texto": "11.5 Gerando e Validando Tokens"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/services/authService.js\nconst jwt = require(\"jsonwebtoken\");\n\nfunction gerarToken(usuario) {\n    return jwt.sign(\n        { id: usuario.id, perfil: usuario.perfil },\n        process.env.JWT_SECRET,\n        { expiresIn: \"8h\" }\n    );\n}"
+  },
+  {
+   "t": "p",
+   "html": "E, completando o fluxo de login, a Service passa a devolver o token junto com os dados básicos do usuário:"
+  },
+  {
+   "t": "codigo",
+   "texto": "async function login(email, senha) {\n    // ... validação de e-mail e senha (seção 11.3) ...\n\n    const token = gerarToken(usuario);\n\n    return {\n        token,\n        usuario: { id: usuario.id, nome: usuario.nome, perfil: usuario.perfil }\n    };\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/controllers/authController.js\nasync function login(req, res, next) {\n    try {\n        const { email, senha } = req.body;\n        const resultado = await authService.login(email, senha);\n        res.json(resultado);\n    } catch (erro) {\n        next(erro);\n    }\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/routes/authRoutes.js\nrouter.post(\"/login\", authController.login);"
+  },
+  {
+   "t": "p",
+   "html": "Testando no Postman: <code>POST /login</code>, com <code>email</code> e <code>senha</code> no corpo. A resposta traz o <code>token</code>, que o cliente deve guardar e reenviar em todas as próximas requisições – no cabeçalho <code>Authorization</code>, que já mencionamos no Capítulo 7:"
+  },
+  {
+   "t": "codigo",
+   "texto": "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6Mi..."
+  },
+  {
+   "t": "h2",
+   "id": "11-6-middleware-de-autenticacao",
+   "texto": "11.6 Middleware de Autenticação"
+  },
+  {
+   "t": "p",
+   "html": "Seguindo a convenção do livro (middlewares aplicados por rota, definida no Capítulo 9), criamos um middleware que valida o token antes de liberar o acesso a uma rota protegida:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/middlewares/autenticar.js\nconst jwt = require(\"jsonwebtoken\");\n\nfunction autenticar(req, res, next) {\n    const authHeader = req.headers.authorization;\n\n    if (!authHeader) {\n        return res.status(401).json({ erro: \"Token não fornecido.\" });\n    }\n\n    const token = authHeader.split(\" \")[1]; // remove o prefixo \"Bearer \"\n\n    try {\n        const dados = jwt.verify(token, process.env.JWT_SECRET);\n        req.usuario = dados; // disponibiliza { id, perfil } para as próximas funções\n        next();\n    } catch (erro) {\n        return res.status(401).json({ erro: \"Token inválido ou expirado.\" });\n    }\n}\n\nmodule.exports = autenticar;"
+  },
+  {
+   "t": "p",
+   "html": "Aplicando em uma rota:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroRoutes.js\nconst autenticar = require(\"../middlewares/autenticar\");\n\nrouter.post(\"/\", autenticar, livroController.cadastrar);"
+  },
+  {
+   "t": "p",
+   "html": "A partir de agora, qualquer requisição <code>POST /livros</code> sem um token JWT válido recebe <code>401 Unauthorized</code> <strong>antes</strong> de chegar ao Controller – o middleware barra o acesso na porta."
+  },
+  {
+   "t": "h2",
+   "id": "11-7-controle-de-perfis-autorizacao",
+   "texto": "11.7 Controle de Perfis (Autorização)"
+  },
+  {
+   "t": "p",
+   "html": "Autenticar confirma <em>quem</em> é o usuário; autorizar decide <em>o que</em> ele pode fazer. Como o token já carrega o <code>perfil</code> (seção 11.5), podemos criar um segundo middleware que restringe rotas a perfis específicos:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/middlewares/autorizar.js\nfunction autorizar(...perfisPermitidos) {\n    return (req, res, next) => {\n        if (!perfisPermitidos.includes(req.usuario.perfil)) {\n            return res.status(403).json({ erro: \"Acesso negado para o seu perfil.\" });\n        }\n        next();\n    };\n}\n\nmodule.exports = autorizar;"
+  },
+  {
+   "t": "p",
+   "html": "Repare que <code>autorizar()</code> é uma <strong>função que retorna um middleware</strong> – isso permite configurá-la com os perfis desejados diretamente na rota:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroRoutes.js\nconst autenticar = require(\"../middlewares/autenticar\");\nconst autorizar = require(\"../middlewares/autorizar\");\n\n// Qualquer usuário autenticado pode listar\nrouter.get(\"/\", autenticar, livroController.listar);\n\n// Somente ADMIN e BIBLIOTECARIO podem cadastrar\nrouter.post(\"/\", autenticar, autorizar(\"ADMIN\", \"BIBLIOTECARIO\"), livroController.cadastrar);\n\n// Somente ADMIN pode remover\nrouter.delete(\"/:id\", autenticar, autorizar(\"ADMIN\"), livroController.remover);"
+  },
+  {
+   "t": "p",
+   "html": "Note a ordem: <code>autenticar</code> sempre vem antes de <code>autorizar</code> – não faz sentido verificar o perfil de alguém antes de confirmar que o token é válido. É por isso que <code>autorizar()</code> pode confiar em <code>req.usuario.perfil</code>: ele só é executado depois que <code>autenticar</code> já preencheu essa informação."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Código",
+    "Situação"
+   ],
+   "linhas": [
+    [
+     "<code>401 Unauthorized</code>",
+     "Token ausente, inválido ou expirado (não sabemos quem é)"
+    ],
+    [
+     "<code>403 Forbidden</code>",
+     "Token válido, mas o perfil não tem permissão (sabemos quem é, mas não pode)"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Glossário",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Autenticação</strong>: processo de verificar a identidade de um usuário.<br> <strong>Autorização</strong>: processo de verificar quais ações um usuário autenticado pode executar.<br> <strong>Hash</strong>: resultado de uma função criptográfica que não pode ser revertido.<br> <strong>bcrypt</strong>: algoritmo utilizado para gerar hashes seguros de senhas.<br> <strong>JWT (<em>JSON Web Token</em>)</strong>: token assinado digitalmente, utilizado para manter um usuário autenticado entre requisições.<br> <strong>Payload</strong>: a parte do JWT que carrega os dados do usuário – codificada, mas não criptografada.<br> <strong>Bearer Token</strong>: convenção de enviar um token JWT no cabeçalho <code>Authorization</code>, prefixado por \"Bearer \"."
+    }
+   ]
+  }
+ ]
+}

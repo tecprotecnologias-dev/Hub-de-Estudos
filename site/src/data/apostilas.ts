@@ -493,4 +493,48 @@ export const apostilas: Apostila[] = [
     descricao:
       'Como escrever bons pedidos para ferramentas de IA: os 5 passos de um prompt e os frameworks RTF, CTF, GRADE, PECRA, ROSES, SPARK e CREATE, com exemplos de desenvolvimento web.',
   },
+
+  // Livro "Node.js, Express e MySQL — Guia Completo para Desenvolvimento de APIs Modernas" (TecPro)
+  // Fonte: Guia NODES.js/LIVRO A5/livro-completo-A5 (LaTeX), convertido com ferramentas/converter_livro_node.py
+  // (capítulo 10 junta os arquivos 10a a 10d; sem as seções de Estudo de Caso e Resumo Visual)
+  ...[
+    ['Introdução ao Node.js', 'O que é o Node.js, por que foi criado, o que é um runtime, arquitetura, vantagens, limitações e o que é uma API.'],
+    ['Preparando o Ambiente de Desenvolvimento Node.js', 'Instalação do Node.js e do VS Code, o primeiro projeto, package.json, package-lock.json, node_modules e o primeiro programa.'],
+    ['JavaScript Moderno para Node.js', 'let e const, funções, arrow functions, template strings, destructuring e módulos.'],
+    ['Programação Assíncrona no Node.js', 'Síncrono e assíncrono, Event Loop, Call Stack, callbacks, callback hell, Promises e async/await.'],
+    ['NPM e Gerenciamento de Pacotes', 'O que é o NPM, pacotes, dependências de produção e desenvolvimento, atualização, remoção e scripts.'],
+    ['MySQL: Fundamentos e Linguagem SQL', 'Banco relacional, tipos de dados, CREATE TABLE, chaves, constraints, INSERT, SELECT, WHERE, GROUP BY, JOIN e índices.'],
+    ['Preparando o Ambiente para a API', 'A BibliotecaAPI, o que é uma API REST, cliente e servidor, métodos HTTP, Postman e a estrutura do projeto.'],
+    ['Conectando o Node.js ao MySQL com mysql2', 'Pool de conexões, consultas, INSERT, UPDATE e DELETE, prepared statements contra SQL Injection e as camadas Model e Service.'],
+    ['Construindo a Primeira API REST', 'Express, o primeiro servidor, rotas, Express Router, controllers, req.body, req.params e req.query, middlewares e tratamento de erros.'],
+    ['CRUD Completo da BibliotecaAPI', 'Modelagem e tabelas do sistema, Create, Read, Update e Delete, empréstimos, validação com express-validator, paginação e filtros.'],
+    ['Autenticação com JWT', 'Hash de senhas com bcrypt, login, JSON Web Token, middleware de autenticação e controle de perfis.'],
+    ['Qualidade e Boas Práticas', 'Arquitetura em camadas, respostas padronizadas, logs, introdução aos testes automatizados, variáveis de ambiente e checklist.'],
+    ['Projeto Integrador', 'A BibliotecaAPI completa: estrutura de pastas, todos os endpoints, consumo com HTML e fetch(), como rodar do zero e como levar ao portfólio.'],
+  ].map(
+    ([titulo, descricao], i): Apostila => ({
+      id: `web2-node-cap${i + 1}`,
+      capitulo: i + 1,
+      grupo: 'Material complementar: Node.js, Express e MySQL',
+      titulo,
+      disciplinaId: 'programacao-e-design-para-web-ii',
+      descricao,
+    }),
+  ),
+  {
+    id: 'web2-node-apa',
+    rotulo: 'Apêndice A',
+    grupo: 'Material complementar: Node.js, Express e MySQL',
+    titulo: 'Referência Rápida',
+    disciplinaId: 'programacao-e-design-para-web-ii',
+    descricao: 'Os comandos SQL, npm, mysql2, métodos e status HTTP, JavaScript moderno e autenticação mais usados no livro, para consulta.',
+  },
+  {
+    id: 'web2-node-apb',
+    rotulo: 'Apêndice B',
+    grupo: 'Material complementar: Node.js, Express e MySQL',
+    titulo: 'Guia de Arquivos e Pacotes da BibliotecaAPI',
+    disciplinaId: 'programacao-e-design-para-web-ii',
+    descricao: 'Para que serve cada arquivo e pasta do projeto, o fluxo de uma requisição, os pacotes usados e o que nunca fazer.',
+  },
 ]

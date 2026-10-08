@@ -2,12 +2,14 @@
  "_sobre": "Alternativas reescritas para que a correta não seja sempre a mais longa. Chave: id da questão; dentro, letra -> novo texto. Aplicar com: python ferramentas/aplicar_ajustes_alternativas.py",
  "engsoft-cap1-q2": {
   "B": "O gerente está equivocado: a norma define processos de ciclo de vida comuns a qualquer modelo, seja Cascata, Ágil ou Espiral",
-  "C": "O gerente está correto, pois a norma só se aplica a projetos que seguem estritamente o Modelo Cascata, com fases sequenciais e documentação formal em cada etapa"
+  "C": "O gerente está correto, pois a norma só se aplica a projetos que seguem estritamente o Modelo Cascata, com fases sequenciais e documentação formal em cada etapa",
+  "resolucao": "a apostila (Seção 1.1) mostra que todos os modelos de ciclo de vida compartilham as mesmas atividades essenciais (requisitos, análise, design, implementação, testes, implantação e manutenção); o que muda é a ordem no tempo, a intensidade e a flexibilidade. A ISO/IEC/IEEE 12207 formaliza esse conjunto comum, então existe sim um denominador comum, e o gerente está equivocado. {{A}} contraria essa base comum, que é justamente o que permite comparar os modelos; {{C}} está errada porque nada restringe a norma ao Cascata; {{D}} nega a existência da própria norma citada no enunciado; {{E}} confunde: a 12207 trata de software, e sistemas com hardware são tema da ISO/IEC/IEEE 15288."
  },
  "engsoft-cap1-q3": {
   "B": "Modelo Espiral, pela ênfase em análise de riscos contínua a cada volta do ciclo de desenvolvimento",
   "C": "Modelo Incremental, pela entrega do sistema em múltiplas partes, cada uma passando por todas as fases",
-  "D": "Modelo Cascata, pela estrutura sequencial em que cada fase só começa após o fim da anterior"
+  "D": "Modelo Cascata, pela estrutura sequencial em que cada fase só começa após o fim da anterior",
+  "resolucao": "o caso descreve a definição do Cascata na Seção 1.1: requisitos concluídos e aprovados, depois design, código, testes do sistema inteiro e implantação, cada etapa encerrada antes da próxima, com uma única passagem por fase e uma única entrega no fim. {{A}} não serve porque não há iterações; {{B}} não serve porque não há voltas nem análise de riscos; {{C}} não serve porque o sistema é entregue inteiro, e não em partes; {{E}} não serve porque não há protótipos nem participação do usuário durante a construção."
  },
  "engsoft-cap1-q4": {
   "A": "Modelo Cascata, pois o projeto exige documentação formal, processo bem definido e aprovação de cada fase antes da seguinte",
@@ -39,14 +41,16 @@
  },
  "engsoft-cap2-q2": {
   "A": "Questionários para cada grupo de stakeholder, um de cada vez, sem encontros diretos, consolidando as respostas em um relatório final",
-  "D": "JAD (Workshops), uma sessão facilitada com todos os stakeholders juntos para negociar os requisitos"
+  "D": "JAD (Workshops), uma sessão facilitada com todos os stakeholders juntos para negociar os requisitos",
+  "resolucao": "o caso reproduz o \"ideal quando\" dos workshops na Seção 2.1: vários stakeholders com visões conflitantes (CEO, analistas de risco e clientes) e necessidade de consenso rápido. O JAD reúne todos numa sessão facilitada para negociar e resolver os conflitos. {{A}}: questionários servem para muitos usuários dispersos, e respostas isoladas não resolvem conflito; {{B}}: entrevistas levantam necessidades individuais, não negociam visões, e o próprio enunciado descarta meses de entrevistas; {{C}}: a observação ajuda quando o usuário não sabe explicar o que precisa, e aqui cada grupo sabe bem o que quer; {{E}}: protótipos servem a requisitos de interface, e feitos \"isoladamente\" não produzem consenso."
  },
  "engsoft-cap2-q3": {
   "A": "Card — o cartão de índice ou formato digital em que a história é registrada e priorizada no backlog",
   "C": "Confirmation — a verificação de que a história foi implementada conforme critérios testáveis"
  },
  "engsoft-cap2-q4": {
-  "C": "Could Have, pois é desejável, mas não crítico para o MVP"
+  "C": "Could Have, pois é desejável, mas não crítico para o MVP",
+  "resolucao": "pela tabela da Seção 2.2, Could Have é o desejável de menor impacto, que entra só se sobrar tempo e orçamento; num MVP de dois meses, o cliente compra sem o programa de fidelidade. {{A}}: Must Have é aquilo sem o qual o sistema não pode ser entregue (catálogo, carrinho, pagamento), e \"toda loja tem\" não é critério; {{B}}: é a distratora mais forte, mas Should Have é importante e tem um contorno, e a fidelidade nem faz parte do fluxo de compra; {{D}}: Won't Have é algo adiado e documentado para o futuro, não algo \"desnecessário\"; {{E}}: as quatro categorias do MoSCoW cobrem todos os requisitos."
  },
  "engsoft-cap2-q5": {
   "A": "Excelente: teleconferências são suficientes e documentar tudo num único e-mail torna o processo mais rápido e barato",
@@ -61,7 +65,8 @@
  "engsoft-cap2-q7": {
   "A": "Desempenho, pois o sistema está lento e os usuários levam muito tempo para completar a tarefa",
   "B": "Segurança, pois a interface não está protegida contra erros e acessos indevidos dos usuários",
-  "C": "Usabilidade, pois o sistema é difícil de aprender e usar, gerando lentidão e erros dos usuários"
+  "C": "Usabilidade, pois o sistema é difícil de aprender e usar, gerando lentidão e erros dos usuários",
+  "resolucao": "o requisito funcional foi atendido (dá para agendar), mas 12 cliques, ícones confusos e 20 minutos de tentativa e erro atingem a Usabilidade, que a Seção 2.4 define como facilidade de aprendizado, eficiência e satisfação; compare com o exemplo da apostila, de uma compra em até 5 minutos sem treinamento. {{A}}: desempenho é tempo de resposta e uso de recursos, e quem demora é o usuário, não o sistema; {{B}}: segurança trata de acesso, criptografia e autenticação, ausentes no caso; {{D}}: confiabilidade é disponibilidade e tolerância a falhas, e o sistema não falha; {{E}}: conformidade é aderência a leis, e o caso não envolve exigência legal."
  },
  "engsoft-cap2-q8": {
   "A": "Apenas verificabilidade — não há forma de testar \"seguro\" e \"rápido\", mas os requisitos são consistentes entre si",
@@ -76,7 +81,8 @@
  "engsoft-cap2-q10": {
   "B": "Violações de requisitos não funcionais de conformidade (LGPD), que deveriam ter sido especificados desde o início",
   "C": "Problemas de design de banco de dados, que não têm relação com a engenharia de requisitos do sistema",
-  "E": "Problemas que só aparecem em sistemas muito grandes e com muitos usuários, não sendo aplicáveis a startups em fase inicial"
+  "E": "Problemas que só aparecem em sistemas muito grandes e com muitos usuários, não sendo aplicáveis a startups em fase inicial",
+  "resolucao": "criptografia, registro de consentimento e mecanismo de exclusão são exigências da LGPD, e a Seção 2.4 classifica a aderência à lei como requisito não funcional de Conformidade; ignorar RNFs gera sistemas que funcionam, mas são ilegais, por isso deveriam estar especificados desde os requisitos. {{A}}: não são requisitos funcionais, e corrigi-los tarde é caro, não rotineiro; {{C}}: RNFs nascem na engenharia de requisitos, com a lei como stakeholder, não no projeto do banco; {{D}}: a criptografia é Segurança, mas quem a exige aqui é a LGPD, e as duas categorias estão ligadas; {{E}}: a LGPD vale para qualquer organização que trate dados pessoais, de qualquer porte."
  },
  "engsoft-cap3-q3": {
   "A": "A classe viola o Princípio da Responsabilidade Única: tem vários motivos para mudar e deveria ser dividida",
@@ -85,12 +91,13 @@
  },
  "engsoft-cap3-q4": {
   "C": "Um problema típico de microsserviços, relacionado à consistência de dados entre serviços que mantêm bancos separados",
-  "D": "Uma limitação da arquitetura em camadas: camadas que só repassam chamadas, gerando latência sem agregar valor"
+  "D": "Uma limitação da arquitetura em camadas: camadas que só repassam chamadas, gerando latência sem agregar valor",
+  "resolucao": "a Seção 3.3 aponta como limitação da arquitetura em camadas o risco de camadas que só repassam chamadas, sem agregar valor, gerando latência: é o antipadrão que Richards chama de \"architecture sinkhole\". {{A}} inverte o conceito, pois a vantagem das camadas é cada uma ter um papel próprio; {{B}} fala de MVC, outro padrão, e o problema não é falta de Controller; {{C}} trata de microsserviços, que não existem no caso; {{E}} trata de arquitetura orientada a eventos, e não há barramento nem fila de mensagens."
  },
  "engsoft-cap3-q5": {
   "B": "Pouco adequada: a complexidade operacional dos microsserviços não é comportada por uma equipe de quatro pessoas",
   "E": "Adequada, desde que os doze serviços compartilhem um único banco com as mesmas tabelas, evitando problemas de consistência",
-  "resolucao": "Microsserviços permitem escalabilidade independente e times autônomos, mas cobram um alto custo operacional. Em um sistema de porte moderado, com equipe pequena e sem infraestrutura dedicada, esse custo não se paga — a mesma conclusão do estudo de caso da apostila. Fazer os doze serviços compartilharem um único banco ainda eliminaria a independência que justifica o estilo."
+  "resolucao": "a Seção 3.3 lista a complexidade operacional dos microsserviços (monitoramento distribuído, consistência entre bancos, infraestrutura), e o estudo de caso do capítulo conclui que, com equipe pequena, a arquitetura em camadas é a mais adequada; a escola também não precisa escalar partes separadamente. {{A}}: nenhum padrão é sempre o melhor, pois depende do contexto; {{C}}: é o contrário, pois microsserviços exigem mais infraestrutura; {{D}}: chega ao veredito certo pelo motivo errado, pois o próprio texto de Lewis e Fowler cita a comunicação por API HTTP; {{E}}: um banco único compartilhado acaba com a independência que define o estilo."
  },
  "engsoft-cap3-q6": {
   "E": "O caso ilustra uma limitação da arquitetura orientada a eventos: o fluxo de dados fica difícil de rastrear e depurar",
@@ -2116,5 +2123,28 @@
  "qualidade-cap9-m10": {
   "C": "Ferramentas e pentests têm lacunas, inclusive entre uma avaliação e outra; faltam treinamento em código seguro, gestão de segredos, hardening, monitoramento de anomalias, WAF, resposta a incidentes e gestão de patches.",
   "B": "Falta só um pentest semestral para a segurança ficar completa."
+ },
+ "engsoft-cap6-f1": {
+  "D": "QA foca no processo e na prevenção de defeitos; QC foca no produto e na identificação de defeitos."
+ },
+ "engsoft-cap6-f2": {
+  "B": "Os defeitos em relação ao tamanho do software, como defeitos por mil linhas de código.",
+  "C": "O tempo médio necessário para corrigir os defeitos encontrados em produção pela equipe de suporte."
+ },
+ "engsoft-cap6-f3": {
+  "C": "O número de caminhos de execução independentes, que indica a complexidade estrutural.",
+  "B": "Avaliar a eficiência do algoritmo em termos de tempo de execução e de consumo de memória."
+ },
+ "engsoft-cap6-f4": {
+  "C": "A organização gerencia os processos com métricas e controle estatístico."
+ },
+ "engsoft-cap6-f5": {
+  "B": "O custo de corrigir um defeito cresce quanto mais tarde ele é encontrado no ciclo."
+ },
+ "engsoft-cap1-q1": {
+  "respostaEsperada": "a) O risco é o erro só aparecer tarde, quando já é caro. No Cascata, cada fase só começa quando a anterior termina, e a validação acontece apenas nos Testes. O requisito mal interpretado na primeira fase atravessou Análise, Design e Implementação sem ser percebido, e o modelo não prevê retorno às fases anteriores. Também vale citar a baixa flexibilidade a mudanças e o cliente participando só no início e no fim (Seção 1.3).\nb) A fase de Requisitos é onde os erros são mais baratos de encontrar e mais caros de deixar passar. Aqui o erro nasceu nela e só foi descoberto nos Testes: sobre o entendimento errado já foram construídos modelo, arquitetura, código e casos de teste, e tudo isso precisa ser refeito. Com seis meses gastos, prazo de 18 meses e orçamento fixo, não há folga para o retrabalho.\nc) Cascata: o pior cenário, pois sem retorno entre fases a correção obriga a refazer o caminho desde os Requisitos, com alto impacto em prazo e custo. Incremental: impacto moderado, pois o erro fica contido no incremento em que está e a correção entra num incremento seguinte. Ágil: menor impacto, pois com participação contínua do cliente o erro provavelmente teria aparecido em semanas, e a mudança entraria no backlog da próxima iteração.\nd) 1) Requisitos muito bem definidos e estáveis, com pouca chance de mudança, como um sistema embarcado de escopo fechado: sem mudanças, a fraqueza do modelo pesa pouco, e vale a simplicidade de gerenciamento. 2) Contratos formais rígidos, como projetos governamentais com licitação e preço fechado, que exigem a documentação formal e a estimativa precisa de custo e prazo do Cascata. Projetos pequenos e curtos também servem. Atenção: \"equipe pequena\" sozinha não justifica o Cascata, pois a apostila associa equipes pequenas aos modelos ágeis."
+ },
+ "engsoft-cap3-q8": {
+  "resolucao": "pela tabela da apostila (Seções 1.2 e 3.4), I é corretiva (defeito encontrado após a implantação), II é adaptativa (mudança no ambiente externo, como um novo sistema operacional), III é perfectiva (funcionalidade pedida pelos usuários) e IV é preventiva (refatoração sem mudar o comportamento, reduzindo o débito técnico). {{A}} acerta I, mas troca II e III; {{B}} inverte I e II; {{C}} acerta I e II, mas troca III e IV; {{E}} inverte as pontas, chamando a correção de preventiva e a refatoração de corretiva."
  }
 }

@@ -1,0 +1,601 @@
+{
+ "numero": 10,
+ "titulo": "CRUD Completo da BibliotecaAPI",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "10-1-modelando-o-sistema-completo",
+   "texto": "10.1 Modelando o Sistema Completo"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, trabalhamos com uma versão simplificada da tabela <code>livros</code>, relacionada apenas a <code>autores</code>. Chegou o momento de completar o modelo de dados da BibliotecaAPI, incluindo todas as entidades que um sistema de biblioteca real precisa: <strong>autores</strong>, <strong>editoras</strong>, <strong>categorias</strong>, <strong>usuários</strong> e <strong>empréstimos</strong>."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Entidade",
+    "Representa"
+   ],
+   "linhas": [
+    [
+     "Autores",
+     "Escritores das obras"
+    ],
+    [
+     "Editoras",
+     "Empresas responsáveis pela publicação"
+    ],
+    [
+     "Categorias",
+     "Classificação temática dos livros"
+    ],
+    [
+     "Usuários",
+     "Leitores e bibliotecários cadastrados no sistema"
+    ],
+    [
+     "Livros",
+     "O acervo em si"
+    ],
+    [
+     "Empréstimos",
+     "Histórico de retiradas e devoluções"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Diagrama Entidade-Relacionamento (DER)"
+  },
+  {
+   "t": "p",
+   "html": "Antes de escrever qualquer <code>CREATE TABLE</code>, vale visualizar como essas seis entidades se conectam:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/node/capitulo-10a_diagrama1.png",
+   "alt": "capitulo 10a diagrama1"
+  },
+  {
+   "t": "p",
+   "html": "Cada seta representa um relacionamento <strong>1:N</strong> (um-para-muitos): um autor pode ter vários livros, mas cada livro pertence a um único autor principal; um usuário pode realizar vários empréstimos, mas cada empréstimo pertence a um único usuário."
+  },
+  {
+   "t": "h2",
+   "id": "10-2-criando-as-tabelas",
+   "texto": "10.2 Criando as Tabelas"
+  },
+  {
+   "t": "p",
+   "html": "A ordem de criação importa: uma tabela que referencia outra por <code>FOREIGN KEY</code> só pode ser criada <strong>depois</strong> da tabela referenciada. A ordem correta aqui é: Autores → Editoras → Categorias → Usuários → Livros → Empréstimos."
+  },
+  {
+   "t": "h3",
+   "texto": "Autores"
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE TABLE autores (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    nome VARCHAR(150) NOT NULL,\n    nacionalidade VARCHAR(80),\n    data_nascimento DATE,\n    biografia TEXT,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n        ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB;\n\nCREATE INDEX idx_autores_nome ON autores(nome);"
+  },
+  {
+   "t": "h3",
+   "texto": "Editoras"
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE TABLE editoras (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    nome VARCHAR(150) NOT NULL,\n    cidade VARCHAR(100),\n    pais VARCHAR(80),\n    site VARCHAR(255),\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n        ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB;"
+  },
+  {
+   "t": "h3",
+   "texto": "Categorias"
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE TABLE categorias (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    nome VARCHAR(100) NOT NULL UNIQUE,\n    descricao TEXT,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n        ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB;"
+  },
+  {
+   "t": "h3",
+   "texto": "Usuários"
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE TABLE usuarios (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    nome VARCHAR(150) NOT NULL,\n    email VARCHAR(150) NOT NULL UNIQUE,\n    senha VARCHAR(255) NOT NULL,\n    telefone VARCHAR(20),\n    perfil ENUM('LEITOR', 'BIBLIOTECARIO', 'ADMIN') DEFAULT 'LEITOR',\n    ativo BOOLEAN DEFAULT TRUE,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n        ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB;\n\nCREATE INDEX idx_usuarios_perfil ON usuarios(perfil);"
+  },
+  {
+   "t": "p",
+   "html": "Note que a coluna <code>senha</code> tem 255 caracteres – espaço suficiente para armazenar o <em>hash</em> gerado pelo bcrypt, que vamos implementar no Capítulo 11. Nunca armazenamos a senha em texto puro."
+  },
+  {
+   "t": "h3",
+   "texto": "Livros"
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE TABLE livros (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    titulo VARCHAR(200) NOT NULL,\n    isbn VARCHAR(20) UNIQUE,\n    ano_publicacao YEAR,\n    quantidade INT DEFAULT 1,\n    disponivel BOOLEAN DEFAULT TRUE,\n    autor_id INT NOT NULL,\n    editora_id INT NOT NULL,\n    categoria_id INT NOT NULL,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n        ON UPDATE CURRENT_TIMESTAMP,\n    CONSTRAINT fk_livro_autor FOREIGN KEY (autor_id)\n        REFERENCES autores(id),\n    CONSTRAINT fk_livro_editora FOREIGN KEY (editora_id)\n        REFERENCES editoras(id),\n    CONSTRAINT fk_livro_categoria FOREIGN KEY (categoria_id)\n        REFERENCES categorias(id)\n) ENGINE=InnoDB;\n\nCREATE INDEX idx_livros_titulo ON livros(titulo);\nCREATE INDEX idx_livros_isbn ON livros(isbn);"
+  },
+  {
+   "t": "p",
+   "html": "Essa é a primeira tabela do livro com três chaves estrangeiras – ela é o \"centro\" do banco, conectando autores, editoras e categorias."
+  },
+  {
+   "t": "h3",
+   "texto": "Empréstimos"
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE TABLE emprestimos (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    usuario_id INT NOT NULL,\n    livro_id INT NOT NULL,\n    data_emprestimo DATE NOT NULL,\n    data_prevista DATE NOT NULL,\n    data_devolucao DATE,\n    status ENUM('EMPRESTADO', 'DEVOLVIDO', 'ATRASADO')\n        DEFAULT 'EMPRESTADO',\n    observacao TEXT,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n        ON UPDATE CURRENT_TIMESTAMP,\n    CONSTRAINT fk_emprestimo_usuario FOREIGN KEY (usuario_id)\n        REFERENCES usuarios(id),\n    CONSTRAINT fk_emprestimo_livro FOREIGN KEY (livro_id)\n        REFERENCES livros(id)\n) ENGINE=InnoDB;\n\nCREATE INDEX idx_emprestimos_status ON emprestimos(status);"
+  },
+  {
+   "t": "h2",
+   "id": "10-3-populando-o-banco-com-dados-iniciais",
+   "texto": "10.3 Populando o Banco com Dados Iniciais"
+  },
+  {
+   "t": "p",
+   "html": "Com as seis tabelas criadas, vamos inserir alguns dados para testar a API ao longo deste capítulo – respeitando sempre a mesma ordem de dependência usada na criação:"
+  },
+  {
+   "t": "codigo",
+   "texto": "INSERT INTO autores (nome, nacionalidade, data_nascimento) VALUES\n('Machado de Assis', 'Brasil', '1839-06-21'),\n('Clarice Lispector', 'Brasil', '1920-12-10'),\n('George Orwell', 'Reino Unido', '1903-06-25');\n\nINSERT INTO editoras (nome, cidade, pais) VALUES\n('Companhia das Letras', 'São Paulo', 'Brasil'),\n('Novatec', 'São Paulo', 'Brasil');\n\nINSERT INTO categorias (nome) VALUES\n('Literatura'), ('Programação'), ('Banco de Dados');\n\nINSERT INTO usuarios (nome, email, senha, perfil) VALUES\n('Administrador', 'admin@biblioteca.com', '$2b$hashadmin', 'ADMIN'),\n('Carlos Silva', 'carlos@email.com', '$2b$hash1', 'LEITOR');\n\nINSERT INTO livros (titulo, isbn, ano_publicacao, autor_id, editora_id, categoria_id) VALUES\n('Dom Casmurro', '9788535902773', 1899, 1, 1, 1),\n('1984', '9780451524935', 1949, 3, 1, 1);"
+  },
+  {
+   "t": "p",
+   "html": "Repare que os hashes de senha (<code>$2b$hash1</code>) são fictícios por enquanto – vamos gerar hashes reais com bcrypt no Capítulo 11."
+  },
+  {
+   "t": "p",
+   "html": "Para validar que os relacionamentos foram criados corretamente, uma consulta com <code>JOIN</code> encadeado (Capítulo 6) é o melhor teste:"
+  },
+  {
+   "t": "codigo",
+   "texto": "SELECT l.titulo, a.nome AS autor, e.nome AS editora, c.nome AS categoria\nFROM livros l\nINNER JOIN autores a ON l.autor_id = a.id\nINNER JOIN editoras e ON l.editora_id = e.id\nINNER JOIN categorias c ON l.categoria_id = c.id;"
+  },
+  {
+   "t": "p",
+   "html": "Se essa consulta retornar os livros com o nome do autor, da editora e da categoria corretamente combinados, o banco está pronto – e podemos seguir para a próxima parte deste capítulo, onde construiremos as rotas de <strong>Create</strong> e <strong>Read</strong> para cada uma dessas entidades."
+  },
+  {
+   "t": "h2",
+   "id": "10-4-o-padrao-crud-create",
+   "texto": "10.4 O Padrão CRUD: Create"
+  },
+  {
+   "t": "p",
+   "html": "Com o banco completo (Parte 1), vamos agora implementar as rotas de cada entidade seguindo exatamente a arquitetura em camadas dos Capítulos 8 e 9. Começamos pelo recurso mais completo – <strong>livros</strong> – e depois replicamos o mesmo padrão, de forma mais direta, para as demais entidades."
+  },
+  {
+   "t": "h3",
+   "texto": "Model"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/models/livroModel.js\nconst db = require(\"../config/db\");\n\nasync function inserir(livro) {\n    const sql = `\n        INSERT INTO livros\n        (titulo, isbn, ano_publicacao, autor_id, editora_id, categoria_id)\n        VALUES (?, ?, ?, ?, ?, ?)\n    `;\n\n    const valores = [\n        livro.titulo, livro.isbn, livro.ano_publicacao,\n        livro.autor_id, livro.editora_id, livro.categoria_id\n    ];\n\n    const [resultado] = await db.execute(sql, valores);\n    return { id: resultado.insertId, ...livro };\n}\n\nmodule.exports = { inserir };"
+  },
+  {
+   "t": "h3",
+   "texto": "Service"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/services/livroService.js\nconst livroModel = require(\"../models/livroModel\");\n\nasync function cadastrarLivro(dados) {\n    if (!dados.titulo || !dados.autor_id) {\n        const erro = new Error(\"Título e autor são obrigatórios.\");\n        erro.status = 400;\n        throw erro;\n    }\n\n    return await livroModel.inserir(dados);\n}\n\nmodule.exports = { cadastrarLivro };"
+  },
+  {
+   "t": "h3",
+   "texto": "Controller e Route"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/controllers/livroController.js\nasync function cadastrar(req, res, next) {\n    try {\n        const livro = await livroService.cadastrarLivro(req.body);\n        res.status(201).json(livro);\n    } catch (erro) {\n        next(erro);\n    }\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/routes/livroRoutes.js\nrouter.post(\"/\", livroController.cadastrar);"
+  },
+  {
+   "t": "p",
+   "html": "Testando no Postman: método <code>POST</code>, URL <code>http://localhost:3000/livros</code>, corpo em JSON com <code>titulo</code>, <code>isbn</code>, <code>ano_publicacao</code>, <code>autor_id</code>, <code>editora_id</code> e <code>categoria_id</code>. A resposta esperada é <code>201 Created</code>, com o livro recém-criado (incluindo o <code>id</code> gerado)."
+  },
+  {
+   "t": "h2",
+   "id": "10-5-o-padrao-crud-read",
+   "texto": "10.5 O Padrão CRUD: Read"
+  },
+  {
+   "t": "h3",
+   "texto": "Listando todos os registros"
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroModel.js\nasync function listarTodos() {\n    const sql = `\n        SELECT l.id, l.titulo, l.isbn, l.ano_publicacao, l.disponivel,\n               a.nome AS autor, e.nome AS editora, c.nome AS categoria\n        FROM livros l\n        INNER JOIN autores a ON l.autor_id = a.id\n        INNER JOIN editoras e ON l.editora_id = e.id\n        INNER JOIN categorias c ON l.categoria_id = c.id\n    `;\n    const [rows] = await db.query(sql);\n    return rows;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare que a listagem já retorna o <strong>nome</strong> do autor, da editora e da categoria – não apenas os IDs – graças ao <code>JOIN</code> que aprendemos no Capítulo 6. Isso evita que o cliente da API precise fazer múltiplas requisições só para montar uma tela de listagem."
+  },
+  {
+   "t": "h3",
+   "texto": "Buscando um registro específico"
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroModel.js\nasync function buscarPorId(id) {\n    const sql = `\n        SELECT l.*, a.nome AS autor, e.nome AS editora, c.nome AS categoria\n        FROM livros l\n        INNER JOIN autores a ON l.autor_id = a.id\n        INNER JOIN editoras e ON l.editora_id = e.id\n        INNER JOIN categorias c ON l.categoria_id = c.id\n        WHERE l.id = ?\n    `;\n    const [rows] = await db.execute(sql, [id]);\n    return rows[0];\n}"
+  },
+  {
+   "t": "p",
+   "html": "No Controller, tratamos o caso em que o livro não existe com o código <code>404</code>, que já vimos no Capítulo 9:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroController.js\nasync function buscarPorId(req, res, next) {\n    try {\n        const livro = await livroService.buscarPorId(req.params.id);\n\n        if (!livro) {\n            return res.status(404).json({ erro: \"Livro não encontrado.\" });\n        }\n\n        res.json(livro);\n    } catch (erro) {\n        next(erro);\n    }\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroRoutes.js\nrouter.get(\"/\", livroController.listar);\nrouter.get(\"/:id\", livroController.buscarPorId);"
+  },
+  {
+   "t": "h2",
+   "id": "10-6-aplicando-o-padrao-as-demais-entidades",
+   "texto": "10.6 Aplicando o Padrão às Demais Entidades"
+  },
+  {
+   "t": "p",
+   "html": "O mesmo padrão – Model → Service → Controller → Route – se repete para <strong>autores</strong>, <strong>editoras</strong>, <strong>categorias</strong> e <strong>usuários</strong>. Como essas tabelas não têm chaves estrangeiras (exceto <code>usuarios</code>, que veremos com atenção especial no Capítulo 11), seus Models ficam ainda mais diretos:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/models/autorModel.js\nconst db = require(\"../config/db\");\n\nasync function listarTodos() {\n    const [rows] = await db.query(\"SELECT * FROM autores\");\n    return rows;\n}\n\nasync function inserir(autor) {\n    const sql = \"INSERT INTO autores (nome, nacionalidade, data_nascimento) VALUES (?, ?, ?)\";\n    const [resultado] = await db.execute(sql, [autor.nome, autor.nacionalidade, autor.data_nascimento]);\n    return { id: resultado.insertId, ...autor };\n}\n\nmodule.exports = { listarTodos, inserir };"
+  },
+  {
+   "t": "p",
+   "html": "Os arquivos <code>editoraModel.js</code> e <code>categoriaModel.js</code> seguem exatamente essa mesma estrutura, trocando apenas o nome da tabela e das colunas."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção especial: usuários",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A listagem de usuários <strong>nunca</strong> deve retornar a coluna <code>senha</code> – nem mesmo o <em>hash</em>. Sempre selecione as colunas explicitamente:"
+    },
+    {
+     "t": "codigo",
+     "texto": "async function listarTodos() {\n    const sql = \"SELECT id, nome, email, perfil, ativo FROM usuarios\";\n    const [rows] = await db.query(sql);\n    return rows;\n}"
+    },
+    {
+     "t": "p",
+     "html": "Usar <code>SELECT *</code> aqui seria um erro de segurança – mesmo com o <em>hash</em> da senha (e não a senha em texto puro), ela nunca deveria trafegar até o cliente sem necessidade."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Todas as rotas de <strong>Create</strong> e <strong>Read</strong> construídas até aqui:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Método",
+    "Rota",
+    "Ação"
+   ],
+   "linhas": [
+    [
+     "<code>GET</code>",
+     "<code>/autores</code>",
+     "Listar autores"
+    ],
+    [
+     "<code>POST</code>",
+     "<code>/autores</code>",
+     "Cadastrar autor"
+    ],
+    [
+     "<code>GET</code>",
+     "<code>/editoras</code>",
+     "Listar editoras"
+    ],
+    [
+     "<code>POST</code>",
+     "<code>/editoras</code>",
+     "Cadastrar editora"
+    ],
+    [
+     "<code>GET</code>",
+     "<code>/categorias</code>",
+     "Listar categorias"
+    ],
+    [
+     "<code>POST</code>",
+     "<code>/categorias</code>",
+     "Cadastrar categoria"
+    ],
+    [
+     "<code>GET</code>",
+     "<code>/usuarios</code>",
+     "Listar usuários (sem senha)"
+    ],
+    [
+     "<code>GET</code>",
+     "<code>/livros</code>",
+     "Listar livros (com JOIN)"
+    ],
+    [
+     "<code>GET</code>",
+     "<code>/livros/:id</code>",
+     "Buscar livro por id"
+    ],
+    [
+     "<code>POST</code>",
+     "<code>/livros</code>",
+     "Cadastrar livro"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "10-7-o-padrao-crud-update",
+   "texto": "10.7 O Padrão CRUD: Update"
+  },
+  {
+   "t": "p",
+   "html": "Seguindo a mesma arquitetura das partes anteriores, o <code>Update</code> distingue duas situações: substituição completa do recurso (<code>PUT</code>) e atualização parcial (<code>PATCH</code>) – diferença que já discutimos no Capítulo 7."
+  },
+  {
+   "t": "h3",
+   "texto": "Model"
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroModel.js\nasync function atualizar(id, dados) {\n    const sql = `\n        UPDATE livros\n        SET titulo = ?, isbn = ?, ano_publicacao = ?,\n            autor_id = ?, editora_id = ?, categoria_id = ?\n        WHERE id = ?\n    `;\n\n    const valores = [\n        dados.titulo, dados.isbn, dados.ano_publicacao,\n        dados.autor_id, dados.editora_id, dados.categoria_id, id\n    ];\n\n    const [resultado] = await db.execute(sql, valores);\n    return resultado.affectedRows > 0;\n}"
+  },
+  {
+   "t": "h3",
+   "texto": "Controller e Route"
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroController.js\nasync function atualizar(req, res, next) {\n    try {\n        const atualizado = await livroService.atualizarLivro(req.params.id, req.body);\n\n        if (!atualizado) {\n            return res.status(404).json({ erro: \"Livro não encontrado.\" });\n        }\n\n        res.status(200).json({ mensagem: \"Livro atualizado com sucesso.\" });\n    } catch (erro) {\n        next(erro);\n    }\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroRoutes.js\nrouter.put(\"/:id\", livroController.atualizar);"
+  },
+  {
+   "t": "p",
+   "html": "Repare que reaproveitamos exatamente o <code>affectedRows</code> que conhecemos no Capítulo 8 para confirmar se o registro existia – se <code>affectedRows</code> for <code>0</code>, o <code>id</code> informado não corresponde a nenhum livro, e retornamos <code>404</code>."
+  },
+  {
+   "t": "h3",
+   "texto": "Atualização parcial com PATCH"
+  },
+  {
+   "t": "p",
+   "html": "Uma atualização parcial de verdade só deveria alterar os campos que o cliente realmente enviou – construir esse SQL \"dinamicamente\" é um pouco mais trabalhoso:"
+  },
+  {
+   "t": "codigo",
+   "texto": "async function atualizarParcial(id, dados) {\n    const campos = Object.keys(dados);\n\n    if (campos.length === 0) {\n        const erro = new Error(\"Nenhum campo para atualizar.\");\n        erro.status = 400;\n        throw erro;\n    }\n\n    const sets = campos.map(campo => `${campo} = ?`).join(\", \");\n    const valores = campos.map(campo => dados[campo]);\n\n    const sql = `UPDATE livros SET ${sets} WHERE id = ?`;\n    const [resultado] = await db.execute(sql, [...valores, id]);\n\n    return resultado.affectedRows > 0;\n}"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Como os nomes dos campos vêm de <code>Object.keys(dados)</code> – ou seja, das <strong>chaves</strong> do JSON enviado pelo cliente, não dos <strong>valores</strong> – essa construção continua segura contra SQL Injection: os valores em si sempre passam pelo <code>?</code> parametrizado. Nunca inverta essa lógica e monte nomes de coluna a partir de valores livres digitados pelo usuário."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "10-8-o-padrao-crud-delete",
+   "texto": "10.8 O Padrão CRUD: Delete"
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroModel.js\nasync function remover(id) {\n    const [resultado] = await db.execute(\n        \"DELETE FROM livros WHERE id = ?\",\n        [id]\n    );\n    return resultado.affectedRows > 0;\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroController.js\nasync function remover(req, res, next) {\n    try {\n        const removido = await livroService.removerLivro(req.params.id);\n\n        if (!removido) {\n            return res.status(404).json({ erro: \"Livro não encontrado.\" });\n        }\n\n        res.status(204).send();\n    } catch (erro) {\n        next(erro);\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "O código <code>204 No Content</code> (Capítulo 9) indica sucesso sem necessidade de retornar um corpo na resposta – é o código mais adequado para uma exclusão bem-sucedida."
+  },
+  {
+   "t": "p",
+   "html": "Antes de excluir um livro de verdade, vale relembrar a técnica de <strong>Soft Delete</strong> do Capítulo 8: em vez de <code>DELETE FROM livros</code>, um sistema de biblioteca real provavelmente prefere <code>UPDATE livros SET ativo = FALSE</code>, preservando o título no histórico mesmo depois de retirado de circulação."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Método",
+    "Rota",
+    "Ação"
+   ],
+   "linhas": [
+    [
+     "<code>PUT</code>",
+     "<code>/livros/:id</code>",
+     "Atualizar livro (completo)"
+    ],
+    [
+     "<code>PATCH</code>",
+     "<code>/livros/:id</code>",
+     "Atualizar livro (parcial)"
+    ],
+    [
+     "<code>DELETE</code>",
+     "<code>/livros/:id</code>",
+     "Remover livro"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O mesmo padrão de <code>Update</code> e <code>Delete</code> se replica, de forma direta, para autores, editoras e categorias – trocando apenas tabela e colunas, exatamente como fizemos com Create e Read na Parte 2."
+  },
+  {
+   "t": "h2",
+   "id": "10-9-registrando-emprestimos",
+   "texto": "10.9 Registrando Empréstimos"
+  },
+  {
+   "t": "p",
+   "html": "A entidade <code>emprestimos</code> é diferente das demais: cadastrar um empréstimo não é uma simples inserção – envolve uma <strong>regra de negócio</strong> real, que só faz sentido na camada Service."
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/models/emprestimoModel.js\nasync function verificarDisponibilidade(livroId) {\n    const [rows] = await db.execute(\n        \"SELECT disponivel FROM livros WHERE id = ?\",\n        [livroId]\n    );\n    return rows[0]?.disponivel === 1;\n}\n\nasync function inserir(emprestimo) {\n    const sql = `\n        INSERT INTO emprestimos (usuario_id, livro_id, data_emprestimo, data_prevista)\n        VALUES (?, ?, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 15 DAY))\n    `;\n    const [resultado] = await db.execute(sql, [emprestimo.usuario_id, emprestimo.livro_id]);\n    return { id: resultado.insertId, ...emprestimo };\n}\n\nasync function marcarIndisponivel(livroId) {\n    await db.execute(\"UPDATE livros SET disponivel = FALSE WHERE id = ?\", [livroId]);\n}\n\nmodule.exports = { verificarDisponibilidade, inserir, marcarIndisponivel };"
+  },
+  {
+   "t": "p",
+   "html": "É na <strong>Service</strong> que essas três operações se combinam em uma única regra de negócio – e é exatamente esse tipo de decisão que, como vimos no Capítulo 7, não pertence ao Model:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/services/emprestimoService.js\nconst emprestimoModel = require(\"../models/emprestimoModel\");\n\nasync function registrarEmprestimo(dados) {\n    const disponivel = await emprestimoModel.verificarDisponibilidade(dados.livro_id);\n\n    if (!disponivel) {\n        const erro = new Error(\"Livro indisponível para empréstimo.\");\n        erro.status = 400;\n        throw erro;\n    }\n\n    const emprestimo = await emprestimoModel.inserir(dados);\n    await emprestimoModel.marcarIndisponivel(dados.livro_id);\n\n    return emprestimo;\n}\n\nmodule.exports = { registrarEmprestimo };"
+  },
+  {
+   "t": "p",
+   "html": "Note o fluxo: primeiro verificamos a regra de negócio (o livro está disponível?), só então inserimos o empréstimo, e por fim atualizamos a disponibilidade do livro – três operações no banco, coordenadas por uma única função de Service. O Controller e a Route seguem exatamente o mesmo formato que já vimos:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// emprestimoController.js\nasync function registrar(req, res, next) {\n    try {\n        const emprestimo = await emprestimoService.registrarEmprestimo(req.body);\n        res.status(201).json(emprestimo);\n    } catch (erro) {\n        next(erro);\n    }\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// emprestimoRoutes.js\nrouter.post(\"/\", emprestimoController.registrar);"
+  },
+  {
+   "t": "h3",
+   "texto": "Registrando a devolução"
+  },
+  {
+   "t": "codigo",
+   "texto": "async function registrarDevolucao(emprestimoId, livroId) {\n    await db.execute(\n        `UPDATE emprestimos SET status = 'DEVOLVIDO', data_devolucao = CURDATE()\n         WHERE id = ?`,\n        [emprestimoId]\n    );\n\n    await db.execute(\n        \"UPDATE livros SET disponivel = TRUE WHERE id = ?\",\n        [livroId]\n    );\n}"
+  },
+  {
+   "t": "h2",
+   "id": "10-10-validacao-de-dados-com-express-validator",
+   "texto": "10.10 Validação de Dados com express-validator"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, nossa validação se resumia a verificações manuais dentro da Service, como <code>if (!dados.titulo)</code>. Isso funciona, mas se torna repetitivo e difícil de manter conforme a API cresce. O pacote <strong>express-validator</strong> oferece uma forma declarativa de validar e higienizar dados recebidos pelo Express."
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install express-validator"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/validators/livroValidator.js\nconst { body } = require(\"express-validator\");\n\nconst validarLivro = [\n    body(\"titulo\")\n        .notEmpty().withMessage(\"O título é obrigatório.\"),\n\n    body(\"autor_id\")\n        .isInt().withMessage(\"autor_id deve ser um número inteiro.\"),\n\n    body(\"ano_publicacao\")\n        .optional()\n        .isInt({ min: 1500, max: 2100 })\n        .withMessage(\"Ano de publicação inválido.\")\n];\n\nmodule.exports = validarLivro;"
+  },
+  {
+   "t": "p",
+   "html": "Esse validador é aplicado <strong>antes</strong> do Controller, como mais um middleware na cadeia da rota – seguindo a mesma convenção de middlewares por rota que adotamos desde o Capítulo 9:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroRoutes.js\nconst { validationResult } = require(\"express-validator\");\nconst validarLivro = require(\"../validators/livroValidator\");\n\nfunction tratarValidacao(req, res, next) {\n    const erros = validationResult(req);\n\n    if (!erros.isEmpty()) {\n        return res.status(400).json({ sucesso: false, erros: erros.array() });\n    }\n\n    next();\n}\n\nrouter.post(\"/\", validarLivro, tratarValidacao, livroController.cadastrar);"
+  },
+  {
+   "t": "p",
+   "html": "Se o cliente enviar dados inválidos, a requisição é interrompida <strong>antes</strong> de chegar ao Controller – e, portanto, antes de qualquer consulta ao banco – retornando uma lista com todos os problemas encontrados:"
+  },
+  {
+   "t": "codigo",
+   "texto": "{\n    \"sucesso\": false,\n    \"erros\": [\n        { \"msg\": \"O título é obrigatório.\", \"path\": \"titulo\" }\n    ]\n}"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Boas práticas",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Valide <strong>sempre</strong> no servidor, mesmo que o cliente (um formulário web, por exemplo) já valide os mesmos campos. A validação no navegador melhora a experiência do usuário, mas nunca substitui a validação no servidor – requisições podem ser enviadas diretamente para a API, por qualquer ferramenta, ignorando completamente o formulário."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "10-11-paginacao-ordenacao-e-filtros",
+   "texto": "10.11 Paginação, Ordenação e Filtros"
+  },
+  {
+   "t": "p",
+   "html": "Uma biblioteca com 80 mil livros não pode responder <code>GET /livros</code> devolvendo os 80 mil registros de uma vez – o <code>LIMIT</code>/<code>OFFSET</code> que aprendemos no Capítulo 6 é exatamente a ferramenta que faltava para resolver isso em uma rota real."
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroController.js\nasync function listar(req, res, next) {\n    try {\n        const page = parseInt(req.query.page) || 1;\n        const limit = Math.min(parseInt(req.query.limit) || 10, 100);\n\n        const resultado = await livroService.listarLivros(page, limit);\n        res.json(resultado);\n    } catch (erro) {\n        next(erro);\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare no <code>Math.min(..., 100)</code>: sempre definimos um limite <strong>máximo</strong> de registros por página, mesmo que o cliente peça mais – evitando que uma requisição maliciosa (ou só descuidada) sobrecarregue o servidor pedindo <code>limit=1000000</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "// livroModel.js\nasync function listarComPaginacao(page, limit) {\n    const offset = (page - 1) * limit;\n\n    const [rows] = await db.query(\n        `SELECT l.id, l.titulo, a.nome AS autor\n         FROM livros l\n         INNER JOIN autores a ON l.autor_id = a.id\n         LIMIT ? OFFSET ?`,\n        [limit, offset]\n    );\n\n    const [[{ total }]] = await db.query(\"SELECT COUNT(*) AS total FROM livros\");\n\n    return {\n        page,\n        limit,\n        total,\n        totalPages: Math.ceil(total / limit),\n        data: rows\n    };\n}"
+  },
+  {
+   "t": "p",
+   "html": "Note que retornamos, além dos dados em si, informações <strong>sobre</strong> a paginação (<code>total</code>, <code>totalPages</code>) – isso facilita bastante a construção de interfaces com botões de \"próxima página\" no lado do cliente."
+  },
+  {
+   "t": "h3",
+   "texto": "Filtros dinâmicos"
+  },
+  {
+   "t": "p",
+   "html": "Combinando <code>req.query</code> (Capítulo 9) com <code>WHERE</code> e <code>LIKE</code> (Capítulo 6), conseguimos filtrar por autor sem criar uma rota nova:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// GET /livros?autor=Machado&page=2&limit=10\nasync function listarComFiltro(autor, page, limit) {\n    const offset = (page - 1) * limit;\n    const filtro = `%${autor}%`;\n\n    const [rows] = await db.query(\n        `SELECT l.titulo, a.nome AS autor\n         FROM livros l\n         INNER JOIN autores a ON l.autor_id = a.id\n         WHERE a.nome LIKE ?\n         LIMIT ? OFFSET ?`,\n        [filtro, limit, offset]\n    );\n\n    return rows;\n}"
+  },
+  {
+   "t": "h3",
+   "texto": "Ordenação segura"
+  },
+  {
+   "t": "p",
+   "html": "Um erro comum é montar o <code>ORDER BY</code> diretamente com o valor recebido do cliente – isso abriria uma brecha de SQL Injection, já que o nome da coluna não pode ser passado como parâmetro <code>?</code> (parâmetros só funcionam para <strong>valores</strong>, não para nomes de coluna ou tabela). A solução é validar contra uma lista de campos permitidos:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const camposPermitidos = [\"titulo\", \"ano_publicacao\", \"preco\"];\nconst campo = camposPermitidos.includes(req.query.sort) ? req.query.sort : \"titulo\";\n\nconst sql = `SELECT * FROM livros ORDER BY ${campo} LIMIT ? OFFSET ?`;"
+  },
+  {
+   "t": "p",
+   "html": "Como <code>campo</code> só pode assumir um dos três valores da lista <code>camposPermitidos</code>, mesmo que o cliente tente enviar algo malicioso em <code>?sort=</code>, o valor será descartado e substituído pelo padrão seguro (<code>\"titulo\"</code>)."
+  },
+  {
+   "t": "h2",
+   "id": "encerrando-o-capitulo-10",
+   "texto": "Encerrando o Capítulo 10"
+  },
+  {
+   "t": "p",
+   "html": "Ao longo deste capítulo – dividido em quatro partes –, transformamos a BibliotecaAPI de um esqueleto com uma única rota em uma API REST completa: modelamos as seis entidades do sistema, implementamos o CRUD inteiro (com atenção especial ao caso de empréstimos, que envolve regra de negócio real), e adicionamos validação, paginação e filtros – os detalhes que separam um protótipo de uma API pronta para uso real."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Glossário",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>CRUD</strong>: conjunto das operações de criação, consulta, atualização e remoção de dados.<br> <strong>express-validator</strong>: biblioteca para validação e sanitização de dados em aplicações Express.<br> <strong>Paginação</strong>: técnica que divide grandes conjuntos de dados em páginas menores.<br> <strong>Soft Delete</strong>: técnica que marca um registro como inativo, em vez de removê-lo fisicamente (Capítulo 8).<br> <strong>Regra de negócio</strong>: lógica específica da aplicação (como \"não permitir empréstimo de livro indisponível\"), que pertence à camada Service."
+    }
+   ]
+  }
+ ]
+}

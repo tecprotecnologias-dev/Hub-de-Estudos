@@ -14,8 +14,10 @@ Também aceita o modelo "por módulos" (Web Design II):
   \\modulotitulo{01}{Título}       -> número e título do capítulo
   \\subsection / \\subsubsection    -> h2 / h3
   codigo + Verbatim               -> bloco de código (texto literal)
-  \\includegraphics               -> imagem (copiada com --imagens <pasta> <url>)
+  \\includegraphics               -> imagem (copiada com --imagens <pasta> <url>; PDF vira PNG)
   tabular                         -> tabela
+E o modelo "livro" (Guia Node.js, Express e MySQL):
+  \\section{Capítulo N -- Título} ou \\section{Apêndice A -- Título} -> número e título
 Capa, sumário do capítulo, cabeçalho e rodapé são descartados, assim como as
 seções de Resumo, Estudo de Caso e Exercícios de Fixação (mesma regra do
 converter_capitulo.py).
@@ -25,6 +27,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 
 from converter_capitulo import remover_secoes, slug, verificar_termos
@@ -227,16 +230,27 @@ def dividir_itens(s):
     return itens
 
 
+def codigo_no_item(it):
+    """Bloco de código dentro de um item de lista (passo a passo do livro Node.js) vira <pre> no próprio item."""
+    trechos = []
+
+    def guardar(m):
+        trechos.append('<pre class="bloco-codigo"><code>' + html.escape(LITERAIS[int(m.group(1))]) + '</code></pre>')
+        return f'\x03{len(trechos) - 1}\x03'
+    it = re.sub(r'(?:\\begin\{codigo\})?\s*\x02(\d+)\x02\s*(?:\\end\{codigo\})?', guardar, it)
+    return it, trechos
+
+
 def lista(corpo, numerada):
     itens = []
     for n, it in enumerate(dividir_itens(corpo), 1):
-        it = it.strip()
+        it, trechos = codigo_no_item(it.strip())
         marcador = ''
         if it.startswith('['):
             fim = it.index(']')
             marcador = inline(it[1:fim])
             it = it[fim + 1:]
-        h = inline(it)
+        h = re.sub(r'\x03(\d+)\x03', lambda m: trechos[int(m.group(1))], inline(it))
         if marcador:
             h = f'{marcador} {h}'
         elif numerada:
@@ -267,6 +281,12 @@ def tabela(corpo):
 
 
 def paragrafos(s):
+    # Verbatim solto, fora do quadro "codigo" (aparece no livro Node.js): vira bloco de código à parte
+    if '\x02' in s:
+        blocos = []
+        for k, parte in enumerate(re.split(r'\x02(\d+)\x02', s)):
+            blocos += [{'t': 'codigo', 'texto': LITERAIS[int(parte)]}] if k % 2 else paragrafos(parte)
+        return blocos
     blocos = []
     for p in re.split(r'\n\s*\n', s):
         if not re.sub(r'\\(noindent|bigskip|medskip|smallskip|newpage)\b|%[^\n]*', '', p).strip():
@@ -343,6 +363,21 @@ def blocos_de(s):
                 blocos += blocos_de(corpo)
 
 
+def finalizar(blocos, numero, titulo):
+    """Monta o capítulo do modelo "livro": ids das seções e sem Resumo/Estudo de Caso/Exercícios."""
+    if blocos and blocos[0]['t'] != 'h2':
+        blocos.insert(0, {'t': 'h2', 'id': '', 'texto': 'Introdução'})
+    usados = set()
+    for b in blocos:
+        if b['t'] == 'h2':
+            ident = slug(b['texto']) or 'secao'
+            while ident in usados:
+                ident += '-2'
+            usados.add(ident)
+            b['id'] = ident
+    return {'numero': numero, 'titulo': titulo, 'blocos': remover_secoes(blocos)}
+
+
 def converter(caminho):
     s = open(caminho, encoding='utf-8').read()
     LITERAIS.clear()
@@ -354,6 +389,11 @@ def converter(caminho):
     s = re.sub(r'\\begin\{Verbatim\}(?:\[[^]]*\])?\n?(.*?)\\end\{Verbatim\}', guardar, s, flags=re.S)
     s = re.sub(r'(?<!\\)%[^\n]*', '', s)
     capa = s[s.index('\\begin{document}'):] if '\\begin{document}' in s else s
+    # modelo "livro" (Guia Node.js): \section{Capítulo 1 -- Título} ou \section{Apêndice A -- Título}
+    secao = re.search(r'\\section\*?\{(Cap[ií]tulo\s+(\d+)|Ap[eê]ndice\s+\w+)\s*(?:--|—|–)\s*([^}]*)\}', capa)
+    if secao:
+        capa = capa.replace(secao.group(0), '', 1)
+        return finalizar(blocos_de(capa), int(secao.group(2)) if secao.group(2) else None, inline(secao.group(3)).strip())
     modulo = re.search(r'\\modulotitulo\s*\{([^}]*)\}\s*\{([^}]*)\}', capa)
     numero = re.search(r'CAP[IÍ]TULO\s+(\d+)', capa)
     titulo = re.search(r'\\(?:Huge|huge|LARGE)\\bfseries\s+(.*?)\}', capa, re.S)
@@ -442,7 +482,13 @@ if __name__ == '__main__':
                     if not os.path.exists(origem):
                         origem = os.path.join(base, '..', b['src'])
                     destino = os.path.basename(b['src'])
-                    shutil.copy(origem, os.path.join(imagens[0], destino))
+                    if destino.lower().endswith('.pdf'):
+                        # diagramas em PDF (TikZ/Inkscape) viram PNG para o navegador
+                        destino = destino[:-4] + '.png'
+                        subprocess.run(['pdftoppm', '-png', '-r', '150', '-singlefile', origem,
+                                        os.path.join(imagens[0], destino[:-4])], check=True)
+                    else:
+                        shutil.copy(origem, os.path.join(imagens[0], destino))
                     b['src'] = imagens[1].rstrip('/') + '/' + destino
                 elif b['t'] == 'quadro':
                     ajustar(b['blocos'])

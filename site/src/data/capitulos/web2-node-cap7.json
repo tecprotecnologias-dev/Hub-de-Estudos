@@ -1,0 +1,330 @@
+{
+ "numero": 7,
+ "titulo": "Preparando o Ambiente para a API",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "7-1-apresentacao",
+   "texto": "7.1 Apresentação"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, construímos uma base sólida: os fundamentos do Node.js, JavaScript moderno, programação assíncrona, gerenciamento de pacotes com npm, e toda a linguagem SQL necessária para modelar e consultar um banco de dados relacional."
+  },
+  {
+   "t": "p",
+   "html": "A partir deste capítulo, vamos unir esses dois mundos. A <strong>BibliotecaAPI</strong> deixará de ser apenas um banco de dados isolado para se tornar um sistema capaz de responder a requisições reais, vindas de um navegador, de um aplicativo móvel, ou de qualquer outro programa. Antes de escrever a primeira rota, porém, vale a pena entender <strong>como</strong> essa comunicação vai acontecer – e é isso que faremos agora."
+  },
+  {
+   "t": "h2",
+   "id": "7-2-arquitetura-da-bibliotecaapi",
+   "texto": "7.2 Arquitetura da BibliotecaAPI"
+  },
+  {
+   "t": "p",
+   "html": "Quando um sistema começa a crescer, concentrar todo o código em um único arquivo torna-se inviável. A <strong>arquitetura de software</strong> define como os componentes de uma aplicação serão organizados e como eles se comunicam entre si – e é isso que vamos planejar antes de escrever qualquer rota."
+  },
+  {
+   "t": "p",
+   "html": "Nossa aplicação será organizada em camadas:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/node/capitulo-07_diagrama1.png",
+   "alt": "capitulo 07 diagrama1"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Camada",
+    "Responsabilidade"
+   ],
+   "linhas": [
+    [
+     "Router",
+     "Recebe a URL e encaminha para o Controller correto"
+    ],
+    [
+     "Controller",
+     "Recebe a requisição e envia a resposta"
+    ],
+    [
+     "Service",
+     "Concentra as regras de negócio"
+    ],
+    [
+     "Repository/Model",
+     "Único ponto de acesso ao banco de dados"
+    ],
+    [
+     "mysql2",
+     "Driver de comunicação entre Node.js e MySQL"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Cada camada conhece apenas a camada imediatamente abaixo dela – o Controller nunca conversa diretamente com o MySQL, por exemplo. Essa separação evita que responsabilidades se misturem: não é papel de uma rota consultar o banco, assim como não é papel do banco validar regras de negócio da aplicação."
+  },
+  {
+   "t": "p",
+   "html": "Todo o banco desenvolvido no Capítulo 6 será reaproveitado aqui – nenhuma tabela precisa ser recriada, a API apenas vai manipulá-las."
+  },
+  {
+   "t": "h2",
+   "id": "7-3-aprofundando-o-que-e-uma-api-rest",
+   "texto": "7.3 Aprofundando: O que é uma API REST"
+  },
+  {
+   "t": "p",
+   "html": "No Capítulo 1 (seção 1.8) já vimos a ideia central de uma API: uma ponte que permite que um cliente converse com um servidor, trocando dados em JSON por meio de métodos HTTP. Vamos agora aprofundar esse conceito, com foco no estilo arquitetural que vamos seguir ao longo de todo o livro: o <strong>REST</strong>."
+  },
+  {
+   "t": "p",
+   "html": "<strong>REST</strong> é a sigla para <em>Representational State Transfer</em>, termo proposto em 2000 por Roy Fielding, um dos responsáveis pela especificação do protocolo HTTP. REST não é uma linguagem, nem um <em>framework</em> – é um <strong>estilo arquitetural</strong> que define princípios para a construção de serviços utilizando HTTP."
+  },
+  {
+   "t": "p",
+   "html": "Uma API REST organiza-se em torno de <strong>recursos</strong> (<em>resources</em>) – cada informação disponível na aplicação. Na BibliotecaAPI, os recursos serão:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Recurso",
+    "URL"
+   ],
+   "linhas": [
+    [
+     "Livros",
+     "<code>/livros</code>"
+    ],
+    [
+     "Autores",
+     "<code>/autores</code>"
+    ],
+    [
+     "Categorias",
+     "<code>/categorias</code>"
+    ],
+    [
+     "Editoras",
+     "<code>/editoras</code>"
+    ],
+    [
+     "Usuários",
+     "<code>/usuarios</code>"
+    ],
+    [
+     "Empréstimos",
+     "<code>/emprestimos</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Uma API REST bem projetada segue alguns princípios centrais:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Cliente-servidor</strong>: cada lado tem responsabilidades bem definidas – o cliente nunca acessa o banco diretamente.",
+    "<strong><em>Stateless</em> (sem estado)</strong>: cada requisição deve conter todas as informações necessárias para ser processada. O servidor não guarda contexto de requisições anteriores.",
+    "<strong>Interface uniforme</strong>: URLs e métodos HTTP seguem um padrão consistente entre todos os recursos."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-4-cliente-x-servidor",
+   "texto": "7.4 Cliente x Servidor"
+  },
+  {
+   "t": "p",
+   "html": "Grande parte das aplicações modernas segue o modelo <strong>cliente-servidor</strong>. O <strong>cliente</strong> é quem envia a solicitação – um navegador, um aplicativo, o próprio Postman. O <strong>servidor</strong> é quem recebe essa solicitação, processa (consultando o banco, aplicando regras de negócio) e devolve uma resposta."
+  },
+  {
+   "t": "p",
+   "html": "Uma pergunta que costuma surgir: <em>por que o cliente nunca acessa o banco de dados diretamente?</em> Imagine que qualquer pessoa pudesse executar comandos SQL diretamente no seu banco a partir do navegador – um simples <code>DELETE FROM livros;</code> enviado por engano (ou por má-fé) apagaria todo o acervo. Por isso, <strong>apenas o servidor</strong> possui acesso ao banco; o cliente só conversa com a API."
+  },
+  {
+   "t": "p",
+   "html": "Essa separação também traz uma vantagem prática: a mesma BibliotecaAPI poderá atender, ao mesmo tempo, um site, um aplicativo móvel e o Postman – todos consumindo exatamente as mesmas rotas, sem duplicar lógica de negócio em lugar nenhum."
+  },
+  {
+   "t": "h2",
+   "id": "7-5-http-na-pratica",
+   "texto": "7.5 HTTP na Prática"
+  },
+  {
+   "t": "p",
+   "html": "Já usamos o protocolo HTTP diversas vezes ao longo do livro. Vamos agora entender sua estrutura interna, que vamos manipular diretamente a partir do próximo capítulo."
+  },
+  {
+   "t": "p",
+   "html": "Uma requisição HTTP é composta por: uma linha de requisição (método + URL), cabeçalhos (<em>headers</em>), e – em métodos como POST e PUT – um corpo (<em>body</em>)."
+  },
+  {
+   "t": "codigo",
+   "texto": "POST /livros HTTP/1.1\nHost: localhost:3000\nContent-Type: application/json\n\n{\n    \"titulo\": \"Node.js na Prática\",\n    \"ano\": 2026\n}"
+  },
+  {
+   "t": "p",
+   "html": "A resposta do servidor segue uma estrutura parecida: um código de status, cabeçalhos, e um corpo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "HTTP/1.1 201 Created\nContent-Type: application/json\n\n{\n    \"id\": 25,\n    \"titulo\": \"Node.js na Prática\",\n    \"ano\": 2026\n}"
+  },
+  {
+   "t": "p",
+   "html": "Dois cabeçalhos merecem destaque especial:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong><code>Content-Type</code></strong>: informa o formato dos dados enviados. Em APIs REST, quase sempre <code>application/json</code>.",
+    "<strong><code>Authorization</code></strong>: transporta credenciais de autenticação – por exemplo, <code>Bearer eyJhbGc...</code>. Vamos usar esse cabeçalho ativamente quando estudarmos JWT, no Capítulo 11."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-6-metodos-http-em-detalhe",
+   "texto": "7.6 Métodos HTTP em Detalhe"
+  },
+  {
+   "t": "p",
+   "html": "O Capítulo 1 já apresentou os cinco métodos mais usados em APIs REST. Vale agora relacioná-los formalmente às operações do CRUD (<em>Create, Read, Update, Delete</em>) – a base de praticamente toda API que vamos construir:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "CRUD",
+    "SQL",
+    "HTTP"
+   ],
+   "linhas": [
+    [
+     "Create",
+     "<code>INSERT</code>",
+     "<code>POST</code>"
+    ],
+    [
+     "Read",
+     "<code>SELECT</code>",
+     "<code>GET</code>"
+    ],
+    [
+     "Update",
+     "<code>UPDATE</code>",
+     "<code>PUT</code> ou <code>PATCH</code>"
+    ],
+    [
+     "Delete",
+     "<code>DELETE</code>",
+     "<code>DELETE</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A diferença entre <code>PUT</code> e <code>PATCH</code> costuma gerar dúvida: <code>PUT</code> substitui o recurso <strong>por completo</strong> (o cliente reenvia todos os campos); <code>PATCH</code> altera <strong>apenas</strong> os campos informados. Se um usuário quer corrigir só o preço de um livro, <code>PATCH</code> é mais eficiente – transmite menos dados e deixa clara a intenção da alteração."
+  },
+  {
+   "t": "h2",
+   "id": "7-7-editor-de-codigo-e-ferramentas",
+   "texto": "7.7 Editor de Código e Ferramentas"
+  },
+  {
+   "t": "p",
+   "html": "O Capítulo 2 já apresentou o Visual Studio Code e seu terminal integrado, que usaremos continuamente daqui em diante. Vale complementar com algumas extensões que facilitam bastante o desenvolvimento de APIs:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Extensão",
+    "Finalidade"
+   ],
+   "linhas": [
+    [
+     "ESLint",
+     "Identificação de erros e padronização do código"
+    ],
+    [
+     "Prettier",
+     "Formatação automática"
+    ],
+    [
+     "DotENV",
+     "Suporte a arquivos <code>.env</code>"
+    ],
+    [
+     "Thunder Client",
+     "Testar requisições HTTP sem sair do VS Code"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-8-instalando-o-postman",
+   "texto": "7.8 Instalando o Postman"
+  },
+  {
+   "t": "p",
+   "html": "Durante o desenvolvimento de uma API, é necessário testar continuamente se as rotas estão funcionando – e, para métodos como POST, PUT e DELETE, o navegador sozinho não é suficiente. O <strong>Postman</strong> é a ferramenta que vamos usar para isso a partir de agora."
+  },
+  {
+   "t": "p",
+   "html": "O Postman pode ser obtido gratuitamente em <a href=\"https://www.postman.com/downloads/\" target=\"_blank\" rel=\"noreferrer\">https://www.postman.com/downloads/</a>. Após a instalação, sua interface reúne alguns elementos essenciais: um seletor de <strong>método</strong> HTTP, um campo de <strong>URL</strong>, um botão <strong>Send</strong>, abas para configurar <strong>Headers</strong> e <strong>Body</strong>, e uma área de <strong>resposta</strong> mostrando o status, os cabeçalhos e o corpo retornado pelo servidor."
+  },
+  {
+   "t": "p",
+   "html": "Um teste rápido, assim que tivermos nosso primeiro servidor no ar (Capítulo 9):"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Método</strong>: <code>GET</code>",
+    "<strong>URL</strong>: <code>http://localhost:3000</code>",
+    "Clique em <strong>Send</strong>."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Para enviar dados em uma requisição <code>POST</code>, selecione <code>Body</code> → <code>raw</code> → <code>JSON</code>, e digite o objeto a ser enviado – exatamente como fizemos na seção 7.5."
+  },
+  {
+   "t": "p",
+   "html": "O Postman será nosso principal cliente HTTP até a conclusão da BibliotecaAPI: cadastro de autores, editoras, categorias, usuários, livros, empréstimos, login, autenticação JWT e todas as operações de CRUD serão testadas por ele."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Boas práticas",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Organize as requisições em <em>collections</em> (coleções) dentro do Postman – uma para cada recurso da API. Nomeie claramente cada requisição, e utilize variáveis de ambiente para a URL base (assim, trocar de <code>localhost:3000</code> para um servidor de produção exige apenas uma alteração, não dezenas)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-9-estrutura-do-projeto",
+   "texto": "7.9 Estrutura do Projeto"
+  },
+  {
+   "t": "p",
+   "html": "Retomando o projeto que iniciamos no Capítulo 2, vamos agora organizá-lo em camadas, refletindo a arquitetura da seção 7.2:"
+  },
+  {
+   "t": "codigo",
+   "texto": "BibliotecaAPI/\n|-- src/\n|   |-- controllers/\n|   |-- services/\n|   |-- repositories/\n|   |-- routes/\n|   |-- middlewares/\n|   |-- config/\n|   `-- app.js\n|-- .env\n|-- package.json\n|-- package-lock.json\n`-- server.js"
+  },
+  {
+   "t": "p",
+   "html": "Cada pasta corresponde diretamente a uma camada da arquitetura: <code>routes</code> define os endpoints, <code>controllers</code> recebe as requisições, <code>services</code> concentra as regras de negócio, e <code>repositories</code> é o único lugar do projeto onde consultas SQL são escritas. Vamos preencher essas pastas, uma a uma, a partir do próximo capítulo."
+  }
+ ]
+}
