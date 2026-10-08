@@ -1,0 +1,203 @@
+{
+ "numero": 3,
+ "titulo": "React: Hooks e Estado",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "3-1-o-que-e-estado",
+   "texto": "3.1 O que é Estado?"
+  },
+  {
+   "t": "p",
+   "html": "Até agora, os componentes que construímos (<code>Button</code>, <code>ProjetoCard</code>) recebem dados de fora, via <em>props</em>, mas nunca \"lembram\" de nada por conta própria. Se você clicar num botão, nada muda na tela – porque não existe nenhum mecanismo guardando esse clique."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Estado</strong> (<em>state</em>) é exatamente isso: um valor que um componente guarda e controla sozinho, e que pode mudar ao longo do tempo – geralmente em resposta a uma ação do usuário (clicar, digitar, enviar um formulário)."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Props e estado são a mesma coisa?\" – Não! <em>Props</em> vêm de <strong>fora</strong> (do componente pai) e o componente filho nunca deve alterá-las (Módulo 2). <strong>Estado</strong> vive <strong>dentro</strong> do próprio componente, e só ele pode mudá-lo. É a diferença entre receber uma carta pronta (<em>props</em>) e escrever seu próprio caderno de anotações (estado)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-2-usestate-criando-estado",
+   "texto": "3.2 useState: Criando Estado"
+  },
+  {
+   "t": "p",
+   "html": "O <code>useState</code> é um <strong>Hook</strong> – uma função especial do React que \"conecta\" um componente a recursos internos da biblioteca (aqui, a capacidade de guardar estado). Todo Hook começa com o prefixo <code>use</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "import { useState } from \"react\";\n\nfunction Contador() {\n  const [contagem, setContagem] = useState(0);\n\n  return (\n    <div>\n      <p>Voce clicou {contagem} vezes</p>\n      <button onClick={() => setContagem(contagem + 1)}>\n        Clicar\n      </button>\n    </div>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>useState(0)</code> recebe o <strong>valor inicial</strong> do estado (aqui, <code>0</code>) e devolve um <em>array</em> com exatamente dois itens:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Item",
+    "Função"
+   ],
+   "linhas": [
+    [
+     "<code>contagem</code>",
+     "O valor atual do estado – só para leitura"
+    ],
+    [
+     "<code>setContagem</code>",
+     "A função que atualiza esse estado, e manda o React redesenhar a tela"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Sempre que <code>setContagem</code> é chamado, o React executa a função do componente de novo, com o novo valor – é isso que faz o número mudar na tela."
+  },
+  {
+   "t": "h2",
+   "id": "3-3-atualizando-estado-corretamente",
+   "texto": "3.3 Atualizando Estado Corretamente"
+  },
+  {
+   "t": "p",
+   "html": "Um erro comum é tentar mudar o estado diretamente, sem passar pela função <em>setter</em>."
+  },
+  {
+   "t": "codigo",
+   "texto": "// ERRADO -- nao faz nada na tela\ncontagem = contagem + 1;\n\n// CERTO -- avisa o React que precisa redesenhar\nsetContagem(contagem + 1);"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Mudei a variável, mas a tela não atualiza.\" – Isso acontece porque o React só redesenha o componente quando você chama a função <em>setter</em> (<code>setContagem</code>, <code>setNome</code>, etc.). Alterar a variável diretamente não avisa o React de nada – é como escrever num caderno que ninguém vai ler."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Quando o novo valor depende do valor anterior, é mais seguro passar uma função para o <em>setter</em>, em vez do valor direto:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// Funciona, mas pode causar bugs se chamado varias vezes seguidas\nsetContagem(contagem + 1);\n\n// Mais seguro: recebe o valor mais atualizado garantido\nsetContagem((valorAtual) => valorAtual + 1);"
+  },
+  {
+   "t": "h2",
+   "id": "3-4-formularios-controlados",
+   "texto": "3.4 Formulários Controlados"
+  },
+  {
+   "t": "p",
+   "html": "Um <strong>input controlado</strong> é aquele cujo valor é sempre ditado pelo estado do React – nunca pelo próprio HTML. É o padrão usado em praticamente todo formulário React."
+  },
+  {
+   "t": "codigo",
+   "texto": "import { useState } from \"react\";\n\nfunction CampoNome() {\n  const [nome, setNome] = useState(\"\");\n\n  return (\n    <input\n      type=\"text\"\n      value={nome}\n      onChange={(e) => setNome(e.target.value)}\n      placeholder=\"Seu nome\"\n    />\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare no ciclo: o valor exibido no campo (<code>value</code>) vem do estado; toda vez que o usuário digita, o evento <code>onChange</code> dispara e atualiza esse estado com <code>e.target.value</code> (o texto atual do campo) – fechando o ciclo."
+  },
+  {
+   "t": "h2",
+   "id": "3-5-multiplos-campos-estado-como-objeto",
+   "texto": "3.5 Múltiplos Campos: Estado como Objeto"
+  },
+  {
+   "t": "p",
+   "html": "Quando um formulário tem vários campos, é comum guardar tudo num único objeto de estado, em vez de um <code>useState</code> para cada campo."
+  },
+  {
+   "t": "codigo",
+   "texto": "function FormularioContato() {\n  const [dados, setDados] = useState({\n    nome: \"\",\n    email: \"\",\n    mensagem: \"\",\n  });\n\n  function atualizarCampo(campo, valor) {\n    setDados({ ...dados, [campo]: valor });\n  }\n\n  return (\n    <form>\n      <input\n        value={dados.nome}\n        onChange={(e) => atualizarCampo(\"nome\", e.target.value)}\n      />\n      <input\n        value={dados.email}\n        onChange={(e) => atualizarCampo(\"email\", e.target.value)}\n      />\n    </form>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>{...dados, [campo]: valor}</code> usa o operador <em>spread</em> (já visto de relance no Módulo 2) para copiar todos os campos existentes, e só sobrescrever o campo que mudou."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<code>setDados({[campo]: valor})</code> (sem o <code>...dados</code> na frente) <strong>apaga todos os outros campos</strong> do objeto – porque o React não faz mistura automática de objetos, ele substitui o estado inteiro pelo que você mandar."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-6-useeffect-efeitos-colaterais",
+   "texto": "3.6 useEffect: Efeitos Colaterais"
+  },
+  {
+   "t": "p",
+   "html": "Nem tudo que um componente precisa fazer é renderizar JSX. Buscar dados de uma API, mudar o título da aba do navegador, ou registrar algo no console são exemplos de <strong>efeitos colaterais</strong> (<em>side effects</em>) – e o Hook <code>useEffect</code> existe pra isso."
+  },
+  {
+   "t": "codigo",
+   "texto": "import { useState, useEffect } from \"react\";\n\nfunction Contador() {\n  const [contagem, setContagem] = useState(0);\n\n  useEffect(() => {\n    document.title = `Cliques: ${contagem}`;\n  }, [contagem]);\n\n  return (\n    <button onClick={() => setContagem(contagem + 1)}>\n      Cliquei {contagem} vezes\n    </button>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>useEffect</code> recebe uma função (o efeito em si) e, como segundo argumento, um <strong>array de dependências</strong>."
+  },
+  {
+   "t": "h2",
+   "id": "3-7-o-array-de-dependencias",
+   "texto": "3.7 O Array de Dependências"
+  },
+  {
+   "t": "p",
+   "html": "O array de dependências controla <strong>quando</strong> o efeito roda de novo:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Array",
+    "Quando o efeito roda"
+   ],
+   "linhas": [
+    [
+     "<code>[contagem]</code>",
+     "Toda vez que <code>contagem</code> mudar"
+    ],
+    [
+     "<code>[]</code> (vazio)",
+     "Só uma vez, quando o componente aparece na tela pela primeira vez"
+    ],
+    [
+     "sem array nenhum",
+     "Depois de TODA renderização (raramente é o que você quer)"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Meu <code>useEffect</code> entra em loop infinito.\" – Geralmente é porque uma dependência do array muda dentro do próprio efeito, disparando ele de novo, que muda de novo, e por aí vai. Confira sempre se o que está dentro do efeito realmente precisa estar no array de dependências."
+    }
+   ]
+  }
+ ]
+}

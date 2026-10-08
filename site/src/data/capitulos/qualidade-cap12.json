@@ -1,0 +1,254 @@
+{
+ "numero": 12,
+ "titulo": "Projeto Final",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Este capítulo é diferente dos anteriores: em vez de apresentar novos conceitos, ele integra tudo o que foi estudado nos Capítulos 1 a 11 em um único projeto prático. O objetivo não é aprender mais teoria, mas aplicar, de ponta a ponta, os tipos de teste, as ferramentas de automação, a estratégia de regressão e o pipeline de CI/CD em uma aplicação real – exercitando exatamente o tipo de trabalho que se espera de um profissional de qualidade de software no mercado."
+  },
+  {
+   "t": "h2",
+   "id": "12-1-a-aplicacao-alvo-taskflow",
+   "texto": "12.1 A Aplicação Alvo: TaskFlow"
+  },
+  {
+   "t": "p",
+   "html": "O projeto final aplica todos os conceitos do curso em uma aplicação real: o <strong>TaskFlow</strong> – um sistema de gerenciamento de tarefas construído em Next.js, com banco de dados NeonDB e autenticação via NextAuth. Se você não tiver o projeto próprio, use o repositório modelo disponibilizado pela professora."
+  },
+  {
+   "t": "quadro",
+   "tipo": "boa-pratica",
+   "titulo": "O objetivo do projeto",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Construir uma suíte completa de testes cobrindo todas as camadas vistas no curso – não um teste isolado, mas um conjunto coerente que vai do teste unitário mais simples até o pipeline de CI/CD que impede código quebrado de chegar à produção."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "12-2-as-camadas-do-projeto-e-seus-pesos",
+   "texto": "12.2 As Camadas do Projeto e seus Pesos"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Camada",
+    "Ferramenta",
+    "O que testar",
+    "Peso"
+   ],
+   "linhas": [
+    [
+     "Unitários",
+     "Vitest",
+     "Funções puras, schemas Zod, helpers",
+     "2,0 pt"
+    ],
+    [
+     "Integração",
+     "Vitest + Supertest",
+     "API Routes, autenticação, CRUD",
+     "2,5 pt"
+    ],
+    [
+     "E2E",
+     "Playwright",
+     "Fluxo do usuário: login → CRUD → logout",
+     "2,5 pt"
+    ],
+    [
+     "Performance",
+     "k6",
+     "Carga na API de listagem e criação",
+     "1,5 pt"
+    ],
+    [
+     "CI/CD",
+     "GitHub Actions",
+     "Pipeline completo automatizado",
+     "1,5 pt"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Repare que a soma dá 10 pontos – e que E2E e Integração têm o maior peso, exatamente por cobrirem os fluxos mais próximos da experiência real do usuário, coerente com a importância dada a essas camadas ao longo de todo o curso."
+  },
+  {
+   "t": "h2",
+   "id": "12-3-configurando-o-ambiente-de-testes",
+   "texto": "12.3 Configurando o Ambiente de Testes"
+  },
+  {
+   "t": "p",
+   "html": "Antes de escrever o primeiro teste, é preciso instalar: <strong>Vitest</strong> com plugin React (executor de testes unitários e de integração), <strong>Testing Library</strong> (utilitários para testar componentes do ponto de vista do usuário, não da implementação interna), <strong>Playwright</strong> com os navegadores baixados (framework E2E) e <strong>Supertest</strong> (para testar API Routes com requisições HTTP reais)."
+  },
+  {
+   "t": "h2",
+   "id": "12-4-testes-unitarios-de-integracao-e-e2e",
+   "texto": "12.4 Testes Unitários, de Integração e E2E"
+  },
+  {
+   "t": "h3",
+   "texto": "Unitários: Funções e Schemas Zod"
+  },
+  {
+   "t": "p",
+   "html": "No TaskFlow, os testes unitários cobrem funções puras (formatadores de data) e os schemas de validação Zod que definem as regras de cada formulário – criação de tarefa, login e cadastro. Para o schema de criar tarefa: título com o tamanho mínimo exigido, prioridade dentro do conjunto de valores permitido, formato de data válido. Para o schema de login: formato de e-mail válido e senha não vazia."
+  },
+  {
+   "t": "h3",
+   "texto": "Integração: Supertest e API Routes"
+  },
+  {
+   "t": "p",
+   "html": "Os testes de integração verificam as API Routes com o banco de dados mockado (ou um banco de teste), cobrindo autenticação e as operações de CRUD de tarefas."
+  },
+  {
+   "t": "quadro",
+   "tipo": "boa-pratica",
+   "titulo": "Cenários que não podem faltar",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Criar tarefa com dados válidos (201), rejeitar título vazio com mensagem de erro por campo (400), e rejeitar requisição sem autenticação (401). Testar apenas o caminho feliz é o erro mais comum nesta camada – o valor real está em testar também os caminhos de erro."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "E2E: Login, CRUD e Logout"
+  },
+  {
+   "t": "p",
+   "html": "Os testes E2E com Playwright cobrem o fluxo real que um usuário percorre: cadastro, login, criação e gerenciamento de tarefas, edição, exclusão e logout. É o topo da pirâmide – poucos testes, cobrindo os caminhos mais críticos do produto."
+  },
+  {
+   "t": "p",
+   "html": "Se cada teste E2E precisar repetir o login completo antes de testar qualquer outra coisa, a suíte fica desnecessariamente lenta. A solução: fazer login uma única vez, salvar o estado da sessão do navegador (<em>storage state</em>), e reutilizá-lo nos testes seguintes – os testes de CRUD partem direto de uma sessão já autenticada."
+  },
+  {
+   "t": "h2",
+   "id": "12-5-teste-de-performance-com-k6",
+   "texto": "12.5 Teste de Performance com k6"
+  },
+  {
+   "t": "p",
+   "html": "O teste de performance foca nos dois endpoints mais usados: listar tarefas e criar uma nova tarefa. Um threshold razoável para este projeto: 95% das requisições de listagem devem responder em menos de 500ms, e a taxa de erro deve se manter abaixo de 1%, mesmo com 50 usuários virtuais simultâneos."
+  },
+  {
+   "t": "h2",
+   "id": "12-6-pipeline-ci-cd-completo",
+   "texto": "12.6 Pipeline CI/CD Completo"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Job",
+    "Quando roda",
+    "O que faz"
+   ],
+   "linhas": [
+    [
+     "Lint + Type Check",
+     "A cada push ou PR",
+     "Verifica estilo de código e tipos TypeScript"
+    ],
+    [
+     "Unit Tests",
+     "Após o job anterior passar",
+     "Roda testes unitários e de integração, com cobertura"
+    ],
+    [
+     "E2E Tests",
+     "Após os Unit Tests passarem",
+     "Roda a suíte Playwright, com screenshots em falha"
+    ],
+    [
+     "Deploy",
+     "Só na branch principal, se tudo passar",
+     "Publica a nova versão em produção"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "12-7-rubrica-de-avaliacao",
+   "texto": "12.7 Rubrica de Avaliação"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Critério",
+    "Requisito mínimo",
+    "Pontos"
+   ],
+   "linhas": [
+    [
+     "Testes unitários",
+     "Mínimo 10 testes passando. Cobertura ≥ 70% nas funções de negócio",
+     "2,0 pt"
+    ],
+    [
+     "Testes de integração",
+     "Mínimo 6 testes: GET, POST (válido + inválido), PATCH, DELETE, erro de autenticação",
+     "2,5 pt"
+    ],
+    [
+     "Testes E2E",
+     "Mínimo 5 testes: cadastro, login, criar tarefa, editar, logout",
+     "2,5 pt"
+    ],
+    [
+     "Performance k6",
+     "Script com estágios (ramp-up + carga + ramp-down), thresholds definidos",
+     "1,5 pt"
+    ],
+    [
+     "CI/CD",
+     "Pipeline com lint + unit tests + e2e. Deploy bloqueado se algo falhar",
+     "1,5 pt"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns-a-evitar",
+   "texto": "Erros Comuns a Evitar"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Testar só o caminho feliz</strong> — esquecer cenários de erro é o erro mais frequente",
+    "<strong>Deixar o pipeline não-obrigatório</strong> — não cumpre a exigência de CI/CD da rubrica",
+    "<strong>Cobertura sem qualidade</strong> — testes que só existem para “subir o número”",
+    "<strong>Deixar tudo para a última semana</strong> — E2E e CI/CD costumam ter mais imprevistos técnicos do que parecem"
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "checklist-final",
+   "texto": "Checklist Final"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "☐ Todos os testes unitários passam localmente, sem depender de ordem de execução",
+    "☐ Os testes de integração cobrem sucesso e erros esperados",
+    "☐ A suíte E2E cobre o fluxo completo: cadastro, login, CRUD, logout",
+    "☐ O script k6 tem estágios e thresholds configurados, não só uma carga fixa",
+    "☐ O pipeline bloqueia o merge se qualquer etapa falhar — testado de verdade",
+    "☐ O relatório de cobertura foi gerado e revisado, não apenas gerado e ignorado"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,297 @@
+{
+ "numero": 5,
+ "titulo": "Segurança em Sistemas Web",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Todos os capítulos anteriores construíram, camada por camada, um sistema web funcional: arquitetura, hospedagem, desenvolvimento e conteúdo. Mas um sistema que funciona perfeitamente e não é seguro é, na melhor das hipóteses, uma bomba-relógio – e, na pior, já está comprometido sem que ninguém tenha percebido ainda. Este capítulo apresenta os fundamentos da segurança web: os pilares conceituais, os ataques mais comuns e como preveni-los, e o arcabouço legal – LGPD e GDPR – que torna a segurança não apenas uma boa prática técnica, mas também uma obrigação legal."
+  },
+  {
+   "t": "h2",
+   "id": "5-1-por-que-seguranca-web-e-fundamental",
+   "texto": "5.1 Por que Segurança Web é Fundamental?"
+  },
+  {
+   "t": "p",
+   "html": "Segurança não é um item opcional que se adiciona a um sistema já pronto – é uma mentalidade que deve permear todo o ciclo de desenvolvimento, do design inicial até a manutenção contínua depois do lançamento. Uma única brecha pode resultar em perdas financeiras devastadoras, exposição de dados sensíveis de milhares (ou milhões) de pessoas, e uma crise de confiança da qual a marca pode nunca mais se recuperar completamente."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Caso real — Equifax (2017)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma falha de segurança relativamente simples – um componente de software desatualizado que não recebeu um patch de correção disponível havia meses – permitiu o vazamento de dados de 147 milhões de pessoas. Não foi apenas um incidente técnico: foi uma lição sobre como a negligência em segurança transforma empresas em sinônimo de vulnerabilidade. O prejuízo superou US$ 700 milhões em acordos e reparações."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-2-a-triade-cia",
+   "texto": "5.2 A Tríade CIA"
+  },
+  {
+   "t": "p",
+   "html": "A segurança da informação se apoia sobre três pilares fundamentais, conhecidos pela sigla CIA (<em>Confidentiality, Integrity, Availability</em>)."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Pilar",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "Confidencialidade",
+     "Apenas pessoas autorizadas acessam determinada informação – garantida por criptografia e controle de acesso. Violação típica: hackers roubando dados"
+    ],
+    [
+     "Integridade",
+     "Os dados não podem ser alterados sem autorização – garantida por checksums e assinaturas digitais. Violação típica: malware corrompendo arquivos"
+    ],
+    [
+     "Disponibilidade",
+     "O sistema permanece acessível quando necessário – garantida por redundância e backups. Violação típica: ransomware ou ataques DDoS"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Toda medida de segurança que estudaremos neste capítulo – de uma simples validação de formulário a um firewall de aplicação inteiro – existe, em última instância, para proteger um (ou mais) desses três pilares."
+  },
+  {
+   "t": "h2",
+   "id": "5-3-principios-de-seguranca-aplicados-a-web",
+   "texto": "5.3 Princípios de Segurança Aplicados à Web"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Princípio",
+    "Aplicação prática"
+   ],
+   "linhas": [
+    [
+     "Autenticação",
+     "Confirmar a identidade do usuário – MFA, OAuth, senhas protegidas com bcrypt/Argon2"
+    ],
+    [
+     "Autorização",
+     "Controlar o que cada usuário autenticado pode efetivamente fazer – RBAC, ABAC"
+    ],
+    [
+     "Não-repúdio",
+     "Impedir que uma ação seja negada depois de realizada – logs de auditoria, tokens JWT"
+    ],
+    [
+     "Menor Privilégio",
+     "Cada componente do sistema tem apenas as permissões estritamente necessárias"
+    ],
+    [
+     "Defesa em Profundidade",
+     "Múltiplas camadas de proteção – se uma falhar, as demais ainda protegem o sistema"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O princípio da <strong>Defesa em Profundidade</strong> merece destaque: nenhuma medida de segurança isolada é infalível, e sistemas bem projetados nunca dependem de uma única barreira. Um firewall de aplicação pode falhar, mas se as <em>prepared statements</em> no código estiverem corretas, um ataque de SQL Injection ainda será bloqueado – e vice-versa."
+  },
+  {
+   "t": "h2",
+   "id": "5-4-sql-injection-e-xss",
+   "texto": "5.4 SQL Injection e XSS"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Ataque",
+    "Como funciona",
+    "Como prevenir"
+   ],
+   "linhas": [
+    [
+     "SQL Injection",
+     "Insere código SQL malicioso em campos de entrada não sanitizados, podendo burlar autenticação ou extrair dados de outras tabelas",
+     "<em>Prepared statements</em>, uso de ORM e princípio do menor privilégio na conta do banco"
+    ],
+    [
+     "XSS (<em>Cross-Site Scripting</em>)",
+     "Injeta JavaScript malicioso em páginas vistas por outros usuários, podendo roubar cookies de sessão",
+     "<em>Output encoding</em> contextual, <em>Content-Security-Policy</em> e cookies com flags <code>HttpOnly</code>/<code>Secure</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Ambos os ataques exploram a mesma falha de raiz: confiar em dados fornecidos pelo usuário sem tratá -los adequadamente antes de usá-los. A regra de ouro que evita a maioria dos incidentes de SQL Injection e XSS é simples de enunciar, embora exija disciplina para aplicar sempre: nunca confie em dados vindos de fora do seu próprio backend."
+  },
+  {
+   "t": "h2",
+   "id": "5-5-csrf-ransomware-ddos-e-phishing",
+   "texto": "5.5 CSRF, Ransomware, DDoS e Phishing"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Ataque",
+    "Como funciona",
+    "Como prevenir"
+   ],
+   "linhas": [
+    [
+     "CSRF",
+     "Força ações indesejadas usando a sessão ativa do usuário em outro site",
+     "Tokens únicos por formulário, atributo <code>SameSite</code> nos cookies"
+    ],
+    [
+     "Ransomware",
+     "Criptografa arquivos, banco de dados e até backups, exigindo resgate para liberar",
+     "Backups offline testados regularmente, MFA, tudo sempre atualizado"
+    ],
+    [
+     "DDoS",
+     "Uma rede de máquinas infectadas (botnet) satura a capacidade do servidor com tráfego massivo",
+     "CDN, serviços como Cloudflare/AWS Shield, <em>rate limiting</em>"
+    ],
+    [
+     "Phishing",
+     "E-mails ou sites falsos induzem a vítima a fornecer credenciais voluntariamente",
+     "Autenticação de e-mail no DNS (SPF, DKIM, DMARC), treinamento e MFA"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O phishing merece atenção especial por ser, na prática, o ataque com a menor barreira técnica e o maior índice de sucesso – ele não explora uma falha no código, mas na confiança humana. É por isso que MFA (autenticação multifator) é uma defesa tão valiosa: mesmo que a senha da vítima seja roubada por phishing, o atacante ainda não teria o segundo fator de autenticação."
+  },
+  {
+   "t": "h2",
+   "id": "5-6-ferramentas-de-seguranca-essenciais",
+   "texto": "5.6 Ferramentas de Segurança Essenciais"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Ferramenta",
+    "Função"
+   ],
+   "linhas": [
+    [
+     "OWASP ZAP",
+     "Teste dinâmico (DAST) gratuito – testa SQLi, XSS, CSRF e os itens do OWASP Top 10"
+    ],
+    [
+     "Burp Suite",
+     "Plataforma profissional, padrão de mercado entre pentesters"
+    ],
+    [
+     "Fail2Ban",
+     "Monitora logs e bane automaticamente IPs com comportamento suspeito, como tentativas de força bruta"
+    ],
+    [
+     "SonarQube / Snyk",
+     "Análise estática (SAST) – detecta vulnerabilidades no código antes mesmo do deploy"
+    ],
+    [
+     "ModSecurity / WAF",
+     "Firewall de aplicação – bloqueia ataques conhecidos em tempo real"
+    ],
+    [
+     "ELK Stack / Splunk",
+     "SIEM – agrega logs de todo o sistema, correlaciona eventos e gera alertas inteligentes"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-7-boas-praticas-de-desenvolvimento-seguro",
+   "texto": "5.7 Boas Práticas de Desenvolvimento Seguro"
+  },
+  {
+   "t": "p",
+   "html": "Validar e sanitizar todas as entradas de dados, sem exceção; tornar MFA obrigatório para contas críticas e armazenar senhas com algoritmos apropriados (bcrypt, Argon2); aplicar o princípio do menor privilégio em cada papel de usuário (RBAC); usar TLS 1.3 para todo o tráfego e AES-256 para dados sensíveis armazenados; remover funcionalidades e configurações desnecessárias do ambiente de produção; e revisar código e realizar testes de penetração regularmente, não apenas uma vez antes do lançamento."
+  },
+  {
+   "t": "h2",
+   "id": "5-8-monitoramento-e-kpis-de-seguranca",
+   "texto": "5.8 Monitoramento e KPIs de Segurança"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "KPI",
+    "O que mede"
+   ],
+   "linhas": [
+    [
+     "MTTD",
+     "Tempo médio até um incidente ser detectado – meta: minutos a horas, não dias"
+    ],
+    [
+     "MTTR",
+     "Tempo médio até a resposta inicial ao incidente"
+    ],
+    [
+     "Taxa de Patches",
+     "Percentual de sistemas com correções críticas aplicadas – meta usual: 95%+ em 30 dias"
+    ],
+    [
+     "Phishing Simulado",
+     "Percentual de funcionários que clicam em campanhas de phishing simulado – meta: abaixo de 5%"
+    ],
+    [
+     "Adoção de MFA",
+     "Percentual de contas críticas protegidas por autenticação multifator – meta ideal: 100%"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Medir esses indicadores regularmente transforma segurança de uma preocupação abstrata em um processo gerenciável, com metas claras e progresso mensurável ao longo do tempo – exatamente como qualquer outra área crítica de uma organização."
+  },
+  {
+   "t": "h2",
+   "id": "5-9-lgpd-e-gdpr",
+   "texto": "5.9 LGPD e GDPR"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Legislação",
+    "Principais pontos"
+   ],
+   "linhas": [
+    [
+     "LGPD (Brasil)",
+     "Lei 13.709/2018, em vigor desde 2020 – multas de até 2% do faturamento, limitadas a R$ 50 milhões por infração; fiscalizada pela ANPD"
+    ],
+    [
+     "GDPR (União Europeia)",
+     "Em vigor desde maio de 2018 – multas de até 20 milhões de euros ou 4% do faturamento global, o que for maior"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Atualização 2025 — Enforcement em alta",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A ANPD intensificou a fiscalização da LGPD em 2025: a Deliberação CD-10/2025 introduziu multas diárias por descumprimento de medidas cautelares, e o STJ decidiu, em setembro de 2025, pela responsabilidade civil por disponibilização indevida de dados. Do lado europeu, as autoridades aplicaram cerca de €1,2 bilhão em multas de GDPR só em 2025, com o valor acumulado desde 2018 chegando a €7,1 bilhões. A fase puramente educativa dessas legislações está chegando ao fim – o enforcement é real e crescente."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Para um desenvolvedor, essas leis se traduzem em obrigações concretas: mapear todos os dados pessoais coletados pela aplicação, criptografar dados em trânsito e em repouso, implementar mecanismos para que o usuário exerça seus direitos (acesso, correção, exclusão), e ter um procedimento claro de notificação em caso de incidente de segurança."
+  }
+ ]
+}

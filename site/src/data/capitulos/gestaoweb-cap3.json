@@ -1,0 +1,288 @@
+{
+ "numero": 3,
+ "titulo": "Desenvolvimento de Aplicações Web",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Depois de entender a arquitetura geral de um sistema web (Capítulo 1) e onde ele pode ser hospedado (Capítulo 2), chegou a hora de olhar para dentro da aplicação: como ela é efetivamente construída. Este capítulo apresenta a divisão entre frontend e backend, os bancos de dados que sustentam a aplicação, os frameworks que aceleram o desenvolvimento moderno, e os princípios que garantem que o resultado funcione bem em qualquer tela – do celular ao monitor ultrawide."
+  },
+  {
+   "t": "h2",
+   "id": "3-1-frontend-backend",
+   "texto": "3.1 Frontend × Backend"
+  },
+  {
+   "t": "p",
+   "html": "Toda aplicação web moderna se divide, de forma didática, em duas grandes camadas. O <strong>frontend</strong> é tudo o que o usuário vê e com o que interage diretamente: a estrutura (HTML), o estilo (CSS) e o comportamento (JavaScript), organizados hoje, na maioria dos projetos profissionais, por frameworks como React, Angular ou Vue.js. O <strong>backend</strong> é o que acontece nos bastidores: a lógica de negócio, a autenticação, a conexão com o banco de dados – escrita em linguagens como Python, Java, PHP, C# ou Node.js, geralmente com o apoio de frameworks como Django, Laravel ou Spring."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático — E-commerce",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em uma loja virtual, o frontend exibe os produtos, permite adicionar itens ao carrinho e mostra a interface de pagamento. O backend processa o pedido, verifica se há estoque disponível, conecta-se ao banco de dados e confirma o pagamento junto ao gateway financeiro. O banco de dados, por fim, armazena os cadastros de produtos, usuários, pedidos e transações – é o elo entre as duas camadas."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-2-site-estatico-aplicacao-dinamica",
+   "texto": "3.2 Site Estático × Aplicação Dinâmica"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo",
+    "Características"
+   ],
+   "linhas": [
+    [
+     "Site Estático",
+     "Conteúdo fixo – todos os visitantes veem exatamente a mesma informação. Mais leve, hospedagem barata, manutenção simples. Ex.: portfólio, cartão de visita digital"
+    ],
+    [
+     "Aplicação Dinâmica",
+     "Conteúdo gerado com base nas ações do usuário. Depende de servidor e banco de dados. Ex.: lojas virtuais, redes sociais, plataformas de streaming"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A escolha entre um site estático e uma aplicação dinâmica não é uma questão de qual é “melhor” em termos absolutos, mas de qual resolve o problema em questão com o menor custo e complexidade possíveis: usar uma aplicação dinâmica completa para um site institucional simples é <em>over-engineering</em> – desperdício de recursos que não traz benefício real ao usuário."
+  },
+  {
+   "t": "h2",
+   "id": "3-3-javascript-no-cliente-e-no-servidor-e-typescript",
+   "texto": "3.3 JavaScript no Cliente e no Servidor, e TypeScript"
+  },
+  {
+   "t": "p",
+   "html": "O JavaScript é a única linguagem de programação nativamente suportada por todos os navegadores, e por isso ocupa um papel duplo no desenvolvimento web moderno. No <strong>cliente</strong> (<em>client-side</em>), ele valida formulários em tempo real, controla menus interativos, atualiza partes da página sem recarregá-la por completo (via AJAX/<em>Fetch</em>) e cria animações. No <strong>servidor</strong> (<em>server-side</em>, via Node.js), a mesma linguagem processa requisições HTTP, conecta-se a bancos de dados, autentica usuários e expõe APIs REST – permitindo que uma mesma equipe trabalhe em ambas as pontas da aplicação com uma única linguagem."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "TypeScript",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "TypeScript é JavaScript com tipagem estática, e em 2025 se tornou praticamente obrigatório em projetos profissionais de médio e grande porte. Ao declarar explicitamente o tipo de cada variável e função, o TypeScript permite que erros sejam detectados ainda durante o desenvolvimento – antes de o código chegar à produção –, o que se torna especialmente valioso em projetos grandes, com muitos desenvolvedores trabalhando na mesma base de código simultaneamente."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-4-bancos-de-dados-sql-nosql",
+   "texto": "3.4 Bancos de Dados: SQL × NoSQL"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Critério",
+    "SQL",
+    "NoSQL"
+   ],
+   "linhas": [
+    [
+     "Estrutura",
+     "Tabelas com linhas e colunas",
+     "Documentos, chave-valor ou grafos"
+    ],
+    [
+     "Esquema",
+     "Rígido, definido antes de usar",
+     "Flexível, pode variar por registro"
+    ],
+    [
+     "Consistência",
+     "ACID (alta)",
+     "Eventual – escala melhor em grande volume"
+    ],
+    [
+     "Escalabilidade",
+     "Vertical",
+     "Horizontal (distribui entre servidores)"
+    ],
+    [
+     "Exemplos",
+     "MySQL, PostgreSQL, Oracle",
+     "MongoDB, Firebase, Cassandra, Redis"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A escolha entre SQL e NoSQL depende, sobretudo, da natureza dos dados. Dados transacionais – pedidos, pagamentos, cadastros com relações bem definidas entre entidades – costumam se beneficiar da consistência forte e da integridade referencial de um banco SQL. Já dados com estrutura variável ou com volume e velocidade de escrita muito altos – registros de eventos, feeds de rede social, logs – costumam se adaptar melhor a um banco NoSQL."
+  },
+  {
+   "t": "h2",
+   "id": "3-5-recursos-avancados-de-bancos-sql",
+   "texto": "3.5 Recursos Avançados de Bancos SQL"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Recurso",
+    "Função"
+   ],
+   "linhas": [
+    [
+     "ACID",
+     "Garante Atomicidade, Consistência, Isolamento e Durabilidade em cada transação"
+    ],
+    [
+     "Índices",
+     "Aceleram buscas – funcionam como o índice remissivo de um livro, evitando percorrer a tabela inteira"
+    ],
+    [
+     "Views",
+     "Consultas salvas que funcionam como tabelas virtuais, simplificando consultas recorrentes"
+    ],
+    [
+     "Triggers",
+     "Ações automáticas disparadas por eventos específicos no banco de dados"
+    ],
+    [
+     "Stored Procedures",
+     "Executam regras de negócio diretamente no banco, próximas aos dados"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Comandos básicos como <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code> resolvem o dia a dia da manipulação de dados, mas são esses recursos avançados que diferenciam um banco de dados bem projetado de um que simplesmente “funciona”: índices bem posicionados podem ser a diferença entre uma consulta que leva 3 segundos e uma que leva 3 milissegundos."
+  },
+  {
+   "t": "h2",
+   "id": "3-6-frameworks-frontend",
+   "texto": "3.6 Frameworks Frontend"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Framework",
+    "Características"
+   ],
+   "linhas": [
+    [
+     "React (Meta)",
+     "Biblioteca baseada em componentes reutilizáveis e Virtual DOM – ideal para SPAs de alta performance"
+    ],
+    [
+     "Angular (Google)",
+     "Framework completo, com TypeScript nativo – forte em sistemas corporativos de grande porte"
+    ],
+    [
+     "Vue.js",
+     "Curva de aprendizado baixa – excelente para projetos de médio porte e prototipagem rápida"
+    ],
+    [
+     "Svelte",
+     "Compilador que gera JavaScript puro, sem framework em tempo de execução – sites de altíssima performance"
+    ],
+    [
+     "Next.js",
+     "Meta-framework construído sobre React, com renderização no servidor (SSR) – apps full-stack com SEO avançado"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Atualização 2025 — Frameworks Frontend",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Segundo o Stack Overflow Developer Survey de 2025, o React lidera em uso com 44,7%, seguido de Angular (18,2%) e Vue.js (17,6%). Curiosamente, o Svelte é o framework mais <em>admirado</em> pelos próprios desenvolvedores (62,4%), superando o React (52,1%) nesse quesito – um sinal de que popularidade de uso e satisfação nem sempre andam juntas. Meta-frameworks como Next.js, Nuxt e SvelteKit consolidaram-se como tendência, e o Tailwind CSS se tornou o framework de estilo mais popular do mercado."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-7-frameworks-backend",
+   "texto": "3.7 Frameworks Backend"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Framework",
+    "Contexto de uso"
+   ],
+   "linhas": [
+    [
+     "Django (Python)",
+     "Painel administrativo, ORM e autenticação prontos – usado por Instagram e Pinterest"
+    ],
+    [
+     "Laravel (PHP)",
+     "Sintaxe elegante e ORM Eloquent – muito comum em portais e startups"
+    ],
+    [
+     "Spring Boot (Java)",
+     "Robusto e escalável – padrão em sistemas bancários e grandes corporações"
+    ],
+    [
+     ".NET (C#)",
+     "Forte integração com o ecossistema Microsoft, alta performance – comum em órgãos públicos no Brasil"
+    ],
+    [
+     "Node.js/Express (JS)",
+     "Assíncrono e leve – ideal para APIs REST e aplicações em tempo real"
+    ],
+    [
+     "FastAPI (Python)",
+     "Alta performance com documentação automática – adotado amplamente em projetos de IA e Machine Learning"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Não existe um framework backend “melhor” de forma absoluta – a escolha depende do tipo de projeto, da experiência da equipe e do ecossistema em que o sistema vai se inserir. Uma equipe que já domina Python tende a produzir mais rápido e com menos erros usando Django ou FastAPI do que migrando às pressas para uma stack completamente nova só porque ela está na moda."
+  },
+  {
+   "t": "h2",
+   "id": "3-8-principios-do-design-responsivo",
+   "texto": "3.8 Princípios do Design Responsivo"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Princípio",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "Layouts Flexíveis",
+     "Usar unidades relativas (%, em, rem, vh, vw) em vez de pixels fixos"
+    ],
+    [
+     "Media Queries",
+     "Regras CSS que mudam o estilo aplicado conforme o tamanho da tela"
+    ],
+    [
+     "Imagens Fluidas",
+     "<code>max-width: 100%</code> garante que imagens nunca ultrapassem o contêiner"
+    ],
+    [
+     "Flexbox e Grid",
+     "Flexbox organiza em uma dimensão; Grid organiza layouts complexos em duas dimensões"
+    ],
+    [
+     "Mobile First",
+     "Projetar primeiro para o celular, expandindo progressivamente para telas maiores"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A abordagem <strong>Mobile First</strong> deixou de ser uma opção de design e se tornou, na prática, uma necessidade de mercado: a maioria absoluta dos acessos à web hoje acontece por dispositivos móveis, e projetar primeiro para a tela pequena obriga a equipe a priorizar o essencial – um exercício de disciplina que quase sempre resulta em uma experiência melhor também no desktop."
+  }
+ ]
+}

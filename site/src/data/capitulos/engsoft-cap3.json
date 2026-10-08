@@ -1,0 +1,398 @@
+{
+ "numero": 3,
+ "titulo": "Arquitetura de Software",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Arquitetura de software é a estrutura fundamental de um sistema – como os componentes são organizados, como se comunicam entre si e como as decisões de design impactam qualidade, escalabilidade e manutenibilidade ao longo do tempo. Diferentemente do código de uma funcionalidade específica, decisões arquiteturais afetam o sistema inteiro e são muito mais caras de reverter depois que o desenvolvimento avança – por isso, compreender arquitetura é essencial mesmo para quem ainda não ocupa um cargo de arquiteto."
+  },
+  {
+   "t": "p",
+   "html": "Este capítulo percorre as decisões de design em dois níveis (sistema e componente), os cinco princípios SOLID que orientam código orientado a objetos de qualidade, os principais padrões arquiteturais e o modelo MVC, e finaliza com o tema muitas vezes esquecido nos cursos de graduação: como manter, modernizar e, quando necessário, substituir sistemas que já estão em produção."
+  },
+  {
+   "t": "h2",
+   "id": "3-1-design-de-sistemas-e-componentes",
+   "texto": "3.1 Design de Sistemas e Componentes"
+  },
+  {
+   "t": "p",
+   "html": "O design de arquitetura acontece em dois níveis complementares: o <strong>design de sistemas</strong>, que trata das decisões de alto nível sobre como o sistema como um todo é estruturado; e o <strong>design de componentes</strong>, que trata de como cada módulo ou classe individual é projetado internamente."
+  },
+  {
+   "t": "h3",
+   "texto": "Design de Sistemas"
+  },
+  {
+   "t": "p",
+   "html": "No nível de sistema, as principais decisões incluem:"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Decomposição do sistema",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Como dividir o sistema em módulos, serviços ou camadas. Essa decisão determina o quão fácil será desenvolver, testar e manter cada parte de forma independente."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Definição de interfaces",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Como os diferentes componentes do sistema se comunicam entre si – por chamadas de função, APIs REST, filas de mensagens, eventos, entre outros mecanismos."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Escolha de tecnologias",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Quais linguagens, frameworks, bancos de dados e infraestrutura serão utilizados. Essa escolha impacta diretamente a produtividade da equipe e a capacidade de encontrar profissionais no mercado."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Estratégias de escalabilidade e disponibilidade",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Como o sistema vai lidar com o crescimento de usuários e dados, e como vai se comportar diante de falhas de componentes individuais."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Design de Componentes"
+  },
+  {
+   "t": "p",
+   "html": "No nível de componente, o foco está em como cada classe, módulo ou serviço individual é estruturado internamente – suas responsabilidades, suas dependências e como ele expõe funcionalidades para o restante do sistema. É neste nível que os princípios SOLID (Seção 3.2) se tornam especialmente relevantes, orientando decisões de design que impactam diretamente a manutenibilidade do código a longo prazo."
+  },
+  {
+   "t": "p",
+   "html": "Um sistema bem arquitetado no nível macro, mas mal projetado no nível de componentes, ainda pode se tornar difícil de manter – por isso os dois níveis de design precisam andar juntos."
+  },
+  {
+   "t": "h2",
+   "id": "3-2-principios-solid",
+   "texto": "3.2 Princípios SOLID"
+  },
+  {
+   "t": "p",
+   "html": "SOLID é um acrônimo que reúne cinco princípios de design orientado a objetos, popularizados por Robert C. Martin (conhecido como “Uncle Bob”). Esses princípios ajudam a criar sistemas mais fáceis de entender, manter e estender ao longo do tempo."
+  },
+  {
+   "t": "h3",
+   "texto": "S — Single Responsibility Principle (Princípio da Responsabilidade Única)"
+  },
+  {
+   "t": "p",
+   "html": "Uma classe deve ter apenas um motivo para mudar – ou seja, deve ser responsável por uma única parte da funcionalidade do sistema. Quando uma classe acumula múltiplas responsabilidades, qualquer mudança em uma delas arrisca quebrar as outras, e o código se torna difícil de testar isoladamente."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma classe Funcionario não deveria, ao mesmo tempo, calcular salário, gerar relatórios em PDF e enviar e-mails – essas são três responsabilidades distintas que deveriam estar em classes separadas."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "O — Open/Closed Principle (Princípio do Aberto/Fechado)"
+  },
+  {
+   "t": "p",
+   "html": "Entidades de software (classes, módulos, funções) devem estar abertas para extensão, mas fechadas para modificação. Isso significa que deve ser possível adicionar novos comportamentos sem alterar o código já existente e testado."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em vez de um método com vários if/else para calcular descontos por tipo de cliente, usar uma interface EstrategiaDesconto que pode ganhar novas implementações sem alterar o código que já funciona."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "L — Liskov Substitution Principle (Princípio da Substituição de Liskov)"
+  },
+  {
+   "t": "p",
+   "html": "Objetos de uma classe derivada devem poder substituir objetos da classe base sem alterar o comportamento correto do programa. Se uma subclasse quebra expectativas estabelecidas pela superclasse, a herança foi usada de forma inadequada."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Se Retangulo tem um método definirLargura() que também altera a altura (como ocorre em Quadrado), substituir um Retangulo por um Quadrado pode quebrar código que dependia do comportamento original."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "I — Interface Segregation Principle (Princípio da Segregação de Interfaces)"
+  },
+  {
+   "t": "p",
+   "html": "Clientes não deveriam ser forçados a depender de interfaces que não utilizam. É preferível ter várias interfaces pequenas e específicas do que uma única interface grande e genérica."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma interface Trabalhador com métodos trabalhar() e comer() força uma classe Robo a implementar comer() sem sentido – melhor separar em duas interfaces distintas."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "D — Dependency Inversion Principle (Princípio da Inversão de Dependência)"
+  },
+  {
+   "t": "p",
+   "html": "Módulos de alto nível não devem depender de módulos de baixo nível – ambos devem depender de abstrações. Além disso, abstrações não devem depender de detalhes; detalhes devem depender de abstrações."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma classe de serviço não deveria instanciar diretamente uma implementação concreta de banco de dados – deveria depender de uma interface de repositório, permitindo trocar a implementação sem alterar a lógica de negócio."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-3-padroes-arquiteturais-e-o-modelo-mvc",
+   "texto": "3.3 Padrões Arquiteturais e o Modelo MVC"
+  },
+  {
+   "t": "p",
+   "html": "Padrões arquiteturais são soluções consolidadas para problemas recorrentes de organização de sistemas em larga escala. Diferem dos padrões de projeto (como os do livro Gang of Four) por operarem em um nível mais alto – a estrutura geral do sistema, não a estrutura interna de uma classe."
+  },
+  {
+   "t": "h3",
+   "texto": "Arquitetura em Camadas (Layered Architecture)"
+  },
+  {
+   "t": "p",
+   "html": "Organiza o sistema em camadas horizontais, cada uma com uma responsabilidade específica – tipicamente apresentação, lógica de negócio e acesso a dados. Cada camada só se comunica com a camada imediatamente adjacente."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Vantagens e limitações",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Facilita a separação de responsabilidades e é bem conhecida pela maioria dos desenvolvedores, mas pode introduzir latência desnecessária e o risco de camadas que apenas repassam chamadas sem agregar valor real."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Arquitetura de Microsserviços"
+  },
+  {
+   "t": "p",
+   "html": "Divide o sistema em serviços pequenos e independentes, cada um responsável por uma capacidade de negócio específica, comunicando-se via rede (APIs, mensageria). Cada microsserviço pode ser desenvolvido, implantado e escalado de forma independente."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Vantagens e limitações",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Permite escalabilidade independente e times autônomos, mas traz complexidade operacional significativa – monitoramento distribuído, consistência de dados entre serviços e maior esforço de infraestrutura."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Arquitetura Orientada a Eventos (Event-Driven Architecture)"
+  },
+  {
+   "t": "p",
+   "html": "Os componentes se comunicam por meio da publicação e consumo de eventos, geralmente através de um barramento de eventos ou fila de mensagens, em vez de chamadas diretas entre serviços."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Vantagens e limitações",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Proporciona baixo acoplamento entre componentes e alta escalabilidade, mas torna o fluxo de dados mais difícil de rastrear e depurar, exigindo ferramentas específicas de observabilidade."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "O Modelo MVC (Model-View-Controller)"
+  },
+  {
+   "t": "p",
+   "html": "Um dos padrões arquiteturais mais utilizados no desenvolvimento de aplicações com interface, especialmente em aplicações web. Divide o sistema em três partes:"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Model (Modelo)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Representa os dados e as regras de negócio do sistema. É responsável por acessar e manipular informações, independentemente de como elas serão exibidas."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "View (Visão)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Responsável pela apresentação dos dados ao usuário – a interface visual. Não contém lógica de negócio, apenas exibe o que o Model fornece."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Controller (Controlador)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Recebe as ações do usuário, interpreta essas ações, aciona o Model quando necessário e determina qual View deve ser exibida em resposta."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Essa separação facilita a manutenção, pois mudanças na interface não afetam a lógica de negócio, e vice-versa – além de permitir que times diferentes trabalhem em paralelo em cada camada."
+  },
+  {
+   "t": "h2",
+   "id": "3-4-manutencao-modernizacao-e-substituicao-de-software",
+   "texto": "3.4 Manutenção, Modernização e Substituição de Software"
+  },
+  {
+   "t": "p",
+   "html": "A maior parte do ciclo de vida de um sistema de software não é gasta em seu desenvolvimento inicial, mas em sua manutenção – que pode se estender por anos ou décadas. Compreender como manter, modernizar e, quando necessário, substituir sistemas legados é uma habilidade tão importante quanto saber construí-los do zero."
+  },
+  {
+   "t": "h3",
+   "texto": "Manutenção de Software"
+  },
+  {
+   "t": "p",
+   "html": "Segundo a norma ISO/IEC 14764, a manutenção de software se divide em quatro tipos:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "Corretiva",
+     "Correção de defeitos identificados após a implantação do sistema"
+    ],
+    [
+     "Adaptativa",
+     "Ajustes necessários devido a mudanças no ambiente externo – novos sistemas operacionais, legislações, dependências de terceiros"
+    ],
+    [
+     "Perfectiva",
+     "Melhorias solicitadas pelos usuários ou identificadas como oportunidades de aprimoramento"
+    ],
+    [
+     "Preventiva",
+     "Alterações realizadas para reduzir a probabilidade de falhas futuras ou facilitar manutenções futuras"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Modernização de Sistemas Legados"
+  },
+  {
+   "t": "p",
+   "html": "Quando um sistema antigo ainda entrega valor de negócio, mas sua tecnologia está obsoleta, a modernização é frequentemente preferível à substituição completa. Estratégias comuns incluem:"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Refatoração",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Reestruturar o código interno sem alterar seu comportamento externo, melhorando a qualidade gradualmente."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Encapsulamento (Wrapping)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Criar uma camada de API moderna em torno de um sistema legado, permitindo que novos sistemas interajam com ele sem precisar entender sua implementação interna."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Migração incremental (Strangler Fig)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Substituir gradualmente partes do sistema legado por novos componentes, até que o sistema antigo possa ser completamente desativado – reduzindo o risco em comparação com uma reescrita total."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Substituição de Sistemas"
+  },
+  {
+   "t": "p",
+   "html": "Quando a modernização não é mais viável – por limitações técnicas profundas ou porque o custo de manutenção supera o de uma reescrita –, a substituição completa se torna necessária. Essa decisão deve considerar o risco de interromper operações críticas do negócio, o custo de treinamento dos usuários no novo sistema e a necessidade de migração de dados históricos."
+  }
+ ]
+}

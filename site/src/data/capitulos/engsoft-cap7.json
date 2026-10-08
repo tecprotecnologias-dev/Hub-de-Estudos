@@ -1,0 +1,188 @@
+{
+ "numero": 7,
+ "titulo": "Gestão da Configuração de Software",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Gestão da Configuração de Software (GCS) responde a uma pergunta central: o que temos, em qual versão está, quem mudou o quê, quando e por quê? Sem GCS, dois desenvolvedores podem sobrescrever o trabalho um do outro, uma versão com <em>bug</em> pode ir para produção sem que ninguém saiba qual mudança a introduziu, e a equipe pode perder horas tentando reproduzir um ambiente que funcionava antes. Este capítulo percorre os itens de configuração, o Git como sistema de controle de versão, as principais estratégias de <em>branching</em> e os mecanismos de auditoria e rastreabilidade."
+  },
+  {
+   "t": "h2",
+   "id": "7-1-parametros-de-configuracao-e-itens-de-configuracao",
+   "texto": "7.1 Parâmetros de Configuração e Itens de Configuração"
+  },
+  {
+   "t": "p",
+   "html": "Qualquer artefato com valor suficiente para ser gerenciado de forma independente é um <strong>Item de Configuração</strong> (IC): código-fonte e testes automatizados; documentação de requisitos e arquitetura; configuração de ambiente (Dockerfiles, <em>pipelines</em> CI/CD); artefatos de qualidade (planos e casos de teste); e artefatos de entrega (executáveis, pacotes de instalação, imagens Docker publicadas)."
+  },
+  {
+   "t": "h3",
+   "texto": "Versionamento Semântico (SemVer)"
+  },
+  {
+   "t": "p",
+   "html": "Formato <code>MAJOR.MINOR.PATCH</code>: <strong>MAJOR</strong> indica mudanças incompatíveis com versões anteriores (<em>breaking changes</em>); <strong>MINOR</strong> indica novas funcionalidades retrocompatíveis; <strong>PATCH</strong> indica correções de <em>bugs</em> retrocompatíveis. Rótulos especiais como <code>alpha</code>, <code>beta</code> e <code>RC</code> (<em>Release Candidate</em>) marcam estágios do ciclo de release: <code>1.0.0-alpha</code> → <code>1.0.0-beta</code> → <code>1.0.0-RC1</code> → <code>1.0.0</code>."
+  },
+  {
+   "t": "h3",
+   "texto": "Baseline — Linha de Base"
+  },
+  {
+   "t": "p",
+   "html": "Um <em>snapshot</em> formal e aprovado de um conjunto de itens de configuração – um ponto de referência estável ao qual é possível retornar caso necessário."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo de Baseline",
+    "Momento de Aprovação",
+    "Itens Incluídos"
+   ],
+   "linhas": [
+    [
+     "Requisitos",
+     "Final da fase de levantamento",
+     "SRS aprovado, histórias priorizadas"
+    ],
+    [
+     "Arquitetura",
+     "Após aprovação do design",
+     "Documentos de arquitetura, diagramas"
+    ],
+    [
+     "Release",
+     "Antes de cada implantação",
+     "Código-fonte, executáveis, scripts de banco"
+    ],
+    [
+     "Produção",
+     "Após cada <em>deploy</em> bem-sucedido",
+     "Versão exata de tudo que está em produção"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-2-controle-de-versoes-com-git",
+   "texto": "7.2 Controle de Versões com Git"
+  },
+  {
+   "t": "p",
+   "html": "O coração operacional da gestão de configuração. Criado por Linus Torvalds em 2005 – hoje o sistema de controle de versão mais utilizado no mundo."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Dimensão",
+    "Centralizado (CVCS)",
+    "Distribuído (DVCS)"
+   ],
+   "linhas": [
+    [
+     "Repositório",
+     "Único servidor central",
+     "Cada desenvolvedor tem cópia completa"
+    ],
+    [
+     "Operações locais",
+     "Requerem conexão ao servidor",
+     "<em>Commit</em>, <em>log</em>, <em>diff</em> – todas locais"
+    ],
+    [
+     "Exemplos",
+     "SVN, CVS, TFS",
+     "Git, Mercurial"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Cinco conceitos fundamentais estruturam o Git: <strong>Repositório</strong> (banco de dados com todo o histórico, local ou remoto); <strong>Commit</strong> (<em>snapshot</em> do estado dos arquivos, com mensagem descritiva e <em>hash</em> único); <strong>Branch</strong> (linha de desenvolvimento independente, barata e rápida de criar); <strong>Merge</strong> (integração de alterações de uma <em>branch</em> em outra, com conflitos resolvidos manualmente); e <strong>Tag</strong> (marcador imutável em um <em>commit</em> para <em>releases</em>, como <code>v2.1.0</code>)."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Conventional Commits",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Padrão de mensagens de <em>commit</em> que facilita a leitura do histórico: <code>feat</code> (funcionalidade), <code>fix</code> (correção), <code>docs</code> (documentação), <code>refactor</code> (refatoração), <code>test</code> (testes), <code>chore</code> (manutenção)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-3-estrategias-de-branching",
+   "texto": "7.3 Estratégias de Branching"
+  },
+  {
+   "t": "p",
+   "html": "Define como a equipe organiza e nomeia <em>branches</em>, quando cria e mescla cada uma. A escolha certa impacta velocidade de entrega e estabilidade."
+  },
+  {
+   "t": "h3",
+   "texto": "Git Flow"
+  },
+  {
+   "t": "p",
+   "html": "Estratégia mais estruturada, com <em>branches</em> dedicadas: <code>main</code> (produção), <code>develop</code> (integração), <code>feature/*</code>, <code>release/*</code>, <code>hotfix/*</code>. Adequada para projetos com releases planejadas e equipes maiores com múltiplas versões em produção simultaneamente."
+  },
+  {
+   "t": "h3",
+   "texto": "GitHub Flow"
+  },
+  {
+   "t": "p",
+   "html": "Estratégia simples e eficaz para equipes que praticam Entrega Contínua: apenas a <em>branch</em> <code>main</code> (sempre <em>deployável</em>) e <em>branches</em> de <em>feature</em> de curta duração, integradas via <em>Pull Request</em>. Ideal para times ágeis com <em>deploy</em> frequente."
+  },
+  {
+   "t": "h3",
+   "texto": "Trunk-Based Development"
+  },
+  {
+   "t": "p",
+   "html": "Os desenvolvedores integram mudanças na <em>branch</em> principal diariamente ou várias vezes ao dia, em <em>commits</em> pequenos. <em>Feature flags</em> controlam a visibilidade de funcionalidades incompletas – exige times com alta maturidade em CI/CD."
+  },
+  {
+   "t": "h2",
+   "id": "7-4-auditoria-rastreabilidade-e-controle-de-mudancas",
+   "texto": "7.4 Auditoria, Rastreabilidade e Controle de Mudanças"
+  },
+  {
+   "t": "p",
+   "html": "Nenhuma mudança em um item de configuração controlado deve ocorrer de forma não planejada – toda alteração precisa ser registrada, avaliada e autorizada."
+  },
+  {
+   "t": "h3",
+   "texto": "Auditoria de Configuração: FCA vs. PCA"
+  },
+  {
+   "t": "p",
+   "html": "<strong>FCA</strong> (Auditoria Funcional) verifica se o software entregue realmente implementa todos os requisitos funcionais documentados na baseline de requisitos – “o que foi prometido foi entregue?”. <strong>PCA</strong> (Auditoria Física) verifica se todos os artefatos que compõem o produto estão completos, corretamente identificados e presentes – um inventário completo do produto a ser entregue."
+  },
+  {
+   "t": "h3",
+   "texto": "Rastreabilidade Bidirecional"
+  },
+  {
+   "t": "p",
+   "html": "A capacidade de acompanhar a vida de um requisito ou artefato em ambas as direções: <em>Forward Traceability</em> (Requisito → Design → Código → Teste) verifica se todos os requisitos foram implementados e testados; <em>Backward Traceability</em> (Código/<em>bug</em> → Requisito de origem) identifica a origem de um defeito."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Fluxo de Controle de Mudanças",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Solicitação (<em>Change Request</em>) → Análise de impacto → Aprovação (<em>Change Control Board</em> ou PO) → Implementação → Revisão (<em>code review</em> e testes) → <em>Deploy</em> → Fechamento. Em ambientes ágeis, o <em>backlog</em> priorizado pelo <em>Product Owner</em> é o mecanismo de controle de mudanças – mais leve, mas com a mesma essência."
+    }
+   ]
+  }
+ ]
+}

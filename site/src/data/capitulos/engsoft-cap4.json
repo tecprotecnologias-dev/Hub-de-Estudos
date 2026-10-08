@@ -1,0 +1,204 @@
+{
+ "numero": 4,
+ "titulo": "Programação Orientada a Objetos (POO)",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Programação Orientada a Objetos (POO) é um paradigma de programação baseado na ideia de que um sistema pode ser modelado como um conjunto de objetos que interagem entre si. Cada objeto representa uma entidade do mundo real ou do domínio do problema, com suas próprias características (atributos) e comportamentos (métodos). Desde sua origem na linguagem Simula, nos anos 1960, e sua consolidação com o Smalltalk, na década de 1970, a POO se tornou o paradigma dominante da indústria com Java e C++ nos anos 1990, e segue central em Python, C#, Ruby e Kotlin. Este capítulo revisita os conceitos fundamentais, os quatro pilares clássicos e aprofunda herança, polimorfismo e os princípios SOLID já introduzidos no Capítulo 3, agora sob a ótica específica da POO."
+  },
+  {
+   "t": "h2",
+   "id": "4-1-conceitos-fundamentais-de-poo",
+   "texto": "4.1 Conceitos Fundamentais de POO"
+  },
+  {
+   "t": "h3",
+   "texto": "Classe e Objeto"
+  },
+  {
+   "t": "p",
+   "html": "Uma <strong>classe</strong> é um molde, um modelo ou uma planta baixa a partir da qual os objetos são criados – define quais atributos e métodos os objetos daquela categoria terão, mas a classe em si não é um objeto. Um <strong>objeto</strong> é uma instância de uma classe – uma entidade concreta criada a partir do molde, com seus próprios valores de atributos, mas compartilhando a mesma estrutura definida pela classe."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Se <code>Carro</code> é a classe (molde), então <code>meuCarro</code> (um Fiat Argo vermelho, 2023) e <code>carroDoVizinho</code> (um Chevrolet Onix prata, 2022) são objetos distintos, ambos criados a partir da mesma classe: atributos <code>marca</code>, <code>modelo</code>, <code>cor</code>, <code>velocidadeAtual</code>; métodos <code>ligar()</code>, <code>desligar()</code>, <code>acelerar()</code>, <code>frear()</code>."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Atributos, Métodos e Abstração"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Atributos</strong> são características ou propriedades de um objeto – seus dados internos (marca, cor, velocidade). <strong>Métodos</strong> são ações ou comportamentos que um objeto pode executar (<code>ligar()</code>, <code>acelerar()</code>, <code>frear()</code>). <strong>Abstração</strong>, neste nível, significa focar apenas no que é relevante para o problema, ignorando detalhes desnecessários – um objeto <code>Cliente</code> precisa de nome, CPF e endereço, mas não de altura ou time de futebol."
+  },
+  {
+   "t": "h2",
+   "id": "4-2-os-quatro-pilares-da-poo",
+   "texto": "4.2 Os Quatro Pilares da POO"
+  },
+  {
+   "t": "p",
+   "html": "Juntos, os quatro pilares permitem criar sistemas organizados, reutilizáveis e de fácil manutenção."
+  },
+  {
+   "t": "h3",
+   "texto": "Encapsulamento"
+  },
+  {
+   "t": "p",
+   "html": "Princípio de proteger os dados internos de um objeto, expondo apenas o que é necessário. Atributos são declarados privados; o acesso é controlado por métodos públicos (<em>getters</em> e <em>setters</em>), que podem validar os dados antes de aceitá-los. Exemplo: em uma conta bancária, o saldo é privado, e o método <code>sacar()</code> verifica se há saldo suficiente antes de reduzi-lo – ninguém de fora pode definir <code>saldo = -1000</code> diretamente."
+  },
+  {
+   "t": "h3",
+   "texto": "Herança"
+  },
+  {
+   "t": "p",
+   "html": "Mecanismo pelo qual uma classe (subclasse) herda atributos e métodos de outra classe (superclasse). A subclasse pode adicionar novos atributos e métodos, ou sobrescrever métodos herdados com implementações específicas. Exemplo: <code>Funcionario</code> é a superclasse com <code>nome</code>, <code>CPF</code> e <code>calcularSalario()</code>; <code>Gerente</code> e <code>Vendedor</code> herdam de <code>Funcionario</code>, cada um sobrescrevendo <code>calcularSalario()</code> com sua própria lógica."
+  },
+  {
+   "t": "h3",
+   "texto": "Polimorfismo"
+  },
+  {
+   "t": "p",
+   "html": "Significa “muitas formas” – a capacidade de um mesmo método se comportar de formas diferentes dependendo do objeto que o executa. Existem dois tipos: <strong>Sobrescrita</strong> (<em>Override</em>), quando a subclasse redefine um método herdado mantendo a mesma assinatura; e <strong>Sobrecarga</strong> (<em>Overload</em>), quando a mesma classe define métodos com o mesmo nome, mas com parâmetros diferentes."
+  },
+  {
+   "t": "h3",
+   "texto": "Abstração (como pilar)"
+  },
+  {
+   "t": "p",
+   "html": "Manifesta-se por meio de <strong>Classes Abstratas</strong> (não podem ser instanciadas diretamente; servem como base) e <strong>Interfaces</strong> (contrato que define quais métodos uma classe deve implementar, sem especificar o como). Exemplo: a interface <code>Pagamento</code> define o método <code>processar()</code>; as classes <code>CartaoCredito</code>, <code>Pix</code> e <code>Boleto</code> implementam <code>Pagamento</code> cada uma à sua maneira – o checkout usa <code>Pagamento</code> sem saber qual implementação está sendo usada."
+  },
+  {
+   "t": "h2",
+   "id": "4-3-heranca-polimorfismo-e-abstracao-em-profundidade",
+   "texto": "4.3 Herança, Polimorfismo e Abstração em Profundidade"
+  },
+  {
+   "t": "h3",
+   "texto": "Herança: Uso Correto e Armadilhas"
+  },
+  {
+   "t": "p",
+   "html": "A herança deve ser usada quando existe uma relação genuína “é um” entre as classes – <code>Gerente</code> É UM <code>Funcionario</code> está correto. Porém, herança excessiva cria hierarquias rígidas e dificulta a manutenção. O princípio <strong>“prefira composição à herança”</strong> (<em>favor composition over inheritance</em>) recomenda que, quando a relação entre classes é “tem um” em vez de “é um”, a composição é mais flexível: <code>Animal</code> → <code>Cachorro</code> → <code>Labrador</code> é herança genuína, enquanto <code>Carro</code> contendo <code>Motor</code>, <code>Roda</code> e <code>Câmbio</code> é composição."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Situação",
+    "Usar Herança",
+    "Usar Composição"
+   ],
+   "linhas": [
+    [
+     "Relação",
+     "“É um”",
+     "“Tem um”"
+    ],
+    [
+     "Flexibilidade",
+     "Menos flexível – é estática",
+     "Mais flexível – componentes trocáveis"
+    ],
+    [
+     "Acoplamento",
+     "Alto – subclasse conhece superclasse",
+     "Baixo – objetos compostos são independentes"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Polimorfismo: Sobrescrita vs. Sobrecarga"
+  },
+  {
+   "t": "p",
+   "html": "O polimorfismo permite escrever código que trabalha com abstrações em vez de tipos concretos, tornando o sistema muito mais extensível. Ao adicionar um novo tipo – por exemplo, um novo tipo de <code>Funcionario</code> –, o código existente que usa a interface não precisa ser modificado: basta criar a nova classe e implementar o método esperado."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Isso é o poder do polimorfismo",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma lista de <code>Funcionario</code> chama <code>calcularSalario()</code> para cada elemento – cada objeto (<code>Gerente</code>, <code>Vendedor</code>, <code>Analista</code>) responde com seu próprio cálculo, sem que o código chamador saiba o tipo exato. Para adicionar <code>Estagiario</code>, basta criar a classe e implementar <code>calcularSalario()</code> – o restante do código funciona sem nenhuma modificação: extensibilidade sem alterar o que já funciona."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-4-principios-solid",
+   "texto": "4.4 Princípios SOLID"
+  },
+  {
+   "t": "p",
+   "html": "Já introduzidos no Capítulo 3 – aqui revisamos com foco na aplicação direta aos pilares da POO, com novos exemplos de violação e correção."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Princípio",
+    "Problema que Resolve",
+    "Indicador de Violação"
+   ],
+   "linhas": [
+    [
+     "S — Responsabilidade Única",
+     "Classes gigantes e difíceis de testar",
+     "Classe com muitas razões para mudar"
+    ],
+    [
+     "O — Aberto/Fechado",
+     "Modificações que geram regressões",
+     "<code>if/else</code> crescente para cada novo tipo"
+    ],
+    [
+     "L — Substituição de Liskov",
+     "Herança que quebra comportamento",
+     "Subclasse lança exceção em método herdado"
+    ],
+    [
+     "I — Segregação de Interfaces",
+     "Interfaces gordas com métodos inúteis",
+     "Classe implementa método com corpo vazio"
+    ],
+    [
+     "D — Inversão de Dependência",
+     "Alto acoplamento entre módulos",
+     "<code>new ConcreteClass()</code> dentro de classe de alto nível"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo — Violação de L (Liskov)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Um caso clássico: <code>Quadrado</code> herda de <code>Retangulo</code> – ao alterar a largura, a altura também muda, violando o contrato esperado de um retângulo. Solução: ambos herdam de uma classe mais genérica, <code>FormaGeometrica</code>, em vez de um herdar do outro."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "SOLID não são regras rígidas – são guias de design para código mais limpo, flexível e testável, mesmo em sistemas que evoluem por longos períodos."
+  }
+ ]
+}

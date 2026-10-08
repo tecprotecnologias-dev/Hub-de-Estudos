@@ -1,0 +1,580 @@
+{
+ "numero": 5,
+ "titulo": "Regulamentação de Marketing Digital",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "O marketing digital tornou-se o principal canal de comunicação entre marcas e consumidores na era da internet. Com bilhões de pessoas conectadas diariamente, empresas investem cifras crescentes em anúncios online, campanhas em redes sociais, e-mail marketing, influenciadores digitais e personalização de conteúdo baseada em dados. Mas esse poder de alcance traz responsabilidades jurídicas significativas: o uso inadequado de dados pessoais, a falta de transparência na publicidade paga, a segmentação abusiva de públicos vulneráveis e o desrespeito às regras do CONAR e do CDC podem resultar em sanções, processos judiciais e danos reputacionais graves. Este capítulo explora o arcabouço legal que regula o marketing digital no Brasil e no mundo."
+  },
+  {
+   "t": "h2",
+   "id": "5-1-marketing-digital-e-o-arcabouco-regulatorio-brasileiro",
+   "texto": "5.1 Marketing Digital e o Arcabouço Regulatório Brasileiro"
+  },
+  {
+   "t": "p",
+   "html": "Não há uma lei única para publicidade online — a regulamentação é formada por diferentes instrumentos legais, normativos e de autorregulação."
+  },
+  {
+   "t": "h3",
+   "texto": "As Fontes do Direito da Publicidade Digital"
+  },
+  {
+   "t": "p",
+   "html": "CDC (Lei 8.078/1990): proíbe publicidade enganosa e abusiva; vincula o fornecedor à oferta veiculada."
+  },
+  {
+   "t": "p",
+   "html": "CONAR (1980): autorregulação de adesão voluntária, mas amplamente respeitada."
+  },
+  {
+   "t": "p",
+   "html": "LGPD (Lei 13.709/2018): exige base legal e consentimento para uso de dados em campanhas."
+  },
+  {
+   "t": "p",
+   "html": "Marco Civil da Internet: regras de privacidade e responsabilidade de plataformas."
+  },
+  {
+   "t": "p",
+   "html": "BACEN e CVM: regulam publicidade de produtos financeiros e criptoativos."
+  },
+  {
+   "t": "p",
+   "html": "ANVISA e ANS: restringem publicidade de medicamentos, alimentos e planos de saúde."
+  },
+  {
+   "t": "h3",
+   "texto": "O Papel do CONAR no Marketing Digital"
+  },
+  {
+   "t": "p",
+   "html": "Organização da sociedade civil que estabelece padrões éticos para toda comunicação comercial no Brasil. Suas decisões não têm força de lei, mas têm autoridade moral e prática para recomendar suspensão ou alteração de campanhas."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Princípio</strong>",
+    "<strong>Aplicação no Marketing Digital</strong>"
+   ],
+   "linhas": [
+    [
+     "Legalidade",
+     "Anúncios de apostas, cigarros e medicamentos têm restrições específicas"
+    ],
+    [
+     "Honestidade",
+     "Claims de produto devem ser comprováveis; before/after deve ser real"
+    ],
+    [
+     "Veracidade",
+     "Depoimentos de influenciadores devem refletir experiência real"
+    ],
+    [
+     "Identificação Publicitária",
+     "Posts patrocinados e publis devem ser sinalizados explicitamente"
+    ],
+    [
+     "Proteção ao Consumidor",
+     "Proibida segmentação de anúncios de crédito para endividados"
+    ],
+    [
+     "Respeito à Concorrência",
+     "Anúncios comparativos devem ser objetivos e verificáveis"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-2-publicidade-enganosa-e-abusiva-no-ambiente-digital",
+   "texto": "5.2 Publicidade Enganosa e Abusiva no Ambiente Digital"
+  },
+  {
+   "t": "h3",
+   "texto": "Publicidade Enganosa — CDC, Art. 37, §1º"
+  },
+  {
+   "t": "p",
+   "html": "Informação ou comunicação publicitária inteira ou parcialmente falsa, ou capaz de induzir o consumidor a erro — mesmo por omissão."
+  },
+  {
+   "t": "h3",
+   "texto": "Exemplos de Publicidade Enganosa"
+  },
+  {
+   "t": "p",
+   "html": "Preço enganoso: anunciar por R$ 99,90 e cobrar R$ 299,90 sem informar condições reais."
+  },
+  {
+   "t": "p",
+   "html": "Claims de saúde não comprovados: \"emagrece 10 kg em 10 dias\" sem respaldo científico validado pela ANVISA."
+  },
+  {
+   "t": "p",
+   "html": "Falsos testemunhos: depoimentos fabricados ou atores como clientes reais."
+  },
+  {
+   "t": "p",
+   "html": "Urgência e escassez falsas: contadores regressivos e \"últimas unidades\" que se reiniciam (dark pattern)."
+  },
+  {
+   "t": "p",
+   "html": "Omissão de informações: anunciar crédito sem informar o CET (Custo Efetivo Total)."
+  },
+  {
+   "t": "p",
+   "html": "Greenwashing: alegar \"sustentável\" ou \"carbono neutro\" sem comprovação técnica."
+  },
+  {
+   "t": "h3",
+   "texto": "Publicidade Abusiva — CDC, Art. 37, §2º"
+  },
+  {
+   "t": "p",
+   "html": "Mesmo podendo ser verdadeira, viola valores éticos ou explora vulnerabilidades do consumidor de forma prejudicial."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Exploração de inseguranças:</strong> corpos irreais ou padrões de beleza inalcançáveis para vender emagrecedores.",
+    "<strong>Jogo e ganho fácil:</strong> apostas online que reforçam enriquecimento rápido sem alertar sobre riscos.",
+    "<strong>Crédito predatório:</strong> crédito fácil direcionado a pessoas em situação de vulnerabilidade financeira.",
+    "<strong>Conteúdo discriminatório:</strong> estereótipos de gênero, raça ou orientação sexual de forma depreciativa.",
+    "<strong>Pressão psicológica:</strong> urgência artificial ou pressão extrema para forçar decisão de compra imediata."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: Dark Patterns — Armadilhas de Design que Violam o CDC",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Roach Motel: fácil assinar (1 clique), mas extremamente difícil cancelar."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Confirmshaming: botão de recusa com texto que constrange: \"Não, prefiro pagar mais caro\"."
+  },
+  {
+   "t": "p",
+   "html": "Hidden Costs: taxas reveladas só na última etapa do checkout."
+  },
+  {
+   "t": "p",
+   "html": "Privacy Zuckering: interface confusa que leva a compartilhar mais dados do que pretendia."
+  },
+  {
+   "t": "p",
+   "html": "Trick Questions: perguntas confusas que levam a aceitar comunicações sem perceber."
+  },
+  {
+   "t": "h2",
+   "id": "5-3-publicidade-por-influenciadores-digitais-e-o-conar",
+   "texto": "5.3 Publicidade por Influenciadores Digitais e o CONAR"
+  },
+  {
+   "t": "h3",
+   "texto": "O Fenômeno do Marketing de Influência"
+  },
+  {
+   "t": "p",
+   "html": "Movimentou mais de US$ 21 bilhões em 2023. O Brasil é o país com maior número de influenciadores per capita do mundo, com criadores de todos os portes — dos nano-influenciadores (1 a 10 mil seguidores) às celebridades com dezenas de milhões. A falta de transparência nessas relações comerciais é um dos principais problemas regulatórios do setor."
+  },
+  {
+   "t": "h3",
+   "texto": "Resolução CONAR nº 01/2023 — Publicidade por Influenciadores"
+  },
+  {
+   "t": "p",
+   "html": "Identificação Obrigatória: todo conteúdo pago — inclusive permuta ou produto grátis — deve ser identificado (#publi, #ad)."
+  },
+  {
+   "t": "p",
+   "html": "Posicionamento da Marcação: visível, no início do post, legível e em contraste — não enterrada em hashtags."
+  },
+  {
+   "t": "p",
+   "html": "Responsabilidade Compartilhada: marca e influenciador são corresponsáveis pelo conteúdo veiculado."
+  },
+  {
+   "t": "p",
+   "html": "Conteúdo Verídico: influenciador deve ter experiência real; afirmações devem ser verificáveis."
+  },
+  {
+   "t": "p",
+   "html": "Restrições Setoriais: mesmas restrições da publicidade tradicional: cigarros, álcool, medicamentos, apostas."
+  },
+  {
+   "t": "h3",
+   "texto": "Responsabilidade Civil e Penal dos Influenciadores"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Situação</strong>",
+    "<strong>Responsabilidade</strong>",
+    "<strong>Base Legal</strong>"
+   ],
+   "linhas": [
+    [
+     "Promover produto defeituoso sem alertar",
+     "Solidária com o fabricante",
+     "CDC arts. 12 e 18"
+    ],
+    [
+     "Afirmar falsamente que usa o produto",
+     "Publicidade enganosa e danos materiais",
+     "CDC art. 37; CC art. 186"
+    ],
+    [
+     "Promover esquema de pirâmide",
+     "Penal por estelionato + civil solidária",
+     "CP art. 171; CDC art. 37"
+    ],
+    [
+     "Publicidade não identificada p/ menores de 12",
+     "Agravamento por violação do ECA",
+     "ECA art. 78; CONAR"
+    ],
+    [
+     "Vazar dados de seguidores em sorteios",
+     "Responsabilidade como controlador/operador",
+     "LGPD arts. 44 e 45"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Boas Práticas para Contratos com Influenciadores"
+  },
+  {
+   "t": "p",
+   "html": "Escopo do Conteúdo (quantos posts, quais plataformas, frequência); Aprovação Prévia (antes da publicação); Obrigação de Identificação (conforme normas do CONAR); Exclusividade (em relação a concorrentes); Propriedade do Conteúdo (reuso pela marca); Cláusula de Conduta (rescisão por dano reputacional)."
+  },
+  {
+   "t": "h2",
+   "id": "5-4-publicidade-segmentada-comportamental-e-uso-de-dados",
+   "texto": "5.4 Publicidade Segmentada, Comportamental e Uso de Dados"
+  },
+  {
+   "t": "h3",
+   "texto": "Como Funciona a Publicidade Baseada em Dados"
+  },
+  {
+   "t": "p",
+   "html": "A publicidade digital moderna é fundamentada na coleta e análise de dados comportamentais: sites visitados, buscas, produtos visualizados, localização e interações em redes sociais criam perfis de audiência altamente detalhados."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Tipo</strong>",
+    "<strong>Dados Utilizados</strong>",
+    "<strong>Risco Legal</strong>"
+   ],
+   "linhas": [
+    [
+     "Retargeting",
+     "Cookies de terceiros, pixel de rastreamento",
+     "Exige consentimento via banner (LGPD)"
+    ],
+    [
+     "Lookalike Audiences",
+     "Lista de clientes + algoritmos da plataforma",
+     "Compartilhamento exige base legal"
+    ],
+    [
+     "Segmentação por interesses",
+     "Histórico de navegação, curtidas, buscas",
+     "Dados inferidos exigem transparência"
+    ],
+    [
+     "Geolocalização",
+     "GPS, Wi-Fi, endereço IP",
+     "Dado sensível em certos contextos"
+    ],
+    [
+     "Dados sensíveis",
+     "Inferência de saúde, religião, orientação sexual",
+     "Vedada sem base legal específica (art. 11)"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Cookies, Rastreamento e a LGPD"
+  },
+  {
+   "t": "h3",
+   "texto": "Requisitos Legais para um Banner de Cookies"
+  },
+  {
+   "t": "p",
+   "html": "Clareza (finalidade de cada categoria); Granularidade (aceitar/recusar cada categoria separadamente); Recusa tão fácil quanto aceitação; Sem cookies antes do consentimento (consent-first); Registro do consentimento; Fácil revogação."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O Google anunciou — e adiou diversas vezes — a descontinuação dos cookies de terceiros no Chrome, acompanhando decisões semelhantes da Apple (Safari) e Mozilla (Firefox). Para as marcas, o futuro do marketing digital é baseado em dados consentidos (first-party data) e relações diretas com os consumidores."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-5-consentimento-e-privacidade-em-campanhas-de-marketing",
+   "texto": "5.5 Consentimento e Privacidade em Campanhas de Marketing"
+  },
+  {
+   "t": "p",
+   "html": "Para fins de marketing direto, o consentimento é a base legal mais utilizada e, muitas vezes, a única adequada."
+  },
+  {
+   "t": "h3",
+   "texto": "Requisitos do Consentimento Válido — LGPD, Art. 8º"
+  },
+  {
+   "t": "p",
+   "html": "Livre: não pode ser condicionado à prestação de serviço."
+  },
+  {
+   "t": "p",
+   "html": "Informado: o usuário deve saber exatamente o que está autorizando."
+  },
+  {
+   "t": "p",
+   "html": "Inequívoco: manifestação positiva; caixas pré-marcadas não valem."
+  },
+  {
+   "t": "p",
+   "html": "Registrável: a empresa deve poder comprovar sua obtenção."
+  },
+  {
+   "t": "p",
+   "html": "Granular: consentir separadamente para cada finalidade."
+  },
+  {
+   "t": "p",
+   "html": "Revogável: a qualquer momento, com a mesma facilidade."
+  },
+  {
+   "t": "h3",
+   "texto": "Double Opt-in: a Melhor Prática de Consentimento"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Modelo</strong>",
+    "<strong>Validade sob a LGPD</strong>",
+    "<strong>Recomendação</strong>"
+   ],
+   "linhas": [
+    [
+     "Single Opt-in",
+     "Questionável — sem confirmação da vontade",
+     "Evitar para e-mail marketing"
+    ],
+    [
+     "Double Opt-in",
+     "Válido — consentimento positivo e verificado",
+     "Recomendado para todas as listas"
+    ],
+    [
+     "Soft Opt-in",
+     "Permitido com cautela (legítimo interesse)",
+     "Usar com transparência e opt-out fácil"
+    ],
+    [
+     "Opt-out",
+     "Inválido — sem manifestação prévia",
+     "Vedado pela LGPD para marketing"
+    ],
+    [
+     "Caixa pré-marcada",
+     "Inválido — não é inequívoco",
+     "Vedado pela LGPD"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Gestão de Preferências e o Direito de Opt-out"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Link de descadastramento — todo e-mail marketing deve conter link visível e funcional.",
+    "Processamento imediato — enviar mensagens após o descadastramento é prática ilegal.",
+    "Opt-out granular — o usuário deve poder recusar tipos específicos de comunicação.",
+    "Exclusão de dados — a solicitação deve ser atendida em prazo razoável, com confirmação ao titular."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-6-e-mail-marketing-sms-e-notificacoes-push-regras-legais",
+   "texto": "5.6 E-mail Marketing, SMS e Notificações Push: Regras Legais"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Canal</strong>",
+    "<strong>Consentimento</strong>",
+    "<strong>Opt-out</strong>"
+   ],
+   "linhas": [
+    [
+     "E-mail Marketing",
+     "Opt-in explícito; double opt-in recomendado",
+     "Link de descadastramento em todo e-mail"
+    ],
+    [
+     "SMS Comercial",
+     "Opt-in exigido; ANATEL veda envio sem consentimento",
+     "Instrução de STOP ou CANCELAR"
+    ],
+    [
+     "WhatsApp Business",
+     "Consentimento expresso; sem envio em massa não solicitado",
+     "Botão de bloqueio nativo do app"
+    ],
+    [
+     "Notificação Push",
+     "Opt-in obrigatório pelo sistema (iOS/Android)",
+     "Configuração do sistema e da conta"
+    ],
+    [
+     "Retargeting por e-mail",
+     "Pixel exige consentimento de cookies",
+     "Opt-out do anúncio e da audiência"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Checklist de E-mail Marketing em Conformidade"
+  },
+  {
+   "t": "p",
+   "html": "Lista Própria e Autorizada (nunca compre ou alugue listas); Identificação do Remetente (nome, domínio próprio, CNPJ no rodapé); Assunto Honesto; Conteúdo Verificável; Link de Descadastramento (visível, sem exigir login); Gestão de Bounces (spam acima de 0,1% gera bloqueio); Registro de Consentimento (log de quando, como e onde foi obtido)."
+  },
+  {
+   "t": "h2",
+   "id": "5-7-publicidade-para-publicos-vulneraveis-criancas-e-idosos",
+   "texto": "5.7 Publicidade para Públicos Vulneráveis: Crianças e Idosos"
+  },
+  {
+   "t": "h3",
+   "texto": "Crianças e Adolescentes"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Vedado abuso da inexperiência ou apelo emocional (pester power).",
+    "Branded content infantil deve ser identificado.",
+    "Dados de crianças até 12 anos exigem consentimento dos pais (LGPD art. 14).",
+    "YouTube Kids e Roblox têm políticas próprias contra álcool e apostas."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Idosos"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Estatuto do Idoso e CDC protegem consumidores 60+.",
+    "Produtos financeiros: clareza sobre custos e riscos.",
+    "Promessas de cura milagrosa são vedadas pela ANVISA.",
+    "Interfaces devem ser acessíveis — dificuldade de uso pode ser dark pattern."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-8-regulamentacoes-setoriais-e-publicidade-em-plataformas-digitais",
+   "texto": "5.8 Regulamentações Setoriais e Publicidade em Plataformas Digitais"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Setor</strong>",
+    "<strong>Restrições Principais</strong>",
+    "<strong>Órgão</strong>"
+   ],
+   "linhas": [
+    [
+     "Bebidas Alcoólicas",
+     "Vedada segmentação para menores; declaração de maioridade",
+     "CONAR / ANVISA"
+    ],
+    [
+     "Tabaco e Derivados",
+     "Publicidade praticamente vedada em todos os meios",
+     "Lei 9.294/1996"
+    ],
+    [
+     "Medicamentos",
+     "Tarjados: só para profissionais de saúde",
+     "ANVISA (RDC 204/2017)"
+    ],
+    [
+     "Serviços Financeiros",
+     "Obrigação de informar CET; vedada promessa de rendimento",
+     "BACEN / CVM"
+    ],
+    [
+     "Apostas Online",
+     "Alerta de riscos; vedação para menores",
+     "SECAP / MF"
+    ],
+    [
+     "Planos de Saúde",
+     "Deve refletir a cobertura real do plano",
+     "ANS"
+    ],
+    [
+     "Alimentos Infantis",
+     "Alertas obrigatórios para ultraprocessados",
+     "ANVISA (RDC 163/2017)"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Principais Restrições nas Plataformas Digitais"
+  },
+  {
+   "t": "p",
+   "html": "Google Ads: proíbe produtos falsificados, hacking; exige certificação para farmácias e apostas."
+  },
+  {
+   "t": "p",
+   "html": "Meta: restrições para before/after, saúde, política, crédito e habitação."
+  },
+  {
+   "t": "p",
+   "html": "TikTok Ads: proíbe tabaco, armas; restrições para menores de 18 e emagrecimento."
+  },
+  {
+   "t": "p",
+   "html": "YouTube / Google: anúncios em vídeos infantis limitados; jogos de azar exigem certificação."
+  },
+  {
+   "t": "p",
+   "html": "LinkedIn Ads: mais flexível para B2B; restrições para renda rápida e esquemas de investimento."
+  }
+ ]
+}

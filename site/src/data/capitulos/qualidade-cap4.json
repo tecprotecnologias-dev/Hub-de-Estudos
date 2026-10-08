@@ -1,0 +1,783 @@
+{
+ "numero": 4,
+ "titulo": "Testes de Software",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Testar software é uma das atividades mais críticas da Engenharia de Software. Por mais cuidadoso que seja o processo de desenvolvimento, defeitos sempre podem surgir — seja por ambiguidade nos requisitos, erro de lógica, falha de integração ou comportamento inesperado em determinados ambientes. Os testes existem para detectar esses defeitos antes que cheguem ao usuário final, minimizando riscos e custos de correção."
+  },
+  {
+   "t": "h2",
+   "id": "4-1-importancia-dos-testes-na-garantia-da-qualidade",
+   "texto": "4.1 Importância dos Testes na Garantia da Qualidade"
+  },
+  {
+   "t": "p",
+   "html": "Os testes de software são o principal mecanismo de verificação e validação do produto. Verificação responde à pergunta \"estamos construindo o produto corretamente?\" — ou seja, o software está de acordo com suas especificações. Validação responde \"estamos construindo o produto correto?\" — o software atende às necessidades reais do usuário."
+  },
+  {
+   "t": "h3",
+   "texto": "O Custo da Não Qualidade e o Papel dos Testes"
+  },
+  {
+   "t": "p",
+   "html": "Quanto mais tarde um defeito é encontrado no ciclo de desenvolvimento, mais caro é corrigi-lo. Estudos clássicos da área mostram que um defeito encontrado em produção pode custar até 100 vezes mais para corrigir do que se tivesse sido detectado durante a fase de requisitos. Os testes, quando bem planejados e executados, deslocam a detecção de defeitos para as fases mais baratas do ciclo de vida."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Fase de Detecção",
+    "Custo Relativo de Correção",
+    "Exemplo"
+   ],
+   "linhas": [
+    [
+     "Requisitos",
+     "1x (mínimo)",
+     "Requisito ambíguo identificado em revisão"
+    ],
+    [
+     "Design",
+     "3x a 6x",
+     "Erro de arquitetura detectado em inspeção"
+    ],
+    [
+     "Codificação",
+     "10x",
+     "Bug encontrado durante revisão de código"
+    ],
+    [
+     "Testes internos",
+     "20x a 40x",
+     "Falha detectada durante testes de sistema"
+    ],
+    [
+     "Produção",
+     "40x a 100x",
+     "Defeito reportado por usuário final em uso real"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Princípios Fundamentais dos Testes de Software"
+  },
+  {
+   "t": "p",
+   "html": "O ISTQB (International Software Testing Qualifications Board) estabelece sete princípios que orientam a prática de testes de software:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>1. Testes revelam defeitos, não provam ausência: </strong>O objetivo do teste é encontrar falhas. A ausência de defeitos nos testes não garante que o software está livre de erros.",
+    "<strong>2. Testes exaustivos são impossíveis: </strong>Testar todas as combinações de entradas e estados é inviável. É necessário priorizar com base em risco e criticidade.",
+    "<strong>3. Testar cedo economiza tempo e dinheiro: </strong>Quanto mais cedo os testes forem iniciados, menor o custo de correção dos defeitos encontrados.",
+    "<strong>4. Agrupamento de defeitos: </strong>A maioria dos defeitos tende a se concentrar em poucos módulos do sistema (lei de Pareto: 80% dos defeitos em 20% do código).",
+    "<strong>5. Paradoxo do pesticida: </strong>Se os mesmos testes forem executados repetidamente, eles param de encontrar novos defeitos. Os casos de teste devem ser revisados e atualizados.",
+    "<strong>6. Testes dependem do contexto: </strong>A abordagem de teste de um sistema de pagamento é diferente da de um site informativo. O contexto define as estratégias.",
+    "<strong>7. A ilusão da ausência de erros: </strong>Encontrar e corrigir todos os defeitos não garante sucesso se o software não atender às necessidades do usuário."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Verificação x Validação",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "VERIFICAÇÃO: Avalia se o software está sendo construído corretamente, de acordo com as especificações."
+    },
+    {
+     "t": "p",
+     "html": "Exemplo: O sistema calcula o imposto conforme a fórmula definida nos requisitos?"
+    },
+    {
+     "t": "p",
+     "html": "VALIDAÇÃO: Avalia se o software correto está sendo construído, atendendo às necessidades reais."
+    },
+    {
+     "t": "p",
+     "html": "Exemplo: O sistema de cálculo de imposto é útil e adequado para o contador que vai usá-lo no dia a dia?"
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-2-tipos-de-testes-unitario-integracao-sistema-e-aceitacao",
+   "texto": "4.2 Tipos de Testes: Unitário, Integração, Sistema e Aceitação"
+  },
+  {
+   "t": "p",
+   "html": "Os tipos de teste são organizados em níveis que seguem a progressão do desenvolvimento do software — do menor componente individual até o sistema completo em uso pelo cliente. Essa estrutura é frequentemente chamada de 'pirâmide de testes' ou 'níveis de teste'."
+  },
+  {
+   "t": "h3",
+   "texto": "Teste Unitário"
+  },
+  {
+   "t": "p",
+   "html": "O teste unitário é o nível mais básico de teste. Ele verifica o funcionamento de uma unidade individual de código — geralmente uma função, método ou classe — de forma isolada, sem depender de outros módulos, bancos de dados ou serviços externos. É o tipo de teste mais rápido de executar e o que oferece o feedback mais imediato ao desenvolvedor."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aspecto",
+    "Detalhe"
+   ],
+   "linhas": [
+    [
+     "O que testa",
+     "Funções, métodos, classes ou pequenos módulos de forma isolada"
+    ],
+    [
+     "Quem executa",
+     "O próprio desenvolvedor, durante ou após a codificação"
+    ],
+    [
+     "Ferramentas",
+     "JUnit (Java), NUnit (.NET), PyTest (Python), Jest (JavaScript)"
+    ],
+    [
+     "Vantagens",
+     "Execução rápida, feedback imediato, facilita refatoração segura"
+    ],
+    [
+     "Limitações",
+     "Não detecta problemas de integração entre componentes"
+    ],
+    [
+     "Boa prática",
+     "TDD (Test-Driven Development): escrever o teste antes do código"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo de Teste Unitário",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Cenário: Função calcularDesconto(preco, percentual) que aplica desconto a um preço."
+    },
+    {
+     "t": "p",
+     "html": "Caso de teste 1: calcularDesconto(100, 10) → deve retornar 90,00"
+    },
+    {
+     "t": "p",
+     "html": "Caso de teste 2: calcularDesconto(200, 50) → deve retornar 100,00"
+    },
+    {
+     "t": "p",
+     "html": "Caso de teste 3: calcularDesconto(100, 0)  → deve retornar 100,00 (sem desconto)"
+    },
+    {
+     "t": "p",
+     "html": "Caso de teste 4: calcularDesconto(100, -5) → deve lançar exceção (valor inválido)"
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Teste de Integração"
+  },
+  {
+   "t": "p",
+   "html": "O teste de integração verifica se os módulos ou componentes do sistema funcionam corretamente quando combinados. Um componente pode funcionar perfeitamente de forma isolada, mas apresentar falhas quando interage com outros — por incompatibilidade de interfaces, troca incorreta de dados ou dependências mal gerenciadas."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Estratégia",
+    "Descrição",
+    "Quando usar"
+   ],
+   "linhas": [
+    [
+     "Big Bang",
+     "Todos os módulos são integrados de uma só vez e testados juntos.",
+     "Sistemas pequenos com poucos módulos."
+    ],
+    [
+     "Top-Down",
+     "Integração começa pelos módulos de nível mais alto (interface) e desce.",
+     "Quando o design de alto nível está consolidado."
+    ],
+    [
+     "Bottom-Up",
+     "Integração começa pelos módulos de nível mais baixo (base) e sobe.",
+     "Quando os módulos de base são críticos e estáveis."
+    ],
+    [
+     "Sanduíche (Mista)",
+     "Combina top-down e bottom-up simultaneamente.",
+     "Projetos grandes com muitas dependências."
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Teste de Sistema"
+  },
+  {
+   "t": "p",
+   "html": "O teste de sistema avalia o sistema como um todo, verificando se ele atende aos requisitos funcionais e não funcionais especificados. Neste nível, o software é testado em um ambiente o mais próximo possível do ambiente de produção, incluindo integrações com sistemas externos, banco de dados real e configurações de rede e infraestrutura."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Testes funcionais: </strong>Verificam se todas as funcionalidades do sistema operam conforme especificado nos requisitos.",
+    "<strong>Testes de desempenho: </strong>Avaliam o comportamento do sistema sob carga, incluindo tempo de resposta e consumo de recursos.",
+    "<strong>Testes de segurança: </strong>Buscam vulnerabilidades como injeção de SQL, XSS, autenticação fraca e exposição de dados.",
+    "<strong>Testes de usabilidade: </strong>Avaliam se o sistema é intuitivo e eficiente para os usuários-alvo.",
+    "<strong>Testes de recuperação: </strong>Verificam como o sistema se comporta e se recupera após falhas ou situações de erro.",
+    "<strong>Testes de compatibilidade: </strong>Garantem que o sistema funcione corretamente em diferentes navegadores, dispositivos e sistemas operacionais."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Teste de Aceitação"
+  },
+  {
+   "t": "p",
+   "html": "O teste de aceitação é realizado para determinar se o sistema está pronto para ser entregue e aceito pelo cliente. É o nível mais próximo do ponto de vista do usuário final e geralmente é conduzido pelo próprio cliente ou por seus representantes. O critério de aprovação é o atendimento aos requisitos de negócio, não apenas às especificações técnicas."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Modalidade",
+    "Responsável",
+    "Objetivo",
+    "Resultado"
+   ],
+   "linhas": [
+    [
+     "UAT (User Acceptance Testing)",
+     "Usuários finais / cliente",
+     "Validar se o sistema atende às necessidades reais de negócio",
+     "Aceite ou rejeição formal do sistema"
+    ],
+    [
+     "Teste de Contrato",
+     "Equipe técnica + cliente",
+     "Verificar se o sistema cumpre os termos do contrato de desenvolvimento",
+     "Liberação para produção"
+    ],
+    [
+     "Teste de Regulamentação",
+     "Órgão regulador / auditor",
+     "Verificar conformidade com leis, normas e regulamentos aplicáveis",
+     "Certificação ou homologação"
+    ],
+    [
+     "Teste Beta (ver 4.5)",
+     "Usuários externos selecionados",
+     "Coletar feedback real em ambiente de uso antes do lançamento oficial",
+     "Lista de ajustes finais"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "A Pirâmide de Testes",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A 'Pirâmide de Testes', conceito popularizado por Mike Cohn, organiza os níveis de teste por velocidade, custo e quantidade ideal:"
+    },
+    {
+     "t": "p",
+     "html": "▲ TOPO: Testes de Aceitação / E2E — poucos, lentos, caros, alta confiança do usuário"
+    },
+    {
+     "t": "p",
+     "html": "▲ MEIO: Testes de Integração — quantidade moderada, velocidade média"
+    },
+    {
+     "t": "p",
+     "html": "▲ BASE: Testes Unitários — muitos, rápidos, baratos, maior cobertura de código"
+    },
+    {
+     "t": "p",
+     "html": "Uma distribuição saudável: 70% unitários, 20% integração, 10% sistema/aceitação."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-3-tecnicas-de-teste-caixa-branca",
+   "texto": "4.3 Técnicas de Teste: Caixa Branca"
+  },
+  {
+   "t": "p",
+   "html": "As técnicas de teste definem como os casos de teste são projetados — isto é, como escolhemos quais entradas usar, quais caminhos executar e quais resultados verificar. A técnica de Caixa Branca (também chamada de Caixa de Vidro, Teste Estrutural ou Teste Orientado à Lógica) baseia o projeto dos casos de teste no conhecimento da estrutura interna do código."
+  },
+  {
+   "t": "h3",
+   "texto": "O que é o Teste de Caixa Branca?"
+  },
+  {
+   "t": "p",
+   "html": "No teste de Caixa Branca, o testador tem acesso e conhecimento do código-fonte, da lógica interna, dos algoritmos e das estruturas de dados do software. Os casos de teste são projetados para exercitar caminhos específicos do código, garantindo que toda a lógica implementada seja verificada. É análogo a conhecer o motor de um carro antes de testá-lo."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Característica",
+    "Detalhamento"
+   ],
+   "linhas": [
+    [
+     "Foco",
+     "Estrutura interna do código: fluxo de controle, fluxo de dados, condições, laços"
+    ],
+    [
+     "Quem executa",
+     "Desenvolvedores ou testadores com acesso ao código-fonte"
+    ],
+    [
+     "Quando aplicar",
+     "Testes unitários e de integração; revisões de código; análise estática"
+    ],
+    [
+     "Principal métrica",
+     "Cobertura de código (code coverage): percentual do código exercitado pelos testes"
+    ],
+    [
+     "Limitação chave",
+     "Não detecta funcionalidades ausentes (o que não foi implementado não pode ser testado)"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Critérios de Cobertura da Caixa Branca"
+  },
+  {
+   "t": "p",
+   "html": "Os critérios de cobertura definem o grau de exaustividade com que o código está sendo testado. Quanto maior a cobertura, maior a chance de detectar defeitos, mas também maior o esforço necessário:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Cobertura de Declarações (Statement Coverage): </strong>Cada linha de código deve ser executada pelo menos uma vez. É o critério mais simples e menos rigoroso.",
+    "<strong>Cobertura de Desvios (Branch Coverage): </strong>Cada desvio condicional (if/else, switch) deve ser exercitado tanto no caminho verdadeiro quanto no falso. Mais rigoroso que statement coverage.",
+    "<strong>Cobertura de Condições (Condition Coverage): </strong>Cada condição booleana individual dentro de uma expressão deve ser avaliada como verdadeira e como falsa.",
+    "<strong>Cobertura de Caminhos (Path Coverage): </strong>Todos os caminhos possíveis de execução devem ser percorridos. É o critério mais completo, porém inviável para códigos complexos.",
+    "<strong>Cobertura MC/DC (Modified Condition/Decision Coverage): </strong>Exigida em sistemas críticos de aviação (DO-178C) e medicina. Cada condição deve influenciar independentemente o resultado da decisão."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Ferramentas de Cobertura de Código",
+   "blocos": [
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Java: JaCoCo, Cobertura",
+      "Python: Coverage.py, Pytest-cov",
+      "JavaScript: Istanbul / NYC",
+      ".NET: dotCover, OpenCover",
+      "C/C++: gcov, LCOV"
+     ]
+    },
+    {
+     "t": "p",
+     "html": "Padrão de mercado: cobertura de branches acima de 80% é geralmente considerada boa prática. Em sistemas críticos, pode-se exigir 100% de cobertura MC/DC."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-4-tecnicas-de-teste-caixa-preta",
+   "texto": "4.4 Técnicas de Teste: Caixa Preta"
+  },
+  {
+   "t": "p",
+   "html": "A técnica de Caixa Preta (também chamada de Teste Funcional, Teste Comportamental ou Teste Orientado a Dados) projeta os casos de teste com base exclusivamente nas especificações externas do sistema — requisitos, casos de uso, histórias de usuário — sem qualquer conhecimento da implementação interna. O testador trata o software como uma 'caixa preta': fornece entradas e verifica as saídas produzidas."
+  },
+  {
+   "t": "h3",
+   "texto": "O que é o Teste de Caixa Preta?"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Característica",
+    "Detalhamento"
+   ],
+   "linhas": [
+    [
+     "Foco",
+     "Comportamento externo: o que o sistema faz, não como faz"
+    ],
+    [
+     "Quem executa",
+     "Testadores, analistas de qualidade, clientes — sem necessidade de conhecer o código"
+    ],
+    [
+     "Quando aplicar",
+     "Testes de sistema, aceitação, regressão e testes de integração de alto nível"
+    ],
+    [
+     "Principal métrica",
+     "Cobertura de requisitos: percentual de requisitos cobertos por casos de teste"
+    ],
+    [
+     "Limitação chave",
+     "Não garante que toda a lógica interna foi exercitada; pode deixar código não testado"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Técnicas de Projeto de Casos de Teste (Caixa Preta)"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Particionamento de Equivalência</strong>"
+  },
+  {
+   "t": "p",
+   "html": "Divide os valores de entrada em classes (partições) equivalentes, onde se assume que todos os valores de uma mesma classe se comportam da mesma forma. Basta testar um representante de cada partição, reduzindo o número de casos de teste necessários."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo: Campo de idade (1 a 120 anos)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Partição inválida 1: valores negativos (ex: -1) → deve rejeitar"
+    },
+    {
+     "t": "p",
+     "html": "Partição válida:    valores entre 1 e 120 (ex: 25) → deve aceitar"
+    },
+    {
+     "t": "p",
+     "html": "Partição inválida 2: valores acima de 120 (ex: 150) → deve rejeitar"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Análise do Valor Limite (Boundary Value Analysis)</strong>"
+  },
+  {
+   "t": "p",
+   "html": "Complementa o particionamento de equivalência focando nos valores nas fronteiras entre partições, onde os defeitos são mais frequentes. Para cada limite, testa-se o valor no limite, imediatamente abaixo e imediatamente acima."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo: Campo de idade (1 a 120 anos)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Valores de fronteira inferior: 0 (inválido), 1 (válido), 2 (válido)"
+    },
+    {
+     "t": "p",
+     "html": "Valores de fronteira superior: 119 (válido), 120 (válido), 121 (inválido)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Tabela de Decisão</strong>"
+  },
+  {
+   "t": "p",
+   "html": "Representa combinações de condições e as ações correspondentes em formato tabular. É especialmente útil para sistemas com regras de negócio complexas onde múltiplas condições determinam o comportamento do sistema."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Condição / Ação",
+    "Regra 1",
+    "Regra 2",
+    "Regra 3",
+    "Regra 4"
+   ],
+   "linhas": [
+    [
+     "Cliente Premium?",
+     "Sim",
+     "Sim",
+     "Não",
+     "Não"
+    ],
+    [
+     "Compra &gt; R$500?",
+     "Sim",
+     "Não",
+     "Sim",
+     "Não"
+    ],
+    [
+     "→ Desconto 20%",
+     "✓",
+     "✗",
+     "✗",
+     "✗"
+    ],
+    [
+     "→ Desconto 10%",
+     "✗",
+     "✓",
+     "✓",
+     "✗"
+    ],
+    [
+     "→ Sem desconto",
+     "✗",
+     "✗",
+     "✗",
+     "✓"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Teste Baseado em Estado (State Transition Testing)</strong>"
+  },
+  {
+   "t": "p",
+   "html": "Modela o comportamento do sistema como uma máquina de estados e projeta casos de teste para cobrir as transições entre estados. É ideal para sistemas que têm comportamento diferente dependendo do seu estado atual, como sistemas de pedidos, autômatos e fluxos de trabalho."
+  },
+  {
+   "t": "h2",
+   "id": "4-5-teste-alfa-e-teste-beta",
+   "texto": "4.5 Teste Alfa e Teste Beta"
+  },
+  {
+   "t": "p",
+   "html": "Os testes alfa e beta são modalidades de teste de aceitação que expõem o software a usuários reais antes do lançamento oficial. Eles são especialmente comuns no desenvolvimento de produtos comerciais — aplicativos, jogos, sistemas SaaS — onde a experiência do usuário final é determinante para o sucesso do produto."
+  },
+  {
+   "t": "h3",
+   "texto": "Teste Alfa"
+  },
+  {
+   "t": "p",
+   "html": "O teste alfa é realizado pelos próprios usuários do cliente ou por testadores internos da organização desenvolvedora, em um ambiente controlado, geralmente nas instalações do desenvolvedor ou em laboratório de usabilidade. O software ainda não está em seu estado final — pode conter limitações de funcionalidade e bugs conhecidos."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aspecto",
+    "Característica"
+   ],
+   "linhas": [
+    [
+     "Quem executa",
+     "Usuários internos, equipe de QA, representantes do cliente"
+    ],
+    [
+     "Ambiente",
+     "Controlado — nas instalações do desenvolvedor ou ambiente de homologação"
+    ],
+    [
+     "Estado do software",
+     "Versão quase finalizada, mas ainda com possíveis instabilidades"
+    ],
+    [
+     "Objetivo",
+     "Identificar defeitos que passaram pelos testes internos; validar usabilidade"
+    ],
+    [
+     "Feedback",
+     "Coletado diretamente pelos desenvolvedores que observam o uso"
+    ],
+    [
+     "Resultado",
+     "Lista de defeitos, melhorias de usabilidade e ajustes finais antes do beta"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Teste Beta"
+  },
+  {
+   "t": "p",
+   "html": "O teste beta é realizado por usuários reais externos à organização desenvolvedora, em seus próprios ambientes e equipamentos, sem supervisão direta dos desenvolvedores. É a última oportunidade de detectar problemas antes do lançamento oficial. O software beta é disponibilizado a um grupo selecionado ou ao público em geral, dependendo da estratégia da empresa."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aspecto",
+    "Característica"
+   ],
+   "linhas": [
+    [
+     "Quem executa",
+     "Usuários externos selecionados (beta testers) ou público em geral"
+    ],
+    [
+     "Ambiente",
+     "Ambiente real do usuário — seus próprios dispositivos, redes e configurações"
+    ],
+    [
+     "Estado do software",
+     "Versão estável, próxima ao produto final"
+    ],
+    [
+     "Objetivo",
+     "Coletar feedback real de uso, encontrar bugs em ambientes diversos, validar escalabilidade"
+    ],
+    [
+     "Feedback",
+     "Coletado via formulários, relatórios de erro automáticos, comunidades ou suporte"
+    ],
+    [
+     "Resultado",
+     "Correções finais, ajustes de desempenho e validação de mercado antes do lançamento"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Alfa vs. Beta: Comparativo Rápido",
+   "blocos": [
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "TESTE ALFA"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Local: nas instalações do desenvolvedor",
+      "Usuários: internos ou representantes do cliente",
+      "Controle: alta supervisão",
+      "Objetivo: encontrar defeitos antes de liberar para o público"
+     ]
+    },
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "TESTE BETA"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Local: ambiente real do usuário",
+      "Usuários: externos — beta testers ou público geral",
+      "Controle: uso livre, sem supervisão",
+      "Objetivo: validar em condições reais e coletar feedback de mercado"
+     ]
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Estratégias Modernas de Teste Beta"
+  },
+  {
+   "t": "p",
+   "html": "Com o avanço das práticas ágeis e DevOps, surgiram variações modernas do teste beta:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Beta Fechado (Closed Beta): </strong>Somente usuários convidados têm acesso. Comum em jogos e aplicativos que querem controlar a experiência inicial.",
+    "<strong>Beta Aberto (Open Beta): </strong>Qualquer usuário pode participar. Gera maior volume de feedback e testa escalabilidade em condições reais.",
+    "<strong>Canary Release: </strong>O software é lançado progressivamente — primeiro para 1% dos usuários, depois 10%, 50% e assim por diante, permitindo rollback rápido.",
+    "<strong>Feature Flags: </strong>Novas funcionalidades são ativadas para subgrupos específicos de usuários, permitindo testes A/B e lançamentos graduais controlados."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-6-comparativo-e-boas-praticas",
+   "texto": "4.6 Comparativo e Boas Práticas"
+  },
+  {
+   "t": "h3",
+   "texto": "Comparativo das Técnicas: Caixa Branca vs. Caixa Preta"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Critério",
+    "Caixa Branca",
+    "Caixa Preta"
+   ],
+   "linhas": [
+    [
+     "Base dos testes",
+     "Estrutura interna do código",
+     "Especificações e requisitos externos"
+    ],
+    [
+     "Conhecimento exigido",
+     "Código-fonte e lógica interna",
+     "Requisitos e regras de negócio"
+    ],
+    [
+     "Quem executa",
+     "Desenvolvedores / testadores técnicos",
+     "Testadores / analistas / usuários"
+    ],
+    [
+     "Detecta",
+     "Erros de lógica, caminhos não testados",
+     "Funcionalidades ausentes ou incorretas"
+    ],
+    [
+     "Não detecta",
+     "Funcionalidades ausentes nos requisitos",
+     "Caminhos de código não exercitados"
+    ],
+    [
+     "Métricas",
+     "Cobertura de código (branches, paths)",
+     "Cobertura de requisitos"
+    ],
+    [
+     "Nível de aplicação",
+     "Unitário e integração",
+     "Sistema, aceitação, regressão"
+    ],
+    [
+     "Ferramentas",
+     "JUnit, pytest, JaCoCo, gcov",
+     "Selenium, Postman, JIRA, qTest"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Boas Práticas de Testes de Software"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Automatize o que pode ser automatizado: </strong>Testes unitários e de regressão devem ser automatizados e integrados ao pipeline de CI/CD para garantir feedback contínuo.",
+    "<strong>Planeje os testes desde o início: </strong>Integre o planejamento de testes ao planejamento do projeto — não deixe para o final do ciclo.",
+    "<strong>Use dados de teste representativos: </strong>Os dados de teste devem refletir a diversidade dos dados reais, incluindo casos extremos e valores inválidos.",
+    "<strong>Documente os casos de teste: </strong>Casos de teste bem documentados permitem rastreabilidade entre requisitos e testes, além de facilitar a manutenção.",
+    "<strong>Revise os casos de teste periodicamente: </strong>Para evitar o 'paradoxo do pesticida', atualize os casos de teste conforme o sistema evolui.",
+    "<strong>Combine as técnicas: </strong>Não use apenas Caixa Branca ou apenas Caixa Preta — a combinação das duas abordagens oferece a cobertura mais completa."
+   ]
+  }
+ ]
+}

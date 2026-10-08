@@ -1,0 +1,171 @@
+{
+ "numero": 5,
+ "titulo": "Server e Client Components",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "5-1-por-que-server-components-existem",
+   "texto": "5.1 Por que Server Components Existem?"
+  },
+  {
+   "t": "p",
+   "html": "No Módulo 4, você criou páginas com o App Router – mas todo componente que você escreveu até agora (<code>Button</code>, <code>ProjetoCard</code>, <code>FormularioContato</code>) rodava inteiramente no <strong>navegador</strong> do usuário, mesmo com o Next.js."
+  },
+  {
+   "t": "p",
+   "html": "O App Router muda esse padrão: por definição, <strong>todo componente dentro de <code>app/</code> é um Server Component</strong>, a menos que você diga o contrário. Isso significa que ele é renderizado no <strong>servidor</strong>, e só o HTML final chega no navegador – sem enviar o código JavaScript daquele componente para o cliente."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Vantagem",
+    "Por quê"
+   ],
+   "linhas": [
+    [
+     "Menos JavaScript no navegador",
+     "O código do componente nunca é enviado ao cliente"
+    ],
+    [
+     "Acesso direto a dados",
+     "Pode buscar num banco de dados sem precisar de uma API"
+    ],
+    [
+     "Carregamento mais rápido",
+     "O HTML já chega pronto, sem esperar o React \"montar\""
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-2-server-components-o-padrao",
+   "texto": "5.2 Server Components: o Padrão"
+  },
+  {
+   "t": "p",
+   "html": "Um Server Component é só... um componente normal. Nenhuma sintaxe nova – a diferença é que ele <strong>pode ser assíncrono</strong>, algo que um componente React comum nunca podia fazer antes."
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/projetos/page.tsx -- Server Component (padrao)\nasync function buscarProjetos() {\n  // simula uma busca (no Modulo 6, isso vira uma consulta real)\n  return [\n    { id: 1, titulo: \"Portfolio Pessoal\", tecnologias: [\"React\", \"Next.js\"] },\n  ];\n}\n\nexport default async function Projetos() {\n  const projetos = await buscarProjetos();\n\n  return (\n    <main>\n      <h1>Meus Projetos</h1>\n      {projetos.map((p) => (\n        <p key={p.id}>{p.titulo}</p>\n      ))}\n    </main>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare no <code>async</code> direto na função do componente, e no <code>await</code> dentro dela – isso é exclusivo de Server Components. Um componente React comum (Módulos 2 e 3) nunca podia ser <code>async</code>."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Posso usar <code>useState</code> em qualquer componente do Next.js?\" – Não! <code>useState</code>, <code>useEffect</code>, e qualquer coisa que rode no navegador (cliques, digitação) só funcionam em <strong>Client Components</strong>. Um Server Component nunca chega a existir no navegador – ele já virou HTML antes de sair do servidor, então não há nada ali para \"reagir\" a um clique."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-3-client-components-a-diretiva-use-client",
+   "texto": "5.3 Client Components: a Diretiva \"use client\""
+  },
+  {
+   "t": "p",
+   "html": "Sempre que um componente precisa de interatividade – estado (<code>useState</code>), efeitos (<code>useEffect</code>), ou eventos como <code>onClick</code> – ele precisa virar um <strong>Client Component</strong>, com a diretiva <code>\"use client\"</code> no topo do arquivo."
+  },
+  {
+   "t": "codigo",
+   "texto": "\"use client\";\n\nimport { useState } from \"react\";\n\nfunction Contador() {\n  const [contagem, setContagem] = useState(0);\n\n  return (\n    <button onClick={() => setContagem(contagem + 1)}>\n      Cliquei {contagem} vezes\n    </button>\n  );\n}\n\nexport default Contador;"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Os componentes <code>Button</code>, <code>FormularioContato</code> (que usam <code>useState</code> – Módulo 3) e qualquer componente com <code>onClick</code> precisam ganhar <code>\"use client\"</code> no topo do arquivo quando forem migrados para dentro do Next.js. Sem essa linha, o Next.js tenta tratá-los como Server Component, e o <code>useState</code> simplesmente não funciona."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-4-misturando-server-e-client-components",
+   "texto": "5.4 Misturando Server e Client Components"
+  },
+  {
+   "t": "p",
+   "html": "A regra mais importante: um Server Component pode <strong>importar e renderizar</strong> um Client Component – mas o caminho inverso não é permitido. Um Client Component não pode importar um Server Component diretamente."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Direção",
+    "Permitido?"
+   ],
+   "linhas": [
+    [
+     "Server Component importa Client Component",
+     "Sim – é o padrão mais comum"
+    ],
+    [
+     "Client Component importa Server Component",
+     "Não diretamente – use <code>children</code> (props)"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Na prática, isso significa: busque os dados no Server Component (a página em si), e passe esses dados como <em>props</em> para os Client Components que precisam de interatividade."
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/projetos/page.tsx -- Server Component\nimport BotaoFavoritar from \"@/components/BotaoFavoritar\"; // Client\n\nasync function buscarProjetos() {\n  return [{ id: 1, titulo: \"Portfolio Pessoal\" }];\n}\n\nexport default async function Projetos() {\n  const projetos = await buscarProjetos();\n\n  return (\n    <main>\n      {projetos.map((p) => (\n        <div key={p.id}>\n          <h2>{p.titulo}</h2>\n          <BotaoFavoritar />\n        </div>\n      ))}\n    </main>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "O componente <code>Projetos</code> (Server) busca os dados e renderiza o <code>BotaoFavoritar</code> (Client) – que cuida só da parte interativa, sem precisar saber de onde os dados vieram."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Colocar <code>\"use client\"</code> no topo de <code>page.tsx</code> \"só para garantir\" transforma a página inteira em Client Component – perdendo a vantagem de buscar dados direto no servidor. Use <code>\"use client\"</code> só nos componentes que realmente precisam de interatividade, o mais \"embaixo\" possível na árvore de componentes."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-5-como-decidir-server-ou-client",
+   "texto": "5.5 Como Decidir: Server ou Client?"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "O componente precisa de...",
+    "Tipo"
+   ],
+   "linhas": [
+    [
+     "Buscar dados (banco, arquivo, API)",
+     "Server"
+    ],
+    [
+     "<code>useState</code> ou <code>useEffect</code>",
+     "Client"
+    ],
+    [
+     "Eventos como <code>onClick</code> ou <code>onChange</code>",
+     "Client"
+    ],
+    [
+     "Só exibir informação recebida por <em>props</em>",
+     "Server (padrão)"
+    ]
+   ]
+  }
+ ]
+}

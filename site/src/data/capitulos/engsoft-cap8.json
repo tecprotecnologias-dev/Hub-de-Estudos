@@ -1,0 +1,167 @@
+{
+ "numero": 8,
+ "titulo": "Gestão de Projetos de Software",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "A gestão de projetos organiza, planeja, executa e controla as atividades para entregar software dentro das restrições de escopo, tempo, custo e qualidade acordadas – o chamado <strong>Triângulo de Ferro</strong>: você pode ter escopo grande, prazo curto ou custo baixo – escolha dois. Comprometer qualidade gera débito técnico e problemas futuros. Este capítulo percorre o planejamento tradicional (incluindo o EVM), e os dois frameworks ágeis mais utilizados no mercado: Scrum e Kanban."
+  },
+  {
+   "t": "h2",
+   "id": "8-1-planejamento-execucao-e-monitoramento",
+   "texto": "8.1 Planejamento, Execução e Monitoramento"
+  },
+  {
+   "t": "h3",
+   "texto": "Escopo e Estimativas"
+  },
+  {
+   "t": "p",
+   "html": "A EAP (Estrutura Analítica do Projeto) decompõe o projeto em pacotes de trabalho gerenciáveis. O <em>scope creep</em> – crescimento não controlado do escopo – é uma das principais causas de falha em projetos. Técnicas de estimativa incluem: Analogia (comparar com projetos similares), COCOMO (modelo paramétrico matemático), <em>Planning Poker</em> (consenso ágil com <em>story points</em>) e <em>T-Shirt Sizing</em> (P, M, G, GG)."
+  },
+  {
+   "t": "h3",
+   "texto": "Cronograma e Gestão de Riscos"
+  },
+  {
+   "t": "p",
+   "html": "O cronograma organiza as atividades no tempo, identificando dependências e o <strong>Caminho Crítico</strong> – a sequência de tarefas que determina a duração mínima do projeto. A Gestão de Riscos identifica riscos, avalia probabilidade e impacto, e define respostas: evitar, transferir, mitigar ou aceitar, priorizadas pela Matriz de Riscos (probabilidade × impacto)."
+  },
+  {
+   "t": "h3",
+   "texto": "EVM — Earned Value Management"
+  },
+  {
+   "t": "p",
+   "html": "A técnica mais robusta de monitoramento de projetos, integrando escopo, prazo e custo em um único conjunto de métricas, a partir de três valores fundamentais: <strong>PV</strong> (<em>Planned Value</em>, custo orçado do trabalho planejado até a data); <strong>EV</strong> (<em>Earned Value</em>, custo orçado do trabalho realizado até a data); e <strong>AC</strong> (<em>Actual Cost</em>, custo real do trabalho realizado)."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Indicador",
+    "Fórmula",
+    "Interpretação"
+   ],
+   "linhas": [
+    [
+     "SV",
+     "EV - PV",
+     "Negativo = atrasado"
+    ],
+    [
+     "CV",
+     "EV - AC",
+     "Negativo = acima do orçamento"
+    ],
+    [
+     "SPI",
+     "EV / PV",
+     "&lt;1 atrasado, &gt;1 adiantado"
+    ],
+    [
+     "CPI",
+     "EV / AC",
+     "&lt;1 caro demais, &gt;1 econômico"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-2-scrum-o-framework-agil-mais-adotado",
+   "texto": "8.2 Scrum — O Framework Ágil Mais Adotado"
+  },
+  {
+   "t": "p",
+   "html": "<em>Framework</em> leve que define papéis, artefatos e eventos para guiar equipes na entrega iterativa e incremental de valor. A cada <em>Sprint</em>, a equipe entrega um incremento potencialmente utilizável."
+  },
+  {
+   "t": "h3",
+   "texto": "Os Três Papéis"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Product Owner (PO)</strong>: maximiza o valor do produto, define e prioriza o <em>Product Backlog</em> – única voz do cliente. <strong>Scrum Master</strong>: guardião do processo, facilita eventos, remove impedimentos, protege o time do caos externo – não é gerente tradicional, é <em>líder-servo</em>. <strong>Time de Desenvolvimento</strong>: equipe multifuncional e auto-organizada, responsável por construir o incremento."
+  },
+  {
+   "t": "h3",
+   "texto": "Os Três Artefatos"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Product Backlog</strong>: lista ordenada por prioridade de tudo que o produto precisa – viva, atualizada continuamente pelo PO. <strong>Sprint Backlog</strong>: subconjunto selecionado para a <em>sprint</em>, mais o plano de execução – pertence ao Time, o PO não pode adicionar itens durante a <em>sprint</em> em andamento. <strong>Incremento</strong>: resultado tangível de cada <em>sprint</em>, completamente desenvolvido, testado e alinhado à <em>Definition of Done</em>."
+  },
+  {
+   "t": "h3",
+   "texto": "Os Cinco Eventos"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Sprint</strong>: <em>timebox</em> fixo de uma a quatro semanas – nenhuma mudança que coloque em risco o <em>Sprint Goal</em> é permitida durante o ciclo. <strong>Sprint Planning</strong>: abre a <em>sprint</em>, define o que será entregue e como. <strong>Daily Scrum</strong>: reunião diária de até quinze minutos, focada em impedimentos – não é reunião de status para o gerente. <strong>Sprint Review</strong>: ao final da <em>sprint</em>, demonstra o incremento aos <em>stakeholders</em> e coleta <em>feedback</em>. <strong>Sprint Retrospective</strong>: a equipe reflete sobre seu próprio processo – a principal cerimônia de melhoria contínua do Scrum."
+  },
+  {
+   "t": "h2",
+   "id": "8-3-kanban-gestao-visual-do-fluxo",
+   "texto": "8.3 Kanban — Gestão Visual do Fluxo"
+  },
+  {
+   "t": "p",
+   "html": "Método de gestão visual originado no sistema de produção da Toyota. Não prescreve <em>timeboxes</em>, papéis ou reuniões fixas – se aplica sobre o processo existente. Suas seis práticas centrais: <strong>Visualizar o fluxo</strong> (quadro com colunas por estado do trabalho); <strong>Limitar o WIP</strong> (restrição explícita de itens por coluna – a prática mais distintiva do Kanban); <strong>Gerenciar o fluxo</strong> (<em>Lead Time</em> e <em>Cycle Time</em> medem a saúde do fluxo); <strong>Explicitar políticas</strong> (regras visíveis para todos); <strong>Criar laços de feedback</strong> (reuniões regulares para revisar fluxo e métricas); e <strong>Melhorar colaborativamente</strong> (usar dados para guiar melhorias incrementais)."
+  },
+  {
+   "t": "h2",
+   "id": "8-4-scrum-vs-kanban-comparativo",
+   "texto": "8.4 Scrum vs. Kanban — Comparativo"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Dimensão",
+    "Scrum",
+    "Kanban"
+   ],
+   "linhas": [
+    [
+     "Cadência",
+     "<em>Sprints</em> fixas (1–4 semanas)",
+     "Fluxo contínuo – sem <em>sprints</em>"
+    ],
+    [
+     "Papéis definidos",
+     "Sim: PO, Scrum Master, Time",
+     "Não prescreve papéis específicos"
+    ],
+    [
+     "Mudanças durante o ciclo",
+     "Não permitidas durante a <em>sprint</em>",
+     "Aceitas a qualquer momento"
+    ],
+    [
+     "Controle de WIP",
+     "Implícito (capacidade da <em>sprint</em>)",
+     "Explícito – limite por coluna"
+    ],
+    [
+     "Melhor para",
+     "Entregas regulares de funcionalidades",
+     "Trabalho variável: suporte, operações"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Quando usar cada um",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Use Scrum quando a equipe entrega novas funcionalidades em ciclos regulares e há necessidade de comprometimento e previsibilidade. Use Kanban quando o trabalho é variável e imprevisível (suporte, <em>bugs</em>) e o time precisa responder a demandas urgentes. Muitas equipes usam <strong>Scrumban</strong> – combinação dos dois."
+    }
+   ]
+  }
+ ]
+}

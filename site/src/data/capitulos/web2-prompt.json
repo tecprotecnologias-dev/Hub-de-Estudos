@@ -1,0 +1,442 @@
+{
+ "numero": null,
+ "titulo": "Técnicas de Engenharia de Prompt",
+ "blocos": [
+  {
+   "t": "p",
+   "html": "Engenharia de prompt é a habilidade de escrever pedidos claros para ferramentas de inteligência artificial, como ChatGPT, Gemini e Claude. Quanto mais bem estruturado o pedido, mais útil e precisa é a resposta. Neste guia você vai conhecer os passos de um bom prompt e alguns frameworks (modelos prontos) para montar os seus."
+  },
+  {
+   "t": "h2",
+   "id": "os-5-passos-de-um-bom-prompt",
+   "texto": "Os 5 passos de um bom prompt"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. <strong>Definir o objetivo claramente:</strong> identifique o que você precisa saber ou o problema que precisa resolver. Isso ajuda a formular uma tarefa específica para o modelo.",
+    "2. <strong>Especificar o contexto:</strong> forneça informações de fundo para enquadrar a pergunta. Isso pode incluir detalhes sobre o cenário, condições específicas ou premissas relevantes.",
+    "3. <strong>Identificar o papel ou perspectiva desejada:</strong> decida se a resposta deve ser dada de um ponto de vista específico ou por um especialista em determinada área (use a técnica \"atue como\").",
+    "4. <strong>Formular a tarefa de maneira precisa:</strong> seja específico sobre o que o modelo deve fazer: explicar, listar, comparar, analisar etc.",
+    "5. <strong>Incluir instruções de formato, se necessário:</strong> especifique como você quer que a informação seja apresentada (lista, parágrafos, tabela etc.)."
+   ]
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/engenharia-de-prompt-rtf.png",
+   "alt": "Infográfico RTF: objetivo, contexto, papel, tarefa e formato",
+   "grande": true
+  },
+  {
+   "t": "h2",
+   "id": "exemplo-montando-um-prompt-passo-a-passo",
+   "texto": "Exemplo: montando um prompt passo a passo"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Passo",
+    "O que você define",
+    "Exemplo"
+   ],
+   "linhas": [
+    [
+     "1",
+     "Objetivo",
+     "\"Quero entender HTML básico\""
+    ],
+    [
+     "2",
+     "Contexto",
+     "\"Sou aluno iniciante de Web Design\""
+    ],
+    [
+     "3",
+     "Papel",
+     "\"Atue como professor de Web Design\""
+    ],
+    [
+     "4",
+     "Tarefa",
+     "\"Explique as principais tags HTML\""
+    ],
+    [
+     "5",
+     "Formato",
+     "\"Explique com exemplos simples e código\""
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "resposta",
+   "titulo": "Prompt final",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Atue como um professor de Web Design. Explique as principais tags HTML para um aluno iniciante, usando exemplos simples e código."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "frameworks-de-prompt",
+   "texto": "Frameworks de prompt"
+  },
+  {
+   "t": "p",
+   "html": "Os frameworks são \"receitas\" que lembram você de incluir as partes certas no pedido. Cada sigla vem das iniciais em inglês. Não existe um melhor que o outro: escolha o que combina com a sua situação."
+  },
+  {
+   "t": "h3",
+   "texto": "RTF — Role + Task + Format"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/prompt-rtf.png",
+   "alt": "Diagrama RTF: Papel + Tarefa + Formato"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Papel</strong> + <strong>Tarefa</strong> + <strong>Formato</strong>"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Papel</strong> (Role): define quem ou o que está realizando a ação no prompt: uma pessoa, um profissional, uma entidade ou uma função.",
+    "<strong>Tarefa</strong> (Task): especifica o que precisa ser feito, de forma clara e direta.",
+    "<strong>Formato</strong> (Format): como a resposta deve ser estruturada: lista, parágrafo, tabela, artigo, código etc."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Quando usar:</strong> pedidos rápidos do dia a dia, quando basta dizer quem responde, o quê e como."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo de prompt RTF",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Atue como um desenvolvedor front-end sênior <strong>(PAPEL)</strong> e revise este componente React apontando problemas de acessibilidade <strong>(TAREFA)</strong> em formato de lista numerada <strong>(FORMATO)</strong>."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "CTF — Context + Task + Format"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/prompt-ctf.png",
+   "alt": "Diagrama CTF: Contexto + Tarefa + Formato"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Contexto</strong> + <strong>Tarefa</strong> + <strong>Formato</strong>"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Contexto</strong> (Context): a situação que envolve o pedido.",
+    "<strong>Tarefa</strong> (Task): o que precisa ser feito.",
+    "<strong>Formato</strong> (Format): como a resposta deve ser entregue."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Quando usar:</strong> quando a situação é o que mais importa para a resposta fazer sentido."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo de prompt CTF",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Meu site em Next.js ficou lento no celular e a nota de desempenho do Lighthouse caiu para 45 <strong>(CONTEXTO)</strong>, liste as causas mais prováveis e como investigar cada uma <strong>(TAREFA)</strong> em uma tabela com as colunas causa, como verificar e como corrigir <strong>(FORMATO)</strong>."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "GRADE — Goal + Request + Action + Detail + Examples"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/prompt-grade.png",
+   "alt": "Diagrama GRADE: Meta + Pedido + Ação + Detalhe + Exemplos"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Meta</strong> + <strong>Pedido</strong> + <strong>Ação</strong> + <strong>Detalhe</strong> + <strong>Exemplos</strong>"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Meta</strong> (Goal): o objetivo maior por trás do pedido.",
+    "<strong>Pedido</strong> (Request): o que você quer receber.",
+    "<strong>Ação</strong> (Action): o que a IA deve fazer para atender o pedido.",
+    "<strong>Detalhe</strong> (Detail): o nível de detalhe ou os requisitos de cada parte.",
+    "<strong>Exemplos</strong> (Examples): exemplos que mostram o que você espera."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Quando usar:</strong> quando você quer um material completo e já sabe que tipo de conteúdo espera."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo de prompt GRADE",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Visando melhorar a acessibilidade do site da minha turma <strong>(META)</strong>, crie um checklist para revisar páginas web <strong>(PEDIDO)</strong>. Desenvolva uma lista com 10 verificações <strong>(AÇÃO)</strong>. Cada verificação deve ter uma breve explicação e como testar <strong>(DETALHE)</strong>. Inclua itens como texto alternativo em imagens, contraste de cores e navegação pelo teclado <strong>(EXEMPLOS)</strong>."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "PECRA — Purpose + Expectation + Context + Request + Action"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/prompt-pecra.png",
+   "alt": "Diagrama PECRA: Propósito + Expectativa + Contexto + Pedido + Ação"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Propósito</strong> + <strong>Expectativa</strong> + <strong>Contexto</strong> + <strong>Pedido</strong> + <strong>Ação</strong>"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Propósito</strong> (Purpose): para que serve o resultado.",
+    "<strong>Expectativa</strong> (Expectation): como você espera que seja a resposta.",
+    "<strong>Contexto</strong> (Context): a situação ou o motivo do pedido.",
+    "<strong>Pedido</strong> (Request): o que deve ser produzido.",
+    "<strong>Ação</strong> (Action): o que cada parte da resposta deve conter."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Quando usar:</strong> quando você precisa deixar claro o motivo e a expectativa, como em planos de estudo e materiais de apoio."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo de prompt PECRA",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Para aprender a consumir APIs em React <strong>(PROPÓSITO)</strong>, espero exercícios práticos e progressivos <strong>(EXPECTATIVA)</strong>. Já sei usar useState, mas ainda não usei useEffect <strong>(CONTEXTO)</strong>, elabore uma lista de 5 exercícios <strong>(PEDIDO)</strong> em que cada exercício tenha o enunciado, a API pública usada e o que eu devo conseguir fazer no final <strong>(AÇÃO)</strong>."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "ROSES — Role + Objective + Scenario + Expected Solution + Steps"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/prompt-roses.png",
+   "alt": "Diagrama ROSES: Papel + Objetivo + Cenário + Solução esperada + Etapas"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Papel</strong> + <strong>Objetivo</strong> + <strong>Cenário</strong> + <strong>Solução esperada</strong> + <strong>Etapas</strong>"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Papel</strong> (Role): quem responde.",
+    "<strong>Objetivo</strong> (Objective): o que se quer alcançar.",
+    "<strong>Cenário</strong> (Scenario): a situação atual, com o problema.",
+    "<strong>Solução esperada</strong> (Expected Solution): o resultado que você espera receber.",
+    "<strong>Etapas</strong> (Steps): os passos que a resposta deve seguir."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Quando usar:</strong> para resolver problemas com passo a passo, como planos de ação e processos."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo de prompt ROSES",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Como um líder técnico de uma equipe web <strong>(PAPEL)</strong>, seu objetivo é organizar o fluxo de trabalho com Git <strong>(OBJETIVO)</strong>. A equipe tem 4 pessoas e vive tendo conflitos de merge na branch principal <strong>(CENÁRIO)</strong>. A solução esperada é um fluxo de branches simples, que todos consigam seguir <strong>(SOLUÇÃO ESPERADA)</strong>. Descreva as etapas para: 1. criar as branches; 2. revisar o código com pull requests; 3. integrar na branch principal <strong>(ETAPAS)</strong>."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "SPARK — Situation + Problem + Aspiration + Results + Kismet"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/prompt-spark.png",
+   "alt": "Diagrama SPARK: Situação + Problema + Aspiração + Resultados + Sorte ou destino"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Situação</strong> + <strong>Problema</strong> + <strong>Aspiração</strong> + <strong>Resultados</strong> + <strong>Sorte ou destino</strong>"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Situação</strong> (Situation): o cenário atual.",
+    "<strong>Problema</strong> (Problem): o que está dando errado.",
+    "<strong>Aspiração</strong> (Aspiration): aonde você quer chegar.",
+    "<strong>Resultados</strong> (Results): como medir o sucesso.",
+    "<strong>Sorte ou destino</strong> (Kismet): um fator imprevisto que a resposta deve considerar."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Quando usar:</strong> em situações criativas ou de estratégia, em que imprevistos podem mudar o resultado."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo de prompt SPARK",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma loja virtual pequena vende acessórios pelo próprio site <strong>(SITUAÇÃO)</strong>. O problema é que muitos visitantes abandonam o carrinho antes de pagar <strong>(PROBLEMA)</strong>. A aspiração é deixar a compra mais simples e confiável <strong>(ASPIRAÇÃO)</strong>. Os resultados esperados são menos carrinhos abandonados e mais vendas concluídas <strong>(RESULTADOS)</strong>. Considerando que um pico de acessos inesperado pode acontecer em uma data promocional <strong>(SORTE OU DESTINO)</strong>, proponha melhorias na página de checkout."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "CREATE — Character + Request + Examples + Adjustment + Type of output + Extras"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/prompt-create.png",
+   "alt": "Diagrama CREATE: Personagem (papel) + Pedido + Exemplos + Ajustes + Tipo de saída (formato) + Extras"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Personagem (papel)</strong> + <strong>Pedido</strong> + <strong>Exemplos</strong> + <strong>Ajustes</strong> + <strong>Tipo de saída (formato)</strong> + <strong>Extras</strong>"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Personagem (papel)</strong> (Character): quem responde.",
+    "<strong>Pedido</strong> (Request): o que deve ser produzido.",
+    "<strong>Exemplos</strong> (Examples): exemplos do que você espera.",
+    "<strong>Ajustes</strong> (Adjustment): para quem é a resposta ou que adaptações ela deve ter.",
+    "<strong>Tipo de saída (formato)</strong> (Type of output): o formato final.",
+    "<strong>Extras</strong> (Extras): qualquer complemento desejado."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Quando usar:</strong> para conteúdos mais elaborados, como artigos, tutoriais e materiais didáticos."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo de prompt CREATE",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Como um especialista em desenvolvimento web <strong>(PAPEL)</strong>, elabore um guia sobre como publicar um site Next.js gratuitamente <strong>(PEDIDO)</strong>. Exemplos incluem publicar pela Vercel e pelo GitHub Pages <strong>(EXEMPLOS)</strong>. Ajuste o guia para ser útil tanto para iniciantes quanto para quem já publicou algum site <strong>(AJUSTES)</strong>. O tipo de saída deve ser um artigo de blog <strong>(FORMATO)</strong>. Inclua uma tabela comparando as opções <strong>(EXTRAS)</strong>."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "comparando-os-frameworks",
+   "texto": "Comparando os frameworks"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Framework",
+    "Partes",
+    "Bom para"
+   ],
+   "linhas": [
+    [
+     "RTF",
+     "Papel, Tarefa, Formato",
+     "pedidos rápidos e diretos"
+    ],
+    [
+     "CTF",
+     "Contexto, Tarefa, Formato",
+     "quando a situação define a resposta"
+    ],
+    [
+     "GRADE",
+     "Meta, Pedido, Ação, Detalhe, Exemplos",
+     "materiais completos com exemplos"
+    ],
+    [
+     "PECRA",
+     "Propósito, Expectativa, Contexto, Pedido, Ação",
+     "planos de estudo e materiais de apoio"
+    ],
+    [
+     "ROSES",
+     "Papel, Objetivo, Cenário, Solução esperada, Etapas",
+     "resolver problemas com passo a passo"
+    ],
+    [
+     "SPARK",
+     "Situação, Problema, Aspiração, Resultados, Sorte ou destino",
+     "estratégia e criatividade"
+    ],
+    [
+     "CREATE",
+     "Personagem, Pedido, Exemplos, Ajustes, Tipo de saída, Extras",
+     "artigos, tutoriais e conteúdos longos"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "boa-pratica",
+   "titulo": "Dica",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Depois da primeira resposta, continue a conversa: peça para detalhar uma parte, mudar o formato ou corrigir algo. Um bom prompt é o começo, não o fim. E sempre confira o que a IA responder, principalmente código: teste antes de usar."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "para-saber-mais",
+   "texto": "Para saber mais"
+  },
+  {
+   "t": "p",
+   "html": "Vídeos sobre engenharia de prompt e os frameworks apresentados neste guia:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<a href=\"https://www.youtube.com/watch?v=SQOlDCWSSeE\" target=\"_blank\" rel=\"noreferrer\">https://www.youtube.com/watch?v=SQOlDCWSSeE</a>",
+    "<a href=\"https://www.youtube.com/watch?v=lza2UY7lyws\" target=\"_blank\" rel=\"noreferrer\">https://www.youtube.com/watch?v=lza2UY7lyws</a>",
+    "<a href=\"https://www.youtube.com/watch?v=Hkg3v4fLjj0\" target=\"_blank\" rel=\"noreferrer\">https://www.youtube.com/watch?v=Hkg3v4fLjj0</a>",
+    "<a href=\"https://www.youtube.com/@fvivascom\" target=\"_blank\" rel=\"noreferrer\">https://www.youtube.com/@fvivascom</a>"
+   ]
+  }
+ ]
+}

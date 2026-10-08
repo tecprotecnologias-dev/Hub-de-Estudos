@@ -1,0 +1,1615 @@
+[
+  {
+    "id": "gestaoweb-cap1-q1",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "discursiva",
+    "contexto": [
+      {
+        "t": "imagem",
+        "src": "questoes/gestaoweb/gestaoweb-cap1-figura1.png",
+        "legenda": "Figura 1 — Arquitetura do sistema original da PetCare"
+      },
+      {
+        "t": "citacao",
+        "texto": "“Um sistema monolítico [...] é construído como uma unidade única. [...] Toda mudança no sistema envolve a construção e implantação de uma nova versão de toda a aplicação server-side.”",
+        "fonte": "FOWLER, Martin; LEWIS, James. Microservices: a definition of this new architectural term. 2014."
+      },
+      {
+        "t": "p",
+        "texto": "A rede de clínicas veterinárias PetCare iniciou suas operações em 2018 com um único sistema, hospedado em um único servidor próprio, responsável por quatro funções: agendamento de consultas, prontuário eletrônico dos animais, controle de estoque de medicamentos e faturamento. Todo o código das quatro funcionalidades compartilhava o mesmo banco de dados e era implantado em conjunto qualquer alteração, por menor que fosse, exigia recompilar e reiniciar o sistema inteiro."
+      },
+      {
+        "t": "p",
+        "texto": "Entre 2018 e 2024, a rede expandiu de 3 para 40 unidades em todo o país, e o volume de acessos simultâneos cresceu de aproximadamente 50 para mais de 6.000 usuários em horários de pico. Nesse período, a equipe de TI registrou um aumento progressivo de incidentes: o tempo médio de resposta do sistema, que era de 200ms em 2018, passou para mais de 4 segundos em 2024, e o número de quedas completas do sistema chegou a 12 ocorrências apenas no último trimestre."
+      },
+      {
+        "t": "p",
+        "texto": "O incidente mais grave ocorreu quando uma atualização no módulo de faturamento motivada por uma mudança na legislação tributária introduziu um erro que consumia toda a memória disponível do servidor. Como resultado, não apenas o faturamento parou de funcionar, mas também o agendamento de consultas e o acesso aos prontuários ficaram indisponíveis por 6 horas, em pleno horário comercial, impedindo o atendimento de urgências em todas as 40 unidades simultaneamente."
+      },
+      {
+        "t": "p",
+        "texto": "Newman (2015) argumenta que sistemas decompostos em serviços menores e independentes “podem ser implantados de forma isolada”, permitindo que equipes façam mudanças em um serviço sem coordenar uma reimplantação de todo o sistema. Com base nesse princípio, a diretoria da PetCare exige que qualquer redesenho da arquitetura garanta que uma falha em uma função nunca mais comprometa as demais, e que módulos com maior demanda (como agendamento, responsável por 70% do tráfego) recebam mais recursos sem exigir escalar o sistema inteiro."
+      },
+      {
+        "t": "fonte",
+        "texto": "NEWMAN, Sam. Building Microservices: Designing Fine-Grained Systems. Sebastopol: O'Reilly Media, 2015."
+      }
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) Com base no conceito de Fowler e Lewis (2014) apresentado no texto, identifique o tipo de arquitetura utilizada no sistema original da PetCare e explique por que uma falha no módulo de faturamento foi capaz de comprometer também o agendamento e os prontuários.",
+      "b) Proponha uma arquitetura alternativa que atenda à exigência da diretoria, relacionando sua resposta ao princípio de implantação isolada descrito por Newman (2015).",
+      "c) Explique qual mecanismo viabiliza a comunicação entre os módulos dessa nova arquitetura, e cite um cuidado técnico necessário para que o crescimento do número de módulos não torne essa comunicação inviável de gerenciar.",
+      "d) A equipe de TI cogita adotar um componente central que gerencie autenticação, monitoramento e balanceamento de carga entre os módulos. Identifique esse componente e avalie se sua adoção é justificável para uma rede de 40 unidades como a PetCare."
+    ],
+    "linhas": 12
+  },
+  {
+    "id": "gestaoweb-cap1-q2",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "imagem",
+        "src": "questoes/gestaoweb/gestaoweb-cap1-figura1.png",
+        "legenda": "Figura 1 — Arquitetura do sistema original da PetCare"
+      },
+      {
+        "t": "citacao",
+        "texto": "“Um sistema monolítico [...] é construído como uma unidade única. [...] Toda mudança no sistema envolve a construção e implantação de uma nova versão de toda a aplicação server-side.”",
+        "fonte": "FOWLER, Martin; LEWIS, James. Microservices: a definition of this new architectural term. 2014."
+      },
+      {
+        "t": "p",
+        "texto": "A rede de clínicas veterinárias PetCare iniciou suas operações em 2018 com um único sistema, hospedado em um único servidor próprio, responsável por quatro funções: agendamento de consultas, prontuário eletrônico dos animais, controle de estoque de medicamentos e faturamento. Todo o código das quatro funcionalidades compartilhava o mesmo banco de dados e era implantado em conjunto qualquer alteração, por menor que fosse, exigia recompilar e reiniciar o sistema inteiro."
+      },
+      {
+        "t": "p",
+        "texto": "Entre 2018 e 2024, a rede expandiu de 3 para 40 unidades em todo o país, e o volume de acessos simultâneos cresceu de aproximadamente 50 para mais de 6.000 usuários em horários de pico. Nesse período, a equipe de TI registrou um aumento progressivo de incidentes: o tempo médio de resposta do sistema, que era de 200ms em 2018, passou para mais de 4 segundos em 2024, e o número de quedas completas do sistema chegou a 12 ocorrências apenas no último trimestre."
+      },
+      {
+        "t": "p",
+        "texto": "O incidente mais grave ocorreu quando uma atualização no módulo de faturamento motivada por uma mudança na legislação tributária introduziu um erro que consumia toda a memória disponível do servidor. Como resultado, não apenas o faturamento parou de funcionar, mas também o agendamento de consultas e o acesso aos prontuários ficaram indisponíveis por 6 horas, em pleno horário comercial, impedindo o atendimento de urgências em todas as 40 unidades simultaneamente."
+      },
+      {
+        "t": "p",
+        "texto": "Newman (2015) argumenta que sistemas decompostos em serviços menores e independentes “podem ser implantados de forma isolada”, permitindo que equipes façam mudanças em um serviço sem coordenar uma reimplantação de todo o sistema. Com base nesse princípio, a diretoria da PetCare exige que qualquer redesenho da arquitetura garanta que uma falha em uma função nunca mais comprometa as demais, e que módulos com maior demanda (como agendamento, responsável por 70% do tráfego) recebam mais recursos sem exigir escalar o sistema inteiro."
+      },
+      {
+        "t": "fonte",
+        "texto": "NEWMAN, Sam. Building Microservices: Designing Fine-Grained Systems. Sebastopol: O'Reilly Media, 2015."
+      },
+      {
+        "t": "p",
+        "texto": "Definida a migração para uma arquitetura de microsserviços, a equipe da PetCare decidiu que cada um dos quatro módulos (Agendamento, Prontuário, Estoque e Faturamento) passaria a ter seu próprio banco de dados e ciclo de implantação independente. Um novo desafio surgiu: o serviço de Faturamento precisa confirmar, em tempo real, se uma consulta foi efetivamente realizada antes de emitir a cobrança informação que hoje pertence ao serviço de Agendamento. Essa comunicação ocorre internamente, em alta frequência, entre os serviços (não é exposta a clientes externos ou parceiros), e a equipe estabeleceu como requisito não funcional que essa checagem não pode adicionar mais que poucos milissegundos de latência ao processo de faturamento, mesmo nos horários de pico em que o Agendamento sozinho responde por 70% do tráfego do sistema."
+      }
+    ],
+    "enunciado": "Considerando exclusivamente o requisito de comunicação interna, de alta frequência e baixa latência entre os serviços de Agendamento e Faturamento, assinale a alternativa que apresenta a arquitetura de API mais adequada para essa integração específica, acompanhada da justificativa tecnicamente correta para essa escolha:",
+    "alternativas": [
+      "REST, pois é a arquitetura mais adotada no mercado atual e garante compatibilidade com qualquer cliente que venha a consumir esse serviço no futuro",
+      "GraphQL, pois permite que o serviço de Faturamento solicite exatamente os campos que precisa do Agendamento, reduzindo o tamanho da resposta e, consequentemente, a latência",
+      "SOAP, pois seu uso de contratos rígidos (WSDL) garante a integridade dos dados trafegados entre dois módulos financeiros críticos como Agendamento e Faturamento",
+      "gRPC, pois seu protocolo binário e fortemente tipado tem menor overhead em chamadas internas frequentes",
+      "WebSocket, pois mantém uma conexão persistente entre os dois serviços"
+    ],
+    "correta": 3,
+    "resolucao": "{{B}} e {{E}} são os distratores mais fortes: GraphQL de fato reduz o tamanho da resposta, mas seu overhead de parsing e resolução de consultas o torna menos eficiente que o gRPC para chamadas internas simples e bem definidas — sua vantagem aparece em consultas flexíveis vindas de clientes externos, não neste cenário. WebSocket resolve um problema diferente (comunicação contínua e bidirecional), não uma verificação pontual de tipo requisição-resposta. {{C}} explora a falsa ideia de que rigidez (XML/WSDL) implica maior integridade; na prática, o SOAP adiciona overhead que prejudica exatamente o requisito de baixa latência."
+  },
+  {
+    "id": "gestaoweb-cap1-q3",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "imagem",
+        "src": "questoes/gestaoweb/gestaoweb-cap1-figura2.png",
+        "legenda": "Figura 2 — Os cinco métodos HTTP e sua função sobre um recurso"
+      },
+      {
+        "t": "citacao",
+        "texto": "“O método PATCH solicita que um conjunto de alterações descritas no corpo da requisição seja aplicado ao recurso identificado pela Request-URI. [...] Diferente do PUT, o PATCH representa uma modificação parcial.”",
+        "fonte": "DUSSEAULT, L.; SNELL, J. RFC 5789 — PATCH Method for HTTP. IETF, 2010."
+      },
+      {
+        "t": "p",
+        "texto": "Uma desenvolvedora backend está construindo a API de um aplicativo de delivery que já processa cerca de 15 mil pedidos por dia. O recurso pedido é representado no banco de dados com 14 campos, entre eles: itens do pedido, endereço de entrega, forma de pagamento, valor total, nome do entregador designado, horário estimado de entrega e status atual."
+      },
+      {
+        "t": "p",
+        "texto": "A equipe identificou um problema: sempre que o status de um pedido precisa ser atualizado (por exemplo, quando o entregador sai para a entrega), o aplicativo do restaurante envia ao servidor os 14 campos do pedido inteiro, mesmo que apenas o campo status tenha mudado. Isso tem gerado tráfego de rede desnecessário, aumentado o tempo de resposta da API em horários de pico e ocasionalmente sobrescrito, por engano, informações atualizadas por outro processo nesse intervalo como o nome do entregador, reatribuído por outro sistema."
+      },
+      {
+        "t": "p",
+        "texto": "A desenvolvedora precisa corrigir esse endpoint para que ele realize apenas a mudança de status, sem reenviar nem sobrescrever os demais campos do pedido."
+      }
+    ],
+    "enunciado": "Considerando o texto de Dusseault e Snell (2010) e o cenário descrito, assinale a alternativa que apresenta a solução tecnicamente mais adequada:",
+    "alternativas": [
+      "Manter o método atualmente utilizado, pois reenviar o recurso completo é a única forma de garantir que o servidor sempre tenha uma versão íntegra e atualizada do pedido",
+      "Substituir o método por uma requisição GET contendo o novo status como parâmetro de URL, já que esse método é o mais leve entre os disponíveis no protocolo HTTP",
+      "Criar um endpoint com o método PATCH, enviando só o campo status, sem reenviar nem sobrescrever os demais campos",
+      "Utilizar o método PUT enviando apenas o campo status, já que a especificação HTTP permite que esse método seja usado para atualizações parciais quando o cliente considerar necessário",
+      "Criar um novo recurso com POST a cada mudança de status do pedido"
+    ],
+    "correta": 2,
+    "resolucao": "a alternativa que propõe usar PUT enviando só o campo status é o distrator mais forte: menciona corretamente a ideia de enviar poucos dados, mas contraria a própria definição citada no texto motivador, já que o PUT pressupõe substituição do recurso, não modificação parcial."
+  },
+  {
+    "id": "gestaoweb-cap1-q4",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "imagem",
+        "src": "questoes/gestaoweb/gestaoweb-cap1-figura2.png",
+        "legenda": "Figura 2 — Os cinco métodos HTTP e sua função sobre um recurso"
+      },
+      {
+        "t": "citacao",
+        "texto": "“O método PATCH solicita que um conjunto de alterações descritas no corpo da requisição seja aplicado ao recurso identificado pela Request-URI. [...] Diferente do PUT, o PATCH representa uma modificação parcial.”",
+        "fonte": "DUSSEAULT, L.; SNELL, J. RFC 5789 — PATCH Method for HTTP. IETF, 2010."
+      },
+      {
+        "t": "p",
+        "texto": "Uma desenvolvedora backend está construindo a API de um aplicativo de delivery que já processa cerca de 15 mil pedidos por dia. O recurso pedido é representado no banco de dados com 14 campos, entre eles: itens do pedido, endereço de entrega, forma de pagamento, valor total, nome do entregador designado, horário estimado de entrega e status atual."
+      },
+      {
+        "t": "p",
+        "texto": "A equipe identificou um problema: sempre que o status de um pedido precisa ser atualizado (por exemplo, quando o entregador sai para a entrega), o aplicativo do restaurante envia ao servidor os 14 campos do pedido inteiro, mesmo que apenas o campo status tenha mudado. Isso tem gerado tráfego de rede desnecessário, aumentado o tempo de resposta da API em horários de pico e ocasionalmente sobrescrito, por engano, informações atualizadas por outro processo nesse intervalo como o nome do entregador, reatribuído por outro sistema."
+      },
+      {
+        "t": "p",
+        "texto": "A desenvolvedora precisa corrigir esse endpoint para que ele realize apenas a mudança de status, sem reenviar nem sobrescrever os demais campos do pedido."
+      },
+      {
+        "t": "citacao",
+        "texto": "“O código de status 412 (Precondition Failed) indica que uma ou mais condições dadas nos campos de cabeçalho da requisição avaliaram como falsas quando testadas no servidor. [...] Diferente do 409, que sinaliza um conflito genérico com o estado atual do recurso, o 412 se aplica especificamente quando uma requisição condicional falha.”",
+        "fonte": "FIELDING, R.; RESCHKE, J. RFC 9110 — HTTP Semantics, seção 15.5. IETF, 2022."
+      },
+      {
+        "t": "p",
+        "texto": "Após o incidente relatado no texto anterior — em que o nome do entregador foi sobrescrito por engano durante uma atualização de status — a equipe decidiu implementar um controle de concorrência otimista no endpoint PATCH do recurso pedido, usando o cabeçalho HTTP If-Match com um ETag: o aplicativo do restaurante armazena o ETag retornado na última leitura do pedido e o envia no cabeçalho If-Match a cada requisição PATCH. O servidor compara esse valor com o ETag atual do recurso; se não houver correspondência — sinal de que o pedido foi modificado por outro processo nesse intervalo — a atualização deve ser rejeitada, e o aplicativo deve recarregar o pedido antes de tentar novamente."
+      }
+    ],
+    "enunciado": "Considerando a definição apresentada no texto motivador, assinale a alternativa que indica o código de status HTTP tecnicamente correto para a resposta do servidor quando o ETag enviado no cabeçalho If-Match não corresponde ao ETag atual do pedido:",
+    "alternativas": [
+      "409 Conflict, pois qualquer divergência entre o estado esperado pelo cliente e o estado real do recurso no servidor caracteriza um conflito, independentemente do mecanismo usado para detectá-lo",
+      "412 Precondition Failed, pois a condição enviada no cabeçalho If-Match foi avaliada pelo servidor e não foi satisfeita",
+      "428 Precondition Required, pois o servidor exige que requisições de atualização sejam sempre acompanhadas de uma condição prévia para serem aceitas",
+      "400 Bad Request, pois o valor incorreto enviado no cabeçalho If-Match torna a sintaxe da requisição inválida",
+      "423 Locked, pois o recurso pedido está temporariamente bloqueado para edição por outro processo no momento da requisição"
+    ],
+    "correta": 1,
+    "resolucao": "{{A}} é o distrator mais forte: 409 também trata de conflito, e boa parte dos desenvolvedores o escolhe por hábito; mas a RFC reserva o 409 para conflitos genéricos de estado, enquanto o 412 é o código específico para quando uma condição do cabeçalho da própria requisição (If-Match, If-None-Match, If-Unmodified-Since) falha — exatamente o mecanismo descrito no texto. {{C}} confunde 'exigir' uma condição (428, quando o cabeçalho está ausente) com 'falhar' uma condição já enviada (412). {{D}} está errado porque o cabeçalho está sintaticamente correto — o problema é semântico (valor desatualizado), não de formato. {{E}} descreve bloqueio pessimista (locking), mecanismo diferente do controle otimista via ETag descrito no cenário."
+  },
+  {
+    "id": "gestaoweb-cap1-q5",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "imagem",
+        "src": "questoes/gestaoweb/gestaoweb-cap1-figura3.png",
+        "legenda": "Figura 3 — Comportamento do TCP e do UDP diante da perda de um pacote"
+      },
+      {
+        "t": "citacao",
+        "texto": "“O TCP foi projetado para transferência confiável de dados, não para aplicações em tempo real com requisitos rígidos de latência. [...] A retransmissão de segmentos perdidos, embora garanta a confiabilidade, introduz atraso adicional insustentável para mídia interativa em tempo real.”",
+        "fonte": "KUROSE, James F.; ROSS, Keith W. Redes de Computadores e a Internet: Uma Abordagem Top-Down. 6ª ed. São Paulo: Pearson, 2013."
+      },
+      {
+        "t": "p",
+        "texto": "A startup ConectaJá está desenvolvendo um aplicativo de videochamadas corporativas. Nos primeiros testes, a equipe implementou a transmissão de áudio e vídeo sobre TCP, priorizando a confiabilidade de entrega dos dados. Em condições de rede ideais, a latência da chamada ficava em torno de 80 milissegundos — dentro do limite considerado aceitável para uma conversa fluida. No entanto, ao simular uma perda de pacotes de apenas 2% (nível comum em redes móveis e Wi-Fi doméstico), a equipe registrou picos de latência superiores a 600 milissegundos, com participantes relatando congelamentos perceptíveis da imagem e do áudio a cada poucos segundos."
+      },
+      {
+        "t": "p",
+        "texto": "Ao substituir o transporte de áudio e vídeo por um protocolo baseado em UDP (a mesma abordagem adotada pelo WebRTC, tecnologia usada por serviços como Google Meet), a equipe observou que a latência se manteve abaixo de 150 milissegundos mesmo sob a mesma taxa de perda de pacotes. Em contrapartida, passaram a ocorrer pequenas falhas pontuais na imagem ou no áudio — um quadro de vídeo levemente corrompido, uma fração de segundo de áudio ausente — que os usuários, em testes, classificaram como muito menos incômodas do que os congelamentos anteriores."
+      },
+      {
+        "t": "p",
+        "texto": "É importante notar que o chat de texto integrado à videochamada, usado para compartilhar links e anotações durante a reunião, permaneceu implementado sobre TCP mesmo após essa mudança."
+      }
+    ],
+    "enunciado": "Considerando o texto de Kurose e Ross, a Figura 3 e o fato de que o chat de texto da ConectaJá permaneceu sobre TCP mesmo após a migração do áudio e do vídeo para UDP, assinale a alternativa que justifica corretamente essa decisão de arquitetura:",
+    "alternativas": [
+      "O chat deveria ter sido migrado para UDP também, e sua permanência em TCP foi um erro de arquitetura que a equipe ainda não corrigiu",
+      "Mensagens de chat têm baixo volume de dados, tornando irrelevante qual protocolo de transporte é utilizado nesse canal",
+      "Ao contrário de um quadro de vídeo, uma mensagem de chat perdida faz falta ao usuário; a confiabilidade do TCP é o que esse canal precisa",
+      "O protocolo UDP não é compatível com transmissão de texto, apenas com fluxos binários de áudio e vídeo",
+      "Manter dois protocolos de transporte diferentes na mesma aplicação não é tecnicamente viável, e o chat provavelmente reutiliza a mesma conexão UDP do vídeo por baixo dos panos"
+    ],
+    "correta": 2,
+    "resolucao": "a escolha do protocolo de transporte depende da natureza do dado: perder um quadro de vídeo por uma fração de segundo é imperceptível, mas perder uma mensagem de chat (um link, uma anotação) é inaceitável — o texto motivador já indica que a confiabilidade do TCP é vantajosa quando não há restrição rígida de latência. {{B}} é o distrator mais comum: volume de dados não é o critério relevante aqui, e sim a tolerância a perdas. {{D}} é falso — UDP transporta qualquer tipo de dado binário, incluindo texto. {{E}} descreve uma limitação técnica inexistente."
+  },
+  {
+    "id": "gestaoweb-cap1-q6",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "imagem",
+        "src": "questoes/gestaoweb/gestaoweb-cap1-figura3.png",
+        "legenda": "Figura 3 — Comportamento do TCP e do UDP diante da perda de um pacote"
+      },
+      {
+        "t": "citacao",
+        "texto": "“O TCP foi projetado para transferência confiável de dados, não para aplicações em tempo real com requisitos rígidos de latência. [...] A retransmissão de segmentos perdidos, embora garanta a confiabilidade, introduz atraso adicional insustentável para mídia interativa em tempo real.”",
+        "fonte": "KUROSE, James F.; ROSS, Keith W. Redes de Computadores e a Internet: Uma Abordagem Top-Down. 6ª ed. São Paulo: Pearson, 2013."
+      },
+      {
+        "t": "p",
+        "texto": "A startup ConectaJá está desenvolvendo um aplicativo de videochamadas corporativas. Nos primeiros testes, a equipe implementou a transmissão de áudio e vídeo sobre TCP, priorizando a confiabilidade de entrega dos dados. Em condições de rede ideais, a latência da chamada ficava em torno de 80 milissegundos — dentro do limite considerado aceitável para uma conversa fluida. No entanto, ao simular uma perda de pacotes de apenas 2% (nível comum em redes móveis e Wi-Fi doméstico), a equipe registrou picos de latência superiores a 600 milissegundos, com participantes relatando congelamentos perceptíveis da imagem e do áudio a cada poucos segundos."
+      },
+      {
+        "t": "p",
+        "texto": "Ao substituir o transporte de áudio e vídeo por um protocolo baseado em UDP (a mesma abordagem adotada pelo WebRTC, tecnologia usada por serviços como Google Meet), a equipe observou que a latência se manteve abaixo de 150 milissegundos mesmo sob a mesma taxa de perda de pacotes. Em contrapartida, passaram a ocorrer pequenas falhas pontuais na imagem ou no áudio — um quadro de vídeo levemente corrompido, uma fração de segundo de áudio ausente — que os usuários, em testes, classificaram como muito menos incômodas do que os congelamentos anteriores."
+      },
+      {
+        "t": "p",
+        "texto": "É importante notar que o chat de texto integrado à videochamada, usado para compartilhar links e anotações durante a reunião, permaneceu implementado sobre TCP mesmo após essa mudança."
+      },
+      {
+        "t": "citacao",
+        "texto": "“O Forward Error Correction (FEC) permite que o receptor reconstrua pacotes de mídia perdidos a partir de dados redundantes transmitidos junto com o fluxo original, sem que seja necessário solicitar a retransmissão ao emissor — trade-off que consome banda adicional em troca da eliminação do atraso de uma nova viagem de ida e volta (RTT).”",
+        "fonte": "RFC 5109 — RTP Payload Format for Generic Forward Error Correction. IETF, 2007."
+      },
+      {
+        "t": "p",
+        "texto": "Ainda no caso da ConectaJá, mesmo após a migração do áudio e do vídeo para UDP, a equipe de engenharia quer reduzir ainda mais o impacto perceptível das perdas de pacote nos quadros de vídeo, sem reintroduzir a espera por confirmação (ACK) que causava os congelamentos observados originalmente sobre TCP."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador, assinale a alternativa que apresenta a técnica mais adequada para esse objetivo:",
+    "alternativas": [
+      "Retransmissão seletiva dos pacotes perdidos, como faz o TCP, porém com temporizadores de espera mais agressivos e de menor duração",
+      "Forward Error Correction (FEC): enviar dados redundantes que permitem reconstruir o pacote perdido sem retransmissão",
+      "Algoritmo de Nagle, que agrupa pequenos pacotes em um único envio para reduzir o overhead de cabeçalhos na rede",
+      "Controle por janela deslizante (sliding window), regulando quantos pacotes podem ser enviados antes de uma confirmação do receptor e reenviando apenas os que se perderem",
+      "Comutação de circuitos, estabelecendo um caminho físico dedicado entre emissor e receptor durante toda a duração da chamada"
+    ],
+    "correta": 1,
+    "resolucao": "{{A}} é o distrator mais forte: parece uma otimização razoável, mas qualquer forma de retransmissão reintroduz uma viagem de ida e volta (RTT) de espera, exatamente o problema que a equipe quer evitar — apenas com temporizadores menores, não elimina o mecanismo. {{C}} e {{D}} descrevem mecanismos reais de otimização de rede, mas pertencem ao universo do TCP (controle de fluxo e agrupamento de pacotes), sem relação com reconstrução de dados perdidos. {{E}} descreve um paradigma de rede inteiro (telefonia tradicional), incompatível com a arquitetura de pacotes da internet."
+  },
+  {
+    "id": "gestaoweb-cap1-q7",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A arquitetura cliente-servidor é atualmente o modelo dominante para sistemas distribuídos. Nesse modelo, o sistema é organizado como um conjunto de serviços providos por servidores e solicitados por clientes.”",
+        "fonte": "SOMMERVILLE, Ian. Engenharia de Software. 10ª ed. São Paulo: Pearson, 2019."
+      },
+      {
+        "t": "p",
+        "texto": "A ContabilFácil é um escritório de contabilidade cujo sistema de gestão passou por quatro fases ao longo de quase 30 anos de operação. Em 1995, o escritório operava com um único computador de grande porte, ao qual se conectavam seis terminais burros usados pelos contadores — todo o processamento e armazenamento de dados ocorria nessa máquina central, e os terminais apenas exibiam telas e capturavam digitação."
+      },
+      {
+        "t": "p",
+        "texto": "Em 2001, o escritório substituiu esse modelo por um sistema em que cada contador tinha um microcomputador próprio, rodando uma aplicação desenvolvida em Delphi que se conectava diretamente a um banco de dados Access compartilhado em um servidor de arquivos: a interface e todas as regras de cálculo de impostos ficavam no próprio computador de cada contador, que enviava e recebia dados diretamente do banco."
+      },
+      {
+        "t": "p",
+        "texto": "Em 2010, após reclamações de que qualquer mudança na legislação tributária exigia atualizar manualmente o programa em cada um dos agora 40 computadores da empresa, a equipe de TI passou a concentrar todas as regras de cálculo em um servidor de aplicação Java dedicado, separado do servidor de banco de dados (que migrou para Oracle). Os computadores dos contadores passaram a rodar uma interface mais simples, que apenas exibia dados e enviava solicitações ao servidor de aplicação."
+      },
+      {
+        "t": "p",
+        "texto": "Em 2018, a ContabilFácil migrou novamente: os contadores passaram a acessar o sistema inteiramente pelo navegador, sem instalar nenhum programa, e uma equipe de contadores home office pôde ser contratada pela primeira vez, já que o acesso deixou de depender de estar fisicamente conectado à rede interna do escritório."
+      }
+    ],
+    "enunciado": "Com base no conceito de Sommerville (2019) e nas quatro fases descritas, assinale a alternativa que classifica corretamente a arquitetura de cada fase e justifica a mudança de 2001 para 2010:",
+    "alternativas": [
+      "1995: mainframe; 2001: 2 camadas; 2010: 3 camadas; 2018: arquitetura web — a mudança resolveu o problema porque centralizou a lógica de negócio no servidor de aplicação",
+      "1995: 2 camadas; 2001: 3 camadas; 2010: mainframe; 2018: arquitetura web — a mudança resolveu o problema porque substituiu o Access por um banco de dados Oracle, mais robusto e rápido",
+      "1995: mainframe; 2001: 3 camadas; 2010: 2 camadas; 2018: arquitetura web — a mudança resolveu o problema porque reduziu o número de estações de trabalho conectadas ao sistema",
+      "1995: arquitetura web; 2001: mainframe; 2010: 2 camadas; 2018: 3 camadas — a mudança resolveu o problema porque introduziu, pela primeira vez, um banco de dados compartilhado entre os contadores",
+      "1995: mainframe; 2001: 2 camadas; 2010: 3 camadas; 2018: arquitetura web — a mudança resolveu o problema porque o Java, diferente do Delphi, é uma linguagem compilada e portanto mais eficiente"
+    ],
+    "correta": 0,
+    "resolucao": "a sequência corresponde exatamente à evolução histórica das arquiteturas (mainframe → 2 camadas → 3 camadas → web), e a justificativa correta está na centralização da lógica de negócio em uma única camada de aplicação. {{E}} é o distrator mais sedutor: acerta a sequência das arquiteturas, mas atribui a melhoria à linguagem de programação (Java vs. Delphi), quando na verdade a melhoria decorre da reestruturação arquitetural, não da troca de linguagem."
+  },
+  {
+    "id": "gestaoweb-cap1-q8",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A arquitetura cliente-servidor é atualmente o modelo dominante para sistemas distribuídos. Nesse modelo, o sistema é organizado como um conjunto de serviços providos por servidores e solicitados por clientes.”",
+        "fonte": "SOMMERVILLE, Ian. Engenharia de Software. 10ª ed. São Paulo: Pearson, 2019."
+      },
+      {
+        "t": "p",
+        "texto": "A ContabilFácil é um escritório de contabilidade cujo sistema de gestão passou por quatro fases ao longo de quase 30 anos de operação. Em 1995, o escritório operava com um único computador de grande porte, ao qual se conectavam seis terminais burros usados pelos contadores — todo o processamento e armazenamento de dados ocorria nessa máquina central, e os terminais apenas exibiam telas e capturavam digitação."
+      },
+      {
+        "t": "p",
+        "texto": "Em 2001, o escritório substituiu esse modelo por um sistema em que cada contador tinha um microcomputador próprio, rodando uma aplicação desenvolvida em Delphi que se conectava diretamente a um banco de dados Access compartilhado em um servidor de arquivos: a interface e todas as regras de cálculo de impostos ficavam no próprio computador de cada contador, que enviava e recebia dados diretamente do banco."
+      },
+      {
+        "t": "p",
+        "texto": "Em 2010, após reclamações de que qualquer mudança na legislação tributária exigia atualizar manualmente o programa em cada um dos agora 40 computadores da empresa, a equipe de TI passou a concentrar todas as regras de cálculo em um servidor de aplicação Java dedicado, separado do servidor de banco de dados (que migrou para Oracle). Os computadores dos contadores passaram a rodar uma interface mais simples, que apenas exibia dados e enviava solicitações ao servidor de aplicação."
+      },
+      {
+        "t": "p",
+        "texto": "Em 2018, a ContabilFácil migrou novamente: os contadores passaram a acessar o sistema inteiramente pelo navegador, sem instalar nenhum programa, e uma equipe de contadores home office pôde ser contratada pela primeira vez, já que o acesso deixou de depender de estar fisicamente conectado à rede interna do escritório."
+      },
+      {
+        "t": "p",
+        "texto": "Uma sócia da ContabilFácil, avessa a mudanças, propõe que a empresa volte ao modelo de 2001 (Delphi + Access), alegando que “funcionava bem e era mais simples de entender”. A equipe de TI foi solicitada a redigir um parecer técnico explicando, entre outros pontos, por que o modelo de 2010 (servidor de aplicação separado do banco de dados) é estruturalmente mais adequado para uma empresa que já opera com 40 estações de trabalho e enfrenta mudanças regulatórias frequentes."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que apresenta o argumento tecnicamente mais preciso para esse parecer:",
+    "alternativas": [
+      "O modelo de 2001 é tecnicamente idêntico ao de 2010, mudando apenas a linguagem de programação utilizada (Delphi para Java), o que torna a comparação irrelevante",
+      "O modelo de 2010 é superior exclusivamente porque o banco de dados Oracle é mais robusto e rápido que o Access, independentemente de como a lógica de negócio está organizada entre as camadas",
+      "No modelo de 2001, a lógica tributária está replicada em cada estação; no de 2010, fica só no servidor de aplicação e muda em um único ponto",
+      "A diferença entre os dois modelos é apenas estética, já que ambos permitem que os contadores acessem os mesmos dados financeiros armazenados no servidor",
+      "O modelo de 2001 já era uma arquitetura em três camadas, portanto não haveria ganho técnico real na migração para o modelo de 2010"
+    ],
+    "correta": 2,
+    "resolucao": "a alternativa correta identifica a real diferença estrutural: em uma arquitetura de 2 camadas, cada cliente carrega sua própria cópia da lógica de negócio, exigindo atualização individual; em 3 camadas, a lógica fica centralizada no servidor de aplicação. {{B}} é um distrator forte porque cita um fato verdadeiro (Oracle é mais robusto), mas atribui a ele um benefício que, na verdade, decorre da separação de camadas, não do SGBD escolhido. {{E}} é o distrator mais traiçoeiro: descreve corretamente uma característica de 2 camadas, mas rotula-a incorretamente como 3 camadas."
+  },
+  {
+    "id": "gestaoweb-cap1-q9",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A sintaxe genérica de uma URI é composta hierarquicamente pelos componentes: scheme, authority, path, query e fragment [...]. Caracteres reservados que aparecem em um componente com finalidade diferente da sua função sintática devem ser codificados percentualmente (percent-encoded).”",
+        "fonte": "BERNERS-LEE, T.; FIELDING, R.; MASINTER, L. RFC 3986 — Uniform Resource Identifier (URI): Generic Syntax. IETF, 2005."
+      },
+      {
+        "t": "p",
+        "texto": "A plataforma de ensino EstudaMais migrou, em 2024, suas URLs de um formato antigo — como plataforma.com/c.php?id=482&cat=3 — para um formato descritivo — como plataforma.com/cursos/programacao-python/modulo-2#exercicios. Após seis meses, a equipe de marketing registrou aumento de 40% no tráfego orgânico vindo de buscadores, e reduziu em 25% a taxa de abandono de usuários que chegavam à página por meio de links compartilhados em redes sociais."
+      },
+      {
+        "t": "p",
+        "texto": "Durante a migração, no entanto, a equipe de desenvolvimento identificou um bug recorrente: cursos com acentuação no título, como “Introdução à Programação”, geravam URLs quebradas quando compartilhadas em determinados aplicativos de mensagem — o link chegava truncado ou redirecionava para uma página de erro 404. A correção envolveu garantir que os caracteres especiais do título fossem devidamente tratados antes de compor a URL final."
+      }
+    ],
+    "enunciado": "Considerando o trecho da RFC 3986 e o bug relatado com títulos acentuados, assinale a alternativa que identifica corretamente a causa técnica mais provável do problema e a solução adequada:",
+    "alternativas": [
+      "O caractere acentuado, fora do conjunto permitido em URIs, não foi convertido para percent-encoding antes de compor a URL",
+      "O servidor da EstudaMais está com a codificação de caracteres (charset) configurada incorretamente na resposta HTTP, o que não tem relação com a formação da URL em si nem com a RFC 3986",
+      "URLs com mais de 60 caracteres são automaticamente truncadas por qualquer navegador, independentemente de conterem acentuação",
+      "O problema está no protocolo HTTPS, que não oferece suporte a caracteres Unicode em nenhum componente da URL",
+      "O bug ocorre porque a URL descritiva ultrapassa o limite de subdiretórios permitido pela sintaxe hierárquica de path definida na RFC 3986"
+    ],
+    "correta": 0,
+    "resolucao": "caracteres acentuados estão fora do conjunto de caracteres não reservados da sintaxe de URI, e precisam ser convertidos para sua representação percent-encoded (%XX) para serem transmitidos de forma confiável em qualquer cliente. {{B}}, {{C}}, {{D}} e {{E}} atribuem o problema a causas plausíveis à primeira vista, mas tecnicamente incorretas ou inexistentes."
+  },
+  {
+    "id": "gestaoweb-cap1-q10",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A sintaxe genérica de uma URI é composta hierarquicamente pelos componentes: scheme, authority, path, query e fragment [...]. Caracteres reservados que aparecem em um componente com finalidade diferente da sua função sintática devem ser codificados percentualmente (percent-encoded).”",
+        "fonte": "BERNERS-LEE, T.; FIELDING, R.; MASINTER, L. RFC 3986 — Uniform Resource Identifier (URI): Generic Syntax. IETF, 2005."
+      },
+      {
+        "t": "p",
+        "texto": "A plataforma de ensino EstudaMais migrou, em 2024, suas URLs de um formato antigo — como plataforma.com/c.php?id=482&cat=3 — para um formato descritivo — como plataforma.com/cursos/programacao-python/modulo-2#exercicios. Após seis meses, a equipe de marketing registrou aumento de 40% no tráfego orgânico vindo de buscadores, e reduziu em 25% a taxa de abandono de usuários que chegavam à página por meio de links compartilhados em redes sociais."
+      },
+      {
+        "t": "p",
+        "texto": "Durante a migração, no entanto, a equipe de desenvolvimento identificou um bug recorrente: cursos com acentuação no título, como “Introdução à Programação”, geravam URLs quebradas quando compartilhadas em determinados aplicativos de mensagem — o link chegava truncado ou redirecionava para uma página de erro 404. A correção envolveu garantir que os caracteres especiais do título fossem devidamente tratados antes de compor a URL final."
+      },
+      {
+        "t": "p",
+        "texto": "Durante a investigação do bug, um desenvolvedor júnior da equipe propôs simplesmente remover todos os acentos dos títulos dos cursos antes de gerar a URL (transformando “Introdução” em “Introducao”), alegando que essa seria a forma mais simples de evitar qualquer problema de codificação. Uma desenvolvedora sênior discordou, afirmando que a solução do júnior resolveria o sintoma, mas não seria a prática tecnicamente recomendada."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que melhor descreve por que a abordagem da desenvolvedora sênior — aplicar percent-encoding corretamente aos caracteres especiais, preservando a acentuação visível na URL — é preferível à simples remoção de acentos:",
+    "alternativas": [
+      "Porque URLs sem qualquer codificação especial carregam mais rápido, já que o navegador não precisa decodificar nenhum caractere",
+      "Porque remover os acentos tornaria a URL tecnicamente inválida segundo a RFC 3986, impedindo qualquer navegador de acessá-la",
+      "Porque o percent-encoding mantém a URL legível para o usuário e trata, nos bastidores, os caracteres não permitidos em URIs",
+      "Porque apenas URLs com caracteres acentuados são indexadas pelos mecanismos de busca em português, o que beneficia diretamente o SEO e o posicionamento do site",
+      "Porque o percent-encoding é obrigatório por lei em sites brasileiros que utilizam a língua portuguesa em suas URLs"
+    ],
+    "correta": 2,
+    "resolucao": "a remoção de acentos (distrator {{A}}, também via a falsa vantagem de performance) é uma solução funcional, mas empobrece a URL como identificador legível do conteúdo. {{B}} está errado: URLs sem acentuação são perfeitamente válidas, apenas menos fiéis ao título original. {{D}} e {{E}} são afirmações falsas sobre SEO e legislação, inseridas como distratores de plausibilidade superficial."
+  },
+  {
+    "id": "gestaoweb-cap1-q11",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O W3C existe para conduzir a Web ao seu pleno potencial por meio do desenvolvimento de protocolos e diretrizes que assegurem o crescimento da Web a longo prazo, garantindo que ela permaneça acessível a todas as pessoas, independentemente de hardware, software, infraestrutura de rede, idioma, cultura, localização geográfica ou capacidade física ou mental.”",
+        "fonte": "W3C. W3C Mission. World Wide Web Consortium, 2023."
+      },
+      {
+        "t": "p",
+        "texto": "Uma equipe de desenvolvimento foi contratada para construir, em prazo apertado de seis semanas, o novo portal de agendamento de serviços de uma prefeitura de médio porte. Pressionado pelo cronograma, um dos desenvolvedores construiu boa parte da interface usando elementos <div> genéricos com eventos de clique via JavaScript no lugar de elementos semânticos — por exemplo, um <div onclick=\"enviarFormulario()\">Confirmar Agendamento</div> no lugar de um elemento de botão nativo, e uma sequência de <div> estilizados para simular uma lista de horários disponíveis, no lugar de uma lista HTML semântica."
+      },
+      {
+        "t": "p",
+        "texto": "Duas semanas após o lançamento, a Ouvidoria da prefeitura recebeu reclamações de munícipes que utilizam leitores de tela (softwares de acessibilidade para pessoas com deficiência visual): o botão “Confirmar Agendamento” não era anunciado como um elemento interativo pelo leitor de tela, e a navegação pela lista de horários usando apenas o teclado (sem mouse) era impossível, obrigando esses usuários a telefonar para marcar um horário."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que apresenta a correção tecnicamente adequada para os dois problemas relatados (o botão de confirmação e a lista de horários), à luz do papel do HTML semântico defendido pelo W3C:",
+    "alternativas": [
+      "Trocar o <div onclick> por <button> e a sequência de <div> por uma lista semântica (<ul>/<li>), recuperando foco, teclado e leitura por leitores de tela",
+      "Manter os elementos <div>, mas aumentar o contraste de cores da interface, já que a maioria dos problemas de acessibilidade se resume a questões visuais",
+      "Adicionar uma declaração <meta name=\"acessibilidade\" content=\"true\"> ao <head> do documento, sinalizando aos leitores de tela que a página segue as diretrizes de acessibilidade do W3C",
+      "Reescrever toda a interface em JavaScript puro, eliminando o uso de HTML e CSS, que são as tecnologias responsáveis pelas falhas de acessibilidade relatadas",
+      "Adicionar uma versão em texto simples do site, separada da versão principal, destinada exclusivamente a usuários de leitores de tela"
+    ],
+    "correta": 0,
+    "resolucao": "usar elementos HTML semânticos nativos (<button>, listas) resolve a causa raiz do problema, restaurando comportamentos de acessibilidade que o navegador já implementa automaticamente. {{C}} é um distrator que descreve um atributo/mecanismo inexistente no HTML. {{E}} descreve a prática, hoje desaconselhada, de 'sites paralelos para acessibilidade', que o próprio W3C recomenda evitar em favor de uma única interface acessível a todos."
+  },
+  {
+    "id": "gestaoweb-cap1-q12",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O W3C existe para conduzir a Web ao seu pleno potencial por meio do desenvolvimento de protocolos e diretrizes que assegurem o crescimento da Web a longo prazo, garantindo que ela permaneça acessível a todas as pessoas, independentemente de hardware, software, infraestrutura de rede, idioma, cultura, localização geográfica ou capacidade física ou mental.”",
+        "fonte": "W3C. W3C Mission. World Wide Web Consortium, 2023."
+      },
+      {
+        "t": "p",
+        "texto": "Uma equipe de desenvolvimento foi contratada para construir, em prazo apertado de seis semanas, o novo portal de agendamento de serviços de uma prefeitura de médio porte. Pressionado pelo cronograma, um dos desenvolvedores construiu boa parte da interface usando elementos <div> genéricos com eventos de clique via JavaScript no lugar de elementos semânticos — por exemplo, um <div onclick=\"enviarFormulario()\">Confirmar Agendamento</div> no lugar de um elemento de botão nativo, e uma sequência de <div> estilizados para simular uma lista de horários disponíveis, no lugar de uma lista HTML semântica."
+      },
+      {
+        "t": "p",
+        "texto": "Duas semanas após o lançamento, a Ouvidoria da prefeitura recebeu reclamações de munícipes que utilizam leitores de tela (softwares de acessibilidade para pessoas com deficiência visual): o botão “Confirmar Agendamento” não era anunciado como um elemento interativo pelo leitor de tela, e a navegação pela lista de horários usando apenas o teclado (sem mouse) era impossível, obrigando esses usuários a telefonar para marcar um horário."
+      },
+      {
+        "t": "p",
+        "texto": "Ao corrigir o problema, um segundo desenvolvedor da equipe sugeriu uma solução intermediária: manter o elemento <div>, mas adicionar a ele o atributo role=\"button\" e um tabindex=\"0\", replicando via JavaScript o comportamento de foco e ativação por teclado que um <button> nativo já possui automaticamente."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que apresenta a avaliação tecnicamente mais correta dessa solução intermediária, em comparação com o uso do elemento <button> nativo:",
+    "alternativas": [
+      "É estritamente equivalente ao <button> nativo, já que role=\"button\" informa ao navegador para tratar o elemento exatamente da mesma forma, sem qualquer diferença de comportamento",
+      "É tecnicamente inferior, pois o desenvolvedor precisa reimplementar à mão comportamentos nativos do <button>, como Enter e Espaço",
+      "É inválida, pois o atributo role não é reconhecido por nenhum navegador ou leitor de tela atualmente em uso",
+      "É superior ao <button> nativo, pois permite uma customização visual que elementos nativos do HTML jamais podem alcançar via CSS",
+      "É irrelevante, pois leitores de tela modernos conseguem inferir corretamente a função de qualquer elemento clicável, independentemente de sua marcação"
+    ],
+    "correta": 1,
+    "resolucao": "a alternativa correta reconhece que atributos ARIA como role=\"button\" comunicam a função do elemento a tecnologias assistivas, mas não replicam automaticamente o comportamento funcional nativo (foco, ativação por teclado), que precisa ser implementado manualmente em JavaScript — daí o princípio de acessibilidade “native HTML first”. {{D}} é um distrator comum: a customização visual via CSS é igualmente possível em um <button> nativo, não é exclusividade de um <div sem semântica própria."
+  },
+  {
+    "id": "gestaoweb-cap1-q13",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Inteiramente novas formas de enciclopédias aparecerão, prontas, com uma malha de trilhas associativas percorrendo-as, prontas para serem inseridas no memex e ali amplificadas [...]. O processo de associar ideias, no entanto, é a operação essencial da mente humana.”",
+        "fonte": "BUSH, Vannevar. As We May Think. The Atlantic, julho de 1945."
+      },
+      {
+        "t": "p",
+        "texto": "Um museu de ciências está desenvolvendo um totem digital interativo para sua nova exposição sobre a história da computação. Ao tocar no nome de um cientista (por exemplo, “Ada Lovelace”) em um texto sobre a máquina analítica de Babbage, o visitante é levado a uma página dedicada com biografia, fotos de época e um trecho de áudio narrado. Essa página, por sua vez, contém um link para um vídeo de três minutos sobre o primeiro algoritmo publicado da história, e esse vídeo contém, sobreposto, botões que levam a outras figuras contemporâneas mencionadas na narração — permitindo que dois visitantes diferentes, partindo do mesmo texto inicial, terminem a visita tendo consumido conjuntos de conteúdo completamente diferentes, em ordens diferentes."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que distingue corretamente hipertexto de hipermídia, relacionando cada conceito a um elemento do totem descrito no texto:",
+    "alternativas": [
+      "Hipertexto e hipermídia são sinônimos técnicos; a distinção entre os termos é apenas uma questão de preferência de estilo entre autores",
+      "Hipertexto se refere exclusivamente a documentos acadêmicos interligados por citações; hipermídia, a qualquer conteúdo exibido em uma tela sensível ao toque, como a do totem",
+      "Hipertexto é texto em blocos ligados por links, como o nome \"Ada Lovelace\"; hipermídia inclui outras mídias interligadas, como o áudio e o vídeo",
+      "Hipertexto é qualquer texto disponível na internet; hipermídia é qualquer texto disponível apenas em mídia offline, como CDs interativos",
+      "Hipertexto refere-se à velocidade de carregamento do conteúdo; hipermídia refere-se à quantidade de mídias simultâneas exibidas na tela"
+    ],
+    "correta": 2,
+    "resolucao": "hipertexto é o conceito original de Bush (1945), focado em texto interligado por associações; hipermídia é sua extensão natural para incluir áudio, vídeo e outras mídias na mesma teia de conexões, exatamente como descrito no totem do museu."
+  },
+  {
+    "id": "gestaoweb-cap1-q14",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Inteiramente novas formas de enciclopédias aparecerão, prontas, com uma malha de trilhas associativas percorrendo-as, prontas para serem inseridas no memex e ali amplificadas [...]. O processo de associar ideias, no entanto, é a operação essencial da mente humana.”",
+        "fonte": "BUSH, Vannevar. As We May Think. The Atlantic, julho de 1945."
+      },
+      {
+        "t": "p",
+        "texto": "Um museu de ciências está desenvolvendo um totem digital interativo para sua nova exposição sobre a história da computação. Ao tocar no nome de um cientista (por exemplo, “Ada Lovelace”) em um texto sobre a máquina analítica de Babbage, o visitante é levado a uma página dedicada com biografia, fotos de época e um trecho de áudio narrado. Essa página, por sua vez, contém um link para um vídeo de três minutos sobre o primeiro algoritmo publicado da história, e esse vídeo contém, sobreposto, botões que levam a outras figuras contemporâneas mencionadas na narração — permitindo que dois visitantes diferentes, partindo do mesmo texto inicial, terminem a visita tendo consumido conjuntos de conteúdo completamente diferentes, em ordens diferentes."
+      },
+      {
+        "t": "p",
+        "texto": "A equipe de desenvolvimento do totem precisa implementar um botão “Voltar ao início da linha do tempo”, visível em todas as subpáginas do exibidor, que deve levar o visitante de volta a uma seção específica dentro da própria página inicial da exposição (e não a uma nova página carregada do zero), identificada no HTML como <section id=\"linha-do-tempo\">."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que apresenta a construção de link tecnicamente adequada para esse botão, considerando que a página inicial da exposição está localizada em /exposicao/inicio.html:",
+    "alternativas": [
+      "<a href=\"/exposicao/inicio.html\">Voltar</a>, pois qualquer link para a página inicial automaticamente rola até a última seção visitada pelo usuário",
+      "<a href=\"/exposicao/inicio.html#linha-do-tempo\">Voltar</a>, pois o fragmento após o # leva à seção com esse identificador",
+      "<a href=\"linha-do-tempo\">Voltar</a>, pois o nome da seção serve como caminho",
+      "<a href=\"/exposicao/inicio.html?section=linha-do-tempo\">Voltar</a>, pois parâmetros de query são a forma padronizada de direcionar a uma seção específica de uma página",
+      "<a href=\"#linha-do-tempo\">Voltar</a>, pois o símbolo # sozinho, sem o caminho do arquivo, é suficiente para navegar entre páginas diferentes do site"
+    ],
+    "correta": 1,
+    "resolucao": "combina corretamente o caminho até o documento HTML com o fragmento (#linha-do-tempo) que identifica a seção alvo dentro dele. {{D}} é o distrator mais forte: parâmetros de query (?section=...) não têm esse efeito nativo no HTML — direcionar a uma seção da página é função específica do fragmento, não da query string. {{E}} funciona apenas se o botão já estiver na própria página /inicio.html; em qualquer subpágina, resultaria em erro, pois faltaria o caminho até o documento correto."
+  },
+  {
+    "id": "gestaoweb-cap1-q15",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um gateway opera como um tradutor entre redes ou sistemas que utilizam protocolos de comunicação distintos. Um roteador encaminha pacotes entre redes com base no endereço IP de destino. Um firewall inspeciona o tráfego de rede e aplica regras de permissão ou bloqueio, protegendo os recursos internos de acessos não autorizados.”",
+        "fonte": "STALLINGS, William. Redes e Sistemas de Comunicação de Dados. 8ª ed. Rio de Janeiro: Campus/Elsevier, 2008."
+      },
+      {
+        "t": "p",
+        "texto": "Uma seguradora de médio porte mantém, desde a década de 2000, um sistema legado de apólices que só se comunica por meio de mensagens SOAP em XML. Em 2024, a empresa lançou um aplicativo mobile moderno, cujo backend foi construído inteiramente em torno de APIs REST com JSON, e que precisa consultar dados de apólices desse sistema legado em tempo real toda vez que um cliente abre o app."
+      },
+      {
+        "t": "p",
+        "texto": "No mesmo período, a equipe de segurança da informação identificou um volume anormal de requisições chegando de milhares de endereços IP diferentes, direcionadas simultaneamente ao servidor do sistema legado — um padrão de tráfego que, três dias depois, culminou na indisponibilidade total do sistema durante um período de renovações de apólices em massa."
+      }
+    ],
+    "enunciado": "Considerando os dois incidentes relatados e as definições do texto motivador, assinale a alternativa que associa corretamente cada componente de rede à sua função na infraestrutura da seguradora:",
+    "alternativas": [
+      "O gateway resolve o problema de tráfego anormal (DDoS); o firewall traduz entre SOAP/XML e REST/JSON",
+      "O gateway traduz entre SOAP/XML e REST/JSON; o firewall deveria filtrar o tráfego anormal do DDoS; o roteador segue encaminhando pacotes por IP",
+      "O roteador traduz entre os protocolos SOAP/XML e REST/JSON; o gateway filtra o tráfego malicioso do ataque; o firewall não desempenha nenhuma função relevante nesse cenário",
+      "Os três componentes são funcionalmente intercambiáveis, e qualquer um deles poderia ter sido configurado para resolver ambos os problemas",
+      "O firewall traduz entre os protocolos; o roteador filtra o tráfego malicioso; o gateway apenas armazena logs de acesso para auditoria"
+    ],
+    "correta": 1,
+    "resolucao": "cada componente cumpre a função descrita no texto motivador: gateway traduz entre protocolos distintos, firewall filtra tráfego malicioso, e roteador encaminha pacotes com base em IP, de forma transversal a toda a rede."
+  },
+  {
+    "id": "gestaoweb-cap1-q16",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um gateway opera como um tradutor entre redes ou sistemas que utilizam protocolos de comunicação distintos. Um roteador encaminha pacotes entre redes com base no endereço IP de destino. Um firewall inspeciona o tráfego de rede e aplica regras de permissão ou bloqueio, protegendo os recursos internos de acessos não autorizados.”",
+        "fonte": "STALLINGS, William. Redes e Sistemas de Comunicação de Dados. 8ª ed. Rio de Janeiro: Campus/Elsevier, 2008."
+      },
+      {
+        "t": "p",
+        "texto": "Uma seguradora de médio porte mantém, desde a década de 2000, um sistema legado de apólices que só se comunica por meio de mensagens SOAP em XML. Em 2024, a empresa lançou um aplicativo mobile moderno, cujo backend foi construído inteiramente em torno de APIs REST com JSON, e que precisa consultar dados de apólices desse sistema legado em tempo real toda vez que um cliente abre o app."
+      },
+      {
+        "t": "p",
+        "texto": "No mesmo período, a equipe de segurança da informação identificou um volume anormal de requisições chegando de milhares de endereços IP diferentes, direcionadas simultaneamente ao servidor do sistema legado — um padrão de tráfego que, três dias depois, culminou na indisponibilidade total do sistema durante um período de renovações de apólices em massa."
+      },
+      {
+        "t": "p",
+        "texto": "Ao propor a solução para a comunicação entre o aplicativo mobile e o sistema legado, um consultor externo sugeriu que a mesma função poderia ser cumprida por um API Gateway (um componente de software especializado em gerenciar, rotear e transformar chamadas de API), em vez de um gateway de propósito mais genérico."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que compara corretamente essas duas opções nesse contexto específico:",
+    "alternativas": [
+      "São conceitos idênticos; “API Gateway” é apenas um nome de marketing usado por fornecedores de nuvem para o mesmo componente",
+      "Um API Gateway não seria capaz de traduzir entre SOAP/XML e REST/JSON, sendo tecnicamente inviável para esse cenário",
+      "Um API Gateway faria a mesma tradução, com recursos extras de gerenciamento de APIs, como versionamento, autenticação e limite de requisições",
+      "A escolha entre os dois é puramente uma questão de custo, sem qualquer diferença técnica relevante entre as duas abordagens",
+      "Um API Gateway substituiria também a função do firewall e do roteador, tornando esses dois componentes desnecessários na infraestrutura da seguradora, inclusive contra ataques DDoS"
+    ],
+    "correta": 2,
+    "resolucao": "um API Gateway é uma especialização do conceito de gateway, focada especificamente em tráfego de APIs, e agrega funcionalidades além da tradução de protocolo. {{B}} é o distrator mais tentador para quem associa API Gateway apenas a REST puro, ignorando que produtos reais de API Gateway (Kong, Apigee, AWS API Gateway) suportam plug-ins e transformações para múltiplos formatos, incluindo XML/SOAP. {{E}} é falso: API Gateway e firewall resolvem problemas diferentes (roteamento/gerenciamento de API vs. filtragem de tráfego de rede) e tipicamente coexistem na mesma infraestrutura."
+  },
+  {
+    "id": "gestaoweb-cap1-q17",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Uma URI genérica é composta hierarquicamente por: scheme “:” [\"//\" authority] path [\"?\" query] [\"#\" fragment]. A authority, por sua vez, é subdividida em [userinfo \"@\"] host [\":\" port].”",
+        "fonte": "BERNERS-LEE, T.; FIELDING, R.; MASINTER, L. RFC 3986 — Uniform Resource Identifier (URI): Generic Syntax. IETF, 2005."
+      },
+      {
+        "t": "p",
+        "texto": "Durante uma auditoria técnica, um desenvolvedor júnior recebeu a seguinte URL, extraída dos logs de acesso do sistema de vendas de uma livraria online, e precisou explicá-la, parte por parte, para o restante da equipe antes de investigar um erro relatado por um cliente:"
+      },
+      {
+        "t": "p",
+        "texto": "https://loja.livrariacentral.com.br:8443/catalogo/livros/9788535902778?cupom=LEITOR10&parcelas=3#avaliacoes"
+      },
+      {
+        "t": "p",
+        "texto": "O cliente relatou que, ao clicar em um link promocional recebido por e-mail contendo essa URL, foi redirecionado corretamente para a página do livro, com o cupom de desconto já aplicado, mas a página abriu no topo, e não na seção de avaliações, como era esperado pelo time de marketing que criou a campanha."
+      }
+    ],
+    "enunciado": "A porta 8443 aparece explicitamente na URL, algo incomum na maioria dos links que os usuários acessam no dia a dia. Assinale a alternativa que explica corretamente por que a porta pode ser omitida na grande maioria das URLs HTTPS, e por que, nesse caso específico, ela precisou ser declarada:",
+    "alternativas": [
+      "A porta nunca pode ser omitida em uma URL válida; sua ausência na maioria dos links é, na verdade, um erro comum que os navegadores toleram silenciosamente",
+      "HTTPS usa a porta 443 por padrão, que o navegador assume quando ela não aparece; só é preciso declará-la quando é outra, como 8443",
+      "A porta é um componente opcional exclusivo de sites de comércio eletrônico, exigido por norma de segurança de pagamento (PCI-DSS), e ausente em qualquer outro tipo de site",
+      "A porta 8443 substitui a necessidade do esquema https:// no início da URL, funcionando como uma abreviação reconhecida por todos os navegadores",
+      "A porta na URL é só informativa e não afeta a conexão com o servidor"
+    ],
+    "correta": 1,
+    "resolucao": "443 é a porta padrão do HTTPS, assumida implicitamente quando omitida; declarar 8443 explicitamente é necessário porque o servidor da livraria está configurado para aceitar conexões nessa porta alternativa, e sem essa informação o navegador tentaria a porta 443 por padrão e falharia em se conectar."
+  },
+  {
+    "id": "gestaoweb-cap1-q18",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Uma URI genérica é composta hierarquicamente por: scheme “:” [\"//\" authority] path [\"?\" query] [\"#\" fragment]. A authority, por sua vez, é subdividida em [userinfo \"@\"] host [\":\" port].”",
+        "fonte": "BERNERS-LEE, T.; FIELDING, R.; MASINTER, L. RFC 3986 — Uniform Resource Identifier (URI): Generic Syntax. IETF, 2005."
+      },
+      {
+        "t": "p",
+        "texto": "Durante uma auditoria técnica, um desenvolvedor júnior recebeu a seguinte URL, extraída dos logs de acesso do sistema de vendas de uma livraria online, e precisou explicá-la, parte por parte, para o restante da equipe antes de investigar um erro relatado por um cliente:"
+      },
+      {
+        "t": "p",
+        "texto": "https://loja.livrariacentral.com.br:8443/catalogo/livros/9788535902778?cupom=LEITOR10&parcelas=3#avaliacoes"
+      },
+      {
+        "t": "p",
+        "texto": "O cliente relatou que, ao clicar em um link promocional recebido por e-mail contendo essa URL, foi redirecionado corretamente para a página do livro, com o cupom de desconto já aplicado, mas a página abriu no topo, e não na seção de avaliações, como era esperado pelo time de marketing que criou a campanha."
+      },
+      {
+        "t": "p",
+        "texto": "Investigando mais a fundo, a equipe descobriu que o time de marketing havia, na verdade, construído o link promocional errado: pretendiam levar o cliente à seção de avaliações do livro, mas trocaram acidentalmente a ordem de dois componentes da URL ao montar o link manualmente em uma planilha, gerando o endereço:"
+      },
+      {
+        "t": "p",
+        "texto": "https://loja.livrariacentral.com.br:8443/catalogo/livros/9788535902778#avaliacoes?cupom=LEITOR10&parcelas=3"
+      }
+    ],
+    "enunciado": "Assinale a alternativa que explica corretamente o efeito técnico dessa troca de ordem entre os componentes:",
+    "alternativas": [
+      "Nenhum efeito prático ocorre, pois a sintaxe de URI permite que query e fragment apareçam em qualquer ordem, sendo interpretados corretamente de qualquer forma",
+      "A URL deixa de ser válida, e o navegador exibirá uma página de erro antes mesmo de enviar qualquer requisição ao servidor",
+      "Tudo o que vem depois do # vira fragmento, inclusive \"?cupom=LEITOR10&parcelas=3\", que não chega ao servidor como query",
+      "O navegador prioriza automaticamente o fragmento sobre a query string, aplicando a rolagem até a seção de avaliações e ignorando silenciosamente o cupom, sem nenhum efeito colateral",
+      "O servidor responderá 400 Bad Request, pois a ordem da RFC 3986 foi violada"
+    ],
+    "correta": 2,
+    "resolucao": "pela sintaxe genérica da RFC 3986, o fragmento é sempre o último componente da URL; uma vez que o símbolo # aparece, tudo o que o segue -- inclusive um trecho que parece uma query string -- é tratado como parte do fragmento, e nunca é enviado ao servidor (o fragmento é processado inteiramente pelo navegador). Isso explica por que o cupom não seria aplicado nesse cenário invertido -- o oposto do que ocorria na URL original do item anterior. {{D}} é o distrator mais sedutor por descrever um resultado parcialmente plausível (a rolagem funcionaria), mas erra ao afirmar que isso ocorre 'sem efeito colateral': o cupom simplesmente nunca chegaria ao servidor. {{B}} e {{E}} erram ao supor que a sintaxe malformada bloquearia o carregamento -- URLs com fragment mal posicionado continuam sendo tecnicamente válidas, apenas com efeito diferente do pretendido."
+  },
+  {
+    "id": "gestaoweb-cap2-q1",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "discursiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A computação em nuvem é um modelo que permite acesso à rede onipresente, conveniente e sob demanda a um conjunto compartilhado de recursos computacionais configuráveis ​​[...] que podem ser rapidamente provisionados e liberados com o mínimo de esforço de gerenciamento ou interação com o provedor de serviços. Esse modelo de nuvem é composto por cinco características essenciais: autosserviço sob demanda, amplo acesso à rede, agrupamento de recursos, elasticidade rápida e serviço mensurado.”",
+        "fonte": "MELL, Peter; GRANCE, Timothy. The NIST Definition of Cloud Computing. NIST Special Publication 800-145. Gaithersburg: National Institute of Standards and Technology, 2011."
+      },
+      {
+        "t": "p",
+        "texto": "A rede de varejo ModaBrasil historicamente comprava e mantinha seus próprios servidores, dimensionados para suportar o pico de vendas de novembro e dezembro (Black Friday e Natal), quando o tráfego do site chega a ser 15 vezes maior que em um mês comum. Nos outros dez meses do ano, mais de 80% da capacidade desses servidores permanecia ociosa, um investimento caro e mal aproveitado na maior parte do tempo."
+      },
+      {
+        "t": "p",
+        "texto": "Em 2023, a ModaBrasil migrou sua infraestrutura para um provedor de nuvem pública. Qualquer engenheiro da equipe de TI passou a poder provisionar novos servidores em minutos, por um painel de controle web, sem precisar abrir chamado ou negociar com o provedor. O acesso a esse painel funciona de qualquer computador ou celular conectado à internet, de qualquer lugar. Os servidores físicos que executam a aplicação da ModaBrasil são compartilhados, nos bastidores, com centenas de outras empresas clientes do mesmo provedor, sem que isso seja perceptível para nenhuma delas. Durante a Black Friday, o número de servidores ativos passa de 10 para 150 automaticamente, conforme o tráfego aumenta, e volta a 10 dias depois, sem qualquer intervenção manual da equipe. Ao final de cada mês, a fatura da ModaBrasil reflete exatamente as horas de servidor efetivamente consumidas em dezembro, o valor foi oito vezes maior do que em março."
+      }
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) O texto de Mell e Grance (2011) descreve cinco características essenciais da computação em nuvem. Identifique, no relato sobre a ModaBrasil, um trecho que representa a característica de autoatendimento sob demanda (on-demand self-service), explicando por que ele se encaixa nessa definição.",
+      "b) Identifique, no mesmo relato, o trecho que representa a elasticidade rápida (rapid elasticity), e explique como ela se diferencia do modelo antigo de servidores próprios da ModaBrasil.",
+      "c) Identifique o trecho que representa o serviço medido (measured service), relacionando sua resposta ao modelo de cobrança pay-as-you-go.",
+      "d) Considerando as cinco características citadas no texto motivador, qual delas explica mais diretamente a redução de desperdício de capacidade ociosa relatada no início do texto? Justifique."
+    ],
+    "linhas": 12
+  },
+  {
+    "id": "gestaoweb-cap2-q2",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Aplicações precisam de recursos de forma imprevisível: uma startup de sucesso pode precisar escalar de centenas para milhões de usuários da noite para o dia, enquanto outra pode nunca decolar. Em ambos os casos, o investimento antecipado em infraestrutura própria representa um risco financeiro considerável — a nuvem elimina a necessidade desse compromisso inicial.”",
+        "fonte": "ARMBRUST, M. et al. Above the Clouds: A Berkeley View of Cloud Computing. Berkeley: University of California, Technical Report No. UCB/EECS-2009-28, 2009."
+      },
+      {
+        "t": "p",
+        "texto": "A EstudaJá é uma startup de educação online com apenas 8 meses de existência. Os fundadores não sabem se, em um ano, terão 2 mil ou 2 milhões de usuários, o crescimento depende de uma parceria com uma rede de escolas que ainda está em negociação e pode não se concretizar. Um investidor sugeriu que a startup comprasse logo um conjunto robusto de servidores próprios, argumentando que “é mais barato no longo prazo”. A equipe técnica discorda e defende o uso de um provedor de nuvem pública."
+      }
+    ],
+    "enunciado": "Considerando o texto de Armbrust et al. e a situação de incerteza da EstudaJá, assinale a alternativa que apresenta o principal argumento técnico a favor da equipe:",
+    "alternativas": [
+      "A nuvem é sempre mais barata que servidores próprios, em qualquer cenário e a qualquer escala, o que torna a comparação irrelevante",
+      "Servidores próprios exigiriam a contratação imediata de uma equipe de datacenter, o que é proibido por lei para startups em fase inicial",
+      "A nuvem permite pagar só pelos recursos usados, sem investimento antecipado nem risco de dimensionar mal a infraestrutura",
+      "Servidores próprios não são compatíveis com aplicações web modernas, tornando a nuvem a única opção tecnicamente viável",
+      "A nuvem elimina completamente a necessidade de qualquer planejamento de capacidade, já que os recursos são infinitos e gratuitos até certo limite de uso mensal definido pelo provedor"
+    ],
+    "correta": 2,
+    "resolucao": "o argumento central do texto de Armbrust et al. é justamente a eliminação do compromisso financeiro antecipado diante de uma demanda incerta. {{A}} é um exagero: em cargas de trabalho estáveis e previsíveis, servidores próprios podem sim ser mais baratos a longo prazo — o argumento da nuvem é mais forte exatamente em cenários de incerteza, como o da EstudaJá. {{B}}, {{D}} e {{E}} são afirmações falsas usadas como distratores."
+  },
+  {
+    "id": "gestaoweb-cap2-q3",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A nuvem comunitária é provisionada para uso exclusivo de uma comunidade específica de consumidores de organizações que possuem interesses em comum (por exemplo, missão, requisitos de segurança, política e considerações de conformidade).”",
+        "fonte": "MELL, Peter; GRANCE, Timothy. The NIST Definition of Cloud Computing. NIST Special Publication 800-145. NIST, 2011."
+      },
+      {
+        "t": "p",
+        "texto": "A Secretaria Estadual de Saúde do Rio de Janeiro avalia uma proposta para modernizar a infraestrutura de TI de 12 hospitais públicos estaduais. Todos os hospitais lidam com o mesmo tipo de dado sensível (prontuários de pacientes, protegidos pela LGPD), estão sujeitos às mesmas exigências de auditoria do Ministério da Saúde, e precisam trocar informações entre si com frequência (por exemplo, quando um paciente é transferido de um hospital para outro). Nenhum hospital, isoladamente, tem orçamento para manter uma nuvem privada própria, mas o grupo dos 12, somado, teria recursos suficientes para uma infraestrutura compartilhada dedicada exclusivamente a eles."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador e o cenário descrito, assinale o tipo de implantação de nuvem mais adequado para essa proposta:",
+    "alternativas": [
+      "Nuvem pública, pois é a opção de menor custo entre todas, independentemente dos requisitos de conformidade envolvidos",
+      "Nuvem privada, pois apenas esse modelo garante segurança suficiente para dados de saúde protegidos pela LGPD",
+      "Nuvem comunitária, pois os 12 hospitais têm requisitos de conformidade e segurança semelhantes e podem dividir os custos",
+      "Nuvem híbrida, pois combina obrigatoriamente uma nuvem pública com uma privada em qualquer cenário do setor público",
+      "Não há necessidade de nenhum tipo de nuvem nesse cenário, já que hospitais públicos são obrigados por lei a manter apenas infraestrutura on-premises, administrada pela própria equipe"
+    ],
+    "correta": 2,
+    "resolucao": "o cenário descreve exatamente a definição de nuvem comunitária do NIST: múltiplas organizações com missão e requisitos de conformidade semelhantes compartilhando uma infraestrutura dedicada. {{B}} é o distrator mais comum: nuvem privada exigiria que cada hospital mantivesse a sua própria, o que o texto já descarta por questão de orçamento; a nuvem comunitária oferece um nível de segurança e controle comparável, de forma compartilhada."
+  },
+  {
+    "id": "gestaoweb-cap2-q4",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Nos modelos de serviço em nuvem, a divisão de responsabilidade entre provedor e cliente varia conforme o nível de abstração oferecido: no IaaS, o cliente gerencia o sistema operacional em diante; no PaaS, apenas a aplicação e os dados; no SaaS, nada além do uso da aplicação em si.”",
+        "fonte": "MELL, Peter; GRANCE, Timothy. The NIST Definition of Cloud Computing. NIST Special Publication 800-145. NIST, 2011."
+      },
+      {
+        "t": "p",
+        "texto": "A empresa de tecnologia educacional Aprenda+ utiliza, simultaneamente, três serviços de nuvem diferentes em sua operação: (1) todos os funcionários usam o Google Workspace para e-mail corporativo, planilhas e videoconferência, sem que a empresa gerencie qualquer servidor por trás disso; (2) o time de desenvolvimento publica o backend da plataforma de cursos diretamente no Heroku, enviando apenas o código-fonte da aplicação, sem se preocupar com o sistema operacional ou o servidor web subjacente; (3) a empresa também aluga um conjunto de máquinas virtuais na AWS EC2, nas quais o time de infraestrutura instala e configura manualmente o sistema operacional Linux, o banco de dados e todo o restante da pilha necessária para rodar um sistema legado de processamento de vídeo herdado de uma aquisição."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que classifica corretamente os três serviços utilizados pela Aprenda+, na ordem em que foram descritos:",
+    "alternativas": [
+      "(1) SaaS, (2) PaaS, (3) IaaS",
+      "(1) IaaS, (2) SaaS, (3) PaaS",
+      "(1) PaaS, (2) IaaS, (3) SaaS",
+      "(1) SaaS, (2) IaaS, (3) PaaS",
+      "(1) IaaS, (2) PaaS, (3) SaaS"
+    ],
+    "correta": 0,
+    "resolucao": "o Google Workspace é uma aplicação completa e pronta para uso (SaaS); o Heroku recebe apenas código e cuida do restante da infraestrutura (PaaS); a AWS EC2, nesse cenário, exige que a própria empresa configure o sistema operacional e tudo acima dele (IaaS). A ordem das demais alternativas embaralha essa correspondência, exigindo atenção ao nível de responsabilidade descrito em cada caso, não apenas ao nome do provedor."
+  },
+  {
+    "id": "gestaoweb-cap2-q5",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Os chamados ‘Big Three’ (AWS, Azure e Google Cloud) controlam juntos mais de 63% do mercado global de infraestrutura em nuvem em 2025, mas se diferenciam entre si por forças históricas distintas: a AWS pelo portfólio mais amplo de serviços, a Azure pela integração ao ecossistema corporativo Microsoft, e o Google Cloud pelo investimento e liderança em inteligência artificial e aprendizado de máquina.”",
+        "fonte": "SYNERGY RESEARCH GROUP. Cloud Market Ends 2025 on a High, relatório de mercado, 2025."
+      },
+      {
+        "t": "p",
+        "texto": "Uma fintech decidiu migrar sua infraestrutura para a nuvem e elencou três prioridades para a escolha do provedor, em ordem de importância: (1) a empresa já usa intensamente Microsoft 365 e Active Directory para gerenciar identidade e permissões de todos os funcionários; (2) o time de dados planeja treinar modelos próprios de machine learning para detecção de fraude, e considera esse projeto estratégico para os próximos dois anos; (3) o time de engenharia não tem preferência técnica forte entre os provedores, pois já trabalhou com mais de um anteriormente."
+      }
+    ],
+    "enunciado": "Considerando exclusivamente as prioridades (1) e (2) listadas, assinale a alternativa que melhor reflete o trade-off enfrentado pela fintech ao escolher entre os provedores:",
+    "alternativas": [
+      "A escolha é irrelevante, pois os três provedores oferecem exatamente os mesmos recursos de integração de identidade e de machine learning, sem qualquer diferença prática de preço ou desempenho",
+      "A Azure atende melhor à prioridade (1), pela integração com o ecossistema Microsoft; o Google Cloud, à (2), pela força em IA e ML",
+      "A AWS deve ser escolhida automaticamente, pois é a líder de mercado, independentemente das prioridades específicas listadas pela fintech",
+      "A prioridade (1) só pode ser atendida contratando servidores on-premises adicionais, já que nenhum provedor de nuvem oferece integração com o Active Directory",
+      "A prioridade (2) elimina a Azure e a AWS, que não oferecem machine learning"
+    ],
+    "correta": 1,
+    "resolucao": "a resposta reconhece o trade-off real: nenhum provedor é objetivamente 'o melhor' de forma absoluta, e a decisão depende de qual prioridade da empresa pesa mais, o que é uma situação comum o suficiente para justificar estratégias multi-cloud, citadas na atualização de mercado do capítulo. {{C}} ilustra a 'armadilha da liderança de mercado' — ser líder geral não significa ser a melhor opção para toda prioridade específica. {{D}} e {{E}} são falsas: os três grandes provedores oferecem integração de identidade corporativa e serviços de ML, em graus de maturidade diferentes."
+  },
+  {
+    "id": "gestaoweb-cap2-q6",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Setores fortemente regulados frequentemente adotam arquiteturas híbridas não por preferência tecnológica, mas como resposta direta a exigências de conformidade que impõem restrições sobre onde certos dados podem fisicamente residir.”",
+        "fonte": "ERL, Thomas; PUTTINI, Ricardo; MAHMOOD, Zaigham. Cloud Computing: Concepts, Technology & Architecture. Boston: Prentice Hall, 2013."
+      },
+      {
+        "t": "p",
+        "texto": "Uma fintech recém-autorizada pelo Banco Central do Brasil a operar como Instituição de Pagamento processa, diariamente, milhares de transações financeiras de seus clientes. A regulamentação do Bacen exige que determinados registros transacionais fiquem sujeitos a auditorias com acesso físico garantido em território nacional, e que a empresa consiga demonstrar controle total sobre o ambiente onde esses registros são processados e armazenados. Ao mesmo tempo, a fintech quer usar ferramentas de nuvem pública para análise de grandes volumes de dados de comportamento de usuários (Big Data), com o objetivo de aprimorar seus modelos de crédito, uma carga de trabalho que não envolve os dados transacionais regulados diretamente."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que representa a arquitetura mais adequada para a fintech, considerando as duas necessidades descritas:",
+    "alternativas": [
+      "Nuvem pública para tudo, já que os grandes provedores de nuvem sempre atendem automaticamente a qualquer exigência regulatória de qualquer país",
+      "On-premises para tudo, já que é a única forma de garantir conformidade regulatória em qualquer instituição financeira, independentemente do tipo de dado e do volume a ser analisado",
+      "Arquitetura híbrida: dados transacionais regulados em ambiente on-premises ou nuvem privada; análise de Big Data em nuvem pública",
+      "Nuvem comunitária, formada exclusivamente por outras fintechs concorrentes, para compartilhar os custos de conformidade regulatória",
+      "A arquitetura é irrelevante para esse cenário, pois exigências do Banco Central se aplicam apenas a bancos tradicionais, não a fintechs"
+    ],
+    "correta": 2,
+    "resolucao": "o cenário é o exemplo clássico de arquitetura híbrida motivada por conformidade: dados regulados ficam sob controle direto da empresa, enquanto cargas de trabalho sem essa restrição aproveitam a escalabilidade da nuvem pública. {{A}} ignora que a responsabilidade pela conformidade é do cliente, não apenas do provedor (modelo de responsabilidade compartilhada). {{D}} descreve um cenário implausível — concorrentes diretos raramente compartilham a mesma infraestrutura de dados sensíveis."
+  },
+  {
+    "id": "gestaoweb-cap2-q7",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A migração para a nuvem sem um inventário completo das aplicações, suas dependências e seus padrões de uso costuma resultar em subestimação de custos e em uma arquitetura que apenas replica, na nuvem, os mesmos gargalos já existentes no ambiente on-premises.”",
+        "fonte": "ERL, Thomas; PUTTINI, Ricardo; MAHMOOD, Zaigham. Cloud Computing: Concepts, Technology & Architecture. Boston: Prentice Hall, 2013."
+      },
+      {
+        "t": "p",
+        "texto": "A varejista MóveisJá decidiu migrar seu sistema de gestão de estoque para a nuvem em um prazo de apenas três semanas, definido pela diretoria sem consulta prévia à equipe de TI. A equipe, sob pressão de tempo, migrou o sistema “como estava”: um monolito antigo, com um único processo que concentra consultas de estoque, geração de relatórios financeiros mensais e processamento de notas fiscais, sem separar essas responsabilidades em serviços independentes. Três meses após a migração, a fatura mensal da nuvem havia ficado 340% acima do valor estimado inicialmente pela diretoria, e o sistema continuava apresentando os mesmos períodos de lentidão que já ocorriam no ambiente on-premises, especialmente durante a geração dos relatórios financeiros de fim de mês, que ainda travava as consultas de estoque em tempo real."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que identifica corretamente os dois desafios de migração evidenciados nesse caso:",
+    "alternativas": [
+      "Falta de criptografia dos dados e ausência de backup — ambos seriam resolvidos automaticamente por qualquer provedor de nuvem, sem exigir ação da MóveisJá",
+      "Planejamento insuficiente (sem inventário nem estimativa de custos) e arquitetura inadequada (o monolito foi migrado sem refatoração)",
+      "Excesso de planejamento e arquitetura excessivamente distribuída, que tornaram a operação mais cara do que o necessário",
+      "Escolha do provedor de nuvem errado — o problema seria resolvido apenas trocando de fornecedor, sem qualquer mudança na arquitetura da aplicação",
+      "Ausência de um contrato de SLA (Service Level Agreement) com o provedor, que é a única causa possível tanto do aumento de custo quanto da lentidão relatada pelos usuários"
+    ],
+    "correta": 1,
+    "resolucao": "o caso reúne exatamente os dois desafios mais citados na literatura: planejamento insuficiente, evidenciado pelo prazo apertado e pelo estouro de custo, e arquitetura inadequada, evidenciada pela migração do monolito sem refatoração — a nuvem, por si só, não resolve um gargalo estrutural presente no desenho da aplicação. {{D}} é um distrator comum: trocar de provedor sem mudar a arquitetura da aplicação não resolveria o gargalo de concorrência entre relatórios e consultas."
+  },
+  {
+    "id": "gestaoweb-cap2-q8",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap2",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um processo de migração bem-sucedido tipicamente segue um padrão de refatoração gradual: componentes de menor risco são migrados e validados primeiro, com monitoramento contínuo de desempenho e custo orientando cada etapa subsequente, em vez de uma migração completa e simultânea de todo o sistema.”",
+        "fonte": "ERL, Thomas; PUTTINI, Ricardo; MAHMOOD, Zaigham. Cloud Computing: Concepts, Technology & Architecture. Boston: Prentice Hall, 2013."
+      },
+      {
+        "t": "p",
+        "texto": "Diferente do caso da MóveisJá, a rede de farmácias SaúdeBem planejou sua migração para a nuvem ao longo de seis meses. A equipe começou mapeando todas as aplicações existentes e suas dependências, e identificou que o módulo de busca de produtos no site — de baixo risco, sem dados financeiros sensíveis — seria o primeiro a migrar. Após duas semanas monitorando o desempenho e o custo desse primeiro módulo na nuvem, a equipe ajustou a configuração dos servidores (que haviam sido superdimensionados) antes de seguir para o próximo componente: o módulo de carrinho de compras. O módulo de processamento de pagamentos, considerado o mais crítico, foi deixado para a última fase da migração, já com toda a experiência acumulada nas fases anteriores."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que identifica corretamente a boa prática de migração central ilustrada pela SaúdeBem, em contraste direto com a abordagem da MóveisJá:",
+    "alternativas": [
+      "Migração completa e simultânea de todos os módulos, para reduzir o tempo total do projeto — assim como fez a MóveisJá",
+      "Refatoração gradual, começando pelos componentes de menor risco, com monitoramento de custo e desempenho a cada etapa",
+      "Escolha do provedor de nuvem mais barato do mercado, independentemente de qualquer outro critério técnico",
+      "Terceirização completa da migração para uma consultoria externa especializada, eliminando a necessidade de envolvimento da equipe interna de TI em todas as etapas do projeto",
+      "Migração direta do módulo de pagamentos primeiro, por ser o mais crítico e, portanto, o que exige validação mais urgente"
+    ],
+    "correta": 1,
+    "resolucao": "a SaúdeBem ilustra exatamente a prática de migração gradual, começando pelo componente de menor risco e usando o aprendizado de cada etapa para calibrar a seguinte, reservando o componente mais crítico (pagamentos) para quando a equipe já tem mais experiência e confiança no processo. {{E}} inverte perigosamente essa lógica: migrar o componente mais crítico primeiro, sem qualquer experiência prévia acumulada, maximiza o risco exatamente onde o impacto de um erro seria maior."
+  },
+  {
+    "id": "gestaoweb-cap3-q1",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "discursiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A separação entre a camada de apresentação, a lógica de domínio e o acesso a dados permite que cada camada evolua de forma independente, seja mantida por equipes especializadas e seja testada isoladamente, sem que uma mudança na interface exija recompilar ou reimplantar as regras de negócio.”",
+        "fonte": "FOWLER, Martin. Patterns of Enterprise Application Architecture. Boston: Addison-Wesley, 2002."
+      },
+      {
+        "t": "p",
+        "texto": "A ModaBrasil mantinha, até 2022, um único sistema em que o código que gerava o HTML das páginas do site, as regras de cálculo de frete e desconto, e o acesso ao banco de dados de produtos estavam misturados em um único conjunto de arquivos PHP. Qualquer alteração visual simples como mudar a cor de um botão exigia que um desenvolvedor mexesse no mesmo arquivo onde ficava a lógica de cálculo de preços, e qualquer erro introduzido nesse arquivo podia derrubar tanto a aparência quanto o funcionamento da loja ao mesmo tempo."
+      },
+      {
+        "t": "p",
+        "texto": "Em 2023, a empresa reestruturou o sistema em dois projetos completamente separados: um frontend em React, responsável apenas por exibir produtos e capturar interações do usuário, e um backend em Node.js, responsável por calcular preços, processar pagamentos e acessar o banco de dados os dois projetos passaram a se comunicar exclusivamente por meio de uma API REST bem definida, publicada e versionada. Após a mudança, a equipe de design conseguiu lançar três novas versões da interface visual em um único mês, sem que o time de backend precisasse revisar ou aprovar nenhuma dessas mudanças, e sem que nenhuma delas tenha causado um único incidente relacionado a cálculo de preços."
+      }
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) Com base no texto de Fowler (2002), explique por que a arquitetura original da ModaBrasil (2022) representava um risco maior de incidentes do que a arquitetura reestruturada (2023).",
+      "b) Explique qual mecanismo técnico permitiu que o frontend e o backend, agora em projetos separados, continuassem se comunicando de forma organizada.",
+      "c) A equipe de design conseguiu lançar três versões da interface sem envolver o time de backend. Relacione esse ganho de velocidade ao conceito de separação de responsabilidades descrito no texto motivador.",
+      "d) Aponte uma limitação ou custo adicional que a arquitetura de 2023 (frontend e backend separados) pode ter introduzido, que não existia no modelo monolítico original."
+    ],
+    "linhas": 12
+  },
+  {
+    "id": "gestaoweb-cap3-q2",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A geração estática de sites transfere o processamento do momento da requisição para o momento da build, produzindo HTML pré-renderizado que pode ser servido diretamente por uma CDN, sem qualquer processamento no servidor a cada requisição.”",
+        "fonte": "BIILMANN, Mathias. The Rise of Jamstack. Netlify Blog, 2016."
+      },
+      {
+        "t": "p",
+        "texto": "Um escritório de advocacia contratou uma agência para criar dois projetos web distintos: (1) um site institucional com sete páginas (Home, Sobre, Áreas de Atuação, Equipe, Blog, Contato e Localização), cujo conteúdo muda, em média, uma vez por trimestre; e (2) um portal do cliente, onde cada cliente do escritório faz login e acompanha o andamento de seus próprios processos judiciais em tempo real, incluindo prazos, documentos anexados e mensagens trocadas com os advogados responsáveis."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador e a natureza de cada um dos dois projetos, assinale a alternativa tecnicamente mais adequada:",
+    "alternativas": [
+      "Ambos os projetos devem ser aplicações dinâmicas, já que sites estáticos não são mais utilizados no mercado atual",
+      "O site institucional (1) pode ser estático, pois muda pouco; o portal do cliente (2) precisa ser dinâmico, com login e dados por usuário",
+      "O portal do cliente (2) pode ser um site estático, desde que seja atualizado manualmente uma vez por dia pela equipe do escritório",
+      "Ambos os projetos devem ser sites estáticos, já que aplicações dinâmicas não podem ser hospedadas em provedores de nuvem",
+      "A escolha entre site estático e aplicação dinâmica depende exclusivamente do orçamento disponível, sem qualquer relação com a natureza do conteúdo exibido aos visitantes e clientes"
+    ],
+    "correta": 1,
+    "resolucao": "a distinção correta segue a natureza do conteúdo: informação institucional pouco variável e igual para todos os visitantes é o caso ideal para conteúdo estático; dados de processos judiciais, específicos de cada cliente autenticado e atualizados em tempo real, exigem necessariamente uma aplicação dinâmica com backend e banco de dados. {{C}} descreve uma contradição: dados 'em tempo real' não podem depender de atualização manual diária."
+  },
+  {
+    "id": "gestaoweb-cap3-q3",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“TypeScript is JavaScript with syntax for types. TypeScript adds additional syntax to JavaScript to support a tighter integration with your editor. Catch errors early in your editor, [before they reach your users].”",
+        "fonte": "TYPESCRIPT DOCUMENTATION. What is TypeScript? Microsoft, 2023."
+      },
+      {
+        "t": "p",
+        "texto": "A equipe de desenvolvimento da fintech PagaFácil enfrentava, em média, dois incidentes de produção por mês causados por um mesmo tipo de erro: uma função esperava receber um número (o valor de uma transação, por exemplo) e recebia, por engano, um texto — como “150,00” em vez de 150 — vindo de um formulário mal validado no frontend. Esses erros só eram descobertos quando o código já estava rodando em produção, muitas vezes gerando cálculos financeiros incorretos que precisavam ser corrigidos manualmente. Após migrar gradualmente o código-base de JavaScript para TypeScript ao longo de quatro meses, a equipe passou a receber alertas diretamente no editor de código sempre que uma função recebia um tipo de dado incompatível com o esperado, antes mesmo de rodar o código."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador e o cenário da PagaFácil, assinale a alternativa que explica corretamente o benefício técnico obtido com a adoção do TypeScript:",
+    "alternativas": [
+      "O TypeScript substitui completamente o JavaScript, executando o código diretamente no navegador sem qualquer etapa adicional",
+      "O TypeScript permite declarar tipos, e o editor e o compilador apontam incompatibilidades antes da execução, e não em produção",
+      "O TypeScript elimina automaticamente a necessidade de validar dados vindos de formulários, tornando qualquer validação no frontend e no backend desnecessária a partir da compilação",
+      "O TypeScript é executado exclusivamente no servidor, o que explica por que os erros deixaram de ocorrer no frontend",
+      "O benefício relatado decorreu do uso do Node.js, e não do TypeScript, já que ambos costumam ser adotados na mesma migração"
+    ],
+    "correta": 1,
+    "resolucao": "o TypeScript adiciona um sistema de tipos estático que permite detectar incompatibilidades (como uma string sendo passada onde um number é esperado) antes da execução, exatamente o problema relatado pela PagaFácil. {{A}} é falso: TypeScript é compilado (transpilado) para JavaScript antes de rodar, não o substitui. {{C}} é um exagero: tipos ajudam a capturar erros de tipo, mas não substituem toda validação de negócio. {{D}} confunde TypeScript com uma tecnologia exclusiva de backend, quando na verdade roda tanto no cliente quanto no servidor."
+  },
+  {
+    "id": "gestaoweb-cap3-q4",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Sistemas distribuídos de armazenamento de dados enfrentam um trade-off fundamental entre consistência forte e disponibilidade sob partição de rede bancos relacionais tradicionalmente priorizam a primeira; muitos bancos NoSQL, a segunda.”",
+        "fonte": "BREWER, Eric. Towards Robust Distributed Systems. PODC Keynote Address, ACM Symposium on Principles of Distributed Computing, 2000."
+      },
+      {
+        "t": "p",
+        "texto": "A rede social ConectaAqui precisa armazenar dois tipos de dados fundamentalmente diferentes: (1) o histórico de pagamentos de assinaturas premium dos usuários, em que cada cobrança precisa estar corretamente vinculada a um único usuário, sem duplicações e sem inconsistências, mesmo em caso de falha simultânea de dois servidores durante uma transação; e (2) o feed de publicações dos usuários, que recebe mais de 50 mil novas postagens por minuto nos horários de pico, com estrutura de dados que varia bastante (algumas postagens têm apenas texto, outras têm texto e imagem, outras têm enquetes com múltiplas opções)."
+      }
+    ],
+    "enunciado": "Considerando o texto sobre o trade-off entre consistência e disponibilidade, assinale a alternativa que recomenda corretamente o tipo de banco de dados para cada caso:",
+    "alternativas": [
+      "SQL para os dois casos, pois é sempre superior tecnicamente e mais rápido em qualquer cenário de escrita massiva",
+      "NoSQL para os dois casos, pois é a tecnologia mais moderna e substitui integralmente os bancos relacionais em qualquer aplicação atual",
+      "SQL para o histórico de pagamentos (1), que exige consistência e ACID; NoSQL para o feed (2), que pede esquema flexível e muita escrita",
+      "NoSQL para o histórico de pagamentos (1); SQL para o feed de publicações (2), invertendo a lógica anterior por questão de custo de licenciamento e de facilidade de manutenção",
+      "A escolha entre SQL e NoSQL é irrelevante nesse cenário, pois ambos os tipos de banco garantem exatamente as mesmas propriedades de consistência e escalabilidade"
+    ],
+    "correta": 2,
+    "resolucao": "o histórico de pagamentos exige a consistência forte e as garantias transacionais (ACID) típicas dos bancos SQL; o feed de publicações, com alto volume de escrita e estrutura variável entre os registros, se beneficia da flexibilidade de esquema e da escalabilidade horizontal típicas dos bancos NoSQL. {{A}} e {{B}} são generalizações falsas — nenhum dos dois tipos de banco é 'sempre superior'; a escolha depende da natureza dos dados e da carga de tra balho.)"
+  },
+  {
+    "id": "gestaoweb-cap3-q5",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A transação é o mecanismo fundamental que garante que uma sequência de operações sobre o banco de dados seja executada por completo ou não seja executada de forma alguma, preservando a consistência do sistema mesmo diante de falhas.”",
+        "fonte": "GRAY, Jim. The Transaction Concept: Virtues and Limitations. Proceedings of the 7th International Conference on Very Large Data Bases (VLDB), 1981."
+      },
+      {
+        "t": "p",
+        "texto": "O sistema de um banco digital processa a transferência de R$ 500,00 da conta de Marcos para a conta de Juliana. A operação envolve dois passos: (1) debitar R$ 500,00 do saldo de Marcos, e (2) creditar R$ 500,00 no saldo de Juliana. Durante um teste de estresse simulando uma queda de energia no data center, a equipe de QA interrompeu forçadamente o processo exatamente entre os passos (1) e (2). Ao reiniciar o sistema, a equipe verificou que o saldo de Marcos permanecia intacto, como se a transferência nunca tivesse começado — nenhum valor havia sido debitado da conta dele, e nenhum valor extra apareceu na conta de Juliana."
+      }
+    ],
+    "enunciado": "Considerando o texto de Gray (1981), assinale a alternativa que identifica corretamente a propriedade ACID demonstrada por esse comportamento:",
+    "alternativas": [
+      "Isolamento — porque a transação de Marcos não interferiu em nenhuma outra transação simultânea no sistema",
+      "Atomicidade — a transação é indivisível: como não pôde ser concluída, o sistema desfez (rollback) o que já havia executado",
+      "Durabilidade — porque, uma vez confirmada, a transação permaneceria registrada mesmo após uma queda de energia",
+      "Consistência — porque o banco de dados manteve suas regras de integridade referencial entre as tabelas de clientes e contas, mesmo após a falha simulada no meio da transferência",
+      "Disponibilidade — porque o sistema continuou respondendo a outras requisições mesmo durante a falha simulada"
+    ],
+    "correta": 1,
+    "resolucao": "o cenário descreve exatamente a atomicidade: uma transação com múltiplos passos que, ao ser interrompida no meio, é revertida por completo, sem deixar o sistema em um estado parcial (dinheiro debitado sem ser creditado). {{C}} é o distrator mais comum, pois trata de um conceito relacionado (persistência após confirmação), mas o cenário descrito envolve uma transação que nunca chegou a ser confirmada — o comportamento relevante é o rollback completo, que é a definição de atomicidade, não de durabilidade. {{E}} não é uma propriedade ACID, e sim um conceito do teorema CAP."
+  },
+  {
+    "id": "gestaoweb-cap3-q6",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Entre os frameworks JavaScript avaliados, o React lidera em adoção profissional (44,7%), mas o Svelte é o mais admirado entre os desenvolvedores que já o utilizaram (62,4%) — um indicativo de que popularidade de uso e satisfação declarada nem sempre andam juntas.”",
+        "fonte": "STACK OVERFLOW. Stack Overflow Developer Survey 2025. Stack Overflow, 2025."
+      },
+      {
+        "t": "p",
+        "texto": "A diretoria de tecnologia de uma empresa de médio porte precisa escolher um framework frontend para reconstruir seu sistema interno de gestão. Dois critérios foram definidos como prioritários: (1) facilidade de contratar novos desenvolvedores no mercado local nos próximos dois anos, já que a empresa planeja triplicar o time de frontend; e (2) suporte de longo prazo por parte do mantenedor do framework, dado que o sistema deve ficar em produção por pelo menos dez anos."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador e exclusivamente os dois critérios listados, assinale a alternativa com a avaliação tecnicamente mais adequada:",
+    "alternativas": [
+      "O Svelte deve ser escolhido automaticamente, pois é o framework mais admirado segundo a pesquisa, o que garante facilidade de contratação e maior número de candidatos disponíveis",
+      "Ser o mais admirado (Svelte) não significa ser o mais fácil de contratar; o React, mais adotado no mercado, tende a ter mais candidatos",
+      "A escolha do framework é irrelevante para a contratação, já que todo desenvolvedor frontend sabe usar qualquer framework igualmente bem",
+      "Frameworks mais admirados pelos desenvolvedores nunca têm bom suporte de longo prazo, o que exclui automaticamente o Svelte da análise",
+      "A pesquisa citada garante que o React será descontinuado nos próximos dez anos, o que o torna inadequado para esse projeto"
+    ],
+    "correta": 1,
+    "resolucao": "a resposta reconhece a distinção apontada no texto motivador entre adoção de mercado (relevante para contratação) e satisfação declarada (relevante para outros aspectos, como retenção), sem tratar nenhuma delas como garantia automática da outra. {{A}} comete o erro de tratar 'mais admirado' como sinônimo de 'mais fácil de contratar' — são métricas diferentes. {{D}} e {{E}} são afirmações não sustentadas pelo texto motivador."
+  },
+  {
+    "id": "gestaoweb-cap3-q7",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A escolha de uma tecnologia não deve ser guiada apenas por suas características técnicas isoladas, mas pelo ajuste entre essas características, a experiência da equipe disponível e os requisitos específicos do problema a ser resolvido.”",
+        "fonte": "SOMMERVILLE, Ian. Engenharia de Software. 10ª ed. São Paulo: Pearson, 2019."
+      },
+      {
+        "t": "p",
+        "texto": "Um laboratório de pesquisa em inteligência artificial de uma universidade precisa expor, publicamente, um modelo de machine learning já treinado por sua equipe de cientistas de dados (todos com forte domínio de Python, mas nenhuma experiência prévia com desenvolvimento web), na forma de uma API que outras aplicações possam consumir. Um dos requisitos levantados pela equipe é que a documentação da API seja gerada automaticamente a partir do próprio código, sem trabalho manual adicional, já que o time é pequeno e não tem um desenvolvedor backend dedicado."
+      }
+    ],
+    "enunciado": "Considerando o texto de Sommerville e o perfil da equipe e dos requisitos descritos, assinale a alternativa com a recomendação de framework backend mais adequada:",
+    "alternativas": [
+      "Spring Boot, por ser o framework mais robusto do mercado, independentemente da linguagem de programação dominada pela equipe e do tempo necessário para aprendê-la",
+      "FastAPI, framework Python que gera documentação interativa (OpenAPI/Swagger) a partir do código, como a equipe precisa",
+      "Laravel, por ser o framework mais popular entre equipes sem experiência prévia em desenvolvimento web",
+      ".NET, por ser a única opção compatível com modelos de machine learning treinados em Python",
+      "Node.js/Express, por gerar documentação de API automaticamente sem qualquer configuração adicional"
+    ],
+    "correta": 1,
+    "resolucao": "o FastAPI é um framework Python (compatível com a experiência da equipe) amplamente reconhecido por gerar documentação interativa automaticamente a partir de anotações de tipo no próprio código, atendendo exatamente aos dois requisitos citados. {{A}} e {{D}} ignoram o domínio técnico da equipe (Python), exigindo aprendizado de uma linguagem nova (Java ou C#) sem justificativa no texto. {{E}} é falso: Express não gera documentação automática sem bibliotecas e configuração adicionais."
+  },
+  {
+    "id": "gestaoweb-cap3-q8",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Em vez de criar layouts fixos e depois adaptá-los a diferentes tamanhos de tela, propomos inverter esse fluxo: através de grades fluidas, imagens flexíveis e media queries, um único layout pode responder de forma fluida às características do dispositivo que o exibe.”",
+        "fonte": "MARCOTTE, Ethan. Responsive Web Design. A List Apart, 2010."
+      },
+      {
+        "t": "p",
+        "texto": "Um desenvolvedor júnior recebeu a tarefa de tornar responsiva a página de checkout de um e-commerce, atualmente projetada apenas para telas de desktop (1440px de largura). Sua primeira tentativa definiu todas as larguras dos elementos em pixels fixos (por exemplo, width: 1200px para o contêiner principal) e, em seguida, escreveu uma media query que reduzia esse valor fixo para 350px quando a tela era menor que 480px. Ao testar em diferentes tamanhos de celular, o desenvolvedor notou que o layout ficava correto exatamente nas larguras testadas, mas quebrava (com elementos cortados ou barras de rolagem horizontal indesejadas) em qualquer largura intermediária não prevista, como as de tablets ou celulares dobráveis."
+      }
+    ],
+    "enunciado": "Considerando o texto de Marcotte (2010), assinale a alternativa que identifica corretamente o erro do desenvolvedor e a correção adequada:",
+    "alternativas": [
+      "O erro foi usar media queries, que devem ser evitadas em qualquer projeto responsivo moderno; a correção é remover todas elas",
+      "O erro foi usar larguras fixas em pixels e remendar com media queries; a correção é uma grade fluida, com unidades relativas (%, rem)",
+      "O erro foi não ter testado em tablets e celulares dobráveis antes de lançar o código; a correção é apenas adicionar mais media queries para cada dispositivo específico do mercado",
+      "Não houve erro técnico; o comportamento relatado é esperado e inevitável em qualquer layout responsivo, independentemente da abordagem utilizada",
+      "O erro foi usar CSS puro; a correção adequada é reescrever toda a página em JavaScript para calcular o layout dinamicamente a cada carregamento"
+    ],
+    "correta": 1,
+    "resolucao": "o texto de Marcotte propõe exatamente a inversão de abordagem: em vez de larguras fixas remendadas por breakpoints pontuais, usar grades fluidas com unidades relativas, que se adaptam continuamente a qualquer largura de tela, não apenas às larguras específicas testadas. {{C}} é um distrator tentador, mas descreve uma solução que apenas adia o problema (sempre faltará testar 'mais um dispositivo'); a causa raiz é a unidade de medida escolhida, não a quantidade de testes realizados."
+  },
+  {
+    "id": "gestaoweb-cap4-q1",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "discursiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um sistema de gerenciamento de conteúdo separa a estrutura e a apresentação do conteúdo do processo de criação e edição, permitindo que colaboradores sem conhecimento técnico produzam, revisem e publiquem material digital por meio de uma interface visual, sem depender diretamente de um programador para cada alteração.”",
+        "fonte": "BOIKO, Bob. Content Management Bible. 2ª ed. Indianapolis: Wiley, 2004."
+      },
+      {
+        "t": "p",
+        "texto": "A ONG Mãos que Ajudam mantinha, até 2021, um site institucional feito em HTML puro por um desenvolvedor freelancer. Qualquer atualização — desde corrigir um número de telefone até publicar uma notícia sobre uma nova campanha de arrecadação — exigia entrar em contato com esse freelancer, que cobrava por hora e costumava levar, em média, cinco dias úteis para atender cada pedido. Durante uma campanha emergencial de doações após uma enchente, a ONG precisou de duas semanas para publicar informações atualizadas sobre os locais de doação, período em que o site continuou exibindo instruções desatualizadas."
+      },
+      {
+        "t": "p",
+        "texto": "Em 2022, a ONG migrou o site para o WordPress. A coordenadora de comunicação, sem qualquer formação técnica, passou a publicar notícias diretamente por um painel de administração, preenchendo campos de título, texto e imagem em um editor visual semelhante a um processador de texto. Na campanha emergencial seguinte, em 2023, as informações sobre pontos de doação foram publicadas e atualizadas no mesmo dia em que mudavam, sem envolver nenhum desenvolvedor."
+      }
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) Com base na definição de Boiko (2004), explique por que o site antigo da ONG (HTML puro, mantido por um freelancer) não se caracteriza como uma solução de gerenciamento de conteúdo, mesmo sendo um site funcional.",
+      "b) Identifique, no relato sobre a migração para o WordPress, o elemento que corresponde à “interface visual” mencionada na definição de Boiko, e explique sua importância para a autonomia da coordenadora de comunicação.",
+      "c) Explique de que forma a diferença de tempo de resposta entre as duas campanhas (2021: duas semanas; 2023: mesmo dia) ilustra o benefício central de se adotar um CMS.",
+      "d) Aponte uma responsabilidade ou risco que a ONG passou a assumir ao adotar um CMS como o WordPress, que não existia (ou era de responsabilidade do freelancer) no modelo anterior."
+    ],
+    "linhas": 12
+  },
+  {
+    "id": "gestaoweb-cap4-q2",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O WordPress é utilizado por 43,4% de todos os sites da internet cujo CMS pôde ser identificado, uma participação de mercado superior à soma de todos os seus concorrentes diretos combinados.”",
+        "fonte": "W3TECHS. Usage Statistics of Content Management Systems. W3Techs, 2025."
+      },
+      {
+        "t": "p",
+        "texto": "Um empreendedor está avaliando qual CMS utilizar para o site de sua nova marca de cosméticos veganos, com planos de vender diretamente aos consumidores (D2C) desde o lançamento. Ao pesquisar sobre o assunto, ele encontrou a estatística citada no texto motivador e concluiu: “Se o WordPress é usado por mais sites do que qualquer outro CMS, ele deve ser a escolha certa para qualquer projeto, incluindo o meu.”"
+      }
+    ],
+    "enunciado": "Assinale a alternativa que avalia corretamente esse raciocínio:",
+    "alternativas": [
+      "O raciocínio está correto: a participação de mercado de um CMS é o único critério relevante para escolher a plataforma de qualquer projeto",
+      "O raciocínio tem uma falha: participação de mercado mostra adoção geral, mas não garante a melhor plataforma para um e-commerce D2C",
+      "O raciocínio está correto, pois o WordPress é gratuito, e isso basta",
+      "O raciocínio está incorreto porque a estatística citada refere-se exclusivamente a sites em língua inglesa, não sendo aplicável ao Brasil",
+      "O raciocínio está incorreto porque o WordPress não pode ser utilizado para nenhum tipo de venda online, independentemente de plugins ou extensões instalados, como o WooCommerce"
+    ],
+    "correta": 1,
+    "resolucao": "participação de mercado é um indicador de adoção geral, não de adequação a um caso de uso específico; embora o WordPress também ofereça soluções de e-commerce (como o WooCommerce), a conclusão de que a maior participação de mercado necessariamente implica a melhor escolha para qualquer projeto é uma generalização indevida. {{D}} e {{E}} são afirmações factualmente falsas usadas como distratores."
+  },
+  {
+    "id": "gestaoweb-cap4-q3",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um CMS headless desacopla o gerenciamento de conteúdo de sua camada de apresentação, expondo o conteúdo por meio de APIs que podem ser consumidas por qualquer frontend — de um site tradicional a um aplicativo móvel ou um display de loja física — a partir de uma única fonte de verdade.”",
+        "fonte": "GARTNER. Magic Quadrant for Digital Experience Platforms. Gartner Research, 2023."
+      },
+      {
+        "t": "p",
+        "texto": "A rede de lojas de eletrônicos TechPonto decidiu centralizar a criação de conteúdo sobre seus produtos (descrições, especificações técnicas, fotos, vídeos de demonstração) em uma única equipe editorial. Esse mesmo conteúdo precisa aparecer automaticamente em quatro lugares diferentes: no site de e-commerce, no aplicativo mobile da empresa, em totens de autoatendimento instalados dentro das lojas físicas, e em anúncios dinâmicos exibidos em telas digitais nas vitrines. Atualmente, a equipe reescreve manualmente o mesmo conteúdo em até quatro sistemas diferentes sempre que um produto é atualizado, um processo lento e sujeito a inconsistências entre os canais."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador, assinale a alternativa que indica corretamente a abordagem de CMS mais adequada para o problema da TechPonto:",
+    "alternativas": [
+      "Um CMS tradicional (acoplado), pois esse modelo já foi projetado para exibir o mesmo conteúdo automaticamente em qualquer tipo de tela, incluindo totens e aplicativos",
+      "Um CMS headless, pois o conteúdo é publicado uma vez e cada canal (site, app, totem, vitrine) o consome por uma API",
+      "Nenhum CMS resolveria esse problema, que exigiria a contratação de uma equipe editorial separada para cada canal",
+      "Um CMS headless resolveria apenas o problema do site de e-commerce, sendo tecnicamente incompatível com aplicativos móveis",
+      "A melhor solução seria abandonar os totens e as vitrines digitais, a única forma prática de eliminar a duplicação de conteúdo"
+    ],
+    "correta": 1,
+    "resolucao": "o cenário da TechPonto é o exemplo canônico de motivação para adoção de CMS headless: múltiplos canais de exibição consumindo uma única fonte de conteúdo via API. {{A}} inverte a definição: CMS tradicionais (acoplados) é que amarram o conteúdo a uma única forma de apresentação, exigindo duplicação manual para outros canais."
+  },
+  {
+    "id": "gestaoweb-cap4-q4",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A segurança é um princípio central de design do Drupal; uma equipe de segurança dedicada tria e coordena respostas a vulnerabilidades reportadas, com um histórico de divulgação responsável reconhecido no setor público de diversos países.”",
+        "fonte": "DRUPAL.ORG. Drupal Security Team. Drupal Association, 2023."
+      },
+      {
+        "t": "p",
+        "texto": "O Tribunal Regional de Contas de um estado brasileiro precisa reconstruir seu portal de transparência, que publica dados de licitações, contratos e prestações de contas de centenas de órgãos públicos, com tráfego de milhões de acessos mensais e forte exigência de resistência a ataques, dado o histórico de tentativas de invasão registradas em portais de transparência de outros estados. A equipe técnica do tribunal é composta por servidores concursados com formação sólida em desenvolvimento de sistemas, mas o cronograma de implantação não é uma prioridade tão crítica quanto a segurança e a escalabilidade da solução."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador e o perfil do projeto descrito, assinale a alternativa com a recomendação de CMS mais adequada:",
+    "alternativas": [
+      "Wix, por ser a opção mais rápida de configurar, o que deveria ser sempre o critério decisivo, independentemente dos demais requisitos",
+      "Drupal, por sua segurança e escalabilidade em portais governamentais, compatível com a equipe técnica do tribunal",
+      "WordPress, por ser o CMS mais popular do mundo",
+      "Nenhum CMS seria adequado para um órgão público, que deveria obrigatoriamente desenvolver um sistema do zero, sem uso de nenhuma plataforma pronta, por exigência de segurança",
+      "Squarespace, por oferecer os templates visuais mais sofisticados do mercado, critério mais relevante do que segurança nesse cenário"
+    ],
+    "correta": 1,
+    "resolucao": "o cenário reúne exatamente os fatores que historicamente justificam a escolha do Drupal: alta exigência de segurança, escala de tráfego elevada, e disponibilidade de equipe técnica qualificada capaz de lidar com sua curva de aprendizado mais acentuada. {{C}} explora a 'armadilha da popularidade' já vista em questões anteriores: ser o mais popular não implica ser o mais adequado a um requisito específico como segurança de nível governamental."
+  },
+  {
+    "id": "gestaoweb-cap4-q5",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Diferentes plataformas de comércio eletrônico foram desenhadas para atender a diferentes escalas de operação: desde o empreendedor individual que precisa de uma loja simples e rápida de configurar, até distribuidoras B2B que exigem catálogos de centenas de milhares de itens, tabelas de preço negociadas por cliente e integrações complexas com sistemas de estoque.”",
+        "fonte": "SHOPIFY INC. Shopify Investor Relations, Annual Report, 2024."
+      },
+      {
+        "t": "p",
+        "texto": "Duas empresas buscam recomendação de plataforma de e-commerce: (1) a Distribuidora Ferro&Cia, que vende peças industriais para outras empresas (B2B), com um catálogo de 180 mil itens, tabelas de preço diferentes negociadas individualmente com cada um de seus 3 mil clientes corporativos, e um sistema de estoque próprio (ERP) que precisa se integrar profundamente à loja; e (2) a fotógrafa autônoma Beatriz Lima, que quer vender, pela primeira vez, um pequeno catálogo de 15 presets de edição de fotos digitais, sem qualquer equipe técnica de apoio."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador, assinale a alternativa que recomenda corretamente uma plataforma para cada caso:",
+    "alternativas": [
+      "Magento (Adobe Commerce) para a Ferro&Cia (1), pela escala e pelos recursos B2B; Squarespace ou Wix para Beatriz (2), pela simplicidade",
+      "Squarespace para a Ferro&Cia (1), por seus templates visuais premium; Magento para Beatriz (2), por ser a opção mais robusta disponível no mercado",
+      "A mesma plataforma deveria ser usada nos dois casos, já que o tamanho do catálogo e a complexidade da operação não influenciam a escolha de uma plataforma de e-commerce",
+      "Ghost para os dois casos, por ser a plataforma mais indicada para qualquer tipo de venda online, incluindo operações B2B de grande escala",
+      "Wix para a Ferro&Cia (1), pois sua simplicidade reduz o tempo de implantação, independentemente da complexidade do catálogo e das integrações exigidas"
+    ],
+    "correta": 0,
+    "resolucao": "a recomendação reflete o alinhamento entre a complexidade da operação e as capacidades de cada plataforma: Magento foi desenhado para suportar exatamente o tipo de operação B2B de grande escala da Ferro&Cia; Squarespace/Wix atendem plenamente à necessidade simples de Beatriz, sem exigir equipe técnica. {{B}} e {{E}} invertem essa lógica, recomendando a plataforma simples para o cenário complexo (ou vice-versa). {{D}} ignora que o Ghost é especializado em publicação e newsletters, não em operações B2B complexas."
+  },
+  {
+    "id": "gestaoweb-cap4-q6",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A escolha de um CMS deve equilibrar três fatores centrais: a complexidade e a escala do conteúdo a ser gerenciado, a capacidade técnica da equipe responsável pela manutenção, e o orçamento disponível — não existe uma plataforma objetivamente superior em todos os cenários simultaneamente.”",
+        "fonte": "CMSWIRE. State of the CMS Industry Report. Simpler Media Group, 2024."
+      },
+      {
+        "t": "p",
+        "texto": "Uma padaria de bairro, administrada por uma família sem qualquer funcionário com conhecimento técnico, quer, pela primeira vez, ter uma página na internet para divulgar o cardápio e permitir encomendas simples de bolos por WhatsApp integrado ao site. O orçamento mensal disponível para isso é de até R$ 150,00, e não há previsão de crescimento significativo do negócio nos próximos anos — a família deixou claro que quer “uma solução simples que funcione e que a gente consiga mexer sozinho”."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador e o cenário descrito, assinale a alternativa com a recomendação mais adequada, e sua justificativa:",
+    "alternativas": [
+      "Drupal, por ser o CMS tecnicamente mais robusto disponível no mercado, independentemente da capacidade técnica da equipe que vai operá-lo",
+      "Magento (Adobe Commerce), por ser a plataforma de e-commerce mais completa, ideal para maximizar o potencial de crescimento futuro do negócio",
+      "Wix, pelo editor visual simples, sem exigir conhecimento técnico, e com custo compatível com o orçamento — mesmo não sendo o mais robusto",
+      "Nenhuma solução de CMS seria viável com o orçamento de R$ 150,00 mensais, tornando obrigatória a contratação de um desenvolvedor para construir um site do zero, com hospedagem própria",
+      "A escolha do CMS é irrelevante nesse cenário, já que qualquer plataforma exigiria exatamente o mesmo esforço técnico da família"
+    ],
+    "correta": 2,
+    "resolucao": "a resposta aplica corretamente os três fatores do texto motivador ao cenário: baixa complexidade de conteúdo, equipe sem capacidade técnica, e orçamento limitado apontam para uma plataforma simples e acessível, não para a mais robusta ou mais cara do mercado. {{A}} e {{B}} cometem o erro de recomendar a opção 'mais poderosa' ignorando que ela não é a mais adequada às restrições reais do cliente — o mesmo tipo de raciocínio equivocado já visto em outras questões deste capítulo."
+  },
+  {
+    "id": "gestaoweb-cap4-q7",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A governança de conteúdo define quem pode criar, revisar, aprovar e publicar cada tipo de conteúdo, e por quê — sem um processo claro, organizações tendem a publicar material inconsistente, desatualizado ou juridicamente arriscado, mesmo dispondo de um CMS tecnicamente robusto.”",
+        "fonte": "NIELSEN NORMAN GROUP. Content Governance. NN/g, 2019."
+      },
+      {
+        "t": "p",
+        "texto": "A rede de academias FitMais permitia que qualquer instrutor com acesso ao CMS publicasse posts diretamente no blog da empresa, sem qualquer revisão prévia. Um instrutor publicou um artigo recomendando um protocolo de jejum intermitente extremo, atribuindo benefícios não comprovados cientificamente e citando incorretamente um estudo médico. O artigo ficou no ar por três semanas antes de ser notado pelo departamento jurídico da empresa, após a reclamação de um cliente que seguiu as recomendações e passou mal. O incidente gerou um processo judicial contra a empresa."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador, assinale a alternativa que identifica corretamente a falha organizacional evidenciada pelo incidente e a correção mais adequada:",
+    "alternativas": [
+      "A falha foi puramente técnica (o CMS utilizado não suportava múltiplos autores); a correção é trocar de plataforma de CMS",
+      "Faltava um fluxo de aprovação (workflow); a correção é exigir revisão editorial e, quando preciso, técnica ou jurídica antes de publicar",
+      "A falha foi exclusivamente do instrutor, que deveria ser o único responsabilizado, sem qualquer necessidade de mudança no processo da empresa",
+      "Não houve falha organizacional; incidentes como esse são inevitáveis em qualquer empresa que utiliza um CMS, independentemente do processo de publicação adotado pela equipe",
+      "A falha foi usar um blog em vez de uma rede social para publicar o conteúdo, já que redes sociais removem automaticamente informações de saúde incorretas"
+    ],
+    "correta": 1,
+    "resolucao": "o incidente ilustra exatamente a ausência de um workflow de aprovação (rascunho → revisão → aprovação → publicação) para conteúdo sensível, um problema organizacional e de processo, não técnico. {{A}} confunde a causa raiz: o CMS pode perfeitamente suportar múltiplos autores; o que faltou foi um processo de revisão antes da publicação. {{C}} ignora a responsabilidade organizacional da empresa em não ter um processo de governança de conteúdo, mesmo quando um indivíduo comete o erro inicial."
+  },
+  {
+    "id": "gestaoweb-cap4-q8",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Títulos de página descritivos, URLs legíveis e uma estrutura clara de cabeçalhos ajudam tanto os usuários quanto os mecanismos de busca a entender do que trata uma página — otimizações que devem refletir o conteúdo real, nunca induzir o usuário a expectativas que a página não cumpre.”",
+        "fonte": "GOOGLE SEARCH CENTRAL. SEO Starter Guide. Google, 2024."
+      },
+      {
+        "t": "p",
+        "texto": "O blog de receitas SaborCaseiro passou por uma reformulação de SEO: a equipe reescreveu todos os títulos das receitas para incluir termos de busca populares, otimizou as meta descrições e reestruturou as URLs de forma descritiva. Nos três meses seguintes, o tráfego orgânico vindo do Google cresceu 65%. No entanto, a taxa de rejeição (usuários que saem da página em poucos segundos) também subiu de 35% para 58% no mesmo período, e o tempo médio na página caiu significativamente. Uma investigação revelou que, para aumentar o volume de buscas atraídas, a equipe havia começado a usar títulos como “Bolo de Chocolate em 5 Minutos” para receitas que, na verdade, levavam mais de uma hora de preparo."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador do Google e os dados relatados, assinale a alternativa que avalia corretamente a estratégia adotada pelo SaborCaseiro:",
+    "alternativas": [
+      "A estratégia foi um sucesso completo, já que o aumento de 65% no tráfego orgânico é o único indicador relevante de uma boa prática de SEO, segundo o próprio guia do Google",
+      "Trouxe tráfego, mas com títulos que não refletem o conteúdo, o que explica a rejeição; o guia do Google recomenda o oposto",
+      "A alta na taxa de rejeição não tem qualquer relação com a mudança nos títulos, sendo, nesse caso, apenas uma coincidência estatística",
+      "O problema foi exclusivamente técnico (URLs mal formatadas), sem qualquer relação com o conteúdo dos títulos",
+      "Taxa de rejeição é uma métrica irrelevante para avaliar o sucesso de uma estratégia de SEO, bastando observar o volume de tráfego"
+    ],
+    "correta": 1,
+    "resolucao": "os dados relatados (aumento de tráfego combinado com aumento de rejeição e queda de tempo na página) indicam claramente um caso de títulos que geram expectativas que a página não cumpre — prática que o próprio guia do Google desaconselha, pois prejudica a experiência do usuário e pode ser penalizada no médio prazo. {{A}} e {{E}} cometem o erro de considerar apenas a métrica de volume de tráfego, ignorando sinais de qualidade da experiência do usuário, que também influenciam o desempenho de SEO no longo prazo."
+  },
+  {
+    "id": "gestaoweb-cap4-q9",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Migrações de CMS mal planejadas frequentemente subestimam o esforço de mapeamento do conteúdo existente e de suas dependências, resultando em conteúdo perdido, links quebrados e queda temporária no tráfego orgânico após o lançamento da nova plataforma.”",
+        "fonte": "FORRESTER RESEARCH. The Total Economic Impact of Content Management System Migration. Forrester Consulting, 2023."
+      },
+      {
+        "t": "p",
+        "texto": "A revista digital MundoTech decidiu migrar seus 12 mil artigos publicados ao longo de 15 anos de um CMS proprietário antigo para o WordPress. A empresa concedeu à equipe apenas três semanas para o projeto inteiro, sem tempo dedicado a mapear previamente quais URLs antigas precisariam de redirecionamento para as novas. Após o lançamento, cerca de 40% dos links antigos (amplamente compartilhados e referenciados por outros sites ao longo dos anos) passaram a retornar erro 404, e o tráfego orgânico da revista caiu 30% nas primeiras seis semanas após a migração, só se recuperando por completo cinco meses depois, quando a equipe finalmente mapeou e corrigiu os redirecionamentos faltantes."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador, assinale a alternativa que identifica corretamente a causa raiz do problema enfrentado pela MundoTech e a prática que deveria ter sido adotada:",
+    "alternativas": [
+      "O problema foi a escolha do WordPress como plataforma de destino, que deveria ser substituída por outro CMS para evitar problemas semelhantes no futuro",
+      "Faltou mapear o conteúdo e as URLs antes da migração, e as URLs antigas ficaram sem redirecionamento para as novas",
+      "O problema foi o volume de 12 mil artigos, impossível de migrar",
+      "A queda de tráfego foi inevitável e não tem relação com o planejamento da migração, sendo um efeito colateral normal de qualquer troca de CMS",
+      "O problema foi exclusivamente do Google, que deveria reconhecer automaticamente o novo endereço de cada artigo migrado, sem qualquer configuração por parte da MundoTech"
+    ],
+    "correta": 1,
+    "resolucao": "o cenário ilustra exatamente o risco citado pela Forrester: planejamento insuficiente do mapeamento de conteúdo e de suas dependências (nesse caso, URLs antigas amplamente referenciadas) gera perda de tráfego evitável. A resposta correta identifica tanto a causa (falta de mapeamento e de redirecionamentos) quanto a prática de mitigação (planejar redirecionamentos como parte do escopo do projeto). {{D}} é falso: a perda de tráfego por links quebrados é evitável com o planejamento adequado, como demonstra a própria recuperação da MundoTech após corrigir os redirecionamentos."
+  },
+  {
+    "id": "gestaoweb-cap5-q1",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "discursiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Confidencialidade, integridade e disponibilidade, frequentemente referidas como a tríade CIA, são os três objetivos fundamentais de segurança tanto para dados quanto para serviços de informação e computação. Uma perda de confidencialidade é a divulgação não autorizada de informação. Uma perda de integridade é a modificação ou destruição não autorizada de informação. Uma perda de disponibilidade é a interrupção do acesso a uma informação ou sistema de informação.”",
+        "fonte": "STALLINGS, William; BROWN, Lawrie. Computer Security: Principles and Practice. 4ª ed. Boston: Pearson, 2018."
+      },
+      {
+        "t": "p",
+        "texto": "O Hospital Vida Plena sofreu três incidentes de segurança distintos ao longo de um mesmo semestre. No primeiro, um funcionário mal-intencionado do setor de TI acessou, sem autorização, os prontuários eletrônicos de pacientes famosos internados no hospital e os vendeu a um site de fofocas, que publicou detalhes do tratamento desses pacientes sem qualquer consentimento. No segundo incidente, um erro em uma atualização do sistema de prontuários corrompeu silenciosamente os registros de dosagem de medicamentos de 340 pacientes, sem que ninguém percebesse imediatamente — alguns registros passaram a indicar dosagens diferentes das que haviam sido efetivamente prescritas pelos médicos. No terceiro incidente, um ataque de ransomware criptografou todos os servidores do hospital, incluindo o sistema de agendamento cirúrgico, impedindo qualquer acesso aos prontuários por 26 horas, período em que duas cirurgias eletivas precisaram ser remarcadas por falta de acesso ao histórico dos pacientes."
+      }
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) Com base no texto de Stallings e Brown (2018), identifique qual dos três pilares da tríade CIA foi violado em cada um dos três incidentes relatados, justificando cada associação com elementos específicos do texto.",
+      "b) Dos três incidentes, qual representa o risco mais grave para a segurança física imediata dos pacientes, e por quê? Justifique sua resposta relacionando-a ao pilar da tríade CIA correspondente.",
+      "c) Seria possível que um único incidente de segurança violasse mais de um pilar da tríade CIA simultaneamente? Justifique sua resposta com um exemplo hipotético relacionado ao contexto hospitalar do texto."
+    ],
+    "linhas": 12
+  },
+  {
+    "id": "gestaoweb-cap5-q2",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O custo médio global de um vazamento de dados atingiu US$ 4,88 milhões em 2024, um aumento de 10% em relação ao ano anterior — o maior salto desde a pandemia. Organizações que utilizam extensivamente inteligência artificial e automação em segurança registraram custos médios significativamente menores do que aquelas que não utilizam essas tecnologias.”",
+        "fonte": "IBM SECURITY. Cost of a Data Breach Report 2024. IBM, 2024."
+      },
+      {
+        "t": "p",
+        "texto": "O diretor financeiro de uma empresa de médio porte questionou, em uma reunião de orçamento, por que a equipe de TI havia solicitado um aumento de 40% no investimento em segurança da informação para o próximo ano, incluindo contratação de uma ferramenta de monitoramento automatizado. Ele argumentou: “Nunca tivemos um incidente de segurança grave em dez anos de empresa — esse investimento parece desnecessário e a prioridade deveria ser expandir a equipe de vendas.”"
+      }
+    ],
+    "enunciado": "Considerando o texto motivador, assinale a alternativa que melhor contra-argumenta a posição do diretor financeiro:",
+    "alternativas": [
+      "O diretor está certo: sem incidentes, não há por que investir em segurança",
+      "O custo de um vazamento é alto e crescente, e não ter sofrido incidentes até hoje não garante que o risco seja baixo no futuro",
+      "Investimento em segurança da informação é responsabilidade exclusiva de empresas de tecnologia, não sendo relevante para uma empresa de médio porte de outro setor, como o da indústria",
+      "O argumento do diretor financeiro é irrelevante, pois investimentos em segurança nunca trazem qualquer retorno financeiro mensurável",
+      "A ausência de incidentes nos últimos dez anos é uma prova estatística confiável de que a empresa continuará livre de incidentes de segurança indefinidamente"
+    ],
+    "correta": 1,
+    "resolucao": "a resposta reconhece a falácia no raciocínio do diretor (ausência de incidentes passados não é garantia de segurança futura) e usa o dado do texto motivador sobre o custo médio de vazamentos e o benefício de ferramentas de automação para fundamentar o investimento propostas. {{E}} é o distrator mais perigoso: descreve exatamente o viés cognitivo (falácia da ausência de evidência) que motivou o questionamento do diretor."
+  },
+  {
+    "id": "gestaoweb-cap5-q3",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O princípio do menor privilégio estabelece que cada usuário, processo ou sistema deve operar utilizando o conjunto mínimo de privilégios necessário para completar sua tarefa, e nada além disso, de modo a limitar o dano potencial decorrente de erro, mau uso ou comprometimento de credenciais.”",
+        "fonte": "NIST. Security and Privacy Controls for Information Systems and Organizations. NIST Special Publication 800-53, Rev. 5. National Institute of Standards and Technology, 2020."
+      },
+      {
+        "t": "p",
+        "texto": "Uma estagiária do departamento de marketing de uma varejista precisava, para uma tarefa pontual, apenas consultar os dados de uma única tabela do banco de dados — a lista de e-mails de clientes que haviam aceitado receber newsletters — para montar uma campanha de divulgação. Por praticidade, o administrador de sistemas concedeu a ela uma credencial de acesso administrativo completo ao banco de dados da empresa, com permissão de leitura e escrita em todas as tabelas, incluindo dados financeiros e senhas de clientes, alegando que “assim ela não precisa ficar pedindo acesso a cada nova tarefa”. Meses depois, o notebook da estagiária foi infectado por um malware após ela clicar em um link malicioso em um e-mail de phishing, e as credenciais salvas em seu navegador foram roubadas por um atacante, que obteve acesso ao banco de dados completo da empresa."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador, assinale a alternativa que identifica corretamente o princípio de segurança violado nesse cenário e sua consequência:",
+    "alternativas": [
+      "Violou-se o menor privilégio: a estagiária tinha acesso muito além do necessário, e uma só credencial expôs todo o banco de dados",
+      "Nenhum princípio de segurança foi violado, já que o phishing é um ataque direcionado ao usuário, e não à política de acesso definida pela empresa",
+      "O único erro foi a estagiária ter clicado no link de phishing; a política de conceder acesso administrativo completo por praticidade é uma prática recomendada e amplamente aceita",
+      "O incidente decorreu exclusivamente de uma falha técnica do banco de dados, sem qualquer relação com as permissões concedidas à estagiária",
+      "O princípio violado foi o de não-repúdio, já que a empresa não conseguiria provar quem realizou cada ação no banco de dados"
+    ],
+    "correta": 0,
+    "resolucao": "o cenário ilustra exatamente a consequência de violar o princípio do menor privilégio: ao conceder acesso muito além do necessário 'por praticidade', a empresa ampliou desnecessariamente o raio de dano de um incidente que, isoladamente, envolveria apenas uma credencial de baixo risco. {{C}} descreve a prática relatada como recomendada, quando na verdade é o exato oposto do que a segurança da informação recomenda."
+  },
+  {
+    "id": "gestaoweb-cap5-q4",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A03:2021 – Injection [...] ocorre quando dados fornecidos pelo usuário não são validados, filtrados ou sanitizados pela aplicação. [...] A07:2021 – Cross-Site Scripting (XSS) ocorre sempre que uma aplicação inclui dados não confiáveis em uma nova página web sem validação ou escape adequados, permitindo que um atacante execute scripts no navegador da vítima.”",
+        "fonte": "OWASP FOUNDATION. OWASP Top 10:2021. OWASP, 2021."
+      },
+      {
+        "t": "p",
+        "texto": "A equipe de segurança de um e-commerce investigou dois incidentes reportados na mesma semana. No primeiro, um atacante inseriu o texto ’ OR ’1’=’1 no campo de busca de produtos do site, e a aplicação retornou a lista completa de todos os produtos do catálogo, incluindo itens que deveriam estar ocultos por não estarem mais à venda — indicando que essa entrada alterou o comportamento de uma consulta ao banco de dados. No segundo incidente, um atacante publicou uma avaliação de produto contendo um trecho de código JavaScript escondido no texto; qualquer outro cliente que visualizasse essa avaliação teve, sem perceber, seus cookies de sessão enviados automaticamente para um servidor externo controlado pelo atacante."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador da OWASP, assinale a alternativa que classifica corretamente os dois incidentes:",
+    "alternativas": [
+      "Ambos os incidentes são exemplos de SQL Injection, já que os dois envolveram a inserção de texto malicioso em um campo de entrada do site",
+      "O primeiro é SQL Injection, pois a entrada alterou uma consulta ao banco; o segundo é XSS, pois o script rodou no navegador de outros usuários",
+      "Ambos os incidentes são exemplos de XSS, já que os dois envolveram scripts executados no navegador dos usuários",
+      "O primeiro incidente é um exemplo de XSS, pois o texto foi digitado no navegador; o segundo, de SQL Injection, pois a avaliação foi gravada no banco de dados",
+      "Nenhum dos dois incidentes se caracteriza como uma vulnerabilidade de segurança, pois ambos dependeram de uma ação do usuário (buscar um produto ou ler uma avaliação no site)"
+    ],
+    "correta": 1,
+    "resolucao": "o primeiro caso apresenta a sintaxe clássica de SQL Injection ( ’ OR ’1’=’1 ) alterando uma consulta ao banco; o segundo apresenta o padrão de XSS armazenado, em que um script malicioso publicado é executado no navegador de outras vítimas que visualizam o conteúdo, roubando seus cookies de sessão. {{D}} inverte deliberadamente a classificação correta, testando se o candidato memorizou o padrão em vez de compreender a diferença entre os dois ataques."
+  },
+  {
+    "id": "gestaoweb-cap5-q5",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Phishing continua sendo o vetor de acesso inicial mais comum em incidentes de segurança confirmados, frequentemente servindo como porta de entrada para ataques subsequentes, como a instalação de ransomware, uma vez que credenciais válidas são obtidas.”",
+        "fonte": "VERIZON. 2024 Data Breach Investigations Report. Verizon Business, 2024."
+      },
+      {
+        "t": "p",
+        "texto": "Uma auditoria de segurança reconstruiu a cronologia de um incidente sofrido por uma empresa de logística: no dia 1, um funcionário do setor financeiro recebeu um e-mail que imitava perfeitamente a identidade visual do banco da empresa, solicitando que ele “confirmasse suas credenciais” em um site falso quase idêntico ao site real do banco; o funcionário digitou usuário e senha nesse site falso. No dia 3, usando essas credenciais roubadas, os atacantes acessaram a rede interna da empresa e, ao longo da semana seguinte, instalaram um software que criptografou todos os arquivos dos servidores da empresa, exibindo uma mensagem exigindo pagamento em criptomoeda para restaurar o acesso."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador da Verizon e a cronologia descrita, assinale a alternativa que classifica corretamente os dois ataques envolvidos, na ordem em que ocorreram:",
+    "alternativas": [
+      "Dia 1: ataque DDoS; Dia 3 em diante: ataque CSRF",
+      "Dia 1: phishing (o funcionário entregou as credenciais ao site falso); Dia 3 em diante: ransomware (os arquivos foram criptografados)",
+      "Dia 1: ransomware; Dia 3 em diante: phishing, invertendo a ordem cronológica correta dos dois ataques",
+      "Os dois eventos descritos são, na verdade, um único ataque de CSRF, apenas com duração estendida",
+      "Não é possível classificar os ataques com as informações fornecidas, pois phishing e ransomware nunca ocorrem em sequência no mesmo incidente, segundo o texto motivador"
+    ],
+    "correta": 1,
+    "resolucao": "o e-mail e o site falso solicitando credenciais são o padrão clássico de phishing; a criptografia dos arquivos com exigência de resgate é a definição de ransomware. A sequência descrita reflete exatamente o padrão citado no texto motivador da Verizon: phishing como vetor de acesso inicial, seguido de ransomware. {{E}} contraria diretamente essa afirmação do texto motivador, que descreve esse encadeamento como algo frequente, não impossível."
+  },
+  {
+    "id": "gestaoweb-cap5-q6",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Ferramentas de teste de segurança se dividem, entre outras categorias, em análise estática (SAST), que examina o código-fonte da aplicação sem executá-la, e análise dinâmica (DAST), que testa a aplicação em execução, simulando ataques reais contra ela — as duas abordagens são complementares, não substitutas uma da outra.”",
+        "fonte": "OWASP FOUNDATION. OWASP Testing Guide v4.2. OWASP, 2020."
+      },
+      {
+        "t": "p",
+        "texto": "O time de desenvolvimento de uma fintech quer adicionar uma etapa automatizada de segurança ao seu pipeline de integração contínua (CI/CD), de forma que vulnerabilidades sejam identificadas assim que um desenvolvedor envia uma alteração de código, antes mesmo de a aplicação ser implantada em qualquer ambiente de teste. O objetivo é analisar o código-fonte diretamente em busca de padrões conhecidos de vulnerabilidade, como uso de funções inseguras ou ausência de sanitização de entradas, sem a necessidade de a aplicação estar em execução durante essa análise."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador, assinale a alternativa que indica corretamente o tipo de ferramenta de segurança mais adequado para esse objetivo:",
+    "alternativas": [
+      "Uma ferramenta DAST, pois é a única capaz de identificar vulnerabilidades de código-fonte antes da implantação da aplicação",
+      "Uma ferramenta SAST (análise estática), que examina o código-fonte sem executar a aplicação, ideal para o início do pipeline",
+      "Um firewall de aplicação (WAF), pois é a única ferramenta de segurança capaz de ser integrada a um pipeline de CI/CD",
+      "Uma ferramenta DAST, pois análise estática (SAST) foi descontinuada pelo mercado e substituída integralmente por ferramentas dinâmicas",
+      "Nenhuma ferramenta automatizada seria capaz de identificar esse tipo de vulnerabilidade, sendo necessária exclusivamente uma revisão manual de código por especialistas antes de cada deploy"
+    ],
+    "correta": 1,
+    "resolucao": "o requisito descrito (analisar código-fonte sem executar a aplicação, logo após o envio de uma alteração) corresponde exatamente à definição de SAST apresentada no texto motivador. {{A}} e {{D}} invertem a classificação ou fazem afirmação falsa sobre SAST estar descontinuado; DAST, ao contrário, exige que a aplicação esteja em execução, o que normalmente ocorre em uma etapa posterior do pipeline, não na etapa inicial descrita no cenário."
+  },
+  {
+    "id": "gestaoweb-cap5-q7",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Senhas nunca devem ser armazenadas em texto plano ou utilizando algoritmos de hash reversíveis ou rápidos demais para função de senha; algoritmos como bcrypt e Argon2 foram projetados especificamente para tornar ataques de força bruta computacionalmente inviáveis, mesmo que o banco de dados de senhas seja comprometido.”",
+        "fonte": "MICROSOFT. Security Development Lifecycle (SDL) — Password Storage Guidance. Microsoft, 2023."
+      },
+      {
+        "t": "p",
+        "texto": "Durante uma auditoria de segurança em um aplicativo de delivery, um pesquisador de segurança conseguiu acessar uma cópia do banco de dados de usuários (obtida por meio de uma vulnerabilidade já corrigida) e constatou que a coluna correspondente às senhas dos usuários continha valores como “123456”, “mariasilva2020” e “senhadopedro” — exatamente como os usuários as haviam digitado no momento do cadastro, sem qualquer transformação criptográfica aplicada pelo sistema antes de salvar essas informações."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador, assinale a alternativa que identifica corretamente a falha evidenciada e a correção recomendada:",
+    "alternativas": [
+      "A falha foi guardar as senhas em texto plano; a correção é aplicar um hash próprio para senhas, como bcrypt ou Argon2",
+      "Não houve falha, já que armazenar a senha exatamente como o usuário a digitou garante que ele sempre conseguirá recuperá-la caso a esqueça",
+      "A única falha foi permitir senhas fracas como “123456”; bastaria exigir senhas mais longas, mantendo o armazenamento em texto plano",
+      "A correção adequada seria criptografar as senhas com um algoritmo reversível, para que a equipe de suporte técnico possa lê-las sempre que um usuário solicitar ajuda",
+      "O problema identificado é exclusivo de aplicativos de delivery, não se aplicando a outros tipos de aplicação web"
+    ],
+    "correta": 0,
+    "resolucao": "o texto motivador é explícito ao afastar tanto o texto plano quanto algoritmos reversíveis ou rápidos demais, recomendando funções de hash específicas para senha, como bcrypt ou Argon2. {{B}} descreve uma prática perigosa como se fosse um benefício. {{D}} sugere uma criptografia reversível, contrariando diretamente a orientação do texto motivador — mesmo criptografada de forma reversível, uma senha comprometida ainda pode ser decifrada pelo atacante que obtiver a chave."
+  },
+  {
+    "id": "gestaoweb-cap5-q8",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O tempo médio de detecção (MTTD) mede quanto tempo, em média, uma organização leva para identificar um incidente de segurança em curso; o tempo médio de resposta (MTTR) mede quanto tempo leva, a partir da detecção, para conter e remediar esse incidente — organizações com MTTD e MTTR menores tendem a sofrer impactos financeiros significativamente menores por incidente.”",
+        "fonte": "PONEMON INSTITUTE. Cost of a Data Breach Study: Impact of Detection and Response Time. Ponemon Institute Research Report, 2023."
+      },
+      {
+        "t": "p",
+        "texto": "Duas empresas do mesmo setor sofreram incidentes de segurança semelhantes (acesso não autorizado a um servidor de dados de clientes) no mesmo mês. A Empresa Alfa detectou o acesso indevido 3 horas após seu início, graças a um sistema de monitoramento automatizado que gerou um alerta imediato, e conteve o incidente em mais 2 horas. A Empresa Beta, que não possuía monitoramento automatizado, só descobriu o incidente 47 dias depois, quando um cliente notou uma cobrança fraudulenta e entrou em contato com a empresa; a partir da descoberta, a Beta levou mais 12 dias para conter completamente o acesso não autorizado."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador sobre MTTD e MTTR, assinale a alternativa que compara corretamente os dois casos:",
+    "alternativas": [
+      "As duas empresas tiveram desempenho equivalente, já que o KPI relevante é apenas se o incidente foi eventualmente contido, independentemente do tempo decorrido até a detecção",
+      "A Alfa teve MTTD e MTTR muito menores (3h e 2h, contra 47 e 12 dias), o que tende a reduzir bastante o custo do incidente",
+      "A Empresa Beta teve melhor desempenho, pois levou mais tempo para agir, permitindo uma investigação mais cuidadosa do incidente",
+      "O MTTD e o MTTR são métricas aplicáveis apenas a ataques de ransomware, não a casos de acesso não autorizado a servidores",
+      "Não é possível comparar as duas empresas, pois MTTD e MTTR só podem ser calculados por auditores externos certificados"
+    ],
+    "correta": 1,
+    "resolucao": "a Alfa teve MTTD de 3 horas e MTTR de 2 horas, contra 47 dias e 12 dias da Beta, respectivamente — uma diferença ordens de grandeza maior, exatamente o tipo de cenário que o texto motivador associa a impactos financeiros bastante distintos. {{C}} inverte perigosamente a lógica das métricas, tratando um tempo de resposta muito maior como algo positivo, quando na verdade representa uma falha grave de monitoramento e resposta."
+  },
+  {
+    "id": "gestaoweb-cap5-q9",
+    "disciplinaId": "gestao-de-sistemas-digitais-na-web",
+    "capituloId": "gestaoweb-cap5",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O tratamento de dados pessoais realizado por pessoa jurídica sediada fora do Brasil está sujeito à LGPD sempre que a atividade de tratamento tenha por objetivo a oferta ou o fornecimento de bens ou serviços a indivíduos localizados no território nacional, ou o tratamento de dados de indivíduos localizados no Brasil.”",
+        "fonte": "BRASIL. Lei nº 13.709, de 14 de agosto de 2018 (Lei Geral de Proteção de Dados Pessoais — LGPD), Art. 3º, inciso II."
+      },
+      {
+        "t": "p",
+        "texto": "Uma empresa de software com sede em Lisboa, Portugal, sem qualquer escritório físico ou funcionário no Brasil, desenvolveu um aplicativo de meditação guiada que se tornou popular entre usuários brasileiros, que representam hoje 35% de sua base total de usuários pagantes. A empresa coleta dados de localização, padrões de sono relatados pelos próprios usuários e informações de pagamento de todos os seus assinantes, incluindo os brasileiros. A empresa argumenta que, por não ter nenhuma presença física no Brasil, estaria sujeita apenas ao GDPR (regulamento europeu), e não à LGPD."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador (Art. 3º, inciso II, da LGPD), assinale a alternativa que avalia corretamente o argumento da empresa:",
+    "alternativas": [
+      "O argumento está correto: a LGPD só se aplica a empresas com sede ou funcionários fisicamente estabelecidos em território brasileiro",
+      "Está incorreto: pela extraterritorialidade, a LGPD vale para dados de pessoas no Brasil, mesmo sem sede da empresa no país",
+      "O argumento está correto, mas apenas porque o GDPR é uma legislação superior à LGPD e a substitui automaticamente para empresas europeias",
+      "A LGPD e o GDPR são mutuamente excludentes, de modo que uma empresa nunca pode estar sujeita a ambas simultaneamente",
+      "O argumento está incorreto, mas apenas porque a empresa deveria estar sujeita unicamente à legislação de proteção de dados de Portugal, e não à LGPD nem ao GDPR"
+    ],
+    "correta": 1,
+    "resolucao": "o critério de extraterritorialidade da LGPD, citado explicitamente no texto motivador, torna a lei aplicável ao tratamento de dados de pessoas localizadas no Brasil, mesmo por empresas sediadas no exterior e sem presença física no país, desde que haja oferta de bens ou serviços a esse público. {{D}} é falso: é perfeitamente possível — e, no caso descrito, provável — que a empresa esteja sujeita simultaneamente à LGPD (por atender usuários no Brasil) e ao GDPR (por estar sediada na União Europeia)."
+  }
+]

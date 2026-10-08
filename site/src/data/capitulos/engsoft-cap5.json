@@ -1,0 +1,196 @@
+{
+ "numero": 5,
+ "titulo": "Testes de Software",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Testar software é o processo de avaliar e verificar se um sistema faz o que deveria fazer – e, igualmente importante, verificar se ele não faz o que não deveria. Como lembra a máxima clássica da área: testes não provam a ausência de defeitos, mas provam a presença deles. Nenhum conjunto de testes, por mais completo que seja, pode garantir que o software está livre de defeitos – mas um bom conjunto de testes pode reduzir drasticamente o risco de falhas em produção. Este capítulo percorre os fundamentos de QA, as técnicas de teste, a pirâmide de testes e a automação no pipeline de CI/CD."
+  },
+  {
+   "t": "h2",
+   "id": "5-1-qa-conceitos-fundamentais",
+   "texto": "5.1 QA — Conceitos Fundamentais"
+  },
+  {
+   "t": "p",
+   "html": "QA é frequentemente confundido com “fazer testes”, mas seu escopo é muito mais amplo: prevenir defeitos desde o início, não apenas encontrá-los no produto final."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Dimensão",
+    "Verificação",
+    "Validação"
+   ],
+   "linhas": [
+    [
+     "Pergunta central",
+     "Estamos construindo o produto corretamente?",
+     "Estamos construindo o produto correto?"
+    ],
+    [
+     "Foco",
+     "Conformidade com especificações e padrões",
+     "Atendimento às reais necessidades do usuário"
+    ],
+    [
+     "Atividades típicas",
+     "Revisão de código, inspeção, análise estática",
+     "Testes de aceitação (UAT), testes com usuários reais"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Conclusão",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Precisamos de AMBOS: verificar que estamos construindo corretamente e validar que estamos construindo a coisa certa. Um sistema pode estar <strong>verificado mas inválido</strong> (construído exatamente conforme a especificação, mas a especificação estava errada) ou <strong>válido mas não verificado</strong> (o usuário aprova o resultado, mas o código está cheio de problemas técnicos que gerarão dores de cabeça no futuro)."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Os conceitos fundamentais de teste incluem: <strong>Erro</strong>, a ação humana incorreta que origina o problema; <strong>Defeito</strong> (<em>bug</em>), a manifestação do erro no código; <strong>Falha</strong>, o comportamento incorreto observado pelo usuário; <strong>Cobertura de Testes</strong>, o percentual do código exercitado pelos testes automatizados; e <strong>Caso de Teste</strong>, o conjunto de entradas, condições e resultado esperado que define uma verificação específica."
+  },
+  {
+   "t": "h2",
+   "id": "5-2-tecnicas-de-teste-caixa-branca-preta-e-cinza",
+   "texto": "5.2 Técnicas de Teste: Caixa Branca, Preta e Cinza"
+  },
+  {
+   "t": "p",
+   "html": "As técnicas diferem no conhecimento que o testador tem sobre a estrutura interna do sistema – isso define o tipo de verificação e quem conduz cada teste."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aspecto",
+    "Caixa Branca",
+    "Caixa Preta",
+    "Caixa Cinza"
+   ],
+   "linhas": [
+    [
+     "Visibilidade",
+     "Código-fonte visível",
+     "Sem acesso ao código",
+     "Acesso parcial"
+    ],
+    [
+     "Quem executa",
+     "Desenvolvedores",
+     "Testadores funcionais",
+     "Testers experientes, <em>pentesters</em>"
+    ],
+    [
+     "Vantagem",
+     "Alta cobertura técnica",
+     "Valida requisitos do usuário",
+     "Equilíbrio entre as duas perspectivas"
+    ],
+    [
+     "Limitação",
+     "Não valida necessidade real",
+     "Não garante cobertura interna",
+     "Mais complexo de projetar"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-3-estrategias-de-teste-niveis-e-piramide",
+   "texto": "5.3 Estratégias de Teste: Níveis e Pirâmide"
+  },
+  {
+   "t": "p",
+   "html": "Os testes são organizados em níveis que diferem em escopo, objetivo e momento de execução – representados pela <strong>Pirâmide de Testes</strong>: muitos testes unitários (rápidos e baratos), alguns testes de integração (velocidade média) e poucos testes de aceitação/E2E (lentos e caros)."
+  },
+  {
+   "t": "h3",
+   "texto": "Testes Unitários"
+  },
+  {
+   "t": "p",
+   "html": "Verificam o menor componente testável do sistema de forma isolada – tipicamente uma função, método ou classe, com dependências externas substituídas por <em>mocks</em> ou <em>stubs</em>. Executados pelos desenvolvedores, preferencialmente durante a implementação (TDD)."
+  },
+  {
+   "t": "h3",
+   "texto": "Testes de Integração"
+  },
+  {
+   "t": "p",
+   "html": "Verificam se dois ou mais componentes funcionam corretamente quando combinados – detectam problemas de incompatibilidade entre módulos, erros de configuração de banco de dados e falhas de comunicação entre serviços."
+  },
+  {
+   "t": "h3",
+   "texto": "Testes de Sistema"
+  },
+  {
+   "t": "p",
+   "html": "Avaliam o software como um todo em um ambiente que simula a produção: teste funcional, de desempenho (carga, estresse, pico), de segurança, de usabilidade e de regressão."
+  },
+  {
+   "t": "h3",
+   "texto": "Testes de Aceitação (UAT)"
+  },
+  {
+   "t": "p",
+   "html": "Último nível de validação antes da implantação em produção, realizado pelos próprios usuários finais. O <strong>BDD</strong> (<em>Behavior-Driven Development</em>) aproxima os testes da linguagem do negócio usando cenários em Gherkin (Dado/Quando/Então)."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo de cenário BDD",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Cenário: Login com credenciais válidas</strong><br> Dado que o usuário está na página de login<br> Quando ele insere o e-mail e a senha corretos<br> Então ele deve ser redirecionado para o painel principal"
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-4-automacao-de-testes-e-ci-cd",
+   "texto": "5.4 Automação de Testes e CI/CD"
+  },
+  {
+   "t": "p",
+   "html": "Uma das práticas mais transformadoras da engenharia de software moderna, especialmente em contextos ágeis onde o código muda várias vezes ao dia."
+  },
+  {
+   "t": "h3",
+   "texto": "O que Automatizar e o que Não Automatizar"
+  },
+  {
+   "t": "p",
+   "html": "Automatize: testes repetitivos executados a cada <em>build</em>, testes de regressão de funcionalidades estáveis, testes unitários e de integração. Não automatize: testes exploratórios (exigem criatividade humana), testes de usabilidade com usuários reais, testes de percepção estética – que exigem julgamento humano subjetivo que ferramentas não conseguem replicar."
+  },
+  {
+   "t": "h3",
+   "texto": "TDD — Test-Driven Development"
+  },
+  {
+   "t": "p",
+   "html": "No TDD, o ciclo de desenvolvimento inverte a ordem tradicional: <strong>RED</strong> (escrever um teste que falha), <strong>GREEN</strong> (escrever o mínimo de código necessário para o teste passar) e <strong>REFACTOR</strong> (melhorar o código mantendo os testes passando). O código nasce testável, o teste documenta o comportamento esperado antes da implementação, e problemas são detectados imediatamente, quando o custo de correção é mínimo."
+  },
+  {
+   "t": "quadro",
+   "tipo": "boa-pratica",
+   "titulo": "Regra de ouro do pipeline",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Se os testes falham, o pipeline para – nenhum código com defeito avança. Um pipeline típico segue: Commit → Testes Unitários (&lt;5 min) → Testes de Integração (5–15 min) → Testes de Sistema/E2E (15–60 min) → Deploy automático."
+    }
+   ]
+  }
+ ]
+}

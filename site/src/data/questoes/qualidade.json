@@ -1,0 +1,1776 @@
+[
+  {
+    "id": "qualidade-cap1-q1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "discursiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A qualidade é a conformidade com os requisitos. [...] O sistema, então, deve prevenir defeitos. [...] O padrão de desempenho deve ser Zero Defeitos, e não algo como 'isso já está bom o suficiente'.” (tradução nossa)",
+        "fonte": "CROSBY, Philip B. Quality Is Free: The Art of Making Quality Certain. New York: McGraw-Hill, 1979."
+      },
+      {
+        "t": "citacao",
+        "texto": "“A aptidão para o uso é determinada pelas características do produto que o usuário reconhece como benéficas para si. [...] Um produto é apto para o uso se desempenha a função para a qual foi destinado, nas condições que o usuário efetivamente encontra.” (tradução nossa)",
+        "fonte": "JURAN, J. M.; GODFREY, A. B. (Ed.). Juran's Quality Handbook. 5. ed. New York: McGraw-Hill, 1999."
+      },
+      {
+        "t": "p",
+        "texto": "A MedFácil é uma plataforma de agendamento de consultas de telemedicina lançada em 2023. O contrato assinado com a clínica-cliente especificava, entre outros requisitos: (1) o paciente deve conseguir agendar uma consulta escolhendo especialidade médica; (2) o sistema deve permitir pagamento on-line; (3) o paciente deve receber confirmação por e-mail. A equipe de desenvolvimento implementou rigorosamente os três requisitos, e a clínica assinou o termo de aceite formal declarando que"
+      },
+      {
+        "t": "p",
+        "texto": "100% dos critérios do contrato haviam sido cumpridos. Para atender ao requisito (1), a equipe construiu um fluxo de sete telas sequenciais (login → especialidade → cidade → convênio → médico → horário → confirmação), sem consultar usuários finais durante o desenvolvimento."
+      },
+      {
+        "t": "p",
+        "texto": "Três meses após o lançamento, os dados de uso mostraram que 42% dos novos usuários abandonavam o fluxo de agendamento antes de concluí-lo — a maioria pacientes acima de 60 anos — e o volume de agendamentos feitos por telefone, que a plataforma deveria substituir, aumentou 15% em relação ao período anterior ao lançamento, contrariando a expectativa da clínica."
+      },
+      {
+        "t": "p",
+        "texto": "Diante da repercussão negativa, a MedFácil contratou uma consultoria de UX, que redesenhou o fluxo para apenas duas telas (especialidade + horário, com médico e confirmação assistidos automaticamente). Após o redesenho, o abandono caiu para 8%, e o volume de agendamentos por telefone ficou 60% abaixo da média anterior ao lançamento original."
+      }
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) Com base nas definições de Crosby (1979) e Juran (1999) apresentadas, explique por que o sistema da MedFácil pôde estar em total conformidade com os requisitos contratuais e, ainda assim, fracassar nos primeiros três meses. Relacione especificamente a citação de Crosby ao termo de aceite assinado pela clínica, e a citação de Juran ao comportamento observado dos pacientes com mais de 60 anos.",
+      "b) Considerando o modelo ISO/IEC 25010 (estudado no capítulo), identifique qual característica de qualidade foi negligenciada no design original de sete telas, e explique por que a Adequação Funcional (o sistema “fazer o que deveria fazer”) não é suficiente, sozinha, para garantir essa característica.",
+      "c) Usando as quatro categorias do Custo da Qualidade (Prevenção, Avaliação, Falha Interna, Falha Externa), classifique: (i) o custo gerado pelos 42% de abandono e pelo aumento de 15% nas ligações telefônicas nos primeiros três meses; (ii) o investimento contratado na consultoria de UX. Justifique cada classificação com base no momento em que cada custo ocorreu em relação ao usuário final.",
+      "d) Um desenvolvedor da equipe original alega, em uma reunião de retrospectiva: “O sistema estava certo, porque cumpriu 100% do que foi escrito no contrato — o problema foi dos usuários, que não souberam usá-lo”. Avalie criticamente essa afirmação, relacionando sua resposta à distinção entre Verificação e Validação apresentada no capítulo."
+    ],
+    "linhas": 12
+  },
+  {
+    "id": "qualidade-cap2-q2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Esta Norma Internacional define oito características de qualidade de produto: adequação funcional, eficiência de desempenho, compatibilidade, usabilidade, confiabilidade, segurança, manutenibilidade e portabilidade. [...] Segurança é definida como o grau em que um produto protege informações e dados, de modo que pessoas ou outros produtos tenham o grau de acesso apropriado aos seus tipos e níveis de autorização.” (tradução nossa)",
+        "fonte": "ISO/IEC 25010:2011. Systems and software engineering — SQuaRE — System and software quality models. Genebra: ISO, 2011."
+      },
+      {
+        "t": "p",
+        "texto": "A fintech PagCerto obteve, em 2015, uma avaliação de qualidade de produto com base na ISO/IEC 9126 — modelo então vigente cobrindo Funcionalidade, Confiabilidade, Usabilidade, Eficiência, Manutenibilidade e Portabilidade, sem nenhum item de avaliação dedicado exclusivamente a controle de acesso e criptografia de dados sensíveis, que ficavam registrados apenas como sub-item de Funcionalidade. Em 2021, a empresa sofreu um vazamento de dados de cartão por falha de criptografia, e decidiu adotar a ISO/IEC 25010 nas avaliações seguintes."
+      }
+    ],
+    "enunciado": "Considerando o texto de ISO/IEC 25010 (2011) e o caso da PagCerto, assinale a alternativa que identifica corretamente por que a avaliação de 2015 não capturou adequadamente o risco que se concretizou em 2021:",
+    "alternativas": [
+      "Porque a ISO/IEC 9126 não incluía nenhuma menção à segurança de dados, tornando qualquer avaliação de risco impossível antes de 2011",
+      "Porque, na ISO/IEC 9126, Segurança era só uma sub-característica de Funcionalidade, sem avaliação própria, como passou a ter na 25010",
+      "Porque a equipe de avaliação de 2015 cometeu um erro humano ao aplicar a ISO/IEC 9126, que já continha critérios de segurança equivalentes aos da 25010",
+      "Porque a criptografia de dados é um requisito legal, e não um requisito de qualidade de software em nenhum dos dois modelos",
+      "Porque a ISO/IEC 25010 substituiu completamente a avaliação de Funcionalidade por avaliação de Segurança, tornando as duas normas incompatíveis entre si e obrigando a refazer a avaliação de 2015"
+    ],
+    "correta": 1,
+    "resolucao": "a ISO/IEC 9126 de fato mencionava segurança, mas apenas como sub-característica de Funcionalidade — por isso é falso dizer que ela não fazia nenhuma menção à segurança —, sem o mesmo peso e escopo de avaliação dedicada que a ISO/IEC 25010 passou a exigir como característica independente. Atribuir a falha a erro humano da equipe também está errado: é uma limitação estrutural do modelo de 2001. Dizer que criptografia é só requisito legal é falso, pois segurança é tema central dos dois modelos ISO. Por fim, a 25010 não substituiu a Funcionalidade: manteve a Adequação Funcional e apenas separou Segurança como característica própria."
+  },
+  {
+    "id": "qualidade-cap2-q3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Esta Norma Internacional define oito características de qualidade de produto: adequação funcional, eficiência de desempenho, compatibilidade, usabilidade, confiabilidade, segurança, manutenibilidade e portabilidade. [...] Segurança é definida como o grau em que um produto protege informações e dados, de modo que pessoas ou outros produtos tenham o grau de acesso apropriado aos seus tipos e níveis de autorização.” (tradução nossa)",
+        "fonte": "ISO/IEC 25010:2011. Systems and software engineering — SQuaRE — System and software quality models. Genebra: ISO, 2011."
+      },
+      {
+        "t": "p",
+        "texto": "A fintech PagCerto obteve, em 2015, uma avaliação de qualidade de produto com base na ISO/IEC 9126 — modelo então vigente cobrindo Funcionalidade, Confiabilidade, Usabilidade, Eficiência, Manutenibilidade e Portabilidade, sem nenhum item de avaliação dedicado exclusivamente a controle de acesso e criptografia de dados sensíveis, que ficavam registrados apenas como sub-item de Funcionalidade. Em 2021, a empresa sofreu um vazamento de dados de cartão por falha de criptografia, e decidiu adotar a ISO/IEC 25010 nas avaliações seguintes."
+      },
+      {
+        "t": "p",
+        "texto": "Após adotar a ISO/IEC 25010, a PagCerto identificou um segundo problema: sua API de pagamentos, que funcionava perfeitamente havia anos, passou a apresentar falhas intermitentes de comunicação após um parceiro de tecnologia atualizar sua própria biblioteca de integração para uma versão mais recente, incompatível com a versão antiga usada pela PagCerto."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que identifica corretamente a característica da ISO/IEC 25010 mais diretamente relacionada a esse segundo problema:",
+    "alternativas": [
+      "Portabilidade, pois envolve instalar o sistema em outro hardware",
+      "Confiabilidade, pois qualquer falha intermitente de comunicação é, por definição, um problema de manutenção do nível de desempenho ao longo do tempo de operação do sistema",
+      "Compatibilidade, pois envolve a capacidade de dois sistemas trocarem informações operando no mesmo ambiente",
+      "Usabilidade, pois falhas de integração eventualmente afetam a experiência do usuário final do aplicativo de pagamentos",
+      "Segurança, pois qualquer falha de comunicação entre sistemas representa, por definição, uma vulnerabilidade explorável"
+    ],
+    "correta": 2,
+    "resolucao": "o cenário descreve exatamente a definição de Compatibilidade da ISO/IEC 25010: a capacidade de dois ou mais sistemas trocarem informação e operarem juntos. {{B}} é o distrator mais forte, pois falhas intermitentes de fato tangenciam Confiabilidade, mas a causa raiz descrita — incompatibilidade entre versões de biblioteca de dois sistemas distintos — é o critério que define Compatibilidade, não uma degradação natural do próprio sistema ao longo do tempo. {{A}} confunde Compatibilidade com Portabilidade (rodar em ambientes diferentes, não interoperar com outro sistema). {{D}} e {{E}} descrevem efeitos possíveis, mas não a causa técnica central do problema."
+  },
+  {
+    "id": "qualidade-cap2-q4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Os fatores de revisão do produto [...] dizem respeito aos atributos do software relacionados aos erros que ocorrem ao tentar fazer alterações especificadas no programa. [...] Os fatores de transição do produto [...] relacionam-se à previsão do desempenho do software quando ele é movido de uma configuração de hardware e/ou ambiente de sistema para outro.” (tradução nossa)",
+        "fonte": "MCCALL, J. A.; RICHARDS, P. K.; WALTERS, G. F. Factors in Software Quality. Rome Air Development Center, US Air Force, 1977."
+      },
+      {
+        "t": "p",
+        "texto": "Uma equipe de TI avalia um sistema legado de folha de pagamento, em operação contínua há 15 anos. O sistema processa a folha mensal de 3.000 funcionários sem falhas de cálculo há mais de dois anos consecutivos — os usuários do RH o consideram extremamente confiável no uso diário. Por outro lado, a própria equipe de desenvolvimento afirma que qualquer alteração simples, como adicionar um novo tipo de benefício, leva em média três semanas e exige testar manualmente todo o sistema, porque o código não possui nenhuma modularização e qualquer mudança tem efeitos colaterais imprevisíveis em partes aparentemente não relacionadas."
+      }
+    ],
+    "enunciado": "Considerando o modelo de McCall (1977) apresentado no texto motivador, assinale a alternativa que classifica corretamente os dois aspectos descritos no caso:",
+    "alternativas": [
+      "Ambos os aspectos — a confiabilidade no uso diário e a dificuldade de alteração — pertencem à mesma categoria: fatores de operação do produto, pois ambos afetam o usuário final",
+      "A confiabilidade no uso diário é fator de operação do produto; a dificuldade de alteração é fator de revisão do produto",
+      "A confiabilidade é fator de transição; a alteração, de operação",
+      "Ambos os aspectos pertencem a fatores de transição do produto, já que envolvem a evolução do sistema ao longo de 15 anos de uso",
+      "A dificuldade de alteração é, na verdade, um indicador de baixa confiabilidade, e não uma categoria separada no modelo de McCall"
+    ],
+    "correta": 1,
+    "resolucao": "o modelo de McCall separa claramente: fatores de operação avaliam o quão bem o software funciona no uso corrente (a confiabilidade observada pelo RH); fatores de revisão avaliam o esforço e o risco de modificá-lo (exatamente o problema relatado pela equipe de desenvolvimento). {{C}} inverte as categorias. {{D}} confunde revisão com transição (que trata de mudança de ambiente/plataforma, não de alteração funcional). {{E}} tenta fundir as duas categorias, ignorando que um sistema pode ser simultaneamente confiável em operação e péssimo em manutenibilidade — exatamente o ponto central do caso."
+  },
+  {
+    "id": "qualidade-cap2-q5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Os fatores de revisão do produto [...] dizem respeito aos atributos do software relacionados aos erros que ocorrem ao tentar fazer alterações especificadas no programa. [...] Os fatores de transição do produto [...] relacionam-se à previsão do desempenho do software quando ele é movido de uma configuração de hardware e/ou ambiente de sistema para outro.” (tradução nossa)",
+        "fonte": "MCCALL, J. A.; RICHARDS, P. K.; WALTERS, G. F. Factors in Software Quality. Rome Air Development Center, US Air Force, 1977."
+      },
+      {
+        "t": "p",
+        "texto": "Uma equipe de TI avalia um sistema legado de folha de pagamento, em operação contínua há 15 anos. O sistema processa a folha mensal de 3.000 funcionários sem falhas de cálculo há mais de dois anos consecutivos — os usuários do RH o consideram extremamente confiável no uso diário. Por outro lado, a própria equipe de desenvolvimento afirma que qualquer alteração simples, como adicionar um novo tipo de benefício, leva em média três semanas e exige testar manualmente todo o sistema, porque o código não possui nenhuma modularização e qualquer mudança tem efeitos colaterais imprevisíveis em partes aparentemente não relacionadas."
+      },
+      {
+        "t": "p",
+        "texto": "A diretoria da empresa avalia migrar o sistema de folha de pagamento do servidor local atual para um provedor de nuvem, citando redução de custos de infraestrutura. A equipe técnica alerta que o sistema foi escrito há 15 anos com dependências diretas de bibliotecas específicas do sistema operacional do servidor atual, e que essa migração provavelmente exigirá meses de adaptação antes de funcionar corretamente no novo ambiente."
+      }
+    ],
+    "enunciado": "Essa preocupação da equipe técnica está associada a qual grupo de fatores do modelo de McCall (1977)?",
+    "alternativas": [
+      "Fatores de operação do produto, pois a nuvem é apenas um novo tipo de operação do sistema",
+      "Fatores de revisão do produto, pois qualquer migração é, por definição, uma forma de manutenção do sistema",
+      "Fatores de transição do produto, que tratam do desempenho do software ao ser movido para outro ambiente",
+      "Nenhum dos três grupos se aplica, pois migração de infraestrutura é uma decisão de negócio, não um fator de qualidade de software, e deve ser avaliada só pela área financeira",
+      "Fatores de operação e revisão simultaneamente, pois a migração afeta tanto o uso quanto a manutenção do sistema"
+    ],
+    "correta": 2,
+    "resolucao": "o próprio texto motivador define fatores de transição exatamente como a previsão de desempenho do software ao mudar de ambiente de hardware ou sistema, que é precisamente o risco identificado pela equipe técnica ao migrar para a nuvem. {{B}} tenta encaixar o cenário em revisão (modificação de código), mas o problema descrito é de portabilidade entre ambientes, não de alterar uma funcionalidade. {{D}} ignora que decisões de negócio frequentemente escondem riscos técnicos de qualidade, que é exatamente o papel da equipe técnica apontar. {{E}} dilui a resposta ao tentar combinar duas categorias que o modelo trata como distintas."
+  },
+  {
+    "id": "qualidade-cap1-q6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O custo da qualidade tem dois grandes componentes: o custo de alcançá-la, e o custo de não alcançá-la — o preço da não conformidade. [...] Minha experiência mostra que o custo da qualidade [em uma empresa típica] gira entre 20 e 25 por cento das vendas — dinheiro gasto fazendo as coisas erradas.” (tradução nossa)",
+        "fonte": "CROSBY, Philip B. Quality Is Free: The Art of Making Quality Certain. New York: McGraw-Hill, 1979."
+      },
+      {
+        "t": "p",
+        "texto": "A empresa LogiTrack, desenvolvedora de um sistema de rastreamento de frotas, registrou os seguintes gastos relacionados a qualidade no último trimestre: R$ 18.000 em treinamento da equipe e revisão de código (atividades para evitar defeitos); R$ 12.000 em testes de QA e auditorias de código (medir se o produto tem qualidade); R$ 90.000 em retrabalho e depuração de bugs encontrados antes do lançamento; e R$ 640.000 em suporte emergencial, indenizações contratuais e perda de dois clientes corporativos, após uma falha de geolocalização ter sido percebida apenas pelos próprios clientes em produção."
+      }
+    ],
+    "enunciado": "Considerando as quatro categorias do Custo da Qualidade e os valores apresentados, assinale a alternativa correta:",
+    "alternativas": [
+      "Os R$ 640.000 representam Falha Interna, pois o defeito já existia no sistema antes de ser percebido pelo cliente",
+      "Os R$ 90.000 representam Falha Externa, pois qualquer retrabalho decorre de uma falha já ocorrida no processo de desenvolvimento, mesmo que o cliente não a tenha percebido",
+      "Os R$ 640.000 são Falha Externa, a categoria mais cara — cerca de 35 vezes os R$ 18.000 investidos em Prevenção",
+      "Os R$ 12.000 representam Prevenção, pois testes de QA evitam que defeitos cheguem a existir no código",
+      "Não é possível classificar os valores em categorias de Custo da Qualidade sem saber o faturamento total da LogiTrack no trimestre"
+    ],
+    "correta": 2,
+    "resolucao": "os R$ 640.000 (suporte emergencial, indenizações, perda de clientes) foram gerados por um defeito percebido pelo cliente em produção, a definição exata de Falha Externa; e a proporção com os R$ 18.000 de Prevenção é de fato compatível, em ordem de grandeza, com a regra geral apresentada no capítulo. {{A}} confunde Falha Interna com Externa — o critério que separa as duas categorias é justamente quem percebe o defeito primeiro, e neste caso foi o cliente. {{B}} comete o mesmo erro na direção oposta: retrabalho antes do lançamento é Falha Interna, não Externa. {{D}} erra a categoria: testes de QA medem qualidade (Avaliação), não evitam que o defeito exista em primeiro lugar (isso é Prevenção, categoria dos R$ 18.000). {{E}} é um distrator que introduz uma exigência (faturamento total) desnecessária para a classificação pedida, que depende apenas da natureza de cada gasto."
+  },
+  {
+    "id": "qualidade-cap1-q7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O custo da qualidade tem dois grandes componentes: o custo de alcançá-la, e o custo de não alcançá-la — o preço da não conformidade. [...] Minha experiência mostra que o custo da qualidade [em uma empresa típica] gira entre 20 e 25 por cento das vendas — dinheiro gasto fazendo as coisas erradas.” (tradução nossa)",
+        "fonte": "CROSBY, Philip B. Quality Is Free: The Art of Making Quality Certain. New York: McGraw-Hill, 1979."
+      },
+      {
+        "t": "p",
+        "texto": "A empresa LogiTrack, desenvolvedora de um sistema de rastreamento de frotas, registrou os seguintes gastos relacionados a qualidade no último trimestre: R$ 18.000 em treinamento da equipe e revisão de código (atividades para evitar defeitos); R$ 12.000 em testes de QA e auditorias de código (medir se o produto tem qualidade); R$ 90.000 em retrabalho e depuração de bugs encontrados antes do lançamento; e R$ 640.000 em suporte emergencial, indenizações contratuais e perda de dois clientes corporativos, após uma falha de geolocalização ter sido percebida apenas pelos próprios clientes em produção."
+      },
+      {
+        "t": "p",
+        "texto": "Após o incidente, a diretoria da LogiTrack propõe dobrar o orçamento de Avaliação (de R$ 12.000 para R$ 24.000 por trimestre, contratando mais auditorias de QA), mas rejeita a proposta da equipe técnica de também dobrar o orçamento de Prevenção, alegando que “avaliação já resolve o problema, porque encontra os defeitos antes do lançamento”."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que apresenta a avaliação tecnicamente mais adequada dessa decisão da diretoria:",
+    "alternativas": [
+      "A decisão está correta, pois Avaliação e Prevenção são categorias equivalentes, e investir em uma automaticamente substitui a necessidade da outra no orçamento de qualidade",
+      "A decisão é incompleta: mais Avaliação detecta defeitos existentes, mas só a Prevenção reduz a entrada de novos defeitos",
+      "A decisão está correta, pois investir simultaneamente em Prevenção e Avaliação seria redundante e desperdiçaria recursos da empresa",
+      "A decisão está errada porque deveria priorizar exclusivamente Falha Externa, já que foi essa categoria que gerou o maior custo no trimestre",
+      "É impossível avaliar a decisão sem primeiro eliminar completamente os custos de Falha Interna e Externa"
+    ],
+    "correta": 1,
+    "resolucao": "Avaliação (testes, auditorias) e Prevenção (treinamento, revisão de código) atuam em momentos diferentes: a primeira encontra defeitos que já existem; a segunda reduz a chance de o defeito ser introduzido. Aumentar só a Avaliação melhora a taxa de detecção, mas não ataca a causa dos defeitos. {{A}} e {{C}} tratam as duas categorias como intercambiáveis, contrariando a distinção central do capítulo. {{D}} é logicamente impossível: não se investe diretamente ‘em’ Falha Externa, que é uma consequência a ser evitada, não uma categoria de investimento. {{E}} propõe uma condição irreal — o objetivo do COQ é justamente reduzir, não eliminar por completo, os custos de falha."
+  },
+  {
+    "id": "qualidade-cap1-q8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um erro de software que permitiu que os acidentes ocorressem foi rastreado a um sutil problema de temporização [uma condição de corrida] no software, que permitia ao operador contornar as travas de segurança da máquina. [...] O software do Therac-25 só permitia que a máquina entrasse nesse estado perigoso se um operador experiente fizesse entradas específicas e rápidas no teclado, possíveis apenas quando o operador trabalhava com rapidez.” (tradução nossa)",
+        "fonte": "LEVESON, Nancy G.; TURNER, Clark S. An Investigation of the Therac-25 Accidents. IEEE Computer, v. 26, n. 7, p. 18-41, jul. 1993."
+      },
+      {
+        "t": "p",
+        "texto": "O caso do Therac-25, uma máquina de radioterapia fabricada nos anos 1980, é referência obrigatória em qualidade de software para sistemas críticos: o defeito só se manifestava quando um operador experiente digitava comandos de forma muito rápida — uma condição rara, que passou despercebida durante os testes convencionais do fabricante, e que resultou em pelo menos seis casos de superdosagem de radiação, alguns fatais."
+      }
+    ],
+    "enunciado": "Considerando o texto de Leveson e Turner (1993) e o modelo ISO/IEC 25010, assinale a alternativa que identifica corretamente a característica de qualidade mais diretamente comprometida pelo defeito do Therac-25, e por que testes convencionais não a capturaram:",
+    "alternativas": [
+      "Usabilidade, pois o problema ocorreu porque os operadores não foram suficientemente treinados para usar a máquina com lentidão",
+      "Confiabilidade, pois o sistema falhou sob uma condição de uso específica (digitação rápida) que os testes não reproduziram",
+      "Portabilidade, pois o defeito só ocorria em determinadas configurações de hardware do equipamento",
+      "Eficiência de Desempenho, pois o problema estava relacionado exclusivamente à velocidade de processamento do sistema diante da digitação rápida dos operadores da máquina",
+      "Compatibilidade, pois o defeito surgia da interação entre o software e o teclado usado pelo operador"
+    ],
+    "correta": 1,
+    "resolucao": "o defeito é um caso clássico de falha de Confiabilidade sob uma condição de uso não coberta pelos testes: a máquina funcionava corretamente na grande maioria dos cenários, mas falhava sob uma sequência específica de eventos (digitação rápida), caracterizando uma condição de corrida não testada. {{A}} confunde causa técnica (bug de sincronização) com treinamento do usuário — o problema era do software, não do operador. {{C}} e {{E}} distorcem o cenário: não há relação com portabilidade de hardware nem com compatibilidade de dispositivos, mas com uma condição de tempo (timing) interna ao próprio software. {{D}} erra ao reduzir o problema a velocidade de processamento, quando o texto descreve uma falha de sincronização entre eventos (race condition), não de performance."
+  },
+  {
+    "id": "qualidade-cap1-q9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um erro de software que permitiu que os acidentes ocorressem foi rastreado a um sutil problema de temporização [uma condição de corrida] no software, que permitia ao operador contornar as travas de segurança da máquina. [...] O software do Therac-25 só permitia que a máquina entrasse nesse estado perigoso se um operador experiente fizesse entradas específicas e rápidas no teclado, possíveis apenas quando o operador trabalhava com rapidez.” (tradução nossa)",
+        "fonte": "LEVESON, Nancy G.; TURNER, Clark S. An Investigation of the Therac-25 Accidents. IEEE Computer, v. 26, n. 7, p. 18-41, jul. 1993."
+      },
+      {
+        "t": "p",
+        "texto": "O caso do Therac-25, uma máquina de radioterapia fabricada nos anos 1980, é referência obrigatória em qualidade de software para sistemas críticos: o defeito só se manifestava quando um operador experiente digitava comandos de forma muito rápida — uma condição rara, que passou despercebida durante os testes convencionais do fabricante, e que resultou em pelo menos seis casos de superdosagem de radiação, alguns fatais."
+      },
+      {
+        "t": "p",
+        "texto": "Investigações posteriores ao caso revelaram que o fabricante confiava fortemente em travas de segurança (“safety interlocks”) implementadas em hardware nos modelos anteriores (Therac-6 e Therac-20), e que, ao migrar essas travas para serem controladas por software no Therac-25, removeu parte da redundância física de segurança presente nos modelos anteriores, sem compensar essa remoção com testes adicionais equivalentes."
+      }
+    ],
+    "enunciado": "Considerando as quatro categorias do Custo da Qualidade, assinale a alternativa que classifica corretamente o custo humano e financeiro resultante dos acidentes do Therac-25:",
+    "alternativas": [
+      "Falha Interna, pois o defeito já existia no software antes de qualquer paciente ser tratado pela máquina",
+      "Avaliação, pois os acidentes ocorreram justamente durante o processo de avaliação de qualidade do equipamento",
+      "Falha Externa, a mais grave, pois o defeito só apareceu com o produto em uso real, causando dano a pacientes",
+      "Prevenção, pois a remoção das travas de segurança em hardware foi uma tentativa (frustrada) de reduzir custos preventivos",
+      "Nenhuma das quatro categorias se aplica a acidentes que envolvem risco à vida humana, que estariam fora do escopo do modelo de Custo da Qualidade e seriam tratados só na esfera judicial"
+    ],
+    "correta": 2,
+    "resolucao": "por definição, Falha Externa é o defeito percebido pelo cliente (ou, neste caso extremo, pelo paciente) já em uso real — exatamente o que ocorreu. O caso Therac-25 é o exemplo mais grave possível dessa categoria, ilustrando por que a literatura de qualidade trata prevenção como investimento, não como custo. {{A}} erra a categoria (o defeito existir antes não é o critério — o critério é quem o percebeu primeiro). {{B}} e {{D}} distorcem as definições: avaliação e prevenção são categorias de investimento antes do defeito se manifestar, não descrições do próprio acidente. {{E}} é falso: o modelo de Custo da Qualidade se aplica a qualquer tipo de falha, e o Therac-25 é, na literatura de engenharia de software, citado exatamente como o exemplo-limite de Falha Externa."
+  },
+  {
+    "id": "qualidade-cap1-q10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A exceção interna de software do SRI foi causada durante a execução de uma conversão de dados de um valor de ponto flutuante de 64 bits para um valor inteiro de 16 bits com sinal. O número de ponto flutuante convertido tinha um valor maior do que o que poderia ser representado por um inteiro de 16 bits com sinal. [...] Esse software é usado antes da decolagem para um propósito diferente [...] e não era necessário para o Ariane 5, mas decidiu-se mantê-lo por razões de uniformidade.” (tradução nossa)",
+        "fonte": "LIONS, J. L. (Presidente). Ariane 5 — Flight 501 Failure: Report by the Inquiry Board. Paris: CNES/ESA, 19 jul. 1996."
+      },
+      {
+        "t": "p",
+        "texto": "O relatório oficial da investigação do acidente do foguete Ariane 5, ocorrido 37 segundos após o lançamento em 1996, aponta que o módulo de referência inercial (SRI) reaproveitou, sem qualquer nova validação, um trecho de código já usado com sucesso no foguete anterior, Ariane 4 — mesmo esse trecho não sendo estritamente necessário para a nova missão. O erro de conversão numérica, presente havia anos no código herdado, nunca havia causado problema no Ariane 4, cuja trajetória de voo gerava valores de velocidade dentro da faixa que o código conseguia processar."
+      }
+    ],
+    "enunciado": "Considerando o relatório de Lions (1996) e a distinção entre Verificação e Validação estudada no capítulo, assinale a alternativa correta sobre a causa raiz do acidente:",
+    "alternativas": [
+      "O código do SRI nunca havia sido verificado, isto é, nunca havia sido conferido quanto à sua conformidade com a especificação técnica original do Ariane 4, nem testado em simulação",
+      "O código do SRI foi verificado (funcionava como especificado para o Ariane 4), mas não foi validado para o voo do Ariane 5",
+      "O acidente decorreu exclusivamente de uma falha de hardware do módulo de referência inercial, sem relação com o software reaproveitado",
+      "O acidente foi causado pela ausência total de testes em qualquer etapa do desenvolvimento do software do Ariane 5",
+      "A reutilização de código entre foguetes distintos é, segundo o relatório, uma prática tecnicamente correta que não teve nenhuma relação causal com o acidente"
+    ],
+    "correta": 1,
+    "resolucao": "o próprio relatório de Lions (1996) descreve um código que funcionava corretamente havia anos (bem verificado para seu contexto original), mas cuja adequação nunca foi revalidada para as condições específicas de voo do novo foguete — o resumo mais preciso da distinção entre um software conforme ao especificado (verificado) e apto ao uso no novo contexto real (validado). {{A}} está errado porque o código de fato funcionava conforme especificado no Ariane 4 havia anos, isto é, era verificado nesse contexto. {{C}} introduz uma causa (falha de hardware) não mencionada no relatório, que atribui o problema a software. {{D}} é falso: o software passou por testes, mas não nas condições reais do Ariane 5. {{E}} ignora que o próprio relatório aponta exatamente a reutilização sem revalidação como fator causal central do acidente."
+  },
+  {
+    "id": "qualidade-cap1-q11",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A exceção interna de software do SRI foi causada durante a execução de uma conversão de dados de um valor de ponto flutuante de 64 bits para um valor inteiro de 16 bits com sinal. O número de ponto flutuante convertido tinha um valor maior do que o que poderia ser representado por um inteiro de 16 bits com sinal. [...] Esse software é usado antes da decolagem para um propósito diferente [...] e não era necessário para o Ariane 5, mas decidiu-se mantê-lo por razões de uniformidade.” (tradução nossa)",
+        "fonte": "LIONS, J. L. (Presidente). Ariane 5 — Flight 501 Failure: Report by the Inquiry Board. Paris: CNES/ESA, 19 jul. 1996."
+      },
+      {
+        "t": "p",
+        "texto": "O relatório oficial da investigação do acidente do foguete Ariane 5, ocorrido 37 segundos após o lançamento em 1996, aponta que o módulo de referência inercial (SRI) reaproveitou, sem qualquer nova validação, um trecho de código já usado com sucesso no foguete anterior, Ariane 4 — mesmo esse trecho não sendo estritamente necessário para a nova missão. O erro de conversão numérica, presente havia anos no código herdado, nunca havia causado problema no Ariane 4, cuja trajetória de voo gerava valores de velocidade dentro da faixa que o código conseguia processar."
+      },
+      {
+        "t": "p",
+        "texto": "O relatório de Lions (1996) também destaca que o trecho de código com o erro de conversão sequer era necessário para a missão do Ariane 5 — ele só seria útil em uma reinicialização da plataforma inercial antes do lançamento, cenário que não se aplicava ao novo foguete — mas foi mantido “por razões de uniformidade” entre os dois programas."
+      }
+    ],
+    "enunciado": "Considerando os “Fatores que Afetam a Qualidade” apresentados no capítulo, assinale a alternativa que identifica mais precisamente o fator predominante nessa decisão de manter o código:",
+    "alternativas": [
+      "Pressão de prazo, pois manter código já pronto é sempre mais rápido do que escrever um novo módulo do zero",
+      "Falta de testes, pois a equipe simplesmente não sabia como testar aquele trecho específico de código",
+      "Débito técnico, pois manter código desnecessário \"por uniformidade\", sem revalidar, é um atalho que se acumula",
+      "Requisitos mal definidos, pois a especificação da missão do Ariane 5 não mencionava a necessidade de reinicialização da plataforma inercial nem os novos limites de velocidade do foguete",
+      "Design inadequado, pois a arquitetura de software do Ariane 5 nunca chegou a ser definida formalmente pela equipe de engenharia"
+    ],
+    "correta": 2,
+    "resolucao": "manter, sem necessidade real e sem revalidação, um código legado “por uniformidade” entre dois programas distintos é o retrato exato do débito técnico descrito no capítulo: um atalho que funciona até que o contexto que o sustentava deixa de ser válido. {{A}} tenta encaixar o cenário em pressão de prazo, mas o texto não menciona urgência como motivador da decisão, e sim conveniência de uniformidade. {{B}} é factualmente incorreto: o código foi de fato testado (no contexto do Ariane 4), o problema foi a ausência de revalidação para o novo contexto, questão distinta de ‘não saber testar’. {{D}} inverte a causa: o problema não foi um requisito mal definido da missão, mas a manutenção desnecessária de um código legado. {{E}} não é sustentado pelo relatório, que não aponta ausência de arquitetura formal como causa."
+  },
+  {
+    "id": "qualidade-cap1-q12",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Os custos nacionais anuais de uma infraestrutura inadequada para testes de software são estimados entre US$ 22,2 e US$ 59,5 bilhões. [...] Mais da metade desses custos é arcada pelos usuários de software, em atividades de prevenção e mitigação de erros. O restante é arcado pelos desenvolvedores de software [...] Os desenvolvedores de software poderiam eliminar mais da metade desses custos [...] adotando técnicas de teste aprimoradas mais cedo no ciclo de vida do software.” (tradução nossa)",
+        "fonte": "RTI International. The Economic Impacts of Inadequate Infrastructure for Software Testing. NIST Planning Report 02-3. Gaithersburg: National Institute of Standards and Technology, 2002."
+      },
+      {
+        "t": "p",
+        "texto": "Uma diretoria financeira, ao revisar o orçamento anual de TI, questiona por que a equipe de engenharia solicita mais horas dedicadas a testes automatizados “logo no início” de cada novo projeto, em vez de concentrar essas horas apenas na fase final, imediatamente antes do lançamento — argumentando que, dessa forma, “o orçamento de testes renderia mais, pois seria aplicado quando o sistema já está quase pronto e mais fácil de testar por completo”."
+      }
+    ],
+    "enunciado": "Considerando o relatório do NIST (2002) e o conceito do Custo da Qualidade apresentados no capítulo, assinale a alternativa que melhor fundamenta uma resposta técnica a essa diretoria:",
+    "alternativas": [
+      "A diretoria está correta: testar no final é sempre mais eficiente",
+      "Segundo o NIST, mais da metade dos custos de testes inadequados cairia com testes mais cedo no ciclo, o que apoia o pedido da equipe",
+      "O relatório do NIST (2002) não faz nenhuma recomendação sobre o momento ideal de testar um sistema, apenas quantifica custos totais, sem relação com o pedido da equipe de engenharia",
+      "Concentrar testes no fim do projeto é preferível porque reduz o número total de vezes que a equipe precisa interromper o desenvolvimento para corrigir problemas",
+      "A quantidade de horas dedicadas a testes é irrelevante para o orçamento total, desde que o sistema eventualmente funcione antes do lançamento"
+    ],
+    "correta": 1,
+    "resolucao": "o próprio texto motivador afirma que desenvolvedores poderiam eliminar mais da metade dos custos associados a testes inadequados adotando técnicas de teste mais cedo no ciclo de vida — exatamente o argumento técnico que sustenta o pedido da equipe de engenharia, e que se conecta diretamente à regra geral do Custo da Qualidade (prevenir é mais barato que corrigir depois). {{A}} e {{D}} repetem a intuição da diretoria, mas contrariam tanto o texto motivador quanto o princípio de custo crescente por fase, apresentado no capítulo. {{C}} é factualmente incorreto: o relatório explicitamente recomenda testes mais cedo no ciclo de vida. {{E}} ignora todo o raciocínio econômico apresentado no capítulo sobre custo da qualidade."
+  },
+  {
+    "id": "qualidade-cap3-q1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "discursiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Em uma organização com processos imaturos, o desempenho dos processos de software é amplamente determinado pelas habilidades de indivíduos específicos, e varia conforme as competências natas de quem realiza a tarefa naquele momento. [...] Em uma organização madura, existe uma capacidade organizacional de gerenciar o desenvolvimento e a manutenção de software ao longo de toda a empresa, independentemente de quais indivíduos estejam, de fato, empregados em um dado momento.” (tradução nossa)",
+        "fonte": "PAULK, M. C.; CURTIS, B.; CHRISSIS, M. B.; WEBER, C. V. Capability Maturity Model for Software, Version 1.1. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 1993."
+      },
+      {
+        "t": "p",
+        "texto": "A TechNova é uma software house que, nos últimos três anos, executou 40 projetos para três clientes recorrentes do setor de e-commerce, com atraso médio de apenas 3 dias em relação ao prazo contratado — um índice que a diretoria costuma citar como prova da “excelência” da equipe."
+      },
+      {
+        "t": "p",
+        "texto": "Em 2024, a TechNova fechou seu primeiro contrato fora do setor de e-commerce: um sistema de prontuário eletrônico para uma rede de clínicas. O projeto, orçado para 120 dias, foi entregue com 95 dias de atraso. Durante o desenvolvimento, o escopo do sistema foi alterado 22 vezes por solicitação do cliente, sem que existisse qualquer processo formal de controle de mudanças — cada alteração era simplesmente repassada verbalmente ao desenvolvedor responsável, que ajustava o código imediatamente, por vezes sem informar o restante da equipe. Ao final do projeto, três funcionalidades entregues contradiziam decisões tomadas (e não documentadas) em reuniões anteriores com o cliente."
+      },
+      {
+        "t": "p",
+        "texto": "Questionada sobre o ocorrido, a diretoria da TechNova afirmou: “Nossa equipe é uma das melhores do mercado — o problema foi exclusivamente a complexidade do domínio de saúde, que nenhuma empresa de tecnologia comum conseguiria prever”."
+      }
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) Com base na citação de Paulk et al. (1993), explique por que os 40 projetos bem-sucedidos com clientes recorrentes não são, por si só, evidência de que a TechNova opera em um nível de maturidade elevado. Relacione sua resposta à distinção entre desempenho dependente de indivíduos específicos e capacidade organizacional independente deles.",
+      "b) Considerando os 5 níveis do CMM estudados no capítulo, em qual nível a TechNova provavelmente se encontra? Justifique com base em pelo menos dois elementos concretos do caso (não apenas a conclusão).",
+      "c) Identifique qual Área de Processo do CMMI (Nível 2) está claramente ausente na condução do projeto de prontuário eletrônico, e explique de que forma sua existência poderia ter evitado a contradição entre as três funcionalidades entregues e as decisões tomadas anteriormente com o cliente.",
+      "d) Avalie criticamente a afirmação da diretoria de que “o problema foi exclusivamente a complexidade do domínio de saúde”. Sua avaliação deve se posicionar explicitamente sobre se a causa raiz relatada no caso é, de fato, a complexidade do domínio, ou outra questão — e por quê."
+    ],
+    "linhas": 12
+  },
+  {
+    "id": "qualidade-cap3-q2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“No nível 2 (Repetível), políticas básicas de gerenciamento de projeto são estabelecidas para acompanhar custos, cronograma e funcionalidade. [...] Os processos necessários para repetir sucessos anteriores em projetos com aplicações similares estão em vigor. [...] No nível 3 (Definido), o processo-padrão de desenvolvimento e manutenção de software da organização está documentado, [...] e esse processo é usado para ajudar os gerentes e a equipe técnica a desempenhar com mais eficácia.” (tradução nossa)",
+        "fonte": "PAULK, M. C.; CURTIS, B.; CHRISSIS, M. B.; WEBER, C. V. Capability Maturity Model for Software, Version 1.1. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 1993."
+      },
+      {
+        "t": "p",
+        "texto": "A empresa Construware desenvolve, há oito anos, softwares de gestão para construtoras. Toda vez que fecha um novo contrato com um perfil de cliente semelhante a projetos anteriores, a equipe reaproveita estimativas de prazo e custo baseadas nesses projetos passados, e consegue prever com boa precisão o cronograma. No entanto, a empresa não possui nenhum documento formal descrevendo como o processo de desenvolvimento deve ser conduzido — o conhecimento sobre “como estimar” está apenas na experiência acumulada dos dois gerentes de projeto mais antigos, e nunca foi escrito ou ensinado formalmente a novos contratados."
+      }
+    ],
+    "enunciado": "Considerando a citação de Paulk et al. (1993) e o caso da Construware, assinale a alternativa que classifica corretamente o nível de maturidade da empresa:",
+    "alternativas": [
+      "Nível 3 (Definido), pois a empresa já consegue prever prazos e custos com boa precisão em projetos semelhantes",
+      "Nível 2 (Repetível), pois repete sucessos em projetos semelhantes, mas o conhecimento depende de pessoas, sem processo-padrão",
+      "Nível 1 (Inicial), pois qualquer empresa que não documenta processos formalmente está, por definição, no nível mais baixo de maturidade, independentemente de outros fatores",
+      "Nível 4 (Gerenciado), pois a empresa já demonstra capacidade de medir e prever o desempenho de seus projetos",
+      "Nível 5 (Otimizando), pois a repetição de boas práticas em projetos semelhantes já caracteriza um processo de melhoria contínua"
+    ],
+    "correta": 1,
+    "resolucao": "o caso descreve exatamente a definição do Nível 2 citada no texto motivador: a empresa repete sucessos em projetos semelhantes, mas essa capacidade depende do conhecimento tácito de dois gerentes específicos, não de um processo-padrão documentado e ensinável — o que caracterizaria o Nível 3. {{A}} é o distrator mais forte: confunde a previsibilidade obtida por repetição empírica (Nível 2) com a existência de um processo documentado e institucionalizado (Nível 3), que o caso explicitamente afirma não existir. {{C}} ignora que o CMM reconhece graus intermediários de maturidade antes da documentação formal completa. {{D}} e {{E}} atribuem à empresa capacidades de medição quantitativa e melhoria contínua não descritas no caso."
+  },
+  {
+    "id": "qualidade-cap3-q3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“No nível 2 (Repetível), políticas básicas de gerenciamento de projeto são estabelecidas para acompanhar custos, cronograma e funcionalidade. [...] Os processos necessários para repetir sucessos anteriores em projetos com aplicações similares estão em vigor. [...] No nível 3 (Definido), o processo-padrão de desenvolvimento e manutenção de software da organização está documentado, [...] e esse processo é usado para ajudar os gerentes e a equipe técnica a desempenhar com mais eficácia.” (tradução nossa)",
+        "fonte": "PAULK, M. C.; CURTIS, B.; CHRISSIS, M. B.; WEBER, C. V. Capability Maturity Model for Software, Version 1.1. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 1993."
+      },
+      {
+        "t": "p",
+        "texto": "A empresa Construware desenvolve, há oito anos, softwares de gestão para construtoras. Toda vez que fecha um novo contrato com um perfil de cliente semelhante a projetos anteriores, a equipe reaproveita estimativas de prazo e custo baseadas nesses projetos passados, e consegue prever com boa precisão o cronograma. No entanto, a empresa não possui nenhum documento formal descrevendo como o processo de desenvolvimento deve ser conduzido — o conhecimento sobre “como estimar” está apenas na experiência acumulada dos dois gerentes de projeto mais antigos, e nunca foi escrito ou ensinado formalmente a novos contratados."
+      },
+      {
+        "t": "p",
+        "texto": "Preocupada com o fato de que todo o conhecimento de estimativa está concentrado em apenas dois gerentes de projeto — ambos próximos da aposentadoria —, a diretoria da Construware decide investir na documentação formal do processo de estimativa e planejamento, com treinamento obrigatório para todos os novos gerentes de projeto contratados."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que descreve corretamente o objetivo dessa iniciativa em termos do modelo CMM:",
+    "alternativas": [
+      "Reduzir custos operacionais, um objetivo financeiro sem relação direta com o modelo de maturidade de processos",
+      "Avançar do Nível 2 para o Nível 3, transformando conhecimento de pessoas em um processo-padrão da organização",
+      "Avançar diretamente para o Nível 5, pois qualquer documentação de processo já representa o estágio mais avançado de maturidade",
+      "Retroceder ao Nível 1, pois formalizar processos tende a reduzir a flexibilidade que caracterizava o sucesso anterior da empresa e a fazer a equipe depender de documentos",
+      "Não produzir nenhum efeito relevante sobre a maturidade da empresa, já que a capacidade de prever prazos já existia informalmente"
+    ],
+    "correta": 1,
+    "resolucao": "documentar o processo de estimativa e torná-lo ensinável a qualquer novo gerente de projeto é exatamente a transição descrita no capítulo entre o Nível 2 (conhecimento tácito, individual) e o Nível 3 (processo padronizado e institucionalizado). {{A}} ignora a motivação explícita do caso (risco de perda de conhecimento com a aposentadoria dos gerentes), tratando a iniciativa como puramente financeira. {{C}} erra ao pular etapas do modelo, que é sequencial. {{D}} inverte a lógica do CMM: formalizar processos é o que caracteriza avanço de maturidade, não retrocesso. {{E}} ignora a diferença entre previsibilidade dependente de pessoas específicas e previsibilidade institucionalizada, tema central da citação motivadora."
+  },
+  {
+    "id": "qualidade-cap3-q4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Uma área de processo é um conjunto de práticas relacionadas em uma área que, quando implementadas coletivamente, satisfazem um conjunto de metas consideradas importantes para produzir uma melhoria significativa naquela área. [...] No nível de maturidade 2, o foco está em estabelecer a disciplina de gerenciamento de projeto básica.” (tradução nossa)",
+        "fonte": "CMMI PRODUCT TEAM. CMMI for Development, Version 1.3. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 2010."
+      },
+      {
+        "t": "p",
+        "texto": "Uma equipe de auditoria de processos avalia duas empresas candidatas a um contrato público que exige maturidade CMMI mínima de Nível 2. A Empresa X possui um documento formal de escopo assinado pelo cliente em todos os projetos dos últimos dois anos, e todo projeto passa por uma revisão formal de qualidade antes da entrega — mas os requisitos de cada projeto são renegociados informalmente, por e-mail, sem nenhum controle de versão ou rastreabilidade das mudanças. A Empresa Y não possui revisão formal de qualidade, mas mantém rigoroso controle de versão de requisitos, com cada mudança formalmente aprovada e registrada antes de qualquer alteração no sistema."
+      }
+    ],
+    "enunciado": "Considerando a citação do CMMI (2010) e o caso das duas empresas, assinale a alternativa correta:",
+    "alternativas": [
+      "A Empresa X atende integralmente ao Nível 2, pois já realiza revisões formais de qualidade em todos os projetos",
+      "A Empresa Y atende integralmente ao Nível 2, pois o controle de requisitos é a única Área de Processo relevante nesse nível",
+      "Nenhuma atende sozinha ao Nível 2: a X cobre Garantia da Qualidade e a Y, Gerência de Requisitos, faltando as demais áreas",
+      "Ambas as empresas já atingem o Nível 3, pois cada uma documenta ao menos uma prática de gerenciamento formal",
+      "É impossível avaliar o nível de maturidade de qualquer empresa sem uma auditoria presencial, independentemente das práticas relatadas, pois o CMMI não aceita autodeclaração"
+    ],
+    "correta": 2,
+    "resolucao": "o Nível 2 do CMMI exige a implementação coletiva de múltiplas Áreas de Processo (entre elas, Gerência de Requisitos e Garantia da Qualidade), não apenas uma isoladamente, conforme a própria definição citada no texto motivador (‘quando implementadas coletivamente’). {{A}} e {{B}} cometem o mesmo erro: tratam uma única prática forte como suficiente para todo o nível, ignorando que a Empresa X carece de controle de requisitos e a Empresa Y carece de garantia de qualidade. {{D}} erra ao supor que qualquer prática documentada já representa o Nível 3, que exige um processo organizacional padronizado, não apenas práticas pontuais. {{E}} é um exagero: o caso fornece informações suficientes para uma avaliação comparativa, mesmo que uma certificação formal exigisse etapas adicionais."
+  },
+  {
+    "id": "qualidade-cap3-q5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Uma área de processo é um conjunto de práticas relacionadas em uma área que, quando implementadas coletivamente, satisfazem um conjunto de metas consideradas importantes para produzir uma melhoria significativa naquela área. [...] No nível de maturidade 2, o foco está em estabelecer a disciplina de gerenciamento de projeto básica.” (tradução nossa)",
+        "fonte": "CMMI PRODUCT TEAM. CMMI for Development, Version 1.3. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 2010."
+      },
+      {
+        "t": "p",
+        "texto": "Uma equipe de auditoria de processos avalia duas empresas candidatas a um contrato público que exige maturidade CMMI mínima de Nível 2. A Empresa X possui um documento formal de escopo assinado pelo cliente em todos os projetos dos últimos dois anos, e todo projeto passa por uma revisão formal de qualidade antes da entrega — mas os requisitos de cada projeto são renegociados informalmente, por e-mail, sem nenhum controle de versão ou rastreabilidade das mudanças. A Empresa Y não possui revisão formal de qualidade, mas mantém rigoroso controle de versão de requisitos, com cada mudança formalmente aprovada e registrada antes de qualquer alteração no sistema."
+      },
+      {
+        "t": "p",
+        "texto": "Diante do resultado da auditoria, a Empresa X decide implementar imediatamente um sistema de controle de versão de requisitos, com aprovação formal obrigatória para qualquer mudança de escopo — replicando a prática já madura da Empresa Y, mantendo também sua própria revisão formal de qualidade já existente."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que descreve corretamente o efeito dessa decisão sobre a maturidade da Empresa X, segundo o CMMI:",
+    "alternativas": [
+      "Nenhum efeito, pois Áreas de Processo diferentes não se combinam para elevar o nível de maturidade de uma organização",
+      "A empresa passa a cobrir mais Áreas de Processo do Nível 2, aproximando-se de atender integralmente a esse nível",
+      "A empresa salta automaticamente para o Nível 4, pois passou a medir formalmente dois aspectos diferentes do projeto",
+      "A empresa retrocede de maturidade, pois adicionar processos novos sempre aumenta o risco de erro humano na sua execução e a burocracia das equipes de desenvolvimento",
+      "O efeito depende exclusivamente do tamanho da equipe da Empresa X, informação que não foi fornecida no caso"
+    ],
+    "correta": 1,
+    "resolucao": "como o Nível 2 do CMMI exige a cobertura coletiva de várias Áreas de Processo, adicionar Gerência de Requisitos à Garantia da Qualidade já existente aproxima a Empresa X de atender ao nível completo, exatamente o raciocínio inverso do problema identificado na Questão 4. {{A}} contraria a própria lógica cumulativa do modelo. {{C}} erra ao pular diretamente ao Nível 4, que exige gerenciamento quantitativo, não apenas a soma de duas práticas do Nível 2. {{D}} inverte o princípio central do CMMI, em que mais processo formal (bem aplicado) indica maior maturidade, não menor. {{E}} introduz uma variável (tamanho da equipe) irrelevante para a lógica de Áreas de Processo descrita no texto motivador."
+  },
+  {
+    "id": "qualidade-cap3-q6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A representação contínua permite que uma organização selecione a ordem de melhoria que melhor atenda aos seus objetivos de negócio e que mitigue as áreas de maior risco da organização. [...] A representação por estágios oferece uma sequência predefinida e comprovada de melhorias, cada nível de maturidade servindo como base para o próximo.” (tradução nossa)",
+        "fonte": "CMMI PRODUCT TEAM. CMMI for Development, Version 1.3. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 2010."
+      },
+      {
+        "t": "p",
+        "texto": "A DataSeg, empresa de software para o setor financeiro, identificou que sua maior fragilidade concentra-se especificamente em Gerência de Riscos área crítica dado o histórico recente de auditorias externas rigorosas no setor enquanto as demais práticas de gestão de projeto já operam em um patamar satisfatório. A diretoria deseja investir pesadamente e rapidamente apenas nessa área específica, sem necessariamente elevar de forma uniforme todas as demais Áreas de Processo da organização ao mesmo tempo."
+      }
+    ],
+    "enunciado": "Considerando o texto do CMMI (2010), assinale a alternativa que indica a representação mais adequada à necessidade da DataSeg, e por quê:",
+    "alternativas": [
+      "Representação por estágios, pois é a única reconhecida oficialmente pelo CMMI em avaliações de certificação",
+      "Representação contínua, pois permite escolher a ordem de melhoria e atacar primeiro as áreas de maior risco",
+      "Representação por estágios, pois garante que a Gerência de Riscos seja sempre a primeira Área de Processo a ser desenvolvida em qualquer organização que busque certificação",
+      "Nenhuma das duas representações permite priorizar uma Área de Processo específica isoladamente",
+      "Representação contínua, pois é a única forma de uma organização atingir o Nível 5 de maturidade"
+    ],
+    "correta": 1,
+    "resolucao": "o próprio texto motivador define a representação contínua como aquela que permite priorizar áreas específicas de maior risco, exatamente a necessidade da DataSeg. {{A}} é factualmente incorreto: ambas as representações são formalmente reconhecidas pelo CMMI. {{C}} inventa uma regra inexistente sobre ordem obrigatória de Áreas de Processo. {{D}} contraria diretamente a definição do texto motivador. {{E}} é falso: o Nível 5 pode ser alcançado por qualquer uma das duas representações, dependendo de como a organização estrutura sua jornada de melhoria."
+  },
+  {
+    "id": "qualidade-cap3-q7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“A representação contínua permite que uma organização selecione a ordem de melhoria que melhor atenda aos seus objetivos de negócio e que mitigue as áreas de maior risco da organização. [...] A representação por estágios oferece uma sequência predefinida e comprovada de melhorias, cada nível de maturidade servindo como base para o próximo.” (tradução nossa)",
+        "fonte": "CMMI PRODUCT TEAM. CMMI for Development, Version 1.3. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 2010."
+      },
+      {
+        "t": "p",
+        "texto": "A DataSeg, empresa de software para o setor financeiro, identificou que sua maior fragilidade concentra-se especificamente em Gerência de Riscos área crítica dado o histórico recente de auditorias externas rigorosas no setor enquanto as demais práticas de gestão de projeto já operam em um patamar satisfatório. A diretoria deseja investir pesadamente e rapidamente apenas nessa área específica, sem necessariamente elevar de forma uniforme todas as demais Áreas de Processo da organização ao mesmo tempo."
+      },
+      {
+        "t": "p",
+        "texto": "Um ano depois, a DataSeg concorre a um contrato governamental que exige, como critério eliminatório de participação na licitação, a comprovação de “Nível de Maturidade 3” da empresa como um todo — sem especificar Áreas de Processo isoladas."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que avalia corretamente essa nova exigência à luz das duas representações do CMMI:",
+    "alternativas": [
+      "A exigência usa termos da representação por estágios, que dá à organização um nível único e global, ao contrário da contínua",
+      "A exigência é redigida em termos da representação contínua, pois qualquer “nível” mencionado em uma licitação refere-se sempre a essa representação",
+      "A exigência é tecnicamente impossível de ser cumprida por qualquer empresa, pois o CMMI não define níveis organizacionais únicos em nenhuma das duas representações existentes",
+      "As duas representações são equivalentes para fins de licitação",
+      "A exigência só poderia ser atendida pela DataSeg se a empresa nunca tivesse utilizado a representação contínua em nenhum momento de sua história"
+    ],
+    "correta": 0,
+    "resolucao": "“Nível de Maturidade” como classificação única e global da organização é justamente a lógica da representação por estágios, apresentada no texto motivador como uma sequência predefinida em que cada nível se aplica à organização como um todo — diferente da representação contínua, que descreve níveis de capacidade por Área de Processo, não um nível organizacional único. {{B}} inverte as definições. {{C}} nega, sem fundamento, que o CMMI defina níveis organizacionais — o que a representação por estágios faz exatamente. {{D}} ignora a diferença estrutural entre as duas abordagens, central ao texto motivador. {{E}} introduz uma condição sem qualquer relação com a definição técnica das representações."
+  },
+  {
+    "id": "qualidade-cap3-q8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O MPS.BR é um programa mobilizador de longo prazo, criado em 2003, coordenado pela Associação para Promoção da Excelência do Software Brasileiro (SOFTEX), cujo propósito é definir e aprimorar um modelo de melhoria de processo de software adequado ao contexto das empresas brasileiras, em especial as micro, pequenas e médias empresas, buscando estabelecer um caminho economicamente viável para que essas empresas alcancem os benefícios da melhoria de processos.”",
+        "fonte": "SOFTEX. MPS.BR — Guia Geral MPS de Software. Campinas: Associação para Promoção da Excelência do Software Brasileiro, 2016."
+      },
+      {
+        "t": "p",
+        "texto": "A ViaCode, desenvolvedora de software com 12 funcionários em uma cidade do interior, avalia buscar certificação de maturidade para participar de licitações públicas municipais. Uma consultoria apresentou dois orçamentos: certificação CMMI Nível 3, por R$ 180.000, com prazo estimado de 18 meses; ou certificação MPS.BR Nível F, por R$ 35.000, com prazo estimado de 8 meses — este último, segundo a consultoria, plenamente suficiente para os requisitos técnicos das licitações municipais que a ViaCode pretende disputar."
+      }
+    ],
+    "enunciado": "Considerando a citação do Guia Geral MPS de Software (SOFTEX, 2016) e o caso da ViaCode, assinale a alternativa correta:",
+    "alternativas": [
+      "A recomendação da consultoria pela certificação MPS.BR é incompatível com o propósito do modelo, que se destina exclusivamente a grandes corporações multinacionais",
+      "A recomendação é coerente com o MPS.BR, que busca uma melhoria de processo viável para micro, pequenas e médias empresas",
+      "As duas opções de certificação são tecnicamente idênticas, e a diferença de preço decorre apenas de uma estratégia comercial da consultoria",
+      "A ViaCode deveria obrigatoriamente buscar a certificação CMMI, pois é a única reconhecida internacionalmente em processos de licitação pública no Brasil, inclusive municipais",
+      "O MPS.BR não é aplicável a licitações públicas municipais, sendo restrito a contratos com o governo federal"
+    ],
+    "correta": 1,
+    "resolucao": "o próprio texto motivador define o propósito do MPS.BR como oferecer um caminho de melhoria de processo economicamente viável para micro, pequenas e médias empresas — perfil exato da ViaCode, com 12 funcionários. {{A}} inverte o público-alvo real do modelo. {{C}} ignora diferenças estruturais reais entre os dois modelos (número de níveis, custo de certificação, foco). {{D}} afirma uma exclusividade que não existe: licitações municipais frequentemente aceitam o MPS.BR como certificação válida. {{E}} é uma restrição fabricada, sem qualquer base no texto motivador ou no conteúdo do capítulo."
+  },
+  {
+    "id": "qualidade-cap3-q9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O MPS.BR é um programa mobilizador de longo prazo, criado em 2003, coordenado pela Associação para Promoção da Excelência do Software Brasileiro (SOFTEX), cujo propósito é definir e aprimorar um modelo de melhoria de processo de software adequado ao contexto das empresas brasileiras, em especial as micro, pequenas e médias empresas, buscando estabelecer um caminho economicamente viável para que essas empresas alcancem os benefícios da melhoria de processos.”",
+        "fonte": "SOFTEX. MPS.BR — Guia Geral MPS de Software. Campinas: Associação para Promoção da Excelência do Software Brasileiro, 2016."
+      },
+      {
+        "t": "p",
+        "texto": "A ViaCode, desenvolvedora de software com 12 funcionários em uma cidade do interior, avalia buscar certificação de maturidade para participar de licitações públicas municipais. Uma consultoria apresentou dois orçamentos: certificação CMMI Nível 3, por R$ 180.000, com prazo estimado de 18 meses; ou certificação MPS.BR Nível F, por R$ 35.000, com prazo estimado de 8 meses — este último, segundo a consultoria, plenamente suficiente para os requisitos técnicos das licitações municipais que a ViaCode pretende disputar."
+      },
+      {
+        "t": "p",
+        "texto": "Um sócio da ViaCode, com experiência anterior em uma multinacional certificada CMMI, questiona por que o MPS.BR possui sete níveis (de G a A) em vez dos cinco níveis do CMMI, sugerindo que essa diferença tornaria o modelo brasileiro “menos rigoroso”."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que apresenta a resposta tecnicamente mais adequada a essa dúvida:",
+    "alternativas": [
+      "O sócio está correto: quanto maior o número de níveis, menos rigoroso é o modelo de maturidade, pois cada nível individual exige menos progresso da empresa avaliada",
+      "Os sete níveis não indicam menos rigor, e sim uma progressão mais gradual, adequada a empresas pequenas",
+      "O número de níveis é irrelevante, pois MPS.BR e CMMI avaliam exatamente os mesmos critérios técnicos, apenas com nomenclaturas diferentes",
+      "O MPS.BR é de fato menos rigoroso, por falha de concepção",
+      "Os sete níveis existem exclusivamente por motivos de tradução linguística entre as letras do alfabeto e os números do CMMI"
+    ],
+    "correta": 1,
+    "resolucao": "a maior granularidade do MPS.BR (7 níveis) é uma escolha deliberada de design para permitir avanços intermediários mais acessíveis a empresas menores, sem que isso implique redução de rigor técnico em cada nível — é uma diferença de escala de progressão, não de exigência. {{A}} confunde quantidade de degraus com facilidade de cada degrau individual, um raciocínio logicamente falho. {{C}} ignora diferenças reais de estrutura e progressão entre os dois modelos. {{D}} aceita a premissa (menor rigor) sem justificativa, quando na verdade a diferença tem propósito técnico documentado. {{E}} é uma explicação sem qualquer fundamento técnico ou histórico real."
+  },
+  {
+    "id": "qualidade-cap3-q10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O modelo CMMI V2.0 foi desenvolvido para ser mais fácil de usar e mais diretamente aplicável às necessidades de negócio das organizações, integrando-se a práticas ágeis já adotadas amplamente pela indústria de software. [...] O modelo é organizado em constelações que endereçam diferentes áreas de aplicação: desenvolvimento de produtos e serviços (CMMI-DEV), gestão de serviços (CMMI-SVC) e gestão de fornecedores e aquisição (CMMI-ACQ).” (tradução nossa)",
+        "fonte": "ISACA. CMMI V2.0 Model. Schaumburg: ISACA, 2018."
+      },
+      {
+        "t": "p",
+        "texto": "A SupportPro, empresa que presta serviços de suporte técnico terceirizado (help desk) para outras empresas de tecnologia, deseja obter certificação CMMI para se diferenciar de concorrentes em processos de licitação corporativa. A empresa não desenvolve software próprio — sua atividade principal é operar centrais de atendimento e resolver chamados técnicos de terceiros, seguindo acordos de nível de serviço (SLA) rigorosos."
+      }
+    ],
+    "enunciado": "Considerando o texto motivador sobre o CMMI V2.0 e a natureza da atividade da SupportPro, assinale a alternativa correta:",
+    "alternativas": [
+      "A SupportPro deveria buscar certificação na constelação CMMI-DEV, pois é a única reconhecida pelo mercado, independentemente do tipo de atividade da empresa",
+      "Buscar a constelação CMMI-SVC, voltada à gestão de serviços, mais alinhada a uma central de atendimento com SLA",
+      "A SupportPro não pode buscar nenhuma certificação CMMI, pois o modelo se aplica exclusivamente a empresas que desenvolvem software próprio",
+      "As três constelações do CMMI avaliam exatamente os mesmos critérios, e a escolha entre elas não produz nenhuma diferença prática",
+      "Buscar a constelação CMMI-ACQ, pois presta serviços a terceiros"
+    ],
+    "correta": 1,
+    "resolucao": "a constelação CMMI-SVC foi criada exatamente para organizações cuja atividade principal é a prestação de serviços (como help desk sob SLA), diferente da constelação CMMI-DEV, focada em desenvolvimento de produtos e sistemas. {{A}} ignora a existência das constelações, tratando o CMMI como um modelo único e genérico. {{C}} é factualmente incorreto: o texto motivador explicitamente descreve constelações para diferentes áreas de aplicação, incluindo serviços. {{D}} contraria o propósito declarado de existirem constelações distintas. {{E}} confunde CMMI-ACQ (voltada à gestão de fornecedores e processos de aquisição por parte de quem contrata) com a atividade da SupportPro, que é prestadora de serviço, não compradora."
+  },
+  {
+    "id": "qualidade-cap3-q11",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O modelo CMMI V2.0 foi desenvolvido para ser mais fácil de usar e mais diretamente aplicável às necessidades de negócio das organizações, integrando-se a práticas ágeis já adotadas amplamente pela indústria de software. [...] O modelo é organizado em constelações que endereçam diferentes áreas de aplicação: desenvolvimento de produtos e serviços (CMMI-DEV), gestão de serviços (CMMI-SVC) e gestão de fornecedores e aquisição (CMMI-ACQ).” (tradução nossa)",
+        "fonte": "ISACA. CMMI V2.0 Model. Schaumburg: ISACA, 2018."
+      },
+      {
+        "t": "p",
+        "texto": "A SupportPro, empresa que presta serviços de suporte técnico terceirizado (help desk) para outras empresas de tecnologia, deseja obter certificação CMMI para se diferenciar de concorrentes em processos de licitação corporativa. A empresa não desenvolve software próprio — sua atividade principal é operar centrais de atendimento e resolver chamados técnicos de terceiros, seguindo acordos de nível de serviço (SLA) rigorosos."
+      },
+      {
+        "t": "p",
+        "texto": "Ao pesquisar sobre o histórico do modelo, um diretor da SupportPro encontra referências tanto ao “CMMI Institute” quanto à “ISACA” como organizações responsáveis pelo CMMI, e fica em dúvida sobre qual organização atualmente administra o modelo."
+      }
+    ],
+    "enunciado": "Assinale a alternativa tecnicamente correta sobre a administração atual do modelo CMMI, considerando sua evolução histórica desde o SEI (Software Engineering Institute):",
+    "alternativas": [
+      "O modelo permanece administrado exclusivamente pelo SEI (Carnegie Mellon University), sem qualquer alteração institucional desde sua criação",
+      "O CMMI Institute, derivado do SEI, passou a administrar o modelo e depois foi adquirido pela ISACA, hoje responsável pelo CMMI",
+      "A ISACA sempre administrou o CMMI desde sua criação na década de 1990, sem qualquer vínculo histórico com o SEI",
+      "O CMMI deixou de existir como modelo, tendo sido totalmente substituído pelos produtos de auditoria da ISACA",
+      "SEI, CMMI Institute e ISACA são apenas nomes alternativos para a mesma entidade legal, sem qualquer diferença histórica ou organizacional entre eles"
+    ],
+    "correta": 1,
+    "resolucao": "reflete corretamente a evolução histórica: o modelo nasceu no SEI (Carnegie Mellon), passou a ser administrado pelo CMMI Institute, e este foi adquirido pela ISACA, que hoje conduz a evolução do modelo, incluindo o lançamento da versão 2.0. {{A}} ignora essa evolução institucional documentada. {{C}} inverte a ordem histórica real dos fatos. {{D}} é falso: o CMMI continua sendo um modelo ativo e atualizado, não descontinuado. {{E}} simplifica de forma incorreta três organizações e momentos históricos distintos como se fossem idênticos."
+  },
+  {
+    "id": "qualidade-cap3-q12",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Embora desenvolvidos em contextos distintos — o CMM e o CMMI no âmbito de um instituto de pesquisa norte-americano voltado a contratos de defesa, e o MPS.BR como iniciativa nacional voltada à realidade das empresas brasileiras —, os três modelos compartilham a mesma lógica de base: a maturidade organizacional evolui de processos caóticos e dependentes de indivíduos para processos institucionalizados, medidos e continuamente otimizados.”",
+        "fonte": "Elaborado com base em: PAULK et al. (1993); CMMI PRODUCT TEAM (2010); SOFTEX (2016)."
+      },
+      {
+        "t": "p",
+        "texto": "Uma multinacional europeia avalia dois fornecedores brasileiros para um contrato de desenvolvimento de software crítico: o Fornecedor A, certificado MPS.BR Nível C, e o Fornecedor B, certificado CMMI Nível 2. A equipe de compras da multinacional, sem conhecimento profundo sobre os dois modelos brasileiro e internacional, pergunta à consultoria de auditoria qual dos dois fornecedores demonstra, em tese, maior maturidade de processo."
+      }
+    ],
+    "enunciado": "Considerando a equivalência aproximada entre os modelos estudada no capítulo, assinale a alternativa correta:",
+    "alternativas": [
+      "É impossível comparar as duas certificações, pois MPS.BR e CMMI avaliam critérios completamente distintos e incompatíveis entre si",
+      "O Fornecedor B (CMMI Nível 2) demonstra maior maturidade, pois qualquer nível CMMI é automaticamente superior a qualquer nível MPS.BR, independentemente da letra ou do número",
+      "O Fornecedor A (MPS.BR Nível C) equivale, em tese, ao Nível 3 do CMMI, acima do Fornecedor B (CMMI Nível 2)",
+      "Os dois fornecedores demonstram exatamente a mesma maturidade, pois ambos possuem alguma certificação formal de processo",
+      "O Fornecedor A deveria ser automaticamente desqualificado, pois certificações nacionais não têm nenhum reconhecimento fora do Brasil"
+    ],
+    "correta": 2,
+    "resolucao": "segundo a equivalência aproximada apresentada no capítulo (CMM/CMMI nível 3 ≈ MPS.BR nível C), o Fornecedor A, certificado no nível C do MPS.BR, corresponde a uma maturidade aproximadamente equivalente ao Nível 3 do CMMI — superior, portanto, ao Nível 2 do Fornecedor B. {{A}} nega, sem fundamento, qualquer possibilidade de comparação entre os modelos, contrariando o próprio propósito do quadro de equivalência estudado. {{B}} assume uma superioridade automática do CMMI sobre o MPS.BR que não corresponde à lógica de equivalência de níveis. {{D}} ignora completamente a diferença de patamar entre as duas certificações específicas mencionadas. {{E}} é uma afirmação infundada sobre reconhecimento internacional, que contraria inclusive o próprio cenário do caso, em que a multinacional está avaliando seriamente o fornecedor certificado no modelo brasileiro."
+  },
+  {
+    "id": "qualidade-cap4-q1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "discursiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Testes exaustivos são impossíveis. Testar tudo (todas as combinações de entradas e pré-condições) não é viável, exceto em casos triviais. Em vez de testes exaustivos, a análise de risco e as prioridades devem ser usadas para focar os esforços de teste.”",
+        "fonte": "ISTQB. Corpo de Conhecimento (Syllabus) Nível Básico — Testador Certificado. Tradução Brasileira: BSTQB (Brazilian Software Testing Qualifications Board), 2018."
+      },
+      {
+        "t": "citacao",
+        "texto": "“Imagine uma pirâmide dividida em três camadas horizontais. [...] A camada inferior e mais larga é composta de testes de unidade. [...] A segunda camada é composta de testes de serviço [integração]. [...] A camada superior, mais estreita, contém os testes de interface do usuário. [...] A forma da pirâmide indica que devemos ter muito mais testes de unidade do que testes de UI.” (tradução nossa)",
+        "fonte": "COHN, Mike. Succeeding with Agile: Software Development Using Scrum. Boston: Addison-Wesley, 2009."
+      },
+      {
+        "t": "p",
+        "texto": "A CloudMed, plataforma SaaS de agendamento para clínicas, decidiu “levar testes a sério” há 18 meses. Hoje sua suíte automatizada possui 350 testes end-to-end (Selenium), cobrindo praticamente toda tela do sistema, e apenas 25 testes unitários. A suíte completa leva 4 horas e 10 minutos para rodar, e falha em média três vezes por semana por motivos identificados posteriormente como “cosméticos” (mudanças de layout, atrasos de animação) — nenhum deles um defeito real de negócio."
+      },
+      {
+        "t": "p",
+        "texto": "Diante da lentidão e da instabilidade, a equipe reduziu a frequência de deploy de diária para quinzenal, e passa, em média, 6 horas por semana apenas investigando falhas da suíte que, ao final, não correspondem a bugs reais. Nos últimos três meses, dois defeitos de cálculo de valor de consulta chegaram a produção sem serem detectados por nenhum teste automatizado — ambos em funções de cálculo que nunca haviam sido testadas isoladamente, apenas indiretamente, através dos fluxos de tela cobertos pelos testes E2E."
+      },
+      {
+        "t": "p",
+        "texto": "O CTO da CloudMed defende publicamente a estratégia atual, afirmando: “Nossa cobertura é altíssima — 350 testes é muito mais do que a maioria das empresas do nosso porte possui. O problema é só uma questão de paciência: com mais tempo, a suíte vai naturalmente ficando mais estável”."
+      }
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) Com base na citação de Cohn (2009), explique por que o número absoluto de 350 testes não é, por si só, um indicador de boa cobertura, e identifique o anti-padrão descrito no caso da CloudMed. Proponha, de forma aproximada, como a proporção entre testes unitários, de integração e E2E deveria ser redistribuída.",
+      "b) Relacione a citação do ISTQB sobre testes exaustivos serem impossíveis com a decisão da CloudMed de cobrir “praticamente toda tela do sistema” por E2E. Essa cobertura ampla de telas garante, por si só, que os riscos mais importantes do negócio (como o cálculo de valor de consulta) estejam adequadamente testados? Justifique.",
+      "c) As funções de cálculo de valor de consulta nunca foram testadas isoladamente, apenas indiretamente via E2E. Que tipo de teste (unitário ou de integração) você recomendaria para essas funções especificamente, e por que testes E2E não substituem essa necessidade, mesmo cobrindo a tela onde o cálculo aparece?",
+      "d) Avalie criticamente a afirmação do CTO de que o problema é “uma questão de paciência”. Sua avaliação deve se posicionar explicitamente sobre se mais tempo, sem mudança estrutural na distribuição de testes, resolveria os sintomas relatados (lentidão, instabilidade, defeitos não detectados) — e por quê."
+    ],
+    "linhas": 12
+  },
+  {
+    "id": "qualidade-cap4-q2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um erro comum é ter uma proporção muito maior de testes de interface do usuário do que qualquer um dos outros tipos. [...] Os testes de interface do usuário são lentos para rodar, frágeis e caros de manter. [...] Por essas razões, a pirâmide de testes nos diz para escrever muito mais testes de unidade e de serviço do que testes de interface do usuário.” (tradução nossa)",
+        "fonte": "COHN, Mike. Succeeding with Agile: Software Development Using Scrum. Boston: Addison-Wesley, 2009."
+      },
+      {
+        "t": "p",
+        "texto": "A VarejoDigital, plataforma de e-commerce, mantém uma suíte com 40 testes unitários, 30 testes de integração e 25 testes end-to-end. Embora a proporção pareça equilibrada em números absolutos, a equipe percebe que os 25 testes E2E consomem 85% do tempo total de execução da suíte (52 dos 61 minutos totais), enquanto os 70 testes unitários e de integração juntos consomem apenas os 9 minutos restantes."
+      }
+    ],
+    "enunciado": "Considerando a citação de Cohn (2009) e o caso da VarejoDigital, assinale a alternativa correta:",
+    "alternativas": [
+      "A proporção da VarejoDigital já está de acordo com a Pirâmide de Testes, pois o número absoluto de testes E2E (25) é menor do que a soma de unitários e integração (70)",
+      "A Pirâmide só considera a quantidade de testes, não o tempo",
+      "Embora a contagem pareça equilibrada, o tempo de execução mostra o problema de Cohn: os testes de UI dominam o custo da suíte",
+      "O tempo de execução de 52 minutos para os testes E2E é considerado rápido pelos padrões da indústria, não representando nenhum risco à produtividade da equipe",
+      "A VarejoDigital deveria eliminar completamente os testes E2E, pois qualquer teste de interface é, por definição, incompatível com a Pirâmide de Testes"
+    ],
+    "correta": 2,
+    "resolucao": "a citação de Cohn destaca que testes de UI são lentos, frágeis e caros de manter, e o ‘custo’ real de uma suíte não se mede apenas pela contagem de testes, mas pelo tempo e esforço que cada camada exige. O caso mostra exatamente esse problema: apesar da contagem numérica parecer equilibrada, 85% do tempo de execução está concentrado nos testes E2E — sintoma do mesmo desequilíbrio estrutural que a pirâmide busca evitar, mesmo que ‘escondido’ atrás de números absolutos aparentemente razoáveis. {{A}} cai exatamente nessa armadilha de olhar só a contagem bruta. {{B}} contraria a citação, que discute custo e velocidade, não apenas quantidade. {{D}} minimiza um tempo de execução que compromete a agilidade de feedback descrita no capítulo. {{E}} é um exagero: a pirâmide recomenda poucos testes E2E, não sua eliminação total, já que eles cobrem riscos que unitários e integração não cobrem sozinhos."
+  },
+  {
+    "id": "qualidade-cap4-q3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um erro comum é ter uma proporção muito maior de testes de interface do usuário do que qualquer um dos outros tipos. [...] Os testes de interface do usuário são lentos para rodar, frágeis e caros de manter. [...] Por essas razões, a pirâmide de testes nos diz para escrever muito mais testes de unidade e de serviço do que testes de interface do usuário.” (tradução nossa)",
+        "fonte": "COHN, Mike. Succeeding with Agile: Software Development Using Scrum. Boston: Addison-Wesley, 2009."
+      },
+      {
+        "t": "p",
+        "texto": "A VarejoDigital, plataforma de e-commerce, mantém uma suíte com 40 testes unitários, 30 testes de integração e 25 testes end-to-end. Embora a proporção pareça equilibrada em números absolutos, a equipe percebe que os 25 testes E2E consomem 85% do tempo total de execução da suíte (52 dos 61 minutos totais), enquanto os 70 testes unitários e de integração juntos consomem apenas os 9 minutos restantes."
+      },
+      {
+        "t": "p",
+        "texto": "Ao investigar quais dos 25 testes E2E realmente precisam continuar nesse nível, a equipe identifica que 18 deles verificam apenas se um formulário exibe corretamente uma mensagem de erro de validação (campo obrigatório vazio, formato de e-mail inválido) — uma lógica que já existe replicada em funções isoladas de validação no código."
+      }
+    ],
+    "enunciado": "Considerando a Pirâmide de Testes, assinale a alternativa que representa a ação tecnicamente mais adequada para esses 18 testes:",
+    "alternativas": [
+      "Mantê-los como estão, pois qualquer verificação relacionada a um formulário deve necessariamente ser testada via E2E, simulando o preenchimento real da tela pelo usuário final",
+      "Levar essas 18 regras para testes unitários das funções de validação, deixando o E2E para poucos cenários de integração completa",
+      "Excluir os 18 testes sem substituí-los por nenhum outro nível, já que validação de formulário é um risco de baixa prioridade",
+      "Duplicar os 18 testes também em nível de integração, além de mantê-los em E2E, para maximizar a cobertura redundante",
+      "Transformar todos os testes unitários existentes em testes E2E, unificando a suíte em um único nível para simplificar a manutenção"
+    ],
+    "correta": 1,
+    "resolucao": "como a lógica de validação já existe isolada em funções específicas, testá-la diretamente nesse nível unitário é mais rápido, mais barato e mais preciso do que simulá-la através de uma tela inteira via E2E — exatamente a lógica da pirâmide de concentrar volume na base. {{A}} ignora que regras de lógica pura não precisam da interface completa para serem verificadas. {{C}} descarta cobertura de risco sem necessidade, quando a alternativa correta é apenas mudar o nível de teste, não eliminar a verificação. {{D}} e {{E}} vão na direção oposta da pirâmide: duplicar aumenta custo sem ganho real, e unificar tudo em E2E recriaria exatamente o problema identificado no caso."
+  },
+  {
+    "id": "qualidade-cap4-q4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Na integração incremental de cima para baixo [top-down], o módulo de controle principal é testado primeiro, com os módulos subordinados incorporados à estrutura progressivamente [...] Na integração de baixo para cima [bottom-up], os módulos de nível mais baixo são combinados em clusters (também chamados de builds) que realizam uma subfunção específica do software.” (tradução nossa)",
+        "fonte": "MYERS, Glenford J.; SANDLER, Corey; BADGETT, Tom. The Art of Software Testing. 3. ed. Hoboken: Wiley, 2011."
+      },
+      {
+        "t": "p",
+        "texto": "A ErpFacil, empresa que desenvolve um ERP modular (módulos de Estoque, Vendas, Financeiro e Relatórios), definiu que o módulo de Relatórios depende dos dados gerados pelos outros três módulos, mas os três módulos-base (Estoque, Vendas, Financeiro) já estão prontos e estáveis havia meses, enquanto o módulo de Relatórios ainda está em desenvolvimento inicial e sujeito a mudanças frequentes de requisito."
+      }
+    ],
+    "enunciado": "Considerando a citação de Myers, Sandler e Badgett (2011) e o cenário da ErpFacil, assinale a alternativa que recomenda a estratégia de integração mais adequada, com a justificativa correta:",
+    "alternativas": [
+      "Top-down, pois o módulo de controle principal (Relatórios) deve ser testado primeiro, incorporando progressivamente os módulos subordinados já estáveis com o uso de stubs",
+      "Bottom-up, testando primeiro os módulos estáveis de baixo nível (Estoque, Vendas, Financeiro) e Relatórios por último",
+      "Big Bang, pois com quatro módulos é sempre a melhor opção",
+      "A escolha da estratégia de integração é irrelevante para este cenário, pois qualquer uma das opções produz exatamente o mesmo resultado técnico",
+      "Top-down, pois é a única estratégia capaz de lidar com módulos que ainda estão sujeitos a mudanças frequentes de requisito"
+    ],
+    "correta": 1,
+    "resolucao": "o cenário descreve exatamente a situação ideal para integração bottom-up: os módulos de base (nível mais baixo na dependência) já estão prontos e estáveis, permitindo formar clusters confiáveis antes de agregar o módulo de Relatórios, ainda instável, por último. {{A}} inverte a lógica: Relatórios não é um módulo de controle principal, e sim um módulo dependente dos demais — não faz sentido testá-lo primeiro. {{C}} ignora que Big Bang é recomendado para sistemas pequenos e estáveis, não para um cenário com um módulo explicitamente instável. {{D}} nega, sem fundamento, que a escolha da estratégia tenha impacto técnico real. {{E}} atribui à estratégia top-down uma vantagem (lidar com instabilidade) que não decorre da definição citada no texto motivador."
+  },
+  {
+    "id": "qualidade-cap4-q5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Na integração incremental de cima para baixo [top-down], o módulo de controle principal é testado primeiro, com os módulos subordinados incorporados à estrutura progressivamente [...] Na integração de baixo para cima [bottom-up], os módulos de nível mais baixo são combinados em clusters (também chamados de builds) que realizam uma subfunção específica do software.” (tradução nossa)",
+        "fonte": "MYERS, Glenford J.; SANDLER, Corey; BADGETT, Tom. The Art of Software Testing. 3. ed. Hoboken: Wiley, 2011."
+      },
+      {
+        "t": "p",
+        "texto": "A ErpFacil, empresa que desenvolve um ERP modular (módulos de Estoque, Vendas, Financeiro e Relatórios), definiu que o módulo de Relatórios depende dos dados gerados pelos outros três módulos, mas os três módulos-base (Estoque, Vendas, Financeiro) já estão prontos e estáveis havia meses, enquanto o módulo de Relatórios ainda está em desenvolvimento inicial e sujeito a mudanças frequentes de requisito."
+      },
+      {
+        "t": "p",
+        "texto": "Seis meses depois, a ErpFacil inicia um novo projeto do zero: um sistema de agendamento hospitalar com apenas dois módulos (Agenda e Notificações), ambos pequenos, desenvolvidos pela mesma dupla de programadores em paralelo, com prazo de apenas três semanas para todo o projeto."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que recomenda a estratégia de integração mais adequada a esse novo cenário, e por quê:",
+    "alternativas": [
+      "Bottom-up, pois deve ser sempre a primeira escolha em qualquer projeto, independentemente do porte ou da equipe",
+      "Sanduíche (mista), pois é obrigatória em qualquer projeto com mais de um módulo, sem exceção",
+      "Big Bang, pois em um sistema pequeno, de uma só equipe e prazo curto, integrar tudo de uma vez tende a ser mais simples",
+      "Top-down, pois qualquer sistema com módulo de notificações deve necessariamente testar esse módulo antes de todos os demais, já que ele depende de serviços externos",
+      "Nenhuma das estratégias de integração se aplica a projetos com menos de três módulos"
+    ],
+    "correta": 2,
+    "resolucao": "o capítulo indica Big Bang como adequado especificamente para sistemas pequenos, com poucos módulos — exatamente o perfil deste novo projeto, ao contrário do ERP anterior, que tinha módulos de maturidade desigual e justificava uma abordagem incremental. {{A}} e {{B}} transformam recomendações contextuais em regras absolutas, o que contraria a própria lógica de ‘escolher a estratégia mais adequada ao contexto’ estudada no capítulo. {{D}} inventa uma prioridade (notificações antes de tudo) sem base técnica. {{E}} nega, sem fundamento, que projetos pequenos também demandem alguma estratégia de integração — mesmo que essa estratégia seja o Big Bang."
+  },
+  {
+    "id": "qualidade-cap4-q6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Os dados de vários projetos [...] mostram que o custo de corrigir um erro de software aumenta de fator de 4 a 1.000 vezes ao longo do ciclo de vida do projeto, sendo o menor custo na fase de requisitos e projeto, e o maior custo depois que o software entra em operação.” (tradução nossa)",
+        "fonte": "BOEHM, Barry W. Software Engineering Economics. Englewood Cliffs: Prentice-Hall, 1981."
+      },
+      {
+        "t": "p",
+        "texto": "Em uma revisão de requisitos de um sistema bancário, um analista identificou uma ambiguidade na regra de cálculo de juros, ambiguidade que, se não corrigida naquele momento, provavelmente só seria percebida meses depois, durante os testes de sistema, exigindo retrabalho significativo em múltiplos módulos já implementados. A correção na fase de requisitos levou 40 minutos de discussão em reunião."
+      }
+    ],
+    "enunciado": "Considerando a citação de Boehm (1981) e o caso relatado, assinale a alternativa correta:",
+    "alternativas": [
+      "O tempo de correção seria o mesmo (40 minutos) independentemente da fase em que o problema fosse identificado, pois a complexidade da regra de juros não muda ao longo do projeto",
+      "Corrigir a ambiguidade nos requisitos é o menor custo da curva de Boehm; nos testes de sistema, custaria muitas vezes mais",
+      "Segundo Boehm (1981), o custo de correção é constante ao longo de todo o ciclo de vida do projeto, não havendo vantagem em revisar requisitos antecipadamente",
+      "A curva de custo por fase descrita por Boehm (1981) se aplica exclusivamente a projetos de hardware, não sendo relevante para sistemas bancários de software",
+      "O menor custo de correção, segundo Boehm (1981), ocorre sempre na fase de testes de sistema, não na fase de requisitos"
+    ],
+    "correta": 1,
+    "resolucao": "a citação de Boehm descreve exatamente um aumento de fator de 4 a 1.000 vezes entre a fase de requisitos/projeto e a operação, o que sustenta diretamente a vantagem relatada no caso: 40 minutos de discussão na fase de requisitos versus o retrabalho significativo que ocorreria se a ambiguidade só fosse percebida nos testes de sistema. {{A}} ignora completamente a curva de custo descrita. {{C}} e {{E}} invertem ou negam a relação central da citação, que é o próprio fundamento histórico do princípio ‘testar cedo economiza’ do ISTQB, também estudado no capítulo. {{D}} restringe indevidamente um princípio de engenharia de software amplamente aplicado, inclusive no próprio texto motivador, a projetos de hardware."
+  },
+  {
+    "id": "qualidade-cap4-q7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Os dados de vários projetos [...] mostram que o custo de corrigir um erro de software aumenta de fator de 4 a 1.000 vezes ao longo do ciclo de vida do projeto, sendo o menor custo na fase de requisitos e projeto, e o maior custo depois que o software entra em operação.” (tradução nossa)",
+        "fonte": "BOEHM, Barry W. Software Engineering Economics. Englewood Cliffs: Prentice-Hall, 1981."
+      },
+      {
+        "t": "p",
+        "texto": "Em uma revisão de requisitos de um sistema bancário, um analista identificou uma ambiguidade na regra de cálculo de juros, ambiguidade que, se não corrigida naquele momento, provavelmente só seria percebida meses depois, durante os testes de sistema, exigindo retrabalho significativo em múltiplos módulos já implementados. A correção na fase de requisitos levou 40 minutos de discussão em reunião."
+      },
+      {
+        "t": "p",
+        "texto": "Diante da curva de custo apresentada, o gerente de projeto do banco propõe que toda a equipe de desenvolvimento participe obrigatoriamente das reuniões de revisão de requisitos, mesmo antes de qualquer linha de código ser escrita, alegando que esse tempo adicional de reunião “se paga” ao longo do projeto."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que avalia corretamente essa proposta à luz da citação de Boehm (1981):",
+    "alternativas": [
+      "A proposta está tecnicamente desalinhada com a citação, pois revisão de requisitos é responsabilidade exclusiva de analistas de negócio, nunca de desenvolvedores, segundo Boehm",
+      "A proposta é coerente com o custo crescente por fase: revisar requisitos antes de codificar evita correções mais caras depois",
+      "A proposta é irrelevante, pois a citação de Boehm (1981) trata apenas do custo de correção de defeitos, não do custo de identificá-los preventivamente",
+      "A proposta deveria ser rejeitada, pois qualquer tempo gasto antes da codificação é, por definição, tempo improdutivo segundo a engenharia de software",
+      "A proposta só seria válida se o sistema bancário não envolvesse nenhuma regra de cálculo financeiro"
+    ],
+    "correta": 1,
+    "resolucao": "participar de revisões de requisitos é justamente uma forma de identificar problemas na fase de menor custo de correção, coerente com a lógica de Boehm (1981) de que o custo cresce nas fases seguintes. {{A}} restringe sem fundamento a participação em revisões de requisitos, que se beneficia da visão técnica de quem vai implementar o sistema. {{C}} é factualmente incorreto: identificar um defeito mais cedo é justamente o que evita o custo de corrigi-lo mais tarde, conectando diretamente os dois conceitos. {{D}} contraria toda a lógica econômica apresentada no capítulo. {{E}} introduz uma condição arbitrária sem relação com o princípio geral discutido."
+  },
+  {
+    "id": "qualidade-cap4-q8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O teste de caminho básico é uma técnica de teste de caixa branca [...] que permite ao projetista de casos de teste obter uma medida de complexidade lógica de um projeto procedimental e usar essa medida como guia para a definição de um conjunto básico de caminhos de execução. [...] Casos de teste derivados do conjunto básico garantem que cada instrução do programa seja executada pelo menos uma vez durante o teste.”",
+        "fonte": "PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software: uma abordagem profissional. 8. ed. Porto Alegre: AMGH, 2016."
+      },
+      {
+        "t": "p",
+        "texto": "Uma função de cálculo de frete possui a seguinte lógica: se o peso for maior que 30kg, aplica-se taxa de carga pesada; dentro dessa condição, se o destino for zona rural, soma-se uma taxa adicional de deslocamento. Um desenvolvedor júnior escreveu apenas um caso de teste, com peso de 50kg e destino urbano, e declarou a função “totalmente testada”, pois o teste passou sem erros."
+      }
+    ],
+    "enunciado": "Considerando a citação de Pressman e Maxim (2016) e o caso da função de frete, assinale a alternativa correta:",
+    "alternativas": [
+      "A declaração do desenvolvedor está correta, pois qualquer teste que passe sem erros garante cobertura total da lógica da função",
+      "O teste executa só um caminho (peso > 30kg e zona rural), deixando sem execução peso ≤ 30kg e peso > 30kg fora da zona rural",
+      "A cobertura de caminhos básicos é uma preocupação exclusiva de sistemas embarcados, sem aplicação em funções de cálculo comercial como essa",
+      "Como a função possui apenas duas condições (peso e destino), um único teste é matematicamente suficiente para cobrir toda a lógica possível, desde que use valores extremos",
+      "O teste realizado cobre a lógica de peso, mas não precisa cobrir a lógica de destino, pois são variáveis independentes entre si"
+    ],
+    "correta": 1,
+    "resolucao": "a lógica descrita tem, no mínimo, quatro caminhos possíveis (peso ≤ 30kg; peso > 30kg e destino urbano; peso > 30kg e destino rural — este coberto pelo teste único citado; e peso ≤30kg combinações adicionais se existirem), e o único teste executado cobre apenas um desses caminhos, contrariando exatamente o princípio citado de que cada instrução (e caminho relevante) deveria ser exercitada ao menos uma vez. {{A}} generaliza incorretamente ‘passar sem erro’ como sinônimo de cobertura completa — um teste só verifica o caminho que de fato executa. {{C}} restringe sem base um princípio de teste estrutural amplamente aplicável a qualquer lógica condicional. {{D}} erra a contagem: duas condições aninhadas já geram múltiplas combinações possíveis, não uma só. {{E}} ignora que as duas condições estão aninhadas no enunciado (o destino só é avaliado dentro da condição de peso), portanto não são caminhos totalmente independentes a serem ignorados."
+  },
+  {
+    "id": "qualidade-cap4-q9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O teste de caminho básico é uma técnica de teste de caixa branca [...] que permite ao projetista de casos de teste obter uma medida de complexidade lógica de um projeto procedimental e usar essa medida como guia para a definição de um conjunto básico de caminhos de execução. [...] Casos de teste derivados do conjunto básico garantem que cada instrução do programa seja executada pelo menos uma vez durante o teste.”",
+        "fonte": "PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software: uma abordagem profissional. 8. ed. Porto Alegre: AMGH, 2016."
+      },
+      {
+        "t": "p",
+        "texto": "Uma função de cálculo de frete possui a seguinte lógica: se o peso for maior que 30kg, aplica-se taxa de carga pesada; dentro dessa condição, se o destino for zona rural, soma-se uma taxa adicional de deslocamento. Um desenvolvedor júnior escreveu apenas um caso de teste, com peso de 50kg e destino urbano, e declarou a função “totalmente testada”, pois o teste passou sem erros."
+      },
+      {
+        "t": "p",
+        "texto": "Uma desenvolvedora sênior revisa o código e propõe a seguinte suíte mínima de testes: (1) peso = 20kg, destino urbano; (2) peso = 50kg, destino urbano; (3) peso = 50kg, destino rural."
+      }
+    ],
+    "enunciado": "Considerando a técnica de caixa branca descrita no texto motivador, assinale a alternativa que avalia corretamente essa suíte proposta:",
+    "alternativas": [
+      "A suíte é insuficiente, pois qualquer função com duas condições exige no mínimo cinco casos de teste, independentemente da estrutura lógica e dos caminhos que ela possua",
+      "A suíte cobre os três caminhos distintos (peso baixo; peso alto e urbano; peso alto e rural), uma cobertura adequada",
+      "A suíte é redundante, pois o caso (2) e o caso (3) testam exatamente a mesma condição de peso, tornando um deles desnecessário",
+      "A suíte só seria válida se incluísse também testes com valores negativos de peso, obrigatórios em qualquer teste de caixa branca",
+      "A suíte é insuficiente porque não testa o caso de peso exatamente igual a 30kg, o único caminho relevante da função"
+    ],
+    "correta": 1,
+    "resolucao": "os três casos de teste cobrem exatamente os três caminhos logicamente distintos que a estrutura condicional aninhada (peso e, dentro dela, destino) permite: peso baixo (sem entrar na condição de taxa pesada), peso alto com destino urbano (entra na condição, mas não na sub-condição rural), e peso alto com destino rural (entra em ambas as condições) — cobertura estrutural coerente com o princípio citado de exercitar cada caminho relevante. {{A}} inventa uma regra numérica sem relação com a estrutura lógica real da função. {{C}} erra ao considerar os casos (2) e (3) redundantes: eles compartilham a condição de peso, mas divergem exatamente na sub-condição de destino, que é o ponto que se quer testar. {{D}} introduz uma exigência (valores negativos) não implícita na lógica da função nem no texto motivador. {{E}} é o distrator mais sutil: valores de fronteira como peso = 30kg são importantes, mas pertencem à técnica de caixa preta (valor de fronteira), não à cobertura de caminhos de caixa branca, que é o foco específico deste texto motivador."
+  },
+  {
+    "id": "qualidade-cap4-q10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“No particionamento de equivalência, o domínio de entrada de um programa é dividido em classes de dados a partir das quais os casos de teste podem ser derivados. [...] Um caso de teste ideal identifica, sozinho, uma classe de erros [...] que de outra forma exigiriam muitos casos de teste antes que um erro genérico fosse observado.”",
+        "fonte": "PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software: uma abordagem profissional. 8. ed. Porto Alegre: AMGH, 2016."
+      },
+      {
+        "t": "p",
+        "texto": "Um formulário de cadastro exige que a idade do usuário esteja entre 18 e 65 anos para liberar a contratação de um seguro de vida. Uma testadora júnior projetou 15 casos de teste, com as idades 18, 19, 20, 21, 22, 23, 24, 25, 30, 40, 50, 60, 63, 64 e 65 todos dentro da faixa válida, sem nenhum valor fora dela."
+      }
+    ],
+    "enunciado": "Considerando a citação de Pressman e Maxim (2016) sobre particionamento de equivalência, assinale a alternativa correta sobre a suíte da testadora júnior:",
+    "alternativas": [
+      "A suíte está tecnicamente adequada, pois quanto maior o número de valores testados dentro da faixa válida, mais confiável é a cobertura da função",
+      "A suíte repete valores da mesma classe (idade válida), sem classes inválidas (< 18 ou > 65) nem fronteiras (17, 18, 65, 66)",
+      "A suíte é redundante apenas porque contém mais de dez casos de teste, independentemente de quais valores foram escolhidos",
+      "Testar 15 valores diferentes é sempre preferível a testar 6 valores diferentes, independentemente de quais classes de equivalência cada valor representa na faixa de idades",
+      "O particionamento de equivalência não se aplica a campos numéricos como idade, sendo restrito a campos de texto"
+    ],
+    "correta": 1,
+    "resolucao": "a citação define que um bom caso de teste identifica, sozinho, uma classe inteira de erros — o que significa que testar 15 valores dentro da mesma classe válida é redundante e ineficiente, enquanto a suíte falha em cobrir a classe inválida (menor que 18, maior que 65) e os valores de fronteira, onde erros de comparação costumam se esconder. {{A}} e {{D}} caem exatamente na armadilha que a citação adverte: quantidade não é sinônimo de qualidade de cobertura quando os valores pertencem à mesma classe. {{C}} erra a razão: o problema não é o número de casos em si, mas a ausência de diversidade de classes representadas. {{E}} é falso: particionamento de equivalência se aplica a qualquer domínio de entrada, incluindo campos numéricos, exatamente como no caso descrito."
+  },
+  {
+    "id": "qualidade-cap4-q11",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“No particionamento de equivalência, o domínio de entrada de um programa é dividido em classes de dados a partir das quais os casos de teste podem ser derivados. [...] Um caso de teste ideal identifica, sozinho, uma classe de erros [...] que de outra forma exigiriam muitos casos de teste antes que um erro genérico fosse observado.”",
+        "fonte": "PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software: uma abordagem profissional. 8. ed. Porto Alegre: AMGH, 2016."
+      },
+      {
+        "t": "p",
+        "texto": "Um formulário de cadastro exige que a idade do usuário esteja entre 18 e 65 anos para liberar a contratação de um seguro de vida. Uma testadora júnior projetou 15 casos de teste, com as idades 18, 19, 20, 21, 22, 23, 24, 25, 30, 40, 50, 60, 63, 64 e 65 todos dentro da faixa válida, sem nenhum valor fora dela."
+      },
+      {
+        "t": "p",
+        "texto": "Após revisão, a equipe de QA propõe substituir a suíte original por apenas seis casos de teste: idade = 17, 18, 19, 64, 65, 66."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que avalia corretamente essa nova suíte, considerando as técnicas de particionamento de equivalência e valor de fronteira estudadas no capítulo:",
+    "alternativas": [
+      "A nova suíte é insuficiente, pois seis casos de teste são sempre menos confiáveis do que os 15 originais, independentemente de quais valores representam",
+      "A nova suíte foca nas fronteiras (17, 18, 65, 66) e nas classes relevantes, cobrindo melhor com menos casos que a original",
+      "A nova suíte é tecnicamente equivalente à original, pois ambas testam o mesmo campo de idade, sem nenhuma diferença relevante de cobertura",
+      "A nova suíte deveria ser descartada por não incluir nenhum valor \"intermediário\", como 30 ou 40 anos, considerados obrigatórios em qualquer teste de campo numérico",
+      "A nova suíte só seria válida se incluísse também testes automatizados de performance para o mesmo campo"
+    ],
+    "correta": 1,
+    "resolucao": "os seis valores propostos cobrem exatamente as classes de equivalência relevantes (idade inválida abaixo da faixa, válida, inválida acima) e os valores de fronteira mais propensos a revelar erros de comparação (17/18 e 65/66) — a aplicação mais precisa possível das duas técnicas de caixa preta estudadas no capítulo, com uma fração do esforço da suíte original. {{A}} repete o erro de assumir que mais testes é sempre melhor, ignorando a qualidade da cobertura. {{C}} ignora uma diferença de cobertura real e significativa entre as duas suítes. {{D}} exige valores intermediários que, segundo a própria lógica de particionamento de equivalência, são redundantes quando já se tem um representante de cada classe. {{E}} introduz uma exigência (teste de performance) fora do escopo da técnica discutida no texto motivador."
+  },
+  {
+    "id": "qualidade-cap5-q12",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O plano de teste deve identificar todos os itens de teste, as características a serem testadas, as tarefas de teste a serem realizadas, o pessoal responsável por cada tarefa, e os riscos associados a esse plano. [...] Critérios de suspensão especificam as condições sob as quais as atividades de teste ativas devem ser suspensas, e critérios de retomada especificam quando as atividades de teste podem ser retomadas de forma válida após uma suspensão.” (tradução nossa)",
+        "fonte": "IEEE. IEEE Std 829-2008 — IEEE Standard for Software and System Test Documentation. Nova York: Institute of Electrical and Electronics Engineers, 2008."
+      },
+      {
+        "t": "p",
+        "texto": "A equipe de QA de um sistema de folha de pagamento elaborou um plano de teste que definia claramente o escopo, os tipos de teste e os critérios de aceite — mas não incluía nenhuma cláusula sobre o que fazer caso um defeito crítico fosse encontrado durante a execução dos testes, nem sobre as condições em que os testes deveriam ser retomados após uma correção. Durante a execução, um defeito crítico de cálculo salarial foi encontrado no meio da suíte, e a equipe, sem orientação formal, decidiu — de forma improvisada e sem consenso — continuar testando as demais funcionalidades enquanto o defeito ainda não havia sido corrigido, o que gerou confusão sobre quais resultados de teste ainda eram confiáveis."
+      }
+    ],
+    "enunciado": "Considerando a citação da IEEE 829 (2008) e o caso relatado, assinale a alternativa correta:",
+    "alternativas": [
+      "O problema relatado não tem relação com o conteúdo do plano de teste, sendo apenas uma falha de comunicação pontual da equipe naquele dia específico",
+      "Faltavam no plano os critérios de suspensão e retomada da IEEE 829; sem eles, a equipe não sabia agir diante do defeito crítico",
+      "O plano de teste da equipe estava completo, pois definir escopo, tipos de teste e critérios de aceite já é suficiente segundo a norma IEEE 829",
+      "Critérios de suspensão e retomada são exigidos apenas em sistemas de missão crítica, como aviação ou saúde, não sendo aplicáveis a um sistema de folha de pagamento de uma empresa privada",
+      "A confusão relatada só poderia ter sido evitada com mais testadores na equipe, independentemente do conteúdo do plano de teste"
+    ],
+    "correta": 1,
+    "resolucao": "a citação da IEEE 829 define explicitamente critérios de suspensão e retomada como componentes do plano de teste, exatamente o elemento ausente no caso e a causa mais direta da decisão improvisada e sem consenso da equipe. {{A}} minimiza um problema estrutural do documento como se fosse um incidente pontual de comunicação. {{C}} afirma incorretamente que o plano estava completo, ignorando a lacuna específica apontada pela norma citada. {{D}} restringe, sem base na citação, a aplicabilidade desses critérios a sistemas ‘críticos’ — a norma não faz essa distinção, e um sistema de folha de pagamento lida com dados financeiros sensíveis. {{E}} propõe uma solução (mais pessoas) que não resolve a causa raiz identificada: a ausência de critérios formais e claros no plano."
+  },
+  {
+    "id": "qualidade-cap6-q1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "discursiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Mocks são [...] objetos pré-programados com expectativas que formam uma especificação das chamadas que se espera que recebam. [...] A principal distinção é que, com mocks, você verifica o comportamento: em vez de verificar os resultados de uma ação, você verifica se as ações corretas foram disparadas durante a execução do teste.” (tradução nossa)",
+        "fonte": "FOWLER, Martin. Mocks Aren't Stubs. martinfowler.com, 2007."
+      },
+      {
+        "t": "citacao",
+        "texto": "“Testes devem ser Rápidos (Fast). [...] Testes devem ser Independentes (Independent) — eles não devem depender uns dos outros. [...] Testes devem ser Repetíveis (Repeatable) em qualquer ambiente. [...] Testes devem ser Autovalidáveis (Self-Validating), com uma saída booleana: passou ou falhou.” (tradução nossa)",
+        "fonte": "MARTIN, Robert C. Clean Code: A Handbook of Agile Software Craftsmanship. Upper Saddle River: Prentice Hall, 2008."
+      },
+      {
+        "t": "p",
+        "texto": "O BankFlow é um sistema de transferências bancárias. A equipe de desenvolvimento decidiu, há um ano, mockar completamente a integração com o serviço de validação de saldo em absolutamente todos os testes unitários da função de transferência — inclusive nos testes que deveriam verificar o comportamento em caso de saldo insuficiente, onde o mock sempre retorna “saldo suficiente = true”, independentemente do cenário testado."
+      },
+      {
+        "t": "p",
+        "texto": "Três meses atrás, uma alteração no serviço real de validação de saldo introduziu um defeito: o serviço passou a retornar incorretamente “saldo suficiente = true” mesmo quando o saldo era insuficiente, em uma condição específica envolvendo contas conjuntas. Como todos os testes unitários da função de transferência mockavam esse serviço, nenhum deles falhou — a suíte inteira, com 180 testes, permaneceu 100% verde. O defeito só foi percebido em produção, quando clientes com contas conjuntas conseguiram realizar transferências acima do saldo disponível, gerando saldo negativo não autorizado em 340 contas ao longo de três semanas."
+      },
+      {
+        "t": "p",
+        "texto": "Em retrospectiva, um desenvolvedor sênior observou: “Nossos testes eram rápidos, independentes e sempre passavam — ou seja, seguiam perfeitamente os princípios de bons testes. O problema não foi a forma como testamos, foi só azar de o defeito estar justamente na única parte que não testamos”."
+      }
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) Com base na citação de Fowler (2007), explique a diferença entre mockar uma dependência para isolar a lógica testada e mockar uma dependência de forma que o teste deixe de verificar seu comportamento real. Relacione sua resposta ao mock de “saldo suficiente = true” fixo, independentemente do cenário.",
+      "b) A citação de Martin (2008) descreve as propriedades Fast, Independent, Repeatable e Self-Validating. Os 180 testes do BankFlow cumpriam essas quatro propriedades. Isso significa que eram, de fato, bons testes? Justifique sua resposta considerando também o propósito de um teste, além de suas propriedades técnicas.",
+      "c) Qual camada da suíte de testes (unitária, integração ou E2E) deveria ter capturado esse defeito, mesmo com o mock presente nos testes unitários? Explique por que essa camada específica é a mais adequada para esse tipo de verificação.",
+      "d) Avalie criticamente a fala do desenvolvedor sênior, que atribui o incidente a “azar”. Sua avaliação deve se posicionar explicitamente sobre se a causa foi aleatória ou estrutural — e, nesse segundo caso, qual prática de automação de testes, estudada no capítulo, poderia ter prevenido esse tipo específico de problema."
+    ],
+    "linhas": 12
+  },
+  {
+    "id": "qualidade-cap6-q2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um stub fornece respostas enlatadas para chamadas feitas durante o teste, geralmente sem responder a nada fora do que foi programado para o teste. [...] Spies são stubs que também registram informações com base em como foram chamados. [...] Um mock é aquilo que descrevemos anteriormente: um objeto pré-programado com expectativas que formam uma especificação das chamadas que se espera que ele receba.” (tradução nossa)",
+        "fonte": "FOWLER, Martin. Mocks Aren't Stubs. martinfowler.com, 2007."
+      },
+      {
+        "t": "p",
+        "texto": "Uma desenvolvedora está testando uma função de envio de notificação por e-mail. Ela cria um objeto substituto para o serviço de e-mail que: (1) sempre retorna sucesso, independentemente dos dados enviados; e (2) armazena internamente quantas vezes foi chamado e com quais parâmetros, permitindo que o teste, ao final, verifique se a função foi chamada exatamente uma vez, com o endereço de e-mail correto do destinatário."
+      }
+    ],
+    "enunciado": "Considerando a citação de Fowler (2007), assinale a alternativa que classifica corretamente o objeto substituto descrito:",
+    "alternativas": [
+      "Trata-se de um stub simples, pois qualquer objeto que retorna uma resposta fixa se enquadra exclusivamente nessa categoria, independentemente de outras características",
+      "Trata-se de um spy, pois combina uma resposta fixa (sempre sucesso) com o registro de como foi chamado",
+      "Trata-se de um mock, pois qualquer objeto usado em testes automatizados é, por definição, um mock, independentemente de seu comportamento específico",
+      "Não é possível classificar o objeto, pois a citação de Fowler (2007) não define nenhuma distinção entre esses termos",
+      "Trata-se de um stub, pois o registro de chamadas é uma característica exclusiva de mocks, nunca de spies"
+    ],
+    "correta": 1,
+    "resolucao": "a citação define exatamente essa combinação como spy: um stub (resposta enlatada) que também registra informações sobre como foi chamado, permitindo verificações posteriores — exatamente o comportamento descrito no caso (retorno fixo de sucesso + registro de chamadas e parâmetros). {{A}} ignora a segunda característica (registro de chamadas), que vai além de um stub simples. {{C}} generaliza incorretamente o termo mock para qualquer substituto de teste, contrariando a distinção detalhada da própria citação. {{D}} é falso: a citação define claramente as três categorias. {{E}} inverte a definição: registro de chamadas é justamente a característica que diferencia spy de stub simples, segundo o texto motivador."
+  },
+  {
+    "id": "qualidade-cap6-q3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um stub fornece respostas enlatadas para chamadas feitas durante o teste, geralmente sem responder a nada fora do que foi programado para o teste. [...] Spies são stubs que também registram informações com base em como foram chamados. [...] Um mock é aquilo que descrevemos anteriormente: um objeto pré-programado com expectativas que formam uma especificação das chamadas que se espera que ele receba.” (tradução nossa)",
+        "fonte": "FOWLER, Martin. Mocks Aren't Stubs. martinfowler.com, 2007."
+      },
+      {
+        "t": "p",
+        "texto": "Uma desenvolvedora está testando uma função de envio de notificação por e-mail. Ela cria um objeto substituto para o serviço de e-mail que: (1) sempre retorna sucesso, independentemente dos dados enviados; e (2) armazena internamente quantas vezes foi chamado e com quais parâmetros, permitindo que o teste, ao final, verifique se a função foi chamada exatamente uma vez, com o endereço de e-mail correto do destinatário."
+      },
+      {
+        "t": "p",
+        "texto": "Em um teste diferente, para a mesma função de envio de notificação, um outro desenvolvedor cria um objeto substituto com expectativas pré-definidas antes da execução: “espero que o método enviar() seja chamado exatamente uma vez, com o parâmetro destinatario igual a 'cliente@banco.com'”. Se essa expectativa específica não for cumprida durante a execução, o próprio objeto substituto faz o teste falhar imediatamente, antes mesmo de qualquer asserção explícita ser verificada ao final do teste."
+      }
+    ],
+    "enunciado": "Considerando a citação de Fowler (2007), assinale a alternativa que classifica corretamente esse segundo objeto substituto:",
+    "alternativas": [
+      "Stub, pois qualquer objeto que simula uma dependência externa é, por definição, um stub",
+      "Spy, pois registra informações sobre como foi chamado, exatamente como no caso anterior",
+      "Mock, pois é pré-programado com expectativas sobre as chamadas e verifica o próprio comportamento",
+      "Este objeto e o spy do caso anterior são tecnicamente idênticos, e a diferença entre eles é apenas de nomenclatura escolhida por cada desenvolvedor",
+      "Esse objeto não se qualifica em nenhuma das três categorias descritas por Fowler (2007), exigindo uma quarta categoria não mencionada no texto motivador"
+    ],
+    "correta": 2,
+    "resolucao": "a definição central de mock, segundo a citação, é ser pré-programado com expectativas que formam uma especificação das chamadas esperadas, com verificação do comportamento (a chamada em si) — exatamente o que ocorre quando o objeto do caso falha imediatamente ao não cumprir a expectativa definida antecipadamente. {{A}} ignora que um stub simples não verifica comportamento, apenas responde a chamadas. {{B}} confunde o cenário com o caso anterior: o spy registra e permite verificação posterior, mas não falha imediatamente por si só ao violar uma expectativa predefinida, como descrito neste novo cenário. {{D}} ignora uma diferença central: um verifica estado (spy consultado depois) e o outro verifica comportamento (mock que falha durante a própria execução). {{E}} é desnecessário: a citação já cobre esse comportamento na definição de mock."
+  },
+  {
+    "id": "qualidade-cap6-q4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Testes precisam rodar rapidamente. Quando os testes são lentos, você não vai querer rodá-los com frequência. [...] Se os testes não forem independentes, um teste pode estabelecer condições para o próximo teste, tornando-o dependente e difícil de diagnosticar quando algo falha.” (tradução nossa)",
+        "fonte": "MARTIN, Robert C. Clean Code: A Handbook of Agile Software Craftsmanship. Upper Saddle River: Prentice Hall, 2008."
+      },
+      {
+        "t": "p",
+        "texto": "Uma suíte de testes de um sistema de reservas de hotel possui um teste chamado “criar_reserva_sucesso” que, antes de rodar, depende de outro teste (“limpar_quartos_disponiveis”) ter rodado antes e deixado o banco de dados de teste em um estado específico. Quando os testes são executados fora de ordem — o que ocorre ocasionalmente na execução paralela do pipeline de CI/CD —, o teste “criar_reserva_sucesso” falha de forma imprevisível, mesmo quando a funcionalidade de criar reserva está funcionando corretamente no sistema."
+      }
+    ],
+    "enunciado": "Considerando a citação de Martin (2008) sobre as propriedades de bons testes, assinale a alternativa correta:",
+    "alternativas": [
+      "Viola a propriedade Rápido (Fast), pois depender de outro teste é lento",
+      "Viola a propriedade Independente (Independent), pois o resultado depende de outro teste ter rodado antes",
+      "O teste está corretamente projetado, pois testes que dependem uns dos outros são uma prática recomendada para reduzir duplicação de código de preparação (setup)",
+      "O problema relatado não tem relação com nenhuma das propriedades citadas, sendo exclusivamente uma falha de configuração do pipeline de CI/CD",
+      "O teste viola a propriedade de ser Autovalidável (Self-Validating), pois seu resultado depende de interpretação manual do desenvolvedor"
+    ],
+    "correta": 1,
+    "resolucao": "a dependência de ordem de execução entre dois testes é exatamente o problema descrito na citação sobre a propriedade Independent: quando testes estabelecem condições um para o outro, tornam-se difíceis de diagnosticar e vulneráveis à ordem em que são executados, como o caso demonstra ao falhar de forma imprevisível na execução paralela. {{A}} confunde duas propriedades diferentes: o problema não é necessariamente velocidade, é dependência de estado entre testes. {{C}} trata como boa prática exatamente o anti-padrão que a citação adverte contra. {{D}} atribui à infraestrutura (pipeline) um problema que é, na verdade, de design do teste em si — a execução paralela apenas expôs um problema pré-existente de acoplamento entre testes. {{E}} confunde independência de execução com autovalidação, que se refere à necessidade de o teste ter um resultado automaticamente verificável (passou/falhou), não à ordem de execução."
+  },
+  {
+    "id": "qualidade-cap6-q5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Testes precisam rodar rapidamente. Quando os testes são lentos, você não vai querer rodá-los com frequência. [...] Se os testes não forem independentes, um teste pode estabelecer condições para o próximo teste, tornando-o dependente e difícil de diagnosticar quando algo falha.” (tradução nossa)",
+        "fonte": "MARTIN, Robert C. Clean Code: A Handbook of Agile Software Craftsmanship. Upper Saddle River: Prentice Hall, 2008."
+      },
+      {
+        "t": "p",
+        "texto": "Uma suíte de testes de um sistema de reservas de hotel possui um teste chamado “criar_reserva_sucesso” que, antes de rodar, depende de outro teste (“limpar_quartos_disponiveis”) ter rodado antes e deixado o banco de dados de teste em um estado específico. Quando os testes são executados fora de ordem — o que ocorre ocasionalmente na execução paralela do pipeline de CI/CD —, o teste “criar_reserva_sucesso” falha de forma imprevisível, mesmo quando a funcionalidade de criar reserva está funcionando corretamente no sistema."
+      },
+      {
+        "t": "p",
+        "texto": "Para corrigir o problema, a equipe reescreve o teste “criar_reserva_sucesso” para que ele próprio configure, no início de sua execução, todo o estado necessário do banco de dados de teste (criando os quartos disponíveis que utilizará), sem depender de nenhum outro teste ter rodado antes."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que avalia corretamente essa correção, à luz das propriedades FIRST descritas por Martin (2008):",
+    "alternativas": [
+      "A correção piora a suíte, pois duplicar código de configuração entre testes é sempre uma prática proibida na automação de testes, segundo Martin (2008)",
+      "A correção devolve ao teste a Independência: ele passa a rodar em qualquer ordem, ou sozinho",
+      "A correção é desnecessária: o teste já seguia o FIRST",
+      "A correção torna o teste mais lento, o que viola automaticamente a propriedade Fast, tornando a mudança tecnicamente incorreta",
+      "A correção é irrelevante para as propriedades FIRST, servindo apenas para facilitar a leitura do código do teste"
+    ],
+    "correta": 1,
+    "resolucao": "ao configurar seu próprio estado necessário, o teste deixa de depender da execução prévia de outro teste específico, restaurando exatamente a propriedade de Independência discutida na citação, e tornando-o executável em qualquer ordem ou isoladamente. {{A}} trata como proibição absoluta algo que, no contexto específico de testes automatizados, é uma prática aceita em troca de maior confiabilidade. {{C}} contraria diretamente a Questão 4, que já identificou a violação da propriedade Independent no cenário original. {{D}} presume uma perda de velocidade sem base no enunciado, e mesmo que houvesse pequeno custo adicional, a prioridade de corrigir uma violação estrutural (independência) normalmente supera uma perda marginal de velocidade. {{E}} subestima o impacto da mudança, que vai além de legibilidade e resolve diretamente um problema estrutural de confiabilidade da suíte."
+  },
+  {
+    "id": "qualidade-cap6-q6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Cobertura de teste é uma métrica útil, mas perigosa. [...] É perfeitamente possível ter 100% de cobertura de linhas e ainda assim ter um código cheio de bugs, porque a métrica de cobertura mede apenas quais linhas foram executadas, não se o comportamento correto foi de fato verificado por uma asserção significativa.” (tradução nossa)",
+        "fonte": "FEATHERS, Michael. Working Effectively with Legacy Code. Upper Saddle River: Prentice Hall, 2004."
+      },
+      {
+        "t": "p",
+        "texto": "Uma equipe recebeu a meta de atingir 90% de cobertura de código antes do próximo lançamento. Para cumprir o prazo, um desenvolvedor escreveu dezenas de testes que apenas chamam cada função do sistema, sem nenhuma asserção sobre o valor retornado os testes apenas verificam que a função “não lança exceção” ao ser chamada. Com essa abordagem, a cobertura de linhas do projeto saltou de 62% para 91% em dois dias, e a meta foi formalmente cumprida."
+      }
+    ],
+    "enunciado": "Considerando a citação de Feathers (2004) e o caso relatado, assinale a alternativa correta:",
+    "alternativas": [
+      "A meta de cobertura foi cumprida de forma tecnicamente adequada, pois qualquer execução de uma linha de código, independentemente de haver asserção, já garante que aquele trecho está livre de defeitos",
+      "Os testes aumentam a cobertura sem verificar o comportamento: cobertura alta não implica ausência de bugs com asserções fracas",
+      "A citação de Feathers (2004) afirma que cobertura de linhas é uma métrica irrelevante e nunca deveria ser utilizada em nenhum contexto de automação de testes",
+      "O salto de 62% para 91% de cobertura em dois dias é, por si só, prova de que os novos testes escritos têm qualidade equivalente aos testes anteriores da suíte",
+      "Testes sem asserção nem chegam a rodar no Jest ou no Vitest"
+    ],
+    "correta": 1,
+    "resolucao": "o caso é uma ilustração quase didática do risco descrito na citação: a cobertura de linhas subiu significativamente, mas os testes não verificam nenhum comportamento esperado além da ausência de exceção — exatamente o cenário de ‘100% de cobertura e ainda assim bugs presentes’ mencionado por Feathers. {{A}} comete o erro central que a citação adverte: confundir execução de linha com verificação de comportamento correto. {{C}} exagera a posição de Feathers, que não descarta a métrica, apenas alerta sobre sua interpretação isolada. {{D}} presume qualidade a partir de velocidade de produção dos testes, sem qualquer relação lógica entre as duas coisas. {{E}} é factualmente incorreto: frameworks de teste permitem perfeitamente escrever testes sem asserções robustas, o que é justamente o problema descrito, não uma impossibilidade técnica."
+  },
+  {
+    "id": "qualidade-cap6-q7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Cobertura de teste é uma métrica útil, mas perigosa. [...] É perfeitamente possível ter 100% de cobertura de linhas e ainda assim ter um código cheio de bugs, porque a métrica de cobertura mede apenas quais linhas foram executadas, não se o comportamento correto foi de fato verificado por uma asserção significativa.” (tradução nossa)",
+        "fonte": "FEATHERS, Michael. Working Effectively with Legacy Code. Upper Saddle River: Prentice Hall, 2004."
+      },
+      {
+        "t": "p",
+        "texto": "Uma equipe recebeu a meta de atingir 90% de cobertura de código antes do próximo lançamento. Para cumprir o prazo, um desenvolvedor escreveu dezenas de testes que apenas chamam cada função do sistema, sem nenhuma asserção sobre o valor retornado os testes apenas verificam que a função “não lança exceção” ao ser chamada. Com essa abordagem, a cobertura de linhas do projeto saltou de 62% para 91% em dois dias, e a meta foi formalmente cumprida."
+      },
+      {
+        "t": "p",
+        "texto": "Ao revisar os novos testes, uma líder técnica propõe uma mudança na meta da equipe: em vez de “atingir 90% de cobertura de linhas”, a meta passa a ser “garantir que toda função de cálculo financeiro tenha ao menos um teste que verifique o valor de retorno esperado para um cenário válido e um cenário inválido”."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que avalia corretamente essa mudança de meta, à luz da citação de Feathers (2004):",
+    "alternativas": [
+      "A nova meta é pior do que a anterior, pois abandona completamente qualquer noção de cobertura, tornando a suíte impossível de ser avaliada",
+      "A nova meta troca uma métrica de execução (linhas que rodaram) por uma de comportamento (retorno correto), como defende Feathers",
+      "As duas metas são estritamente equivalentes em termos de esforço e resultado, mudando apenas a forma como são descritas para a equipe",
+      "A nova meta é tecnicamente inferior, pois não pode ser medida automaticamente por nenhuma ferramenta de cobertura de código, dependendo sempre da revisão manual de cada teste",
+      "A mudança de meta só faz sentido se a equipe abandonar completamente o uso de ferramentas de cobertura de linhas no projeto"
+    ],
+    "correta": 1,
+    "resolucao": "a nova meta desloca exatamente o foco criticado por Feathers: de ‘quantas linhas foram executadas’ para ‘o comportamento correto foi verificado’, com asserções específicas sobre cenários válidos e inválidos — o núcleo da distinção entre cobertura e qualidade de teste discutida no capítulo. {{A}} trata abandonar uma métrica frágil como se fosse abandonar qualquer forma de avaliação, o que não é o caso. {{C}} ignora uma diferença de fundo entre as duas metas, mesmo que ambas sejam mensuráveis de alguma forma. {{D}} é impreciso: é perfeitamente possível medir se as funções financeiras possuem os testes exigidos, mesmo que não seja apenas uma métrica percentual de linhas. {{E}} propõe um extremo desnecessário: as duas métricas podem, na prática, coexistir — cobertura de linhas como indicador complementar, não como meta principal isolada."
+  },
+  {
+    "id": "qualidade-cap6-q8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um Page Object encapsula os elementos de uma página web dentro de uma aplicação [...] Os métodos desse Page Object então encapsulam a funcionalidade presente na própria página. [...] Como resultado, se a interface do usuário mudar, a correção precisa ser feita em apenas um lugar.” (tradução nossa)",
+        "fonte": "FOWLER, Martin. PageObject. martinfowler.com, 2013."
+      },
+      {
+        "t": "p",
+        "texto": "A suíte E2E de um sistema de e-commerce possui 60 testes com Playwright. O seletor CSS do botão “Adicionar ao Carrinho” está escrito diretamente, de forma duplicada, em 22 desses testes. Quando o time de front-end alterou a estrutura HTML dessa página em uma atualização visual, 22 testes quebraram simultaneamente, e a equipe de QA precisou editar, um por um, cada arquivo de teste para atualizar o seletor."
+      }
+    ],
+    "enunciado": "Considerando a citação de Fowler (2013) sobre o padrão Page Object, assinale a alternativa correta:",
+    "alternativas": [
+      "O problema relatado é inevitável em qualquer suíte E2E, independentemente de como os seletores são organizados no código dos testes",
+      "Com um Page Object compartilhado, a mudança no seletor do botão seria corrigida em um só lugar, e não em 22 arquivos",
+      "O Page Object serve só para testes unitários, não para E2E",
+      "A duplicação de seletores em múltiplos testes é considerada uma boa prática, pois torna cada teste completamente independente dos demais",
+      "O uso de Page Object eliminaria completamente a necessidade de atualizar testes quando a interface do usuário mudar, independentemente da natureza da mudança"
+    ],
+    "correta": 1,
+    "resolucao": "a própria citação descreve exatamente esse benefício: encapsular elementos e funcionalidades de uma página em um único lugar, de modo que mudanças na interface exijam correção em um único ponto, não em cada teste que referencia o elemento — exatamente o problema que os 22 testes duplicados sofreram. {{A}} ignora que o padrão descrito no texto motivador existe justamente para mitigar esse tipo de problema. {{C}} é factualmente incorreto: Page Object é uma técnica amplamente associada a testes E2E de interface, como o próprio caso demonstra. {{D}} confunde independência entre testes (uma propriedade positiva, estudada no Texto 3) com duplicação de código de localização de elementos (um problema de manutenibilidade, não relacionado a independência). {{E}} exagera o benefício: Page Object concentra a correção em um lugar, mas não elimina a necessidade de fazer essa correção quando a mudança de fato afeta o elemento encapsulado."
+  },
+  {
+    "id": "qualidade-cap6-q9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um Page Object encapsula os elementos de uma página web dentro de uma aplicação [...] Os métodos desse Page Object então encapsulam a funcionalidade presente na própria página. [...] Como resultado, se a interface do usuário mudar, a correção precisa ser feita em apenas um lugar.” (tradução nossa)",
+        "fonte": "FOWLER, Martin. PageObject. martinfowler.com, 2013."
+      },
+      {
+        "t": "p",
+        "texto": "A suíte E2E de um sistema de e-commerce possui 60 testes com Playwright. O seletor CSS do botão “Adicionar ao Carrinho” está escrito diretamente, de forma duplicada, em 22 desses testes. Quando o time de front-end alterou a estrutura HTML dessa página em uma atualização visual, 22 testes quebraram simultaneamente, e a equipe de QA precisou editar, um por um, cada arquivo de teste para atualizar o seletor."
+      },
+      {
+        "t": "p",
+        "texto": "Após adotar Page Objects para as páginas principais do sistema, a equipe de QA percebe que um novo desenvolvedor, ao escrever um teste para uma funcionalidade de cupom de desconto, voltou a escrever o seletor CSS diretamente no arquivo de teste, sem utilizar o Page Object já existente para aquela página, alegando que “era mais rápido escrever direto do que aprender a estrutura do Page Object”."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que avalia corretamente essa decisão, à luz do propósito do padrão Page Object descrito por Fowler (2013):",
+    "alternativas": [
+      "A decisão é tecnicamente aceitável, pois qualquer economia imediata de tempo de escrita do teste supera considerações futuras de manutenção da suíte de testes E2E",
+      "A decisão traz de volta o problema que o Page Object resolve: uma mudança nessa página exigirá correção em dois lugares",
+      "A decisão é irrelevante, pois seletores CSS nunca mudam depois de definidos pela primeira vez em um projeto",
+      "A decisão deveria ser incentivada, pois reduz a dependência da suíte de testes em relação a um único arquivo de Page Object",
+      "A decisão só seria um problema se o cupom de desconto fosse uma funcionalidade crítica do sistema"
+    ],
+    "correta": 1,
+    "resolucao": "ao escrever o seletor diretamente, esse teste específico volta a ficar vulnerável ao mesmo problema que motivou a adoção de Page Objects: se a página mudar, será necessário corrigir tanto o Page Object (para os demais testes) quanto esse teste isolado, duplicando exatamente o esforço que o padrão busca evitar. {{A}} prioriza uma economia de tempo imediata e pequena em troca de um risco de manutenção recorrente, contrariando o próprio raciocínio econômico implícito na adoção do padrão. {{C}} é uma afirmação factualmente falsa sobre desenvolvimento de interfaces web. {{D}} inverte o valor do padrão: reduzir a dependência de um Page Object bem mantido não é um benefício, é a perda do benefício central descrito na citação. {{E}} introduz uma condição (criticidade da funcionalidade) irrelevante para o problema estrutural de manutenibilidade em questão."
+  },
+  {
+    "id": "qualidade-cap6-q10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Esta especificação define um protocolo remoto que pode ser usado para inspecionar e controlar agentes de usuário [...] O protocolo é projetado para permitir que clientes remotos deem instruções ao comportamento de navegadores web, exercitando o controle sobre um agente de usuário. [...] O protocolo utiliza uma API baseada em REST sobre HTTP.” (tradução nossa)",
+        "fonte": "W3C. WebDriver: W3C Recommendation. World Wide Web Consortium, 2018."
+      },
+      {
+        "t": "p",
+        "texto": "Uma equipe de QA compara dois scripts equivalentes de automação: um usando Selenium WebDriver e outro usando Playwright, ambos abrindo uma página, clicando em um botão e verificando o texto resultante. Ao medir o tempo de execução de 100 repetições de cada script, o script do Selenium levou, em média, 340 milissegundos a mais por interação do que o script equivalente do Playwright, mesmo rodando no mesmo navegador e na mesma máquina."
+      }
+    ],
+    "enunciado": "Considerando a especificação do WebDriver (W3C, 2018) e o resultado da comparação, assinale a alternativa que explica corretamente a diferença de desempenho observada:",
+    "alternativas": [
+      "O Selenium, pelo WebDriver, fala com o navegador por um protocolo remoto REST sobre HTTP; o Playwright usa o protocolo nativo",
+      "A diferença é resultado exclusivo de uma configuração incorreta do ambiente de teste, sem relação com os protocolos de comunicação usados por cada ferramenta",
+      "O protocolo WebDriver, segundo a especificação do W3C (2018), é sempre mais rápido do que qualquer alternativa, tornando o resultado do experimento tecnicamente implausível",
+      "A diferença de desempenho não tem relação com a arquitetura de comunicação de nenhuma das ferramentas, sendo causada apenas pela versão do navegador utilizada",
+      "As duas ferramentas usam o mesmo protocolo; a diferença é acaso"
+    ],
+    "correta": 0,
+    "resolucao": "a especificação do W3C confirma que o WebDriver opera como um protocolo remoto baseado em REST sobre HTTP, uma camada de comunicação adicional entre o código de teste e o navegador — consistente com a maior latência observada no Selenium em comparação ao Playwright, que se conecta de forma mais direta ao protocolo interno do navegador. {{B}} ignora a explicação arquitetural fornecida pela própria especificação citada. {{C}} inverte o sentido da citação, que apenas descreve o protocolo, sem afirmar que ele seja o mais rápido possível. {{D}} nega, sem fundamento, uma relação de causa já documentada na literatura técnica sobre essas ferramentas. {{E}} é factualmente incorreto: a proposta central do Playwright é justamente não depender do protocolo WebDriver da mesma forma que o Selenium."
+  },
+  {
+    "id": "qualidade-cap6-q11",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Esta especificação define um protocolo remoto que pode ser usado para inspecionar e controlar agentes de usuário [...] O protocolo é projetado para permitir que clientes remotos deem instruções ao comportamento de navegadores web, exercitando o controle sobre um agente de usuário. [...] O protocolo utiliza uma API baseada em REST sobre HTTP.” (tradução nossa)",
+        "fonte": "W3C. WebDriver: W3C Recommendation. World Wide Web Consortium, 2018."
+      },
+      {
+        "t": "p",
+        "texto": "Uma equipe de QA compara dois scripts equivalentes de automação: um usando Selenium WebDriver e outro usando Playwright, ambos abrindo uma página, clicando em um botão e verificando o texto resultante. Ao medir o tempo de execução de 100 repetições de cada script, o script do Selenium levou, em média, 340 milissegundos a mais por interação do que o script equivalente do Playwright, mesmo rodando no mesmo navegador e na mesma máquina."
+      },
+      {
+        "t": "p",
+        "texto": "Apesar da diferença de desempenho observada, a equipe de QA decide manter parte da suíte em Selenium, especificamente para os testes que validam o sistema legado de back-office da empresa, que só recebe suporte de automação oficialmente homologado em Selenium havia mais de oito anos, com uma extensa base de testes já validada."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que avalia corretamente essa decisão:",
+    "alternativas": [
+      "A decisão é tecnicamente incorreta, pois qualquer suíte de testes deveria obrigatoriamente utilizar exclusivamente a ferramenta mais rápida disponível, independentemente do contexto",
+      "A decisão é coerente: em sistemas legados, reescrever uma grande base de testes já validada pode custar mais que o ganho de velocidade",
+      "A decisão só seria válida se o sistema de back-office fosse completamente reescrito antes de qualquer teste ser executado",
+      "Selenium e Playwright são reconhecidos pela especificação W3C (2018) como tecnicamente incompatíveis entre si, impedindo que ambos coexistam na mesma organização",
+      "A decisão é irrelevante, pois a escolha de ferramenta de automação nunca deveria considerar fatores como sistemas legados ou base de testes já existente"
+    ],
+    "correta": 1,
+    "resolucao": "a decisão reflete um raciocínio de custo-benefício realista: a diferença de desempenho é real, mas o custo de reescrever uma suíte extensa e já validada, para um sistema legado, pode não justificar a migração completa — um tipo de análise técnica-econômica recorrente na indústria, coerente com o conteúdo do capítulo sobre quando automatizar (e reescrever) vale a pena. {{A}} ignora completamente considerações práticas de custo e risco de reescrita, tratando velocidade como o único critério relevante. {{C}} propõe uma condição desnecessária e não sustentada pelo capítulo. {{D}} é factualmente falso: nada na especificação do WebDriver torna as duas ferramentas mutuamente exclusivas dentro de uma mesma organização. {{E}} contraria diretamente boas práticas de gestão de automação de testes, que devem sim considerar o contexto real do sistema testado."
+  },
+  {
+    "id": "qualidade-cap6-q12",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Escrever testes que passam nos convenceu de que o código estava correto de uma forma que a simples leitura do código nunca havia conseguido. [...] Testadores infectados escrevem código de teste. Muito código de teste. Código de teste que ajuda a acelerar o próprio desenvolvimento, em vez de atrasá-lo.” (tradução nossa)",
+        "fonte": "BECK, Kent; GAMMA, Erich. Test Infected: Programmers Love Writing Tests. Java Report, v. 3, n. 7, 1998."
+      },
+      {
+        "t": "p",
+        "texto": "Uma equipe de desenvolvimento Java que mantém um sistema de gestão acadêmica está decidindo entre duas abordagens para sua nova suíte de testes automatizados: usar JUnit, com sua estrutura mais simples e direta de anotações, ou adotar TestNG desde o início, motivada por um requisito específico do projeto: a necessidade de executar centenas de testes de integração em paralelo, agrupados por categoria (testes de matrícula, testes de notas, testes financeiros), com dependências explícitas entre alguns desses grupos."
+      }
+    ],
+    "enunciado": "Considerando o espírito descrito por Beck e Gamma (1998) sobre a cultura de testes automatizados, e as características de JUnit e TestNG estudadas no capítulo, assinale a alternativa correta:",
+    "alternativas": [
+      "A equipe deveria escolher JUnit exclusivamente, pois é a única ferramenta capaz de gerar a confiança descrita na citação de Beck e Gamma (1998)",
+      "O TestNG atende mais diretamente ao requisito, com suporte nativo a execução paralela, grupos e dependências entre grupos",
+      "A escolha entre JUnit e TestNG é totalmente irrelevante para um sistema de gestão acadêmica, pois ambas as ferramentas são, segundo a citação, tecnicamente idênticas em todos os aspectos",
+      "A citação de Beck e Gamma (1998) recomenda explicitamente o uso de TestNG em vez de JUnit para qualquer projeto Java desenvolvido após 1998",
+      "A equipe deveria abandonar completamente a automação de testes, pois a citação sugere que escrever testes atrasa o desenvolvimento"
+    ],
+    "correta": 1,
+    "resolucao": "a citação de Beck e Gamma descreve a cultura e a confiança geradas pela prática de testes automatizados, um espírito que se aplica independentemente da ferramenta específica; já a escolha técnica entre JUnit e TestNG deve considerar as características de cada uma — e o requisito descrito (paralelismo, agrupamento por categoria, dependências entre grupos) é justamente o ponto forte do TestNG destacado no capítulo. {{A}} transforma uma citação sobre cultura de testes em uma recomendação de ferramenta específica, o que o texto não afirma. {{C}} nega diferenças técnicas reais e documentadas entre as duas ferramentas, estudadas no capítulo. {{D}} é uma inversão factual: a citação é de 1998, ano de popularização do próprio JUnit, e não menciona o TestNG, criado posteriormente. {{E}} distorce completamente o sentido da citação, que defende exatamente o oposto: testes bem escritos aceleram o desenvolvimento."
+  },
+  {
+    "id": "qualidade-cap7-q1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "discursiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Teste de regressão é o processo de testar novamente um programa já testado, após uma modificação, para assegurar que nenhum defeito foi introduzido ou revelado em áreas do software que não foram alteradas, como resultado das mudanças realizadas.” (tradução nossa)",
+        "fonte": "BEIZER, Boris. Software Testing Techniques. 2. ed. New York: Van Nostrand Reinhold, 1990."
+      },
+      {
+        "t": "citacao",
+        "texto": "“Um teste é dito flaky quando pode passar ou falhar sem que nenhuma mudança tenha sido feita no código sob teste. [...] Entre as causas mais comuns de flakiness identificadas em nossa análise estão: espera assíncrona mal implementada, dependência de ordem de execução entre testes, e dependência de condições externas como rede ou tempo do sistema.” (tradução nossa)",
+        "fonte": "LUO, Qingzhou; HARIRI, Farah; ELOUSSI, Lamyaa; MARINOV, Darko. An Empirical Analysis of Flaky Tests. In: Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE 2014), p. 643-653."
+      },
+      {
+        "t": "p",
+        "texto": "A EntregaJá, plataforma de delivery, mantém uma suíte de regressão com 900 testes automatizados. Nos últimos seis meses, a equipe percebeu que 65 desses testes falham e passam de forma intermitente, sem qualquer alteração de código associada — a maioria deles depende de esperas fixas (“aguardar 2 segundos antes de continuar”) em vez de aguardar um elemento específico da tela aparecer, e um grupo menor depende da ordem em que os testes são executados dentro do pipeline."
+      },
+      {
+        "t": "p",
+        "texto": "Diante da instabilidade, o time de engenharia decidiu configurar o pipeline de CI/CD para executar automaticamente até três novas tentativas de qualquer teste que falhar, antes de considerar a build como quebrada — prática que reduziu as interrupções do pipeline, mas também fez com que, em duas ocasiões nos últimos dois meses, um defeito real de cálculo de frete passasse pela suíte, porque o teste correspondente falhou na primeira tentativa (corretamente, detectando o bug) e passou na segunda tentativa por coincidência, já que a falha dependia de uma condição de corrida que nem sempre se manifestava."
+      },
+      {
+        "t": "p",
+        "texto": "O gerente de engenharia defende a prática atual, afirmando: “Três tentativas automáticas são uma solução pragmática e amplamente usada na indústria — o importante é que o pipeline não fique travado por instabilidades que não são culpa do código”."
+      }
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) Com base na citação de Luo et al. (2014), identifique as duas causas de flakiness descritas no caso da EntregaJá, relacionando cada uma a um grupo específico dos 65 testes mencionados.",
+      "b) Com base na citação de Beizer (1990), explique por que a suíte de regressão da EntregaJá deixa de cumprir seu propósito fundamental quando um defeito real de cálculo de frete é mascarado por uma nova tentativa automática que “passa por coincidência”.",
+      "c) Para cada uma das duas causas de flakiness identificadas no item (a), proponha uma correção técnica específica (não a política de novas tentativas automáticas) que elimine a causa raiz, em vez de apenas mascará-la.",
+      "d) Avalie criticamente a afirmação do gerente de engenharia de que a política de três tentativas automáticas é uma “solução pragmática”. Sua avaliação deve se posicionar explicitamente sobre se essa política resolve, mascara, ou agrava o problema estrutural relatado no caso — e por quê."
+    ],
+    "linhas": 12
+  },
+  {
+    "id": "qualidade-cap7-q2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O termo regressão vem da ideia de que o software pode regredir — voltar a um estado pior — mesmo quando a intenção da mudança era apenas melhorá-lo. [...] Quanto maior e mais interconectado o sistema, maior a probabilidade de que uma mudança localizada tenha efeitos em partes aparentemente não relacionadas.” (tradução nossa)",
+        "fonte": "BEIZER, Boris. Software Testing Techniques. 2. ed. New York: Van Nostrand Reinhold, 1990."
+      },
+      {
+        "t": "p",
+        "texto": "Um desenvolvedor da ContaFácil corrige um bug isolado no módulo de exportação de relatórios em PDF. O bug era simples: um erro de formatação de data. Duas semanas depois, a equipe de suporte recebe reclamações de que o módulo de envio automático de boletos, que não foi alterado por esse desenvolvedor, começou a enviar boletos com valores duplicados — rastreando o problema, a causa foi uma função utilitária de formatação de datas, compartilhada entre os dois módulos, que o desenvolvedor alterou sem saber que também era usada pelo módulo de boletos."
+      }
+    ],
+    "enunciado": "Considerando a citação de Beizer (1990) e o caso da ContaFácil, assinale a alternativa correta:",
+    "alternativas": [
+      "O caso não se qualifica como um problema de regressão, pois o módulo de boletos não foi diretamente modificado por nenhum desenvolvedor",
+      "É uma regressão: a mudança na formatação de data do PDF afetou o envio de boletos por uma dependência compartilhada",
+      "O problema só poderia ser classificado como regressão se o próprio módulo de exportação de PDF tivesse voltado a apresentar o erro de formatação original, corrigido na versão anterior",
+      "A citação de Beizer (1990) se aplica exclusivamente a mudanças de interface visual, não a funções utilitárias internas como a descrita no caso",
+      "Só é possível classificar sabendo se a função tinha testes unitários"
+    ],
+    "correta": 1,
+    "resolucao": "o caso reproduz com precisão a definição de Beizer: uma mudança feita com boa intenção (corrigir formatação de data no PDF) introduziu um defeito em uma área do sistema aparentemente não relacionada (envio de boletos), por meio de uma dependência compartilhada que não era óbvia para quem fez a alteração — exatamente o risco que a regressão busca capturar. {{A}} restringe indevidamente o conceito de regressão a mudanças diretas no próprio módulo afetado, ignorando que dependências compartilhadas são justamente a origem mais comum de regressões sutis. {{C}} inverte a definição: regressão não exige que o mesmo defeito original reapareça, apenas que a mudança tenha causado um novo problema em outro lugar. {{D}} restringe sem fundamento o conceito a um tipo específico de mudança. {{E}} introduz uma condição irrelevante para a classificação conceitual do problema como regressão, ainda que relevante para discutir como o problema poderia ter sido evitado."
+  },
+  {
+    "id": "qualidade-cap7-q3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O termo regressão vem da ideia de que o software pode regredir — voltar a um estado pior — mesmo quando a intenção da mudança era apenas melhorá-lo. [...] Quanto maior e mais interconectado o sistema, maior a probabilidade de que uma mudança localizada tenha efeitos em partes aparentemente não relacionadas.” (tradução nossa)",
+        "fonte": "BEIZER, Boris. Software Testing Techniques. 2. ed. New York: Van Nostrand Reinhold, 1990."
+      },
+      {
+        "t": "p",
+        "texto": "Um desenvolvedor da ContaFácil corrige um bug isolado no módulo de exportação de relatórios em PDF. O bug era simples: um erro de formatação de data. Duas semanas depois, a equipe de suporte recebe reclamações de que o módulo de envio automático de boletos, que não foi alterado por esse desenvolvedor, começou a enviar boletos com valores duplicados — rastreando o problema, a causa foi uma função utilitária de formatação de datas, compartilhada entre os dois módulos, que o desenvolvedor alterou sem saber que também era usada pelo módulo de boletos."
+      },
+      {
+        "t": "p",
+        "texto": "Após o incidente, a liderança técnica da ContaFácil propõe que, a partir de agora, qualquer alteração em uma função utilitária compartilhada entre múltiplos módulos dispare automaticamente a execução de testes de regressão de todos os módulos que dependem dela, identificados através de uma análise de dependências do código."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que avalia corretamente essa proposta:",
+    "alternativas": [
+      "A proposta é desnecessária, pois funções utilitárias compartilhadas nunca deveriam ser modificadas em nenhuma circunstância, eliminando o risco pela raiz",
+      "A proposta reduz o risco de regressões, pois amplia o escopo de testes para as áreas que dependem da mudança",
+      "A proposta é equivalente a simplesmente rodar toda a suíte de regressão a cada commit, sem nenhuma vantagem adicional de precisão",
+      "A proposta só faz sentido se a ContaFácil abandonar completamente o uso de funções utilitárias compartilhadas entre módulos",
+      "A proposta só serve para documentar dependências entre módulos"
+    ],
+    "correta": 1,
+    "resolucao": "a proposta ataca exatamente a causa raiz do incidente: identificar, através de análise de dependências, quais módulos podem ser afetados por uma mudança aparentemente isolada, e garantir que sejam re-testados mesmo sem alteração direta em seu próprio código — coerente com a definição de regressão discutida no capítulo. {{A}} propõe uma solução impraticável (nunca alterar código compartilhado), que inviabilizaria a manutenção normal do sistema. {{C}} ignora uma diferença real de precisão: rodar toda a suíte a cada commit é a estratégia de Regressão Total, enquanto a proposta descreve uma forma mais direcionada de Seleção por Impacto, tecnicamente distinta. {{D}} propõe um extremo desnecessário para obter o benefício descrito. {{E}} subestima o valor preventivo real da proposta, tratando-a como meramente documental."
+  },
+  {
+    "id": "qualidade-cap7-q4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O termo smoke test vem da indústria de hardware: quando um novo circuito é ligado pela primeira vez, e nenhuma fumaça sai dele, ele passou no smoke test e está pronto para testes mais detalhados. [...] Um smoke test diário garante que o build mais recente do produto seja minimamente funcional o suficiente para ser testado de forma mais completa.” (tradução nossa)",
+        "fonte": "MCCONNELL, Steve. Rapid Development: Taming Wild Software Schedules. Redmond: Microsoft Press, 1996."
+      },
+      {
+        "t": "p",
+        "texto": "A StreamPlay, plataforma de streaming de vídeo, configurou seu pipeline para, a cada novo build gerado (em média 12 vezes por dia), executar automaticamente 8 testes que verificam apenas: (1) a página inicial carrega; (2) o login funciona; (3) um vídeo específico consegue ser reproduzido; e (4) a busca retorna resultados para um termo conhecido. Esses 8 testes levam, em média, 90 segundos para rodar."
+      }
+    ],
+    "enunciado": "Considerando a citação de McConnell (1996) e o caso da StreamPlay, assinale a alternativa correta:",
+    "alternativas": [
+      "Os 8 testes descritos não se qualificam como smoke test, pois um smoke test deve obrigatoriamente cobrir 100% das funcionalidades do sistema",
+      "Os 8 testes são um smoke test: uma verificação rápida de que o build está \"funcional o suficiente\", não uma validação completa",
+      "A StreamPlay deveria substituir os 8 testes por uma execução completa da suíte de regressão a cada build, já que rodar em 90 segundos é tecnicamente impossível para qualquer suíte relevante",
+      "O conceito de smoke test, segundo McConnell (1996), não tem nenhuma relação com a prática de builds frequentes ou pipelines de integração contínua",
+      "Os 8 testes deveriam ser executados apenas uma vez por semana, e não a cada build, para se qualificarem como smoke test segundo a definição citada"
+    ],
+    "correta": 1,
+    "resolucao": "a citação define exatamente esse propósito: uma verificação mínima e rápida de que o build está ‘funcional o suficiente’ para prosseguir com testes mais detalhados, sem pretensão de cobertura completa — precisamente o papel dos 8 testes rápidos da StreamPlay. {{A}} exige uma cobertura completa que contraria a própria natureza mínima do smoke test descrita na citação. {{C}} confunde smoke test com regressão completa, ignorando que a diferença de propósito (rapidez vs. abrangência) é central ao capítulo. {{D}} é factualmente incorreto: a própria citação, extraída de um livro sobre desenvolvimento rápido, associa o smoke test à prática de builds diários (e, por extensão, frequentes) — a StreamPlay apenas leva essa prática ao extremo de builds múltiplas vezes ao dia. {{E}} inventa uma restrição de frequência sem base na definição citada, que na verdade valoriza execuções frequentes, não esparsas."
+  },
+  {
+    "id": "qualidade-cap7-q5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O termo smoke test vem da indústria de hardware: quando um novo circuito é ligado pela primeira vez, e nenhuma fumaça sai dele, ele passou no smoke test e está pronto para testes mais detalhados. [...] Um smoke test diário garante que o build mais recente do produto seja minimamente funcional o suficiente para ser testado de forma mais completa.” (tradução nossa)",
+        "fonte": "MCCONNELL, Steve. Rapid Development: Taming Wild Software Schedules. Redmond: Microsoft Press, 1996."
+      },
+      {
+        "t": "p",
+        "texto": "A StreamPlay, plataforma de streaming de vídeo, configurou seu pipeline para, a cada novo build gerado (em média 12 vezes por dia), executar automaticamente 8 testes que verificam apenas: (1) a página inicial carrega; (2) o login funciona; (3) um vídeo específico consegue ser reproduzido; e (4) a busca retorna resultados para um termo conhecido. Esses 8 testes levam, em média, 90 segundos para rodar."
+      },
+      {
+        "t": "p",
+        "texto": "Um novo funcionário sugere eliminar a suíte de Regressão Completa (que roda apenas após merge na branch principal, cobrindo cenários muito mais abrangentes) e confiar exclusivamente nos 8 testes de smoke, argumentando que “se o smoke test já garante que o sistema funciona, rodar mais testes depois é redundante e desperdiça tempo de máquina”."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que avalia corretamente essa sugestão, à luz do propósito específico do smoke test descrito por McConnell (1996):",
+    "alternativas": [
+      "A sugestão está correta, pois qualquer teste adicional após um smoke test bem-sucedido é, por definição, desnecessário",
+      "A sugestão contraria o smoke test, que só confirma que o build pode ser testado; a Regressão Completa continua necessária",
+      "A sugestão é irrelevante, pois a StreamPlay já não precisaria de nenhum tipo de teste automatizado, dado que o smoke test cobre completamente o sistema",
+      "A sugestão deveria ser aceita apenas se a StreamPlay reduzisse o número de builds diários de 12 para 1",
+      "A sugestão é tecnicamente equivalente a manter as duas camadas, pois o tempo total de execução é o único critério relevante para essa decisão"
+    ],
+    "correta": 1,
+    "resolucao": "a própria citação de McConnell deixa claro que o smoke test verifica apenas uma funcionalidade mínima, servindo como uma primeira barreira antes de testes mais aprofundados — não uma substituição para eles. Eliminar a Regressão Completa baseando-se unicamente no smoke test contraria diretamente esse propósito declarado, deixando de capturar defeitos em cenários fora dos 4 fluxos mínimos verificados. {{A}} generaliza incorretamente a partir de um caso específico (smoke bem-sucedido) para uma regra geral inválida. {{C}} exagera ainda mais o erro, indo na direção oposta ao capítulo inteiro sobre regressão em camadas. {{D}} introduz uma condição sem relação lógica com o problema de cobertura discutido. {{E}} ignora que tempo de execução e abrangência de cobertura são dois critérios distintos, ambos relevantes, e não apenas um substituindo o outro."
+  },
+  {
+    "id": "qualidade-cap7-q6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Técnicas de seleção de teste de regressão buscam reduzir o custo do teste de regressão selecionando um subconjunto de casos de teste da suíte existente. [...] Uma técnica é considerada segura se garante que nenhum caso de teste capaz de revelar uma falha causada pelas modificações seja excluído do subconjunto selecionado.” (tradução nossa)",
+        "fonte": "ROTHERMEL, Gregg; HARROLD, Mary Jean. Analyzing Regression Test Selection Techniques. IEEE Transactions on Software Engineering, v. 22, n. 8, p. 529-551, 1996."
+      },
+      {
+        "t": "p",
+        "texto": "A SegurTech, seguradora digital, modificou apenas a função de cálculo de prêmio para apólices de automóvel. Um engenheiro propõe selecionar, para a regressão desse commit específico, apenas os testes cujo nome contém a palavra “auto” — cerca de 40 dos 2.000 testes da suíte total —, argumentando que isso reduziria drasticamente o tempo de execução sem comprometer a segurança da seleção."
+      }
+    ],
+    "enunciado": "Considerando a citação de Rothermel e Harrold (1996) sobre segurança na seleção de testes de regressão, assinale a alternativa correta:",
+    "alternativas": [
+      "A proposta do engenheiro é necessariamente segura, segundo a definição citada, pois qualquer redução no número de testes executados é, por definição, uma técnica de seleção válida",
+      "Selecionar pelo nome conter \"auto\" não é seguro: testes de outros módulos que usam a mesma função de cálculo ficariam de fora",
+      "A segurança de uma técnica de seleção, segundo Rothermel e Harrold (1996), depende exclusivamente do número absoluto de testes selecionados, e não de sua relação com o código efetivamente modificado",
+      "Qualquer seleção de testes é, por definição, insegura, tornando a Regressão Total a única opção tecnicamente aceitável em qualquer cenário",
+      "É segura, pois 40 testes bastam para qualquer sistema"
+    ],
+    "correta": 1,
+    "resolucao": "a citação define segurança como a garantia de que nenhum teste capaz de revelar uma falha causada pela modificação seja excluído; selecionar testes apenas por conterem a palavra ‘auto’ no nome é um critério superficial, que ignora a real análise de impacto da mudança — se a função de cálculo de prêmio for compartilhada por outros produtos (como apólices residenciais), testes desses módulos poderiam ser necessários e ficariam de fora dessa seleção simplista. {{A}} confunde qualquer redução de escopo com segurança, quando a citação exige uma relação real entre a seleção e a mudança feita. {{C}} ignora completamente o critério central da definição citada (relação com o código modificado), atribuindo segurança a um critério numérico irrelevante. {{D}} exagera ao afirmar que toda seleção é insegura, quando o próprio texto motivador discute técnicas de seleção seguras como um objetivo alcançável, não impossível. {{E}} repete o erro de {{A}}, tratando quantidade como sinônimo de adequação de critério."
+  },
+  {
+    "id": "qualidade-cap7-q7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Técnicas de seleção de teste de regressão buscam reduzir o custo do teste de regressão selecionando um subconjunto de casos de teste da suíte existente. [...] Uma técnica é considerada segura se garante que nenhum caso de teste capaz de revelar uma falha causada pelas modificações seja excluído do subconjunto selecionado.” (tradução nossa)",
+        "fonte": "ROTHERMEL, Gregg; HARROLD, Mary Jean. Analyzing Regression Test Selection Techniques. IEEE Transactions on Software Engineering, v. 22, n. 8, p. 529-551, 1996."
+      },
+      {
+        "t": "p",
+        "texto": "A SegurTech, seguradora digital, modificou apenas a função de cálculo de prêmio para apólices de automóvel. Um engenheiro propõe selecionar, para a regressão desse commit específico, apenas os testes cujo nome contém a palavra “auto” — cerca de 40 dos 2.000 testes da suíte total —, argumentando que isso reduziria drasticamente o tempo de execução sem comprometer a segurança da seleção."
+      },
+      {
+        "t": "p",
+        "texto": "Buscando uma abordagem mais rigorosa, a equipe de QA da SegurTech passa a utilizar uma ferramenta de análise de dependências que identifica automaticamente todos os testes que, direta ou indiretamente, exercitam qualquer código que dependa da função de cálculo de prêmio modificada — resultando em uma seleção de 340 testes, entre eles testes de apólices de automóvel, residenciais e de vida, todos comprovadamente dependentes daquela função compartilhada."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que avalia corretamente essa nova abordagem, à luz da definição de segurança de Rothermel e Harrold (1996):",
+    "alternativas": [
+      "A nova abordagem é necessariamente pior do que a anterior, pois qualquer aumento no número de testes selecionados representa desperdício de recursos, independentemente do critério utilizado",
+      "A nova abordagem se aproxima do critério de segurança, pois seleciona pela dependência real com o código modificado",
+      "A nova abordagem é tecnicamente idêntica à anterior, pois ambas selecionam um subconjunto da suíte total, sem nenhuma diferença relevante de critério",
+      "Só seria válida se selecionasse os mesmos 40 testes de antes",
+      "A definição de segurança de Rothermel e Harrold (1996) não pode ser aplicada a sistemas com múltiplos produtos de seguro, como o da SegurTech"
+    ],
+    "correta": 1,
+    "resolucao": "ao basear a seleção em uma análise real de dependência de código, em vez de uma convenção de nomenclatura, a nova abordagem se alinha muito mais precisamente ao critério de segurança citado, que exige que nenhum teste capaz de revelar uma falha real causada pela mudança seja excluído — e o fato de a seleção ter revelado dependências em outros produtos de seguro (residencial, vida) confirma que o critério anterior, por nome, de fato arriscava excluir testes relevantes. {{A}} trata o número de testes como o único critério relevante, ignorando completamente a qualidade da seleção, que é o cerne da citação. {{C}} ignora uma diferença metodológica fundamental entre os dois critérios de seleção. {{D}} inverte a lógica: o objetivo da nova abordagem é justamente corrigir as lacunas do critério anterior, não replicá-lo. {{E}} é uma restrição infundada, sem qualquer base na citação ou no conteúdo do capítulo."
+  },
+  {
+    "id": "qualidade-cap7-q8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um teste flaky é um teste que pode passar ou falhar mesmo quando o código sob teste não foi alterado. [...] Desenvolvedores tendem a perder a confiança nos resultados dos testes quando encontram testes flaky, e podem passar a ignorar falhas reais de teste, assumindo erroneamente que se trata apenas de mais um caso de flakiness.” (tradução nossa)",
+        "fonte": "LUO, Qingzhou; HARIRI, Farah; ELOUSSI, Lamyaa; MARINOV, Darko. An Empirical Analysis of Flaky Tests. In: Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE 2014), p. 643-653."
+      },
+      {
+        "t": "p",
+        "texto": "Na AgroSoft, empresa de software para o agronegócio, um teste específico chamado “verificar_envio_relatorio_climatico” falha, em média, uma vez a cada cinco execuções, sempre com a mesma mensagem de erro de timeout, mesmo quando nenhum código relacionado a esse relatório foi alterado. Com o tempo, os desenvolvedores da AgroSoft passaram a, ao ver esse teste falhar, simplesmente reexecutar o pipeline sem investigar — uma reação tão automática que, na semana passada, um novo defeito real introduzido nesse mesmo módulo (não relacionado a timeout, mas a um cálculo incorreto de índice pluviométrico) foi descartado como “mais uma falha do teste flaky de sempre”, sem qualquer investigação, e chegou a produção."
+      }
+    ],
+    "enunciado": "Considerando a citação de Luo et al. (2014) e o caso da AgroSoft, assinale a alternativa correta:",
+    "alternativas": [
+      "O comportamento dos desenvolvedores da AgroSoft, ao reexecutar o pipeline sem investigar, não tem relação com o fenômeno descrito na citação, sendo apenas uma prática de produtividade recomendada",
+      "O teste flaky minou a confiança, e a equipe ignorou uma falha real, achando que era a mesma instabilidade de sempre",
+      "O teste “verificar_envio_relatorio_climatico” não pode ser classificado como flaky, pois falha com uma mensagem de erro específica e consistente (timeout), e não de forma aleatória",
+      "Para Luo et al., testes flaky nunca convivem com defeitos reais",
+      "O problema relatado seria resolvido apenas com mais poder de processamento no servidor de CI/CD, sem qualquer mudança na forma como a equipe reage às falhas"
+    ],
+    "correta": 1,
+    "resolucao": "o caso é uma ilustração direta do risco central apontado pela citação: a exposição repetida a um teste flaky corrói a confiança da equipe nos resultados de teste, ao ponto de um defeito real e não relacionado ser descartado por presunção, não por investigação — exatamente o padrão de ‘cry wolf’ (alarme falso repetido) que a pesquisa sobre flaky tests documenta. {{A}} trata como prática recomendada exatamente o comportamento que a citação identifica como um risco sério de qualidade. {{C}} confunde consistência da mensagem de erro com ausência de flakiness — um teste pode falhar de forma flaky com a mesma mensagem toda vez, desde que a falha não esteja relacionada a uma mudança real no código sob teste, como no caso descrito. {{D}} não corresponde ao conteúdo da citação nem à lógica do capítulo: flaky tests podem, sim, coexistir com (e mascarar) defeitos reais, como o próprio caso demonstra. {{E}} ignora completamente a causa comportamental (perda de confiança, falta de investigação) central ao problema relatado, tratando-o apenas como uma questão de infraestrutura."
+  },
+  {
+    "id": "qualidade-cap7-q9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Um teste flaky é um teste que pode passar ou falhar mesmo quando o código sob teste não foi alterado. [...] Desenvolvedores tendem a perder a confiança nos resultados dos testes quando encontram testes flaky, e podem passar a ignorar falhas reais de teste, assumindo erroneamente que se trata apenas de mais um caso de flakiness.” (tradução nossa)",
+        "fonte": "LUO, Qingzhou; HARIRI, Farah; ELOUSSI, Lamyaa; MARINOV, Darko. An Empirical Analysis of Flaky Tests. In: Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE 2014), p. 643-653."
+      },
+      {
+        "t": "p",
+        "texto": "Na AgroSoft, empresa de software para o agronegócio, um teste específico chamado “verificar_envio_relatorio_climatico” falha, em média, uma vez a cada cinco execuções, sempre com a mesma mensagem de erro de timeout, mesmo quando nenhum código relacionado a esse relatório foi alterado. Com o tempo, os desenvolvedores da AgroSoft passaram a, ao ver esse teste falhar, simplesmente reexecutar o pipeline sem investigar — uma reação tão automática que, na semana passada, um novo defeito real introduzido nesse mesmo módulo (não relacionado a timeout, mas a um cálculo incorreto de índice pluviométrico) foi descartado como “mais uma falha do teste flaky de sempre”, sem qualquer investigação, e chegou a produção."
+      },
+      {
+        "t": "p",
+        "texto": "Após o incidente do índice pluviométrico incorreto, a equipe de QA decide colocar o teste “verificar_envio_relatorio_climatico” em quarentena — removendo-o temporariamente da suíte principal de regressão, registrando-o em uma lista separada de testes instáveis conhecidos, e atribuindo a um desenvolvedor a tarefa específica de investigar e corrigir sua causa raiz de timeout antes de reintroduzi-lo à suíte principal."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que avalia corretamente essa prática de quarentena, à luz do risco descrito por Luo et al. (2014):",
+    "alternativas": [
+      "A quarentena é uma prática inadequada, pois qualquer teste removido da suíte principal, mesmo temporariamente, representa perda permanente de cobertura de regressão",
+      "A quarentena isola o teste instável e preserva a confiança nos demais, exigindo corrigir a causa antes de ele voltar",
+      "A quarentena é equivalente a excluir permanentemente o teste da suíte, sem qualquer intenção de correção futura",
+      "A prática de quarentena só é válida se aplicada a 100% dos testes da suíte simultaneamente, e não a um teste específico identificado como problemático",
+      "A quarentena é desnecessária, pois reexecutar o pipeline até o teste passar já resolve completamente o problema descrito no caso"
+    ],
+    "correta": 1,
+    "resolucao": "a prática de quarentena responde exatamente ao risco identificado na citação: em vez de permitir que um teste conhecidamente instável continue corroendo a confiança da equipe nos resultados da suíte (como ocorreu no incidente), ele é isolado e tratado como um problema específico a ser corrigido, preservando a confiabilidade dos demais testes da suíte principal enquanto sua causa raiz é investigada. {{A}} confunde quarentena temporária, com plano de correção, com abandono permanente de cobertura. {{C}} descreve incorretamente a prática, que é explicitamente temporária e vinculada a uma tarefa de correção. {{D}} inventa uma exigência de aplicação universal sem qualquer relação com o propósito específico da quarentena, que é justamente isolar casos pontuais. {{E}} repete exatamente o comportamento problemático que o capítulo (e o próprio incidente do caso) identifica como arriscado — reexecutar sem investigar."
+  },
+  {
+    "id": "qualidade-cap7-q10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Integração Contínua é uma prática de desenvolvimento de software em que os membros de uma equipe integram seu trabalho frequentemente [...] Cada integração é verificada por uma build automatizada (incluindo teste) para detectar erros de integração o mais rápido possível. [...] Muitas equipes acham que essa abordagem leva a uma redução significativa dos problemas de integração.” (tradução nossa)",
+        "fonte": "FOWLER, Martin. Continuous Integration. martinfowler.com, 2006 (revisado em 2023)."
+      },
+      {
+        "t": "p",
+        "texto": "Antes de adotar Integração Contínua, a equipe da ObraCerta, desenvolvedora de um sistema de gestão de obras, integrava o código de diferentes desenvolvedores apenas uma vez por mês, em um evento chamado “semana de integração”, durante o qual a equipe inteira parava outras atividades por até cinco dias para resolver conflitos e regressões acumuladas de várias semanas de desenvolvimento paralelo e isolado. Após adotar Integração Contínua, com build e execução automática da suíte de regressão a cada merge, esse evento de cinco dias deixou de existir, sendo substituído por pequenas correções pontuais, geralmente resolvidas em poucos minutos, distribuídas ao longo de todo o mês."
+      }
+    ],
+    "enunciado": "Considerando a citação de Fowler (2006/2023) e o caso da ObraCerta, assinale a alternativa correta:",
+    "alternativas": [
+      "A mudança relatada não tem relação com o conceito de Integração Contínua descrito na citação, sendo apenas uma coincidência de melhoria de produtividade da equipe",
+      "Integrando e testando com frequência, erros de integração e regressão aparecem logo e pequenos, sem se acumular por semanas",
+      "A “semana de integração” mensal já representava, segundo a citação, uma forma legítima de Integração Contínua, apenas com uma frequência diferente",
+      "A citação de Fowler (2006/2023) recomenda que integrações sejam feitas mensalmente, para dar tempo suficiente a cada desenvolvedor de finalizar seu trabalho isoladamente",
+      "A eliminação da semana de integração de cinco dias não tem relação com a execução automática da suíte de regressão a cada merge, sendo apenas uma mudança cultural da equipe"
+    ],
+    "correta": 1,
+    "resolucao": "a citação define precisamente esse benefício: integrar e testar frequentemente permite detectar erros de integração ‘o mais rápido possível’, evitando o acúmulo de problemas — exatamente o que a ObraCerta viveu ao trocar um evento mensal de cinco dias por pequenas correções distribuídas, cada uma tratada perto do momento em que o problema foi introduzido. {{A}} nega, sem fundamento, a relação direta entre a prática adotada e a melhoria observada. {{C}} contraria a própria definição citada, que exige integração frequente (tipicamente diária ou mais), não mensal — o oposto do que a ‘semana de integração’ representava. {{D}} inverte completamente a recomendação da citação. {{E}} ignora que a execução automática da suíte a cada merge é justamente o mecanismo técnico que viabiliza a detecção rápida descrita na citação, não um fator à parte."
+  },
+  {
+    "id": "qualidade-cap7-q11",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“Integração Contínua é uma prática de desenvolvimento de software em que os membros de uma equipe integram seu trabalho frequentemente [...] Cada integração é verificada por uma build automatizada (incluindo teste) para detectar erros de integração o mais rápido possível. [...] Muitas equipes acham que essa abordagem leva a uma redução significativa dos problemas de integração.” (tradução nossa)",
+        "fonte": "FOWLER, Martin. Continuous Integration. martinfowler.com, 2006 (revisado em 2023)."
+      },
+      {
+        "t": "p",
+        "texto": "Antes de adotar Integração Contínua, a equipe da ObraCerta, desenvolvedora de um sistema de gestão de obras, integrava o código de diferentes desenvolvedores apenas uma vez por mês, em um evento chamado “semana de integração”, durante o qual a equipe inteira parava outras atividades por até cinco dias para resolver conflitos e regressões acumuladas de várias semanas de desenvolvimento paralelo e isolado. Após adotar Integração Contínua, com build e execução automática da suíte de regressão a cada merge, esse evento de cinco dias deixou de existir, sendo substituído por pequenas correções pontuais, geralmente resolvidas em poucos minutos, distribuídas ao longo de todo o mês."
+      },
+      {
+        "t": "p",
+        "texto": "Seis meses após a adoção de Integração Contínua, um novo desenvolvedor da ObraCerta sugere que a equipe volte a integrar com menos frequência — a cada duas semanas, em vez de a cada merge — alegando que isso reduziria o número de vezes que o pipeline de testes precisa rodar, economizando recursos de infraestrutura."
+      }
+    ],
+    "enunciado": "Assinale a alternativa que avalia corretamente essa sugestão, à luz da citação de Fowler (2006/2023):",
+    "alternativas": [
+      "A sugestão é tecnicamente neutra, pois a frequência de integração não tem nenhuma relação com a velocidade de detecção de erros, segundo a citação",
+      "A sugestão contraria a ideia central de integrar e testar o mais cedo possível e traria de volta o acúmulo de problemas",
+      "A sugestão deveria ser aceita, pois qualquer economia de recursos de infraestrutura é sempre prioritária em relação à velocidade de detecção de defeitos",
+      "É equivalente à prática atual, pois o resultado seria o mesmo",
+      "A citação de Fowler (2006/2023) apoiaria essa sugestão, pois recomenda explicitamente reduzir a frequência de integração sempre que o custo de infraestrutura de testes for considerado alto"
+    ],
+    "correta": 1,
+    "resolucao": "a citação é explícita ao valorizar a frequência de integração como o mecanismo central para detecção rápida de erros; reduzir a frequência de merge de contínua para quinzenal recria, ainda que em menor escala, o mesmo padrão de acúmulo de mudanças não testadas em conjunto que caracterizava a antiga ‘semana de integração’ da ObraCerta. {{A}} contraria diretamente o argumento central da citação, que relaciona explicitamente frequência de integração à velocidade de detecção de erros. {{C}} prioriza economia de recursos sem considerar o custo — já demonstrado no histórico da própria empresa — de deixar problemas se acumularem. {{D}} ignora que o acúmulo de mudanças não testadas em conjunto aumenta a complexidade de diagnosticar qual mudança específica causou uma eventual regressão, mesmo que a suíte de testes em si seja a mesma. {{E}} é factualmente incorreto: a citação não faz essa recomendação condicionada a custo de infraestrutura."
+  },
+  {
+    "id": "qualidade-cap7-q12",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "contexto": [
+      {
+        "t": "citacao",
+        "texto": "“O pipeline de implantação modela o processo de levar o software do controle de versão até as mãos dos usuários, através de uma série de etapas de validação [...] Cada estágio do pipeline atua como um portão de qualidade, e uma mudança só avança para o próximo estágio se passar em todas as validações do estágio anterior, dando à equipe feedback progressivamente mais confiável sobre se aquela versão está pronta para ser lançada.” (tradução nossa)",
+        "fonte": "HUMBLE, Jez; FARLEY, David. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Boston: Addison-Wesley, 2010."
+      },
+      {
+        "t": "p",
+        "texto": "A EduPlus, plataforma de ensino a distância, estrutura seu pipeline de implantação em quatro estágios sequenciais: (1) build e testes unitários, com duração de 3 minutos; (2) testes de integração, com duração de 12 minutos; (3) testes end-to-end contra um ambiente de staging, com duração de 40 minutos; (4) implantação em produção, liberada apenas se os três estágios anteriores forem aprovados nessa ordem. Em uma ocasião, um defeito de integração passou despercebido pelo estágio 2 por uma falha de cobertura, mas foi corretamente capturado no estágio 3, impedindo que a mudança chegasse ao estágio 4."
+      }
+    ],
+    "enunciado": "Considerando a citação de Humble e Farley (2010) e o caso da EduPlus, assinale a alternativa correta:",
+    "alternativas": [
+      "O pipeline falhou, pois nenhum defeito deveria passar de um estágio",
+      "Os estágios funcionam como portões progressivos: mesmo com uma lacuna na integração, o E2E barrou o defeito antes da produção",
+      "A citação de Humble e Farley (2010) recomenda que todos os estágios do pipeline sejam executados simultaneamente, em vez de sequencialmente, para acelerar o processo",
+      "O fato de o defeito ter sido capturado no estágio 3 prova que os estágios 1 e 2 são desnecessários e poderiam ser removidos do pipeline sem qualquer perda",
+      "Pipelines de implantação, segundo a citação, servem exclusivamente para automatizar o processo de build, sem qualquer relação com testes de regressão"
+    ],
+    "correta": 1,
+    "resolucao": "a citação descreve precisamente essa lógica de defesa em profundidade: cada estágio é um portão de qualidade, e o valor do pipeline está justamente em oferecer múltiplas oportunidades de detecção, de modo que uma lacuna pontual em um estágio (como a falha de cobertura na integração) não signifique necessariamente que o defeito chegará à produção, pois estágios seguintes (E2E, no caso) ainda podem capturá-lo. {{A}} trata uma exceção pontual como falha total do sistema, ignorando que o valor do pipeline está na redundância entre camadas, não na infalibilidade de uma única camada. {{C}} contraria a citação, que descreve estágios sequenciais como portões progressivos, não execuções simultâneas desconectadas. {{D}} comete um erro lógico grave: o fato de o estágio 3 ter capturado esse defeito específico não implica que os estágios 1 e 2 sejam redundantes para os inúmeros outros tipos de defeito que eles capturam rotineiramente, muito mais rapidamente e a menor custo. {{E}} restringe indevidamente o conceito de pipeline de implantação, que a própria citação relaciona diretamente a estágios de teste, não apenas de build."
+  }
+]

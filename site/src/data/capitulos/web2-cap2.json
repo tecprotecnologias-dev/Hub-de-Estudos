@@ -1,0 +1,252 @@
+{
+ "numero": 2,
+ "titulo": "React: Componentes e Props",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "2-1-o-que-e-react",
+   "texto": "2.1 O que é React?"
+  },
+  {
+   "t": "p",
+   "html": "React é uma <strong>biblioteca JavaScript para construir interfaces de usuário</strong>, criada pelo Facebook em 2013 e <em>open-source</em> desde então. Ele não é um <em>framework</em> completo – não tem roteamento, <em>fetch</em> ou banco de dados embutidos. É focado em uma coisa: renderizar UI de forma eficiente e previsível."
+  },
+  {
+   "t": "p",
+   "html": "O conceito central é o <strong>componente</strong>: uma função JavaScript que recebe dados (<em>props</em>) e retorna JSX (HTML + lógica). A UI inteira é uma árvore de componentes. Quando dados mudam, o React recalcula apenas o que precisa mudar, usando o <strong>Virtual DOM</strong> – uma cópia leve da árvore DOM em memória. Ele compara o Virtual DOM novo com o anterior (processo chamado <em>reconciliação</em>) e atualiza apenas os nós realmente modificados no DOM real."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"React substitui o JavaScript?\" – Não! React é só uma biblioteca escrita <em>em</em> JavaScript. Tudo que você já aprendeu no Módulo 1 (funções, <em>arrays</em>, módulos, <code>import</code>/<code>export</code>) continua valendo – React só adiciona um jeito organizado de construir interfaces em cima disso."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-2-jsx-html-dentro-do-javascript",
+   "texto": "2.2 JSX: HTML dentro do JavaScript"
+  },
+  {
+   "t": "p",
+   "html": "JSX é uma extensão de sintaxe que permite escrever algo parecido com HTML diretamente no código JavaScript. Ele não é HTML de verdade – é convertido em chamadas de função JavaScript nos bastidores."
+  },
+  {
+   "t": "codigo",
+   "texto": "function Saudacao() {\n  return <h1>Ola, mundo!</h1>;\n}\n\n// Por baixo dos panos, isso vira algo como:\n// React.createElement(\"h1\", null, \"Ola, mundo!\")"
+  },
+  {
+   "t": "p",
+   "html": "Algumas diferenças importantes entre JSX e HTML comum:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "HTML",
+    "JSX",
+    "Motivo"
+   ],
+   "linhas": [
+    [
+     "<code>class=\"...\"</code>",
+     "<code>className=\"...\"</code>",
+     "<code>class</code> é palavra reservada em JS"
+    ],
+    [
+     "<code>for=\"...\"</code>",
+     "<code>htmlFor=\"...\"</code>",
+     "<code>for</code> também é reservada"
+    ],
+    [
+     "<code>onclick=\"...\"</code>",
+     "<code>onClick={...}</code>",
+     "eventos em <em>camelCase</em>"
+    ],
+    [
+     "<code>&lt;br&gt;</code>",
+     "<code>&lt;br /&gt;</code>",
+     "toda tag precisa ser fechada"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Para inserir valores JavaScript dentro do JSX, usamos chaves <code>{}</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const nome = \"Ana\";\nconst idade = 25;\n\nfunction Perfil() {\n  return (\n    <div className=\"perfil\">\n      <h2>{nome}</h2>\n      <p>Idade: {idade} anos</p>\n      <p>{idade >= 18 ? \"Maior de idade\" : \"Menor de idade\"}</p>\n    </div>\n  );\n}"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Dentro de <code>{}</code>, só cabem <strong>expressões</strong> (algo que retorna um valor) – nunca comandos como <code>if</code>, <code>for</code> ou <code>switch</code> diretamente. Por isso usamos o operador ternário (<code>condição ? a : b</code>) em vez de um <code>if</code> tradicional dentro do JSX."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-3-criando-um-projeto-react",
+   "texto": "2.3 Criando um Projeto React"
+  },
+  {
+   "t": "p",
+   "html": "O jeito mais rápido de começar um projeto React hoje em dia é com o <strong>Vite</strong> – uma ferramenta de <em>build</em> muito mais rápida que alternativas antigas."
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm create vite@latest meu-app -- --template react-ts\n$ cd meu-app\n$ npm install\n$ npm run dev"
+  },
+  {
+   "t": "p",
+   "html": "O <code>react-ts</code> no comando já configura o projeto com <strong>TypeScript</strong> desde o início – vamos usar TypeScript ao longo de todo o curso, tipando <em>props</em> e funções, exatamente como fazem projetos profissionais."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Arquivo",
+    "Função"
+   ],
+   "linhas": [
+    [
+     "<code>src/main.tsx</code>",
+     "Ponto de entrada – monta o React na página"
+    ],
+    [
+     "<code>src/App.tsx</code>",
+     "Componente principal da aplicação"
+    ],
+    [
+     "<code>src/index.css</code>",
+     "Estilos globais"
+    ],
+    [
+     "<code>index.html</code>",
+     "Página HTML onde o React é injetado"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-4-componentes-a-base-de-tudo",
+   "texto": "2.4 Componentes: A Base de Tudo"
+  },
+  {
+   "t": "p",
+   "html": "Um componente React é, na essência, uma <strong>função que retorna JSX</strong>. Por convenção, o nome do componente sempre começa com letra maiúscula – é assim que o React diferencia um componente (<code>&lt;Botao /&gt;</code>) de uma tag HTML comum (<code>&lt;button&gt;</code>)."
+  },
+  {
+   "t": "codigo",
+   "texto": "// Botao.tsx\nfunction Botao() {\n  return <button className=\"botao\">Clique aqui</button>;\n}\n\nexport default Botao;\n\n// App.tsx\nimport Botao from \"./Botao\";\n\nfunction App() {\n  return (\n    <div>\n      <h1>Meu Portfolio</h1>\n      <Botao />\n    </div>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "Componentes podem ser reutilizados quantas vezes forem necessárias – <code>&lt;Botao /&gt;</code> pode aparecer três vezes numa página, e cada instância é independente."
+  },
+  {
+   "t": "h2",
+   "id": "2-5-props-passando-dados-entre-componentes",
+   "texto": "2.5 Props: Passando Dados entre Componentes"
+  },
+  {
+   "t": "p",
+   "html": "<em>Props</em> (abreviação de <em>properties</em>) são a forma de um componente <strong>pai</strong> enviar dados para um componente <strong>filho</strong> – funcionam de forma parecida com argumentos de uma função."
+  },
+  {
+   "t": "codigo",
+   "texto": "// Botao.tsx -- recebe props\ninterface BotaoProps {\n  texto: string;\n  variante: \"primary\" | \"secondary\" | \"danger\";\n}\n\nfunction Botao({ texto, variante }: BotaoProps) {\n  return <button className={`botao botao--${variante}`}>{texto}</button>;\n}\n\nexport default Botao;\n\n// App.tsx -- envia props\nfunction App() {\n  return (\n    <div>\n      <Botao texto=\"Salvar\" variante=\"primary\" />\n      <Botao texto=\"Cancelar\" variante=\"secondary\" />\n      <Botao texto=\"Excluir\" variante=\"danger\" />\n    </div>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare na <code>interface BotaoProps</code>: isso é TypeScript definindo exatamente quais <em>props</em> o componente espera receber, e de que tipo. Se você tentar usar <code>&lt;Botao texto=\"Ok\" variante=\"azul\" /&gt;</code>, o TypeScript já avisa o erro antes mesmo de rodar – <code>\"azul\"</code> não é uma das opções válidas."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<em>Props</em> são <strong>somente leitura</strong> (<em>read-only</em>). Um componente filho <strong>nunca</strong> deve tentar alterar as <em>props</em> que recebeu (<code>props.texto = \"outro valor\"</code> gera erro). Se um valor precisa mudar ao longo do tempo, isso é <strong>estado</strong> (<em>state</em>) – assunto do Módulo 3, com o <code>useState</code>."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-6-a-prop-especial-children",
+   "texto": "2.6 A Prop Especial: children"
+  },
+  {
+   "t": "p",
+   "html": "Toda vez que você coloca conteúdo <strong>entre</strong> a tag de abertura e fechamento de um componente, esse conteúdo chega a ele através de uma <em>prop</em> especial chamada <code>children</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "// Card.tsx\ninterface CardProps {\n  titulo: string;\n  children: React.ReactNode;\n  footer?: React.ReactNode;\n}\n\nfunction Card({ titulo, children, footer }: CardProps) {\n  return (\n    <div className=\"card\">\n      <div className=\"card__header\">\n        <h2>{titulo}</h2>\n      </div>\n      <div className=\"card__body\">\n        {children}\n      </div>\n      {footer && (\n        <div className=\"card__footer\">{footer}</div>\n      )}\n    </div>\n  );\n}\n\n// Usando com children\nfunction App() {\n  return (\n    <Card\n      titulo=\"Programacao Web II\"\n      footer={<button>Ver mais</button>}\n    >\n      <p>Aprenda Next.js, React e Prisma do zero ao deploy.</p>\n      <ul>\n        <li>7 modulos</li>\n        <li>Projeto final fullstack</li>\n      </ul>\n    </Card>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>?</code> depois de <code>footer</code> na interface (<code>footer?: ...</code>) indica que essa <em>prop</em> é <strong>opcional</strong> – o componente funciona com ou sem ela. Repare também no <code>footer &amp;&amp;</code> dentro do JSX: isso é renderização condicional, tema da próxima seção."
+  },
+  {
+   "t": "h2",
+   "id": "2-7-renderizacao-condicional",
+   "texto": "2.7 Renderização Condicional"
+  },
+  {
+   "t": "p",
+   "html": "É muito comum precisar mostrar (ou esconder) partes da interface dependendo de uma condição. Existem três formas principais:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// 1. Operador && -- mostra algo SOMENTE se a condicao for verdadeira\n{usuarioLogado && <p>Bem-vindo de volta!</p>}\n\n// 2. Operador ternario -- escolhe entre DUAS opcoes\n{status === \"aprovado\" ? (\n  <span className=\"badge badge--verde\">Aprovado</span>\n) : (\n  <span className=\"badge badge--vermelho\">Reprovado</span>\n)}\n\n// 3. Variavel calculada antes do return -- para logica mais complexa\nfunction StatusAluno({ media }: { media: number }) {\n  let texto = \"Reprovado\";\n  let cor = \"vermelho\";\n\n  if (media >= 7) {\n    texto = \"Aprovado\";\n    cor = \"verde\";\n  } else if (media >= 5) {\n    texto = \"Recuperacao\";\n    cor = \"amarelo\";\n  }\n\n  return <span className={`badge badge--${cor}`}>{texto}</span>;\n}"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<code>{condicao &amp;&amp; &lt;Componente /&gt;}</code> pode dar um resultado inesperado se <code>condicao</code> for o número <code>0</code>: em vez de não renderizar nada, o React renderiza o próprio <code>0</code> na tela (porque <code>0</code> é um valor \"falso\", mas ainda é um valor válido para exibir). Prefira comparar explicitamente: <code>quantidade &gt; 0 &amp;&amp; ...</code>"
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-8-listas-e-a-prop-key",
+   "texto": "2.8 Listas e a Prop key"
+  },
+  {
+   "t": "p",
+   "html": "Para renderizar uma lista de itens (um <em>array</em> de dados), usamos o método <code>.map()</code> do JavaScript – já visto de relance no Módulo 1 – combinado com JSX."
+  },
+  {
+   "t": "codigo",
+   "texto": "interface Projeto {\n  id: number;\n  titulo: string;\n  tecnologia: string;\n}\n\nconst projetos: Projeto[] = [\n  { id: 1, titulo: \"Portfolio Pessoal\", tecnologia: \"React\" },\n  { id: 2, titulo: \"API de Tarefas\", tecnologia: \"Node.js\" },\n  { id: 3, titulo: \"Dashboard\", tecnologia: \"React\" },\n];\n\nfunction ListaProjetos() {\n  return (\n    <ul>\n      {projetos.map((projeto) => (\n        <li key={projeto.id}>\n          {projeto.titulo} -- {projeto.tecnologia}\n        </li>\n      ))}\n    </ul>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "A <em>prop</em> <code>key</code> é <strong>obrigatória</strong> em toda lista renderizada com <code>.map()</code> – ela ajuda o React a identificar exatamente qual item mudou, foi adicionado ou removido, tornando a reconciliação (seção 2.1) muito mais eficiente."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Nunca use o índice do <em>array</em> (<code>key={index}</code>) quando a lista pode ser reordenada, filtrada ou ter itens removidos – isso confunde o React sobre qual item é qual. Prefira sempre um identificador único e estável, como o <code>id</code> vindo do banco de dados."
+    }
+   ]
+  }
+ ]
+}

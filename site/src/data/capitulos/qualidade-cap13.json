@@ -1,0 +1,339 @@
+{
+ "numero": 13,
+ "titulo": "Testes Práticos com Postman",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Este capítulo fecha o curso com uma virada de perspectiva: em vez de estudar conceitos, vamos praticar diretamente com uma das ferramentas mais usadas do mercado para testar APIs. Diferente dos capítulos anteriores, este não assume que você já sabe programar ou já testou algo antes – vamos construir cada ideia devagar, uma em cima da outra, do que é uma API até escrever sua própria suíte de testes no Postman, aplicada à API do projeto final estudado no Capítulo 12."
+  },
+  {
+   "t": "h2",
+   "id": "13-1-o-que-e-uma-api",
+   "texto": "13.1 O que é uma API?"
+  },
+  {
+   "t": "p",
+   "html": "API significa “Interface de Programação de Aplicações” – mas esse nome não ajuda muito. Pense assim: uma API é a forma como dois programas conversam entre si, um pedindo informação e o outro respondendo."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Uma analogia simples: o restaurante",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Você (o cliente) não entra na cozinha para pegar sua comida. Você faz o pedido ao garçom, que leva à cozinha, e a cozinha devolve o prato pronto através dele. A API é exatamente esse garçom: recebe o seu pedido (a requisição), leva até o sistema que sabe responder (o servidor), e traz de volta o resultado (a resposta) – sem que você precise saber como a cozinha funciona por dentro."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Cliente e Servidor"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Cliente</strong> é quem faz o pedido: o aplicativo do seu celular, o site que você abre no navegador, ou o próprio Postman, que vamos usar para “fingir” ser um cliente. <strong>Servidor</strong> é quem responde ao pedido: processa a informação (busca no banco, faz um cálculo, valida uma senha) e devolve uma resposta."
+  },
+  {
+   "t": "h2",
+   "id": "13-2-o-que-e-o-postman",
+   "texto": "13.2 O que é o Postman?"
+  },
+  {
+   "t": "p",
+   "html": "O Postman é um programa que permite montar e enviar requisições para uma API, sem precisar escrever uma linha de código de aplicação – e depois ver exatamente o que a API respondeu. É a ferramenta mais usada do mercado para testar APIs, tanto por desenvolvedores quanto por QAs, e os conceitos que você aprender aqui valem para qualquer ferramenta que você use depois."
+  },
+  {
+   "t": "h3",
+   "texto": "Conhecendo a Tela"
+  },
+  {
+   "t": "p",
+   "html": "A <strong>barra lateral</strong> (esquerda) guarda suas <em>Collections</em> – pastas organizando grupos de requisições salvas. O <strong>construtor de requisição</strong> (centro-topo) é onde você escolhe o método, digita a URL e configura o que vai enviar. A <strong>área de resposta</strong> (centro-baixo) mostra o que a API respondeu: status, corpo e tempo."
+  },
+  {
+   "t": "h2",
+   "id": "13-3-sua-primeira-requisicao",
+   "texto": "13.3 Sua Primeira Requisição"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. Abra o Postman e clique em “New” → “HTTP Request”",
+    "2. Confirme que o método está em GET",
+    "3. Na barra de URL, digite <code>https://jsonplaceholder.typicode.com/users</code>",
+    "4. Clique no botão azul “Send”",
+    "5. Observe a área de resposta, logo abaixo, aparecer com o resultado"
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Entendendo a Resposta"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Parte",
+    "O que é"
+   ],
+   "linhas": [
+    [
+     "Status",
+     "Um código que resume o resultado — 200 significa “deu certo”"
+    ],
+    [
+     "Body (Corpo)",
+     "O conteúdo real da resposta, geralmente em formato JSON"
+    ],
+    [
+     "Time (Tempo)",
+     "Quanto tempo, em milissegundos, a API levou para responder"
+    ],
+    [
+     "Headers",
+     "Informações extras sobre a resposta, como o tipo de conteúdo"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Códigos de Status HTTP Mais Comuns"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Código",
+    "Significado",
+    "Quando aparece"
+   ],
+   "linhas": [
+    [
+     "200",
+     "OK",
+     "O pedido deu certo e a informação veio na resposta"
+    ],
+    [
+     "201",
+     "Criado",
+     "Algo novo foi criado — ex.: um usuário cadastrado"
+    ],
+    [
+     "400",
+     "Requisição inválida",
+     "Você enviou dados incorretos ou incompletos"
+    ],
+    [
+     "401",
+     "Não autorizado",
+     "Faltou informar corretamente login/token"
+    ],
+    [
+     "404",
+     "Não encontrado",
+     "O endereço ou recurso pedido não existe"
+    ],
+    [
+     "500",
+     "Erro no servidor",
+     "Algo quebrou do lado de quem responde"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "13-4-os-metodos-http",
+   "texto": "13.4 Os Métodos HTTP"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Método",
+    "O que significa",
+    "Exemplo do dia a dia"
+   ],
+   "linhas": [
+    [
+     "GET",
+     "Buscar/ler uma informação, sem alterar nada",
+     "Ver a lista de produtos de uma loja"
+    ],
+    [
+     "POST",
+     "Criar algo novo",
+     "Cadastrar um novo usuário"
+    ],
+    [
+     "PUT / PATCH",
+     "Atualizar algo que já existe",
+     "Editar o nome de um produto"
+    ],
+    [
+     "DELETE",
+     "Remover algo que existe",
+     "Excluir uma tarefa da sua lista"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Fazendo uma Requisição POST"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. Crie uma nova aba e mude o método de GET para POST",
+    "2. Digite a URL: <code>https://jsonplaceholder.typicode.com/posts</code>",
+    "3. Clique na aba “Body”, logo abaixo da URL",
+    "4. Selecione “raw” e, no menu à direita, escolha “JSON”",
+    "5. Digite os dados que quer enviar, em chaves — por exemplo, um título e um texto",
+    "6. Clique em “Send” — o status agora deve ser 201 (Criado)"
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Onde Vai Cada Informação"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Params</strong> (parâmetros de URL): informações curtas para filtrar ou buscar algo, na própria URL após um “?”. <strong>Headers</strong>: informações sobre a própria requisição, como token de autenticação. <strong>Body</strong>: o conteúdo principal enviado em POST, PUT e PATCH – os dados de um cadastro, por exemplo."
+  },
+  {
+   "t": "h2",
+   "id": "13-5-organizando-com-collections",
+   "texto": "13.5 Organizando com Collections"
+  },
+  {
+   "t": "p",
+   "html": "Uma <em>Collection</em> é uma pasta que guarda um grupo de requisições relacionadas – por exemplo, todas as requisições da API de tarefas do TaskFlow. Para criar: “New” → “Collection”, dê um nome, e salve suas requisições dentro dela."
+  },
+  {
+   "t": "h3",
+   "texto": "Variáveis de Ambiente"
+  },
+  {
+   "t": "p",
+   "html": "Se sua API muda de endereço (de teste para produção), editar cada requisição manualmente é inviável. Uma variável de ambiente resolve isso: defina <code>{{base_url}}</code> uma única vez, e use essa “etiqueta” em todas as requisições – em vez de <code>https://taskflow-staging.com/api/tasks</code>, use <code>{{base_url}}/api/tasks</code>."
+  },
+  {
+   "t": "h2",
+   "id": "13-6-escrevendo-seu-primeiro-teste",
+   "texto": "13.6 Escrevendo Seu Primeiro Teste"
+  },
+  {
+   "t": "p",
+   "html": "Até agora, você fez requisições e olhou a resposta com os próprios olhos. Um teste automatiza esse olhar: você escreve uma regra, e o Postman verifica sozinho se ela é verdadeira. Escreve-se na aba “Scripts” (ou “Tests”), em JavaScript – mas o Postman já te dá o esqueleto pronto."
+  },
+  {
+   "t": "quadro",
+   "tipo": "boa-pratica",
+   "titulo": "Três testes prontos para adaptar",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Verificar status:</strong> <code>pm.response.to.have.status(200)</code>"
+    },
+    {
+     "t": "p",
+     "html": "<strong>Verificar campo no corpo:</strong> <code>pm.expect(pm.response.json()).to.have.property(\"id\")</code>"
+    },
+    {
+     "t": "p",
+     "html": "<strong>Verificar tempo de resposta:</strong> <code>pm.expect(pm.response.responseTime).to.be.below(500)</code>"
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Encadeando Requisições"
+  },
+  {
+   "t": "p",
+   "html": "Depois do login, a API geralmente devolve um <em>token</em> – uma senha temporária que prova que você está autenticado. No script da requisição de login, após receber a resposta, salve-o com <code>pm.collectionVariables.set(\"token\", dados.token)</code>. A partir daí, use <code>{{token}}</code> no cabeçalho <code>Authorization</code> de qualquer outra requisição da coleção."
+  },
+  {
+   "t": "h2",
+   "id": "13-7-rodando-tudo-de-uma-vez",
+   "texto": "13.7 Rodando Tudo de Uma Vez"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>Collection Runner</strong> executa todas as requisições de uma coleção em sequência, sem clicar “Send” uma por uma, mostrando um resumo de quantos testes passaram e falharam. Para abrir: botão direito na Collection → “Run collection”."
+  },
+  {
+   "t": "h3",
+   "texto": "Newman"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Newman</strong> é a versão de linha de comando do Postman: roda a mesma coleção testada manualmente, sem abrir nenhuma janela – permitindo executá-la dentro de um pipeline de CI/CD, como o GitHub Actions (veja CI/CD no Capítulo 11). Basta exportar a Collection como <code>.json</code> e rodar <code>newman run TaskFlow-API.postman_collection.json</code> no terminal ou em um job do pipeline."
+  },
+  {
+   "t": "h2",
+   "id": "13-8-conectando-com-o-projeto-final",
+   "texto": "13.8 Conectando com o Projeto Final"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Endpoint TaskFlow",
+    "Método",
+    "O que testar"
+   ],
+   "linhas": [
+    [
+     "/api/login",
+     "POST",
+     "Status 200, resposta contém “token”; credenciais inválidas → 401"
+    ],
+    [
+     "/api/tasks",
+     "GET",
+     "Status 200, resposta é lista; sem token → 401"
+    ],
+    [
+     "/api/tasks",
+     "POST",
+     "Dados válidos → 201; título vazio → 400"
+    ],
+    [
+     "/api/tasks/:id",
+     "PATCH/DELETE",
+     "Atualizar ou excluir tarefa existente → 200"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "boas-praticas-e-erros-comuns",
+   "texto": "Boas Práticas e Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Sempre salve requisições dentro de uma Collection — nunca deixe soltas",
+    "Use variáveis de ambiente para a URL base desde a primeira requisição",
+    "Dê nomes descritivos: “Login — credenciais válidas”, não “Request 1”",
+    "Teste sempre o caminho de erro, não só o de sucesso"
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Se algo não funcionar, comece por aqui",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Esqueceu de mudar o método:</strong> deixar em GET quando deveria ser POST é a causa nº 1 de “não funciona nada”. <strong>Body no formato errado:</strong> selecionar “raw” mas esquecer de trocar para JSON. <strong>Token esquecido ou expirado:</strong> erros 401 inesperados geralmente significam que o token não foi salvo – refaça o login."
+    }
+   ]
+  }
+ ]
+}

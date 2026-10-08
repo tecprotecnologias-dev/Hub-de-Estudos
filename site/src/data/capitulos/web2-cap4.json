@@ -1,0 +1,253 @@
+{
+ "numero": 4,
+ "titulo": "Next.js: App Router e Roteamento",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "4-1-o-que-e-next-js",
+   "texto": "4.1 O que é Next.js?"
+  },
+  {
+   "t": "p",
+   "html": "Até agora, trabalhamos com um projeto React \"puro\", criado com Vite – uma única página (<code>index.html</code>) que carrega um único componente (<code>App.tsx</code>), com tudo empilhado dentro dele. Não existem páginas separadas de verdade: sem endereços como <code>/projetos</code> ou <code>/contato</code>."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Next.js</strong> é um <strong>framework</strong> construído em cima do React (criado pela Vercel) que resolve exatamente isso, e mais algumas coisas:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "React puro (Vite)",
+    "Next.js"
+   ],
+   "linhas": [
+    [
+     "Uma página só",
+     "Roteamento baseado em pastas e arquivos"
+    ],
+    [
+     "Tudo roda no navegador",
+     "Suporta renderização no servidor (SSR)"
+    ],
+    [
+     "Sem backend embutido",
+     "API Routes (backend dentro do mesmo projeto)"
+    ],
+    [
+     "SEO manual",
+     "Otimização automática de imagens, fontes e SEO"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Next.js substitui o React?\" – Não! Next.js é construído <strong>em cima</strong> do React – todo componente, toda <em>prop</em>, todo Hook que você já aprendeu (Módulos 2 e 3) continua funcionando exatamente igual. Next.js só adiciona a estrutura de projeto, o roteamento e os recursos de servidor que o React sozinho não tem."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-2-app-router-vs-pages-router",
+   "texto": "4.2 App Router vs Pages Router"
+  },
+  {
+   "t": "p",
+   "html": "O Next.js tem dois sistemas de roteamento. Projetos mais antigos usam o <strong>Pages Router</strong> (pasta <code>pages/</code>); todo projeto novo usa o <strong>App Router</strong> (pasta <code>app/</code>, padrão desde a versão 13) – é o que vamos usar no curso inteiro."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "App Router (usamos este)",
+    "Pages Router (legado)"
+   ],
+   "linhas": [
+    [
+     "Pasta <code>app/</code>",
+     "Pasta <code>pages/</code>"
+    ],
+    [
+     "Server Components por padrão",
+     "Client Components por padrão"
+    ],
+    [
+     "Layouts aninhados (<code>layout.js</code>)",
+     "Um layout único (<code>_app.js</code>)"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-3-criando-o-projeto-next-js",
+   "texto": "4.3 Criando o Projeto Next.js"
+  },
+  {
+   "t": "codigo",
+   "texto": "npx create-next-app@latest meu-portfolio-next"
+  },
+  {
+   "t": "p",
+   "html": "Dependendo da versão da ferramenta, o assistente pergunta de dois jeitos diferentes. Versões mais recentes fazem uma pergunta só:"
+  },
+  {
+   "t": "codigo",
+   "texto": "Would you like to use the recommended Next.js defaults?   -> Yes"
+  },
+  {
+   "t": "p",
+   "html": "Versões um pouco mais antigas ainda perguntam item por item – nesse caso, responda assim, para manter consistência com o que já aprendemos:"
+  },
+  {
+   "t": "codigo",
+   "texto": "Would you like to use TypeScript?        -> Yes\nWould you like to use ESLint?            -> Yes\nWould you like to use Tailwind CSS?      -> No\nWould you like your code inside src/?    -> Yes\nWould you like to use App Router?        -> Yes\nWould you like to customize import alias?-> No"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Diferente do Vite (Módulo 2), aqui criamos um projeto NOVO em vez de instalar Next.js dentro da pasta antiga."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Escolhi os defaults recomendados e agora tenho Tailwind CSS instalado, mesmo o guia dizendo para não usar.\" – Sem problema: o Tailwind convive tranquilamente com o CSS \"normal\" que usamos no curso (o <code>globals.css</code>). Só ignore as classes e os arquivos extras dele (como o <code>postcss.config.mjs</code>) – eles não atrapalham em nada."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-4-estrutura-de-pastas-do-app-router",
+   "texto": "4.4 Estrutura de Pastas do App Router"
+  },
+  {
+   "t": "codigo",
+   "texto": "meu-portfolio-next/\n  src/\n    app/\n      layout.tsx     <- envolve TODAS as paginas\n      page.tsx        <- pagina inicial (rota /)\n      globals.css      <- CSS global\n  public/\n  package.json\n  next.config.ts"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Minha pasta <code>src/</code> não foi criada, mesmo respondendo Yes.\" – Isso pode acontecer dependendo da versão da ferramenta. Não é um erro seu, e não precisa recriar o projeto: se sua pasta <code>app/</code> está direto dentro de <code>meu-portfolio-next/</code> (sem passar por <code>src/</code>), é só usar os caminhos deste capítulo sem o <code>src/</code> no meio – ex: <code>app/page.tsx</code> em vez de <code>src/app/page.tsx</code>. O restante funciona exatamente igual."
+    }
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Arquivo",
+    "Função"
+   ],
+   "linhas": [
+    [
+     "<code>layout.tsx</code>",
+     "O <code>&lt;html&gt;</code> e <code>&lt;body&gt;</code> da aplicação – só existe UM na raiz"
+    ],
+    [
+     "<code>page.tsx</code>",
+     "O conteúdo de uma rota específica – toda pasta com um <code>page.tsx</code> vira uma URL"
+    ],
+    [
+     "<code>globals.css</code>",
+     "Estilos que valem para o site inteiro"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-5-roteamento-baseado-em-arquivos",
+   "texto": "4.5 Roteamento Baseado em Arquivos"
+  },
+  {
+   "t": "p",
+   "html": "No App Router, <strong>a estrutura de pastas dentro de <code>app/</code> define as URLs do site</strong> – não existe arquivo de configuração de rotas, como em outras ferramentas."
+  },
+  {
+   "t": "codigo",
+   "texto": "app/\n  page.tsx              -> /\n  sobre/\n    page.tsx            -> /sobre\n  projetos/\n    page.tsx             -> /projetos\n  blog/\n    page.tsx             -> /blog"
+  },
+  {
+   "t": "p",
+   "html": "Cada pasta vira um segmento da URL, e o arquivo <code>page.tsx</code> dentro dela é o que renderiza naquela rota. Uma página nova é, literalmente, uma pasta nova com um <code>page.tsx</code> dentro."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "As pastas de rota (<code>sobre/</code>, <code>projetos/</code>, <code>blog/</code>) devem ficar todas lado a lado, soltas direto dentro de <code>app/</code> – nunca uma dentro da outra. Criar <code>app/blog/projetos/</code> por engano (em vez de <code>app/projetos/</code>) faz a URL virar <code>/blog/projetos</code> em vez de <code>/projetos</code>. Depois de criar as pastas, confira visualmente no Explorador de Arquivos que todas estão no mesmo nível de recuo."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O arquivo <strong>precisa</strong> se chamar exatamente <code>page.tsx</code> (ou <code>page.jsx</code>, <code>page.js</code>) – nomes como <code>index.tsx</code> (comuns em outras ferramentas) <strong>não funcionam</strong> no App Router. O Next.js só reconhece pastas com um arquivo chamado literalmente <code>page</code>."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-6-navegando-entre-paginas-o-componente-link",
+   "texto": "4.6 Navegando entre Páginas: o Componente Link"
+  },
+  {
+   "t": "p",
+   "html": "Para navegar entre páginas, o Next.js tem um componente especial, <code>Link</code>, que substitui a tag <code>&lt;a&gt;</code> do HTML."
+  },
+  {
+   "t": "codigo",
+   "texto": "import Link from \"next/link\";\n\nfunction Menu() {\n  return (\n    <nav>\n      <Link href=\"/\">Inicio</Link>\n      <Link href=\"/projetos\">Projetos</Link>\n      <Link href=\"/contato\">Contato</Link>\n    </nav>\n  );\n}"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Por que usar <code>&lt;Link&gt;</code> em vez de <code>&lt;a href=\"...\"&gt;</code>?\" – Uma tag <code>&lt;a&gt;</code> comum recarrega a página <strong>inteira</strong> a cada clique (perdendo todo o estado do React). O <code>&lt;Link&gt;</code> troca só o conteúdo necessário, mantendo a navegação instantânea – é a mesma ideia por trás de toda aplicação de página única (<em>SPA</em>)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-7-layouts-aninhados",
+   "texto": "4.7 Layouts Aninhados"
+  },
+  {
+   "t": "p",
+   "html": "Além do <code>layout.tsx</code> da raiz, cada pasta de rota pode ter o <strong>seu próprio</strong> <code>layout.tsx</code> – que envolve só as páginas daquela seção do site."
+  },
+  {
+   "t": "codigo",
+   "texto": "app/\n  layout.tsx           <- envolve o site inteiro\n  page.tsx\n  blog/\n    layout.tsx          <- envolve so as paginas do blog\n    page.tsx             -> /blog\n    [slug]/\n      page.tsx            -> /blog/qualquer-coisa"
+  },
+  {
+   "t": "p",
+   "html": "Isso permite, por exemplo, um menu lateral que aparece só nas páginas do blog, sem precisar repetir esse código em cada <code>page.tsx</code> – o layout \"empacota\" tudo que está dentro daquela pasta automaticamente."
+  }
+ ]
+}

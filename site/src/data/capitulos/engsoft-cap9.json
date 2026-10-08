@@ -1,0 +1,190 @@
+{
+ "numero": 9,
+ "titulo": "Usabilidade e Experiência do Usuário (UX)",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "A norma ISO 9241-210 define usabilidade como o grau em que um produto pode ser usado por usuários específicos para atingir objetivos específicos com eficácia, eficiência e satisfação em um contexto específico de uso. Enquanto a engenharia de software se preocupa com o que o sistema faz e como é construído, a UX se preocupa com como as pessoas vivenciam o produto. Um sistema tecnicamente perfeito que ninguém consegue usar é, por definição, um fracasso. Este capítulo percorre a distinção entre UI e UX, as heurísticas de Nielsen, os fundamentos de percepção e cognição, os métodos de teste de usabilidade e o processo de Design Centrado no Usuário."
+  },
+  {
+   "t": "h2",
+   "id": "9-1-ui-vs-ux-conceitos-e-distincoes-fundamentais",
+   "texto": "9.1 UI vs. UX: Conceitos e Distinções Fundamentais"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Dimensão",
+    "UI — <em>User Interface</em>",
+    "UX — <em>User Experience</em>"
+   ],
+   "linhas": [
+    [
+     "O que é",
+     "A interface visual – botões, cores, tipografia",
+     "Toda a experiência – emoções, percepções, resultados"
+    ],
+    [
+     "Pergunta central",
+     "“É bonito e organizado visualmente?”",
+     "“É fácil de usar e resolve o problema?”"
+    ],
+    [
+     "Analogia",
+     "A decoração do restaurante",
+     "Toda a experiência de jantar"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "A distinção que o mercado confunde",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "É possível ter uma UI bela e uma UX péssima – um aplicativo com visual deslumbrante, mas menus confusos e mensagens de erro incompreensíveis. O oposto também é possível: o Google de 1998 tinha uma UI minimalista (uma caixa de busca e dois botões), mas resolvia perfeitamente o problema do usuário – UX excelente. O objetivo é ter ambos: interface visualmente coerente e experiência fluida, intuitiva e satisfatória."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "9-2-as-dez-heuristicas-de-usabilidade-de-nielsen",
+   "texto": "9.2 As Dez Heurísticas de Usabilidade de Nielsen"
+  },
+  {
+   "t": "p",
+   "html": "Formuladas por Jakob Nielsen em 1994, são as diretrizes mais citadas e aplicadas em avaliações de usabilidade no mundo."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "#",
+    "Heurística",
+    "Ideia Central"
+   ],
+   "linhas": [
+    [
+     "1",
+     "Visibilidade do Status",
+     "O sistema deve sempre manter o usuário informado, com feedback em tempo razoável"
+    ],
+    [
+     "2",
+     "Correspondência com o Mundo Real",
+     "Falar a linguagem do usuário, não jargão técnico"
+    ],
+    [
+     "3",
+     "Controle e Liberdade",
+     "Uma saída de emergência clara para ações por engano (<em>Desfazer</em>)"
+    ],
+    [
+     "4",
+     "Consistência e Padrões",
+     "Ações e elementos similares devem se comportar de forma similar"
+    ],
+    [
+     "5",
+     "Prevenção de Erros",
+     "Design que previne problemas é melhor que boas mensagens de erro"
+    ],
+    [
+     "6",
+     "Reconhecimento vs. Lembrança",
+     "Minimizar a carga de memória, tornando opções visíveis"
+    ],
+    [
+     "7",
+     "Flexibilidade e Eficiência",
+     "Aceleradores para usuários experientes, sem atrapalhar iniciantes"
+    ],
+    [
+     "8",
+     "Estética Minimalista",
+     "Diálogos não devem conter informação irrelevante"
+    ],
+    [
+     "9",
+     "Reconhecer e Recuperar Erros",
+     "Mensagens em linguagem simples, que sugerem solução"
+    ],
+    [
+     "10",
+     "Ajuda e Documentação",
+     "Ajuda pesquisável e focada na tarefa, quando necessária"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "9-3-principios-de-gestalt-e-leis-cognitivas",
+   "texto": "9.3 Princípios de Gestalt e Leis Cognitivas"
+  },
+  {
+   "t": "p",
+   "html": "A psicologia da Gestalt estudou como o cérebro organiza percepções visuais – diretamente aplicável a como os usuários agrupam e interpretam elementos de interface: <strong>Proximidade</strong> (elementos próximos são percebidos como relacionados), <strong>Similaridade</strong> (elementos visualmente similares pertencem ao mesmo grupo), <strong>Continuidade</strong> (o olho segue linhas e curvas), <strong>Fechamento</strong> (o cérebro completa formas incompletas) e <strong>Figura e Fundo</strong> (o cérebro separa o elemento principal do contexto)."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Leis de Fitts e de Hick",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A <strong>Lei de Fitts</strong> afirma que o tempo para mover o ponteiro até um alvo é função do tamanho e da distância – botões maiores e mais próximos são alcançados mais rápido. A <strong>Lei de Hick</strong> afirma que o tempo de decisão aumenta logaritmicamente com o número de opções disponíveis – um formulário longo deve ser dividido em etapas menores para reduzir a carga de decisão."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A <strong>Carga Cognitiva Extrínseca</strong> é a carga gerada pelo design da interface (não pelo conteúdo em si) – interfaces confusas elevam artificialmente o esforço mental. A <strong>Acessibilidade</strong> (WCAG) garante que o design seja utilizável por pessoas com diferentes capacidades, em três níveis: A (mínimo), AA (padrão de mercado) e AAA (máximo)."
+  },
+  {
+   "t": "h2",
+   "id": "9-4-testes-de-usabilidade",
+   "texto": "9.4 Testes de Usabilidade"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Cinco usuários bastam",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Pesquisa clássica de Jakob Nielsen mostra que cinco usuários são suficientes para identificar aproximadamente 85% dos problemas de usabilidade de uma interface – isso torna os testes de usabilidade altamente acessíveis mesmo com recursos limitados."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Quatro métricas orientam a avaliação: <strong>Taxa de Sucesso na Tarefa</strong> (percentual de participantes que completaram a tarefa), <strong>Tempo de Conclusão</strong>, <strong>Taxa de Erros</strong> e o <strong>SUS</strong> (<em>System Usability Scale</em>, questionário de dez perguntas em escala de 0 a 100 – acima de 80 é considerado “Bom”). Os principais métodos incluem testes moderados (presenciais ou remotos), testes não moderados remotos (escaláveis, baratos), Avaliação Heurística (especialistas aplicando as heurísticas de Nielsen, sem usuários reais), Teste A/B e <em>Eye Tracking</em>."
+  },
+  {
+   "t": "h2",
+   "id": "9-5-arquitetura-da-informacao-e-design-centrado-no-usuario",
+   "texto": "9.5 Arquitetura da Informação e Design Centrado no Usuário"
+  },
+  {
+   "t": "p",
+   "html": "A Arquitetura da Informação organiza o conteúdo por meio de quatro sistemas: Organização (<em>Card Sorting</em>), Rotulação (nomenclatura), Navegação (<em>Tree Testing</em>) e Busca."
+  },
+  {
+   "t": "h3",
+   "texto": "Design Centrado no Usuário (DCU)"
+  },
+  {
+   "t": "p",
+   "html": "Segundo a ISO 9241-210, o DCU é um processo iterativo em quatro fases: <strong>1. Compreender o Contexto de Uso</strong> (quem são os usuários, quais tarefas); <strong>2. Especificar Requisitos do Usuário</strong>; <strong>3. Produzir Soluções de Design</strong> (protótipos de baixa a alta fidelidade); e <strong>4. Avaliar o Design</strong> (testes com usuários reais). Os resultados alimentam a próxima iteração, até o nível adequado de usabilidade."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Personas</strong> são representações fictícias, mas baseadas em dados reais, de um segmento típico de usuários – humanizam o usuário-alvo para toda a equipe. A <strong>Jornada do Usuário</strong> mapeia a sequência de passos que um usuário percorre para alcançar um objetivo, revelando oportunidades de melhoria (<em>pain points</em>) que não aparecem apenas olhando para a interface."
+  }
+ ]
+}

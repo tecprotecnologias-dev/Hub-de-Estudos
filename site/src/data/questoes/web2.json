@@ -1,0 +1,1143 @@
+[
+  {
+    "id": "web2-cap1-e1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "CLI de tarefas: Crie um script Node.js que lê e salva tarefas em um arquivo JSON usando o módulo fs/promises. Comandos: node tasks.js add \"Tarefa\", node tasks.js list, node tasks.js done 1.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Capturar o comando e o valor digitados pelo usuário, descartando os dois primeiros itens de process.argv (seção 1.7):"
+      },
+      {
+        "t": "codigo",
+        "texto": "const [comando, valor] = process.argv.slice(2);"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Carregar as tarefas já salvas no arquivo JSON – tratando o caso em que o arquivo ainda não existe (primeira execução):"
+      },
+      {
+        "t": "codigo",
+        "texto": "async function carregarTarefas() {\n  try {\n    const conteudo = await readFile(\"tarefas.json\", \"utf-8\");\n    return JSON.parse(conteudo);\n  } catch {\n    return [];\n  }\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. Implementar cada comando separadamente com if/else: add insere uma nova tarefa no array; list percorre e imprime; done localiza pelo id e marca feita: true."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 4. Sempre que os dados mudarem (add ou done), regravar o arquivo inteiro com writeFile. Solução completa: exatamente o código apresentado na seção 1.7 – volte a ele para ver a implementação integral, já testada e comentada."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap1-e2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Servidor de arquivos: Crie um servidor HTTP que serve arquivos estáticos de uma pasta public/ com tipos MIME corretos e página 404 personalizada.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Criar o servidor com o módulo nativo http, igual fizemos na seção 1.5."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Montar um objeto que relacione cada extensão de arquivo ao seu Content-Type correto – é isso que faz o navegador saber como interpretar cada resposta:"
+      },
+      {
+        "t": "codigo",
+        "texto": "const MIME = {\n  \".html\": \"text/html\",\n  \".css\": \"text/css\",\n  \".js\": \"application/javascript\",\n  \".json\": \"application/json\",\n  \".png\": \"image/png\",\n  \".jpg\": \"image/jpeg\",\n};"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. Para cada requisição, montar o caminho completo do arquivo dentro de public/, usando path.join e process.cwd():"
+      },
+      {
+        "t": "codigo",
+        "texto": "const url = req.url === \"/\" ? \"/index.html\" : req.url;\nconst filePath = join(process.cwd(), \"public\", url);"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 4. Tentar ler o arquivo. Se der certo, descobrir a extensão com path.extname e responder com o Content-Type correspondente. Se falhar (arquivo não existe), responder com 404 e uma mensagem personalizada:"
+      },
+      {
+        "t": "codigo",
+        "texto": "try {\n  const content = await readFile(filePath);\n  const ext = extname(filePath);\n  const mime = MIME[ext] || \"application/octet-stream\";\n  res.writeHead(200, { \"Content-Type\": mime });\n  res.end(content);\n} catch {\n  res.writeHead(404, { \"Content-Type\": \"text/plain\" });\n  res.end(\"404 -- Arquivo nao encontrado\");\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Solução completa: é exatamente o servidor.js da seção 1.5 – ele já resolve este exercício por completo. Vale revisitá-lo agora sabendo o que cada trecho faz."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap1-e3",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Config segura: Crie um projeto com .env contendo 3 variáveis, carregue com dotenv, e imprima os valores mascarando dados sensíveis (ex: mostrar só os últimos 4 caracteres de um token).",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Instalar o dotenv e criar o .env com três variáveis, seguindo o padrão da seção 1.6:"
+      },
+      {
+        "t": "codigo",
+        "texto": "# .env\nAPI_TOKEN=\"sk-1234567890abcdef\"\nDB_PASSWORD=\"supersenha123\"\nADMIN_EMAIL=\"admin@minhaempresa.com.br\""
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Carregar as variáveis no início do script:"
+      },
+      {
+        "t": "codigo",
+        "texto": "import \"dotenv/config\";"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. Criar uma função que \"mascara\" um valor sensível, mostrando apenas os últimos 4 caracteres e substituindo o resto por asteriscos. O método .slice(-4) pega os últimos 4 caracteres de qualquer string:"
+      },
+      {
+        "t": "codigo",
+        "texto": "function mascarar(valor) {\n  if (!valor || valor.length <= 4) return \"****\";\n  const ultimosQuatro = valor.slice(-4);\n  const asteriscos = \"*\".repeat(valor.length - 4);\n  return asteriscos + ultimosQuatro;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 4. Aplicar a função a cada variável sensível e imprimir o resultado:"
+      },
+      {
+        "t": "codigo",
+        "texto": "console.log(\"API_TOKEN:\", mascarar(process.env.API_TOKEN));\n// API_TOKEN: **************cdef\nconsole.log(\"DB_PASSWORD:\", mascarar(process.env.DB_PASSWORD));\n// DB_PASSWORD: *********y123\n// E-mail nao e um dado sigiloso da mesma forma -- pode ser impresso direto\nconsole.log(\"ADMIN_EMAIL:\", process.env.ADMIN_EMAIL);"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: Note que nem toda variável de ambiente precisa ser mascarada – um e-mail de contato, por exemplo, não é um segredo. O critério não é \"está no .env\", e sim \"esse dado, se vazado, causaria dano\" (senhas, tokens, chaves de API). Aplicar máscara em tudo, indiscriminadamente, também não é uma boa prática."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap2-e1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Design System básico: Crie 5 componentes: Button (variantes: primary/secondary/danger), Badge, Card, Avatar e Alert. Cada um com interface TypeScript completa.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Definir a interface TypeScript de cada componente antes de implementar – isso obriga a pensar em quais dados cada um precisa receber:"
+      },
+      {
+        "t": "codigo",
+        "texto": "interface ButtonProps {\n  texto: string;\n  variante: \"primary\" | \"secondary\" | \"danger\";\n  onClick?: () => void;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Implementar o componente, aplicando a classe CSS de acordo com a variante recebida (mesmo padrão da seção 2.5):"
+      },
+      {
+        "t": "codigo",
+        "texto": "function Button({ texto, variante, onClick }: ButtonProps) {\n  return (\n    <button className={`btn btn--${variante}`} onClick={onClick}>\n      {texto}\n    </button>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. Repetir o padrão para Badge, Avatar e Alert – cada um recebe suas próprias props (ex: Badge recebe texto e cor; Avatar recebe nome e urlImagem)."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 4. Para Card, reaproveitar exatamente o componente construído na seção 2.6, que já usa children e footer opcional."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap2-e2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Lista dinâmica: Crie um componente TabelaAlunos que recebe um array de alunos por props e exibe: nome, média, status (aprovado/recuperação/reprovado) com badge colorido.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Definir a interface do aluno e as props do componente:"
+      },
+      {
+        "t": "codigo",
+        "texto": "interface Aluno {\n  id: number;\n  nome: string;\n  media: number;\n}\ninterface TabelaAlunosProps {\n  alunos: Aluno[];\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Reaproveitar a lógica de StatusAluno da seção 2.7 para calcular o badge de cada aluno."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. Montar a tabela com .map(), sempre usando aluno.id como key:"
+      },
+      {
+        "t": "codigo",
+        "texto": "function TabelaAlunos({ alunos }: TabelaAlunosProps) {\n  return (\n    <table>\n      <thead>\n        <tr><th>Nome</th><th>Media</th><th>Status</th></tr>\n      </thead>\n      <tbody>\n        {alunos.map((aluno) => (\n          <tr key={aluno.id}>\n            <td>{aluno.nome}</td>\n            <td>{aluno.media}</td>\n            <td><StatusAluno media={aluno.media} /></td>\n          </tr>\n        ))}\n      </tbody>\n    </table>\n  );\n}"
+      }
+    ]
+  },
+  {
+    "id": "web2-cap2-e3",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Galeria de projetos: Array de projetos com título, descrição, imagem, tecnologias e links. Renderize como grid de cards com filtro por tecnologia via renderização condicional.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Definir o tipo Projeto com todos os campos pedidos (título, descrição, imagem, tecnologias, links)."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Guardar a tecnologia selecionada para filtro – por enquanto, sem useState (Módulo 3), uma variável fixa serve para praticar o filtro em si:"
+      },
+      {
+        "t": "codigo",
+        "texto": "const filtroAtual = \"React\"; // fixo por enquanto\nconst projetosFiltrados = projetos.filter(\n  (p) => filtroAtual === \"Todos\" || p.tecnologias.includes(filtroAtual)\n);"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. Renderizar a lista filtrada como grid de Card, reaproveitando o componente já construído:"
+      },
+      {
+        "t": "codigo",
+        "texto": "<div className=\"grid\">\n  {projetosFiltrados.map((projeto) => (\n    <Card key={projeto.id} titulo={projeto.titulo}>\n      <p>{projeto.descricao}</p>\n    </Card>\n  ))}\n</div>"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: Este exercício já é, na prática, um rascunho da galeria de projetos do seu portfólio real – o filtro interativo de verdade (clicável, com estado) vem no Módulo 3. Por enquanto, o objetivo é praticar filtro de array + renderização em grid."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap3-e1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Contador com limites: Crie um componente Contador com botões de + e -. O valor não pode passar de 10 nem ficar negativo.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Criar o estado inicial com useState(0)."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. No botão de incrementar, verificar o limite antes de atualizar:"
+      },
+      {
+        "t": "codigo",
+        "texto": "function incrementar() {\n  if (contagem < 10) {\n    setContagem(contagem + 1);\n  }\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. Repetir a mesma lógica no botão de decrementar, trocando o limite para > 0. Solução completa:"
+      },
+      {
+        "t": "codigo",
+        "texto": "function Contador() {\n  const [contagem, setContagem] = useState(0);\n  function incrementar() {\n    if (contagem < 10) setContagem(contagem + 1);\n  }\n  function decrementar() {\n    if (contagem > 0) setContagem(contagem - 1);\n  }\n  return (\n    <div>\n      <button onClick={decrementar}>-</button>\n      <span>{contagem}</span>\n      <button onClick={incrementar}>+</button>\n    </div>\n  );\n}"
+      }
+    ]
+  },
+  {
+    "id": "web2-cap3-e2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Formulário Controlado: Crie um formulário com campos nome, email e mensagem, todos controlados por um único objeto de estado. Exiba os valores digitados em tempo real, abaixo do formulário.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Um único objeto de estado para os três campos (seção 3.5):"
+      },
+      {
+        "t": "codigo",
+        "texto": "const [dados, setDados] = useState({ nome: \"\", email: \"\", mensagem: \"\" });"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Uma função genérica de atualização, reaproveitada nos três campos:"
+      },
+      {
+        "t": "codigo",
+        "texto": "function atualizarCampo(campo, valor) {\n  setDados({ ...dados, [campo]: valor });\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. Exibir os valores em tempo real, lendo direto do objeto dados:"
+      },
+      {
+        "t": "codigo",
+        "texto": "<p>Nome: {dados.nome}</p>\n<p>Email: {dados.email}</p>"
+      }
+    ]
+  },
+  {
+    "id": "web2-cap3-e3",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Título Dinâmico: Use useEffect para mudar o título da aba do navegador conforme o usuário digita no campo nome do exercício anterior (ex: \"Digitando: Ana\").",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Reaproveitar o estado do Exercício 2."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Adicionar o useEffect, com dados.nome no array de dependências:"
+      },
+      {
+        "t": "codigo",
+        "texto": "useEffect(() => {\n  document.title = dados.nome\n    ? `Digitando: ${dados.nome}`\n    : \"Formulario de Contato\";\n}, [dados.nome]);"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: O array tem [dados.nome], não [dados]. Se colocássemos o objeto dados inteiro, o efeito rodaria toda vez que QUALQUER campo mudasse (inclusive email e mensagem) – não é isso que queremos aqui."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap4-e1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Rotas Simples: Crie duas páginas novas no seu projeto Next.js: /sobre e /contato, cada uma com um título e um parágrafo diferentes.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Criar a pasta e o arquivo da primeira rota:"
+      },
+      {
+        "t": "codigo",
+        "texto": "mkdir src/app/sobre"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Criar src/app/sobre/page.tsx:"
+      },
+      {
+        "t": "codigo",
+        "texto": "export default function Sobre() {\n  return (\n    <main>\n      <h1>Sobre Mim</h1>\n      <p>Estudante de Programacao Web, construindo este portfolio.</p>\n    </main>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. Repetir o mesmo padrão para src/app/contato/page.tsx."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap4-e2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Menu de Navegação: Crie um componente Menu.tsx com Link para as rotas /, /sobre e /contato, e inclua ele no layout.tsx raiz.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Criar src/components/Menu.tsx:"
+      },
+      {
+        "t": "codigo",
+        "texto": "import Link from \"next/link\";\nexport default function Menu() {\n  return (\n    <nav>\n      <Link href=\"/\">Inicio</Link>\n      <Link href=\"/sobre\">Sobre</Link>\n      <Link href=\"/contato\">Contato</Link>\n    </nav>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Importar e usar dentro de src/app/layout.tsx, antes de {children}:"
+      },
+      {
+        "t": "codigo",
+        "texto": "import Menu from \"@/components/Menu\";\n<body>\n  <Menu />\n  {children}\n</body>"
+      }
+    ]
+  },
+  {
+    "id": "web2-cap4-e3",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Layout de Seção: Crie uma pasta app/projetos/ com seu próprio layout.tsx, envolvendo o conteúdo com uma <div> de largura máxima diferente do resto do site.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Criar src/app/projetos/layout.tsx:"
+      },
+      {
+        "t": "codigo",
+        "texto": "export default function ProjetosLayout({\n  children,\n}: {\n  children: React.ReactNode;\n}) {\n  return (\n    <div style={{ maxWidth: 900, margin: \"0 auto\" }}>\n      {children}\n    </div>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: Todo layout.tsx precisa receber e renderizar children – é assim que o Next.js encaixa o conteúdo de cada page.tsx dentro do layout. Esquecer o {children} faz a página parecer vazia, mesmo com o page.tsx correto."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap5-e1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Classificando Componentes: Reveja os componentes Button.tsx, ProjetoCard.tsx e FormularioContato.tsx do seu projeto. Para cada um, decida: precisa de \"use client\", ou pode continuar Server Component?",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Button.tsx – precisa de \"use client\" se usar onClick (o exemplo do Módulo 2 não usava, mas normalmente um botão real dispara alguma ação). ProjetoCard.tsx – pode continuar Server Component: só recebe props e exibe informação, sem estado nem eventos. FormularioContato.tsx – precisa de \"use client\", porque usa useState (Módulo 3) para controlar os campos do formulário."
+      },
+      {
+        "t": "codigo",
+        "texto": "\"use client\";\nimport { useState } from \"react\";\n// ... resto do FormularioContato.tsx sem mudanças"
+      }
+    ]
+  },
+  {
+    "id": "web2-cap5-e2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Busca Assíncrona: Crie uma função buscarPosts() assíncrona (pode simular com um array fixo) e use ela dentro de um Server Component em app/blog/page.tsx.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Criar a função de busca simulada:"
+      },
+      {
+        "t": "codigo",
+        "texto": "async function buscarPosts() {\n  return [\n    { id: 1, titulo: \"Meu primeiro post\" },\n    { id: 2, titulo: \"Aprendendo Next.js\" },\n  ];\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Usar dentro do Server Component da página:"
+      },
+      {
+        "t": "codigo",
+        "texto": "export default async function Blog() {\n  const posts = await buscarPosts();\n  return (\n    <main>\n      <h1>Blog</h1>\n      {posts.map((post) => (\n        <h2 key={post.id}>{post.titulo}</h2>\n      ))}\n    </main>\n  );\n}"
+      }
+    ]
+  },
+  {
+    "id": "web2-cap5-e3",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Combinando os Dois: Crie um componente BotaoCurtir.tsx (Client, com estado local de \"curtido\" ou não) e use ele dentro da página de blog (Server), um para cada post.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Criar src/components/BotaoCurtir.tsx (Client):"
+      },
+      {
+        "t": "codigo",
+        "texto": "\"use client\";\nimport { useState } from \"react\";\nfunction BotaoCurtir() {\n  const [curtido, setCurtido] = useState(false);\n  return (\n    <button onClick={() => setCurtido(!curtido)}>\n      {curtido ? \"Curtido!\" : \"Curtir\"}\n    </button>\n  );\n}\nexport default BotaoCurtir;"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Importar e usar dentro do Server Component da página de blog:"
+      },
+      {
+        "t": "codigo",
+        "texto": "import BotaoCurtir from \"@/components/BotaoCurtir\";\n{posts.map((post) => (\n  <div key={post.id}>\n    <h2>{post.titulo}</h2>\n    <BotaoCurtir />\n  </div>\n))}"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: Cada <BotaoCurtir /> tem seu próprio estado independente – clicar em \"Curtir\" num post não afeta os outros. Isso acontece porque cada instância do componente é uma \"cópia\" separada, com sua própria memória"
+      }
+    ]
+  },
+  {
+    "id": "web2-p1-e1-1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Criando um script CLI com Node.js: Crie uma pasta chamada desafio-node e inicialize um projeto Node.js (npm init -y).",
+    "itens": [
+      "Crie um arquivo index.js que leia um parâmetro passado pelo terminal (usando process.argv) com o nome de um aluno e imprima uma mensagem formatada de boas-vindas.",
+      "Comando esperado no terminal: node index.js Maria",
+      "Saída esperada: Olá, Maria! Bem-vinda ao curso de React."
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1 — Criar e entrar na pasta:"
+      },
+      {
+        "t": "codigo",
+        "texto": "mkdir desafio-node\ncd desafio-node"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2 — Inicializar o projeto:"
+      },
+      {
+        "t": "codigo",
+        "texto": "npm init -y"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3 — Criar o arquivo index.js:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// index.js\n// process.argv[0] = caminho do node\n// process.argv[1] = caminho do script\n// process.argv[2] em diante = argumentos digitados pelo usuário\nconst nome = process.argv[2];\nconsole.log(`Olá, ${nome}! Bem-vinda ao curso de React.`);"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 4 — Testar:"
+      },
+      {
+        "t": "codigo",
+        "texto": "node index.js Maria"
+      },
+      {
+        "t": "p",
+        "texto": "Saída:"
+      },
+      {
+        "t": "codigo",
+        "texto": "Olá, Maria! Bem-vinda ao curso de React."
+      },
+      {
+        "t": "p",
+        "texto": "Estrutura final da pasta:"
+      },
+      {
+        "t": "codigo",
+        "texto": "desafio-node/\nnode_modules/       (vazio, já que ainda não instalamos nada)\nindex.js\npackage.json\npackage-lock.json"
+      }
+    ]
+  },
+  {
+    "id": "web2-p1-e1-2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Gerenciamento de Pacotes NPM",
+    "itens": [
+      "Instale a biblioteca chalk (ou pico-colors) para colorir saídas do terminal.",
+      "Crie um script no seu package.json chamado \"start\" que execute o index.js.",
+      "Adicione uma validação: se nenhum nome for passado, exiba um aviso em vermelho no terminal pedindo o nome. Se o nome for informado, exiba a mensagem em verde."
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1 — Continuar na mesma pasta desafio-node, e instalar o chalk:"
+      },
+      {
+        "t": "codigo",
+        "texto": "npm install chalk"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2 — Atualizar o index.js, usando o chalk pra colorir a saída:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// index.js\nimport chalk from \"chalk\";\nconst nome = process.argv[2];\nif (!nome) {\n  console.log(chalk.red(\"Aviso: por favor, informe um nome. Ex: node index.js Maria\"));\n} else {\n  console.log(chalk.green(`Olá, ${nome}! Bem-vinda ao curso de React.`));\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3 — Adicionar \"type\": \"module\" no package.json (necessário pra usar import em vez de require):"
+      },
+      {
+        "t": "codigo",
+        "texto": "{\n  \"name\": \"desafio-node\",\n  \"version\": \"1.0.0\",\n  \"type\": \"module\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"start\": \"node index.js\"\n  },\n  \"dependencies\": {\n    \"chalk\": \"^5.3.0\"\n  }\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 4 — Testar:"
+      },
+      {
+        "t": "codigo",
+        "texto": "npm start Maria"
+      },
+      {
+        "t": "p",
+        "texto": "Saída esperada (em verde):"
+      },
+      {
+        "t": "codigo",
+        "texto": "Olá, Maria! Bem-vinda ao curso de React."
+      },
+      {
+        "t": "p",
+        "texto": "Testando sem nome:"
+      },
+      {
+        "t": "codigo",
+        "texto": "npm start"
+      },
+      {
+        "t": "p",
+        "texto": "Saída esperada (em vermelho):"
+      },
+      {
+        "t": "codigo",
+        "texto": "Aviso: por favor, informe um nome. Ex: node index.js Maria"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: o script \"start\" do npm não repassa argumentos automaticamente — pra passar o nome junto com npm start, o comando certo é npm start -- Maria (com -- antes do argumento). Sem o --, o npm tentaria interpretar Maria como uma opção do próprio npm."
+      },
+      {
+        "t": "p",
+        "texto": "Estrutura final da pasta:"
+      },
+      {
+        "t": "codigo",
+        "texto": "desafio-node/\n  node_modules/\n    chalk/\n    ...\n  index.js\n  package.json\n  package-lock.json"
+      }
+    ]
+  },
+  {
+    "id": "web2-p1-e2-1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Componente de Cartão de Perfil (ProfileCard)",
+    "itens": [
+      "Crie um componente reutilizável chamado ProfileCard que receba dados via props e exiba as informações estruturadas em HTML.",
+      "Props esperadas: nome (string), cargo (string), imagemUrl (string) e ativo (boolean).",
+      "Regra: Se a prop ativo for true, exiba uma tag \"Status: Online\" em verde; caso contrário, \"Status: Offline\" em cinza.",
+      "Renderize 3 cartões diferentes na tela passando dados variados."
+    ],
+    "resolucao": [
+      {
+        "t": "codigo",
+        "texto": "npm create vite@latest perfil-cards -- --template react\ncd perfil-cards\nnpm install"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2 — Criar o componente ProfileCard.jsx dentro de src/components/:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// src/components/ProfileCard.jsx\nfunction ProfileCard({ nome, cargo, imagemUrl, ativo }) {\n  return (\n    <div style={{ border: \"1px solid #ccc\", borderRadius: \"8px\", padding: \"16px\", width: \"220px\" }}>\n      <img\n        src={imagemUrl}\n        alt={nome}\n        style={{ width: \"100%\", borderRadius: \"8px\" }}\n      />\n      <h3>{nome}</h3>\n      <p>{cargo}</p>\n      {ativo ? (\n        <span style={{ color: \"green\" }}>Status: Online</span>\n      ) : (\n        <span style={{ color: \"gray\" }}>Status: Offline</span>\n      )}\n    </div>\n  );\n}\nexport default ProfileCard;"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3 — Usar o componente no App.jsx, renderizando 3 cartões com dados diferentes:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// src/App.jsx\nimport ProfileCard from \"./components/ProfileCard\";\nfunction App() {\n  return (\n    <div style={{ display: \"flex\", gap: \"16px\" }}>\n      <ProfileCard\n        nome=\"Ana Silva\"\n        cargo=\"Desenvolvedora Front-end\"\n        imagemUrl=\"https://i.pravatar.cc/150?img=1\"\n        ativo={true}\n      />\n      <ProfileCard\n        nome=\"Bruno Costa\"\n        cargo=\"Desenvolvedor Back-end\"\n        imagemUrl=\"https://i.pravatar.cc/150?img=2\"\n        ativo={false}\n      />\n      <ProfileCard\n        nome=\"Carla Souza\"\n        cargo=\"UI/UX Designer\"\n        imagemUrl=\"https://i.pravatar.cc/150?img=3\"\n        ativo={true}\n      />\n    </div>\n  );\n}\nexport default App;"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 4 — Rodar:"
+      },
+      {
+        "t": "codigo",
+        "texto": "npm run dev"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: repare o uso do operador ternário (ativo ? ... : ...) pra alternar entre \"Online\" e \"Offline\" — é a mesma lógica de renderização condicional que já vimos no curso, só que com um resultado diferente em cada lado (em vez de mostrar/esconder algo)."
+      },
+      {
+        "t": "p",
+        "texto": "Estrutura final da pasta:"
+      },
+      {
+        "t": "codigo",
+        "texto": "perfil-cards/\n  node_modules/\n  public/\n  src/\n    components/\n      ProfileCard.jsx\n    App.jsx\n    App.css\n    main.jsx\n  index.html\n  package.json\n  vite.config.js"
+      }
+    ]
+  },
+  {
+    "id": "web2-p1-e2-2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Composição de Componentes (children)",
+    "itens": [
+      "Crie um componente wrapper chamado Container que aceite a prop children e uma prop titulo.",
+      "O Container deve renderizar uma estrutura fixa com cabeçalho (<h2>) contendo o título e uma caixa delimitadora em volta do conteúdo passado em children."
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1 — Continuar no mesmo projeto perfil-cards, criar o componente Container.jsx dentro de src/components/:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// src/components/Container.jsx\nfunction Container({ titulo, children }) {\n  return (\n    <div style={{ border: \"2px solid #333\", borderRadius: \"8px\", padding: \"16px\", margin: \"16px 0\" }}>\n      <h2>{titulo}</h2>\n      <div>{children}</div>\n    </div>\n  );\n}\nexport default Container;"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2 — Envolver os ProfileCard do exercício anterior com o Container, no App.jsx:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// src/App.jsx\nimport ProfileCard from \"./components/ProfileCard\";\nimport Container from \"./components/Container\";\nfunction App() {\n  return (\n    <Container titulo=\"Nossa Equipe\">\n      <div style={{ display: \"flex\", gap: \"16px\" }}>\n        <ProfileCard\n          nome=\"Ana Silva\"\n          cargo=\"Desenvolvedora Front-end\"\n          imagemUrl=\"https://i.pravatar.cc/150?img=1\"\n          ativo={true}\n        />\n        <ProfileCard\n          nome=\"Bruno Costa\"\n          cargo=\"Desenvolvedor Back-end\"\n          imagemUrl=\"https://i.pravatar.cc/150?img=2\"\n          ativo={false}\n        />\n        <ProfileCard\n          nome=\"Carla Souza\"\n          cargo=\"UI/UX Designer\"\n          imagemUrl=\"https://i.pravatar.cc/150?img=3\"\n          ativo={true}\n        />\n      </div>\n    </Container>\n  );\n}\nexport default App;"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3 — Rodar:"
+      },
+      {
+        "t": "codigo",
+        "texto": "npm run dev"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: repare que o Container não sabe, e não precisa saber, o que tem dentro dele — pode ser um <div> com três ProfileCard, um parágrafo simples, ou qualquer outra coisa. É exatamente essa flexibilidade que a prop children oferece: o Container só cuida do \"invólucro\" (título + caixa ao redor), e quem usa o componente decide o conteúdo."
+      },
+      {
+        "t": "p",
+        "texto": "Estrutura final da pasta (atualizada):"
+      },
+      {
+        "t": "codigo",
+        "texto": "perfil-cards/\n  node_modules/\n  public/\n  src/\n    components/\n      ProfileCard.jsx\n      Container.jsx\n    App.jsx\n    App.css\n    main.jsx\n  index.html\n  package.json\n  vite.config.js"
+      }
+    ]
+  },
+  {
+    "id": "web2-p1-e3-1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Contador Dinâmico com Passos: Crie um componente de contador que gerencie o estado local usando useState.",
+    "itens": [
+      "Mantenha dois estados: contador e passo (ex: incrementar de 1 em 1, de 5 em 5).",
+      "Inclua botões para: + (Incrementar), - (Decrementar) e Resetar.",
+      "Adicione um <select> ou <input> para alterar o valor do passo."
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1 — Criar um novo projeto (Módulo 3 é sobre Hooks — vamos abrir um projeto novo pra esses exercícios):"
+      },
+      {
+        "t": "codigo",
+        "texto": "npm create vite@latest exercicios-hooks -- --template react\ncd exercicios-hooks\nnpm install"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2 — Criar o componente ContadorPasso.jsx dentro de src/components/:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// src/components/ContadorPasso.jsx\nimport { useState } from \"react\";\nfunction ContadorPasso() {\n  const [contador, setContador] = useState(0);\n  const [passo, setPasso] = useState(1);\n  function incrementar() {\n    setContador(contador + passo);\n  }\n  function decrementar() {\n    setContador(contador - passo);\n  }\n  function resetar() {\n    setContador(0);\n  }\n  return (\n    <div style={{ textAlign: \"center\" }}>\n      <h2>Contador: {contador}</h2>\n      <div style={{ marginBottom: \"12px\" }}>\n        <label>Passo: </label>\n        <select value={passo} onChange={(e) => setPasso(Number(e.target.value))}>\n          <option value={1}>1</option>\n          <option value={5}>5</option>\n          <option value={10}>10</option>\n        </select>\n      </div>\n      <button onClick={decrementar}>-</button>\n      <button onClick={incrementar} style={{ marginLeft: \"8px\" }}>+</button>\n      <button onClick={resetar} style={{ marginLeft: \"8px\" }}>Resetar</button>\n    </div>\n  );\n}\nexport default ContadorPasso;"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3 — Usar no App.jsx:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// src/App.jsx\nimport ContadorPasso from \"./components/ContadorPasso\";\nfunction App() {\n  return <ContadorPasso />;\n}\nexport default App;"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 4 — Rodar:"
+      },
+      {
+        "t": "codigo",
+        "texto": "npm run dev"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: repare em Number(e.target.value) no <select> — o valor de um <select> sempre chega como texto (string), mesmo quando as <option> têm números. Sem essa conversão, contador + passo faria uma concatenação de texto (\"05\" + \"1\" viraria \"051\") em vez de somar de verdade."
+      },
+      {
+        "t": "p",
+        "texto": "Estrutura final da pasta:"
+      },
+      {
+        "t": "codigo",
+        "texto": "exercicios-hooks/\n  node_modules/\n  public/\n  src/\n    components/\n      ContadorPasso.jsx\n    App.jsx\n    App.css\n    main.jsx\n  index.html\n  package.json\n  vite.config.js"
+      }
+    ]
+  },
+  {
+    "id": "web2-p1-e3-2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Busca de Dados na API com useEffect",
+    "itens": [
+      "Crie um componente que busque uma lista de usuários na API pública JSONPlaceholder (https://jsonplaceholder.typicode.com/users).",
+      "Use useState para armazenar a lista de usuários, o estado de carregamento (loading) e eventuais erros (error).",
+      "Use useEffect com array de dependências vazio [] para disparar o fetch ao carregar o componente.",
+      "Renderize um texto de \"Carregando...\" enquanto os dados não chegam."
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1 — Continuar no mesmo projeto exercicios-hooks, criar o componente ListaUsuarios.jsx dentro de src/components/:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// src/components/ListaUsuarios.jsx\nimport { useState, useEffect } from \"react\";\nfunction ListaUsuarios() {\n  const [usuarios, setUsuarios] = useState([]);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n  useEffect(() => {\n    fetch(\"https://jsonplaceholder.typicode.com/users\")\n      .then((resposta) => {\n        if (!resposta.ok) {\n          throw new Error(\"Erro ao buscar usuarios\");\n        }\n        return resposta.json();\n      })\n      .then((dados) => {\n        setUsuarios(dados);\n        setLoading(false);\n      })\n      .catch((err) => {\n        setError(err.message);\n        setLoading(false);\n      });\n  }, []);\n  if (loading) return <p>Carregando...</p>;\n  if (error) return <p>Erro: {error}</p>;\n  return (\n    <ul>\n      {usuarios.map((usuario) => (\n        <li key={usuario.id}>\n          {usuario.name} -- {usuario.email}\n        </li>\n      ))}\n    </ul>\n  );\n}\nexport default ListaUsuarios;"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2 — Usar no App.jsx:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// src/App.jsx\nimport ListaUsuarios from \"./components/ListaUsuarios\";\nfunction App() {\n  return (\n    <div>\n      <h1>Lista de Usuários</h1>\n      <ListaUsuarios />\n    </div>\n  );\n}\nexport default App;"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3 — Rodar:"
+      },
+      {
+        "t": "codigo",
+        "texto": "npm run dev"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: repare no array de dependências vazio ([]) no final do useEffect — isso garante que o fetch rode só uma vez, quando o componente aparece na tela pela primeira vez. Sem esse array, o efeito rodaria a cada renderização, disparando uma busca nova a cada vez que usuarios, loading ou error mudassem — o que causaria um loop infinito de requisições (já que setUsuarios dentro do efeito provoca uma nova renderização, que dispararia o efeito de novo)."
+      },
+      {
+        "t": "p",
+        "texto": "Repare também na ordem dos if: o loading é checado antes do error, e o error antes da lista — assim a tela sempre mostra o estado mais relevante no momento certo."
+      },
+      {
+        "t": "p",
+        "texto": "Estrutura final da pasta:"
+      },
+      {
+        "t": "codigo",
+        "texto": "exercicios-hooks/\n  node_modules/\n  public/\n  src/\n    components/\n      ContadorPasso.jsx\n      ListaUsuarios.jsx\n    App.jsx\n    App.css\n    main.jsx\n  index.html\n  package.json\n  vite.config.js"
+      }
+    ]
+  },
+  {
+    "id": "web2-p1-e4-1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Estrutura de Rotas e Navegação: Dentro de um projeto Next.js (utilizando o diretório app/):",
+    "itens": [
+      "Crie as páginas:",
+      "Home: app/page.js",
+      "Sobre: app/sobre/page.js",
+      "Produtos: app/produtos/page.js",
+      "Crie um componente de menu de navegação reutilizável (Navbar) usando o componente <Link/> do next/link para navegar entre essas 3 rotas sem recarregar a página."
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1 — Criar o projeto Next.js (JavaScript, sem TypeScript, já que o exercício pede page.js):"
+      },
+      {
+        "t": "codigo",
+        "texto": "npx create-next-app@latest loja-next\nNas perguntas do assistente, responda:\nWould you like to use TypeScript?     No\nWould you like to use ESLint?         Yes\nWould you like to use Tailwind CSS?   No\nWould you like to use App Router?     Yes"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2 — Entrar na pasta:"
+      },
+      {
+        "t": "codigo",
+        "texto": "cd loja-next"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3 — Criar a página Home, editando o arquivo que já existe em app/page.js:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/page.js\nexport default function Home() {\n  return (\n    <main>\n      <h1>Bem-vindo à Loja</h1>\n      <p>Confira nossos produtos e saiba mais sobre nós.</p>\n    </main>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 4 — Criar a página Sobre:"
+      },
+      {
+        "t": "codigo",
+        "texto": "mkdir app/sobre"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/sobre/page.js\nexport default function Sobre() {\n  return (\n    <main>\n      <h1>Sobre Nós</h1>\n      <p>Somos uma loja fictícia criada para fins didáticos.</p>\n    </main>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 5 — Criar a página Produtos:"
+      },
+      {
+        "t": "codigo",
+        "texto": "mkdir app/produtos"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/produtos/page.js\nexport default function Produtos() {\n  return (\n    <main>\n      <h1>Nossos Produtos</h1>\n      <p>Lista de produtos em breve.</p>\n    </main>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 6 — Criar o componente Navbar:"
+      },
+      {
+        "t": "codigo",
+        "texto": "mkdir app/components"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/components/Navbar.js\nimport Link from \"next/link\";\nexport default function Navbar() {\n  return (\n    <nav style={{ display: \"flex\", gap: \"16px\", padding: \"16px\" }}>\n      <Link href=\"/\">Início</Link>\n      <Link href=\"/sobre\">Sobre</Link>\n      <Link href=\"/produtos\">Produtos</Link>\n    </nav>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 7 — Adicionar o Navbar no layout.js (arquivo raiz, que envolve todas as páginas):"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/layout.js\nimport Navbar from \"./components/Navbar\";\nimport \"./globals.css\";\nexport default function RootLayout({ children }) {\n  return (\n    <html lang=\"pt-br\">\n      <body>\n        <Navbar />\n        {children}\n      </body>\n    </html>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 8 — Rodar:"
+      },
+      {
+        "t": "codigo",
+        "texto": "npm run dev"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: as três pastas (sobre/, produtos/, components/) precisam ficar lado a lado, todas soltas direto dentro de app/ — nunca uma dentro da outra. E o Navbar vai dentro de app/components/, não dentro de uma das pastas de rota."
+      },
+      {
+        "t": "p",
+        "texto": "Estrutura final da pasta:"
+      },
+      {
+        "t": "codigo",
+        "texto": "loja-next/\n  node_modules/\n  public/\n  app/\n    components/\n      Navbar.js\n    sobre/\n      page.js\n    produtos/\n      page.js\n    layout.js\n    page.js\n    globals.css\n  package.json\n  next.config.js"
+      }
+    ]
+  },
+  {
+    "id": "web2-p1-e4-2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Rotas Dinâmicas ([id])",
+    "itens": [
+      "Dentro de app/produtos/, crie uma pasta dinâmica [id] com o arquivo page.js.",
+      "Faça com que ao acessar a URL /produtos/101, a página leia o parâmetro params.id e exiba o texto: \"Exibindo detalhes do produto número: 101\".",
+      "Adicione um botão \"Voltar para Produtos\" usando a navegação do Next.js."
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1 — Continuar no mesmo projeto loja-next, criar a pasta dinâmica dentro de app/produtos/:"
+      },
+      {
+        "t": "codigo",
+        "texto": "mkdir \"app/produtos/[id]\""
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2 — Criar o arquivo page.js dentro dela:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/produtos/[id]/page.js\nimport Link from \"next/link\";\nexport default function DetalheProduto({ params }) {\n  return (\n    <main>\n      <h1>Exibindo detalhes do produto número: {params.id}</h1>\n      <Link href=\"/produtos\">Voltar para Produtos</Link>\n    </main>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3 — Rodar e testar:"
+      },
+      {
+        "t": "codigo",
+        "texto": "npm run dev\nAcesse http://localhost:3000/produtos/101 — deve aparecer:\nExibindo detalhes do produto número: 101"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: o nome da pasta precisa ser exatamente [id], com colchetes — são os colchetes que avisam o Next.js que aquele pedaço da URL é uma variável, não um nome fixo. Sem eles, o Next.js trataria a pasta como uma rota literal /produtos/[id] (o texto \"[id]\" mesmo), não como /produtos/101, /produtos/102, etc."
+      },
+      {
+        "t": "p",
+        "texto": "Repare também que o Next.js entrega automaticamente o valor da URL dentro do objeto params — params.id é o pedacinho da URL que corresponde ao nome da pasta entre colchetes."
+      },
+      {
+        "t": "p",
+        "texto": "Estrutura final da pasta:"
+      },
+      {
+        "t": "codigo",
+        "texto": "loja-next/\n  node_modules/\n  public/\n  app/\n    components/\n      Navbar.js\n    sobre/\n      page.js\n    produtos/\n      page.js\n      [id]/\n        page.js\n    layout.js\n    page.js\n    globals.css\n  package.json\n  next.config.js"
+      }
+    ]
+  },
+  {
+    "id": "web2-p1-e5",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Mini Loja Online: Crie um projeto Next.js chamado mini-loja, com as seguintes características:",
+    "itens": [
+      "Crie um script Node.js (gerar-produtos.js) que recebe pelo terminal a quantidade de produtos a gerar (ex: node gerar-produtos.js 5) e cria um arquivo produtos.json contendo essa quantidade de produtos fictícios, cada um com id, nome e preco.",
+      "A partir desses dados, construa um site com uma página inicial, uma página \"Sobre\" e uma página \"Produtos\", navegáveis por um menu (Navbar) reutilizável, usando o componente <Link/> do Next.js, sem recarregar a página a cada clique.",
+      "Na página de Produtos, carregue a lista do produtos.json (usando useEffect, com estados de carregamento e erro) e exiba cada produto dentro de um componente ProdutoCard, recebendo nome, preco e id via props. Envolva toda a listagem num componente Container, reutilizável, que recebe uma prop titulo e exibe qualquer conteúdo passado como children. Cada ProdutoCard deve ter um contador de quantidade próprio, controlado com useState, com botões de incrementar e decrementar.",
+      "Por fim, crie uma rota dinâmica para que, ao acessar por exemplo /produtos/101, a página leia o parâmetro da URL e exiba os detalhes daquele produto específico, com um botão para voltar à listagem completa."
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1 — Criar o projeto Next.js:"
+      },
+      {
+        "t": "codigo",
+        "texto": "npx create-next-app@latest mini-loja"
+      },
+      {
+        "t": "p",
+        "texto": "Responda: TypeScript → No, ESLint → Yes, Tailwind → No, App Router → Yes."
+      },
+      {
+        "t": "codigo",
+        "texto": "cd mini-loja"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2 — Criar o script gerar-produtos.js, na RAIZ do projeto (fora da pasta app/):"
+      },
+      {
+        "t": "codigo",
+        "texto": "// gerar-produtos.js\nimport { writeFile } from \"fs/promises\";\nconst quantidade = Number(process.argv[2]) || 5;\nconst nomesBase = [\"Camiseta\", \"Tênis\", \"Boné\", \"Mochila\", \"Relógio\", \"Fone de Ouvido\", \"Garrafa Térmica\", \"Óculos de Sol\"];\nconst produtos = [];\nfor (let i = 1; i <= quantidade; i++) {\n  produtos.push({\n    id: i,\n    nome: `${nomesBase[i % nomesBase.length]} ${i}`,\n    preco: Number((Math.random() * 200 + 20).toFixed(2)),\n  });\n}\nawait writeFile(\"public/produtos.json\", JSON.stringify(produtos, null, 2));\nconsole.log(`${quantidade} produtos gerados em public/produtos.json`);"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: o arquivo é salvo dentro de public/ (não na raiz do projeto) — é a única pasta do Next.js cujo conteúdo fica acessível diretamente pelo navegador, em http://localhost:3000/produtos.json. Por isso o fetch que vamos criar mais adiante vai conseguir acessá-lo."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3 — Rodar o script pra gerar os produtos:"
+      },
+      {
+        "t": "codigo",
+        "texto": "node gerar-produtos.js 6\nSaída esperada:\n6 produtos gerados em public/produtos.json"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 4 — Criar o componente ProdutoCard"
+      },
+      {
+        "t": "codigo",
+        "texto": "mkdir app/components"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/components/ProdutoCard.js\n\"use client\";\nimport { useState } from \"react\";\nexport default function ProdutoCard({ id, nome, preco }) {\n  const [quantidade, setQuantidade] = useState(1);\n  function incrementar() {\n    setQuantidade(quantidade + 1);\n  }\n  function decrementar() {\n    if (quantidade > 1) setQuantidade(quantidade - 1);\n  }\n  return (\n    <div style={{ border: \"1px solid #ccc\", borderRadius: \"8px\", padding: \"16px\", width: \"200px\" }}>\n      <h3>{nome}</h3>\n      <p>R$ {preco.toFixed(2)}</p>\n      <div>\n        <button onClick={decrementar}>-</button>\n        <span style={{ margin: \"0 8px\" }}>{quantidade}</span>\n        <button onClick={incrementar}>+</button>\n      </div>\n    </div>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: esse componente usa useState (interatividade), então precisa da diretiva \"use client\" no topo — sem ela, o Next.js recusaria compilar, exatamente como vimos no Módulo 5."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 5 — Criar o componente Container (reaproveitando o do Exercício 2.2)"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/components/Container.js\nexport default function Container({ titulo, children }) {\n  return (\n    <div style={{ border: \"2px solid #333\", borderRadius: \"8px\", padding: \"16px\", margin: \"16px 0\" }}>\n      <h2>{titulo}</h2>\n      <div style={{ display: \"flex\", gap: \"16px\", flexWrap: \"wrap\" }}>{children}</div>\n    </div>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: o Container não usa useState nem eventos — continua Server Component, sem \"use client\"."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 6 — Criar o Navbar"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/components/Navbar.js\nimport Link from \"next/link\";\nexport default function Navbar() {\n  return (\n    <nav style={{ display: \"flex\", gap: \"16px\", padding: \"16px\" }}>\n      <Link href=\"/\">Início</Link>\n      <Link href=\"/sobre\">Sobre</Link>\n      <Link href=\"/produtos\">Produtos</Link>\n    </nav>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 7 — Criar a página Home e a página Sobre"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/page.js\nexport default function Home() {\n  return (\n    <main>\n      <h1>Bem-vindo à Mini Loja</h1>\n      <p>Confira nossos produtos!</p>\n    </main>\n  );\n}\nmkdir app/sobre"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/sobre/page.js\nexport default function Sobre() {\n  return (\n    <main>\n      <h1>Sobre a Mini Loja</h1>\n      <p>Uma loja fictícia criada para o exercício integrador.</p>\n    </main>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 8 — Criar a página de Produtos (com useEffect)"
+      },
+      {
+        "t": "codigo",
+        "texto": "mkdir app/produtos"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/produtos/page.js\n\"use client\";\nimport { useState, useEffect } from \"react\";\nimport ProdutoCard from \"../components/ProdutoCard\";\nimport Container from \"../components/Container\";\nexport default function Produtos() {\n  const [produtos, setProdutos] = useState([]);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n  useEffect(() => {\n    fetch(\"/produtos.json\")\n      .then((resposta) => {\n        if (!resposta.ok) throw new Error(\"Erro ao carregar produtos\");\n        return resposta.json();\n      })\n      .then((dados) => {\n        setProdutos(dados);\n        setLoading(false);\n      })\n      .catch((err) => {\n        setError(err.message);\n        setLoading(false);\n      });\n  }, []);\n  if (loading) return <p>Carregando...</p>;\n  if (error) return <p>Erro: {error}</p>;\n  return (\n    <main>\n      <Container titulo=\"Nossos Produtos\">\n        {produtos.map((produto) => (\n          <ProdutoCard key={produto.id} id={produto.id} nome={produto.nome} preco={produto.preco} />\n        ))}\n      </Container>\n    </main>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: essa página precisa de \"use client\" porque usa useState e useEffect diretamente nela (não só nos componentes filhos). O fetch(\"/produtos.json\") funciona porque o arquivo está em public/ — o Next.js serve tudo que está lá direto pela raiz do site."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 9 — Criar a rota dinâmica /produtos/[id]"
+      },
+      {
+        "t": "codigo",
+        "texto": "mkdir \"app/produtos/[id]\""
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/produtos/[id]/page.js\nimport Link from \"next/link\";\nexport default function DetalheProduto({ params }) {\n  return (\n    <main>\n      <h1>Detalhes do Produto</h1>\n      <p>Exibindo detalhes do produto número: {params.id}</p>\n      <Link href=\"/produtos\">Voltar para Produtos</Link>\n    </main>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 10 — Conectar o Navbar no layout.js"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/layout.js\nimport Navbar from \"./components/Navbar\";\nimport \"./globals.css\";\nexport default function RootLayout({ children }) {\n  return (\n    <html lang=\"pt-br\">\n      <body>\n        <Navbar />\n        {children}\n      </body>\n    </html>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 11 — Rodar e conferir tudo"
+      },
+      {
+        "t": "codigo",
+        "texto": "npm run dev\n/ → título + parágrafo de boas-vindas\n/sobre → texto sobre a loja\n/produtos → os 6 produtos gerados, cada um com contador +/-\n/produtos/101 → \"Exibindo detalhes do produto número: 101\" + botão de voltar"
+      },
+      {
+        "t": "p",
+        "texto": "Estrutura final completa"
+      },
+      {
+        "t": "codigo",
+        "texto": "mini-loja/\n  node_modules/\n  public/\n    produtos.json\n  app/\n    components/\n      Navbar.js\n      Container.js\n      ProdutoCard.js\n    sobre/\n      page.js\n    produtos/\n      page.js\n      [id]/\n        page.js\n    layout.js\n    page.js\n    globals.css\n  gerar-produtos.js\n  package.json\n  next.config.js"
+      }
+    ]
+  }
+]

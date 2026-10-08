@@ -1,0 +1,1194 @@
+[
+  {
+    "id": "engsoft-cap1-q1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap1",
+    "tipo": "discursiva",
+    "texto": {
+      "citacao": "\"I believe in this concept, but the implementation as described above is risky and invites failure.\"",
+      "traducao": "(Tradução livre: \"Acredito neste conceito, mas a implementação descrita acima é arriscada e convida ao fracasso.\")",
+      "fonte": "ROYCE, W. W. Managing the Development of Large Software Systems. Proceedings of IEEE WESCON, 1970, p. 1-9."
+    },
+    "caso": [
+      "Uma empresa de tecnologia recebeu um contrato para desenvolver um sistema de gestão de vendas com requisitos bem definidos pelo cliente, prazo de 18 meses e orçamento fixo. O gerente de projetos decide aplicar o Modelo Cascata puro — Requisitos → Análise → Design → Implementação → Testes → Implantação — sem qualquer possibilidade de retorno a fases anteriores. Seis meses depois, durante a fase de Testes, a equipe descobriu um requisito crítico que havia sido interpretado erroneamente desde o início do projeto."
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) Explique por que Royce, ao descrever o modelo que mais tarde ficou conhecido como Cascata, alertava que essa implementação sequencial pura é \"arriscada e convida ao fracasso\". Qual é o risco específico?",
+      "b) A empresa do caso acima precisa corrigir o requisito mal interpretado durante a fase de Testes. Segundo os conceitos do Capítulo 1 (especialmente sobre custo de correção de erros), por que essa descoberta tardia é especialmente custosa?",
+      "c) Compare como o Modelo Cascata, o Modelo Incremental e o Modelo Ágil teriam tratado a mesma mudança de requisito descoberta na fase de Testes. Qual seria o impacto em cada um?",
+      "d) Mesmo com os riscos apontados por Royce, existem cenários onde o Modelo Cascata ainda é adequado. Descreva dois contextos de projeto em que esse modelo seria apropriado, justificando sua escolha com base no Capítulo 1."
+    ],
+    "linhas": 12
+  },
+  {
+    "id": "engsoft-cap1-q2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap1",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"The primary purpose of the software life cycle processes is to define the fundamental activities and tasks that must be carried out throughout a software system's life, from conception through deployment to operation, maintenance, and eventual retirement.\"",
+      "traducao": "(Tradução livre: \"O propósito principal dos processos de ciclo de vida de software é definir as atividades e tarefas fundamentais que devem ser realizadas durante toda a vida de um sistema de software, desde sua concepção até a implantação, operação, manutenção e eventual descontinuação.\")",
+      "fonte": "ISO/IEC/IEEE 12207:2017 — Systems and software engineering — Software life cycle processes. Padrão internacional de processos de ciclo de vida de software."
+    },
+    "caso": [
+      "Um gerente de projetos de uma agência de desenvolvimento argumenta que o Modelo Cascata, o Ágil e o Espiral são práticas completamente independentes e não possuem denominador comum. Ele afirma: \"Cada modelo faz o seu trabalho do início ao fim, e não existe nenhum padrão internacional que considere os dois como parte de uma mesma estrutura de processos.\""
+    ],
+    "enunciado": "Com base no propósito da norma ISO/IEC/IEEE 12207 citada acima, qual é a avaliação correta dessa afirmação?",
+    "alternativas": [
+      "O gerente está totalmente correto: modelos diferentes não podem ser comparados ou regulados por um único padrão internacional",
+      "O gerente está equivocado: a norma define processos de ciclo de vida comuns a qualquer modelo, seja Cascata, Ágil ou Espiral",
+      "O gerente está correto, pois a norma só se aplica a projetos que seguem estritamente o Modelo Cascata, com fases sequenciais e documentação formal em cada etapa",
+      "O gerente está correto: não existe qualquer padrão internacional que trate de processos de software",
+      "A norma citada trata apenas de hardware, não tendo relação com processos de desenvolvimento de software"
+    ],
+    "correta": 1,
+    "resolucao": "A ISO/IEC/IEEE 12207 define os processos e atividades fundamentais de ciclo de vida de software que são comuns a todos os modelos de desenvolvimento; cada modelo apenas reorganiza essas atividades de forma diferente conforme o contexto do projeto."
+  },
+  {
+    "id": "engsoft-cap1-q3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap1",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"The analysis and coding steps are still in the picture, but they are preceded by two levels of requirements analysis, are separated by a program design step, and followed by a testing step.\"",
+      "traducao": "(Tradução livre: \"As etapas de análise e codificação ainda estão presentes, mas são precedidas por dois níveis de análise de requisitos, são separadas por uma etapa de design do programa, e seguidas por uma etapa de testes.\")",
+      "fonte": "ROYCE, W. W. Managing the Development of Large Software Systems. Proceedings of IEEE WESCON, 1970, p. 1-9."
+    },
+    "caso": [
+      "Uma empresa de software descreve sua abordagem de desenvolvimento: todo o levantamento de requisitos é completado e aprovado pelo cliente; em seguida, toda a arquitetura e o design do sistema são definidos; só então o código é escrito; depois todo o sistema passa por testes; e, finalmente, o sistema é implantado em produção — cada etapa formalmente encerrada antes de a próxima iniciar."
+    ],
+    "enunciado": "A abordagem descrita pela empresa corresponde ao modelo originalmente apresentado por Royce em 1970 como:",
+    "alternativas": [
+      "Modelo Ágil, pela ênfase em ciclos curtos e iterações",
+      "Modelo Espiral, pela ênfase em análise de riscos contínua a cada volta do ciclo de desenvolvimento",
+      "Modelo Incremental, pela entrega do sistema em múltiplas partes, cada uma passando por todas as fases",
+      "Modelo Cascata, pela estrutura sequencial em que cada fase só começa após o fim da anterior",
+      "RAD, pela prototipagem rápida com usuários"
+    ],
+    "correta": 3,
+    "resolucao": "Royce descreveu em 1970 o modelo sequencial linear (posteriormente chamado de Cascata) com as fases em ordem: requisitos → análise → design → implementação → testes → implantação. Esta é a estrutura presente no caso descrito."
+  },
+  {
+    "id": "engsoft-cap1-q4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap1",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"The spiral model of the software process is oriented toward minimizing risk by emphasizing systematic risk analysis and risk-reduction strategies throughout the software development process.\"",
+      "traducao": "(Tradução livre: \"O modelo espiral do processo de software está orientado para minimizar riscos enfatizando análise sistemática de riscos e estratégias de redução de riscos durante todo o processo de desenvolvimento de software.\")",
+      "fonte": "BOEHM, B. W. A Spiral Model of Software Development and Enhancement. IEEE Computer, v. 21, n. 5, p. 61-72, 1988."
+    },
+    "caso": [
+      "Uma instituição financeira está desenvolvendo um novo sistema de processamento de transações. O projeto é grande, tecnicamente complexo, e qualquer falha de software pode resultar em perda de dados ou fraude. A equipe resolve estruturar o projeto em ciclos, cada um começando com uma análise explícita de riscos (quais são os maiores perigos?), seguida de ações para mitigá-los, e apenas depois prossegue com o desenvolvimento."
+    ],
+    "enunciado": "O modelo de ciclo de vida que melhor descreve a abordagem adotada pela instituição financeira, conforme descrito no artigo de Boehm (1988), é o:",
+    "alternativas": [
+      "Modelo Cascata, pois o projeto exige documentação formal, processo bem definido e aprovação de cada fase antes da seguinte",
+      "Modelo Ágil puro, pois o projeto é complexo e de alto risco",
+      "Modelo Incremental, pois o sistema é entregue em partes funcionais, priorizando os módulos de maior valor",
+      "Modelo Espiral, pois cada ciclo começa com análise explícita de riscos e ações para reduzi-los",
+      "RAD, pois a prototipagem rápida reduz custos"
+    ],
+    "correta": 3,
+    "resolucao": "Boehm descreve o Modelo Espiral como centrado em ciclos que começam pela identificação e análise de riscos, seguida de ações para mitigá-los. Essa característica torna o modelo ideal para projetos grandes, complexos e de alto risco, como sistemas financeiros críticos."
+  },
+  {
+    "id": "engsoft-cap1-q5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap1",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Estamos descobrindo maneiras melhores de desenvolver software, fazendo-o nós mesmos e ajudando outros a fazerem o mesmo. Através deste trabalho, passamos a valorizar: indivíduos e interações mais que processos e ferramentas; software funcionando mais que documentação abrangente; colaboração com o cliente mais que negociação de contratos; e responder a mudanças mais que seguir um plano. Ou seja, embora valorizemos os itens à direita, valorizamos mais os itens à esquerda.\"",
+      "fonte": "BECK, K. et al. Manifesto para Desenvolvimento Ágil de Software, 2001. Disponível em: agilemanifesto.org/iso/ptbr/."
+    },
+    "caso": [
+      "Um Product Owner, ao discutir a adoção do Scrum com sua equipe, interpreta o Manifesto Ágil dessa forma: \"Como valorizamos responder a mudanças e colaboração, não precisamos planejar nada — vamos apenas codificando conforme o feedback dos clientes vai chegando, sem nenhuma estrutura de planejamento.\""
+    ],
+    "enunciado": "Essa interpretação do Manifesto Ágil está:",
+    "alternativas": [
+      "Completamente correta: o Manifesto Ágil defende que planejamento é desnecessário, pois as mudanças devem ser absorvidas a qualquer momento",
+      "Correta, mas incompleta: precisa incluir também a automação de testes",
+      "Equivocada: o Manifesto diz que os itens à direita, como seguir um plano, continuam tendo valor, só que menor",
+      "Correta apenas para projetos pequenos com requisitos muito instáveis",
+      "Equivocada: o Manifesto Ágil não menciona planejamento nem mudanças, tratando apenas da colaboração com o cliente"
+    ],
+    "correta": 2,
+    "resolucao": "O Manifesto Ágil é explícito em sua frase final: embora valorizem os itens à esquerda (indivíduos, software funcionando, colaboração, mudanças), os ágeis ainda reconhecem valor nos itens à direita (processos, documentação, contratos, planos). Isso significa planejamento adaptativo, não ausência de planejamento."
+  },
+  {
+    "id": "engsoft-cap1-q6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap1",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"From a study of 8,380 IT projects across the United States, only 16.2% of the projects were completed within the initially estimated budget and schedule, while 31.1% were canceled before completion.\"",
+      "traducao": "(Tradução livre: \"A partir de um estudo de 8.380 projetos de TI nos Estados Unidos, apenas 16,2% dos projetos foram concluídos dentro do orçamento e prazo estimados inicialmente, enquanto 31,1% foram cancelados antes da conclusão.\")",
+      "fonte": "THE STANDISH GROUP INTERNATIONAL. CHAOS Report, 1994. Pesquisa com 8.380 projetos de TI em empresas norte-americanas."
+    },
+    "caso": [
+      "Uma empresa de consultoria de software argumenta que as falhas em requisitos são relativamente raras na prática e que a maioria dos projetos alcança sucesso sem necessidade de cuidados especiais na fase inicial. Usa esse argumento para justificar uma abordagem de desenvolvimento que inicia a codificação rapidamente, com requisitos ainda pouco refinados."
+    ],
+    "enunciado": "Avaliando essa argumentação à luz dos dados do CHAOS Report, é correto afirmar que:",
+    "alternativas": [
+      "A empresa está correta: a maioria dos projetos de TI é concluída com sucesso sem necessidade de rigor na fase de Requisitos, já que os ajustes são feitos nos testes",
+      "A empresa está equivocada: o relatório mostra alta taxa de insucesso, e requisitos mal definidos estão entre as causas principais",
+      "O CHAOS Report trata apenas de projetos de hardware, não sendo aplicável a software",
+      "Os dados do CHAOS Report indicam que mais de 90% dos projetos de TI são bem-sucedidos, independentemente da qualidade dos requisitos",
+      "O CHAOS Report não tem nenhuma relação com a fase de Requisitos"
+    ],
+    "correta": 1,
+    "resolucao": "O CHAOS Report é um dos estudos mais citados sobre insucesso de projetos de TI. A taxa de insucesso e cancelamento é extremamente alta, e a pesquisa identifica problemas de requisitos e comunicação como causas raízes recorrentes — exatamente o que o Capítulo 1 enfatiza sobre a criticidade dessa fase."
+  },
+  {
+    "id": "engsoft-cap1-q7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap1",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Architecture represents the set of structures needed to reason about the system, which comprise software elements, relations among them, and properties of both elements and relations. It provides a level of abstraction at the highest levels of design.\"",
+      "traducao": "(Tradução livre: \"A arquitetura representa o conjunto de estruturas necessárias para raciocinar sobre o sistema, que compreende elementos de software, relações entre eles e propriedades de ambos. Fornece um nível de abstração nos níveis mais altos de design.\")",
+      "fonte": "ISO/IEC/IEEE 42010:2011 — Systems and software engineering — Architecture description. Padrão internacional de descrição de arquitetura de software."
+    },
+    "caso": [
+      "Uma equipe de desenvolvimento de um sistema de e-commerce, antes de escrever a primeira linha de código, define: quais tecnologias serão usadas (banco de dados relacional, backend em Node.js, frontend em React); como os componentes (Carrinho, Pagamento, Inventário) se comunicarão; qual será a estrutura das tabelas; e quais decisões devem ser mantidas estáveis conforme o sistema cresce. Essas decisões são documentadas e servem como referência para guiar o desenvolvimento."
+    ],
+    "enunciado": "Segundo a definição de arquitetura da norma ISO/IEC/IEEE 42010, a atividade realizada pela equipe corresponde à fase do Capítulo 1 conhecida como:",
+    "alternativas": [
+      "Requisitos, pois envolve levantar o que o sistema deve fazer e quais tecnologias o cliente exige",
+      "Análise, pois envolve examinar a viabilidade das soluções",
+      "Design (Projeto), pois trata dos elementos de software, suas relações e princípios de organização",
+      "Implementação, pois envolve decisões técnicas sobre as linguagens, os frameworks e a forma de organizar o código",
+      "Testes, pois envolve validação das decisões tomadas"
+    ],
+    "correta": 2,
+    "resolucao": "A ISO/IEC/IEEE 42010 define arquitetura como as estruturas (elementos de software, relações, tecnologias, princípios de design) que guiam o sistema. Esta é exatamente a atividade da fase de Design (Projeto) descrita no Capítulo 1, onde a organização estrutural do sistema é definida antes da implementação."
+  },
+  {
+    "id": "engsoft-cap1-q8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap1",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Software testing comprises static and dynamic techniques that are applied throughout the software development process. Testing is performed at different levels of granularity, from unit testing of individual components to system testing of the complete product.\"",
+      "traducao": "(Tradução livre: \"Os testes de software compreendem técnicas estáticas e dinâmicas aplicadas durante todo o processo de desenvolvimento. Os testes são realizados em diferentes níveis de granularidade, desde testes unitários de componentes individuais até testes de sistema do produto completo.\")",
+      "fonte": "ISO/IEC/IEEE 29119 — Software and systems engineering — Software testing. Série de normas internacionais sobre teste de software."
+    },
+    "caso": [
+      "Uma equipe de desenvolvimento de um aplicativo de gestão de vendas realiza a seguinte sequência de testes: primeiro, testa a função que calcula o desconto aplicado a cada venda de forma isolada; depois, testa se essa função se comunica corretamente com a função que atualiza o estoque; em seguida, testa o aplicativo completo de ponta a ponta em um ambiente que simula produção; e, por fim, entrega para um grupo de usuários reais usarem antes do lançamento oficial."
+    ],
+    "enunciado": "Na ordem descrita, os tipos de teste realizados pela equipe são, respectivamente:",
+    "alternativas": [
+      "Teste de sistema, teste de aceitação, teste unitário, teste de integração",
+      "Teste unitário, teste de integração, teste de sistema, teste de aceitação",
+      "Teste de aceitação, teste de sistema, teste de integração, teste unitário",
+      "Todos são testes de sistema, apenas em diferentes ambientes",
+      "Teste de integração, teste unitário, teste de aceitação, teste de sistema"
+    ],
+    "correta": 1,
+    "resolucao": "A sequência descreve exatamente a ordem de níveis de testes definida pela apostila e formalizada pela ISO/IEC/IEEE 29119: teste unitário (componente isolado) → teste de integração (comunicação entre componentes) → teste de sistema (produto completo) → teste de aceitação (usuários finais)."
+  },
+  {
+    "id": "engsoft-cap1-q9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap1",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Software maintenance is broadly defined as the modification of a software product after delivery to correct faults, to improve performance or other attributes, or to adapt the product to a changed environment. The standard classifies software maintenance into four categories: corrective, adaptive, perfective, and preventive.\"",
+      "traducao": "(Tradução livre: \"Manutenção de software é amplamente definida como a modificação de um produto de software após entrega para corrigir defeitos, melhorar desempenho ou outros atributos, ou adaptar o produto a um ambiente alterado. A norma classifica a manutenção em quatro categorias: corretiva, adaptativa, perfectiva e preventiva.\")",
+      "fonte": "ISO/IEC 14764:1999/2006 — Software Engineering — Software Maintenance. Padrão internacional de classificação de manutenção de software."
+    },
+    "caso": [
+      "Um sistema de gerenciamento de biblioteca está em produção há cinco anos. A Lei Geral de Proteção de Dados (LGPD) publicou uma nova resolução que obriga o sistema a alterar como coleta, armazena e autoriza o uso de dados dos usuários. A equipe de manutenção faz as alterações necessárias. Nenhum bug foi corrigido, e nenhuma nova funcionalidade foi solicitada pelo cliente."
+    ],
+    "enunciado": "Segundo a classificação da ISO/IEC 14764, esse tipo de manutenção é:",
+    "alternativas": [
+      "Corretiva, pois qualquer alteração em um sistema já implantado é uma correção",
+      "Perfectiva, pois toda mudança após implantação é uma melhoria",
+      "Adaptativa, pois adequa o sistema a uma mudança no ambiente externo, no caso a legislação",
+      "Preventiva, pois busca reduzir débito técnico",
+      "Nenhuma das anteriores, pois mudanças legais estão fora do escopo da manutenção e devem ser tratadas como um novo projeto"
+    ],
+    "correta": 2,
+    "resolucao": "A manutenção Adaptativa é definida pela ISO/IEC 14764 como a adequação do sistema a mudanças no ambiente externo (legislação, novos SO, APIs de terceiros, etc.). O gatilho não foi um defeito (Corretiva), nem solicitação do cliente (Perfectiva), nem refatoração interna (Preventiva)."
+  },
+  {
+    "id": "engsoft-cap1-q10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap1",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"There is no single development, in either technology or management technique, which by itself promises even one order of magnitude improvement within a decade.\"",
+      "traducao": "(Tradução livre: \"Não existe um único avanço, seja em tecnologia ou em técnica de gestão, que por si só prometa sequer uma ordem de grandeza (dez vezes) de melhoria em uma década.\")",
+      "fonte": "BROOKS, F. P. No Silver Bullet — Essence and Accident in Software Engineering. IEEE Computer, v. 20, n. 4, p. 10-19, 1987 (apresentado em 1986)."
+    },
+    "caso": [
+      "Um gerente de projetos argumenta: \"Se adotarmos Scrum, todos os nossos problemas de atraso e qualidade serão resolvidos de forma definitiva. Scrum é a solução que estava faltando.\" Um colega contra-argumenta: \"Nenhum modelo ou ferramenta isolada resolve tudo; o sucesso depende de uma combinação de práticas adequadas ao contexto.\""
+    ],
+    "enunciado": "Considerando o argumento de Brooks (1986), qual posição está mais alinhada com o pensamento do autor?",
+    "alternativas": [
+      "A do gerente: existe um único modelo ou técnica capaz de resolver todos os desafios de qualquer projeto, desde que aplicado com disciplina",
+      "A do colega: para Brooks, nenhuma técnica isolada garante melhoria drástica; o sucesso depende de combinar práticas",
+      "Ambas estão erradas: Brooks defende que a melhor solução é sempre manter o Modelo Cascata",
+      "A do gerente está correta, mas apenas para projetos grandes",
+      "Brooks não trata dessa questão de escolha de modelos"
+    ],
+    "correta": 1,
+    "resolucao": "O argumento central de Brooks em \"No Silver Bullet\" é que nenhuma tecnologia ou metodologia isolada resolve, por si só, os desafios essenciais da engenharia de software. Isso sustenta a prática de combinar elementos de diferentes modelos conforme o contexto, em vez de seguir um único método de forma dogmática — exatamente o que o Capítulo 1 enfatiza ao apresentar vários modelos."
+  },
+  {
+    "id": "engsoft-cap2-q1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "discursiva",
+    "texto": {
+      "citacao": "\"A software requirements specification (SRS) is a complete description of the behavior of the system to be developed. It includes a set of use cases that describe all the interactions the users will have with the software. Non-functional requirements such as performance, interface, operations, and so on should also be specified.\"",
+      "traducao": "(Tradução livre: \"Uma especificação de requisitos de software (SRS) é uma descrição completa do comportamento do sistema a ser desenvolvido. Inclui um conjunto de casos de uso que descrevem todas as interações que os usuários terão com o software. Requisitos não funcionais como desempenho, interface, operações, e assim por diante, também devem ser especificados.\")",
+      "fonte": "IEEE 830-1998 — IEEE Recommended Practice for Software Requirements Specifications. Padrão internacional para especificação de requisitos de software."
+    },
+    "caso": [
+      "Uma equipe de desenvolvimento está especificando os requisitos para um sistema de gerenciamento de vendas. Um dos requisitos coletados foi escrito assim: \"O sistema deve ser rápido e fácil de usar.\" Outro requisito diz: \"O sistema deve processar pedidos em no máximo 2 segundos para até 500 usuários simultâneos.\" Um terceiro requisito menciona: \"Requisito de desempenho TBD [a ser definido].\""
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) Avalie cada um dos três requisitos acima segundo os seis critérios de qualidade apresentados no Capítulo 2 (completo, consistente, viável, verificável, rastreável, não ambíguo). Qual deles atende melhor aos critérios e por quê?",
+      "b) O primeiro requisito (\"rápido e fácil de usar\") viola o critério de qualidade. Reescreva-o como um ou mais requisitos que atendam aos seis critérios de qualidade.",
+      "c) A norma IEEE 830 enfatiza a inclusão de requisitos funcionais E não funcionais. No contexto do sistema de vendas, cite dois exemplos de requisitos funcionais e dois de requisitos não funcionais que deveriam constar na SRS.",
+      "d) Segundo o Capítulo 2, especificações de requisitos bem feitas reduzem custos durante todo o projeto. Explique por que um requisito mal definido no início (como \"O sistema deve ser rápido\") pode se tornar caro de corrigir durante a Implementação e Testes."
+    ],
+    "linhas": 12
+  },
+  {
+    "id": "engsoft-cap2-q2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Joint Application Development (JAD) is a structured workshop technique used to gather requirements from multiple stakeholders in a collaborative environment. Multiple participants representing different views and interests meet in a facilitated session to identify, discuss, and resolve conflicting requirements quickly.\"",
+      "traducao": "(Tradução livre: \"Joint Application Development (JAD) é uma técnica de workshop estruturada usada para coletar requisitos de múltiplos stakeholders em um ambiente colaborativo. Múltiplos participantes representando diferentes visões e interesses se reúnem em uma sessão facilitada para identificar, discutir e resolver rapidamente requisitos conflitantes.\")",
+      "fonte": "LIND, M. R. Joint Application Development (JAD). Técnica de elicitação colaborativa de requisitos. Contemporary approaches to requirements gathering and analysis in software development."
+    },
+    "caso": [
+      "Uma empresa de fintech está desenvolvendo um novo aplicativo de investimentos. O CEO quer apenas funcionalidades essenciais (login e visualização de carteira), os analistas de risco exigem sistemas de segurança robustos, e os clientes-teste pedem relatórios detalhados de desempenho. A equipe poderia gastar meses em entrevistas individuais tentando alinhar essas visões, mas decide usar uma abordagem diferente."
+    ],
+    "enunciado": "A técnica mais adequada para rapidamente alinhar esses múltiplos stakeholders com visões conflitantes é:",
+    "alternativas": [
+      "Questionários para cada grupo de stakeholder, um de cada vez, sem encontros diretos, consolidando as respostas em um relatório final",
+      "Entrevistas individuais com o CEO, depois com analistas, depois com clientes, sequencialmente",
+      "Observação etnográfica dos usuários trabalhando sem interferência",
+      "JAD (Workshops), uma sessão facilitada com todos os stakeholders juntos para negociar os requisitos",
+      "Prototipagem de interfaces para coletar feedback isoladamente"
+    ],
+    "correta": 3,
+    "resolucao": "JAD é especificamente projetado para situações com múltiplos stakeholders com visões conflitantes. Uma sessão facilitada permite que todas as partes se vejam, discutam conflitos em tempo real e chegem a consenso rapidamente — muito mais eficiente que entrevistas sequenciais ou questionários separados."
+  },
+  {
+    "id": "engsoft-cap2-q3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"A User Story is a short, simple description of a feature told from the perspective of the person who desires the new capability, usually a user or customer of the system. User Stories follow the pattern: As a [type of user], I want [an action], so that [a benefit/a value].\"",
+      "traducao": "(Tradução livre: \"Uma História de Usuário é uma descrição curta e simples de uma funcionalidade contada pela perspectiva da pessoa que deseja a nova capacidade, geralmente um usuário ou cliente do sistema. Histórias de Usuário seguem o padrão: Como [tipo de usuário], quero [uma ação], para que [um benefício/valor].\")",
+      "fonte": "JEFFRIES, R. (Connextra/XP Community). User Stories. Técnica ágil para especificação de requisitos centrada no usuário."
+    },
+    "caso": [
+      "Um Product Owner de um aplicativo de delivery escreve a seguinte história: \"Como cliente, quero poder finalizar meu pedido rápido, para economizar tempo.\" Depois de algum tempo, a equipe percebe que essa história é vaga — \"rápido\" pode significar coisas diferentes para cada um. O PO adiciona critérios: (1) o pedido deve ser confirmado em no máximo 5 toques; (2) a tela de pagamento deve carregar em menos de 2 segundos."
+    ],
+    "enunciado": "Os critérios de aceitação adicionados pelo PO representam qual dos \"Três Cs\" de Ron Jeffries para histórias de usuário bem-formadas?",
+    "alternativas": [
+      "Card — o cartão de índice ou formato digital em que a história é registrada e priorizada no backlog",
+      "Conversation — o diálogo entre desenvolvedores, PO e usuários para esclarecer a história",
+      "Confirmation — a verificação de que a história foi implementada conforme critérios testáveis",
+      "Code — o código-fonte que implementa a funcionalidade",
+      "Context — o contexto do negócio onde a história se aplica"
+    ],
+    "correta": 2,
+    "resolucao": "Os \"Três Cs\" de Ron Jeffries são: Card (formato), Conversation (discussão), e Confirmation (critérios de aceitação que confirmam quando a história está pronta). Os critérios específicos e mensuráveis adicionados pelo PO (5 toques, 2 segundos) são exemplos de Confirmation."
+  },
+  {
+    "id": "engsoft-cap2-q4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"The MoSCoW method (Must, Should, Could, Won't) is a prioritization framework that helps product teams decide which features and requirements to implement in a given release. Must Have represents mandatory features without which the system cannot be delivered. Should Have are important but not critical. Could Have are desirable but low priority. Won't Have are explicitly out of scope for the current iteration.\"",
+      "traducao": "(Tradução livre: \"O método MoSCoW (Must, Should, Could, Won't) é um framework de priorização que ajuda as equipes de produto a decidir quais funcionalidades e requisitos implementar em um determinado lançamento. Must Have representa funcionalidades obrigatórias sem as quais o sistema não pode ser entregue. Should Have são importantes mas não críticas. Could Have são desejáveis mas de baixa prioridade. Won't Have estão explicitamente fora do escopo para a iteração atual.\")",
+      "fonte": "CLEGG, D. et al. A Practical Guide to Dynamic Systems Development Method. Técnica MoSCoW de priorização de requisitos em DSDM/Agile."
+    },
+    "caso": [
+      "Uma startup de e-commerce tem dois meses para lançar um MVP (Mínimo Produto Viável). A lista de requisitos inclui: (1) catálogo de produtos; (2) carrinho de compras; (3) sistema de pagamento; (4) histórico de pedidos do cliente; (5) programa de fidelidade com pontos; (6) recomendações personalizadas baseadas em IA. A equipe tem capacidade técnica limitada e precisa priorizar."
+    ],
+    "enunciado": "Usando a técnica MoSCoW descrita acima, qual seria a classificação MAIS apropriada para o programa de fidelidade com pontos?",
+    "alternativas": [
+      "Must Have, pois toda loja online tem esse sistema",
+      "Should Have, pois é importante mas pode ser implementado em futuro próximo",
+      "Could Have, pois é desejável, mas não crítico para o MVP",
+      "Won't Have, pois é completamente desnecessário",
+      "Não se enquadra em nenhuma categoria MoSCoW"
+    ],
+    "correta": 2,
+    "resolucao": "O programa de fidelidade é uma funcionalidade desejável que adiciona valor, mas não é essencial para que o cliente faça sua primeira compra. Ele entra em Could Have — implementado apenas se houver tempo/recursos após completar Must Haves (catálogo, carrinho, pagamento) e Should Haves."
+  },
+  {
+    "id": "engsoft-cap2-q5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"According to the Standish Group CHAOS Report, the leading causes of software project failure are incomplete requirements (13.1%), lack of user input (12.4%), and unclear requirements (11.8%). Together, requirements-related issues account for approximately 37% of project failures.\"",
+      "traducao": "(Tradução livre: \"De acordo com o Relatório CHAOS do Standish Group, as principais causas de falha de projetos de software são requisitos incompletos (13,1%), falta de envolvimento do usuário (12,4%) e requisitos pouco claros (11,8%). Juntos, problemas relacionados a requisitos representam aproximadamente 37% das falhas de projetos.\")",
+      "fonte": "THE STANDISH GROUP INTERNATIONAL. CHAOS Report (análise de 8.380 projetos). Estatísticas sobre causas de insucesso em projetos de TI."
+    },
+    "caso": [
+      "Uma agência de publicidade está desenvolvendo um site para um grande cliente multinacional. Os requisitos foram coletados em teleconferências rápidas com um único responsável do cliente, sem validação direta com os usuários finais. Os requisitos foram documentados de forma vaga em um email de uma página."
+    ],
+    "enunciado": "Considerando os dados do CHAOS Report citados acima, qual é a avaliação da abordagem de requisitos dessa agência?",
+    "alternativas": [
+      "Excelente: teleconferências são suficientes e documentar tudo num único e-mail torna o processo mais rápido e barato",
+      "Adequada: falta apenas envolvimento do usuário final, que é opcional",
+      "Altamente inadequada: requisitos vagos, sem validação com usuários e mal documentados aumentam muito o risco de falha",
+      "O CHAOS Report não trata especificamente de engenharia de requisitos, e sim apenas de orçamento e cronograma dos projetos de TI",
+      "A abordagem seria boa apenas para projetos muito pequenos"
+    ],
+    "correta": 2,
+    "resolucao": "O CHAOS Report identifica requisitos incompletos, pouco claros e falta de envolvimento do usuário como causas principais de falha. A abordagem descrita (teleconferências rápidas, documentação vaga, sem validação de usuários finais) reproduz exatamente os problemas que causam 37% das falhas de projeto."
+  },
+  {
+    "id": "engsoft-cap2-q6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Functional requirements specify what the system must do — the actions, functions, and services it provides. Non-functional requirements specify how the system must behave — the qualities, constraints, and attributes that affect the entire system. Non-functional requirements are often critical to the success of the project, yet are frequently overlooked or treated as secondary.\"",
+      "traducao": "(Tradução livre: \"Requisitos Funcionais especificam o que o sistema deve fazer — as ações, funções e serviços que fornece. Requisitos Não Funcionais especificam como o sistema deve se comportar — as qualidades, restrições e atributos que afetam o sistema todo. Requisitos Não Funcionais são frequentemente críticos para o sucesso do projeto, mas frequentemente negligenciados ou tratados como secundários.\")",
+      "fonte": "ISO/IEC/IEEE 29148:2018 — Systems and software engineering — Life cycle processes — Requirements engineering."
+    },
+    "caso": [
+      "Um desenvolvedor junior apresenta à equipe uma proposta de requisitos para um aplicativo de banking: RF01: \"O sistema deve permitir transferência bancária entre contas\"; RF02: \"O sistema deve exibir o saldo da conta\"; RNF01: \"O sistema deve responder em menos de 1 segundo\"; RNF02: \"Os dados devem estar em conformidade com a LGPD\". A seguir, diz: \"Os RNFs não são tão importantes — vamos focar nos FRs primeiro e adicionar os RNFs depois.\""
+    ],
+    "enunciado": "Essa afirmação do desenvolvedor é:",
+    "alternativas": [
+      "Correta: requisitos não funcionais são opcionais e podem ser adicionados depois",
+      "Totalmente equivocada: em um banco, segurança, conformidade com a LGPD e desempenho são tão críticos quanto as funcionalidades",
+      "Correta apenas para projetos de pequeno porte",
+      "O desenvolvedor está certo sobre performance, mas errado sobre conformidade",
+      "Requisitos funcionais e não funcionais têm igual importância, mas os funcionais devem sempre vir primeiro, e os não funcionais entram só na fase de testes"
+    ],
+    "correta": 1,
+    "resolucao": "Para sistemas críticos como banking, RNFs (segurança, conformidade, desempenho, confiabilidade) são absolutamente essenciais e não podem ser \"adicionados depois\". Um aplicativo rápido mas inseguro ou não conforme com a LGPD é inaceitável. O Capítulo 2 enfatiza que negligenciar RNFs causa sistemas que \"funcionam\" mas são lentos, inseguros ou ilegais."
+  },
+  {
+    "id": "engsoft-cap2-q7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Usability is a non-functional quality attribute that describes the ease with which users can learn and use a system. A well-designed usable system results in higher user satisfaction, fewer support costs, and wider adoption. Poor usability can result in high error rates, user frustration, and low adoption rates.\"",
+      "traducao": "(Tradução livre: \"Usabilidade é um atributo de qualidade não funcional que descreve a facilidade com que os usuários podem aprender e usar um sistema. Um sistema bem desenhado e usável resulta em maior satisfação do usuário, custos menores de suporte e maior adoção. Usabilidade deficiente pode resultar em altas taxas de erro, frustração do usuário e baixa adoção.\")",
+      "fonte": "ISO 9241-11 — Ergonomics of human-system interaction — Part 11: Usability: Definitions and concepts. Padrão internacional de usabilidade."
+    },
+    "caso": [
+      "Uma equipe desenvolve um aplicativo de agendamento de consultas. O requisito funcional é simples: \"O sistema deve permitir ao usuário agendar uma consulta.\" Porém, durante os testes com usuários, descobre-se que a interface requer 12 cliques para completar um agendamento, os ícones são pouco intuitivos, e a maioria dos usuários consegue fazer um agendamento apenas após 20 minutos de tentativa e erro."
+    ],
+    "enunciado": "O problema identificado trata-se de violação de qual categoria de requisito não funcional?",
+    "alternativas": [
+      "Desempenho, pois o sistema está lento e os usuários levam muito tempo para completar a tarefa",
+      "Segurança, pois a interface não está protegida contra erros e acessos indevidos dos usuários",
+      "Usabilidade, pois o sistema é difícil de aprender e usar, gerando lentidão e erros dos usuários",
+      "Confiabilidade, pois o sistema não é consistente",
+      "Conformidade, pois violaria a LGPD"
+    ],
+    "correta": 2,
+    "resolucao": "O problema descrito (muitos cliques, falta de clareza visual, tempo excessivo para aprender) é típico de usabilidade deficiente. Um RNF de usabilidade deveria ter estabelecido que um usuário sem treinamento deveria conseguir agendar em no máximo 5 minutos com menos de 5 cliques."
+  },
+  {
+    "id": "engsoft-cap2-q8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"High-quality requirements must be: complete (no gaps), consistent (no contradictions), feasible (implementable within constraints), verifiable (testable), traceable (linked to origin), and unambiguous (single interpretation). A single poorly-written requirement can propagate defects through all downstream phases.\"",
+      "traducao": "(Tradução livre: \"Requisitos de alta qualidade devem ser: completos (sem lacunas), consistentes (sem contradições), viáveis (implementáveis dentro de restrições), verificáveis (testáveis), rastreáveis (vinculados à origem) e não ambíguos (interpretação única). Um único requisito mal escrito pode propagar defeitos por todas as fases seguintes.\")",
+      "fonte": "IEEE 830-1998 — IEEE Recommended Practice for Software Requirements Specifications. Critérios de qualidade para especificação de requisitos."
+    },
+    "caso": [
+      "Analise este requisito: \"O sistema deve permitir que o cliente realize compras de forma segura.\" Um segundo requisito diz: \"O sistema deve permitir que o cliente realize compras rapidamente.\" Uma semana depois, testes de performance mostram que adicionar camadas de segurança (criptografia, validação dupla) torna o processo lento — mais de 30 segundos por transação."
+    ],
+    "enunciado": "Os requisitos acima violam qual critério(s) de qualidade?",
+    "alternativas": [
+      "Apenas verificabilidade — não há forma de testar \"seguro\" e \"rápido\", mas os requisitos são consistentes entre si",
+      "Apenas consistência — segurança e velocidade entram em conflito, mas ambos os termos podem ser medidos",
+      "Ambos: \"seguro\" e \"rápido\" são vagos e não mensuráveis, e os dois requisitos entram em conflito",
+      "Nenhum, pois segurança é mais importante que velocidade",
+      "Apenas viabilidade"
+    ],
+    "correta": 2,
+    "resolucao": "Os requisitos violam ambos os critérios: (1) Verificabilidade — \"seguro\" e \"rápido\" são vaguos e não mensuráveis (deveriam ser \"criptografia AES-256\" e \"transação em menos de 5 segundos\"); (2) Consistência — os requisitos entram em conflito direto (segurança geralmente exige mais validações, que consomem tempo). A análise deveria ter identificado esse conflito e negociado qual tem prioridade."
+  },
+  {
+    "id": "engsoft-cap2-q9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"In traditional approaches, requirements are documented in a Software Requirements Specification (SRS) — a formal, comprehensive document following IEEE 830. In agile approaches, requirements are maintained in a Product Backlog — a dynamic, continuously evolving list of user stories prioritized by the Product Owner.\"",
+      "traducao": "(Tradução livre: \"Em abordagens tradicionais, requisitos são documentados em uma Especificação de Requisitos de Software (SRS) — um documento formal e abrangente seguindo IEEE 830. Em abordagens ágeis, requisitos são mantidos em um Backlog do Produto — uma lista dinâmica e continuamente evoluindo de histórias de usuário priorizada pelo Product Owner.\")",
+      "fonte": "Scrum Guide (2020). Software Requirements Specification vs Agile Backlog — Abordagens complementares de documentação de requisitos."
+    },
+    "caso": [
+      "Uma empresa escolheu a metodologia Cascata para um projeto governamental com requisitos bem definidos, contrato rígido de cinco anos, e entrega única no final. A equipe está decidindo como documentar requisitos."
+    ],
+    "enunciado": "Para esse contexto, qual forma de documentação de requisitos seria mais apropriada?",
+    "alternativas": [
+      "Product Backlog, pois é mais moderno e ágil e permite repriorizar os requisitos a cada sprint, mesmo com contrato fixo",
+      "Uma combinação 50/50 de SRS e Backlog",
+      "SRS formal (IEEE 830), pois o projeto é governamental, com requisitos estáveis e contrato fixo",
+      "Apenas prototipagem, sem documentação formal",
+      "Casos de Uso em UML, sem SRS"
+    ],
+    "correta": 2,
+    "resolucao": "Projetos Cascata com requisitos estáveis, contratos rígidos e escopo fixo beneficiam-se de uma SRS formal (IEEE 830) que serve como referência durante todo o projeto. O Backlog é mais apropriado para contextos ágeis onde requisitos evoluem continuamente. Projetos governamentais particularmente exigem documentação formal."
+  },
+  {
+    "id": "engsoft-cap2-q10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Regulatory compliance requirements, such as LGPD (Lei Geral de Proteção de Dados — Brazil's General Data Protection Law), mandate specific constraints on how software handles personal data. Compliance is not optional — violations result in severe penalties, loss of trust, and legal liability. These compliance requirements are classified as non-functional requirements.\"",
+      "traducao": "(Tradução livre: \"Requisitos de conformidade regulatória, como LGPD (Lei Geral de Proteção de Dados), determinam restrições específicas sobre como o software trata dados pessoais. Conformidade não é opcional — violações resultam em penalidades severas, perda de confiança e responsabilidade legal. Esses requisitos de conformidade são classificados como requisitos não funcionais.\")",
+      "fonte": "BRASIL. Lei nº 13.709, de 14 de agosto de 2018. Lei Geral de Proteção de Dados Pessoais (LGPD). Legislação brasileira sobre proteção de dados e privacidade."
+    },
+    "caso": [
+      "Uma startup de marketplace de serviços domésticos coleta dados pessoais de clientes (nome, telefone, endereço, CPF, histórico de transações). Dois anos após o lançamento, auditorias descobrem que: (1) os dados não eram criptografados em repouso; (2) não havia registro de consentimento explícito; (3) não havia mecanismo para usuários solicitarem exclusão de dados."
+    ],
+    "enunciado": "Os problemas descobertos representam:",
+    "alternativas": [
+      "Problemas funcionais simples de corrigir numa manutenção rotineira",
+      "Violações de requisitos não funcionais de conformidade (LGPD), que deveriam ter sido especificados desde o início",
+      "Problemas de design de banco de dados, que não têm relação com a engenharia de requisitos do sistema",
+      "Questões de segurança que não têm relação com LGPD",
+      "Problemas que só aparecem em sistemas muito grandes e com muitos usuários, não sendo aplicáveis a startups em fase inicial"
+    ],
+    "correta": 1,
+    "resolucao": "Conformidade com LGPD é um requisito não funcional crítico que deveria ter sido especificado desde a fase de Requisitos. As violações descobertas (ausência de criptografia, sem consentimento, sem mecanismo de exclusão) são violações legais que expõem a empresa a multas de até 2% do faturamento. Requisitos de conformidade devem ser tratados com a mesma seriedade que requisitos funcionais."
+  },
+  {
+    "id": "engsoft-cap3-q1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "discursiva",
+    "texto": {
+      "citacao": "\"We've seen this simple-sounding plan go down in flames most of the time. Replacing a serious IT system takes a long time, and the users can't wait for new features. [...] Like the fig, it begins with small additions, often new features, that are built on top of, yet separate to the legacy code base.\"",
+      "traducao": "(Tradução livre: \"Vimos esse plano, que parece simples, fracassar na maioria das vezes. Substituir um sistema de TI importante leva muito tempo, e os usuários não podem esperar por novas funcionalidades. [...] Assim como a figueira, [a estratégia] começa com pequenos acréscimos, muitas vezes novas funcionalidades, construídos sobre o código legado, porém separados dele.\")",
+      "fonte": "FOWLER, M. Strangler Fig. martinfowler.com, 2004 (revisado em 2024). Disponível em: martinfowler.com/bliki/StranglerFigApplication.html. O \"plano\" criticado é a substituição completa de um sistema legado de uma só vez."
+    },
+    "caso": [
+      "A prefeitura de uma cidade de médio porte usa, há doze anos, um sistema monolítico de cobrança de IPTU. As regras de cálculo estão espalhadas nas telas e em rotinas do banco de dados, e cada defeito corrigido em um módulo costuma quebrar outro. A equipe técnica tem três desenvolvedores. O secretário de Fazenda quer \"jogar tudo fora e reescrever do zero\", mas o sistema não pode parar: em quatro meses começa a emissão dos carnês, e a cobrança sustenta boa parte da receita do município."
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) Com base no texto de Fowler e na Seção 3.4 da apostila, explique por que a reescrita completa proposta pelo secretário é arriscada neste contexto e qual estratégia de modernização é mais indicada.",
+      "b) Descreva como a migração incremental (Strangler Fig) seria conduzida na prática: por qual parte do sistema você começaria e como o sistema novo e o legado conviveriam até o desligamento do antigo. Em que momento o encapsulamento (wrapping) poderia ajudar?",
+      "c) Para as novas partes do sistema, qual padrão arquitetural você recomendaria — Camadas ou Microsserviços —, considerando uma equipe de três desenvolvedores? Justifique com as vantagens e limitações apresentadas no capítulo.",
+      "d) Ao adotar MVC nos novos módulos, onde devem ficar as regras de cálculo do IPTU que hoje estão nas telas? Descreva o papel do Model, da View e do Controller nessa reorganização."
+    ],
+    "respostaEsperada": "a) A reescrita total leva muito tempo, congela a evolução do sistema e concentra todo o risco em uma única virada — inaceitável para um sistema crítico às vésperas da emissão dos carnês. Pela apostila, a substituição completa é reservada para quando a modernização já não é viável. Aqui o sistema ainda entrega valor, então a estratégia indicada é a migração incremental (Strangler Fig), eventualmente combinada com refatoração e encapsulamento.\nb) Começar por um módulo de menor risco e bem delimitado (ex.: consulta de débitos ou emissão de segunda via), construído à parte do legado. Um ponto de entrada (roteador/API) direciona as requisições dessa funcionalidade para o sistema novo e as demais para o legado. Módulo a módulo, o novo cresce e o antigo \"encolhe\", até poder ser desligado. O encapsulamento ajuda ao expor funções do legado por uma API moderna, para que os módulos novos as utilizem sem conhecer sua implementação interna.\nc) Camadas: é simples, bem conhecida e adequada a uma equipe pequena. Microsserviços trariam complexidade operacional (monitoramento distribuído, consistência de dados entre serviços, infraestrutura e deploy independentes) que três desenvolvedores não conseguem sustentar. Microsserviços fariam sentido com necessidade de escalar partes de forma independente e com times autônomos.\nd) As regras de cálculo (alíquotas, isenções, descontos) devem ficar no Model, junto com o acesso aos dados. A View apenas apresenta informações (formulários, carnês, resultados), sem lógica de negócio. O Controller recebe a ação do usuário, aciona o Model e decide qual View exibir. Assim, mudar a interface não afeta as regras, e vice-versa.",
+    "linhas": 12
+  },
+  {
+    "id": "engsoft-cap3-q2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"The software architecture of a system is the set of structures needed to reason about the system, which comprise software elements, relations among them, and properties of both.\"",
+      "traducao": "(Tradução livre: \"A arquitetura de software de um sistema é o conjunto de estruturas necessárias para raciocinar sobre o sistema, que compreendem elementos de software, as relações entre eles e as propriedades de ambos.\")",
+      "fonte": "BASS, L.; CLEMENTS, P.; KAZMAN, R. Software Architecture in Practice. 3. ed. Boston: Addison-Wesley, 2012."
+    },
+    "caso": [
+      "Na reunião de arquitetura de um aplicativo de delivery, a equipe registrou cinco decisões: (I) dividir o sistema nos módulos Pedidos, Pagamentos e Entregas; (II) os módulos se comunicarão por API REST e por uma fila de mensagens; (III) na classe CalculadoraTaxaEntrega, o cálculo da distância ficará em um método privado e a tabela de preços será recebida por meio de uma interface; (IV) usar PostgreSQL e Node.js; (V) preparar o sistema para suportar o pico de pedidos dos domingos à noite."
+    ],
+    "enunciado": "Segundo a Seção 3.1 da apostila, qual das decisões pertence ao nível de design de componentes, e não ao design de sistemas?",
+    "alternativas": [
+      "Decisão I",
+      "Decisão II",
+      "Decisão III",
+      "Decisão IV",
+      "Decisão V"
+    ],
+    "correta": 2,
+    "resolucao": "O design de sistemas trata das decisões de alto nível: decomposição em módulos (I), definição de interfaces entre componentes (II), escolha de tecnologias (IV) e estratégias de escalabilidade e disponibilidade (V). A decisão III trata de como uma classe é estruturada internamente — suas responsabilidades e dependências —, que é o nível de design de componentes, onde os princípios SOLID se tornam mais relevantes."
+  },
+  {
+    "id": "engsoft-cap3-q3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"A class should have only one reason to change.\"",
+      "traducao": "(Tradução livre: \"Uma classe deve ter apenas um motivo para mudar.\")",
+      "fonte": "MARTIN, R. C. Agile Software Development: Principles, Patterns, and Practices. Upper Saddle River: Prentice Hall, 2002."
+    },
+    "caso": [
+      "Em um sistema de faturamento, a classe NotaFiscal calcula os impostos, gera o arquivo XML exigido pela Secretaria da Fazenda, grava a nota no banco de dados e envia a nota por e-mail ao cliente. Após uma mudança de alíquota, um desenvolvedor editou a classe e, sem perceber, quebrou o envio de e-mails."
+    ],
+    "enunciado": "Qual análise está de acordo com o princípio citado?",
+    "alternativas": [
+      "A classe viola o Princípio da Responsabilidade Única: tem vários motivos para mudar e deveria ser dividida",
+      "A classe viola o Princípio da Substituição de Liskov, pois NotaFiscal deveria herdar de uma classe Documento",
+      "A classe está bem projetada, pois concentrar tudo em um só lugar facilita encontrar o código e reduz o número de arquivos do projeto",
+      "A classe viola o Princípio da Segregação de Interfaces, pois possui poucos métodos públicos",
+      "O problema foi apenas a falta de testes; a estrutura da classe está adequada"
+    ],
+    "correta": 0,
+    "resolucao": "Quando uma classe acumula responsabilidades, uma mudança em uma delas arrisca quebrar as outras — exatamente o que ocorreu. Separando em CalculadoraImpostos, GeradorXmlNota, NotaFiscalRepository e EnvioNotaEmail, uma alteração de alíquota fica isolada. Testes ajudariam a detectar a quebra, mas não eliminam a causa, que é de design."
+  },
+  {
+    "id": "engsoft-cap3-q4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Components within the layered architecture pattern are organized into horizontal layers, each layer performing a specific role within the application. [...] This anti-pattern describes the situation where requests flow through multiple layers of the architecture as simple pass-through processing with little or no logic performed within each layer.\"",
+      "traducao": "(Tradução livre: \"Os componentes do padrão de arquitetura em camadas são organizados em camadas horizontais, cada uma desempenhando um papel específico dentro da aplicação. [...] Esse antipadrão descreve a situação em que as requisições atravessam várias camadas da arquitetura apenas sendo repassadas, com pouca ou nenhuma lógica executada em cada camada.\")",
+      "fonte": "RICHARDS, M. Software Architecture Patterns. Sebastopol: O'Reilly Media, 2015. (O antipadrão descrito é chamado pelo autor de \"architecture sinkhole\".)"
+    },
+    "caso": [
+      "Um sistema de biblioteca foi organizado em três camadas: apresentação, lógica de negócio e acesso a dados. Uma análise mostrou que 80% das requisições — como \"buscar livro por código\" — passam pela camada de negócio sem qualquer processamento: ela apenas recebe a chamada da apresentação e a repassa, idêntica, para a camada de dados. A equipe reclama de latência e de muito código que \"não faz nada\"."
+    ],
+    "enunciado": "A situação descrita corresponde a:",
+    "alternativas": [
+      "Uma vantagem esperada da arquitetura em camadas, pois toda camada deve apenas repassar chamadas",
+      "Uma violação do padrão MVC, já que o sistema não possui Controller",
+      "Um problema típico de microsserviços, relacionado à consistência de dados entre serviços que mantêm bancos separados",
+      "Uma limitação da arquitetura em camadas: camadas que só repassam chamadas, gerando latência sem agregar valor",
+      "Um problema típico da arquitetura orientada a eventos, causado pelo barramento de mensagens"
+    ],
+    "correta": 3,
+    "resolucao": "A apostila destaca que as camadas facilitam a separação de responsabilidades, mas podem introduzir latência e camadas que apenas repassam chamadas. Richards lembra que alguns casos de simples repasse são normais; o problema está na proporção — com 80% das requisições nessa situação, a organização das camadas precisa ser revista."
+  },
+  {
+    "id": "engsoft-cap3-q5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"In short, the microservice architectural style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API.\"",
+      "traducao": "(Tradução livre: \"Em resumo, o estilo arquitetural de microsserviços é uma abordagem para desenvolver uma única aplicação como um conjunto de pequenos serviços, cada um executando em seu próprio processo e se comunicando por mecanismos leves, muitas vezes uma API HTTP.\")",
+      "fonte": "LEWIS, J.; FOWLER, M. Microservices: a definition of this new architectural term. 2014. Disponível em: martinfowler.com/articles/microservices.html."
+    },
+    "caso": [
+      "Uma escola particular com 1.500 alunos vai desenvolver seu sistema de gestão escolar (matrículas, notas, frequência e financeiro). A equipe tem quatro desenvolvedores e nenhum profissional dedicado à infraestrutura. O diretor de TI quer dividir o sistema em doze microsserviços, cada um com seu próprio banco de dados, \"porque é o que as grandes empresas usam\"."
+    ],
+    "enunciado": "Com base no texto e no Capítulo 3, a proposta do diretor é:",
+    "alternativas": [
+      "Adequada, pois microsserviços são sempre a escolha mais moderna e eficiente",
+      "Pouco adequada: a complexidade operacional dos microsserviços não é comportada por uma equipe de quatro pessoas",
+      "Adequada, pois microsserviços reduzem a infraestrutura necessária para manter o sistema",
+      "Pouco adequada, pois microsserviços não podem se comunicar por APIs HTTP",
+      "Adequada, desde que os doze serviços compartilhem um único banco com as mesmas tabelas, evitando problemas de consistência"
+    ],
+    "correta": 1,
+    "resolucao": "Microsserviços permitem escalabilidade independente e times autônomos, mas cobram um alto custo operacional. Em um sistema de porte moderado, com equipe pequena e sem infraestrutura dedicada, esse custo não se paga — a mesma conclusão do estudo de caso da apostila. Fazer os doze serviços compartilharem um único banco ainda eliminaria a independência que justifica o estilo."
+  },
+  {
+    "id": "engsoft-cap3-q6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"The problem is that it can be hard to see such a flow as it's not explicit in any program text. Often the only way to figure out this flow is from monitoring a live system. This can make it hard to debug and modify such a flow.\"",
+      "traducao": "(Tradução livre: \"O problema é que pode ser difícil enxergar esse fluxo, pois ele não está explícito em nenhum trecho do programa. Muitas vezes, a única forma de descobrir o fluxo é monitorando o sistema em funcionamento. Isso pode dificultar a depuração e a modificação desse fluxo.\")",
+      "fonte": "FOWLER, M. What do you mean by \"Event-Driven\"? 2017. Disponível em: martinfowler.com/articles/201701-event-driven.html."
+    },
+    "caso": [
+      "Em um marketplace, o serviço de Pedidos publica o evento PedidoCriado, consumido de forma independente pelos serviços de Estoque, Faturamento, Notificação e Fidelidade. Um cliente reclama que seus pontos de fidelidade não foram creditados. A equipe não consegue dizer qual serviço falhou, nem em que ordem os eventos foram processados."
+    ],
+    "enunciado": "Qual análise está correta?",
+    "alternativas": [
+      "O caso mostra que a comunicação por eventos gera alto acoplamento entre os serviços",
+      "A solução é fazer o serviço de Pedidos chamar diretamente os quatro serviços, pois isso sempre melhora a escalabilidade",
+      "Uma arquitetura em camadas teria exatamente a mesma dificuldade de rastreamento",
+      "A falha comprova que eventos não devem ser usados em sistemas de comércio eletrônico",
+      "O caso ilustra uma limitação da arquitetura orientada a eventos: o fluxo de dados fica difícil de rastrear e depurar"
+    ],
+    "correta": 4,
+    "resolucao": "Na arquitetura orientada a eventos, os componentes não se chamam diretamente — por isso o acoplamento é baixo, e não alto —, mas o fluxo completo não aparece em nenhum trecho de código. A apostila indica essa limitação e a necessidade de ferramentas de observabilidade, como logs correlacionados e rastreamento distribuído. Trocar tudo por chamadas diretas do serviço de Pedidos aumentaria o acoplamento."
+  },
+  {
+    "id": "engsoft-cap3-q7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Models represent knowledge. [...] A view is a (visual) representation of its model. [...] A controller is the link between a user and the system.\"",
+      "traducao": "(Tradução livre: \"Os modelos representam conhecimento. [...] Uma visão é uma representação (visual) do seu modelo. [...] Um controlador é o elo entre o usuário e o sistema.\")",
+      "fonte": "REENSKAUG, T. Models – Views – Controllers. Nota técnica, Xerox PARC, 10 dez. 1979. Reenskaug é o criador do padrão MVC."
+    },
+    "caso": [
+      "Em uma loja virtual, a tela (View) de cadastro de clientes contém a validação do CPF, o cálculo do limite de crédito e o comando SQL que grava o cliente no banco. O Controller apenas exibe a tela. Agora a empresa vai lançar um aplicativo móvel que precisa das mesmas regras — e a equipe percebe que teria de copiá-las."
+    ],
+    "enunciado": "Qual reorganização está de acordo com o padrão MVC?",
+    "alternativas": [
+      "Manter as regras na View da web e copiá-las para a View do aplicativo móvel",
+      "Mover tudo para o Controller, incluindo o comando SQL e o cálculo do limite de crédito, deixando o Model só com os atributos",
+      "Levar validação, cálculo do limite e acesso aos dados para o Model; a View só exibe; o Controller faz a ligação",
+      "Criar uma segunda View dedicada exclusivamente às regras de negócio",
+      "Transferir as regras para gatilhos (triggers) do banco de dados e eliminar o Model"
+    ],
+    "correta": 2,
+    "resolucao": "No MVC, o Model concentra dados e regras de negócio, independentemente de como serão exibidos; a View apenas apresenta; o Controller recebe as ações do usuário e orquestra o fluxo. Com as regras no Model, a web e o aplicativo reutilizam a mesma lógica, e mudanças de interface não afetam as regras."
+  },
+  {
+    "id": "engsoft-cap3-q8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"A program that is used in a real-world environment necessarily must change or become progressively less useful in that environment.\"",
+      "traducao": "(Tradução livre: \"Um programa usado em um ambiente do mundo real necessariamente precisa mudar, ou se tornará progressivamente menos útil nesse ambiente.\")",
+      "fonte": "LEHMAN, M. M. Programs, Life Cycles, and Laws of Software Evolution. Proceedings of the IEEE, v. 68, n. 9, p. 1060-1076, 1980. (\"Lei da Mudança Contínua\".)"
+    },
+    "caso": [
+      "Um sistema de RH em produção há oito anos recebeu quatro manutenções no último semestre: (I) correção do cálculo de férias, que gerava valores errados; (II) atualização para uma nova versão do sistema operacional e do banco de dados, pois as versões antigas vão perder o suporte do fabricante; (III) inclusão da exportação de relatórios para Excel, a pedido do setor de RH; (IV) reorganização do módulo de folha, com remoção de código duplicado e criação de testes automatizados, sem alterar seu comportamento, porque cada mudança nesse módulo vinha causando efeitos colaterais."
+    ],
+    "enunciado": "Segundo a ISO/IEC 14764, as manutenções I, II, III e IV são, respectivamente:",
+    "alternativas": [
+      "Corretiva, perfectiva, adaptativa e preventiva",
+      "Adaptativa, corretiva, perfectiva e preventiva",
+      "Corretiva, adaptativa, preventiva e perfectiva",
+      "Corretiva, adaptativa, perfectiva e preventiva",
+      "Preventiva, adaptativa, perfectiva e corretiva"
+    ],
+    "correta": 3,
+    "resolucao": "I corrige um defeito após a implantação (corretiva). II ajusta o sistema a uma mudança no ambiente externo (adaptativa). III atende a uma melhoria solicitada pelos usuários (perfectiva). IV reduz a probabilidade de falhas futuras e facilita manutenções futuras (preventiva). O texto de Lehman explica por que essas mudanças são inevitáveis durante a vida do software."
+  },
+  {
+    "id": "engsoft-cap3-q9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Refactoring is the process of changing a software system in such a way that it does not alter the external behavior of the code yet improves its internal structure.\"",
+      "traducao": "(Tradução livre: \"Refatoração é o processo de alterar um sistema de software de modo que o comportamento externo do código não mude, mas sua estrutura interna seja melhorada.\")",
+      "fonte": "FOWLER, M. Refactoring: Improving the Design of Existing Code. Boston: Addison-Wesley, 1999. (Ed. bras.: Refatoração. Porto Alegre: Bookman, 2004.)"
+    },
+    "caso": [
+      "Em uma reunião de planejamento, um desenvolvedor anuncia: \"Nesta sprint vou refatorar o módulo de frete. Vou aproveitar para mudar a regra de frete grátis de R$ 150 para R$ 200 e incluir a opção de entrega expressa.\""
+    ],
+    "enunciado": "Considerando a definição de Fowler, o uso do termo \"refatorar\" pelo desenvolvedor está:",
+    "alternativas": [
+      "Correto, pois refatorar é qualquer alteração feita no código de um sistema",
+      "Equivocado: refatorar não altera o comportamento externo, e mudar a regra do frete altera",
+      "Correto, desde que o módulo tenha testes automatizados",
+      "Equivocado, pois a refatoração só pode ser aplicada a sistemas recém-desenvolvidos, antes da primeira entrega ao cliente",
+      "Equivocado, pois refatorar significa reescrever o sistema inteiro do zero"
+    ],
+    "correta": 1,
+    "resolucao": "A apostila define refatoração como reestruturar o código interno sem alterar seu comportamento externo, melhorando a qualidade de forma gradual. A mudança da regra e a nova opção de entrega são alterações de comportamento (manutenção perfectiva). Misturá-las à refatoração dificulta identificar a causa de um eventual defeito. Ter testes automatizados é recomendado, mas não muda o conceito."
+  },
+  {
+    "id": "engsoft-cap3-q10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"They did it by making the single worst strategic mistake that any software company can make: They decided to rewrite the code from scratch.\"",
+      "traducao": "(Tradução livre: \"Eles fizeram isso cometendo o pior erro estratégico que uma empresa de software pode cometer: decidiram reescrever o código do zero.\")",
+      "fonte": "SPOLSKY, J. Things You Should Never Do, Part I. Joel on Software, 6 abr. 2000. Disponível em: joelonsoftware.com. (O autor comenta a decisão da Netscape de reescrever seu navegador.)"
+    },
+    "caso": [
+      "Uma cooperativa de crédito usa há vinte anos um sistema legado em COBOL para calcular empréstimos. O sistema é estável e os cálculos estão corretos, mas não tem interface web. A cooperativa quer lançar um aplicativo móvel em que o associado possa simular empréstimos. Ninguém na equipe atual domina totalmente o código COBOL."
+    ],
+    "enunciado": "Segundo a Seção 3.4 da apostila, qual é a estratégia mais indicada?",
+    "alternativas": [
+      "Reescrever todo o sistema legado antes de iniciar o aplicativo",
+      "Refatorar todo o código COBOL antes de iniciar o aplicativo",
+      "Desativar o sistema legado e passar a calcular os empréstimos manualmente",
+      "Copiar as regras de cálculo do COBOL para dentro do código do aplicativo móvel, reescritas na linguagem do app",
+      "Encapsulamento (wrapping): criar uma API moderna em torno do legado, que continua fazendo os cálculos"
+    ],
+    "correta": 4,
+    "resolucao": "O sistema ainda entrega valor e funciona corretamente — o problema é apenas o acesso a partir de tecnologias novas. O encapsulamento resolve isso com baixo risco. Reescrever todo o legado, prática criticada por Spolsky, é reservado para quando a modernização já não é viável. Copiar as regras para o aplicativo duplicaria a lógica e criaria duas versões a manter."
+  },
+  {
+    "id": "engsoft-cap4-q1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap4",
+    "tipo": "discursiva",
+    "texto": {
+      "citacao": "\"We propose instead that one begins with a list of difficult design decisions or design decisions which are likely to change. Each module is then designed to hide such a decision from the others.\"",
+      "traducao": "(Tradução livre: \"Propomos, em vez disso, que se comece com uma lista de decisões de projeto difíceis ou de decisões de projeto que provavelmente vão mudar. Cada módulo é então projetado para esconder essa decisão dos demais.\")",
+      "fonte": "PARNAS, D. L. On the Criteria To Be Used in Decomposing Systems into Modules. Communications of the ACM, v. 15, n. 12, p. 1053-1058, 1972."
+    },
+    "caso": [
+      "Um sistema de reservas de hotel concentra quase tudo na classe GerenciadorReserva. Os atributos valorDiaria e status são públicos, e recentemente um módulo de relatórios alterou valorDiaria para zero por engano, sem qualquer validação. O método calcularTotal() possui um longo bloco if/else para os tipos de quarto Standard, Luxo, Suíte e Presidencial. A mesma classe ainda gera o voucher em PDF e envia o e-mail de confirmação ao hóspede. Para representar quartos com frigobar e com banheira, a equipe criou as subclasses QuartoComFrigobar, QuartoComBanheira e QuartoComFrigobarEBanheira — e já discute criar mais combinações."
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) Relacione a ideia de Parnas ao pilar do Encapsulamento. Que dados da classe deveriam estar escondidos e como você corrigiria o incidente em que valorDiaria foi zerado por outro módulo?",
+      "b) Proponha, com Polimorfismo por sobrescrita, uma alternativa ao bloco if/else de calcularTotal(). Descreva a estrutura (classe abstrata ou interface e subclasses) e explique o que precisaria ser alterado para incluir um novo tipo \"Suíte Família\".",
+      "c) A equipe está usando herança para frigobar e banheira. Com base no princípio \"prefira composição à herança\", explique por que essa hierarquia tende a crescer sem controle e como a composição resolveria o problema.",
+      "d) Identifique qual princípio SOLID é violado por GerenciadorReserva calcular valores, gerar PDF e enviar e-mails, e proponha uma divisão em classes com uma responsabilidade cada."
+    ],
+    "respostaEsperada": "a) Parnas defende esconder, dentro de cada módulo, as decisões sujeitas a mudança — base do Encapsulamento. valorDiaria e status devem ser privados, com acesso por métodos públicos (ex.: definirValorDiaria(valor)) que validem a entrada, rejeitando valores zero ou negativos. Assim, nenhum módulo externo altera o estado sem passar pelas regras.\nb) Criar uma classe abstrata (ou interface) Quarto com o método calcularDiaria(), sobrescrito em QuartoStandard, QuartoLuxo, QuartoSuite e QuartoPresidencial. calcularTotal() apenas chama quarto.calcularDiaria() sem saber o tipo concreto. Para \"Suíte Família\" basta criar uma nova subclasse; o código existente não é modificado (extensível sem alterar o que já funciona — Aberto/Fechado).\nc) Frigobar e banheira não definem o que o quarto \"é\", mas o que ele \"tem\". Com herança, cada combinação de itens exige uma nova subclasse (explosão combinatória) e o acoplamento é alto. Com composição, Quarto possui uma lista de itens/comodidades (Frigobar, Banheira, Varanda...) que podem ser combinados livremente, sem novas classes para cada combinação.\nd) Viola o Princípio da Responsabilidade Única (S): a classe tem vários motivos para mudar. Divisão possível: CalculadoraReserva (valores), GeradorVoucherPDF (documento), NotificadorEmail (e-mail) e ReservaRepository (persistência), cada uma testável isoladamente.",
+    "linhas": 12
+  },
+  {
+    "id": "engsoft-cap4-q2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap4",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"An object has state, behavior, and identity; the structure and behavior of similar objects are defined in their common class; the terms instance and object are interchangeable.\"",
+      "traducao": "(Tradução livre: \"Um objeto tem estado, comportamento e identidade; a estrutura e o comportamento de objetos semelhantes são definidos em sua classe comum; os termos instância e objeto são intercambiáveis.\")",
+      "fonte": "BOOCH, G. et al. Object-Oriented Analysis and Design with Applications. 3. ed. Boston: Addison-Wesley, 2007."
+    },
+    "caso": [
+      "Em um sistema de biblioteca, um estagiário precisa cadastrar três exemplares físicos do livro \"Dom Casmurro\". Ele explica sua solução: \"Criei três classes — Livro1, Livro2 e Livro3 —, uma para cada exemplar, porque cada um tem um código de tombo e uma situação diferente (disponível, emprestado, em reparo).\""
+    ],
+    "enunciado": "À luz da definição de Booch e dos conceitos do Capítulo 4, a solução do estagiário está:",
+    "alternativas": [
+      "Correta, pois cada exemplar possui valores diferentes e, por isso, exige uma classe própria",
+      "Equivocada: deveria existir uma única classe Livro e três objetos dessa classe, cada um com seus próprios valores",
+      "Equivocada: deveria existir um único objeto Livro compartilhado pelos três exemplares, já que todos têm o mesmo título",
+      "Correta, pois uma classe só pode gerar um objeto quando seus atributos são diferentes",
+      "Equivocada: exemplares físicos devem ser representados como métodos da classe Biblioteca, e não como objetos"
+    ],
+    "correta": 1,
+    "resolucao": "Classe é o molde que define atributos e métodos; objeto é a instância concreta, com estado e identidade próprios. Os três exemplares compartilham a mesma estrutura (classe Livro) e diferem apenas nos valores dos atributos — portanto são três objetos da mesma classe, como Booch define: objetos semelhantes têm estrutura e comportamento definidos na classe comum."
+  },
+  {
+    "id": "engsoft-cap4-q3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap4",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"An abstraction denotes the essential characteristics of an object that distinguish it from all other kinds of objects and thus provide crisply defined conceptual boundaries, relative to the perspective of the viewer.\"",
+      "traducao": "(Tradução livre: \"Uma abstração denota as características essenciais de um objeto que o distinguem de todos os outros tipos de objetos e, assim, fornecem fronteiras conceituais bem definidas, relativas à perspectiva do observador.\")",
+      "fonte": "BOOCH, G. et al. Object-Oriented Analysis and Design with Applications. 3. ed. Boston: Addison-Wesley, 2007."
+    },
+    "caso": [
+      "Ao modelar a classe Cliente de uma loja virtual, um desenvolvedor acrescentou, além de nome, CPF, e-mail e endereço de entrega, os atributos altura, corDosOlhos e timeDeFutebol. Ele justificou: \"Quanto mais completa a classe, mais fiel ela é ao cliente do mundo real.\""
+    ],
+    "enunciado": "De acordo com o conceito de abstração apresentado por Booch e pela apostila, a decisão do desenvolvedor:",
+    "alternativas": [
+      "Está correta, pois quanto mais atributos a classe tiver, mais reutilizável ela será",
+      "Está correta, pois abstrair significa representar todos os detalhes do objeto do mundo real",
+      "Está incorreta, porque abstração é sinônimo de herança e esses atributos deveriam ficar em uma superclasse",
+      "Está incorreta: abstrair é selecionar só as características essenciais para o problema da loja",
+      "Está incorreta, porque classes que representam pessoas não podem possuir atributos físicos"
+    ],
+    "correta": 3,
+    "resolucao": "A abstração foca no que é relevante para o domínio e ignora detalhes desnecessários. O trecho de Booch destaca que as características essenciais dependem da \"perspectiva do observador\": para a loja, importam dados de identificação, contato e entrega. Atributos irrelevantes aumentam a complexidade sem agregar valor — exatamente o exemplo usado na apostila."
+  },
+  {
+    "id": "engsoft-cap4-q4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap4",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Hiding internal state and requiring all interaction to be performed through an object's methods is known as data encapsulation — a fundamental principle of object-oriented programming.\"",
+      "traducao": "(Tradução livre: \"Esconder o estado interno e exigir que toda interação seja feita por meio dos métodos do objeto é conhecido como encapsulamento de dados — um princípio fundamental da programação orientada a objetos.\")",
+      "fonte": "ORACLE. The Java Tutorials — What Is an Object? Disponível em: docs.oracle.com/javase/tutorial/java/concepts/object.html."
+    },
+    "caso": [
+      "Em um sistema bancário, a classe ContaBancaria declara o atributo saldo como público. Um módulo de tarifas executou diretamente a instrução conta.saldo = conta.saldo - 5000, deixando diversas contas com saldo negativo, embora a regra do banco não permita saques acima do saldo disponível."
+    ],
+    "enunciado": "Qual correção aplica corretamente o encapsulamento ao problema?",
+    "alternativas": [
+      "Tornar saldo privado e expor métodos como sacar(valor) e depositar(valor), que validam a operação",
+      "Manter saldo público e documentar no código que outros módulos não devem alterá-lo diretamente, revisando isso nas revisões de código",
+      "Tornar saldo um atributo estático, para que todas as contas compartilhem um único valor controlado",
+      "Criar uma subclasse ContaSegura que herde o atributo público saldo de ContaBancaria",
+      "Mover a validação para a tela do sistema, verificando o saldo antes de o usuário clicar em \"Sacar\""
+    ],
+    "correta": 0,
+    "resolucao": "Encapsular é proteger o estado interno e permitir alterações apenas pelos métodos do próprio objeto, que aplicam as regras de negócio. Documentar no código não impede o acesso; um atributo estático mistura o saldo de todas as contas; herdar um atributo público mantém o problema; e validar só na tela deixa outros módulos — como o de tarifas — livres para burlar a regra."
+  },
+  {
+    "id": "engsoft-cap4-q5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap4",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"The dictionary definition of polymorphism refers to a principle in biology in which an organism or species can have many different forms or stages. This principle can also be applied to object-oriented programming and languages like the Java language. Subclasses of a class can define their own unique behaviors and yet share some of the same functionality of the parent class.\"",
+      "traducao": "(Tradução livre: \"A definição de dicionário de polimorfismo refere-se a um princípio da biologia em que um organismo ou espécie pode ter muitas formas ou estágios diferentes. Esse princípio também pode ser aplicado à programação orientada a objetos e a linguagens como Java. Subclasses de uma classe podem definir seus próprios comportamentos únicos e ainda compartilhar parte da funcionalidade da classe-mãe.\")",
+      "fonte": "ORACLE. The Java Tutorials — Polymorphism. Disponível em: docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html."
+    },
+    "caso": [
+      "Em um sistema de RH, a classe Funcionario possui o método calcularSalario(). As subclasses Gerente e Vendedor redefinem esse método, com a mesma assinatura, cada uma com sua regra (bônus por meta e comissão por venda). No mesmo sistema, a classe Relatorio possui três versões do método gerar: gerar(), gerar(dataInicio, dataFim) e gerar(dataInicio, dataFim, departamento)."
+    ],
+    "enunciado": "Os mecanismos usados em calcularSalario() e em gerar(...) correspondem, respectivamente, a:",
+    "alternativas": [
+      "Sobrecarga e sobrescrita",
+      "Herança e encapsulamento",
+      "Sobrescrita e sobrecarga",
+      "Abstração e composição",
+      "Sobrescrita nos dois casos"
+    ],
+    "correta": 2,
+    "resolucao": "Na sobrescrita, a subclasse redefine um método herdado mantendo a mesma assinatura — é o caso de calcularSalario() em Gerente e Vendedor. Na sobrecarga, a mesma classe define métodos com o mesmo nome e parâmetros diferentes — é o caso das três versões de gerar(...). São as duas formas de polimorfismo descritas na apostila."
+  },
+  {
+    "id": "engsoft-cap4-q6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap4",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Favor object composition over class inheritance. [...] Because inheritance exposes a subclass to details of its parent's implementation, it's often said that 'inheritance breaks encapsulation'.\"",
+      "traducao": "(Tradução livre: \"Prefira a composição de objetos à herança de classes. [...] Como a herança expõe uma subclasse a detalhes da implementação de sua classe-mãe, costuma-se dizer que \"a herança quebra o encapsulamento\".\")",
+      "fonte": "GAMMA, E.; HELM, R.; JOHNSON, R.; VLISSIDES, J. Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley, 1994. (Ed. bras.: Padrões de Projeto. Porto Alegre: Bookman, 2000.)"
+    },
+    "caso": [
+      "Em uma loja virtual, a equipe criou a hierarquia Produto → ProdutoComDesconto → ProdutoComDescontoEFreteGratis → ProdutoComDescontoFreteGratisEGarantia. Agora o time de marketing quer produtos com garantia estendida, mas sem desconto, e produtos com frete grátis, mas sem garantia. Cada nova combinação exige uma nova subclasse."
+    ],
+    "enunciado": "Qual análise está de acordo com o texto e com o Capítulo 4?",
+    "alternativas": [
+      "A hierarquia está adequada, pois herança sempre reduz o acoplamento entre as classes",
+      "Desconto, frete grátis e garantia são coisas que o produto \"tem\"; deveriam ser componentes associados (composição)",
+      "A solução é aprofundar a hierarquia, criando uma subclasse para cada combinação possível, como ProdutoComDescontoEFreteGratis",
+      "Composição só é recomendada quando a linguagem de programação não oferece herança",
+      "Herança e composição são equivalentes, e a escolha entre elas é apenas uma questão de estilo"
+    ],
+    "correta": 1,
+    "resolucao": "A herança deve expressar uma relação genuína \"é um\". Desconto, frete grátis e garantia são características que o produto \"tem\" — relação típica de composição, mais flexível e com baixo acoplamento, pois os componentes podem ser trocados e combinados sem criar novas classes. A hierarquia atual é rígida e cresce de forma combinatória."
+  },
+  {
+    "id": "engsoft-cap4-q7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap4",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification.\"",
+      "traducao": "(Tradução livre: \"Entidades de software (classes, módulos, funções etc.) devem estar abertas para extensão, mas fechadas para modificação.\")",
+      "fonte": "MARTIN, R. C. The Open-Closed Principle. C++ Report, jan. 1996. (Princípio formulado originalmente por Bertrand Meyer em Object-Oriented Software Construction, 1988.)"
+    },
+    "caso": [
+      "Em um e-commerce, o método calcularFrete(tipo) possui um bloco if/else para \"correios\", \"transportadora\" e \"retirada na loja\". A empresa vai lançar entrega por drone. Nas últimas duas vezes em que o método foi editado para incluir uma modalidade, cálculos que já funcionavam passaram a apresentar erros."
+    ],
+    "enunciado": "Qual solução respeita o Princípio Aberto/Fechado?",
+    "alternativas": [
+      "Acrescentar mais um else if para \"drone\", pois é a alteração mais rápida",
+      "Substituir o bloco if/else por um switch/case, que é mais legível",
+      "Copiar o método inteiro para uma nova classe FreteDrone e ajustar o trecho necessário, mantendo o original intacto",
+      "Guardar o tipo de frete em uma variável global consultada por todos os módulos",
+      "Criar uma abstração ModalidadeFrete com uma classe por modalidade; o drone vira só uma nova classe"
+    ],
+    "correta": 4,
+    "resolucao": "O indicador clássico de violação do Aberto/Fechado, segundo a apostila, é o if/else crescente a cada novo tipo. Com uma abstração e implementações polimórficas, novos comportamentos são adicionados por extensão (nova classe), sem modificar código já testado — evitando as regressões relatadas. Trocar o if/else por switch/case continua exigindo modificação."
+  },
+  {
+    "id": "engsoft-cap4-q8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap4",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"What is wanted here is something like the following substitution property: If for each object o1 of type S there is an object o2 of type T such that for all programs P defined in terms of T, the behavior of P is unchanged when o1 is substituted for o2, then S is a subtype of T.\"",
+      "traducao": "(Tradução livre: \"O que se deseja aqui é algo como a seguinte propriedade de substituição: se, para cada objeto o1 do tipo S, existe um objeto o2 do tipo T tal que, para todos os programas P definidos em termos de T, o comportamento de P não se altera quando o1 é substituído por o2, então S é um subtipo de T.\")",
+      "fonte": "LISKOV, B. Data Abstraction and Hierarchy. ACM SIGPLAN Notices, v. 23, n. 5, p. 17-34, 1988 (palestra de abertura da OOPSLA'87)."
+    },
+    "caso": [
+      "Em um banco digital, a classe Conta possui o método sacar(valor). A equipe criou ContaInvestimentoBloqueada, que herda de Conta, mas cujo método sacar() lança a exceção \"Operação não suportada\". No fim do mês, a rotina que percorre uma lista de objetos Conta para debitar a tarifa de manutenção passou a falhar sempre que encontra uma ContaInvestimentoBloqueada."
+    ],
+    "enunciado": "A situação descrita evidencia:",
+    "alternativas": [
+      "Violação do Princípio da Substituição de Liskov: a subclasse não pode substituir a superclasse",
+      "Violação do Encapsulamento, pois o saldo da conta ficou exposto a outros módulos",
+      "Uso correto do Polimorfismo, já que cada subclasse pode reagir a um método como quiser, inclusive recusando a operação",
+      "Violação da Segregação de Interfaces, porque Conta possui poucos métodos",
+      "Um exemplo de sobrecarga de métodos entre Conta e ContaInvestimentoBloqueada"
+    ],
+    "correta": 0,
+    "resolucao": "Pela propriedade de Liskov, um programa escrito em termos de Conta deve continuar funcionando com qualquer subtipo. \"Subclasse lança exceção em método herdado\" é exatamente o indicador de violação listado na apostila. A solução é rever a hierarquia (por exemplo, separar contas que permitem saque das que não permitem) em vez de forçar uma herança que não é um \"é um\" verdadeiro."
+  },
+  {
+    "id": "engsoft-cap4-q9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap4",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Clients should not be forced to depend upon interfaces that they do not use.\"",
+      "traducao": "(Tradução livre: \"Clientes não devem ser forçados a depender de interfaces que não utilizam.\")",
+      "fonte": "MARTIN, R. C. The Interface Segregation Principle. C++ Report, 1996."
+    },
+    "caso": [
+      "Um sistema de gestão de escritório define a interface DispositivoEscritorio com os métodos imprimir(), digitalizar(), enviarFax() e grampear(). A classe ImpressoraSimples, que apenas imprime, é obrigada a implementar os quatro métodos — e três deles ficaram com o corpo vazio ou lançando exceção."
+    ],
+    "enunciado": "Qual refatoração está de acordo com o princípio citado?",
+    "alternativas": [
+      "Manter a interface e documentar quais métodos cada classe realmente implementa",
+      "Transformar a interface em classe abstrata com implementação vazia padrão para os quatro métodos",
+      "Eliminar a interface, deixando cada classe definir seus métodos livremente, sem contrato",
+      "Fazer ImpressoraSimples herdar de uma impressora multifuncional e sobrescrever os métodos extras lançando exceção",
+      "Dividir DispositivoEscritorio em interfaces menores, e cada classe implementa só as que utiliza"
+    ],
+    "correta": 4,
+    "resolucao": "\"Classe implementa método com corpo vazio\" é o indicador de violação da Segregação de Interfaces apresentado na apostila. Interfaces pequenas e específicas evitam dependências desnecessárias: a ImpressoraSimples implementa só Impressora, e uma multifuncional pode implementar várias. A classe abstrata com implementação vazia e a herança que lança exceção apenas escondem o problema, e a herança ainda introduz uma violação de Liskov."
+  },
+  {
+    "id": "engsoft-cap4-q10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap4",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"A. High level modules should not depend upon low level modules. Both should depend upon abstractions. B. Abstractions should not depend upon details. Details should depend upon abstractions.\"",
+      "traducao": "(Tradução livre: \"A. Módulos de alto nível não devem depender de módulos de baixo nível. Ambos devem depender de abstrações. B. Abstrações não devem depender de detalhes. Detalhes devem depender de abstrações.\")",
+      "fonte": "MARTIN, R. C. The Dependency Inversion Principle. C++ Report, 1996."
+    },
+    "caso": [
+      "A classe PedidoService, responsável pelas regras de negócio de pedidos, cria internamente suas dependências: repositorio = new MySQLPedidoRepository() e notificador = new EmailSmtpNotificador(). A empresa decidiu migrar para PostgreSQL e passar a notificar clientes também por WhatsApp. Além disso, os testes unitários de PedidoService só rodam com um banco MySQL real disponível."
+    ],
+    "enunciado": "Qual alternativa aplica corretamente o Princípio da Inversão de Dependência?",
+    "alternativas": [
+      "Substituir new MySQLPedidoRepository() por new PostgreSQLPedidoRepository() dentro de PedidoService",
+      "Fazer PedidoService herdar de MySQLPedidoRepository para reaproveitar o acesso ao banco",
+      "Tornar os atributos repositorio e notificador públicos, para que os testes possam trocá-los",
+      "Fazer PedidoService depender das interfaces PedidoRepository e Notificador, recebendo as implementações pelo construtor",
+      "Unir PedidoService, repositório e notificador em uma única classe para eliminar as dependências e simplificar os testes do sistema"
+    ],
+    "correta": 3,
+    "resolucao": "O indicador de violação apontado na apostila é justamente \"new ConcreteClass() dentro de classe de alto nível\". Ao depender de interfaces e receber as implementações de fora, a regra de negócio fica desacoplada dos detalhes (banco, canal de envio): trocar MySQL por PostgreSQL ou incluir WhatsApp não altera PedidoService, e os testes unitários podem usar mocks."
+  },
+  {
+    "id": "engsoft-cap5-q1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "discursiva",
+    "texto": {
+      "citacao": "\"Program testing can be used to show the presence of bugs, but never to show their absence!\"",
+      "traducao": "(Tradução livre: \"O teste de programas pode ser usado para mostrar a presença de defeitos, mas nunca para mostrar a sua ausência!\")",
+      "fonte": "DIJKSTRA, E. W. Notes on Structured Programming (EWD249). Eindhoven: Technological University, 1970. Publicado também em: DAHL, O.-J.; DIJKSTRA, E. W.; HOARE, C. A. R. Structured Programming. Academic Press, 1972."
+    },
+    "caso": [
+      "O gerente de uma loja virtual afirma: \"Temos 95% de cobertura de testes unitários, portanto o sistema não tem defeitos. Podemos dispensar os testes de integração e a homologação com usuários.\" Após o lançamento, dois problemas surgiram: (1) o cupom de desconto é calculado corretamente no módulo Carrinho, mas o módulo Pagamento recebe e cobra o valor sem desconto; (2) clientes reclamam que o checkout exige cadastro completo antes de mostrar o valor do frete — exatamente como estava na especificação, mas o comportamento afasta os compradores."
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, responda:",
+    "itens": [
+      "a) Interprete a frase de Dijkstra e explique por que 95% de cobertura de testes unitários não permite afirmar que o sistema não tem defeitos.",
+      "b) Classifique cada um dos dois problemas como falha de Verificação (\"estamos construindo o produto corretamente?\") ou de Validação (\"estamos construindo o produto correto?\"). Justifique.",
+      "c) Com base na Pirâmide de Testes, indique em que nível cada problema provavelmente teria sido detectado antes do lançamento e proponha uma distribuição equilibrada de testes para essa loja.",
+      "d) Descreva um pipeline de CI/CD para esse sistema e indique quais testes devem ser automatizados e quais devem continuar sendo feitos por pessoas."
+    ],
+    "respostaEsperada": "a) Testes só exercitam os cenários que alguém pensou em testar; quando passam, mostram que não foram encontrados defeitos naqueles casos, não que o sistema está livre deles. Cobertura mede quanto código foi executado, não se todas as combinações, integrações e necessidades reais foram verificadas. Testes unitários isolam componentes com mocks e não enxergam falhas entre módulos. O objetivo dos testes é reduzir risco, não provar perfeição.\nb) Problema 1: Verificação — o sistema não foi construído corretamente (o valor com desconto deveria chegar ao pagamento; é um defeito técnico). Problema 2: Validação — o sistema foi construído conforme a especificação, mas a especificação não atendia à real necessidade do usuário (\"verificado, mas inválido\").\nc) Problema 1: teste de integração entre Carrinho e Pagamento (os unitários usavam mocks e não exercitavam a comunicação real). Problema 2: teste de aceitação/UAT com usuários reais. Distribuição: muitos testes unitários (rápidos e baratos), um número moderado de testes de integração e poucos E2E/aceitação, focados nos fluxos críticos (compra, pagamento).\nd) Commit → testes unitários (< 5 min) → testes de integração (5–15 min) → testes de sistema/E2E (15–60 min) → deploy automático; se algum teste falhar, o pipeline para. Automatizar: unitários, integração e regressão de funcionalidades estáveis. Manter humano: testes exploratórios, usabilidade com usuários reais e avaliação estética, que exigem julgamento humano.",
+    "linhas": 12
+  },
+  {
+    "id": "engsoft-cap5-q2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Verification: 'Are we building the product right?' Validation: 'Are we building the right product?'\"",
+      "traducao": "(Tradução livre: \"Verificação: \"Estamos construindo o produto corretamente?\" Validação: \"Estamos construindo o produto correto?\"\")",
+      "fonte": "BOEHM, B. W. Software Engineering Economics. Englewood Cliffs: Prentice Hall, 1981."
+    },
+    "caso": [
+      "Um sistema de agendamento de consultas para uma clínica foi implementado exatamente conforme a especificação: passou em todas as revisões de código, inspeções e análises estáticas, sem nenhuma não conformidade. No teste de aceitação, porém, as recepcionistas afirmaram que o sistema não serve para o dia a dia, pois não permite encaixes nem remarcação de várias consultas de uma vez — tarefas que realizam diariamente, mas que nunca entraram na especificação."
+    ],
+    "enunciado": "Segundo as definições de Boehm e do Capítulo 5, o sistema está:",
+    "alternativas": [
+      "Validado, mas não verificado",
+      "Nem verificado nem validado",
+      "Verificado e validado, pois passou em todas as revisões técnicas e nos testes definidos na especificação",
+      "Verificado, mas não validado: atende à especificação, mas não à necessidade real das usuárias",
+      "Sem classificação possível, pois o teste de aceitação não faz parte das atividades de QA"
+    ],
+    "correta": 3,
+    "resolucao": "Revisões, inspeções e análise estática são atividades de verificação — e o sistema passou nelas. O teste de aceitação com usuárias reais é atividade de validação — e o sistema falhou. É o caso \"verificado, mas inválido\" descrito na apostila: construído exatamente conforme a especificação, mas a especificação não refletia a necessidade real."
+  },
+  {
+    "id": "engsoft-cap5-q3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"A human being can make an error (mistake), which produces a defect (fault, bug) in the program code, or in a document. If a defect in code is executed, the system may fail to do what it should do (or do something it shouldn't), causing a failure.\"",
+      "traducao": "(Tradução livre: \"Um ser humano pode cometer um erro (engano), que produz um defeito (falta, bug) no código do programa ou em um documento. Se um defeito no código for executado, o sistema pode deixar de fazer o que deveria (ou fazer algo que não deveria), causando uma falha.\")",
+      "fonte": "ISTQB — International Software Testing Qualifications Board. Certified Tester Foundation Level Syllabus. 2011, seção 1.1.2."
+    },
+    "caso": [
+      "A regra de negócio de uma loja diz: \"frete grátis para compras a partir de R$ 200,00\". Ao implementá-la, o desenvolvedor interpretou \"a partir de\" como \"acima de\" e escreveu no código a condição total > 200 (em vez de total >= 200). Uma cliente com carrinho de exatamente R$ 200,00 foi cobrada pelo frete e abriu uma reclamação."
+    ],
+    "enunciado": "Na situação descrita, correspondem, respectivamente, a erro, defeito e falha:",
+    "alternativas": [
+      "A cobrança indevida do frete; a condição total > 200; a interpretação equivocada do desenvolvedor",
+      "A interpretação equivocada; a condição total > 200; a cobrança indevida do frete",
+      "A condição total > 200; a interpretação equivocada; a cobrança indevida do frete",
+      "Os três termos são sinônimos de bug e descrevem o mesmo elemento da situação",
+      "A interpretação equivocada; a cobrança indevida do frete; a condição total > 200"
+    ],
+    "correta": 1,
+    "resolucao": "Erro é a ação humana incorreta (a má interpretação da regra); defeito é a manifestação desse erro no código (a condição > em vez de >=); falha é o comportamento incorreto observado pelo usuário (o frete cobrado). É a cadeia erro → defeito → falha apresentada na apostila e no trecho do ISTQB."
+  },
+  {
+    "id": "engsoft-cap5-q4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Testing is the process of executing a program with the intent of finding errors.\"",
+      "traducao": "(Tradução livre: \"Testar é o processo de executar um programa com a intenção de encontrar erros.\")",
+      "fonte": "MYERS, G. J. The Art of Software Testing. New York: John Wiley & Sons, 1979."
+    },
+    "caso": [
+      "Três profissionais testam a funcionalidade de login de um sistema: (1) o desenvolvedor lê o código-fonte e escreve testes que percorrem todos os caminhos da lógica que bloqueia a conta após três tentativas; (2) uma analista funcional, sem acesso ao código, digita diferentes combinações de e-mail e senha e compara os resultados com os requisitos; (3) um testador experiente, que conhece a documentação da API e a estrutura das tabelas de autenticação, envia requisições diretamente à API e consulta o banco para conferir o registro das tentativas."
+    ],
+    "enunciado": "As abordagens (1), (2) e (3) correspondem, respectivamente, às técnicas:",
+    "alternativas": [
+      "Caixa preta, caixa branca e caixa cinza",
+      "Caixa cinza, caixa preta e caixa branca",
+      "Caixa branca, caixa preta e caixa cinza",
+      "Caixa branca, caixa cinza e caixa preta",
+      "Caixa preta nas três, pois todas executam o programa"
+    ],
+    "correta": 2,
+    "resolucao": "A diferença está no conhecimento da estrutura interna: (1) caixa branca — código visível, geralmente feita por desenvolvedores, com alta cobertura técnica; (2) caixa preta — sem acesso ao código, compara entradas e saídas com os requisitos; (3) caixa cinza — acesso parcial (documentação da API, estrutura do banco), equilibrando as duas perspectivas."
+  },
+  {
+    "id": "engsoft-cap5-q5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"The test pyramid is a way of thinking about how different kinds of automated tests should be used to create a balanced portfolio. Its essential point is that you should have many more low-level UnitTests than high level BroadStackTests running through a GUI.\"",
+      "traducao": "(Tradução livre: \"A pirâmide de testes é uma forma de pensar em como diferentes tipos de testes automatizados devem ser usados para criar um portfólio equilibrado. Sua ideia essencial é que você deve ter muito mais testes unitários, de baixo nível, do que testes de alto nível que atravessam toda a pilha por meio da interface gráfica.\")",
+      "fonte": "FOWLER, M. TestPyramid. 2012. Disponível em: martinfowler.com/bliki/TestPyramid.html. (Conceito popularizado por Mike Cohn em Succeeding with Agile, 2009.)"
+    },
+    "caso": [
+      "Uma equipe possui 400 testes E2E automatizados pelo navegador, 30 testes de integração e 15 testes unitários. A suíte completa leva duas horas para rodar e quebra com frequência a cada pequena mudança de layout. Os desenvolvedores passaram a ignorar os resultados."
+    ],
+    "enunciado": "Qual recomendação está de acordo com a Pirâmide de Testes?",
+    "alternativas": [
+      "Inverter a proporção: muitos testes unitários, integração moderada e E2E só nos fluxos críticos",
+      "Aumentar ainda mais os testes E2E, pois simulam o usuário real e são os mais confiáveis",
+      "Eliminar todos os testes E2E e manter apenas testes unitários",
+      "Manter a proporção atual, mas executar a suíte apenas antes de cada release, para não atrasar o trabalho diário da equipe",
+      "Substituir todos os testes automatizados por testes manuais exploratórios"
+    ],
+    "correta": 0,
+    "resolucao": "A equipe montou uma \"pirâmide invertida\": muitos testes lentos, caros e frágeis no topo e poucos na base. A pirâmide recomenda muitos unitários (rápidos e baratos), alguns de integração e poucos E2E. Eliminar todos os E2E também é um erro: eles continuam necessários, porém em pequeno número, nos fluxos críticos."
+  },
+  {
+    "id": "engsoft-cap5-q6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Integration testing: Testing performed to expose defects in the interfaces and in the interactions between integrated components or systems.\"",
+      "traducao": "(Tradução livre: \"Teste de integração: teste realizado para expor defeitos nas interfaces e nas interações entre componentes ou sistemas integrados.\")",
+      "fonte": "ISTQB — International Software Testing Qualifications Board. Standard Glossary of Terms Used in Software Testing. Disponível em: glossary.istqb.org."
+    },
+    "caso": [
+      "Em um aplicativo de delivery, os módulos Pedido e Pagamento têm, cada um, 100% de cobertura de testes unitários — nos testes de Pedido, o Pagamento é substituído por um mock. Em homologação, pedidos pagos ficam eternamente \"aguardando pagamento\": o módulo Pagamento devolve o status \"APPROVED\", enquanto o módulo Pedido espera o valor \"aprovado\"."
+    ],
+    "enunciado": "Qual análise está correta?",
+    "alternativas": [
+      "O defeito seria encontrado escrevendo mais testes unitários para o módulo Pedido",
+      "Trata-se de um problema de validação, que só pode ser identificado na homologação com usuários",
+      "O ocorrido prova que testes unitários são inúteis e podem ser abandonados",
+      "Um teste de caixa branca do módulo Pagamento, executado de forma isolada, seria suficiente para detectar o problema",
+      "Os mocks esconderam a incompatibilidade; o nível adequado para detectá-la é o teste de integração"
+    ],
+    "correta": 4,
+    "resolucao": "Testes unitários isolam o componente com mocks, que refletem as suposições de quem os escreveu — por isso não enxergam a divergência real de contrato entre os módulos. O teste de integração existe justamente para expor defeitos nas interfaces e interações entre componentes, como mostra o caso da fintech na apostila. Unitários continuam necessários ({{C}} está errada); só não cobrem esse tipo de defeito."
+  },
+  {
+    "id": "engsoft-cap5-q7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Given some initial context (the givens), When an event occurs, Then ensure some outcomes.\"",
+      "traducao": "(Tradução livre: \"Dado algum contexto inicial (as premissas), Quando um evento ocorre, Então garanta alguns resultados.\")",
+      "fonte": "NORTH, D. Introducing BDD. Better Software Magazine, mar. 2006. Disponível em: dannorth.net/introducing-bdd."
+    },
+    "caso": [
+      "A Product Owner de uma biblioteca digital define a seguinte regra: \"Um leitor com 3 empréstimos ativos não pode pegar um quarto livro.\" A equipe decide registrar essa regra como um cenário BDD em Gherkin, para servir de critério de aceitação."
+    ],
+    "enunciado": "Qual cenário expressa corretamente a regra no formato Dado/Quando/Então?",
+    "alternativas": [
+      "Dado que o leitor clica em \"Emprestar\" / Quando o sistema consulta a tabela emprestimos / Então o método validar() retorna false",
+      "Quando o leitor tem 3 empréstimos / Dado que ele tenta emprestar um livro / Então nada acontece",
+      "Dado que o leitor tem 3 empréstimos ativos / Quando pede um novo livro / Então o sistema recusa e informa o limite",
+      "Dado que o sistema está funcionando / Quando tudo estiver correto / Então o teste deve passar",
+      "Então o leitor recebe uma mensagem / Quando tenta emprestar / Dado que possui 3 livros"
+    ],
+    "correta": 2,
+    "resolucao": "No BDD, o \"Dado\" descreve o contexto inicial (3 empréstimos ativos), o \"Quando\" o evento (solicitar novo empréstimo) e o \"Então\" o resultado observável (recusa com mensagem), na linguagem do negócio. Cenários com termos técnicos, como tabela e método, fogem do que o BDD propõe; os que começam por \"Quando\" ou \"Então\" invertem a ordem; e o cenário \"quando tudo estiver correto\" é vago e não verificável."
+  },
+  {
+    "id": "engsoft-cap5-q8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Red — Write a little test that doesn't work, and perhaps doesn't even compile at first. Green — Make the test work quickly, committing whatever sins necessary in the process. Refactor — Eliminate all of the duplication created in merely getting the test to work.\"",
+      "traducao": "(Tradução livre: \"Vermelho — Escreva um pequeno teste que não funciona e que talvez nem compile no início. Verde — Faça o teste funcionar rapidamente, cometendo os \"pecados\" que forem necessários no processo. Refatorar — Elimine toda a duplicação criada apenas para fazer o teste funcionar.\")",
+      "fonte": "BECK, K. Test-Driven Development: By Example. Boston: Addison-Wesley, 2002. (Ed. bras.: TDD — Desenvolvimento Guiado por Testes. Porto Alegre: Bookman, 2010.)"
+    },
+    "caso": [
+      "Em uma reunião de retrospectiva, um desenvolvedor afirma: \"Estou praticando TDD. Implementei toda a função de cálculo de juros, deixei o código organizado e, no final da sprint, escrevi os testes para confirmar que tudo funciona.\""
+    ],
+    "enunciado": "A afirmação do desenvolvedor está correta?",
+    "alternativas": [
+      "Não: no TDD o teste que falha vem primeiro (Red), depois o código mínimo (Green) e então a melhoria (Refactor)",
+      "Sim, pois o TDD exige apenas que o código tenha testes automatizados até o fim da sprint, em qualquer ordem de escrita",
+      "Sim, desde que a cobertura de testes ao final seja superior a 80%",
+      "Não, porque no TDD o código nunca é refatorado — apenas os testes são alterados",
+      "Não, porque o TDD se aplica somente a testes de aceitação realizados pelos usuários"
+    ],
+    "correta": 0,
+    "resolucao": "O TDD inverte a ordem tradicional: o teste é escrito antes do código e guia a implementação, fazendo o código \"nascer testável\" e o teste documentar o comportamento esperado. Escrever testes depois pode ser útil, mas perde o principal benefício apontado na apostila: o TDD melhora o design do código, não apenas sua correção."
+  },
+  {
+    "id": "engsoft-cap5-q9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Continuous Integration is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily — leading to multiple integrations per day. Each integration is verified by an automated build (including test) to detect integration errors as quickly as possible.\"",
+      "traducao": "(Tradução livre: \"Integração Contínua é uma prática de desenvolvimento de software em que os membros de uma equipe integram seu trabalho com frequência — normalmente cada pessoa integra pelo menos uma vez por dia —, o que leva a várias integrações diárias. Cada integração é verificada por um build automatizado (incluindo testes) para detectar erros de integração o mais rápido possível.\")",
+      "fonte": "FOWLER, M. Continuous Integration. 2006. Disponível em: martinfowler.com/articles/continuousIntegration.html."
+    },
+    "caso": [
+      "O pipeline de uma equipe segue: commit → testes unitários → testes de integração → testes E2E → deploy automático. Às vésperas de uma entrega, um teste de integração falha. Para cumprir o prazo, o líder técnico propõe: \"Vamos marcar esse teste como ignorado, liberar o deploy e corrigir depois.\""
+    ],
+    "enunciado": "Considerando o texto e a \"regra de ouro do pipeline\" apresentada na apostila, a proposta é:",
+    "alternativas": [
+      "Adequada, pois os testes E2E ainda serão executados mais adiante no pipeline e vão detectar o problema antes da produção",
+      "Adequada, desde que o deploy seja feito em um horário de pouco movimento",
+      "Inadequada apenas porque esse teste deveria ser executado manualmente",
+      "Adequada, pois testes de integração são opcionais em pipelines de CI/CD",
+      "Inadequada: se os testes falham, o pipeline para; a falha deve ser corrigida agora, quando custa menos"
+    ],
+    "correta": 4,
+    "resolucao": "A Integração Contínua existe para detectar erros de integração o mais cedo possível. Ignorar um teste que falhou anula esse propósito e leva o defeito para produção, onde a correção é mais cara e arriscada. Pela regra de ouro do pipeline, teste falhou = pipeline parado."
+  },
+  {
+    "id": "engsoft-cap5-q10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "texto": {
+      "citacao": "\"Exploratory testing is simultaneous learning, test design, and test execution.\"",
+      "traducao": "(Tradução livre: \"Teste exploratório é aprendizado, projeto de testes e execução de testes realizados simultaneamente.\")",
+      "fonte": "BACH, J. Exploratory Testing Explained. Satisfice, 2003. Disponível em: satisfice.com."
+    },
+    "caso": [
+      "A equipe de um aplicativo de streaming está decidindo o que automatizar: (I) testes de regressão do login e do pagamento, executados a cada build; (II) sessões para explorar livremente a nova tela de recomendações em busca de comportamentos inesperados; (III) avaliação, com usuários reais, de quão agradável e fácil de usar é a nova interface; (IV) testes unitários do cálculo de preço dos planos; (V) testes de integração entre o catálogo e o player de vídeo."
+    ],
+    "enunciado": "Segundo o Capítulo 5, devem ser automatizados apenas os itens:",
+    "alternativas": [
+      "I, II e III",
+      "II e III",
+      "Todos, pois a automação sempre reduz custos",
+      "I, IV e V",
+      "III, IV e V"
+    ],
+    "correta": 3,
+    "resolucao": "Devem ser automatizados os testes repetitivos executados a cada build, a regressão de funcionalidades estáveis e os testes unitários e de integração (I, IV e V). Testes exploratórios (II) dependem de aprendizado e criatividade humana — como mostra a definição de Bach — e testes de usabilidade e percepção estética com usuários reais (III) exigem julgamento humano subjetivo."
+  }
+]

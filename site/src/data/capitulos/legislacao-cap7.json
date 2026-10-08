@@ -1,0 +1,648 @@
+{
+ "numero": 7,
+ "titulo": "Legislação Internacional em Negócios Digitais",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "A internet é, por natureza, uma tecnologia sem fronteiras. Uma empresa sediada no Brasil pode vender para consumidores na Alemanha, hospedar seus dados em servidores nos Estados Unidos, contratar desenvolvedores na Índia e ser alvo de um processo judicial na França — tudo simultaneamente. Essa realidade cria um dos maiores desafios do direito contemporâneo: como aplicar normas nacionais a um ambiente global, fluido e descentralizado? Quais leis se aplicam quando uma transação digital envolve partes em países diferentes? Qual tribunal é competente para julgar um conflito entre uma startup brasileira e um consumidor europeu? Este capítulo responde a essas perguntas, apresentando os principais marcos legais internacionais que impactam negócios digitais e os mecanismos disponíveis para a resolução de conflitos transfronteiriços."
+  },
+  {
+   "t": "h2",
+   "id": "7-1-a-internet-sem-fronteiras-desafios-da-soberania-digital",
+   "texto": "7.1 A Internet sem Fronteiras: Desafios da Soberania Digital"
+  },
+  {
+   "t": "h3",
+   "texto": "O Problema da Jurisdição no Ambiente Digital"
+  },
+  {
+   "t": "p",
+   "html": "A jurisdição — o poder do Estado de aplicar suas leis e seus tribunais a determinadas situações — foi construída sobre o conceito de território físico. A internet rompe esses limites: um conteúdo publicado em servidor nos EUA por um cidadão russo pode causar dano a uma empresa brasileira — e nenhuma das três jurisdições resolve completamente o conflito."
+  },
+  {
+   "t": "h3",
+   "texto": "Os Três Critérios Tradicionais de Jurisdição"
+  },
+  {
+   "t": "p",
+   "html": "Critério Territorial: a lei se aplica a fatos ocorridos no território. No digital: onde ocorre o crime — atacante, vítima ou servidor?"
+  },
+  {
+   "t": "p",
+   "html": "Critério da Nacionalidade: a lei do país se aplica aos seus nacionais onde quer que estejam."
+  },
+  {
+   "t": "p",
+   "html": "Critério do Efeito: aplica-se quando conduta no exterior produz efeitos no território (GDPR, Sherman Act)."
+  },
+  {
+   "t": "h3",
+   "texto": "Soberania Digital e os Modelos de Governança da Internet"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Modelo</strong>",
+    "<strong>Características</strong>",
+    "<strong>Países</strong>",
+    "<strong>Impacto nos Negócios</strong>"
+   ],
+   "linhas": [
+    [
+     "Liberal / Multistakeholder",
+     "Internet aberta, mínima intervenção estatal",
+     "EUA, ocidentais",
+     "Maior liberdade; regulação fragmentada"
+    ],
+    [
+     "Regulado / Europeu",
+     "Forte regulação, GDPR como paradigma",
+     "UE, Reino Unido",
+     "Alta conformidade; multas pesadas"
+    ],
+    [
+     "Soberanista / Splinternet",
+     "Controle estatal da infraestrutura e conteúdo",
+     "China, Rússia, Irã",
+     "Acesso restrito; regras locais obrigatórias"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: O Risco da Splinternet para Empresas Digitais",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A fragmentação da internet em redes nacionais representa um risco crescente para empresas globais. A China bloqueia Google, Meta e WhatsApp; a Rússia restringiu plataformas estrangeiras após 2022; a Índia baniu centenas de apps chineses. Para startups brasileiras que desejam se expandir, compreender as restrições de cada mercado é tão importante quanto entender suas leis comerciais."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-2-principais-marcos-legais-internacionais-para-negocios-digitais",
+   "texto": "7.2 Principais Marcos Legais Internacionais para Negócios Digitais"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Instrumento</strong>",
+    "<strong>Origem</strong>",
+    "<strong>Abrangência</strong>",
+    "<strong>Temas</strong>"
+   ],
+   "linhas": [
+    [
+     "GDPR",
+     "União Europeia",
+     "Global (extraterritorial)",
+     "Proteção de dados e privacidade"
+    ],
+    [
+     "DSA",
+     "União Europeia",
+     "Plataformas que atendem a UE",
+     "Moderação de conteúdo e transparência"
+    ],
+    [
+     "DMA",
+     "União Europeia",
+     "Gatekeepers que atendem a UE",
+     "Regulação de plataformas dominantes"
+    ],
+    [
+     "AI Act",
+     "União Europeia",
+     "Sistemas de IA usados na UE",
+     "Classificação de riscos de IA"
+    ],
+    [
+     "DMCA",
+     "EUA",
+     "Plataformas internacionais",
+     "Direitos autorais digitais"
+    ],
+    [
+     "CLOUD Act",
+     "EUA",
+     "Empresas com presença nos EUA",
+     "Acesso a dados armazenados"
+    ],
+    [
+     "CCPA / CPRA",
+     "EUA (Califórnia)",
+     "Consumidores da Califórnia",
+     "Privacidade do consumidor"
+    ],
+    [
+     "PIPL",
+     "China",
+     "Dados de cidadãos chineses",
+     "Proteção de dados e localização"
+    ],
+    [
+     "Conv. de Budapeste",
+     "Conselho da Europa",
+     "68 países signatários",
+     "Crimes cibernéticos"
+    ],
+    [
+     "TRIPS (OMC)",
+     "OMC",
+     "164 países membros",
+     "Propriedade intelectual"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "DSA e DMA: as Novas Fronteiras da Regulação Europeia"
+  },
+  {
+   "t": "h3",
+   "texto": "DSA e DMA"
+  },
+  {
+   "t": "p",
+   "html": "DSA — Digital Services Act: responsabiliza plataformas pela moderação de conteúdo ilegal, exige transparência em algoritmos de recomendação, proíbe anúncios com dados sensíveis. Auditoria obrigatória para VLOPs (+45 milhões de usuários na UE). Multas de até 6% do faturamento global."
+  },
+  {
+   "t": "p",
+   "html": "DMA — Digital Markets Act: regula os gatekeepers (Google, Apple, Meta, Amazon, Microsoft). Exige interoperabilidade, proíbe autopreferência, obriga acesso a dados de terceiros. Multas de até 10% do faturamento global; reincidência: 20%."
+  },
+  {
+   "t": "h3",
+   "texto": "O AI Act Europeu: Níveis de Risco"
+  },
+  {
+   "t": "p",
+   "html": "Primeiro marco regulatório abrangente para IA no mundo, com efeito extraterritorial — aplica-se a qualquer sistema usado na UE."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Nível de Risco</strong>",
+    "<strong>Exemplos</strong>",
+    "<strong>Obrigações</strong>"
+   ],
+   "linhas": [
+    [
+     "Inaceitável (PROIBIDO)",
+     "Reconhecimento facial em tempo real, pontuação social",
+     "Proibição total na UE"
+    ],
+    [
+     "Alto Risco",
+     "IA em recrutamento, crédito, saúde, infraestrutura",
+     "Registro, avaliação, supervisão humana"
+    ],
+    [
+     "Limitado",
+     "Chatbots, deepfakes, recomendação",
+     "Transparência: informar que é IA"
+    ],
+    [
+     "Mínimo",
+     "Filtros de spam, jogos, produtividade",
+     "Sem obrigações específicas"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-3-regulacao-de-dados-pessoais-no-plano-internacional",
+   "texto": "7.3 Regulação de Dados Pessoais no Plano Internacional"
+  },
+  {
+   "t": "h3",
+   "texto": "Mecanismos de Transferência Internacional de Dados"
+  },
+  {
+   "t": "p",
+   "html": "Decisão de Adequação (GDPR art. 45): UE reconhece proteção equivalente. Brasil ainda não tem essa decisão."
+  },
+  {
+   "t": "p",
+   "html": "Cláusulas Contratuais Padrão (SCCs): contrato padronizado aprovado pela Comissão Europeia — o mais usado."
+  },
+  {
+   "t": "p",
+   "html": "Binding Corporate Rules (BCRs): políticas internas vinculantes para transferências intragrupo."
+  },
+  {
+   "t": "p",
+   "html": "LGPD, Art. 33: transferência mediante SCCs da ANPD ou consentimento do titular."
+  },
+  {
+   "t": "p",
+   "html": "Data Privacy Framework EUA-UE: acordo de 2023, após invalidação do Privacy Shield (Schrems II)."
+  },
+  {
+   "t": "h3",
+   "texto": "Localização de Dados (Data Localization)"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>País</strong>",
+    "<strong>Dados Sujeitos</strong>",
+    "<strong>Impacto para Empresas</strong>"
+   ],
+   "linhas": [
+    [
+     "China",
+     "Pessoais, críticos, financeiros e de saúde",
+     "Servidores locais obrigatórios"
+    ],
+    [
+     "Rússia",
+     "Dados pessoais de cidadãos russos",
+     "LinkedIn foi bloqueado por descumprimento"
+    ],
+    [
+     "Índia",
+     "Dados financeiros de pagamentos",
+     "Provedores devem ter espelho local"
+    ],
+    [
+     "Brasil",
+     "Sem obrigação geral (LGPD permite com salvaguardas)",
+     "Nuvens internacionais com cláusulas adequadas"
+    ],
+    [
+     "União Europeia",
+     "Sem localização obrigatória, mas restringe transferências",
+     "Dados só vão para países com garantias equivalentes"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-4-tributacao-internacional-de-negocios-digitais",
+   "texto": "7.4 Tributação Internacional de Negócios Digitais"
+  },
+  {
+   "t": "h3",
+   "texto": "O Problema do BEPS e a Solução Pillar Two"
+  },
+  {
+   "t": "p",
+   "html": "BEPS é a prática de transferir artificialmente lucros para jurisdições de baixa tributação — a OCDE estima perda de US$ 100-240 bilhões/ano em receita fiscal global."
+  },
+  {
+   "t": "p",
+   "html": "O Projeto BEPS da OCDE (2013-2021) resultou em 15 ações que reformaram tratados tributários e exigiram transparência de estruturas offshore."
+  },
+  {
+   "t": "p",
+   "html": "Pillar Two (2021): 136 países concordaram em alíquota mínima global de 15% para multinacionais acima de EUR 750 milhões. O Brasil implementou pela Lei nº 15.079/2024 (adicional da CSLL), a partir de 2025."
+  },
+  {
+   "t": "p",
+   "html": "Pillar One: busca redistribuir lucros aos países de mercado — ainda em negociação em 2026."
+  },
+  {
+   "t": "h3",
+   "texto": "Impostos Digitais Nacionais (DSTs)"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>País</strong>",
+    "<strong>Imposto</strong>",
+    "<strong>Alíquota</strong>",
+    "<strong>Base de Incidência</strong>"
+   ],
+   "linhas": [
+    [
+     "França",
+     "TSN",
+     "3%",
+     "Intermediação digital e publicidade &gt; EUR 750 mi"
+    ],
+    [
+     "Reino Unido",
+     "DST",
+     "2%",
+     "Redes sociais, buscadores e marketplaces &gt; GBP 500 mi"
+    ],
+    [
+     "Espanha",
+     "IDSD",
+     "3%",
+     "Publicidade e intermediação &gt; EUR 750 mi"
+    ],
+    [
+     "Itália",
+     "ISD",
+     "3%",
+     "Publicidade e intermediação &gt; EUR 750 mi"
+    ],
+    [
+     "Brasil",
+     "CIDE Digital (proposta)",
+     "Em discussão",
+     "Serviços digitais internacionais no Brasil"
+    ],
+    [
+     "Índia",
+     "Equalization Levy",
+     "2% / 6%",
+     "E-commerce e publicidade de não residentes"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Tributação do E-commerce Internacional no Brasil"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Remessa Conforme (Pessoas Físicas):</strong> desde agosto de 2024 (Lei nº 14.902/2024), até US$ 50: 20% de II. De US$ 50 a US$ 3.000: 60% de II, com desconto de US$ 20 no imposto. O ICMS estadual é cobrado à parte (17% ou 20%, conforme o estado).",
+    "<strong>Importação por Empresas:</strong> Imposto de Importação conforme NCM, além de IPI, PIS, COFINS e ICMS.",
+    "<strong>Tributação de Serviços Digitais Importados:</strong> streaming, SaaS e apps sujeitos a ISS ou ICMS, tema ainda controverso.",
+    "<strong>Estabelecimento Permanente Digital:</strong> empresas estrangeiras sem presença física podem ser obrigadas a se cadastrar no CNPJ."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-5-comercio-eletronico-internacional-regulacao-da-omc-e-tratados",
+   "texto": "7.5 Comércio Eletrônico Internacional: Regulação da OMC e Tratados"
+  },
+  {
+   "t": "h3",
+   "texto": "O Papel da OMC no Comércio Digital"
+  },
+  {
+   "t": "p",
+   "html": "Moratória sobre Transmissões Eletrônicas (1998): sem tarifas alfandegárias sobre downloads de software, música e e-books. Renovada periodicamente, sob pressão de países em desenvolvimento."
+  },
+  {
+   "t": "p",
+   "html": "Iniciativa Conjunta sobre E-commerce (JSI, 2019): 90 países, incluindo o Brasil, negociam regras multilaterais: autenticação, proteção do consumidor e privacidade. Ainda em negociação."
+  },
+  {
+   "t": "p",
+   "html": "Acordo sobre Facilitação do Comércio (TFA, 2017): simplificou procedimentos alfandegários, relevante para o cross-border e-commerce de PMEs."
+  },
+  {
+   "t": "h3",
+   "texto": "Acordos Bilaterais e Regionais com Cláusulas Digitais"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Acordo</strong>",
+    "<strong>Partes</strong>",
+    "<strong>Cláusulas Digitais Relevantes</strong>"
+   ],
+   "linhas": [
+    [
+     "USMCA (T-MEC)",
+     "EUA, Canadá, México",
+     "Proibição de localização de dados; proteção de código-fonte"
+    ],
+    [
+     "CPTPP",
+     "11 países do Pacífico",
+     "Fluxo de dados transfronteiriços; proteção de algoritmos"
+    ],
+    [
+     "DEPA",
+     "Cingapura, Chile, Nova Zelândia",
+     "Primeiro acordo só de economia digital: IA, pagamentos, dados abertos"
+    ],
+    [
+     "UE-Reino Unido (TCA)",
+     "União Europeia, Reino Unido",
+     "Adequação de dados pós-Brexit"
+    ],
+    [
+     "Mercosul-UE (em negociação)",
+     "Mercosul, União Europeia",
+     "Capítulo digital em negociação; proteção de dados é ponto sensível"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-6-conflitos-de-jurisdicao-em-ambiente-digital",
+   "texto": "7.6 Conflitos de Jurisdição em Ambiente Digital"
+  },
+  {
+   "t": "h3",
+   "texto": "Determinação da Lei Aplicável"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Autonomia das Partes:</strong> escolha livre da lei aplicável (LINDB art. 9º; Roma I; UCC).",
+    "<strong>Lei do Local de Execução:</strong> na ausência de escolha — ambígua em serviços digitais.",
+    "<strong>Lei do Local de Celebração:</strong> regra tradicional brasileira (LINDB art. 9º).",
+    "<strong>Lei de Residência do Consumidor:</strong> em B2C, protege o consumidor (Roma I, art. 6º).",
+    "<strong>Cláusulas de Ordem Pública:</strong> normas de proteção ao consumidor podem se sobrepor à escolha das partes."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Determinando o Foro Competente"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Critério</strong>",
+    "<strong>Descrição</strong>",
+    "<strong>Exemplo Digital</strong>"
+   ],
+   "linhas": [
+    [
+     "Domicílio do réu",
+     "Tribunal do país onde o réu está domiciliado",
+     "Consumidor alemão processa empresa brasileira no Brasil"
+    ],
+    [
+     "Lugar do dano",
+     "Tribunal do país onde o dano foi sofrido",
+     "Dano reputacional por conteúdo publicado nos EUA"
+    ],
+    [
+     "Eleição de foro",
+     "Partes elegem o tribunal contratualmente",
+     "Contrato SaaS prevê foro de Delaware"
+    ],
+    [
+     "Foro do consumidor (B2C)",
+     "Consumidor aciona no tribunal de seu domicílio",
+     "Consumidor brasileiro aciona Netflix no Brasil"
+    ],
+    [
+     "Competência exclusiva",
+     "Independe de acordo das partes",
+     "Registro de marcas: país onde está registrada"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Casos Emblemáticos de Jurisdição Digital"
+  },
+  {
+   "t": "p",
+   "html": "Google Spain v. AEPD (2014): TJUE reconheceu o \"direito ao esquecimento\", aplicando o direito da UE a empresa americana."
+  },
+  {
+   "t": "p",
+   "html": "Schrems I e II (2015, 2020): TJUE invalidou Safe Harbor e Privacy Shield por falta de proteção equivalente ao GDPR."
+  },
+  {
+   "t": "p",
+   "html": "Microsoft Corp. v. United States (2018): disputa sobre e-mails na Irlanda acelerou a aprovação do CLOUD Act."
+  },
+  {
+   "t": "p",
+   "html": "WhatsApp v. Brasil (2016, 2021): bloqueio por descumprir ordens judiciais de acesso a mensagens criptografadas."
+  },
+  {
+   "t": "h2",
+   "id": "7-7-mecanismos-de-resolucao-de-conflitos-internacionais-online",
+   "texto": "7.7 Mecanismos de Resolução de Conflitos Internacionais Online"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Mecanismo</strong>",
+    "<strong>Aplicação Digital</strong>",
+    "<strong>Vantagens</strong>"
+   ],
+   "linhas": [
+    [
+     "Arbitragem Internacional",
+     "Contratos B2B, licenças de software, joint ventures",
+     "Executável globalmente; neutro; especializado"
+    ],
+    [
+     "Mediação Internacional",
+     "Conflitos de marca, disputas de parceria",
+     "Preserva relação; rápido; sigiloso"
+    ],
+    [
+     "UDRP (ICANN)",
+     "Cybersquatting, uso indevido em domínios",
+     "Rápido (45-60 dias); barato; global"
+    ],
+    [
+     "ODR",
+     "E-commerce internacional, marketplaces",
+     "Acessível; sem barreiras geográficas"
+    ],
+    [
+     "Plataformas das Big Techs",
+     "Disputas entre vendedores e compradores",
+     "Imediato; gratuito; alta resolução"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "A Convenção de Nova York e a Execução de Laudos Arbitrais"
+  },
+  {
+   "t": "p",
+   "html": "Principal instrumento para garantir que laudos arbitrais sejam executados em países diferentes daquele onde foram proferidos. 172 países signatários, incluindo o Brasil (Decreto nº 4.311/2002)."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Homologação no Brasil:</strong> o STJ verifica apenas requisitos formais, não reanalisa o mérito.",
+    "<strong>Cláusula Arbitral Eficaz:</strong> deve indicar regulamento (ICC, LCIA, CAM-CCBC), sede, idioma e lei aplicável.",
+    "<strong>Limitação em Contratos B2C:</strong> cláusulas que afastem o Judiciário podem ser abusivas e nulas pelo CDC."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Como Estruturar Contratos Digitais Internacionais"
+  },
+  {
+   "t": "p",
+   "html": "Cláusula de Lei Aplicável (escolher lei previsível: Nova York, Reino Unido, Suíça); Eleição de Foro ou Arbitragem; Sede da Arbitragem (país signatário da Convenção de Nova York); Idioma do Contrato; Notificação e Comunicação; Limitação de Responsabilidade (valores máximos, respeitando ordem pública de cada país)."
+  },
+  {
+   "t": "h2",
+   "id": "7-8-o-brasil-no-cenario-regulatorio-digital-global",
+   "texto": "7.8 O Brasil no Cenário Regulatório Digital Global"
+  },
+  {
+   "t": "h3",
+   "texto": "Participação do Brasil em Fóruns de Governança Digital"
+  },
+  {
+   "t": "p",
+   "html": "IGF (ONU): sedia encontros regionais; a NETmundial (São Paulo, 2014) foi um marco histórico."
+  },
+  {
+   "t": "p",
+   "html": "OCDE: candidato à adesão; participa dos grupos de tributação digital (Pillar One/Two) e IA."
+  },
+  {
+   "t": "p",
+   "html": "G20 — Presidência 2024: incluiu governança de IA, tributação de super-ricos e inclusão digital."
+  },
+  {
+   "t": "p",
+   "html": "Convenção de Budapeste: processo de adesão iniciado em 2023, fortalecendo a cooperação em cibercrime."
+  },
+  {
+   "t": "p",
+   "html": "Mercosul Digital: avanços em reconhecimento mútuo de assinaturas eletrônicas."
+  },
+  {
+   "t": "h3",
+   "texto": "Desafios e Oportunidades do Brasil"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Dimensão</strong>",
+    "<strong>Desafios</strong>",
+    "<strong>Oportunidades</strong>"
+   ],
+   "linhas": [
+    [
+     "Proteção de Dados",
+     "ANPD jovem; sem decisão de adequação da UE",
+     "LGPD alinhada ao GDPR facilita parcerias"
+    ],
+    [
+     "Tributação Digital",
+     "Sistema tributário complexo (IVA dual, ISS, ICMS)",
+     "Reforma tributária (CBS e IBS) pode simplificar"
+    ],
+    [
+     "Cibersegurança",
+     "Alto índice de crimes; baixa maturidade nas PMEs",
+     "Estratégia Nacional em implementação"
+    ],
+    [
+     "Regulação de IA",
+     "PL de IA ainda em tramitação",
+     "Presidência do G20/IGF posiciona o Brasil como ator-chave"
+    ],
+    [
+     "Comércio Digital",
+     "Burocracia alfandegária e tributação complexa",
+     "Remessa Conforme abre oportunidades globais"
+    ]
+   ]
+  }
+ ]
+}

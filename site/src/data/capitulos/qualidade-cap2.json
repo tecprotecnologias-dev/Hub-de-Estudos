@@ -1,0 +1,566 @@
+{
+ "numero": 2,
+ "titulo": "Modelos de Qualidade de Software",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Para garantir que um produto de software atinja níveis aceitáveis de qualidade, é necessário definir, medir e avaliar suas características de forma sistemática. Os modelos de qualidade de software surgiram exatamente com esse propósito: fornecer um arcabouço estruturado de atributos que podem ser observados, medidos e melhorados ao longo do ciclo de vida do produto."
+  },
+  {
+   "t": "h2",
+   "id": "2-1-introducao-aos-modelos-de-qualidade-de-software",
+   "texto": "2.1 Introdução aos Modelos de Qualidade de Software"
+  },
+  {
+   "t": "p",
+   "html": "Um modelo de qualidade de software é uma representação estruturada das características que determinam a qualidade de um sistema. Ele organiza os atributos de qualidade em hierarquias ou taxonomias, permitindo que equipes de desenvolvimento identifiquem o que medir e como avaliar se o produto atende às expectativas dos stakeholders."
+  },
+  {
+   "t": "h3",
+   "texto": "Por que usar modelos de qualidade?"
+  },
+  {
+   "t": "p",
+   "html": "Sem um modelo de referência, a avaliação de qualidade torna-se subjetiva e inconsistente. Diferentes desenvolvedores podem ter visões distintas sobre o que é um software de qualidade. Os modelos fornecem uma linguagem comum, critérios mensuráveis e permitem comparações entre produtos e versões ao longo do tempo."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Padronização: </strong>Cria uma linguagem comum entre clientes, desenvolvedores e testadores.",
+    "<strong>Mensurabilidade: </strong>Transforma conceitos abstratos de qualidade em atributos mensuráveis.",
+    "<strong>Melhoria contínua: </strong>Permite identificar pontos fracos e priorizar ações de melhoria.",
+    "<strong>Conformidade: </strong>Facilita auditorias e certificações de qualidade junto a órgãos reguladores."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Principais Modelos de Qualidade de Software"
+  },
+  {
+   "t": "p",
+   "html": "Ao longo das décadas, vários modelos foram propostos pela academia e pela indústria:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Modelo",
+    "Ano",
+    "Criador / Entidade",
+    "Contribuição Principal"
+   ],
+   "linhas": [
+    [
+     "Modelo de McCall",
+     "1977",
+     "Jim McCall (EUA)",
+     "Primeiro modelo estruturado em perspectivas"
+    ],
+    [
+     "Modelo de Boehm",
+     "1978",
+     "Barry Boehm",
+     "Foco em características de alto nível de abstração"
+    ],
+    [
+     "Modelo FURPS",
+     "1987",
+     "Hewlett-Packard",
+     "Classificação em 5 grupos principais"
+    ],
+    [
+     "ISO/IEC 9126",
+     "1991",
+     "ISO/IEC",
+     "Norma internacional com 6 características"
+    ],
+    [
+     "Dromey",
+     "1995",
+     "R.G. Dromey",
+     "Ligação entre propriedades do produto e qualidade"
+    ],
+    [
+     "ISO/IEC 25010",
+     "2011",
+     "ISO/IEC (SQuaRE)",
+     "Evolução da 9126 com 8 características"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-2-modelo-de-qualidade-iso-iec-9126",
+   "texto": "2.2 Modelo de Qualidade ISO/IEC 9126"
+  },
+  {
+   "t": "p",
+   "html": "A norma ISO/IEC 9126, publicada originalmente em 1991 e revisada em 2001, tornou-se a referência mais amplamente adotada para avaliação de qualidade de produto de software. Ela estrutura a qualidade em seis características principais, cada uma subdividida em subcaracterísticas que orientam a definição de métricas e critérios de avaliação."
+  },
+  {
+   "t": "h3",
+   "texto": "Estrutura da ISO/IEC 9126"
+  },
+  {
+   "t": "p",
+   "html": "A norma organiza a qualidade de software em três perspectivas distintas, cada uma com seu próprio conjunto de características:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Perspectiva",
+    "Foco",
+    "O que avalia?"
+   ],
+   "linhas": [
+    [
+     "Qualidade Interna",
+     "Código e estrutura",
+     "Propriedades do software antes da execução"
+    ],
+    [
+     "Qualidade Externa",
+     "Comportamento em uso",
+     "Propriedades observáveis durante a execução"
+    ],
+    [
+     "Qualidade em Uso",
+     "Experiência do usuário",
+     "Resultado do uso em contexto real de trabalho"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "As seis características de qualidade da ISO/IEC 9126 se aplicam tanto à qualidade interna quanto à qualidade externa. Já a qualidade em uso é avaliada por quatro atributos próprios: efetividade, produtividade, segurança e satisfação."
+  },
+  {
+   "t": "h3",
+   "texto": "As Seis Características Principais da ISO/IEC 9126"
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Visão Geral das Seis Características",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "1. FUNCIONALIDADE — Capacidade de fornecer funções que satisfaçam necessidades explícitas e implícitas."
+    },
+    {
+     "t": "p",
+     "html": "2. CONFIABILIDADE — Capacidade de manter o desempenho sob condições definidas ao longo do tempo."
+    },
+    {
+     "t": "p",
+     "html": "3. USABILIDADE — Capacidade de ser compreendido, aprendido e usado de forma eficiente e satisfatória."
+    },
+    {
+     "t": "p",
+     "html": "4. EFICIÊNCIA — Capacidade de fornecer desempenho adequado em relação aos recursos utilizados."
+    },
+    {
+     "t": "p",
+     "html": "5. MANUTENIBILIDADE — Capacidade de ser modificado para correções, melhorias ou adaptações."
+    },
+    {
+     "t": "p",
+     "html": "6. PORTABILIDADE — Capacidade de ser transferido de um ambiente para outro."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-3-funcionalidade-e-confiabilidade",
+   "texto": "2.3 Funcionalidade e Confiabilidade"
+  },
+  {
+   "t": "h3",
+   "texto": "Funcionalidade"
+  },
+  {
+   "t": "p",
+   "html": "A funcionalidade representa a característica mais fundamental da qualidade de software: o software deve fazer o que se propõe a fazer. Essa característica avalia se o conjunto de funções disponíveis atende às necessidades do usuário, tanto as especificadas explicitamente quanto as implícitas do contexto de uso."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Subcaracterística",
+    "Definição",
+    "Exemplo prático"
+   ],
+   "linhas": [
+    [
+     "Adequação",
+     "Funções cobertas atendem às necessidades",
+     "Sistema de RH que calcula corretamente a folha de pagamento"
+    ],
+    [
+     "Acurácia",
+     "Resultados corretos com a precisão necessária",
+     "Cálculo financeiro sem erros de arredondamento"
+    ],
+    [
+     "Interoperabilidade",
+     "Capacidade de interagir com outros sistemas",
+     "API que integra com sistemas legados e modernos"
+    ],
+    [
+     "Segurança de Acesso",
+     "Prevenção de acesso não autorizado",
+     "Autenticação de dois fatores e controle de permissões"
+    ],
+    [
+     "Conformidade",
+     "Atendimento a normas e regulamentos",
+     "LGPD, PCI-DSS, regulamentações do setor de saúde"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: Funcionalidade x Função",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "É comum confundir 'funcionalidade' com 'quantidade de funções'. A ISO/IEC 9126 deixa claro que funcionalidade não se refere ao número de funções do software, mas sim à capacidade dessas funções de atenderem às necessidades dos usuários com adequação, acurácia e segurança."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Confiabilidade"
+  },
+  {
+   "t": "p",
+   "html": "A confiabilidade diz respeito à capacidade do software de manter seu nível de desempenho ao longo do tempo e sob condições específicas de uso. Um software confiável é aquele que apresenta falhas raras, se recupera bem quando falha e está disponível quando necessário."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Subcaracterística",
+    "Definição",
+    "Métricas Associadas"
+   ],
+   "linhas": [
+    [
+     "Maturidade",
+     "Frequência de falhas por defeitos",
+     "MTBF – Tempo médio entre falhas"
+    ],
+    [
+     "Tolerância a Falhas",
+     "Manutenção do desempenho após falha",
+     "Número de falhas catastróficas por período"
+    ],
+    [
+     "Recuperabilidade",
+     "Restauração de dados e desempenho após falha",
+     "MTTR – Tempo médio de recuperação"
+    ],
+    [
+     "Conformidade",
+     "Aderência a normas de confiabilidade",
+     "Cobertura de normas como IEC 61508"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A confiabilidade é especialmente crítica em sistemas de missão crítica — como equipamentos médicos, sistemas bancários e de controle industrial — onde falhas podem ter consequências graves, incluindo perdas financeiras, danos à saúde ou riscos à segurança física."
+  },
+  {
+   "t": "h2",
+   "id": "2-4-usabilidade-e-eficiencia",
+   "texto": "2.4 Usabilidade e Eficiência"
+  },
+  {
+   "t": "h3",
+   "texto": "Usabilidade"
+  },
+  {
+   "t": "p",
+   "html": "A usabilidade avalia o esforço necessário para que um software seja aprendido, operado e compreendido pelo usuário. Um software pode ser funcionalmente correto e confiável, mas ainda assim falhar se os usuários não conseguirem utilizá-lo de forma eficaz. A usabilidade é, portanto, a ponte entre as capacidades técnicas do sistema e as necessidades reais dos usuários."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Subcaracterística",
+    "Definição",
+    "Exemplo de Avaliação"
+   ],
+   "linhas": [
+    [
+     "Inteligibilidade",
+     "Facilidade de compreender o que o software faz",
+     "Usuário entende a finalidade do sistema sem treinamento?"
+    ],
+    [
+     "Apreensibilidade",
+     "Facilidade de aprender a usar o software",
+     "Tempo necessário para que um novato realize uma tarefa"
+    ],
+    [
+     "Operacionalidade",
+     "Facilidade de operar e controlar o software",
+     "Número de cliques para completar uma tarefa comum"
+    ],
+    [
+     "Atratividade",
+     "Qualidade visual e apelo estético da interface",
+     "Satisfação do usuário com o design e o layout"
+    ],
+    [
+     "Conformidade",
+     "Aderência a normas de usabilidade (WCAG, etc.)",
+     "Acessibilidade para pessoas com deficiências"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Usabilidade e Acessibilidade",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A usabilidade está intimamente ligada à acessibilidade — a capacidade do software de ser utilizado por pessoas com deficiências visuais, auditivas, motoras ou cognitivas. Normas como as WCAG 2.1 (Web Content Accessibility Guidelines) e a Lei Brasileira de Inclusão (Lei 13.146/2015) estabelecem requisitos mínimos de acessibilidade para sistemas digitais."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Eficiência"
+  },
+  {
+   "t": "p",
+   "html": "A eficiência, também chamada de desempenho-eficiência na ISO/IEC 25010, avalia a relação entre o desempenho do software e os recursos utilizados. Um software eficiente entrega resultados no tempo esperado, sem desperdiçar memória, processamento, energia ou largura de banda."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Subcaracterística",
+    "Definição",
+    "Indicadores de Qualidade"
+   ],
+   "linhas": [
+    [
+     "Comportamento Temporal",
+     "Tempo de resposta e throughput adequados",
+     "Tempo de resposta &lt; 2s para 95% das transações"
+    ],
+    [
+     "Utilização de Recursos",
+     "Recursos consumidos condizentes com a função",
+     "Uso de CPU &lt; 80% em carga normal de trabalho"
+    ],
+    [
+     "Conformidade",
+     "Aderência a normas de desempenho",
+     "SLAs contratuais de disponibilidade e resposta"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A eficiência ganhou ainda mais relevância com a popularização de aplicações móveis e sistemas em nuvem, onde o uso eficiente de recursos está diretamente relacionado ao custo operacional e à experiência do usuário em dispositivos com recursos limitados."
+  },
+  {
+   "t": "h2",
+   "id": "2-5-manutenibilidade-e-portabilidade",
+   "texto": "2.5 Manutenibilidade e Portabilidade"
+  },
+  {
+   "t": "h3",
+   "texto": "Manutenibilidade"
+  },
+  {
+   "t": "p",
+   "html": "A manutenibilidade reflete a facilidade com que um software pode ser modificado. Considerando que a maior parte dos custos de um software ocorre durante a fase de manutenção — que pode durar décadas —, essa característica tem enorme impacto econômico. Software difícil de manter gera altos custos, maior risco de introdução de novos defeitos e menor capacidade de adaptação a mudanças de negócio."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Subcaracterística",
+    "Definição",
+    "Boas Práticas Associadas"
+   ],
+   "linhas": [
+    [
+     "Analisabilidade",
+     "Facilidade de diagnosticar deficiências e causas de falhas",
+     "Logs detalhados, rastreabilidade de requisitos"
+    ],
+    [
+     "Modificabilidade",
+     "Facilidade de implementar modificações sem introduzir defeitos",
+     "Código limpo, baixo acoplamento, alta coesão"
+    ],
+    [
+     "Estabilidade",
+     "Minimização de efeitos inesperados após modificações",
+     "Testes de regressão automatizados"
+    ],
+    [
+     "Testabilidade",
+     "Facilidade de validar o software modificado",
+     "Design orientado a testes (TDD), injeção de dependência"
+    ],
+    [
+     "Conformidade",
+     "Aderência a normas de manutenibilidade",
+     "Padrões de codificação, documentação técnica"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Débito Técnico e Manutenibilidade",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O conceito de 'débito técnico', cunhado por Ward Cunningham, representa o custo acumulado de decisões de design inadequadas tomadas em busca de velocidade. Software com alto débito técnico tem baixa manutenibilidade — cada nova modificação se torna mais cara e arriscada. Práticas como refatoração contínua, code review e testes automatizados são as principais ferramentas para controlar e reduzir o débito técnico."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Portabilidade"
+  },
+  {
+   "t": "p",
+   "html": "A portabilidade avalia a capacidade do software de ser transferido de um ambiente para outro. Isso inclui diferentes sistemas operacionais, arquiteturas de hardware, plataformas de execução, configurações de ambiente e até diferentes países com idiomas e regulamentos distintos."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Subcaracterística",
+    "Definição",
+    "Exemplo"
+   ],
+   "linhas": [
+    [
+     "Adaptabilidade",
+     "Capacidade de adaptar-se a diferentes ambientes sem necessidade de ações não previstas",
+     "Aplicação web que funciona em Chrome, Firefox e Safari"
+    ],
+    [
+     "Instalabilidade",
+     "Facilidade de instalação e desinstalação no ambiente-alvo",
+     "Instalador automatizado com rollback em caso de falha"
+    ],
+    [
+     "Coexistência",
+     "Capacidade de coexistir com outros softwares independentes",
+     "Sistema que não conflita com antivírus ou outros aplicativos"
+    ],
+    [
+     "Substituibilidade",
+     "Capacidade de ser usado no lugar de outro software para o mesmo propósito",
+     "Sistema ERP que substitui planilhas Excel sem perda de dados"
+    ],
+    [
+     "Conformidade",
+     "Aderência a normas de portabilidade",
+     "Compatibilidade com padrões W3C, POSIX, IEEE"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-6-evolucao-iso-iec-25010-square",
+   "texto": "2.6 Evolução: ISO/IEC 25010 (SQuaRE)"
+  },
+  {
+   "t": "p",
+   "html": "Em 2011, a ISO/IEC publicou a norma 25010 como parte da família SQuaRE (Systems and software Quality Requirements and Evaluation), substituindo a ISO/IEC 9126. A nova norma ampliou o modelo de qualidade de seis para oito características principais, incorporando lições aprendidas com a aplicação da 9126 e refletindo as demandas do desenvolvimento de software moderno."
+  },
+  {
+   "t": "h3",
+   "texto": "Comparativo: ISO/IEC 9126 vs ISO/IEC 25010"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "ISO/IEC 9126 (2001)",
+    "ISO/IEC 25010 (2011)",
+    "Principal diferença"
+   ],
+   "linhas": [
+    [
+     "Funcionalidade",
+     "Adequação Funcional",
+     "Nome refinado, foco em adequação"
+    ],
+    [
+     "Confiabilidade",
+     "Confiabilidade",
+     "Mantida com subcaracterísticas expandidas"
+    ],
+    [
+     "Usabilidade",
+     "Usabilidade",
+     "Expandida com acessibilidade explícita"
+    ],
+    [
+     "Eficiência",
+     "Eficiência de Desempenho",
+     "Nome mais preciso"
+    ],
+    [
+     "Manutenibilidade",
+     "Manutenibilidade",
+     "Adicionada modularidade e reusabilidade"
+    ],
+    [
+     "Portabilidade",
+     "Portabilidade",
+     "Mantida com ajustes"
+    ],
+    [
+     "— (não existia)",
+     "Compatibilidade",
+     "NOVA: coexistência e interoperabilidade"
+    ],
+    [
+     "— (não existia)",
+     "Segurança",
+     "NOVA: confidencialidade, integridade, autenticidade"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "As duas novas características — Compatibilidade e Segurança — refletem as demandas do ambiente digital atual, onde sistemas integrados e ameaças cibernéticas são realidades cotidianas. A segurança, em especial, ganhou status de característica de qualidade de produto, reconhecendo que proteger dados e usuários é tão fundamental quanto oferecer funcionalidades corretas."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "SQuaRE: Uma Família de Normas",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A ISO/IEC 25000 (SQuaRE) não é uma norma isolada, mas uma família composta por mais de 20 normas:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "ISO/IEC 2500n — Gerenciamento da qualidade",
+      "ISO/IEC 2501n — Modelo de qualidade (inclui a 25010)",
+      "ISO/IEC 2502n — Medição da qualidade",
+      "ISO/IEC 2503n — Requisitos de qualidade",
+      "ISO/IEC 2504n — Avaliação da qualidade"
+     ]
+    }
+   ]
+  }
+ ]
+}

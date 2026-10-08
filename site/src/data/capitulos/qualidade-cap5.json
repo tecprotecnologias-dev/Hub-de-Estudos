@@ -1,0 +1,780 @@
+{
+ "numero": 5,
+ "titulo": "Estratégias de Teste",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Testar software não é uma atividade aleatória. Para que os testes sejam eficazes, eficientes e rastreáveis, é necessário planejar sistematicamente o que será testado, como será testado, por quem e em que ordem. Esse planejamento é o que chamamos de estratégia de teste. Uma estratégia bem definida alinha os esforços de teste aos riscos do projeto, aos recursos disponíveis e aos objetivos de qualidade da organização."
+  },
+  {
+   "t": "h2",
+   "id": "5-1-o-que-e-uma-estrategia-de-teste",
+   "texto": "5.1 O que é uma Estratégia de Teste?"
+  },
+  {
+   "t": "p",
+   "html": "Uma estratégia de teste é um documento de alto nível que define a abordagem geral adotada para a atividade de teste em um projeto ou organização. Ela estabelece os princípios, os métodos, os tipos de teste a serem realizados e os critérios que determinarão quando os testes estão completos e o software está pronto para entrega."
+  },
+  {
+   "t": "p",
+   "html": "É importante distinguir a estratégia de teste do plano de teste: enquanto a estratégia define o 'como' em nível macro — as técnicas e abordagens —, o plano de teste detalha o 'quem', 'quando', 'onde' e 'quais recursos' serão usados em um projeto específico."
+  },
+  {
+   "t": "h3",
+   "texto": "Estratégia vs. Plano de Teste"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aspecto",
+    "Estratégia de Teste",
+    "Plano de Teste"
+   ],
+   "linhas": [
+    [
+     "Nível",
+     "Organizacional / programa",
+     "Projeto específico"
+    ],
+    [
+     "Escopo",
+     "Abordagem geral e técnicas",
+     "Escopo, recursos, cronograma detalhado"
+    ],
+    [
+     "Criado por",
+     "Gerente de qualidade / Test Lead",
+     "Test Manager / Test Analyst"
+    ],
+    [
+     "Duração",
+     "Longa duração, reutilizável",
+     "Específico para cada projeto ou ciclo"
+    ],
+    [
+     "Conteúdo",
+     "Tipos de teste, técnicas, critérios de entrada e saída",
+     "Casos de teste, ambiente, riscos, equipe, ferramentas"
+    ],
+    [
+     "Norma IEEE",
+     "IEEE 829 – seção de estratégia",
+     "IEEE 829 – documento completo de plano de teste"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Tipos de Estratégias de Teste"
+  },
+  {
+   "t": "p",
+   "html": "Greg Myers e outros autores da área identificam diferentes abordagens estratégicas que as organizações podem adotar dependendo do contexto do projeto:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Estratégia Analítica: </strong>Testes são projetados com base em análise formal de requisitos e riscos. Cada caso de teste é rastreado a um requisito específico. Comum em sistemas críticos.",
+    "<strong>Estratégia Baseada em Modelos: </strong>Os testes são derivados de modelos do sistema — diagramas de estados, fluxos de processo, modelos de dados. Exige maior esforço inicial, mas gera cobertura sistemática.",
+    "<strong>Estratégia Metódica: </strong>Utiliza conjuntos predefinidos de condições de teste baseados em taxonomias de defeitos conhecidos, listas de verificação ou normas de qualidade.",
+    "<strong>Estratégia Orientada a Processo: </strong>Segue um processo formal e padronizado definido por normas externas (IEEE, ISO) ou padrões internos da organização.",
+    "<strong>Estratégia Dirigida a Consultor: </strong>Testes são definidos com base na experiência e intuição de especialistas no domínio do sistema — comum em testes exploratórios.",
+    "<strong>Estratégia Regressiva: </strong>Foco na reexecução de testes anteriores para garantir que novas modificações não quebraram funcionalidades existentes."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-2-planejamento-da-estrategia-de-teste",
+   "texto": "5.2 Planejamento da Estratégia de Teste"
+  },
+  {
+   "t": "p",
+   "html": "O planejamento da estratégia de teste é um processo estruturado que transforma os objetivos de qualidade do projeto em um conjunto coerente de atividades de teste. Um bom planejamento responde a seis perguntas fundamentais: O quê testar? Como testar? Quando testar? Quem testa? Com quais ferramentas? E como saberemos que terminamos?"
+  },
+  {
+   "t": "h3",
+   "texto": "As Etapas do Planejamento Estratégico de Testes"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Passo 1 — Análise de Requisitos e Escopo",
+   "blocos": [
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Identificar quais funcionalidades e requisitos não funcionais precisam ser testados.",
+      "Mapear requisitos a casos de uso e histórias de usuário.",
+      "Definir o que está DENTRO e FORA do escopo dos testes.",
+      "Entender restrições regulatórias ou de conformidade (ex: LGPD, PCI-DSS)."
+     ]
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Passo 2 — Análise de Riscos",
+   "blocos": [
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Identificar riscos de produto: áreas do sistema mais propensas a falhas.",
+      "Identificar riscos de projeto: prazos, falta de recursos, rotatividade de equipe.",
+      "Classificar riscos por probabilidade e impacto (Matriz de Risco).",
+      "Priorizar os esforços de teste nas áreas de maior risco."
+     ]
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Passo 3 — Definição dos Níveis e Tipos de Teste",
+   "blocos": [
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Definir quais níveis serão aplicados: unitário, integração, sistema, aceitação.",
+      "Selecionar tipos adicionais: desempenho, segurança, regressão, usabilidade.",
+      "Estabelecer a sequência e dependências entre os níveis de teste.",
+      "Definir critérios de entrada e saída para cada nível."
+     ]
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Passo 4 — Seleção de Técnicas de Teste",
+   "blocos": [
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Escolher entre Caixa Branca, Caixa Preta ou combinação (Caixa Cinza).",
+      "Definir técnicas específicas: particionamento, valor limite, tabela de decisão.",
+      "Associar técnicas a cada nível e tipo de teste.",
+      "Considerar o contexto: sistema crítico exige maior rigor técnico."
+     ]
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Passo 5 — Definição de Critérios de Qualidade",
+   "blocos": [
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Critérios de entrada: pré-condições para iniciar os testes (build estável, ambiente configurado).",
+      "Critérios de saída: condições para encerrar os testes (cobertura atingida, zero bugs críticos abertos).",
+      "Critérios de suspensão: quando pausar os testes (taxa de defeitos muito alta, ambiente instável).",
+      "Definir métricas de acompanhamento: densidade de defeitos, cobertura, taxa de aprovação."
+     ]
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Passo 6 — Planejamento de Recursos e Ferramentas",
+   "blocos": [
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Estimar esforço em horas/dias para cada atividade de teste.",
+      "Definir perfil e quantidade de testadores necessários.",
+      "Selecionar ferramentas de gestão de testes, automação e relatórios.",
+      "Planejar ambiente de teste: infraestrutura, dados de teste, configurações."
+     ]
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Passo 7 — Elaboração do Cronograma de Testes",
+   "blocos": [
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Definir marcos e datas para início e fim de cada fase de teste.",
+      "Alinhar o cronograma de testes com o cronograma de desenvolvimento.",
+      "Prever buffer para regressão após correção de defeitos.",
+      "Publicar o cronograma e comunicar a todos os stakeholders."
+     ]
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Análise de Risco em Testes: Matriz de Priorização",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A análise de risco direciona os esforços de teste para onde eles fazem mais diferença. Uma abordagem prática é classificar cada funcionalidade pela combinação de dois fatores:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "PROBABILIDADE DE FALHA: alta (3), média (2), baixa (1)",
+      "IMPACTO NO NEGÓCIO: alto (3), médio (2), baixo (1)"
+     ]
+    },
+    {
+     "t": "p",
+     "html": "Prioridade de teste = Probabilidade × Impacto"
+    },
+    {
+     "t": "p",
+     "html": "Funcionalidades com pontuação 6 a 9 → teste prioritário e exaustivo"
+    },
+    {
+     "t": "p",
+     "html": "Funcionalidades com pontuação 3 a 4 → teste normal"
+    },
+    {
+     "t": "p",
+     "html": "Funcionalidades com pontuação 1 a 2 → teste superficial ou omitido"
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-3-componentes-do-plano-de-teste",
+   "texto": "5.3 Componentes do Plano de Teste"
+  },
+  {
+   "t": "p",
+   "html": "O plano de teste é o documento formal que materializa a estratégia de teste para um projeto específico. A norma IEEE 829 define os elementos que um plano de teste completo deve conter. Conhecer esses componentes é essencial para elaborar documentação de qualidade profissional."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Componente",
+    "Descrição",
+    "Exemplo Prático"
+   ],
+   "linhas": [
+    [
+     "Identificador do plano",
+     "Código único de identificação do documento",
+     "TP-2026-SISTEMA-VENDAS-V1.0"
+    ],
+    [
+     "Introdução e objetivos",
+     "Contexto do projeto e metas de qualidade a serem atingidas",
+     "Garantir que 100% dos requisitos críticos sejam cobertos por testes."
+    ],
+    [
+     "Itens a serem testados",
+     "Lista dos módulos, funcionalidades e versões que serão testados",
+     "Módulo de login, carrinho de compras, checkout, relatórios."
+    ],
+    [
+     "Funcionalidades a testar",
+     "Descrição detalhada das features incluídas no escopo de teste",
+     "Autenticação com 2FA, pagamento por Pix, emissão de nota fiscal."
+    ],
+    [
+     "Funcionalidades excluídas",
+     "Explicitação do que NÃO será testado e justificativa",
+     "Módulo legado de exportação CSV — será descontinuado na próxima versão."
+    ],
+    [
+     "Abordagem de teste",
+     "Técnicas, níveis e tipos de teste que serão utilizados",
+     "Caixa Preta para aceitação; Caixa Branca para unitários; automação com Selenium."
+    ],
+    [
+     "Critérios de aprovação",
+     "Condições que definem quando os testes foram bem-sucedidos",
+     "Zero defeitos críticos abertos; cobertura de branches &gt;= 80%."
+    ],
+    [
+     "Critérios de suspensão",
+     "Condições que justificam a interrupção temporária dos testes",
+     "Mais de 30% dos casos de teste bloqueados por defeito de ambiente."
+    ],
+    [
+     "Entregáveis de teste",
+     "Documentos e artefatos que serão produzidos durante os testes",
+     "Plano de teste, casos de teste, relatório de execução, relatório de defeitos."
+    ],
+    [
+     "Ambiente de teste",
+     "Descrição do hardware, software e configurações necessários",
+     "Ubuntu 22.04, PostgreSQL 15, Chrome 120, API de sandbox do gateway de pagamento."
+    ],
+    [
+     "Estimativa e cronograma",
+     "Esforço estimado e datas planejadas para cada atividade",
+     "Preparação: 3 dias; Execução: 10 dias; Regressão: 2 dias."
+    ],
+    [
+     "Responsabilidades",
+     "Quem é responsável por cada atividade de teste",
+     "Ana (Test Lead), João (automação), equipe de DEV (testes unitários)."
+    ],
+    [
+     "Riscos e contingências",
+     "Riscos identificados e planos de mitigação",
+     "Atraso no ambiente → executar testes em ambiente local com mock de integrações."
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "IEEE 829 – Padrão para Documentação de Testes",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A norma IEEE 829 (atualizada como IEEE 29119) define os padrões para documentação de processos e produtos de teste de software. Ela especifica os seguintes documentos:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Plano de Teste (Test Plan)",
+      "Especificação de Design de Teste (Test Design Specification)",
+      "Especificação de Caso de Teste (Test Case Specification)",
+      "Especificação de Procedimento de Teste (Test Procedure Specification)",
+      "Relatório de Log de Teste (Test Log)",
+      "Relatório de Incidente de Teste (Test Incident Report)",
+      "Relatório de Resumo de Teste (Test Summary Report)"
+     ]
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-4-tecnica-caixa-branca-na-estrategia-de-teste",
+   "texto": "5.4 Técnica Caixa Branca na Estratégia de Teste"
+  },
+  {
+   "t": "p",
+   "html": "A técnica de Caixa Branca ocupa um papel essencial na estratégia de testes de qualquer sistema que exija confiabilidade. Quando integrada à estratégia, ela não é apenas uma ferramenta de detecção de erros, mas uma forma de garantir que toda a lógica implementada tenha sido exercitada de forma intencional e rastreável."
+  },
+  {
+   "t": "h3",
+   "texto": "Onde a Caixa Branca se encaixa na Estratégia"
+  },
+  {
+   "t": "p",
+   "html": "Na estratégia de teste, a Caixa Branca é prioritariamente aplicada nos níveis mais baixos da pirâmide de testes, onde o testador tem acesso direto ao código:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Nível de Teste",
+    "Aplicação da Caixa Branca",
+    "Critério de Cobertura Recomendado"
+   ],
+   "linhas": [
+    [
+     "Unitário",
+     "Principal nível de aplicação. Cada função e método é testado internamente.",
+     "Branch Coverage &gt;= 80%; MC/DC para código crítico"
+    ],
+    [
+     "Integração",
+     "Verificação dos fluxos de dados entre módulos e chamadas de interface.",
+     "Path Coverage nos pontos de integração"
+    ],
+    [
+     "Componente",
+     "Validação do comportamento interno de componentes isolados.",
+     "Statement Coverage + Branch Coverage"
+    ],
+    [
+     "Regressão",
+     "Reexecução automatizada dos testes de Caixa Branca após mudanças no código.",
+     "Manter cobertura anterior; analisar novos caminhos"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Estratégia de Cobertura Progressiva"
+  },
+  {
+   "t": "p",
+   "html": "Uma estratégia eficaz para aplicar Caixa Branca é a cobertura progressiva: começa-se pelos critérios mais simples e avança-se para critérios mais rigorosos conforme a criticidade do módulo aumenta."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Criticidade do Módulo",
+    "Critério Mínimo",
+    "Critério Recomendado",
+    "Exemplo de Contexto"
+   ],
+   "linhas": [
+    [
+     "Baixa",
+     "Statement Coverage (70%+)",
+     "Branch Coverage (80%+)",
+     "Módulos utilitários, formatação de texto"
+    ],
+    [
+     "Média",
+     "Branch Coverage (80%+)",
+     "Condition Coverage (85%+)",
+     "Regras de negócio secundárias, relatórios"
+    ],
+    [
+     "Alta",
+     "Branch Coverage (90%+)",
+     "Path Coverage seletivo",
+     "Autenticação, controle de acesso, transações"
+    ],
+    [
+     "Crítica",
+     "MC/DC (100%)",
+     "Path Coverage completo",
+     "Sistemas médicos, aviônicos, financeiro crítico"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Integração da Caixa Branca ao Pipeline de CI/CD"
+  },
+  {
+   "t": "p",
+   "html": "Nas estratégias modernas de desenvolvimento, a Caixa Branca é automatizada e integrada ao pipeline de integração contínua (CI/CD). Isso garante que a cobertura de código seja verificada a cada commit, impedindo que novas mudanças reduzam a cobertura abaixo do mínimo estabelecido na estratégia."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Quality Gate: </strong>Define um limite mínimo de cobertura que o build deve atingir. Se o código novo não atinge esse limite, o pipeline falha e o merge é bloqueado.",
+    "<strong>Relatórios de Cobertura: </strong>Ferramentas como SonarQube geram dashboards visuais da cobertura por módulo, facilitando a identificação de áreas não testadas.",
+    "<strong>Cobertura Diferencial: </strong>Analisa apenas a cobertura do código novo ou modificado — útil em projetos legados onde atingir 80% de cobertura total é inviável a curto prazo.",
+    "<strong>Análise de Mutação (Mutation Testing): </strong>Avalia a qualidade dos testes introduzindo pequenas mutações no código e verificando se os testes detectam as mudanças. Ferramentas: Pitest (Java), mutmut (Python)."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Caixa Branca na Estratégia: Principais Decisões",
+   "blocos": [
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "Ao incluir Caixa Branca na estratégia, a equipe deve decidir:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Qual critério de cobertura mínimo será exigido por módulo?",
+      "Quem é responsável por escrever e manter os testes de Caixa Branca?",
+      "Os testes serão escritos antes (TDD) ou depois do código?",
+      "Quais ferramentas de cobertura serão integradas ao pipeline?",
+      "Como será tratado o código legado com baixa cobertura?",
+      "Haverá métricas de qualidade dos próprios testes (ex: mutation score)?"
+     ]
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-5-tecnica-caixa-preta-na-estrategia-de-teste",
+   "texto": "5.5 Técnica Caixa Preta na Estratégia de Teste"
+  },
+  {
+   "t": "p",
+   "html": "A técnica de Caixa Preta é a espinha dorsal da maioria das estratégias de teste voltadas para validação funcional e de negócio. Ela garante que o sistema entrega o valor esperado pelos usuários, independentemente de como foi implementado internamente. Quando bem planejada, a Caixa Preta cobre todos os requisitos funcionais e não funcionais do sistema."
+  },
+  {
+   "t": "h3",
+   "texto": "Onde a Caixa Preta se encaixa na Estratégia"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Nível de Teste",
+    "Aplicação da Caixa Preta",
+    "Técnicas Mais Usadas"
+   ],
+   "linhas": [
+    [
+     "Integração",
+     "Verificação das interfaces e contratos entre módulos sem conhecer implementação interna.",
+     "Particionamento de equivalência, tabela de decisão"
+    ],
+    [
+     "Sistema",
+     "Validação completa das funcionalidades do sistema conforme os requisitos.",
+     "Valor limite, estado, caso de uso, exploratório"
+    ],
+    [
+     "Aceitação",
+     "Confirmação de que o sistema atende às necessidades do cliente e do negócio.",
+     "Casos de uso reais, cenários de negócio, UAT"
+    ],
+    [
+     "Regressão",
+     "Verificação de que funcionalidades existentes continuam funcionando após mudanças.",
+     "Scripts automatizados, smoke test, sanity test"
+    ],
+    [
+     "Desempenho",
+     "Avaliação do comportamento do sistema sob carga sem acesso ao código.",
+     "Testes de carga, stress e volume"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Planejamento de Casos de Teste com Caixa Preta"
+  },
+  {
+   "t": "p",
+   "html": "A qualidade da estratégia de Caixa Preta depende diretamente da qualidade dos casos de teste projetados. Um bom caso de teste de Caixa Preta deve ser:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Rastreável: </strong>Cada caso de teste deve ser vinculado a um ou mais requisitos. Sem rastreabilidade, não é possível saber se todos os requisitos foram cobertos.",
+    "<strong>Independente: </strong>Casos de teste não devem depender uns dos outros para ser executados. Dependências criam fragilidade e dificultam a execução paralela.",
+    "<strong>Repetível: </strong>O caso de teste deve produzir o mesmo resultado a cada execução, nas mesmas condições.",
+    "<strong>Auto-verificável: </strong>O resultado esperado deve estar claramente definido, sem ambiguidade — o testador não deve ter dúvida sobre aprovação ou reprovação.",
+    "<strong>Econômico: </strong>Deve cobrir o máximo de cenários com o mínimo de casos de teste. Técnicas como particionamento e valor limite otimizam esse aspecto."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Técnicas de Caixa Preta na Estratégia: Escolha Guiada por Contexto"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Contexto do Sistema",
+    "Técnica Recomendada",
+    "Justificativa"
+   ],
+   "linhas": [
+    [
+     "Campos de entrada com faixas numéricas",
+     "Particionamento de Equivalência + Análise de Valor Limite",
+     "Reduz casos de teste mantendo cobertura das fronteiras"
+    ],
+    [
+     "Regras de negócio complexas com múltiplas condições",
+     "Tabela de Decisão",
+     "Garante que todas as combinações de condições são cobertas"
+    ],
+    [
+     "Sistemas com fluxos e estados bem definidos",
+     "Teste Baseado em Estado",
+     "Garante cobertura de todas as transições de estado"
+    ],
+    [
+     "Fluxos de trabalho do usuário (workflows)",
+     "Teste de Caso de Uso",
+     "Valida o sistema do ponto de vista do usuário real"
+    ],
+    [
+     "Sistemas novos sem documentação completa",
+     "Teste Exploratório",
+     "Usa intuição e experiência para descobrir defeitos inesperados"
+    ],
+    [
+     "Interfaces de usuário web/mobile",
+     "Teste de Compatibilidade + Usabilidade",
+     "Verifica comportamento em diferentes navegadores e dispositivos"
+    ],
+    [
+     "APIs e serviços REST/SOAP",
+     "Teste de Contrato de Interface",
+     "Valida respostas, status codes e payloads sem acesso ao código"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Automação de Testes de Caixa Preta"
+  },
+  {
+   "t": "p",
+   "html": "A automação é um componente estratégico fundamental para a Caixa Preta, especialmente em projetos com ciclos curtos de entrega. Testes automatizados de interface e API permitem executar centenas de casos de teste em minutos, garantindo regressão eficiente a cada release."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Camada",
+    "Ferramenta",
+    "O que automatiza"
+   ],
+   "linhas": [
+    [
+     "Interface Web (UI)",
+     "Selenium, Cypress, Playwright",
+     "Cliques, formulários, navegação, validação visual"
+    ],
+    [
+     "API REST",
+     "Postman, RestAssured, Karate",
+     "Requisições HTTP, validação de resposta, contratos"
+    ],
+    [
+     "Mobile",
+     "Appium, Espresso, XCTest",
+     "Gestos, telas, fluxos de apps iOS e Android"
+    ],
+    [
+     "Desempenho",
+     "JMeter, Gatling, k6",
+     "Carga, stress, volume e tempo de resposta"
+    ],
+    [
+     "BDD (comportamento)",
+     "Cucumber, Behave, SpecFlow",
+     "Cenários em linguagem natural (Gherkin) integrados ao código"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-6-combinacao-de-tecnicas-e-estrategias-ageis",
+   "texto": "5.6 Combinação de Técnicas e Estratégias Ágeis"
+  },
+  {
+   "t": "p",
+   "html": "Na prática, nenhum projeto bem gerenciado usa exclusivamente Caixa Branca ou exclusivamente Caixa Preta. A abordagem mais eficaz combina as duas técnicas — e eventualmente a Caixa Cinza — de forma complementar, alocando cada uma onde ela oferece o maior retorno sobre o investimento em qualidade."
+  },
+  {
+   "t": "h3",
+   "texto": "Caixa Cinza: a Combinação Prática"
+  },
+  {
+   "t": "p",
+   "html": "A Caixa Cinza é uma abordagem híbrida em que o testador possui conhecimento parcial da estrutura interna do sistema — suficiente para projetar casos de teste mais eficazes, mas sem a necessidade de analisar o código linha a linha. É a abordagem mais comum em testes de integração e de API."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Técnica",
+    "Conhecimento do Código",
+    "Foco Principal",
+    "Melhor Aplicação"
+   ],
+   "linhas": [
+    [
+     "Caixa Branca",
+     "Total",
+     "Lógica interna, cobertura de código",
+     "Testes unitários e de componente"
+    ],
+    [
+     "Caixa Cinza",
+     "Parcial",
+     "Fluxos, integrações, banco de dados",
+     "Testes de integração e API"
+    ],
+    [
+     "Caixa Preta",
+     "Nenhum",
+     "Comportamento externo, requisitos funcionais",
+     "Testes de sistema e aceitação"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Estratégias de Teste em Contextos Ágeis"
+  },
+  {
+   "t": "p",
+   "html": "O modelo ágil de desenvolvimento impõe ciclos curtos de entrega (sprints) que transformam a estratégia de teste. Em vez de testar apenas no final, o teste é integrado continuamente ao longo de cada sprint. Algumas práticas estratégicas do mundo ágil:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Shift-Left Testing: </strong>Testar o mais cedo possível — desde a análise de requisitos. Testadores participam do refinamento de histórias de usuário e escrevem critérios de aceitação antes do código.",
+    "<strong>TDD (Test-Driven Development): </strong>O desenvolvedor escreve o teste unitário antes de escrever o código de produção. Garante cobertura de Caixa Branca e design orientado à testabilidade.",
+    "<strong>BDD (Behavior-Driven Development): </strong>Os critérios de aceitação são escritos em linguagem natural (Gherkin: Given/When/Then) e usados como base para testes automatizados de Caixa Preta.",
+    "<strong>ATDD (Acceptance Test-Driven Development): </strong>Combina BDD e TDD: os testes de aceitação são definidos antes do desenvolvimento e guiam tanto a implementação quanto os testes unitários.",
+    "<strong>Testing em Sprints: </strong>Cada história de usuário só é considerada 'pronta' (Definition of Done) quando todos os testes planejados — unitários, integração e aceitação — estão passando."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Estratégia de Teste Completa: Visão Integrada",
+   "blocos": [
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "Uma estratégia robusta de teste combina:"
+    },
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "CAIXA BRANCA (base da pirâmide):"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Testes unitários automatizados com TDD",
+      "Cobertura de branches &gt;= 80% integrada ao CI/CD",
+      "Análise estática com SonarQube ou similar"
+     ]
+    },
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "CAIXA CINZA (meio da pirâmide):"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Testes de integração e API automatizados",
+      "Mocks e stubs para isolar dependências externas"
+     ]
+    },
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "CAIXA PRETA (topo da pirâmide):"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Testes de sistema e aceitação com BDD/Gherkin",
+      "Testes exploratórios guiados por sessão",
+      "Testes alfa e beta com usuários reais"
+     ]
+    },
+    {
+     "t": "p",
+     "html": "ORQUESTRAÇÃO: Pipeline CI/CD com quality gates em cada etapa"
+    }
+   ]
+  }
+ ]
+}

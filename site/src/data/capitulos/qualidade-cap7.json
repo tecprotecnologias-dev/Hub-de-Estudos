@@ -1,0 +1,805 @@
+{
+ "numero": 7,
+ "titulo": "Testes de Regressão",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Todo software evolui. Novos requisitos surgem, bugs são corrigidos, dependências são atualizadas e o código é refatorado continuamente. Cada uma dessas mudanças, por mais pequena que pareça, carrega o risco de quebrar funcionalidades que antes funcionavam perfeitamente. Os testes de regressão existem exatamente para mitigar esse risco — garantindo que o progresso de hoje não destrua o que foi conquistado ontem."
+  },
+  {
+   "t": "h2",
+   "id": "7-1-o-que-sao-testes-de-regressao",
+   "texto": "7.1 O que são Testes de Regressão?"
+  },
+  {
+   "t": "p",
+   "html": "Teste de regressão é o processo de re-testar um sistema após uma modificação para verificar se as funcionalidades existentes continuam funcionando corretamente. O termo 'regressão' refere-se ao retorno de um defeito que havia sido corrigido ou ao surgimento de um novo defeito em uma área do sistema que não foi diretamente modificada."
+  },
+  {
+   "t": "p",
+   "html": "A origem do conceito vem da engenharia eletrônica: quando um circuito é modificado para corrigir um problema, testa-se o circuito inteiro novamente para garantir que a correção não introduziu novos problemas. No software, o princípio é idêntico — o sistema é um organismo interconectado onde mudanças em uma parte podem ter efeitos inesperados em partes aparentemente não relacionadas."
+  },
+  {
+   "t": "h3",
+   "texto": "Definição e Escopo"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aspecto",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "O que verifica",
+     "Se funcionalidades previamente testadas e aprovadas continuam operando corretamente após uma mudança"
+    ],
+    [
+     "O que não é",
+     "Teste de novas funcionalidades — isso é responsabilidade dos testes de desenvolvimento (unitário, integração, sistema)"
+    ],
+    [
+     "Gatilho",
+     "Qualquer modificação no código: correção de bug, nova feature, refatoração, atualização de dependências, mudança de configuração"
+    ],
+    [
+     "Abrangência",
+     "Pode ser parcial (áreas impactadas) ou total (suíte completa), dependendo da estratégia adotada"
+    ],
+    [
+     "Principal risco",
+     "Defeitos de regressão passam despercebidos e chegam à produção, impactando usuários que já usavam o sistema sem problemas"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "O que é um Defeito de Regressão?",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Um defeito de regressão ocorre quando uma funcionalidade que funcionava corretamente deixa de funcionar após uma modificação no sistema. Exemplos reais:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Uma correção no módulo de login quebra o fluxo de recuperação de senha.",
+      "A adição de um novo campo no formulário de cadastro impede o envio de dados já existentes.",
+      "A atualização de uma biblioteca de terceiros altera o comportamento de uma função de cálculo.",
+      "A refatoração de uma classe de serviço introduz uma condição de corrida em operações paralelas.",
+      "A migração de banco de dados altera a ordem dos resultados de uma consulta, quebrando a paginação."
+     ]
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-2-quando-e-por-que-realizar-testes-de-regressao",
+   "texto": "7.2 Quando e Por que Realizar Testes de Regressão"
+  },
+  {
+   "t": "p",
+   "html": "A decisão de quando executar testes de regressão depende do contexto, dos riscos e dos recursos disponíveis. Em metodologias ágeis modernas com CI/CD, a regressão é contínua — executada a cada commit. Em projetos mais tradicionais, pode ser executada a cada ciclo de release. O importante é que nenhuma mudança significativa chegue à produção sem passar por algum nível de regressão."
+  },
+  {
+   "t": "h3",
+   "texto": "Gatilhos para Testes de Regressão"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Correção de defeitos (bug fix): </strong>Toda correção deve ser seguida de regressão, pois a correção pode ter efeitos colaterais inesperados em outras áreas do sistema.",
+    "<strong>Adição de novas funcionalidades: </strong>Novo código frequentemente altera interfaces, comportamentos compartilhados e fluxos de dados que afetam funcionalidades existentes.",
+    "<strong>Refatoração de código: </strong>Mesmo que a lógica interna não mude, refatorações podem introduzir mudanças sutis de comportamento que só os testes de regressão revelarão.",
+    "<strong>Atualização de dependências: </strong>Atualizar bibliotecas, frameworks ou o ambiente de execução (versão do Java, Node.js, banco de dados) pode alterar comportamentos esperados.",
+    "<strong>Mudanças de configuração ou infraestrutura: </strong>Alterações em variáveis de ambiente, arquivos de configuração ou infraestrutura de nuvem podem afetar o comportamento da aplicação.",
+    "<strong>Integração com sistemas externos: </strong>Quando uma API de terceiros ou sistema legado é atualizado, os pontos de integração devem ser re-verificados.",
+    "<strong>Antes de cada release para produção: </strong>Independente da frequência de desenvolvimento, a regressão completa deve ser executada antes de qualquer deploy em produção."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Impacto de não realizar Regressão"
+  },
+  {
+   "t": "p",
+   "html": "Ignorar ou subestimar os testes de regressão é um dos erros mais custosos em projetos de software. As consequências podem ser graves e imediatas:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Consequência",
+    "Impacto",
+    "Exemplo Real"
+   ],
+   "linhas": [
+    [
+     "Defeitos em produção",
+     "Alto",
+     "Usuários encontram funcionalidades quebradas que funcionavam na versão anterior"
+    ],
+    [
+     "Custo de correção elevado",
+     "Alto",
+     "Defeito encontrado em produção custa 40-100x mais para corrigir do que em desenvolvimento"
+    ],
+    [
+     "Perda de confiança",
+     "Alto",
+     "Clientes perdem confiança na qualidade do produto e da equipe de desenvolvimento"
+    ],
+    [
+     "Rollback forçado",
+     "Médio",
+     "Deploy precisa ser revertido, gerando downtime e retrabalho"
+    ],
+    [
+     "Dano à reputação",
+     "Alto",
+     "Incidentes em produção com clientes impactam a imagem da empresa no mercado"
+    ],
+    [
+     "Débito técnico acumulado",
+     "Médio",
+     "Defeitos de regressão não tratados se acumulam, tornando o sistema cada vez mais frágil"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-3-estrategias-de-selecao-de-casos-de-regressao",
+   "texto": "7.3 Estratégias de Seleção de Casos de Regressão"
+  },
+  {
+   "t": "p",
+   "html": "Um dos maiores desafios dos testes de regressão é a seleção de quais casos de teste executar. Em sistemas maduros, a suíte completa pode conter milhares de casos que levariam horas ou dias para ser executados manualmente. É necessário, portanto, adotar estratégias inteligentes de seleção que equilibrem cobertura e velocidade."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Regressão Total (Run All)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Executa toda a suíte de testes de regressão disponível, sem filtragem. Garante a máxima cobertura possível, mas exige maior tempo de execução."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Quando usar: </strong>Releases críticos, mudanças de arquitetura ampla, após longa pausa no desenvolvimento."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Vantagem: </strong>Cobertura máxima — nenhum defeito de regressão passa despercebido."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Limitação: </strong>Tempo de execução longo — inviável para pipelines de CI com execução a cada commit."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Regressão Seletiva por Impacto (Change-Based)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Seleciona apenas os casos de teste relacionados às áreas do código que foram modificadas. Usa análise de impacto para mapear quais módulos e funcionalidades foram afetados pela mudança."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Quando usar: </strong>Mudanças pequenas e localizadas em módulos bem definidos e com baixo acoplamento."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Vantagem: </strong>Eficiência alta — foca o esforço exatamente onde o risco está."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Limitação: </strong>Requer boa rastreabilidade entre código e casos de teste; pode perder defeitos em áreas indiretamente afetadas."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Regressão Baseada em Risco (Risk-Based)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Prioriza os casos de teste com base no risco de negócio — funcionalidades críticas e de alto impacto são testadas primeiro. Funcionalidades de baixo risco podem ser omitidas ou testadas depois."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Quando usar: </strong>Projetos com prazo reduzido, quando não é possível executar a regressão completa."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Vantagem: </strong>Balanceamento inteligente entre cobertura e tempo disponível."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Limitação: </strong>Defeitos em funcionalidades de baixo risco priorizadas podem escapar."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Regressão Progressiva (Incremental)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Divide a suíte de regressão em subconjuntos que são executados progressivamente. A cada sprint ou release, novos casos de teste são adicionados ao conjunto de regressão."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Quando usar: </strong>Projetos em evolução contínua com entregas frequentes (Scrum, Kanban)."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Vantagem: </strong>Cresce organicamente junto com o sistema, mantendo a suíte sempre atualizada."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Limitação: </strong>Requer disciplina para adicionar novos testes à suíte a cada entrega."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Regressão por Camadas (Smoke + Sanity + Full)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Organiza a regressão em camadas de profundidade crescente: Smoke Test (verificação básica), Sanity Test (verificação das áreas modificadas) e Full Regression (suíte completa)."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Quando usar: </strong>Pipelines de CI/CD com múltiplos estágios — cada camada é executada em um estágio diferente."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Vantagem: </strong>Feedback rápido nas primeiras camadas; profundidade total nas camadas posteriores."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Limitação: </strong>Exige planejamento cuidadoso da organização e categorização dos casos de teste."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-4-tipos-de-testes-de-regressao",
+   "texto": "7.4 Tipos de Testes de Regressão"
+  },
+  {
+   "t": "p",
+   "html": "Dentro do universo dos testes de regressão, existem modalidades específicas com objetivos bem definidos. Conhecer cada uma delas permite compor uma estratégia de regressão em camadas, equilibrando velocidade e profundidade de cobertura."
+  },
+  {
+   "t": "h3",
+   "texto": "Smoke Test (Teste de Fumaça)"
+  },
+  {
+   "t": "p",
+   "html": "O Smoke Test é o conjunto mínimo de testes que verifica se as funcionalidades mais fundamentais do sistema estão operando após uma build. O nome vem da eletrônica: ao ligar um circuito pela primeira vez, se não sair fumaça, está funcionando o suficiente para testar mais profundamente."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aspecto",
+    "Smoke Test"
+   ],
+   "linhas": [
+    [
+     "Objetivo",
+     "Verificar rapidamente se o build está estável o suficiente para testes mais profundos"
+    ],
+    [
+     "Escopo",
+     "5% a 10% dos casos de teste — apenas os fluxos mais críticos"
+    ],
+    [
+     "Duração",
+     "5 a 15 minutos — deve ser extremamente rápido"
+    ],
+    [
+     "Quando executar",
+     "A cada build gerado, antes de qualquer outro teste"
+    ],
+    [
+     "Resultado",
+     "Build aprovado ou rejeitado para prosseguir nos testes"
+    ],
+    [
+     "Exemplo",
+     "Login funciona? Página principal carrega? API responde? Banco de dados conecta?"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Sanity Test (Teste de Sanidade)"
+  },
+  {
+   "t": "p",
+   "html": "O Sanity Test é executado após uma correção de defeito ou uma pequena mudança para verificar se a modificação resolveu o problema sem quebrar outras funcionalidades diretamente relacionadas. É mais focado e profundo que o Smoke, mas menos abrangente que a regressão completa."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aspecto",
+    "Sanity Test"
+   ],
+   "linhas": [
+    [
+     "Objetivo",
+     "Verificar se uma correção específica funcionou e não causou impactos colaterais imediatos"
+    ],
+    [
+     "Escopo",
+     "Área específica afetada pela mudança + funcionalidades diretamente relacionadas"
+    ],
+    [
+     "Duração",
+     "15 a 60 minutos — focado na área modificada"
+    ],
+    [
+     "Quando executar",
+     "Após correção de defeito ou mudança pontual, antes da regressão completa"
+    ],
+    [
+     "Resultado",
+     "Confirmação de que a correção é válida e não causou regressões óbvias"
+    ],
+    [
+     "Exemplo",
+     "Bug no cálculo de desconto corrigido → testar desconto + checkout + total do pedido"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Comparativo: Smoke vs. Sanity vs. Full Regression"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Critério",
+    "Smoke Test",
+    "Sanity Test",
+    "Full Regression"
+   ],
+   "linhas": [
+    [
+     "Escopo",
+     "Mínimo vital (5-10%)",
+     "Área modificada",
+     "Suíte completa (100%)"
+    ],
+    [
+     "Profundidade",
+     "Superficial",
+     "Média",
+     "Profunda"
+    ],
+    [
+     "Duração",
+     "&lt; 15 min",
+     "15 min a 1 hora",
+     "Horas a dias"
+    ],
+    [
+     "Gatilho",
+     "Cada novo build",
+     "Após correção de bug",
+     "Antes de release"
+    ],
+    [
+     "Automação",
+     "Essencial",
+     "Recomendada",
+     "Essencial para viabilidade"
+    ],
+    [
+     "Resultado",
+     "Build go/no-go",
+     "Fix validado",
+     "Release autorizado"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-5-automacao-de-testes-de-regressao",
+   "texto": "7.5 Automação de Testes de Regressão"
+  },
+  {
+   "t": "p",
+   "html": "A automação é o pilar que torna os testes de regressão viáveis em projetos modernos. Sem automação, equipes se veem forçadas a escolher entre velocidade de entrega e qualidade — a automação elimina esse dilema, permitindo executar centenas de casos de regressão em minutos. É por isso que os testes de regressão são o principal caso de uso e o maior beneficiário da automação de testes."
+  },
+  {
+   "t": "h3",
+   "texto": "Por que Automatizar a Regressão é Imprescindível"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Volume crescente: </strong>A cada sprint ou release, novos casos de teste são adicionados à suíte. Em poucos meses, a regressão manual de centenas de casos torna-se impraticável dentro dos ciclos de entrega.",
+    "<strong>Frequência de execução: </strong>Em projetos ágeis com CI/CD, a regressão pode ser necessária várias vezes ao dia. Isso é impossível de fazer manualmente com qualidade.",
+    "<strong>Consistência e precisão: </strong>Testadores humanos cometem erros de atenção, especialmente em tarefas repetitivas. Scripts automatizados executam exatamente os mesmos passos toda vez.",
+    "<strong>Liberação de recursos humanos: </strong>Ao automatizar a regressão repetitiva, os testadores ficam livres para atividades de maior valor — testes exploratórios, análise de requisitos e revisão de novos cenários.",
+    "<strong>Detecção imediata: </strong>Testes automatizados no pipeline CI/CD detectam defeitos de regressão imediatamente após o commit, quando o custo de correção é mínimo."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Arquitetura de uma Suíte de Regressão Automatizada"
+  },
+  {
+   "t": "p",
+   "html": "Uma suíte de regressão automatizada bem estruturada segue uma arquitetura em camadas, onde cada camada tem seu papel, ferramentas e tempo de execução bem definidos:"
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Arquitetura em Camadas da Regressão Automatizada",
+   "blocos": [
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "CAMADA 1 — REGRESSÃO UNITÁRIA (execução: &lt; 5 minutos):"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Todos os testes unitários do projeto",
+      "Ferramentas: JUnit 5, pytest, Jest, NUnit",
+      "Gatilho: a cada commit na branch",
+      "Cobertura: lógica de negócio, cálculos, validações"
+     ]
+    },
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "CAMADA 2 — REGRESSÃO DE INTEGRAÇÃO E API (execução: 5 a 20 minutos):"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Testes de integração entre módulos e contratos de API",
+      "Ferramentas: TestNG, RestAssured, Postman/Newman, Karate",
+      "Gatilho: a cada merge na branch de desenvolvimento",
+      "Cobertura: interfaces entre serviços, banco de dados, filas"
+     ]
+    },
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "CAMADA 3 — REGRESSÃO DE SISTEMA / UI (execução: 20 a 90 minutos):"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Fluxos completos de ponta a ponta via interface ou API de alto nível",
+      "Ferramentas: Selenium, Playwright, Cypress, Appium",
+      "Gatilho: a cada release candidate ou merge na branch principal",
+      "Cobertura: fluxos críticos do usuário, happy paths, cenários de erro"
+     ]
+    },
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "CAMADA 4 — REGRESSÃO COMPLETA (execução: 2 a 8 horas):"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Suíte completa de regressão — todos os casos de teste automatizados",
+      "Execução paralela em Selenium Grid, BrowserStack ou Sauce Labs",
+      "Gatilho: antes de cada release para produção",
+      "Cobertura: 100% dos casos de regressão cadastrados"
+     ]
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Ferramentas para Automação de Regressão"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Ferramenta",
+    "Camada",
+    "Diferencial para Regressão"
+   ],
+   "linhas": [
+    [
+     "JUnit 5 + Surefire",
+     "Unitária",
+     "Execução paralela de testes unitários; relatórios XML integrados ao CI"
+    ],
+    [
+     "pytest + pytest-xdist",
+     "Unitária",
+     "Paralelismo nativo; fixtures reutilizáveis; suporte a marcadores por categoria"
+    ],
+    [
+     "TestNG",
+     "Integração",
+     "Agrupamento e dependências entre testes; execução paralela via XML; relatório nativo"
+    ],
+    [
+     "RestAssured",
+     "API",
+     "Validação de contratos de API REST em Java com sintaxe fluente e legível"
+    ],
+    [
+     "Postman + Newman",
+     "API",
+     "Execução de coleções no CI/CD; relatórios HTML; suporte a ambientes e variáveis"
+    ],
+    [
+     "Selenium + TestNG/JUnit",
+     "UI / Sistema",
+     "Execução em Selenium Grid para paralelismo; Page Object Model para manutenção"
+    ],
+    [
+     "Playwright",
+     "UI / Sistema",
+     "Execução em múltiplos navegadores; mais estável que Selenium para apps SPA"
+    ],
+    [
+     "Cypress",
+     "UI / Sistema",
+     "Execução in-browser; time-travel debugging; ideal para frontend JavaScript"
+    ],
+    [
+     "Allure Framework",
+     "Reportes",
+     "Relatórios visuais ricos com histórico de execuções, tendências e falhas por categoria"
+    ],
+    [
+     "Jenkins / GitHub Actions",
+     "Orquestração CI/CD",
+     "Dispara a suíte de regressão automaticamente a cada evento do repositório"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Paralelismo na Regressão Automatizada"
+  },
+  {
+   "t": "p",
+   "html": "A execução paralela é uma das estratégias mais eficazes para reduzir o tempo total da suíte de regressão. Em vez de executar os testes sequencialmente, múltiplos testes são executados simultaneamente em threads ou máquinas separadas."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Paralelismo por thread: </strong>Múltiplos testes executados simultaneamente na mesma máquina em threads paralelas. Suportado nativamente por TestNG e via plugins no JUnit 5 e pytest.",
+    "<strong>Paralelismo por máquina (Grid): </strong>Selenium Grid distribui testes entre múltiplas máquinas ou contêineres. Reduz drasticamente o tempo de execução de suítes de UI.",
+    "<strong>Paralelismo em nuvem: </strong>Serviços como BrowserStack, Sauce Labs e LambdaTest oferecem infraestrutura de execução paralela em múltiplos navegadores e sistemas operacionais simultaneamente.",
+    "<strong>Sharding de testes: </strong>A suíte é dividida em subconjuntos (shards) que são executados em paralelo em diferentes máquinas do pipeline CI/CD, combinando os resultados ao final."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-6-regressao-em-contextos-ageis-e-ci-cd",
+   "texto": "7.6 Regressão em Contextos Ágeis e CI/CD"
+  },
+  {
+   "t": "p",
+   "html": "Em metodologias ágeis, a regressão não é um evento pontual no final do ciclo — ela é contínua e integrada ao fluxo de trabalho diário. A combinação de desenvolvimento ágil com CI/CD transforma a regressão em um processo transparente e automático, onde cada mudança de código dispara automaticamente a verificação de que nada foi quebrado."
+  },
+  {
+   "t": "h3",
+   "texto": "Regressão em Sprints Scrum"
+  },
+  {
+   "t": "p",
+   "html": "No Scrum, os testes de regressão fazem parte dos critérios de 'Definition of Done' de cada história de usuário e de cada sprint. A equipe garante que novos incrementos não quebrem o que já foi entregue nas sprints anteriores."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Momento da Sprint",
+    "Atividade de Regressão"
+   ],
+   "linhas": [
+    [
+     "Durante o desenvolvimento",
+     "Testes unitários e de integração automatizados executados a cada commit (TDD)"
+    ],
+    [
+     "Ao concluir uma história",
+     "Sanity test da funcionalidade + smoke test das áreas relacionadas"
+    ],
+    [
+     "Sprint Review",
+     "Regressão das histórias da sprint atual sobre a base de código consolidada"
+    ],
+    [
+     "Sprint Retrospective / antes da próxima Sprint",
+     "Regressão completa das funcionalidades acumuladas no produto"
+    ],
+    [
+     "Release para produção",
+     "Full regression automatizada + testes exploratórios de homologação"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Regressão no Pipeline CI/CD"
+  },
+  {
+   "t": "p",
+   "html": "No pipeline de integração e entrega contínua, a regressão é automaticamente acionada em diferentes estágios, com profundidade crescente conforme o código avança no pipeline:"
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Regressão no Pipeline CI/CD — Fluxo Completo",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "COMMIT → Análise estática + Testes unitários (Smoke Regression)"
+    },
+    {
+     "t": "p",
+     "html": "↓ aprovado"
+    },
+    {
+     "t": "p",
+     "html": "PULL REQUEST → Testes de integração + Contrato de API (Sanity Regression)"
+    },
+    {
+     "t": "p",
+     "html": "↓ aprovado"
+    },
+    {
+     "t": "p",
+     "html": "MERGE → Build completo + Testes de sistema UI (Regression Layer 3)"
+    },
+    {
+     "t": "p",
+     "html": "↓ aprovado"
+    },
+    {
+     "t": "p",
+     "html": "RELEASE CANDIDATE → Full Regression paralela em múltiplos ambientes"
+    },
+    {
+     "t": "p",
+     "html": "↓ aprovado"
+    },
+    {
+     "t": "p",
+     "html": "STAGING → Testes de aceitação automatizados + Testes exploratórios manuais"
+    },
+    {
+     "t": "p",
+     "html": "↓ aprovado (gate humano)"
+    },
+    {
+     "t": "p",
+     "html": "PRODUÇÃO → Monitoramento + Testes de fumaça pós-deploy (Smoke em produção)"
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Testes de Regressão em Produção (Production Testing)"
+  },
+  {
+   "t": "p",
+   "html": "Uma prática avançada adotada por times maduros é a execução de testes automatizados diretamente em produção, após o deploy. Embora pareça arriscado, quando feito com cuidado, oferece a verificação mais realista possível do sistema."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Smoke tests pós-deploy: </strong>Um conjunto mínimo de testes é executado imediatamente após cada deploy em produção para confirmar que o sistema está operacional.",
+    "<strong>Canary testing: </strong>O deploy é feito para uma fração dos usuários e testes automatizados monitoram o comportamento antes de expandir para todos.",
+    "<strong>Synthetic monitoring: </strong>Scripts simulam ações de usuários reais em produção continuamente, alertando quando algum fluxo crítico falha."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-7-gestao-e-manutencao-da-suite-de-regressao",
+   "texto": "7.7 Gestão e Manutenção da Suíte de Regressão"
+  },
+  {
+   "t": "p",
+   "html": "Uma suíte de regressão é um ativo de longo prazo que cresce e evolui junto com o sistema. Sem gestão adequada, ela se torna um passivo: scripts quebrados, testes duplicados, casos obsoletos e falsos positivos que corroem a confiança da equipe nos resultados. A manutenção da suíte de regressão é tão importante quanto a sua criação."
+  },
+  {
+   "t": "h3",
+   "texto": "Problemas Comuns em Suítes de Regressão"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Flaky tests (testes instáveis): </strong>Testes que passam e falham intermitentemente sem que o código tenha mudado. São causados por dependências de tempo, dados inconsistentes ou ambientes instáveis. Devem ser identificados e corrigidos imediatamente.",
+    "<strong>Testes duplicados: </strong>O mesmo cenário sendo verificado por múltiplos testes diferentes, aumentando o tempo de execução sem agregar cobertura adicional.",
+    "<strong>Testes obsoletos: </strong>Casos de teste que verificam funcionalidades removidas ou modificadas. Geram falhas falsas e confundem a equipe sobre o estado real do sistema.",
+    "<strong>Acoplamento excessivo: </strong>Testes que dependem uns dos outros ou de um estado global compartilhado. Quando um falha, vários outros falham em cascata.",
+    "<strong>Cobertura desequilibrada: </strong>Excesso de testes de UI (lentos) e poucos testes unitários (rápidos), tornando a suíte lenta e difícil de manter."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Boas Práticas de Manutenção"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Revisão periódica da suíte: </strong>Reserve tempo em cada sprint para revisar, atualizar e remover casos de teste obsoletos. Trate a suíte de regressão como código de produção.",
+    "<strong>Quarentena de flaky tests: </strong>Ao identificar um teste instável, isole-o imediatamente em uma lista de quarentena para que não bloqueie o pipeline. Corrija e reintegre após estabilização.",
+    "<strong>Rastreabilidade bidirecional: </strong>Cada caso de teste deve estar vinculado ao requisito que verifica. Quando um requisito muda, os testes correspondentes são automaticamente identificados.",
+    "<strong>Nomenclatura descritiva e consistente: </strong>Nomes de testes devem descrever o cenário e o resultado esperado. Facilita a identificação de falhas nos relatórios sem precisar abrir o código.",
+    "<strong>Monitoramento de métricas da suíte: </strong>Acompanhe indicadores como: taxa de aprovação, tempo médio de execução, número de flaky tests e tendência de falhas por módulo."
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Métrica",
+    "O que mede",
+    "Meta saudável"
+   ],
+   "linhas": [
+    [
+     "Taxa de aprovação (Pass Rate)",
+     "% de testes que passam consistentemente",
+     "&gt; 95% em execuções estáveis"
+    ],
+    [
+     "Taxa de flakiness",
+     "% de testes instáveis (passam às vezes, falham outras)",
+     "&lt; 2% da suíte total"
+    ],
+    [
+     "Tempo médio de execução",
+     "Duração média da suíte completa",
+     "Smoke &lt; 15 min; Full &lt; 2 horas com paralelismo"
+    ],
+    [
+     "Cobertura de requisitos",
+     "% de requisitos cobertos por testes de regressão",
+     "&gt; 90% dos requisitos críticos"
+    ],
+    [
+     "Defeitos escapados para produção",
+     "Defeitos de regressão detectados em produção",
+     "0 defeitos críticos escapados"
+    ],
+    [
+     "Custo de manutenção",
+     "Horas gastas mensalmente mantendo a suíte",
+     "&lt; 20% do esforço total de testes"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,267 @@
+{
+ "numero": 9,
+ "titulo": "Tecnologias Emergentes na Web",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Fechamos esta disciplina olhando para frente. Tudo o que estudamos até aqui – arquitetura, nuvem, desenvolvimento, conteúdo, segurança, integração, desempenho e gestão de projetos – forma a base sólida sobre a qual novas tecnologias continuam surgindo. Este capítulo final apresenta as tendências que estão remodelando a forma como sistemas web são construídos, e – talvez mais importante do que decorar cada uma delas – os critérios que ajudam a decidir quando vale a pena adotar uma tecnologia nova, e quando é melhor esperar."
+  },
+  {
+   "t": "h2",
+   "id": "9-1-o-que-sao-tecnologias-emergentes",
+   "texto": "9.1 O que são Tecnologias Emergentes?"
+  },
+  {
+   "t": "p",
+   "html": "Tecnologias emergentes são inovações recentes ou ainda em desenvolvimento que transformam a forma como criamos, acessamos e interagimos com a web. Diferentemente das tecnologias já consolidadas, elas ainda estão em diferentes estágios de maturidade – podem ser puramente experimentais, estar em fase de adoção inicial, ou já estar ganhando tração real no mercado."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Característica",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "Inovação e Novidade",
+     "Introduzem capacidades antes impossíveis, baseadas em novos padrões do W3C"
+    ],
+    [
+     "Estágio de Maturidade",
+     "Suporte incompleto entre navegadores – exige atenção redobrada antes de adotar em produção"
+    ],
+    [
+     "Potencial Transformador",
+     "Resolvem problemas de forma mais eficiente, melhorando UX e performance"
+    ],
+    [
+     "Evolução Contínua",
+     "Iterações frequentes, impulsionadas por uma comunidade ativa de desenvolvedores"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "9-2-ciclo-de-vida-das-tecnologias-web",
+   "texto": "9.2 Ciclo de Vida das Tecnologias Web"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Estágio",
+    "Descrição e exemplo (CSS Grid)"
+   ],
+   "linhas": [
+    [
+     "1. Experimental",
+     "Protótipos, disponíveis apenas com <em>flags</em> no navegador – CSS Grid em 2011"
+    ],
+    [
+     "2. Adoção Inicial",
+     "Suporte parcial, primeiros projetos reais em produção – CSS Grid em 2015"
+    ],
+    [
+     "3. Maturidade Crescente",
+     "Suporte amplo, frameworks já incorporam a tecnologia – CSS Grid em 2017"
+    ],
+    [
+     "4. Mainstream",
+     "Padrão da indústria, confiável para qualquer projeto – CSS Grid hoje"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Entender em qual estágio uma tecnologia se encontra é mais útil do que simplesmente saber que ela existe: adotar algo ainda experimental em um sistema crítico de produção é um risco real, mas ignorar uma tecnologia que já atingiu maturidade também tem um custo – de competitividade e de eficiência."
+  },
+  {
+   "t": "h2",
+   "id": "9-3-webrtc-comunicacao-em-tempo-real",
+   "texto": "9.3 WebRTC – Comunicação em Tempo Real"
+  },
+  {
+   "t": "p",
+   "html": "O WebRTC é uma tecnologia de código aberto, padronizada pelo W3C e pelo IETF, que possibilita comunicação em tempo real diretamente entre navegadores – sem plugins, aplicativos nativos ou qualquer software adicional. É a base técnica de plataformas como Google Meet, Zoom Web e Discord."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Componente",
+    "Função"
+   ],
+   "linhas": [
+    [
+     "getUserMedia",
+     "Captura áudio e vídeo do dispositivo, mediante autorização explícita do usuário"
+    ],
+    [
+     "RTCPeerConnection",
+     "Estabelece e gerencia a conexão ponto a ponto, negociando codecs e criptografia"
+    ],
+    [
+     "RTCDataChannel",
+     "Troca dados (texto ou binário) entre os pares com baixa latência"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O principal desafio técnico do WebRTC é o <strong>NAT Traversal</strong> – fazer com que dois dispositivos atrás de redes diferentes (cada um com seu próprio roteador e endereço privado) consigam se encontrar e conectar diretamente. Servidores STUN e TURN resolvem esse problema, e toda a comunicação é protegida por criptografia via DTLS e SRTP."
+  },
+  {
+   "t": "h2",
+   "id": "9-4-progressive-web-apps-pwas",
+   "texto": "9.4 Progressive Web Apps (PWAs)"
+  },
+  {
+   "t": "p",
+   "html": "Uma PWA combina o melhor da web e dos aplicativos nativos: é responsiva (adapta-se a qualquer tela), funciona <strong>offline</strong> através de <em>Service Workers</em>, pode ser instalada na tela inicial sem passar por uma loja de aplicativos, se atualiza automaticamente em segundo plano, é servida obrigatoriamente via HTTPS, e suporta notificações <em>push</em>."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tecnologia core",
+    "Função"
+   ],
+   "linhas": [
+    [
+     "Service Workers",
+     "Scripts em segundo plano que interceptam requisições e gerenciam o cache – o motor de toda PWA"
+    ],
+    [
+     "Web App Manifest",
+     "Arquivo JSON com nome, ícones e cores, que permite instalar a PWA como um app nativo"
+    ],
+    [
+     "Cache API",
+     "Armazenamento programático de recursos, viabilizando a funcionalidade offline"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Casos de sucesso reais",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O Twitter Lite reduziu em 70% o volume de dados consumidos e aumentou em 65% o número de páginas vistas por sessão. O Pinterest teve aumento de 60% no engajamento. A Starbucks reduziu o tamanho do seu app em 99,84% comparado à versão nativa de iOS. E o Uber conseguiu um carregamento completo em menos de 3 segundos mesmo em redes 2G – um resultado que ilustra bem por que PWAs são especialmente valiosas em mercados com conectividade instável."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "9-5-webassembly-e-web-components",
+   "texto": "9.5 WebAssembly e Web Components"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>WebAssembly</strong> (Wasm) é um formato de código binário que permite rodar linguagens como C++, Rust, Go e C# diretamente no navegador, com performance quase nativa – usado em edição de vídeo no navegador, jogos 3D e até modelos de Machine Learning executados no lado do cliente."
+  },
+  {
+   "t": "p",
+   "html": "Os <strong>Web Components</strong> são APIs nativas do navegador para criar elementos HTML customizados e reutilizáveis, apoiados em três pilares: <em>Custom Elements</em>, <em>Shadow DOM</em> e <em>HTML Templates</em>. A grande vantagem é a interoperabilidade: um componente criado como Web Component funciona dentro de React, Vue, Angular ou até HTML puro, sem depender de nenhum framework específico."
+  },
+  {
+   "t": "h2",
+   "id": "9-6-jamstack-serverless-e-edge-computing",
+   "texto": "9.6 Jamstack, Serverless e Edge Computing"
+  },
+  {
+   "t": "p",
+   "html": "A arquitetura <strong>Jamstack</strong> (JavaScript + APIs + Markup) pré-renderiza o frontend e o distribui via CDN, aproximando o conteúdo do usuário e reduzindo drasticamente o tempo de carregamento. Frameworks como Next.js, Gatsby, Nuxt.js e Astro são as ferramentas mais usadas para construir sites nesse modelo."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Serverless</strong> e <strong>Edge Computing</strong> complementam essa tendência: funções executadas sob demanda, sem que o desenvolvedor precise gerenciar servidor algum, rodando cada vez mais próximas fisicamente do usuário – reduzindo latência e escalando automaticamente conforme a demanda."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Atualização 2025 — WebGPU e novidades do navegador",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O WebGPU já conta com suporte em Chrome, Firefox e Safari, permitindo renderização 3D fotorrealista e computação paralela diretamente na GPU – sucedendo o WebGL. A WebNN API está se consolidando para inferência de modelos de IA no lado do cliente, e as animações controladas por scroll (<em>Scroll-Driven Animations</em>) já são amplamente suportadas, eliminando a necessidade de JavaScript para muitos efeitos visuais que antes exigiam bibliotecas inteiras."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "9-7-inteligencia-artificial-no-frontend",
+   "texto": "9.7 Inteligência Artificial no Frontend"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aplicação",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "IA no navegador",
+     "TensorFlow.js e WebNN rodam modelos localmente – os dados do usuário não precisam ir ao servidor"
+    ],
+    [
+     "Integração com LLMs",
+     "APIs de modelos como GPT ou Claude alimentam chatbots e personalização dinâmica"
+    ],
+    [
+     "Reconhecimento no cliente",
+     "Imagem, voz e gestos processados sem latência de rede, funcionando até offline"
+    ],
+    [
+     "Personalização dinâmica",
+     "Conteúdo adaptado em tempo real, usando modelos executados localmente"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Rodar modelos de IA diretamente no navegador, em vez de enviar os dados a um servidor, tem uma vantagem de privacidade importante: como o processamento acontece localmente, informações sensíveis do usuário não precisam sair do próprio dispositivo – um argumento cada vez mais relevante à luz da LGPD e do GDPR, estudados no Capítulo 5."
+  },
+  {
+   "t": "h2",
+   "id": "9-8-criterios-para-avaliar-tecnologias-emergentes",
+   "texto": "9.8 Critérios para Avaliar Tecnologias Emergentes"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Critério",
+    "Pergunta a se fazer"
+   ],
+   "linhas": [
+    [
+     "Suporte dos Navegadores",
+     "A tecnologia funciona nos navegadores que meus usuários realmente utilizam? (caniuse.com)"
+    ],
+    [
+     "Maturidade da Especificação",
+     "O padrão no W3C/WHATWG já está estável, ou ainda muda com frequência?"
+    ],
+    [
+     "Comunidade e Ecossistema",
+     "Existe documentação, bibliotecas e uma comunidade ativa por trás?"
+    ],
+    [
+     "Casos de Uso Reais",
+     "Alguma empresa relevante já usa isso em produção, com resultados documentados?"
+    ],
+    [
+     "Curva de Aprendizado",
+     "Minha equipe consegue aprender isso em tempo compatível com o prazo do projeto?"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Esses cinco critérios, aplicados em conjunto, ajudam a diferenciar uma tecnologia genuinamente <strong>emergente</strong> (que já vale a pena avaliar com um piloto controlado) de uma tecnologia ainda <strong>experimental</strong> (que deveria ficar restrita a projetos de pesquisa e aprendizado, longe de sistemas críticos em produção)."
+  }
+ ]
+}

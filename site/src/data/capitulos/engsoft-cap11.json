@@ -1,0 +1,152 @@
+{
+ "numero": 11,
+ "titulo": "Interação Humano-Computador (IHC)",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Interação Humano-Computador é a disciplina científica e aplicada que estuda e projeta a interação entre pessoas e sistemas computacionais. Surgiu como campo formal nos anos 1980, com a disseminação dos computadores pessoais, e hoje, com bilhões de pessoas interagindo via <em>smartphones</em>, <em>wearables</em>, assistentes de voz e realidade aumentada, um produto tecnicamente excelente que gera frustração, erros e abandono é, por definição, um fracasso. Este capítulo aprofunda os fundamentos cognitivos da interação, os principais paradigmas, os princípios de design e a acessibilidade digital – inclusive sob a ótica da legislação brasileira."
+  },
+  {
+   "t": "h2",
+   "id": "11-1-conceitos-fundamentais-modelo-de-interacao-affordances-e-cognicao",
+   "texto": "11.1 Conceitos Fundamentais: Modelo de Interação, Affordances e Cognição"
+  },
+  {
+   "t": "h3",
+   "texto": "Os Dois Abismos de Norman"
+  },
+  {
+   "t": "p",
+   "html": "Donald Norman propôs um ciclo de interação de sete estágios: formular objetivo → intenção → especificar ação → executar → perceber → interpretar → avaliar. Desse ciclo emergem dois abismos: o <strong>Abismo da Execução</strong> (“o que eu quero fazer e o que o sistema me permite fazer” – o usuário não consegue descobrir como realizar a ação) e o <strong>Abismo da Avaliação</strong> (“o que aconteceu e o que eu esperava que acontecesse” – o sistema não comunica adequadamente o resultado de uma ação)."
+  },
+  {
+   "t": "h3",
+   "texto": "Affordances, Signifiers e Feedback"
+  },
+  {
+   "t": "p",
+   "html": "<strong><em>Affordance</em></strong> é o que o objeto “convida” a fazer (uma maçaneta redonda convida a girar). <strong><em>Signifier</em></strong> é o sinal perceptível que torna a <em>affordance</em> visível (“clique aqui”, um cursor de mãozinha). <strong><em>Feedback</em></strong> é a resposta do sistema às ações, confirmando o resultado. <strong>Restrições</strong> limitam ações possíveis, prevenindo erros; e <strong>Mapeamento</strong> é a relação natural entre controles e seus efeitos."
+  },
+  {
+   "t": "h3",
+   "texto": "Cognição e Carga Cognitiva"
+  },
+  {
+   "t": "p",
+   "html": "A <strong>Memória de Trabalho</strong> humana é muito limitada – George Miller demonstrou em 1956 que mantemos em mente apenas 7 pm 2 itens simultaneamente. A <strong>Atenção Seletiva</strong> faz o cérebro selecionar ativamente o que é relevante. A <strong>Carga Cognitiva Extrínseca</strong> é gerada pelo próprio design da interface – interfaces confusas elevam artificialmente o esforço mental, e o objetivo do design é minimizá-la."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Taxonomia de Erros de Reason",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Deslizes</strong> (<em>Slips</em>): a intenção estava correta, mas a ação executada foi errada por falha de atenção – por exemplo, clicar no ícone errado por similaridade visual. <strong>Enganos</strong> (<em>Mistakes</em>): a intenção em si estava equivocada, por um modelo mental incorreto. O design previne deslizes com distinção visual clara; previne enganos com educação e <em>feedback</em>."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "11-2-paradigmas-de-interacao-cli-gui-touch-voz-ar-vr",
+   "texto": "11.2 Paradigmas de Interação: CLI, GUI, Touch, Voz, AR/VR"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Paradigma",
+    "Características",
+    "Vantagens / Limitações"
+   ],
+   "linhas": [
+    [
+     "CLI",
+     "Comandos textuais – dominante em desenvolvimento e automação",
+     "Alta eficiência para especialistas; barreira de entrada alta"
+    ],
+    [
+     "GUI (WIMP)",
+     "<em>Windows, Icons, Menus, Pointer</em>",
+     "Intuitiva para iniciantes; pode ser ineficiente para avançados"
+    ],
+    [
+     "<em>Touchscreen</em>",
+     "Manipulação direta por toque, popularizada pelo iPhone (2007)",
+     "Direta e intuitiva; imprecisa para tarefas delicadas"
+    ],
+    [
+     "VUI (Voz)",
+     "Assistentes como Siri, Alexa, Google Assistant",
+     "Mãos-livres; privacidade comprometida em público"
+    ],
+    [
+     "AR/VR",
+     "Sobreposição digital ao real (AR) ou imersão completa (VR)",
+     "Imersão e presença; custo elevado, cinetose"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "11-3-design-de-interacao-as-cinco-dimensoes-e-principios",
+   "texto": "11.3 Design de Interação: As Cinco Dimensões e Princípios"
+  },
+  {
+   "t": "p",
+   "html": "As <strong>Cinco Dimensões</strong> propostas por Gillian Crampton Smith estruturam o design de interação: <strong>Palavras</strong> (rótulos, mensagens de erro – na linguagem do usuário, não do desenvolvedor); <strong>Representações Visuais</strong> (ícones, gráficos); <strong>Espaço Físico</strong> (contexto de uso – <em>smartphone</em> no metrô <em>versus</em> desktop); <strong>Tempo</strong> (animações, transições, <em>feedback</em> sonoro); e <strong>Comportamento</strong> – a síntese que emerge da combinação consciente das quatro anteriores."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Cinco princípios de design de interação",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Visibilidade</strong> (funções importantes nunca escondidas em menus profundos); <strong>Feedback Imediato</strong> (regra dos três tempos: menos de 0,1s é instantâneo, menos de 1s é fluxo natural, menos de 10s precisa de indicador de carregamento); <strong>Reversibilidade</strong> (ações devem ser reversíveis, reduzindo a ansiedade do usuário); <strong>Consistência</strong> (elementos similares tratados de forma similar); <strong>Simplicidade</strong> (cada elemento sem propósito claro é um obstáculo)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "11-4-acessibilidade-web-wcag-e-legislacao-brasileira",
+   "texto": "11.4 Acessibilidade Web: WCAG e Legislação Brasileira"
+  },
+  {
+   "t": "p",
+   "html": "Os quatro princípios WCAG, conhecidos pelo acrônimo <strong>POUR</strong>: <strong>Perceptível</strong> (texto alternativo, legendas, contraste mínimo 4,5:1); <strong>Operável</strong> (toda funcionalidade acessível por teclado, foco visível); <strong>Compreensível</strong> (idioma declarado, comportamento previsível); <strong>Robusto</strong> (HTML semântico, compatível com leitores de tela). Os níveis de conformidade são A (mínimo, obrigatório em sítios de governo), AA (padrão de mercado) e AAA (máximo, raramente alcançável em 100% do conteúdo)."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Legislação Brasileira de Acessibilidade Digital",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A <strong>Lei Brasileira de Inclusão</strong> (LBI, Lei 13.146/2015) estabelece a acessibilidade digital como direito da pessoa com deficiência – sites e aplicativos inacessíveis configuram discriminação. O <strong>Decreto 5.296/2004</strong> torna obrigatória a acessibilidade em sítios do governo federal. O <strong>e-MAG</strong> (Modelo de Acessibilidade em Governo Eletrônico) é o guia brasileiro baseado nas WCAG."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "11-5-avaliacao-de-interfaces-e-tendencias-em-ihc",
+   "texto": "11.5 Avaliação de Interfaces e Tendências em IHC"
+  },
+  {
+   "t": "p",
+   "html": "Três métodos complementam a Avaliação Heurística (já vista no Capítulo 9): o <strong>Percurso Cognitivo</strong>, no qual avaliadores simulam passo a passo a perspectiva de um usuário iniciante; e a <strong>Análise de Tarefas</strong>, que decompõe sistematicamente os fluxos em ações, decisões e pontos de carga cognitiva."
+  },
+  {
+   "t": "h3",
+   "texto": "Tendências Contemporâneas"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>Design Conversacional</strong> (assistentes de voz e <em>chatbots</em>) enfrenta desafios de intenção ambígua e recuperação de erros de reconhecimento. O <strong>Design para IA</strong> exige comunicar limitações e incertezas com transparência. O <strong>Design Inclusivo</strong> vai além da acessibilidade – projetar para limitações beneficia todos, o chamado <em>curb-cut effect</em> (legendas criadas para surdos, hoje usadas por qualquer pessoa em ambientes ruidosos). Já os <strong><em>Dark Patterns</em></strong> são padrões manipulativos que exploram vieses cognitivos (assinaturas difíceis de cancelar, o chamado <em>roach motel</em>) – cada vez mais regulamentados."
+  }
+ ]
+}

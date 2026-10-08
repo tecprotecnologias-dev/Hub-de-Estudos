@@ -1,0 +1,1143 @@
+{
+ "_sobre": "Alternativas reescritas para que a correta não seja sempre a mais longa. Chave: id da questão; dentro, letra -> novo texto. Aplicar com: python ferramentas/aplicar_ajustes_alternativas.py",
+ "engsoft-cap1-q2": {
+  "B": "O gerente está equivocado: a norma define processos de ciclo de vida comuns a qualquer modelo, seja Cascata, Ágil ou Espiral",
+  "C": "O gerente está correto, pois a norma só se aplica a projetos que seguem estritamente o Modelo Cascata, com fases sequenciais e documentação formal em cada etapa"
+ },
+ "engsoft-cap1-q3": {
+  "B": "Modelo Espiral, pela ênfase em análise de riscos contínua a cada volta do ciclo de desenvolvimento",
+  "C": "Modelo Incremental, pela entrega do sistema em múltiplas partes, cada uma passando por todas as fases",
+  "D": "Modelo Cascata, pela estrutura sequencial em que cada fase só começa após o fim da anterior"
+ },
+ "engsoft-cap1-q4": {
+  "A": "Modelo Cascata, pois o projeto exige documentação formal, processo bem definido e aprovação de cada fase antes da seguinte",
+  "C": "Modelo Incremental, pois o sistema é entregue em partes funcionais, priorizando os módulos de maior valor",
+  "D": "Modelo Espiral, pois cada ciclo começa com análise explícita de riscos e ações para reduzi-los"
+ },
+ "engsoft-cap1-q5": {
+  "A": "Completamente correta: o Manifesto Ágil defende que planejamento é desnecessário, pois as mudanças devem ser absorvidas a qualquer momento",
+  "C": "Equivocada: o Manifesto diz que os itens à direita, como seguir um plano, continuam tendo valor, só que menor",
+  "E": "Equivocada: o Manifesto Ágil não menciona planejamento nem mudanças, tratando apenas da colaboração com o cliente"
+ },
+ "engsoft-cap1-q6": {
+  "A": "A empresa está correta: a maioria dos projetos de TI é concluída com sucesso sem necessidade de rigor na fase de Requisitos, já que os ajustes são feitos nos testes",
+  "B": "A empresa está equivocada: o relatório mostra alta taxa de insucesso, e requisitos mal definidos estão entre as causas principais",
+  "D": "Os dados do CHAOS Report indicam que mais de 90% dos projetos de TI são bem-sucedidos, independentemente da qualidade dos requisitos"
+ },
+ "engsoft-cap1-q7": {
+  "A": "Requisitos, pois envolve levantar o que o sistema deve fazer e quais tecnologias o cliente exige",
+  "C": "Design (Projeto), pois trata dos elementos de software, suas relações e princípios de organização",
+  "D": "Implementação, pois envolve decisões técnicas sobre as linguagens, os frameworks e a forma de organizar o código"
+ },
+ "engsoft-cap1-q9": {
+  "C": "Adaptativa, pois adequa o sistema a uma mudança no ambiente externo, no caso a legislação",
+  "E": "Nenhuma das anteriores, pois mudanças legais estão fora do escopo da manutenção e devem ser tratadas como um novo projeto"
+ },
+ "engsoft-cap1-q10": {
+  "A": "A do gerente: existe um único modelo ou técnica capaz de resolver todos os desafios de qualquer projeto, desde que aplicado com disciplina",
+  "B": "A do colega: para Brooks, nenhuma técnica isolada garante melhoria drástica; o sucesso depende de combinar práticas"
+ },
+ "engsoft-cap2-q2": {
+  "A": "Questionários para cada grupo de stakeholder, um de cada vez, sem encontros diretos, consolidando as respostas em um relatório final",
+  "D": "JAD (Workshops), uma sessão facilitada com todos os stakeholders juntos para negociar os requisitos"
+ },
+ "engsoft-cap2-q3": {
+  "A": "Card — o cartão de índice ou formato digital em que a história é registrada e priorizada no backlog",
+  "C": "Confirmation — a verificação de que a história foi implementada conforme critérios testáveis"
+ },
+ "engsoft-cap2-q4": {
+  "C": "Could Have, pois é desejável, mas não crítico para o MVP"
+ },
+ "engsoft-cap2-q5": {
+  "A": "Excelente: teleconferências são suficientes e documentar tudo num único e-mail torna o processo mais rápido e barato",
+  "C": "Altamente inadequada: requisitos vagos, sem validação com usuários e mal documentados aumentam muito o risco de falha",
+  "D": "O CHAOS Report não trata especificamente de engenharia de requisitos, e sim apenas de orçamento e cronograma dos projetos de TI"
+ },
+ "engsoft-cap2-q6": {
+  "B": "Totalmente equivocada: em um banco, segurança, conformidade com a LGPD e desempenho são tão críticos quanto as funcionalidades",
+  "C": "Correta apenas para projetos de pequeno porte",
+  "E": "Requisitos funcionais e não funcionais têm igual importância, mas os funcionais devem sempre vir primeiro, e os não funcionais entram só na fase de testes"
+ },
+ "engsoft-cap2-q7": {
+  "A": "Desempenho, pois o sistema está lento e os usuários levam muito tempo para completar a tarefa",
+  "B": "Segurança, pois a interface não está protegida contra erros e acessos indevidos dos usuários",
+  "C": "Usabilidade, pois o sistema é difícil de aprender e usar, gerando lentidão e erros dos usuários"
+ },
+ "engsoft-cap2-q8": {
+  "A": "Apenas verificabilidade — não há forma de testar \"seguro\" e \"rápido\", mas os requisitos são consistentes entre si",
+  "B": "Apenas consistência — segurança e velocidade entram em conflito, mas ambos os termos podem ser medidos",
+  "C": "Ambos: \"seguro\" e \"rápido\" são vagos e não mensuráveis, e os dois requisitos entram em conflito"
+ },
+ "engsoft-cap2-q9": {
+  "A": "Product Backlog, pois é mais moderno e ágil e permite repriorizar os requisitos a cada sprint, mesmo com contrato fixo",
+  "C": "SRS formal (IEEE 830), pois o projeto é governamental, com requisitos estáveis e contrato fixo",
+  "E": "Casos de Uso em UML, sem SRS"
+ },
+ "engsoft-cap2-q10": {
+  "B": "Violações de requisitos não funcionais de conformidade (LGPD), que deveriam ter sido especificados desde o início",
+  "C": "Problemas de design de banco de dados, que não têm relação com a engenharia de requisitos do sistema",
+  "E": "Problemas que só aparecem em sistemas muito grandes e com muitos usuários, não sendo aplicáveis a startups em fase inicial"
+ },
+ "engsoft-cap3-q3": {
+  "A": "A classe viola o Princípio da Responsabilidade Única: tem vários motivos para mudar e deveria ser dividida",
+  "C": "A classe está bem projetada, pois concentrar tudo em um só lugar facilita encontrar o código e reduz o número de arquivos do projeto",
+  "resolucao": "Quando uma classe acumula responsabilidades, uma mudança em uma delas arrisca quebrar as outras — exatamente o que ocorreu. Separando em CalculadoraImpostos, GeradorXmlNota, NotaFiscalRepository e EnvioNotaEmail, uma alteração de alíquota fica isolada. Testes ajudariam a detectar a quebra, mas não eliminam a causa, que é de design."
+ },
+ "engsoft-cap3-q4": {
+  "C": "Um problema típico de microsserviços, relacionado à consistência de dados entre serviços que mantêm bancos separados",
+  "D": "Uma limitação da arquitetura em camadas: camadas que só repassam chamadas, gerando latência sem agregar valor"
+ },
+ "engsoft-cap3-q5": {
+  "B": "Pouco adequada: a complexidade operacional dos microsserviços não é comportada por uma equipe de quatro pessoas",
+  "E": "Adequada, desde que os doze serviços compartilhem um único banco com as mesmas tabelas, evitando problemas de consistência",
+  "resolucao": "Microsserviços permitem escalabilidade independente e times autônomos, mas cobram um alto custo operacional. Em um sistema de porte moderado, com equipe pequena e sem infraestrutura dedicada, esse custo não se paga — a mesma conclusão do estudo de caso da apostila. Fazer os doze serviços compartilharem um único banco ainda eliminaria a independência que justifica o estilo."
+ },
+ "engsoft-cap3-q6": {
+  "E": "O caso ilustra uma limitação da arquitetura orientada a eventos: o fluxo de dados fica difícil de rastrear e depurar",
+  "resolucao": "Na arquitetura orientada a eventos, os componentes não se chamam diretamente — por isso o acoplamento é baixo, e não alto —, mas o fluxo completo não aparece em nenhum trecho de código. A apostila indica essa limitação e a necessidade de ferramentas de observabilidade, como logs correlacionados e rastreamento distribuído. Trocar tudo por chamadas diretas do serviço de Pedidos aumentaria o acoplamento."
+ },
+ "engsoft-cap3-q7": {
+  "B": "Mover tudo para o Controller, incluindo o comando SQL e o cálculo do limite de crédito, deixando o Model só com os atributos",
+  "C": "Levar validação, cálculo do limite e acesso aos dados para o Model; a View só exibe; o Controller faz a ligação"
+ },
+ "engsoft-cap3-q9": {
+  "B": "Equivocado: refatorar não altera o comportamento externo, e mudar a regra do frete altera",
+  "D": "Equivocado, pois a refatoração só pode ser aplicada a sistemas recém-desenvolvidos, antes da primeira entrega ao cliente",
+  "resolucao": "A apostila define refatoração como reestruturar o código interno sem alterar seu comportamento externo, melhorando a qualidade de forma gradual. A mudança da regra e a nova opção de entrega são alterações de comportamento (manutenção perfectiva). Misturá-las à refatoração dificulta identificar a causa de um eventual defeito. Ter testes automatizados é recomendado, mas não muda o conceito."
+ },
+ "engsoft-cap3-q10": {
+  "D": "Copiar as regras de cálculo do COBOL para dentro do código do aplicativo móvel, reescritas na linguagem do app",
+  "E": "Encapsulamento (wrapping): criar uma API moderna em torno do legado, que continua fazendo os cálculos",
+  "resolucao": "O sistema ainda entrega valor e funciona corretamente — o problema é apenas o acesso a partir de tecnologias novas. O encapsulamento resolve isso com baixo risco. Reescrever todo o legado, prática criticada por Spolsky, é reservado para quando a modernização já não é viável. Copiar as regras para o aplicativo duplicaria a lógica e criaria duas versões a manter."
+ },
+ "engsoft-cap4-q2": {
+  "B": "Equivocada: deveria existir uma única classe Livro e três objetos dessa classe, cada um com seus próprios valores"
+ },
+ "engsoft-cap4-q3": {
+  "D": "Está incorreta: abstrair é selecionar só as características essenciais para o problema da loja"
+ },
+ "engsoft-cap4-q4": {
+  "A": "Tornar saldo privado e expor métodos como sacar(valor) e depositar(valor), que validam a operação",
+  "B": "Manter saldo público e documentar no código que outros módulos não devem alterá-lo diretamente, revisando isso nas revisões de código",
+  "resolucao": "Encapsular é proteger o estado interno e permitir alterações apenas pelos métodos do próprio objeto, que aplicam as regras de negócio. Documentar no código não impede o acesso; um atributo estático mistura o saldo de todas as contas; herdar um atributo público mantém o problema; e validar só na tela deixa outros módulos — como o de tarifas — livres para burlar a regra."
+ },
+ "engsoft-cap4-q5": {
+  "C": "Sobrescrita e sobrecarga"
+ },
+ "engsoft-cap4-q6": {
+  "B": "Desconto, frete grátis e garantia são coisas que o produto \"tem\"; deveriam ser componentes associados (composição)",
+  "C": "A solução é aprofundar a hierarquia, criando uma subclasse para cada combinação possível, como ProdutoComDescontoEFreteGratis"
+ },
+ "engsoft-cap4-q7": {
+  "C": "Copiar o método inteiro para uma nova classe FreteDrone e ajustar o trecho necessário, mantendo o original intacto",
+  "E": "Criar uma abstração ModalidadeFrete com uma classe por modalidade; o drone vira só uma nova classe",
+  "resolucao": "O indicador clássico de violação do Aberto/Fechado, segundo a apostila, é o if/else crescente a cada novo tipo. Com uma abstração e implementações polimórficas, novos comportamentos são adicionados por extensão (nova classe), sem modificar código já testado — evitando as regressões relatadas. Trocar o if/else por switch/case continua exigindo modificação."
+ },
+ "engsoft-cap4-q8": {
+  "A": "Violação do Princípio da Substituição de Liskov: a subclasse não pode substituir a superclasse",
+  "C": "Uso correto do Polimorfismo, já que cada subclasse pode reagir a um método como quiser, inclusive recusando a operação"
+ },
+ "engsoft-cap4-q9": {
+  "E": "Dividir DispositivoEscritorio em interfaces menores, e cada classe implementa só as que utiliza",
+  "resolucao": "\"Classe implementa método com corpo vazio\" é o indicador de violação da Segregação de Interfaces apresentado na apostila. Interfaces pequenas e específicas evitam dependências desnecessárias: a ImpressoraSimples implementa só Impressora, e uma multifuncional pode implementar várias. A classe abstrata com implementação vazia e a herança que lança exceção apenas escondem o problema, e a herança ainda introduz uma violação de Liskov."
+ },
+ "engsoft-cap4-q10": {
+  "D": "Fazer PedidoService depender das interfaces PedidoRepository e Notificador, recebendo as implementações pelo construtor",
+  "E": "Unir PedidoService, repositório e notificador em uma única classe para eliminar as dependências e simplificar os testes do sistema"
+ },
+ "engsoft-cap5-q2": {
+  "C": "Verificado e validado, pois passou em todas as revisões técnicas e nos testes definidos na especificação",
+  "D": "Verificado, mas não validado: atende à especificação, mas não à necessidade real das usuárias"
+ },
+ "engsoft-cap5-q3": {
+  "B": "A interpretação equivocada; a condição total > 200; a cobrança indevida do frete"
+ },
+ "engsoft-cap5-q5": {
+  "A": "Inverter a proporção: muitos testes unitários, integração moderada e E2E só nos fluxos críticos",
+  "D": "Manter a proporção atual, mas executar a suíte apenas antes de cada release, para não atrasar o trabalho diário da equipe",
+  "resolucao": "A equipe montou uma \"pirâmide invertida\": muitos testes lentos, caros e frágeis no topo e poucos na base. A pirâmide recomenda muitos unitários (rápidos e baratos), alguns de integração e poucos E2E. Eliminar todos os E2E também é um erro: eles continuam necessários, porém em pequeno número, nos fluxos críticos."
+ },
+ "engsoft-cap5-q6": {
+  "E": "Os mocks esconderam a incompatibilidade; o nível adequado para detectá-la é o teste de integração"
+ },
+ "engsoft-cap5-q7": {
+  "C": "Dado que o leitor tem 3 empréstimos ativos / Quando pede um novo livro / Então o sistema recusa e informa o limite",
+  "resolucao": "No BDD, o \"Dado\" descreve o contexto inicial (3 empréstimos ativos), o \"Quando\" o evento (solicitar novo empréstimo) e o \"Então\" o resultado observável (recusa com mensagem), na linguagem do negócio. Cenários com termos técnicos, como tabela e método, fogem do que o BDD propõe; os que começam por \"Quando\" ou \"Então\" invertem a ordem; e o cenário \"quando tudo estiver correto\" é vago e não verificável."
+ },
+ "engsoft-cap5-q8": {
+  "A": "Não: no TDD o teste que falha vem primeiro (Red), depois o código mínimo (Green) e então a melhoria (Refactor)",
+  "B": "Sim, pois o TDD exige apenas que o código tenha testes automatizados até o fim da sprint, em qualquer ordem de escrita"
+ },
+ "engsoft-cap5-q9": {
+  "A": "Adequada, pois os testes E2E ainda serão executados mais adiante no pipeline e vão detectar o problema antes da produção",
+  "E": "Inadequada: se os testes falham, o pipeline para; a falha deve ser corrigida agora, quando custa menos"
+ },
+ "gestaoweb-cap1-q2": {
+  "D": "gRPC, pois seu protocolo binário e fortemente tipado tem menor overhead em chamadas internas frequentes",
+  "A": "REST, pois é a arquitetura mais adotada no mercado atual e garante compatibilidade com qualquer cliente que venha a consumir esse serviço no futuro",
+  "E": "WebSocket, pois mantém uma conexão persistente entre os dois serviços"
+ },
+ "gestaoweb-cap1-q3": {
+  "C": "Criar um endpoint com o método PATCH, enviando só o campo status, sem reenviar nem sobrescrever os demais campos",
+  "E": "Criar um novo recurso com POST a cada mudança de status do pedido",
+  "resolucao": "a alternativa que propõe usar PUT enviando só o campo status é o distrator mais forte: menciona corretamente a ideia de enviar poucos dados, mas contraria a própria definição citada no texto motivador, já que o PUT pressupõe substituição do recurso, não modificação parcial."
+ },
+ "gestaoweb-cap1-q4": {
+  "B": "412 Precondition Failed, pois a condição enviada no cabeçalho If-Match foi avaliada pelo servidor e não foi satisfeita"
+ },
+ "gestaoweb-cap1-q5": {
+  "C": "Ao contrário de um quadro de vídeo, uma mensagem de chat perdida faz falta ao usuário; a confiabilidade do TCP é o que esse canal precisa"
+ },
+ "gestaoweb-cap1-q6": {
+  "B": "Forward Error Correction (FEC): enviar dados redundantes que permitem reconstruir o pacote perdido sem retransmissão",
+  "D": "Controle por janela deslizante (sliding window), regulando quantos pacotes podem ser enviados antes de uma confirmação do receptor e reenviando apenas os que se perderem"
+ },
+ "gestaoweb-cap1-q7": {
+  "A": "1995: mainframe; 2001: 2 camadas; 2010: 3 camadas; 2018: arquitetura web — a mudança resolveu o problema porque centralizou a lógica de negócio no servidor de aplicação"
+ },
+ "gestaoweb-cap1-q8": {
+  "C": "No modelo de 2001, a lógica tributária está replicada em cada estação; no de 2010, fica só no servidor de aplicação e muda em um único ponto",
+  "B": "O modelo de 2010 é superior exclusivamente porque o banco de dados Oracle é mais robusto e rápido que o Access, independentemente de como a lógica de negócio está organizada entre as camadas"
+ },
+ "gestaoweb-cap1-q9": {
+  "A": "O caractere acentuado, fora do conjunto permitido em URIs, não foi convertido para percent-encoding antes de compor a URL",
+  "B": "O servidor da EstudaMais está com a codificação de caracteres (charset) configurada incorretamente na resposta HTTP, o que não tem relação com a formação da URL em si nem com a RFC 3986"
+ },
+ "gestaoweb-cap1-q10": {
+  "C": "Porque o percent-encoding mantém a URL legível para o usuário e trata, nos bastidores, os caracteres não permitidos em URIs",
+  "D": "Porque apenas URLs com caracteres acentuados são indexadas pelos mecanismos de busca em português, o que beneficia diretamente o SEO e o posicionamento do site"
+ },
+ "gestaoweb-cap1-q11": {
+  "A": "Trocar o <div onclick> por <button> e a sequência de <div> por uma lista semântica (<ul>/<li>), recuperando foco, teclado e leitura por leitores de tela",
+  "C": "Adicionar uma declaração <meta name=\"acessibilidade\" content=\"true\"> ao <head> do documento, sinalizando aos leitores de tela que a página segue as diretrizes de acessibilidade do W3C"
+ },
+ "gestaoweb-cap1-q12": {
+  "B": "É tecnicamente inferior, pois o desenvolvedor precisa reimplementar à mão comportamentos nativos do <button>, como Enter e Espaço"
+ },
+ "gestaoweb-cap1-q13": {
+  "C": "Hipertexto é texto em blocos ligados por links, como o nome \"Ada Lovelace\"; hipermídia inclui outras mídias interligadas, como o áudio e o vídeo",
+  "B": "Hipertexto se refere exclusivamente a documentos acadêmicos interligados por citações; hipermídia, a qualquer conteúdo exibido em uma tela sensível ao toque, como a do totem"
+ },
+ "gestaoweb-cap1-q14": {
+  "B": "<a href=\"/exposicao/inicio.html#linha-do-tempo\">Voltar</a>, pois o fragmento após o # leva à seção com esse identificador",
+  "C": "<a href=\"linha-do-tempo\">Voltar</a>, pois o nome da seção serve como caminho"
+ },
+ "gestaoweb-cap1-q15": {
+  "B": "O gateway traduz entre SOAP/XML e REST/JSON; o firewall deveria filtrar o tráfego anormal do DDoS; o roteador segue encaminhando pacotes por IP",
+  "C": "O roteador traduz entre os protocolos SOAP/XML e REST/JSON; o gateway filtra o tráfego malicioso do ataque; o firewall não desempenha nenhuma função relevante nesse cenário"
+ },
+ "gestaoweb-cap1-q16": {
+  "C": "Um API Gateway faria a mesma tradução, com recursos extras de gerenciamento de APIs, como versionamento, autenticação e limite de requisições",
+  "E": "Um API Gateway substituiria também a função do firewall e do roteador, tornando esses dois componentes desnecessários na infraestrutura da seguradora, inclusive contra ataques DDoS"
+ },
+ "gestaoweb-cap1-q17": {
+  "B": "HTTPS usa a porta 443 por padrão, que o navegador assume quando ela não aparece; só é preciso declará-la quando é outra, como 8443",
+  "E": "A porta na URL é só informativa e não afeta a conexão com o servidor"
+ },
+ "gestaoweb-cap1-q18": {
+  "C": "Tudo o que vem depois do # vira fragmento, inclusive \"?cupom=LEITOR10&parcelas=3\", que não chega ao servidor como query",
+  "E": "O servidor responderá 400 Bad Request, pois a ordem da RFC 3986 foi violada"
+ },
+ "gestaoweb-cap2-q2": {
+  "C": "A nuvem permite pagar só pelos recursos usados, sem investimento antecipado nem risco de dimensionar mal a infraestrutura",
+  "E": "A nuvem elimina completamente a necessidade de qualquer planejamento de capacidade, já que os recursos são infinitos e gratuitos até certo limite de uso mensal definido pelo provedor"
+ },
+ "gestaoweb-cap2-q3": {
+  "C": "Nuvem comunitária, pois os 12 hospitais têm requisitos de conformidade e segurança semelhantes e podem dividir os custos",
+  "E": "Não há necessidade de nenhum tipo de nuvem nesse cenário, já que hospitais públicos são obrigados por lei a manter apenas infraestrutura on-premises, administrada pela própria equipe"
+ },
+ "gestaoweb-cap2-q5": {
+  "B": "A Azure atende melhor à prioridade (1), pela integração com o ecossistema Microsoft; o Google Cloud, à (2), pela força em IA e ML",
+  "A": "A escolha é irrelevante, pois os três provedores oferecem exatamente os mesmos recursos de integração de identidade e de machine learning, sem qualquer diferença prática de preço ou desempenho",
+  "E": "A prioridade (2) elimina a Azure e a AWS, que não oferecem machine learning"
+ },
+ "gestaoweb-cap2-q6": {
+  "C": "Arquitetura híbrida: dados transacionais regulados em ambiente on-premises ou nuvem privada; análise de Big Data em nuvem pública",
+  "B": "On-premises para tudo, já que é a única forma de garantir conformidade regulatória em qualquer instituição financeira, independentemente do tipo de dado e do volume a ser analisado"
+ },
+ "gestaoweb-cap2-q7": {
+  "B": "Planejamento insuficiente (sem inventário nem estimativa de custos) e arquitetura inadequada (o monolito foi migrado sem refatoração)",
+  "E": "Ausência de um contrato de SLA (Service Level Agreement) com o provedor, que é a única causa possível tanto do aumento de custo quanto da lentidão relatada pelos usuários"
+ },
+ "gestaoweb-cap2-q8": {
+  "B": "Refatoração gradual, começando pelos componentes de menor risco, com monitoramento de custo e desempenho a cada etapa",
+  "D": "Terceirização completa da migração para uma consultoria externa especializada, eliminando a necessidade de envolvimento da equipe interna de TI em todas as etapas do projeto"
+ },
+ "gestaoweb-cap3-q2": {
+  "B": "O site institucional (1) pode ser estático, pois muda pouco; o portal do cliente (2) precisa ser dinâmico, com login e dados por usuário",
+  "E": "A escolha entre site estático e aplicação dinâmica depende exclusivamente do orçamento disponível, sem qualquer relação com a natureza do conteúdo exibido aos visitantes e clientes",
+  "resolucao": "a distinção correta segue a natureza do conteúdo: informação institucional pouco variável e igual para todos os visitantes é o caso ideal para conteúdo estático; dados de processos judiciais, específicos de cada cliente autenticado e atualizados em tempo real, exigem necessariamente uma aplicação dinâmica com backend e banco de dados. C descreve uma contradição: dados 'em tempo real' não podem depender de atualização manual diária."
+ },
+ "gestaoweb-cap3-q3": {
+  "B": "O TypeScript permite declarar tipos, e o editor e o compilador apontam incompatibilidades antes da execução, e não em produção",
+  "C": "O TypeScript elimina automaticamente a necessidade de validar dados vindos de formulários, tornando qualquer validação no frontend e no backend desnecessária a partir da compilação"
+ },
+ "gestaoweb-cap3-q4": {
+  "C": "SQL para o histórico de pagamentos (1), que exige consistência e ACID; NoSQL para o feed (2), que pede esquema flexível e muita escrita",
+  "D": "NoSQL para o histórico de pagamentos (1); SQL para o feed de publicações (2), invertendo a lógica anterior por questão de custo de licenciamento e de facilidade de manutenção"
+ },
+ "gestaoweb-cap3-q5": {
+  "B": "Atomicidade — a transação é indivisível: como não pôde ser concluída, o sistema desfez (rollback) o que já havia executado",
+  "D": "Consistência — porque o banco de dados manteve suas regras de integridade referencial entre as tabelas de clientes e contas, mesmo após a falha simulada no meio da transferência"
+ },
+ "gestaoweb-cap3-q6": {
+  "B": "Ser o mais admirado (Svelte) não significa ser o mais fácil de contratar; o React, mais adotado no mercado, tende a ter mais candidatos",
+  "A": "O Svelte deve ser escolhido automaticamente, pois é o framework mais admirado segundo a pesquisa, o que garante facilidade de contratação e maior número de candidatos disponíveis"
+ },
+ "gestaoweb-cap3-q7": {
+  "B": "FastAPI, framework Python que gera documentação interativa (OpenAPI/Swagger) a partir do código, como a equipe precisa",
+  "A": "Spring Boot, por ser o framework mais robusto do mercado, independentemente da linguagem de programação dominada pela equipe e do tempo necessário para aprendê-la"
+ },
+ "gestaoweb-cap3-q8": {
+  "B": "O erro foi usar larguras fixas em pixels e remendar com media queries; a correção é uma grade fluida, com unidades relativas (%, rem)",
+  "C": "O erro foi não ter testado em tablets e celulares dobráveis antes de lançar o código; a correção é apenas adicionar mais media queries para cada dispositivo específico do mercado"
+ },
+ "gestaoweb-cap4-q2": {
+  "B": "O raciocínio tem uma falha: participação de mercado mostra adoção geral, mas não garante a melhor plataforma para um e-commerce D2C",
+  "E": "O raciocínio está incorreto porque o WordPress não pode ser utilizado para nenhum tipo de venda online, independentemente de plugins ou extensões instalados, como o WooCommerce",
+  "C": "O raciocínio está correto, pois o WordPress é gratuito, e isso basta"
+ },
+ "gestaoweb-cap4-q3": {
+  "B": "Um CMS headless, pois o conteúdo é publicado uma vez e cada canal (site, app, totem, vitrine) o consome por uma API",
+  "E": "A melhor solução seria abandonar os totens e as vitrines digitais, a única forma prática de eliminar a duplicação de conteúdo"
+ },
+ "gestaoweb-cap4-q4": {
+  "B": "Drupal, por sua segurança e escalabilidade em portais governamentais, compatível com a equipe técnica do tribunal",
+  "D": "Nenhum CMS seria adequado para um órgão público, que deveria obrigatoriamente desenvolver um sistema do zero, sem uso de nenhuma plataforma pronta, por exigência de segurança",
+  "C": "WordPress, por ser o CMS mais popular do mundo"
+ },
+ "gestaoweb-cap4-q5": {
+  "A": "Magento (Adobe Commerce) para a Ferro&Cia (1), pela escala e pelos recursos B2B; Squarespace ou Wix para Beatriz (2), pela simplicidade",
+  "C": "A mesma plataforma deveria ser usada nos dois casos, já que o tamanho do catálogo e a complexidade da operação não influenciam a escolha de uma plataforma de e-commerce"
+ },
+ "gestaoweb-cap4-q6": {
+  "C": "Wix, pelo editor visual simples, sem exigir conhecimento técnico, e com custo compatível com o orçamento — mesmo não sendo o mais robusto",
+  "D": "Nenhuma solução de CMS seria viável com o orçamento de R$ 150,00 mensais, tornando obrigatória a contratação de um desenvolvedor para construir um site do zero, com hospedagem própria"
+ },
+ "gestaoweb-cap4-q7": {
+  "B": "Faltava um fluxo de aprovação (workflow); a correção é exigir revisão editorial e, quando preciso, técnica ou jurídica antes de publicar",
+  "D": "Não houve falha organizacional; incidentes como esse são inevitáveis em qualquer empresa que utiliza um CMS, independentemente do processo de publicação adotado pela equipe"
+ },
+ "gestaoweb-cap4-q8": {
+  "B": "Trouxe tráfego, mas com títulos que não refletem o conteúdo, o que explica a rejeição; o guia do Google recomenda o oposto",
+  "A": "A estratégia foi um sucesso completo, já que o aumento de 65% no tráfego orgânico é o único indicador relevante de uma boa prática de SEO, segundo o próprio guia do Google"
+ },
+ "gestaoweb-cap4-q9": {
+  "B": "Faltou mapear o conteúdo e as URLs antes da migração, e as URLs antigas ficaram sem redirecionamento para as novas",
+  "E": "O problema foi exclusivamente do Google, que deveria reconhecer automaticamente o novo endereço de cada artigo migrado, sem qualquer configuração por parte da MundoTech",
+  "C": "O problema foi o volume de 12 mil artigos, impossível de migrar"
+ },
+ "gestaoweb-cap5-q2": {
+  "B": "O custo de um vazamento é alto e crescente, e não ter sofrido incidentes até hoje não garante que o risco seja baixo no futuro",
+  "C": "Investimento em segurança da informação é responsabilidade exclusiva de empresas de tecnologia, não sendo relevante para uma empresa de médio porte de outro setor, como o da indústria",
+  "A": "O diretor está certo: sem incidentes, não há por que investir em segurança"
+ },
+ "gestaoweb-cap5-q3": {
+  "A": "Violou-se o menor privilégio: a estagiária tinha acesso muito além do necessário, e uma só credencial expôs todo o banco de dados",
+  "C": "O único erro foi a estagiária ter clicado no link de phishing; a política de conceder acesso administrativo completo por praticidade é uma prática recomendada e amplamente aceita"
+ },
+ "gestaoweb-cap5-q4": {
+  "B": "O primeiro é SQL Injection, pois a entrada alterou uma consulta ao banco; o segundo é XSS, pois o script rodou no navegador de outros usuários",
+  "D": "O primeiro incidente é um exemplo de XSS, pois o texto foi digitado no navegador; o segundo, de SQL Injection, pois a avaliação foi gravada no banco de dados",
+  "E": "Nenhum dos dois incidentes se caracteriza como uma vulnerabilidade de segurança, pois ambos dependeram de uma ação do usuário (buscar um produto ou ler uma avaliação no site)"
+ },
+ "gestaoweb-cap5-q5": {
+  "B": "Dia 1: phishing (o funcionário entregou as credenciais ao site falso); Dia 3 em diante: ransomware (os arquivos foram criptografados)",
+  "E": "Não é possível classificar os ataques com as informações fornecidas, pois phishing e ransomware nunca ocorrem em sequência no mesmo incidente, segundo o texto motivador"
+ },
+ "gestaoweb-cap5-q6": {
+  "B": "Uma ferramenta SAST (análise estática), que examina o código-fonte sem executar a aplicação, ideal para o início do pipeline",
+  "E": "Nenhuma ferramenta automatizada seria capaz de identificar esse tipo de vulnerabilidade, sendo necessária exclusivamente uma revisão manual de código por especialistas antes de cada deploy"
+ },
+ "gestaoweb-cap5-q7": {
+  "A": "A falha foi guardar as senhas em texto plano; a correção é aplicar um hash próprio para senhas, como bcrypt ou Argon2",
+  "D": "A correção adequada seria criptografar as senhas com um algoritmo reversível, para que a equipe de suporte técnico possa lê-las sempre que um usuário solicitar ajuda"
+ },
+ "gestaoweb-cap5-q8": {
+  "B": "A Alfa teve MTTD e MTTR muito menores (3h e 2h, contra 47 e 12 dias), o que tende a reduzir bastante o custo do incidente",
+  "A": "As duas empresas tiveram desempenho equivalente, já que o KPI relevante é apenas se o incidente foi eventualmente contido, independentemente do tempo decorrido até a detecção"
+ },
+ "gestaoweb-cap5-q9": {
+  "B": "Está incorreto: pela extraterritorialidade, a LGPD vale para dados de pessoas no Brasil, mesmo sem sede da empresa no país",
+  "E": "O argumento está incorreto, mas apenas porque a empresa deveria estar sujeita unicamente à legislação de proteção de dados de Portugal, e não à LGPD nem ao GDPR"
+ },
+ "qualidade-cap2-q2": {
+  "B": "Porque, na ISO/IEC 9126, Segurança era só uma sub-característica de Funcionalidade, sem avaliação própria, como passou a ter na 25010",
+  "E": "Porque a ISO/IEC 25010 substituiu completamente a avaliação de Funcionalidade por avaliação de Segurança, tornando as duas normas incompatíveis entre si e obrigando a refazer a avaliação de 2015",
+  "resolucao": "a ISO/IEC 9126 de fato mencionava segurança, mas apenas como sub-característica de Funcionalidade — por isso é falso dizer que ela não fazia nenhuma menção à segurança —, sem o mesmo peso e escopo de avaliação dedicada que a ISO/IEC 25010 passou a exigir como característica independente. Atribuir a falha a erro humano da equipe também está errado: é uma limitação estrutural do modelo de 2001. Dizer que criptografia é só requisito legal é falso, pois segurança é tema central dos dois modelos ISO. Por fim, a 25010 não substituiu a Funcionalidade: manteve a Adequação Funcional e apenas separou Segurança como característica própria."
+ },
+ "qualidade-cap2-q3": {
+  "C": "Compatibilidade, pois envolve a capacidade de dois sistemas trocarem informações operando no mesmo ambiente",
+  "B": "Confiabilidade, pois qualquer falha intermitente de comunicação é, por definição, um problema de manutenção do nível de desempenho ao longo do tempo de operação do sistema",
+  "A": "Portabilidade, pois envolve instalar o sistema em outro hardware"
+ },
+ "qualidade-cap2-q4": {
+  "B": "A confiabilidade no uso diário é fator de operação do produto; a dificuldade de alteração é fator de revisão do produto",
+  "A": "Ambos os aspectos — a confiabilidade no uso diário e a dificuldade de alteração — pertencem à mesma categoria: fatores de operação do produto, pois ambos afetam o usuário final",
+  "C": "A confiabilidade é fator de transição; a alteração, de operação"
+ },
+ "qualidade-cap2-q5": {
+  "C": "Fatores de transição do produto, que tratam do desempenho do software ao ser movido para outro ambiente",
+  "D": "Nenhum dos três grupos se aplica, pois migração de infraestrutura é uma decisão de negócio, não um fator de qualidade de software, e deve ser avaliada só pela área financeira"
+ },
+ "qualidade-cap1-q6": {
+  "C": "Os R$ 640.000 são Falha Externa, a categoria mais cara — cerca de 35 vezes os R$ 18.000 investidos em Prevenção",
+  "B": "Os R$ 90.000 representam Falha Externa, pois qualquer retrabalho decorre de uma falha já ocorrida no processo de desenvolvimento, mesmo que o cliente não a tenha percebido"
+ },
+ "qualidade-cap1-q7": {
+  "B": "A decisão é incompleta: mais Avaliação detecta defeitos existentes, mas só a Prevenção reduz a entrada de novos defeitos",
+  "A": "A decisão está correta, pois Avaliação e Prevenção são categorias equivalentes, e investir em uma automaticamente substitui a necessidade da outra no orçamento de qualidade"
+ },
+ "qualidade-cap1-q8": {
+  "B": "Confiabilidade, pois o sistema falhou sob uma condição de uso específica (digitação rápida) que os testes não reproduziram",
+  "D": "Eficiência de Desempenho, pois o problema estava relacionado exclusivamente à velocidade de processamento do sistema diante da digitação rápida dos operadores da máquina"
+ },
+ "qualidade-cap1-q9": {
+  "C": "Falha Externa, a mais grave, pois o defeito só apareceu com o produto em uso real, causando dano a pacientes",
+  "E": "Nenhuma das quatro categorias se aplica a acidentes que envolvem risco à vida humana, que estariam fora do escopo do modelo de Custo da Qualidade e seriam tratados só na esfera judicial"
+ },
+ "qualidade-cap1-q10": {
+  "B": "O código do SRI foi verificado (funcionava como especificado para o Ariane 4), mas não foi validado para o voo do Ariane 5",
+  "A": "O código do SRI nunca havia sido verificado, isto é, nunca havia sido conferido quanto à sua conformidade com a especificação técnica original do Ariane 4, nem testado em simulação"
+ },
+ "qualidade-cap1-q11": {
+  "C": "Débito técnico, pois manter código desnecessário \"por uniformidade\", sem revalidar, é um atalho que se acumula",
+  "D": "Requisitos mal definidos, pois a especificação da missão do Ariane 5 não mencionava a necessidade de reinicialização da plataforma inercial nem os novos limites de velocidade do foguete"
+ },
+ "qualidade-cap1-q12": {
+  "B": "Segundo o NIST, mais da metade dos custos de testes inadequados cairia com testes mais cedo no ciclo, o que apoia o pedido da equipe",
+  "C": "O relatório do NIST (2002) não faz nenhuma recomendação sobre o momento ideal de testar um sistema, apenas quantifica custos totais, sem relação com o pedido da equipe de engenharia",
+  "A": "A diretoria está correta: testar no final é sempre mais eficiente"
+ },
+ "qualidade-cap3-q2": {
+  "B": "Nível 2 (Repetível), pois repete sucessos em projetos semelhantes, mas o conhecimento depende de pessoas, sem processo-padrão",
+  "C": "Nível 1 (Inicial), pois qualquer empresa que não documenta processos formalmente está, por definição, no nível mais baixo de maturidade, independentemente de outros fatores"
+ },
+ "qualidade-cap3-q3": {
+  "B": "Avançar do Nível 2 para o Nível 3, transformando conhecimento de pessoas em um processo-padrão da organização",
+  "D": "Retroceder ao Nível 1, pois formalizar processos tende a reduzir a flexibilidade que caracterizava o sucesso anterior da empresa e a fazer a equipe depender de documentos"
+ },
+ "qualidade-cap3-q4": {
+  "C": "Nenhuma atende sozinha ao Nível 2: a X cobre Garantia da Qualidade e a Y, Gerência de Requisitos, faltando as demais áreas",
+  "E": "É impossível avaliar o nível de maturidade de qualquer empresa sem uma auditoria presencial, independentemente das práticas relatadas, pois o CMMI não aceita autodeclaração"
+ },
+ "qualidade-cap3-q5": {
+  "B": "A empresa passa a cobrir mais Áreas de Processo do Nível 2, aproximando-se de atender integralmente a esse nível",
+  "D": "A empresa retrocede de maturidade, pois adicionar processos novos sempre aumenta o risco de erro humano na sua execução e a burocracia das equipes de desenvolvimento"
+ },
+ "qualidade-cap3-q6": {
+  "B": "Representação contínua, pois permite escolher a ordem de melhoria e atacar primeiro as áreas de maior risco",
+  "C": "Representação por estágios, pois garante que a Gerência de Riscos seja sempre a primeira Área de Processo a ser desenvolvida em qualquer organização que busque certificação"
+ },
+ "qualidade-cap3-q7": {
+  "A": "A exigência usa termos da representação por estágios, que dá à organização um nível único e global, ao contrário da contínua",
+  "C": "A exigência é tecnicamente impossível de ser cumprida por qualquer empresa, pois o CMMI não define níveis organizacionais únicos em nenhuma das duas representações existentes",
+  "D": "As duas representações são equivalentes para fins de licitação"
+ },
+ "qualidade-cap3-q8": {
+  "B": "A recomendação é coerente com o MPS.BR, que busca uma melhoria de processo viável para micro, pequenas e médias empresas",
+  "D": "A ViaCode deveria obrigatoriamente buscar a certificação CMMI, pois é a única reconhecida internacionalmente em processos de licitação pública no Brasil, inclusive municipais"
+ },
+ "qualidade-cap3-q9": {
+  "B": "Os sete níveis não indicam menos rigor, e sim uma progressão mais gradual, adequada a empresas pequenas",
+  "A": "O sócio está correto: quanto maior o número de níveis, menos rigoroso é o modelo de maturidade, pois cada nível individual exige menos progresso da empresa avaliada",
+  "D": "O MPS.BR é de fato menos rigoroso, por falha de concepção"
+ },
+ "qualidade-cap3-q10": {
+  "B": "Buscar a constelação CMMI-SVC, voltada à gestão de serviços, mais alinhada a uma central de atendimento com SLA",
+  "A": "A SupportPro deveria buscar certificação na constelação CMMI-DEV, pois é a única reconhecida pelo mercado, independentemente do tipo de atividade da empresa",
+  "E": "Buscar a constelação CMMI-ACQ, pois presta serviços a terceiros"
+ },
+ "qualidade-cap3-q11": {
+  "B": "O CMMI Institute, derivado do SEI, passou a administrar o modelo e depois foi adquirido pela ISACA, hoje responsável pelo CMMI",
+  "E": "SEI, CMMI Institute e ISACA são apenas nomes alternativos para a mesma entidade legal, sem qualquer diferença histórica ou organizacional entre eles"
+ },
+ "qualidade-cap3-q12": {
+  "C": "O Fornecedor A (MPS.BR Nível C) equivale, em tese, ao Nível 3 do CMMI, acima do Fornecedor B (CMMI Nível 2)",
+  "B": "O Fornecedor B (CMMI Nível 2) demonstra maior maturidade, pois qualquer nível CMMI é automaticamente superior a qualquer nível MPS.BR, independentemente da letra ou do número"
+ },
+ "qualidade-cap4-q2": {
+  "C": "Embora a contagem pareça equilibrada, o tempo de execução mostra o problema de Cohn: os testes de UI dominam o custo da suíte",
+  "A": "A proporção da VarejoDigital já está de acordo com a Pirâmide de Testes, pois o número absoluto de testes E2E (25) é menor do que a soma de unitários e integração (70)",
+  "B": "A Pirâmide só considera a quantidade de testes, não o tempo",
+  "resolucao": "a citação de Cohn destaca que testes de UI são lentos, frágeis e caros de manter, e o ‘custo’ real de uma suíte não se mede apenas pela contagem de testes, mas pelo tempo e esforço que cada camada exige. O caso mostra exatamente esse problema: apesar da contagem numérica parecer equilibrada, 85% do tempo de execução está concentrado nos testes E2E — sintoma do mesmo desequilíbrio estrutural que a pirâmide busca evitar, mesmo que ‘escondido’ atrás de números absolutos aparentemente razoáveis. {{A}} cai exatamente nessa armadilha de olhar só a contagem bruta. {{B}} contraria a citação, que discute custo e velocidade, não apenas quantidade. {{D}} minimiza um tempo de execução que compromete a agilidade de feedback descrita no capítulo. {{E}} é um exagero: a pirâmide recomenda poucos testes E2E, não sua eliminação total, já que eles cobrem riscos que unitários e integração não cobrem sozinhos."
+ },
+ "qualidade-cap4-q3": {
+  "B": "Levar essas 18 regras para testes unitários das funções de validação, deixando o E2E para poucos cenários de integração completa",
+  "A": "Mantê-los como estão, pois qualquer verificação relacionada a um formulário deve necessariamente ser testada via E2E, simulando o preenchimento real da tela pelo usuário final"
+ },
+ "qualidade-cap4-q4": {
+  "B": "Bottom-up, testando primeiro os módulos estáveis de baixo nível (Estoque, Vendas, Financeiro) e Relatórios por último",
+  "A": "Top-down, pois o módulo de controle principal (Relatórios) deve ser testado primeiro, incorporando progressivamente os módulos subordinados já estáveis com o uso de stubs",
+  "C": "Big Bang, pois com quatro módulos é sempre a melhor opção"
+ },
+ "qualidade-cap4-q5": {
+  "C": "Big Bang, pois em um sistema pequeno, de uma só equipe e prazo curto, integrar tudo de uma vez tende a ser mais simples",
+  "D": "Top-down, pois qualquer sistema com módulo de notificações deve necessariamente testar esse módulo antes de todos os demais, já que ele depende de serviços externos"
+ },
+ "qualidade-cap4-q6": {
+  "B": "Corrigir a ambiguidade nos requisitos é o menor custo da curva de Boehm; nos testes de sistema, custaria muitas vezes mais",
+  "A": "O tempo de correção seria o mesmo (40 minutos) independentemente da fase em que o problema fosse identificado, pois a complexidade da regra de juros não muda ao longo do projeto"
+ },
+ "qualidade-cap4-q7": {
+  "B": "A proposta é coerente com o custo crescente por fase: revisar requisitos antes de codificar evita correções mais caras depois",
+  "A": "A proposta está tecnicamente desalinhada com a citação, pois revisão de requisitos é responsabilidade exclusiva de analistas de negócio, nunca de desenvolvedores, segundo Boehm"
+ },
+ "qualidade-cap4-q8": {
+  "B": "O teste executa só um caminho (peso > 30kg e zona rural), deixando sem execução peso ≤ 30kg e peso > 30kg fora da zona rural",
+  "D": "Como a função possui apenas duas condições (peso e destino), um único teste é matematicamente suficiente para cobrir toda a lógica possível, desde que use valores extremos"
+ },
+ "qualidade-cap4-q9": {
+  "B": "A suíte cobre os três caminhos distintos (peso baixo; peso alto e urbano; peso alto e rural), uma cobertura adequada",
+  "A": "A suíte é insuficiente, pois qualquer função com duas condições exige no mínimo cinco casos de teste, independentemente da estrutura lógica e dos caminhos que ela possua"
+ },
+ "qualidade-cap4-q10": {
+  "B": "A suíte repete valores da mesma classe (idade válida), sem classes inválidas (< 18 ou > 65) nem fronteiras (17, 18, 65, 66)",
+  "D": "Testar 15 valores diferentes é sempre preferível a testar 6 valores diferentes, independentemente de quais classes de equivalência cada valor representa na faixa de idades"
+ },
+ "qualidade-cap4-q11": {
+  "B": "A nova suíte foca nas fronteiras (17, 18, 65, 66) e nas classes relevantes, cobrindo melhor com menos casos que a original",
+  "D": "A nova suíte deveria ser descartada por não incluir nenhum valor \"intermediário\", como 30 ou 40 anos, considerados obrigatórios em qualquer teste de campo numérico",
+  "E": "A nova suíte só seria válida se incluísse também testes automatizados de performance para o mesmo campo"
+ },
+ "qualidade-cap5-q12": {
+  "B": "Faltavam no plano os critérios de suspensão e retomada da IEEE 829; sem eles, a equipe não sabia agir diante do defeito crítico",
+  "D": "Critérios de suspensão e retomada são exigidos apenas em sistemas de missão crítica, como aviação ou saúde, não sendo aplicáveis a um sistema de folha de pagamento de uma empresa privada"
+ },
+ "qualidade-cap6-q2": {
+  "B": "Trata-se de um spy, pois combina uma resposta fixa (sempre sucesso) com o registro de como foi chamado",
+  "A": "Trata-se de um stub simples, pois qualquer objeto que retorna uma resposta fixa se enquadra exclusivamente nessa categoria, independentemente de outras características"
+ },
+ "qualidade-cap6-q3": {
+  "C": "Mock, pois é pré-programado com expectativas sobre as chamadas e verifica o próprio comportamento",
+  "D": "Este objeto e o spy do caso anterior são tecnicamente idênticos, e a diferença entre eles é apenas de nomenclatura escolhida por cada desenvolvedor"
+ },
+ "qualidade-cap6-q4": {
+  "B": "Viola a propriedade Independente (Independent), pois o resultado depende de outro teste ter rodado antes",
+  "C": "O teste está corretamente projetado, pois testes que dependem uns dos outros são uma prática recomendada para reduzir duplicação de código de preparação (setup)",
+  "A": "Viola a propriedade Rápido (Fast), pois depender de outro teste é lento"
+ },
+ "qualidade-cap6-q5": {
+  "B": "A correção devolve ao teste a Independência: ele passa a rodar em qualquer ordem, ou sozinho",
+  "A": "A correção piora a suíte, pois duplicar código de configuração entre testes é sempre uma prática proibida na automação de testes, segundo Martin (2008)",
+  "C": "A correção é desnecessária: o teste já seguia o FIRST"
+ },
+ "qualidade-cap6-q6": {
+  "B": "Os testes aumentam a cobertura sem verificar o comportamento: cobertura alta não implica ausência de bugs com asserções fracas",
+  "A": "A meta de cobertura foi cumprida de forma tecnicamente adequada, pois qualquer execução de uma linha de código, independentemente de haver asserção, já garante que aquele trecho está livre de defeitos",
+  "E": "Testes sem asserção nem chegam a rodar no Jest ou no Vitest"
+ },
+ "qualidade-cap6-q7": {
+  "B": "A nova meta troca uma métrica de execução (linhas que rodaram) por uma de comportamento (retorno correto), como defende Feathers",
+  "D": "A nova meta é tecnicamente inferior, pois não pode ser medida automaticamente por nenhuma ferramenta de cobertura de código, dependendo sempre da revisão manual de cada teste"
+ },
+ "qualidade-cap6-q8": {
+  "B": "Com um Page Object compartilhado, a mudança no seletor do botão seria corrigida em um só lugar, e não em 22 arquivos",
+  "E": "O uso de Page Object eliminaria completamente a necessidade de atualizar testes quando a interface do usuário mudar, independentemente da natureza da mudança",
+  "C": "O Page Object serve só para testes unitários, não para E2E"
+ },
+ "qualidade-cap6-q9": {
+  "B": "A decisão traz de volta o problema que o Page Object resolve: uma mudança nessa página exigirá correção em dois lugares",
+  "A": "A decisão é tecnicamente aceitável, pois qualquer economia imediata de tempo de escrita do teste supera considerações futuras de manutenção da suíte de testes E2E"
+ },
+ "qualidade-cap6-q10": {
+  "A": "O Selenium, pelo WebDriver, fala com o navegador por um protocolo remoto REST sobre HTTP; o Playwright usa o protocolo nativo",
+  "C": "O protocolo WebDriver, segundo a especificação do W3C (2018), é sempre mais rápido do que qualquer alternativa, tornando o resultado do experimento tecnicamente implausível",
+  "E": "As duas ferramentas usam o mesmo protocolo; a diferença é acaso"
+ },
+ "qualidade-cap6-q11": {
+  "B": "A decisão é coerente: em sistemas legados, reescrever uma grande base de testes já validada pode custar mais que o ganho de velocidade",
+  "A": "A decisão é tecnicamente incorreta, pois qualquer suíte de testes deveria obrigatoriamente utilizar exclusivamente a ferramenta mais rápida disponível, independentemente do contexto"
+ },
+ "qualidade-cap6-q12": {
+  "B": "O TestNG atende mais diretamente ao requisito, com suporte nativo a execução paralela, grupos e dependências entre grupos",
+  "C": "A escolha entre JUnit e TestNG é totalmente irrelevante para um sistema de gestão acadêmica, pois ambas as ferramentas são, segundo a citação, tecnicamente idênticas em todos os aspectos"
+ },
+ "qualidade-cap7-q2": {
+  "B": "É uma regressão: a mudança na formatação de data do PDF afetou o envio de boletos por uma dependência compartilhada",
+  "C": "O problema só poderia ser classificado como regressão se o próprio módulo de exportação de PDF tivesse voltado a apresentar o erro de formatação original, corrigido na versão anterior",
+  "E": "Só é possível classificar sabendo se a função tinha testes unitários"
+ },
+ "qualidade-cap7-q3": {
+  "B": "A proposta reduz o risco de regressões, pois amplia o escopo de testes para as áreas que dependem da mudança",
+  "A": "A proposta é desnecessária, pois funções utilitárias compartilhadas nunca deveriam ser modificadas em nenhuma circunstância, eliminando o risco pela raiz",
+  "E": "A proposta só serve para documentar dependências entre módulos"
+ },
+ "qualidade-cap7-q4": {
+  "B": "Os 8 testes são um smoke test: uma verificação rápida de que o build está \"funcional o suficiente\", não uma validação completa",
+  "C": "A StreamPlay deveria substituir os 8 testes por uma execução completa da suíte de regressão a cada build, já que rodar em 90 segundos é tecnicamente impossível para qualquer suíte relevante"
+ },
+ "qualidade-cap7-q5": {
+  "B": "A sugestão contraria o smoke test, que só confirma que o build pode ser testado; a Regressão Completa continua necessária",
+  "C": "A sugestão é irrelevante, pois a StreamPlay já não precisaria de nenhum tipo de teste automatizado, dado que o smoke test cobre completamente o sistema"
+ },
+ "qualidade-cap7-q6": {
+  "B": "Selecionar pelo nome conter \"auto\" não é seguro: testes de outros módulos que usam a mesma função de cálculo ficariam de fora",
+  "C": "A segurança de uma técnica de seleção, segundo Rothermel e Harrold (1996), depende exclusivamente do número absoluto de testes selecionados, e não de sua relação com o código efetivamente modificado",
+  "E": "É segura, pois 40 testes bastam para qualquer sistema"
+ },
+ "qualidade-cap7-q7": {
+  "B": "A nova abordagem se aproxima do critério de segurança, pois seleciona pela dependência real com o código modificado",
+  "A": "A nova abordagem é necessariamente pior do que a anterior, pois qualquer aumento no número de testes selecionados representa desperdício de recursos, independentemente do critério utilizado",
+  "D": "Só seria válida se selecionasse os mesmos 40 testes de antes"
+ },
+ "qualidade-cap7-q8": {
+  "B": "O teste flaky minou a confiança, e a equipe ignorou uma falha real, achando que era a mesma instabilidade de sempre",
+  "A": "O comportamento dos desenvolvedores da AgroSoft, ao reexecutar o pipeline sem investigar, não tem relação com o fenômeno descrito na citação, sendo apenas uma prática de produtividade recomendada",
+  "D": "Para Luo et al., testes flaky nunca convivem com defeitos reais"
+ },
+ "qualidade-cap7-q9": {
+  "B": "A quarentena isola o teste instável e preserva a confiança nos demais, exigindo corrigir a causa antes de ele voltar",
+  "A": "A quarentena é uma prática inadequada, pois qualquer teste removido da suíte principal, mesmo temporariamente, representa perda permanente de cobertura de regressão"
+ },
+ "qualidade-cap7-q10": {
+  "B": "Integrando e testando com frequência, erros de integração e regressão aparecem logo e pequenos, sem se acumular por semanas",
+  "E": "A eliminação da semana de integração de cinco dias não tem relação com a execução automática da suíte de regressão a cada merge, sendo apenas uma mudança cultural da equipe"
+ },
+ "qualidade-cap7-q11": {
+  "B": "A sugestão contraria a ideia central de integrar e testar o mais cedo possível e traria de volta o acúmulo de problemas",
+  "E": "A citação de Fowler (2006/2023) apoiaria essa sugestão, pois recomenda explicitamente reduzir a frequência de integração sempre que o custo de infraestrutura de testes for considerado alto",
+  "D": "É equivalente à prática atual, pois o resultado seria o mesmo"
+ },
+ "qualidade-cap7-q12": {
+  "B": "Os estágios funcionam como portões progressivos: mesmo com uma lacuna na integração, o E2E barrou o defeito antes da produção",
+  "C": "A citação de Humble e Farley (2010) recomenda que todos os estágios do pipeline sejam executados simultaneamente, em vez de sequencialmente, para acelerar o processo",
+  "A": "O pipeline falhou, pois nenhum defeito deveria passar de um estágio"
+ },
+ "legislacao-cap1-q2": {
+  "B": "A justificativa é frágil: o legítimo interesse não pode prevalecer sobre os direitos do titular, e marketing sem opção de recusa tende a não passar nesse teste",
+  "E": "A LGPD não se aplica a marketing, apenas a dados financeiros e de identificação"
+ },
+ "legislacao-cap1-q3": {
+  "B": "A diretoria está equivocada: o GDPR se aplica porque a DataFlow oferece serviços direcionados a pessoas na União Europeia, mesmo sem sede ali",
+  "E": "A aplicabilidade do GDPR depende exclusivamente da nacionalidade dos sócios da empresa e do país onde ficam os servidores, não da localização dos clientes atendidos"
+ },
+ "legislacao-cap1-q4": {
+  "C": "A primeira se aproxima da anonimização, pois a reversão ficou inviável; a segunda é pseudonimização, e os dados continuam sendo pessoais",
+  "A": "Ambas as práticas eliminam igualmente a qualidade de \"dado pessoal\", pois qualquer substituição do nome do cliente por um código já configura anonimização para os fins da LGPD, mesmo com tabela de correspondência"
+ },
+ "legislacao-cap1-q5": {
+  "B": "A conduta foi inadequada: o art. 48 exige comunicar incidentes com risco relevante aos titulares, e 25 dias de atraso contrariam esse dever",
+  "D": "A conduta foi inadequada, mas apenas porque a imprensa noticiou o caso antes — se isso não tivesse ocorrido, a EduPass não teria qualquer dever legal de comunicar a ANPD nem os alunos afetados"
+ },
+ "legislacao-cap1-q6": {
+  "B": "Está incorreta: a LGPD prevê multa de até 2% do faturamento, limitada a R$ 50 milhões; o GDPR chega a 4% do faturamento global, sem esse teto",
+  "E": "A afirmação está incorreta, pois apenas a LGPD prevê multas percentuais sobre o faturamento; o GDPR usa somente valores fixos em euros, nunca percentuais, o que reduz a exposição da GlobalRetail na Europa"
+ },
+ "legislacao-cap1-q7": {
+  "B": "O PagFácil está incorreto: o titular tem direito à portabilidade dos seus dados a outro fornecedor, mediante requisição expressa",
+  "A": "O PagFácil está correto: dados gerados durante a prestação de um serviço passam a ser propriedade do prestador, não do titular, que só pode pedir a sua correção"
+ },
+ "legislacao-cap1-q8": {
+  "B": "A ANPD (Autoridade Nacional de Proteção de Dados), que fiscaliza o cumprimento da LGPD e aplica as sanções administrativas",
+  "A": "O PROCON, pois qualquer questão envolvendo dados de consumidores é de competência exclusiva dos órgãos de defesa do consumidor, que aplicam as multas previstas na LGPD"
+ },
+ "legislacao-cap1-f1": {
+  "C": "IP e histórico de navegação são dados pessoais comuns (identificação indireta); o diagnóstico médico é dado pessoal sensível, de saúde.",
+  "D": "IP é dado anonimizado por ser gerado automaticamente pelo sistema; histórico de navegação é dado pessoal comum; e diagnóstico médico é dado pessoal comum, pois só se torna sensível quando associado ao nome do paciente.",
+  "B": "IP e histórico são dados anonimizados; só o diagnóstico é dado sensível."
+ },
+ "legislacao-cap1-f3": {
+  "C": "Legítimo interesse do controlador, desde que respeite as expectativas razoáveis do titular, com registro e transparência.",
+  "A": "Consentimento, pois qualquer uso de dados comportamentais para personalização de experiência exige manifestação expressa e específica do titular, sendo essa a única base legal aplicável ao caso.",
+  "B": "Obrigação legal, pois a LGPD obriga o e-commerce a guardar esse histórico."
+ },
+ "legislacao-cap1-f4": {
+  "C": "O GDPR exige notificar a autoridade em até 72 horas; a LGPD, pela Resolução CD/ANPD nº 15/2024, em até 3 dias úteis, avisando também os titulares.",
+  "D": "A LGPD exige notificação apenas aos titulares afetados, sem obrigação de comunicar a ANPD salvo quando o vazamento envolver dados sensíveis; o GDPR exige notificação apenas à autoridade reguladora, sem obrigação de comunicar os titulares individualmente.",
+  "B": "A LGPD exige notificar a ANPD em 72 horas; o GDPR não fixa prazo."
+ },
+ "legislacao-cap1-f5": {
+  "C": "A consumidora exerce o direito de revisão de decisão automatizada (art. 20 da LGPD) sobre uma decisão tomada só por algoritmo.",
+  "D": "A consumidora está exercendo o direito de eliminação de dados, podendo exigir que a empresa apague todos os dados utilizados na análise de crédito, o que automaticamente invalida a decisão de negativa e obriga uma nova análise.",
+  "B": "Ela exerce o direito de correção de dados inexatos usados na decisão."
+ },
+ "legislacao-cap1-f6": {
+  "C": "A LGPD exige consentimento específico e em destaque de pelo menos um dos pais ou responsável legal para dados de crianças.",
+  "D": "A base legal é o consentimento da própria criança, que pode ser obtido no momento do cadastro no aplicativo mediante aceite dos termos de uso em linguagem simplificada adaptada à faixa etária, dispensando os pais."
+ },
+ "legislacao-cap1-f7": {
+  "A": "Viola o princípio da finalidade: os dados foram coletados para a compra e venda, e o marketing externo exige nova base legal.",
+  "C": "Viola apenas o princípio da segurança, pois o problema central é a ausência de contrato de operação de dados com a parceira — a finalidade não é violada, já que marketing é uso compatível com qualquer relação comercial.",
+  "D": "Viola o princípio da necessidade, pois foram coletados dados demais."
+ },
+ "legislacao-cap1-f9": {
+  "C": "Biometria para identificação é dado sensível; a base mais adequada é o consentimento específico, atento à desigualdade da relação de emprego.",
+  "D": "A base legal é o legítimo interesse do empregador no controle de jornada, dispensando consentimento para dados biométricos desde que a empresa elabore e publique o Relatório de Impacto (RIPD) antes de iniciar o tratamento dos dados."
+ },
+ "legislacao-cap1-f10": {
+  "C": "Em parte: os dados tratados por consentimento devem ser eliminados, mas os exigidos por obrigação legal, como os fiscais, podem ser mantidos.",
+  "D": "O titular tem razão apenas quanto aos dados sensíveis, cuja eliminação deve ser imediata após a revogação do consentimento — dados comuns como nome e CPF podem ser retidos indefinidamente para fins fiscais sem qualquer limitação de prazo pela LGPD.",
+  "B": "A empresa só tem razão se houver cláusula contratual de retenção fiscal."
+ },
+ "legislacao-cap2-q2": {
+  "B": "Está equivocada: a titularidade automática do art. 4º vale para empregados e servidores, não para autônomos sem contrato de cessão",
+  "A": "A RotaCerta está correta: qualquer software desenvolvido a pedido de uma empresa pertence automaticamente a ela, independentemente do tipo de vínculo com quem o desenvolveu ou de existir contrato escrito",
+  "E": "Sem contrato escrito, o código cai em domínio público"
+ },
+ "legislacao-cap2-q3": {
+  "B": "O art. 10, V, veda patentear o programa em si, já protegido por direito autoral; o INPI admite invenções implementadas por software com efeito técnico",
+  "D": "A proteção adequada nesse caso seria exclusivamente via registro de marca, não havendo qualquer outra via de proteção para algoritmos, nem mesmo o direito autoral sobre o código"
+ },
+ "legislacao-cap2-q4": {
+  "B": "A empresa B, pois o Brasil adota o critério first to file: tem prioridade quem deposita primeiro no INPI",
+  "A": "A empresa A, pois começou a usar o nome publicamente primeiro, independentemente da data de depósito no INPI, já que o uso anterior sempre prevalece sobre o registro"
+ },
+ "legislacao-cap2-q5": {
+  "B": "O primeiro blog faz citação na medida justificada, para crítica; o segundo reproduz um capítulo inteiro, o que não é citação, mesmo com a fonte",
+  "D": "A conduta do segundo blog é lícita, pois qualquer reprodução com fins educacionais está sempre amparada pelo art. 46, III, independentemente da extensão do trecho e da indicação da fonte"
+ },
+ "legislacao-cap2-q6": {
+  "B": "Está equivocada: a GPLv3 é copyleft forte e exige que a obra completa distribuída siga a GPL, o que a NuvemApp não fez",
+  "C": "A obrigação de abrir o código só existiria se a NuvemApp tivesse modificado diretamente os arquivos originais da biblioteca, não bastando apenas incorporá-la ao produto vendido a terceiros"
+ },
+ "legislacao-cap2-q7": {
+  "B": "Reconhecer que não tinha licença para a música e trocá-la por uma trilha licenciada antes de republicar o vídeo",
+  "E": "Solicitar à gravadora que doe os direitos da música para a VoaTech, sendo essa a única forma prevista no DMCA de resolver a notificação sem que o canal seja encerrado"
+ },
+ "legislacao-cap2-q8": {
+  "B": "Viola a licença: além do crédito (BY), a cláusula SA exige que a obra derivada seja distribuída sob a mesma licença CC BY-SA",
+  "D": "A licença CC BY-SA não permite o uso comercial em nenhuma hipótese, tornando toda a operação ilícita desde o início, independentemente da questão do compartilhamento e do crédito",
+  "resolucao": "a licença CC BY-SA permite uso comercial (diferente do que afirma a alternativa que fala em proibição de uso comercial), mas a condição “Share-Alike” exige que qualquer adaptação seja distribuída sob a mesma licença. Ao vender os ícones derivados sob “todos os direitos reservados”, o designer cumpriu a exigência de crédito (BY), mas violou a exigência de compartilhamento (SA)."
+ },
+ "legislacao-cap2-f1": {
+  "C": "Pertence ao desenvolvedor: sem cessão escrita, os direitos ficam com o autor do software (Lei nº 9.609/1998).",
+  "A": "A titularidade pertence à startup, pois o pagamento pelo serviço transfere automaticamente todos os direitos patrimoniais ao contratante, independentemente de contrato escrito ou de vínculo de emprego.",
+  "B": "A titularidade é dividida: 50% para cada parte, por equidade."
+ },
+ "legislacao-cap2-f2": {
+  "C": "A GPL é copyleft forte e pode obrigar a startup a liberar todo o código do produto sob a mesma licença.",
+  "B": "O uso de biblioteca GPL em software comercial é expressamente proibido pela Free Software Foundation, sujeitando a empresa a ação por violação de direitos autorais sem possibilidade de defesa ou acordo.",
+  "A": "A startup terá de pagar royalties ao criador da biblioteca GPL."
+ },
+ "legislacao-cap2-f3": {
+  "C": "Os quatro fatores do fair use (propósito, natureza da obra, quantidade usada e efeito no mercado) são analisados juntos, sem resultado automático.",
+  "D": "O fair use não se aplica a obras musicais em nenhuma hipótese, pois a indústria fonográfica obteve decisão judicial vinculante que exclui músicas comerciais do alcance da Seção 107 do Copyright Act americano."
+ },
+ "legislacao-cap2-f5": {
+  "C": "Duas infrações: falta de crédito ao autor (módulo BY) e uso comercial em vídeo patrocinado (módulo NC).",
+  "B": "Uma infração: a ausência de crédito ao autor viola o módulo BY da licença, mas o uso comercial em vídeo patrocinado é permitido por qualquer licença Creative Commons que não contenha explicitamente o módulo ND.",
+  "A": "Nenhuma infração: Creative Commons é domínio público, de uso livre."
+ },
+ "legislacao-cap2-f6": {
+  "C": "Nos EUA, o 1-Click foi protegido como método de negócio com resultado útil; no Brasil, a Lei nº 9.279/1996 veda o software em si e exige efeito técnico.",
+  "D": "A patente 1-Click foi concedida exclusivamente com base no direito autoral americano sobre interfaces de usuário, instrumento que a lei brasileira também prevê, tornando a proteção equivalente nos dois países via LDA e Lei de Software, com o mesmo prazo."
+ },
+ "legislacao-cap2-f7": {
+  "C": "O argumento mais sólido é que copiar e armazenar as obras para treinar a IA é reprodução não autorizada, sem enquadramento em uso livre.",
+  "A": "Os autores não têm fundamento jurídico sólido, pois o treinamento de IA utiliza as obras apenas como referência estatística — processo equivalente à aprendizagem humana, que não configura reprodução protegida pela LDA ou pelo Copyright Act.",
+  "D": "O mais sólido é a violação da paternidade, por falta de crédito aos autores."
+ },
+ "legislacao-cap2-f8": {
+  "C": "Para domínios \".br\", cabe ação judicial ou o SACI-Adm do CGI.br, por cybersquatting e violação de marca.",
+  "D": "A Nike não tem legitimidade para cancelar domínios registrados por terceiros no Brasil, pois o CGI.br adota o princípio da anterioridade do registro, que protege o primeiro registrante independentemente de eventual conflito com marcas preexistentes.",
+  "B": "A Nike deve acionar a UDRP da ICANN, com decisão em até 60 dias."
+ },
+ "legislacao-cap2-f9": {
+  "C": "Não necessariamente: a LDA permite usar trechos na medida justificada para a aula, e a reprodução integral vai além disso.",
+  "D": "Sim, desde que a apostila seja distribuída apenas fisicamente e não em formato digital — a LDA distingue expressamente reprodução física, permitida para fins educacionais, de reprodução digital, que exige autorização do titular em qualquer caso."
+ },
+ "legislacao-cap2-f10": {
+  "D": "Em outra classe, só há proteção se a marca for de alto renome ou houver risco de confusão. No Instagram, cabe pedir a remoção comprovando a titularidade.",
+  "A": "Em ambos os casos, o registro de marca na classe de vestuário confere proteção absoluta — a empresa pode exigir judicialmente o encerramento imediato das atividades do concorrente e a remoção do perfil sem necessidade de qualquer prova adicional de confusão.",
+  "C": "Nos dois casos, só resta registrar a marca nas classes afetadas antes de agir."
+ },
+ "legislacao-cap3-q2": {
+  "B": "Está incorreta: o dever de exibir CNPJ e endereço vale para qualquer meio eletrônico de oferta, inclusive a página dentro de um marketplace",
+  "A": "A alegação está correta: apenas lojas com site próprio precisam exibir CNPJ e endereço; vendedores dentro de marketplaces estão dispensados dessa obrigação, que passa a ser só da plataforma"
+ },
+ "legislacao-cap3-q3": {
+  "B": "Está incorreta: para o STJ, o marketplace integra a cadeia de fornecimento e responde solidariamente com o vendedor perante o consumidor",
+  "D": "A resposta está incorreta, mas apenas porque o marketplace deveria ter fornecido os dados de contato do vendedor, sem qualquer outra responsabilidade adicional perante o consumidor lesado pela compra"
+ },
+ "legislacao-cap3-q4": {
+  "B": "É inválida: o arrependimento vale para produtos digitais, e a restrição só valeria se informada claramente antes da compra",
+  "D": "A negativa é inválida, mas apenas porque o valor do curso é superior a R$ 500,00 — para valores menores, a restrição ao arrependimento seria automaticamente válida, mesmo sem aviso prévio"
+ },
+ "legislacao-cap3-q5": {
+  "B": "Está incorreta: a assinatura com certificado ICP-Brasil tem presunção legal de autenticidade, e cabe a quem contesta provar a falsidade",
+  "A": "A alegação está correta: nenhuma assinatura eletrônica tem validade jurídica equivalente à assinatura manuscrita em papel, independentemente da tecnologia usada ou do certificado digital empregado"
+ },
+ "legislacao-cap3-q7": {
+  "B": "É nula de pleno direito: exclui toda a responsabilidade mesmo com falha comprovada, gerando desvantagem exagerada ao consumidor",
+  "E": "O CDC não se aplica a contratos entre uma plataforma de nuvem e uma pequena empresa, pois isso configura relação puramente empresarial (B2B), fora do alcance do Código em qualquer situação"
+ },
+ "legislacao-cap3-q8": {
+  "B": "Está incorreta: se a oferta é direcionada ao Brasil (idioma, moeda, logística), o CDC se aplica, independentemente da sede da empresa",
+  "A": "A alegação está correta: nenhuma lei brasileira pode se aplicar a uma empresa sem sede no Brasil, independentemente de a oferta ser direcionada a consumidores brasileiros em português e em reais"
+ },
+ "legislacao-cap3-f1": {
+  "C": "O STJ tem admitido invalidar ofertas com erro evidente e desproporcional, desde que o fornecedor corrija e avise o consumidor logo.",
+  "A": "O fornecedor é obrigado a entregar todos os produtos pelo preço anunciado, pois o art. 30 do CDC vincula o fornecedor a qualquer oferta veiculada, sem exceção para erros materiais, independentemente da desproporcionalidade do valor.",
+  "B": "O fornecedor não tem obrigação: erro de preço digital isenta o CDC."
+ },
+ "legislacao-cap3-f2": {
+  "B": "O marketplace responde solidariamente com o fraudador, pois integra a cadeia de fornecimento e falhou na verificação do cadastro.",
+  "C": "O marketplace não responde, pois atua exclusivamente como intermediário tecnológico neutro, sem participação no negócio jurídico entre vendedor e comprador, o que afasta qualquer responsabilidade pelos atos dos vendedores cadastrados.",
+  "A": "Responde só subsidiariamente, se o fraudador não for encontrado."
+ },
+ "legislacao-cap3-f3": {
+  "C": "É irregular nos dois pontos: a suspensão exige aviso prévio, e os dados devem ser preservados por prazo razoável.",
+  "A": "A conduta é legal, pois contratos de serviços digitais permitem suspensão e exclusão imediata de dados em caso de inadimplemento, conforme cláusula padrão de serviços SaaS amplamente aceita pelo mercado e pelos tribunais brasileiros.",
+  "B": "Ambas são legais: a LGPD permite apagar dados de inadimplentes."
+ },
+ "legislacao-cap3-f4": {
+  "C": "É válido: proposta e aceitação expressas por e-mail cumprem os requisitos do Código Civil, e os e-mails servem de prova.",
+  "D": "O contrato é válido apenas se os e-mails foram enviados de domínios corporativos verificados com certificado SSL, requisito técnico mínimo para que comunicações eletrônicas B2B tenham presunção de autenticidade no direito brasileiro."
+ },
+ "legislacao-cap3-f5": {
+  "C": "Não: o CDC considera nula a cláusula que exclui a responsabilidade por vícios, qualquer que seja o modelo de aceite.",
+  "A": "Sim, é válida: o modelo scroll-wrap garante que o consumidor teve acesso integral ao contrato antes de aceitar, o que configura consentimento pleno e afasta qualquer alegação de desconhecimento das cláusulas, inclusive as limitativas.",
+  "B": "É válida só em contratos B2B; no B2C, seria nula pelo CDC."
+ },
+ "legislacao-cap3-f6": {
+  "C": "Não transfere a propriedade: o art. 108 do Código Civil exige escritura pública para imóveis acima de 30 salários mínimos.",
+  "D": "É válida apenas se ambas as partes utilizarem assinatura eletrônica qualificada ICP-Brasil, pois esse é o único tipo de assinatura eletrônica com presunção legal equivalente à escritura pública para negócios imobiliários acima de 30 salários mínimos.",
+  "B": "É válida para a promessa de compra e venda; a escritura vem só no registro."
+ },
+ "legislacao-cap3-f8": {
+  "B": "A emissão de NF-e exige certificado digital ICP-Brasil (assinatura qualificada); a assinatura simples não atende a esse requisito.",
+  "D": "A assinatura eletrônica avançada seria suficiente para a emissão de NF-e, sendo o problema apenas a escolha da modalidade simples — bastaria a empresa migrar para plataforma que use certificado não-ICP para regularizar integralmente a situação fiscal.",
+  "A": "Não há problema: a assinatura simples vale para todos os fins, até fiscais."
+ },
+ "legislacao-cap3-f9": {
+  "C": "Ele pode acionar o golpista, o banco se houver falha de segurança, o MED do Pix e o Procon; a responsabilidade depende da culpa de cada um.",
+  "D": "O consumidor não tem qualquer recurso jurídico efetivo, pois o Pix é modalidade de pagamento de alto risco expressamente excluída das proteções do CDC, cabendo ao consumidor arcar integralmente com os prejuízos decorrentes de golpes nessa modalidade."
+ },
+ "legislacao-cap3-f10": {
+  "C": "Não: a arbitragem imposta em contrato de adesão com consumidor pode ser abusiva, e custas de R$ 5.000 dificultam o acesso à justiça.",
+  "A": "Sim, é válida: a Lei de Arbitragem (nº 9.307/1996) permite cláusulas arbitrais em qualquer contrato, inclusive de adesão com consumidores, desde que a câmara arbitral escolhida seja registrada no CNJ e as custas sejam previamente informadas ao consumidor.",
+  "B": "É válida para consumidores com renda acima de 10 salários mínimos."
+ },
+ "legislacao-cap4-q2": {
+  "B": "É frágil: em regra (art. 19), a plataforma só responde por conteúdo de terceiros se descumprir ordem judicial específica de remoção",
+  "C": "A tese é frágil, mas apenas porque a ConstruBem deveria ter processado o autor do conteúdo, e não a rede social, sendo essa a única falha do caso, já que a notificação extrajudicial foi correta"
+ },
+ "legislacao-cap4-q3": {
+  "B": "Pode responder subsidiariamente: no art. 21, basta a notificação da vítima, e a demora de 12 dias pode descumprir esse dever",
+  "E": "A responsabilidade da plataforma, nesse caso, é sempre principal (não subsidiária), equivalente à de quem publicou o conteúdo originalmente, desde o momento da publicação e mesmo sem notificação"
+ },
+ "legislacao-cap4-q4": {
+  "B": "Fraude eletrônica qualificada (art. 171, § 2º-A), com reclusão de 4 a 8 anos, por usar aplicativo de mensagens para enganar a vítima",
+  "A": "A conduta se enquadra no estelionato comum (art. 171, caput), com pena de reclusão de 1 a 5 anos, pois o uso de aplicativo de mensagens não altera a natureza do crime nem justifica pena maior"
+ },
+ "legislacao-cap4-q5": {
+  "B": "É incompleta: o crime do invasor não exclui a responsabilidade da EduPass por não adotar segurança adequada, como guardar senhas em texto puro",
+  "A": "A alegação é correta: uma vez que a empresa é vítima de um ataque externo, ela nunca pode ser responsabilizada por qualquer consequência do incidente, cabendo toda a responsabilidade ao invasor"
+ },
+ "legislacao-cap4-q6": {
+  "B": "Há mais de um crime: invasão de dispositivo (art. 154-A) e exigência de pagamento sob ameaça de divulgar dados, próxima da extorsão (art. 158)",
+  "E": "A ameaça de divulgação de dados sigilosos é irrelevante juridicamente, pois a LGPD não prevê qualquer consequência para vazamentos causados por terceiros criminosos, e o Código Penal só pune a invasão",
+  "resolucao": "ataques de ransomware com dupla extorsão (criptografar e ainda ameaçar vazar dados) tipicamente reúnem mais de uma conduta criminosa: a invasão do sistema (art. 154-A) e a exigência de vantagem econômica mediante grave ameaça, que se aproxima da extorsão (art. 158). A análise penal exata depende dos detalhes do caso concreto, mas a combinação de condutas é central para entender por que esse tipo de ataque é tratado com tanta gravidade."
+ },
+ "legislacao-cap4-q7": {
+  "B": "Viola o dever de guarda: o art. 13 exige manter os registros de conexão por no mínimo 1 ano, e não apenas 60 dias",
+  "E": "A guarda de registros de conexão é proibida pela LGPD, o que tornaria a conduta do provedor, paradoxalmente, a única legalmente correta, já que os registros contêm dados pessoais dos usuários"
+ },
+ "legislacao-cap4-q8": {
+  "B": "Usar o acordo de assistência jurídica mútua (MLAT), pedindo as provas por meio das autoridades centrais dos dois países",
+  "D": "Apenas o provedor de nuvem pode decidir, por vontade própria, se coopera ou não, sem qualquer instrumento formal de cooperação entre os dois países, pois os dados estão fora do Brasil"
+ },
+ "legislacao-cap4-f3": {
+  "C": "O funcionário responde penalmente; a empresa responde perante a ANPD, civilmente aos titulares e aos reguladores de saúde.",
+  "A": "Apenas o funcionário responde penalmente por violação de sigilo; a empresa está isenta de responsabilidade civil e administrativa, pois o ato foi praticado por iniciativa exclusiva do colaborador, sem conhecimento ou autorização dos dirigentes da empresa.",
+  "D": "Ambos respondem só na esfera civil, sem crime previsto para o caso."
+ },
+ "legislacao-cap4-f4": {
+  "C": "É obrigatória quando há risco ou dano relevante, como em 800 mil CPFs expostos, e deve ser feita à ANPD em até 3 dias úteis.",
+  "D": "A notificação à ANPD é sempre facultativa sob a LGPD — a lei apenas recomenda a comunicação como boa prática, cabendo ao DPO avaliar discricionariamente a conveniência e oportunidade da notificação em cada caso concreto, sem prazo definido.",
+  "B": "Só é obrigatória acima de 1 milhão de titulares afetados."
+ },
+ "legislacao-cap4-f5": {
+  "C": "Estelionato qualificado (art. 171, § 2º-A do CP), com pena de 4 a 8 anos e multa, incluído pela Lei nº 14.155/2021.",
+  "D": "Invasão de dispositivo informático (art. 154-A do CP) combinado com estelionato, mas sem qualificadora específica, pois a Lei nº 14.155/2021 agravou apenas crimes praticados por hackers com conhecimento técnico, não golpes de engenharia social por telefone.",
+  "A": "Furto qualificado mediante fraude (art. 155, § 4º do CP)."
+ },
+ "legislacao-cap4-f6": {
+  "B": "As omissões agravam a responsabilidade: 15 dias superam os 3 dias úteis orientados pela ANPD, e não avisar os titulares é outra infração.",
+  "D": "As omissões geram apenas responsabilidade administrativa perante a ANPD, sem qualquer reflexo na responsabilidade civil aos titulares afetados, pois o dever de notificação é obrigação exclusivamente regulatória sem relação com o dano sofrido pelos usuários da plataforma."
+ },
+ "legislacao-cap4-f7": {
+  "C": "A entrega viola o Marco Civil, que exige ordem judicial para fornecer os registros de conexão, e pode gerar responsabilidade ao provedor.",
+  "D": "O provedor agiu corretamente: a Lei nº 14.155/2021 criou exceção expressa ao sigilo de registros de conexão para investigações de crimes digitais, autorizando autoridades policiais a requisitar dados de provedores sem necessidade de prévia autorização judicial ou de qualquer outra formalidade.",
+  "A": "Não há problema: basta requisição policial, sem ordem judicial."
+ },
+ "legislacao-cap4-f9": {
+  "C": "MLATs para obter as provas na Alemanha, INTERPOL para identificar o grupo russo e a Convenção de Budapeste, promulgada pelo Decreto nº 11.491/2023.",
+  "D": "O Brasil pode acionar unilateralmente o CLOUD Act americano para obter as evidências nos servidores alemães, pois esse instrumento tem aplicação global para investigações de crimes cibernéticos que afetam empresas com operações nos EUA ou em países aliados.",
+  "A": "É inviável: a soberania impede obter provas em servidores estrangeiros."
+ },
+ "legislacao-cap4-f10": {
+  "C": "Apagar os logs destrói evidências necessárias à perícia, à notificação à ANPD (art. 48) e à defesa, podendo agravar a responsabilidade.",
+  "D": "O problema ocorre apenas se o incidente envolver dados de titulares europeus sujeitos ao GDPR, que exige preservação obrigatória de evidências por 72 horas após o incidente — para incidentes que envolvam exclusivamente dados de brasileiros sob a LGPD, a exclusão de logs é juridicamente irrelevante.",
+  "A": "Não há problema: o NIST e a LGPD autorizam apagar logs na contenção."
+ },
+ "legislacao-cap5-q2": {
+  "C": "Está incorreta: receber produtos em troca de divulgação também é relação comercial, e o conteúdo deve ser identificado como publicidade",
+  "D": "Está incorreta, mas apenas a marca pode ser responsabilizada, pois a influenciadora é mera usuária da rede social e não tem obrigações perante o consumidor, mesmo recebendo produtos gratuitos"
+ },
+ "legislacao-cap5-q3": {
+  "B": "Pode ser publicidade abusiva, por explorar o medo e a pressa, ainda que as informações sobre o produto sejam verdadeiras",
+  "C": "É publicidade enganosa exclusivamente, pois só há ilicitude publicitária quando o conteúdo é falso, e o medo de ataques virtuais é um argumento legítimo de venda para antivírus"
+ },
+ "legislacao-cap5-q4": {
+  "E": "Inválido: é genérico, junta finalidades em um só aceite, vem pré-marcado e é condição de uso, sem ser livre e específico",
+  "D": "Inválido apenas porque a caixa está pré-marcada, sendo irrelevante o fato de a autorização ser genérica e abranger qualquer finalidade, desde que o usuário possa desmarcá-la antes de continuar"
+ },
+ "legislacao-cap5-q5": {
+  "A": "Os e-mails anteriores ao cancelamento eram legítimos, mas continuar enviando depois da revogação é irregular",
+  "C": "Os e-mails anteriores ao cancelamento também se tornam ilegais retroativamente, obrigando a loja a indenizar todos os envios feitos desde o cadastro"
+ },
+ "legislacao-cap5-q6": {
+  "E": "Há vários problemas: rastreadores instalados antes do aceite, recusa mais difícil que aceitação, falta de granularidade e de registro",
+  "B": "O único problema é a ausência de registro do consentimento; o momento da instalação dos rastreadores e a dificuldade de recusar são irrelevantes, pois o usuário pode apagar os cookies depois"
+ },
+ "legislacao-cap5-q7": {
+  "B": "É irregular: dados de crianças exigem consentimento de um dos pais, com esforço razoável para confirmá-lo, e uma autodeclaração não basta",
+  "D": "É irregular apenas se a criança tiver menos de 5 anos, pois acima dessa idade ela pode consentir sozinha desde que a linguagem do formulário seja adequada à sua faixa etária"
+ },
+ "legislacao-cap5-q8": {
+  "C": "É cabível, e a SlimTop paga os custos: a contrapropaganda desfaz o efeito do anúncio e é imposta às custas do infrator",
+  "A": "A contrapropaganda é facultativa e só pode ser aplicada se o consumidor provar prejuízo financeiro individual, e seus custos devem ser divididos entre a empresa e o Procon"
+ },
+ "legislacao-cap5-f2": {
+  "D": "É dark pattern (recusa mais difícil que aceitação): a LGPD exige consentimento livre, com recusa tão fácil quanto aceitar.",
+  "A": "Não há irregularidade, pois a LGPD exige apenas que o usuário seja informado sobre o uso de cookies, sem obrigação de disponibilizar botão de recusa em posição equivalente ao de aceitação ou com o mesmo destaque visual.",
+  "B": "A irregularidade é só ética, sem consequência jurídica."
+ },
+ "legislacao-cap5-f4": {
+  "A": "Não é suficiente: cookies de rastreamento e e-mails de marketing são finalidades distintas, e cada uma exige consentimento próprio.",
+  "D": "Não é necessário qualquer consentimento adicional, pois o legítimo interesse do anunciante em comunicar promoções a visitantes do site é base legal suficiente para o envio de e-mails de marketing pela LGPD.",
+  "C": "Basta o banner mencionar o envio de e-mails, sem opt-in próprio."
+ },
+ "legislacao-cap5-f5": {
+  "C": "Roach motel: fácil de assinar e difícil de cancelar, prática abusiva pelo CDC e alvo de fiscalização da Senacon.",
+  "A": "Confirmshaming, pois a interface usa linguagem constrangedora para desestimular o cancelamento — prática vedada pelo CONAR por violar o princípio da honestidade publicitária e sujeita a multa."
+ },
+ "legislacao-cap5-f6": {
+  "D": "Publicidade enganosa (omissão do CET e falsa aprovação garantida), com responsabilidade solidária da fintech e do influenciador.",
+  "C": "Infração ao CDC por publicidade enganosa e ao BACEN por omissão do CET, com responsabilidade exclusiva da fintech, pois o influenciador é apenas veículo da mensagem publicitária aprovada pela marca e não responde por ela.",
+  "B": "Só infringe a Resolução CVM nº 35/2021, sobre influenciadores."
+ },
+ "legislacao-cap5-f7": {
+  "C": "Publicidade abusiva que explora a inexperiência infantil (CDC, CONAR e Resolução nº 163/2014 do Conanda), sem identificação publicitária.",
+  "D": "Infração apenas ao ECA, que proíbe qualquer forma de publicidade direcionada a menores de 18 anos em plataformas digitais, independentemente do produto anunciado, da forma de veiculação ou do horário de exibição dos anúncios.",
+  "A": "Só infração ao CONAR, sem sanções legais previstas."
+ },
+ "legislacao-cap5-f8": {
+  "A": "Prática ilegal: a lista comprada não traz consentimento livre e informado para marketing, sujeitando a empresa à ANPD e ao Procon.",
+  "D": "Prática permitida desde que a corretora de dados comprove ter obtido os e-mails legalmente, transferindo a responsabilidade integral pelo consentimento à empresa vendedora da lista, que responde sozinha perante a ANPD e o Procon.",
+  "C": "Só é irregular se faltar o link de descadastramento nos e-mails."
+ },
+ "legislacao-cap5-f9": {
+  "D": "O CONAR veda associar bebida alcoólica a esportes, e a campanha precisa excluir menores; do contrário, é publicidade abusiva.",
+  "A": "A campanha é permitida sem restrições, pois adultos que praticam esportes radicais formam um público claramente identificado como maior de idade, afastando qualquer risco de exposição de menores e dispensando filtros de idade na plataforma."
+ },
+ "legislacao-cap5-f10": {
+  "D": "Viola a LGPD: autorizar notificações no sistema é técnico e não equivale ao consentimento específico para receber marketing.",
+  "C": "A prática é permitida pelo Marco Civil da Internet, que garante às empresas de tecnologia liberdade de comunicação com usuários de seus aplicativos desde que exista relação contratual prévia estabelecida no momento do download do aplicativo.",
+  "A": "É legal: autorizar notificações no celular equivale ao consentimento."
+ },
+ "legislacao-cap6-q2": {
+  "B": "É admitido pela lei: o aporte pode ou não virar participação, e o investidor só vira sócio se a conversão ocorrer",
+  "C": "O investidor se torna sócio imediatamente e responde ilimitadamente pelas dívidas da empresa desde a data do contrato, mesmo antes de qualquer conversão em participação societária"
+ },
+ "legislacao-cap6-q3": {
+  "D": "Rejeitado: o investidor-anjo não é sócio e, em regra, não responde pelas dívidas, nem por desconsideração da personalidade jurídica",
+  "B": "Aceito, pois a empresa estava em dificuldades financeiras e isso autoriza o redirecionamento das dívidas a qualquer pessoa que tenha aportado recursos, inclusive o investidor-anjo"
+ },
+ "legislacao-cap6-q4": {
+  "A": "Indevida: o resgate só pode ser pedido após no mínimo 2 anos do aporte, ou prazo maior do contrato",
+  "C": "Devida, porque o prazo de 2 anos só se aplica a investidores que também são sócios administradores, e não a quem apenas aportou capital como investidor-anjo"
+ },
+ "legislacao-cap6-q5": {
+  "B": "É possível, em tese, pela desconsideração da personalidade jurídica, já que a confusão patrimonial é abuso previsto no art. 50 do CC",
+  "E": "Só é possível se os fornecedores provarem que os sócios agiram com dolo de cometer crime, sendo a confusão patrimonial irrelevante para atingir o patrimônio pessoal dos sócios de uma sociedade limitada"
+ },
+ "legislacao-cap6-q6": {
+  "E": "Frágil: a Justiça do Trabalho olha a realidade, e pessoalidade, habitualidade, subordinação e salário fixo podem gerar vínculo",
+  "A": "Sólida, pois o contrato PJ afasta, por si só, qualquer discussão sobre vínculo empregatício, mesmo que o desenvolvedor cumpra horário fixo e receba ordens diretas dos gestores"
+ },
+ "legislacao-cap6-q7": {
+  "D": "Inadequada: segurança e proteção de dados devem existir desde a concepção do produto, e não ser deixadas para depois",
+  "B": "Adequada, pois startups em fase inicial são isentas das obrigações de segurança da LGPD até a primeira rodada de investimento, quando passam a ser fiscalizadas pela ANPD"
+ },
+ "legislacao-cap6-q8": {
+  "B": "O regulador, com condições e acompanhamento, afasta temporariamente certas normas para testar inovações, sem isenção definitiva",
+  "A": "Concede imunidade permanente e total a qualquer norma do setor, sem acompanhamento do regulador, para que a startup possa crescer livremente antes de se adequar às regras do mercado"
+ },
+ "legislacao-cap6-f1": {
+  "C": "Enquadra-se: é inovadora, fatura até R$ 16 milhões e tem até 10 anos.",
+  "A": "Não se enquadra, pois receita acima de R$ 10 milhões desqualifica automaticamente a empresa, independentemente do tempo de constituição.",
+  "B": "Não se enquadra: startup só pode ter até 5 anos."
+ },
+ "legislacao-cap6-f3": {
+  "D": "SAFE ou Mútuo Conversível, que adiam o valuation para uma rodada futura.",
+  "C": "Investimento via equity crowdfunding pela plataforma autorizada, com emissão de cotas para o público geral e valuation definido pela própria plataforma.",
+  "B": "Debêntures conversíveis registradas na CVM."
+ },
+ "legislacao-cap6-f4": {
+  "A": "Ele mantém seus 33,33%, podendo negociá-los ou pedir apuração de haveres.",
+  "C": "O sócio retém apenas 50% de sua participação, devolvendo o restante proporcionalmente ao tempo trabalhado, conforme regra padrão de vesting prevista em lei.",
+  "B": "Perde toda a participação por sair antes de 12 meses."
+ },
+ "legislacao-cap6-f5": {
+  "C": "Autorização do BACEN como Instituição de Pagamento emissora de moeda eletrônica.",
+  "D": "Credenciamento junto à CVM como plataforma de investimento participativo, conforme Resolução CVM nº 88/2022, por envolver a guarda de recursos de terceiros."
+ },
+ "legislacao-cap6-f6": {
+  "D": "Pela cláusula de drag along, os majoritários podem obrigar o terceiro a vender nas mesmas condições.",
+  "A": "A venda não pode ser concluída, pois decisões de alienação total da empresa exigem unanimidade dos sócios, mesmo que exista acordo de sócios com cláusula de drag along."
+ },
+ "legislacao-cap6-f7": {
+  "B": "Contratos que reflitam a real autonomia dos prestadores, sem subordinação, revendo a prática periodicamente.",
+  "A": "Converter todos os prestadores em MEI e assinar contratos de prestação de serviço, o que elimina juridicamente qualquer risco trabalhista, mesmo que a rotina de trabalho continue a mesma.",
+  "D": "Ignorar o risco, pois plataformas são isentas da lei trabalhista."
+ },
+ "legislacao-cap6-f10": {
+  "D": "A Lei Anticorrupção (nº 12.846/2013) responsabiliza a empresa objetivamente, o que torna essencial um programa de integridade.",
+  "A": "A LGPD exige programa anticorrupção de toda empresa que trate dados de servidores públicos, sob pena de multa de 2% do faturamento, limitada a R$ 50 milhões por infração e aplicada pela ANPD.",
+  "C": "A Resolução CVM nº 88/2022 exige due diligence para licitar."
+ },
+ "legislacao-cap7-q2": {
+  "D": "Incorreta: o GDPR alcança quem oferece bens ou serviços a pessoas na União, mesmo sem sede ou filial lá",
+  "C": "Correta, pois a autoridade europeia não pode aplicar o regulamento a dados tratados fora do continente, ainda que os alunos estejam na União Europeia no momento das aulas"
+ },
+ "legislacao-cap7-q3": {
+  "B": "Incorreta: guardar dados no exterior é transferência internacional, permitida só nas hipóteses do art. 33, como cláusulas contratuais",
+  "E": "Correta, desde que o provedor seja norte-americano, pois os Estados Unidos têm decisão de adequação automática com o Brasil, reconhecida pela ANPD para qualquer tipo de dado, inclusive de saúde"
+ },
+ "legislacao-cap7-q4": {
+  "C": "Rejeitado: a homologação do laudo estrangeiro só examina requisitos formais e ordem pública, sem rever o mérito",
+  "B": "Aceito, porque a arbitragem estrangeira não produz efeitos no Brasil sem nova decisão judicial sobre o conflito, já que o Brasil não aderiu a nenhuma convenção internacional sobre o tema"
+ },
+ "legislacao-cap7-q5": {
+  "A": "Nula por abusividade, pois impõe arbitragem compulsória ao consumidor em contrato de adesão",
+  "B": "Plenamente válida, pois a autonomia da vontade das partes prevalece sobre qualquer norma de defesa do consumidor, especialmente em contratos eletrônicos internacionais"
+ },
+ "legislacao-cap7-q6": {
+  "D": "Improcedente: a Justiça brasileira é competente quando a obrigação deve ser cumprida aqui, e o foro estrangeiro imposto ao consumidor pode ser abusivo",
+  "A": "Procedente, pois cláusulas de foro estrangeiro sempre afastam a jurisdição brasileira, inclusive em contratos de adesão com consumidores, por força da autonomia da vontade"
+ },
+ "legislacao-cap7-q7": {
+  "E": "Improcedente: a lei brasileira alcança provedores no exterior que atendem o público brasileiro, se um ato de tratamento ocorre aqui",
+  "B": "Procedente, pois a localização dos servidores no exterior afasta qualquer dever de cumprir ordens brasileiras, ainda que o serviço seja oferecido em português ao público brasileiro"
+ },
+ "legislacao-cap7-q8": {
+  "B": "Usar a UDRP, provando domínio confusamente semelhante, falta de interesse legítimo e má-fé, para obter a transferência",
+  "D": "A NuvemPay precisa, obrigatoriamente, obter antes uma sentença judicial brasileira, pois a UDRP é um mecanismo apenas complementar, que executa decisões já tomadas pela Justiça do país do registrante"
+ },
+ "legislacao-cap7-f2": {
+  "B": "Com mais de 45 milhões de usuários mensais na UE, é uma VLOP pelo DSA, sujeita a auditoria e transparência algorítmica.",
+  "D": "A empresa está sujeita apenas ao DMA, pois o DSA se aplica exclusivamente a plataformas de redes sociais e mecanismos de busca, não a marketplaces, independentemente do número de usuários na União Europeia.",
+  "C": "Só se enquadra no DSA se tiver sede física na UE."
+ },
+ "legislacao-cap7-f3": {
+  "C": "Há obrigações contraditórias: o CLOUD Act manda entregar, a LGPD exige base legal, e há risco de sanção nos dois países.",
+  "A": "Não há conflito real, pois o CLOUD Act tem primazia sobre qualquer legislação nacional estrangeira, incluindo a LGPD, por força do princípio da soberania americana sobre empresas sediadas nos Estados Unidos."
+ },
+ "legislacao-cap7-f4": {
+  "C": "Se a alíquota efetiva em alguma jurisdição ficar abaixo de 15%, o Brasil pode cobrar um imposto complementar (top-up tax).",
+  "B": "A regra Pillar Two se aplica apenas a empresas com sede nos países membros da OCDE, excluindo empresas com operações no Brasil que não sejam de origem europeia ou americana, mesmo com faturamento acima do limite.",
+  "A": "Deve pagar 15% a mais sobre todo o faturamento global."
+ },
+ "legislacao-cap7-f5": {
+  "C": "Sem escolha das partes, cada país aplica suas regras de DIPr (lugar de execução ou de celebração), com resultados possivelmente diferentes.",
+  "B": "Aplica-se a lei do país onde o software foi desenvolvido, pois a Lei nº 9.609/1998 estabelece que contratos de licença regem-se pela lei do país do titular dos direitos, independentemente do local de uso.",
+  "D": "Aplica-se sempre o Regulamento Roma I, que tem eficácia global."
+ },
+ "legislacao-cap7-f7": {
+  "C": "Imposto de Importação de 60%, com desconto de US$ 20 (US$ 72 - US$ 20 = US$ 52), mais ICMS à parte (Lei nº 14.902/2024).",
+  "D": "Isenção de Imposto de Importação sobre os primeiros US$ 50 e 20% de II apenas sobre os US$ 70 que excedem essa faixa, sem incidência de ICMS em compras feitas pelo Programa Remessa Conforme, por se tratar de remessa postal.",
+  "A": "Isenção total, pois compras até US$ 3.000 são isentas."
+ },
+ "legislacao-cap7-f8": {
+  "D": "Alto risco, por ser IA aplicada à saúde, com avaliação de conformidade e supervisão humana obrigatórias.",
+  "C": "Risco limitado, exigindo apenas que o sistema informe ao paciente que está interagindo com inteligência artificial, sem outras obrigações técnicas, de registro ou de supervisão humana."
+ },
+ "legislacao-cap7-f9": {
+  "B": "Conflito positivo de jurisdição: vários países se dizem competentes, o que se evita com cláusula de foro ou arbitragem.",
+  "D": "O conflito negativo de jurisdição, em que nenhum tribunal reconhece competência para o caso — situação típica de contratos digitais internacionais sem cláusula de foro, que só pode ser resolvida por tribunal internacional.",
+  "C": "A imunidade de jurisdição, que impede julgar partes estrangeiras."
+ },
+ "legislacao-cap7-f10": {
+  "D": "Em contratos B2C, a arbitragem que afasta o Judiciário pode ser abusiva pelo CDC e pelo direito europeu; no B2B, é válida.",
+  "B": "Contratos B2B internacionais não podem conter cláusula arbitral sem aprovação prévia da câmara arbitral escolhida pelas partes, o que inviabiliza a padronização contratual e exige negociação individual com cada cliente.",
+  "A": "A Convenção de Nova York proíbe arbitragem em contratos de tecnologia."
+ },
+ "legislacao-cap8-q2": {
+  "C": "Incorreta: no vício oculto, o prazo para reclamar só começa quando o defeito aparece",
+  "A": "Correta, pois o prazo de 90 dias sempre conta da data da compra, em qualquer hipótese, inclusive quando o defeito só aparece depois de meses de uso"
+ },
+ "legislacao-cap8-q3": {
+  "E": "Incorreta: serviço sem solicitação é prática abusiva e equivale a amostra grátis, sem obrigação de pagar",
+  "C": "Correta, desde que o pacote premium tenha sido efetivamente utilizado ao menos uma vez, pois o uso do serviço configura aceitação tácita da contratação e da cobrança mensal"
+ },
+ "legislacao-cap8-q4": {
+  "A": "Irregular: o preço total, com taxas, deve aparecer desde o início, e revelar custos no fim, sob pressão de tempo, viola a transparência",
+  "C": "Regular, pois o consumidor pode desistir da compra a qualquer momento antes de finalizá-la, e o contador de tempo serve apenas para garantir a reserva do ingresso escolhido"
+ },
+ "legislacao-cap8-q5": {
+  "D": "Devolução em dobro, com correção e juros, salvo engano justificável; para o STJ, não é preciso provar má-fé, e erro de sistema não justifica",
+  "A": "A devolução simples do valor é o único direito do consumidor, pois a repetição em dobro exige prova de dolo da empresa, o que não ocorre quando a cobrança decorre de erro de sistema"
+ },
+ "legislacao-cap8-q6": {
+  "B": "O juiz pode inverter o ônus se a alegação for verossímil ou o consumidor hipossuficiente, cabendo à loja provar a entrega",
+  "C": "A inversão do ônus da prova é automática em todos os processos de consumo, sem qualquer análise do juiz, e obriga a loja a indenizar sempre que não apresentar comprovante de entrega"
+ },
+ "legislacao-cap8-q7": {
+  "E": "Camila pode ir direto ao Juizado, pois a causa não passa de 20 salários mínimos, e o advogado é facultativo",
+  "D": "Camila deve primeiro registrar a reclamação no Procon e só depois poderá ir à Justiça, pois a tentativa de acordo administrativo é condição para ações de consumo no Juizado Especial"
+ },
+ "legislacao-cap8-q8": {
+  "D": "Prática abusiva: aproveita a vulnerabilidade do idoso e falha no dever de informar custos e encargos",
+  "A": "Prática regular, pois o consumidor idoso tem plena capacidade civil e responde por qualquer contrato que aceitar verbalmente, cabendo a ele pedir os detalhes antes de concordar"
+ },
+ "legislacao-cap8-f1": {
+  "C": "O CDC se aplica, pois o consumidor está no Brasil, e é nula a cláusula que suprime seus direitos.",
+  "D": "O consumidor pode apenas reclamar no Procon estadual, sem direito a reembolso, pois serviços digitais de streaming são expressamente excluídos do direito de arrependimento pelo Decreto nº 7.962/2013 e pelo CDC."
+ },
+ "legislacao-cap8-f2": {
+  "C": "Sim, se antes da compra o consumidor foi informado com clareza e concordou que o acesso imediato encerra o arrependimento.",
+  "D": "Sim, pois cursos online são classificados como serviços não duráveis pelo CDC, categoria para a qual não se aplica o direito de arrependimento em transações digitais, independentemente de aviso prévio ao consumidor.",
+  "B": "Não, pois o conteúdo só poderia ser liberado após 7 dias."
+ },
+ "legislacao-cap8-f3": {
+  "C": "Não: notebook é durável, a garantia legal é de 90 dias, e o consumidor ainda está no prazo.",
+  "D": "Não, mas o consumidor só pode exigir abatimento proporcional do preço, não sendo possível solicitar substituição ou reembolso integral após 30 dias do recebimento do produto, conforme o art. 26 do CDC."
+ },
+ "legislacao-cap8-f4": {
+  "A": "Publicidade enganosa (art. 37, § 1º do CDC), por preço de referência falso que engana sobre o desconto.",
+  "D": "Infração administrativa ao Decreto nº 7.962/2013, que proíbe especificamente a divulgação de preços de referência em plataformas digitais sem comprovação documental junto ao Procon, com multa diária.",
+  "C": "Prática abusiva por vantagem excessiva (art. 39 do CDC)."
+ },
+ "legislacao-cap8-f5": {
+  "D": "Ambas respondem solidariamente: a influenciadora, por não identificar a publicidade; a marca, pela publicidade enganosa (art. 37 do CDC).",
+  "C": "Nenhuma das duas, pois postagens em redes sociais não configuram publicidade regulada pelo CDC, sendo protegidas pela liberdade de expressão garantida pela Constituição Federal, mesmo quando há pagamento pela divulgação.",
+  "B": "Apenas a influenciadora, que fez as afirmações ao público."
+ },
+ "legislacao-cap8-f6": {
+  "C": "Responde solidariamente com o vendedor, pois integra a cadeia de fornecimento, segundo o STJ.",
+  "A": "O marketplace não tem qualquer responsabilidade, pois atua apenas como intermediário tecnológico, sem participação na relação de compra e venda entre vendedor e consumidor, cabendo ao consumidor acionar só o lojista.",
+  "B": "Responde só subsidiariamente, se o vendedor não pagar."
+ },
+ "legislacao-cap8-f7": {
+  "C": "Dark pattern de urgência falsa, prática abusiva que pressiona a compra, vedada pelo CDC.",
+  "D": "Propaganda comparativa abusiva, pois o contador falso implicitamente compara as condições do aplicativo com as de concorrentes, configurando infração ao art. 37, § 2º do CDC e à Lei nº 12.529/2011.",
+  "B": "Infração à LGPD por manipulação com dados de comportamento."
+ },
+ "legislacao-cap8-f8": {
+  "C": "Não: no arrependimento, a devolução é imediata e integral, frete incluído (CDC e Decreto nº 7.962/2013).",
+  "A": "Sim, pois o CDC prevê explicitamente que o frete de entrega não integra o valor a ser reembolsado no exercício do direito de arrependimento, sendo custo assumido pelo consumidor que desistiu da compra."
+ },
+ "legislacao-cap8-f9": {
+  "D": "O consumidor tem direito à revisão da decisão automatizada e à explicação dos critérios (art. 20 da LGPD).",
+  "A": "O consumidor não tem direito à explicação, pois decisões algorítmicas de crédito são protegidas pelo sigilo comercial e pela propriedade intelectual da empresa, prevalecendo sobre qualquer norma consumerista ou de proteção de dados.",
+  "C": "Só tem direito à explicação se provar dano material."
+ },
+ "legislacao-cap8-f10": {
+  "D": "Passados 30 dias sem solução, ele escolhe entre troca, restituição do valor ou abatimento do preço (art. 18 do CDC).",
+  "A": "O consumidor só pode exigir o reparo do produto, pois o CDC determina que a substituição e o reembolso são medidas subsidiárias, aplicáveis apenas após duas tentativas frustradas de reparo pelo fornecedor.",
+  "C": "Ele só pode pedir abatimento do preço ou troca por similar."
+ }
+}

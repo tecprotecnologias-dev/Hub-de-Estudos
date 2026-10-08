@@ -1,0 +1,221 @@
+{
+ "numero": 1,
+ "titulo": "Conceitos Básicos de Qualidade de Software",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "A qualidade de software é um dos pilares fundamentais da Engenharia de Software moderna. Desenvolver software de alta qualidade significa atender às necessidades dos usuários, respeitar os requisitos estabelecidos e garantir que o produto seja confiável, eficiente e fácil de manter. Neste capítulo, exploraremos os conceitos essenciais que fundamentam a área de qualidade de software."
+  },
+  {
+   "t": "h2",
+   "id": "1-1-definicoes-de-qualidade-de-software-e-sua-importancia",
+   "texto": "1.1 Definições de Qualidade de Software e sua Importância"
+  },
+  {
+   "t": "h3",
+   "texto": "O que é Qualidade de Software?"
+  },
+  {
+   "t": "p",
+   "html": "Qualidade de software é um conceito amplo e multidimensional. Diversas organizações e autores propuseram definições ao longo das décadas, cada uma enfatizando aspectos diferentes desse conceito essencial."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Definições Clássicas de Qualidade de Software",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Qualidade é a conformidade com os requisitos\" — Philip Crosby (1979)"
+    },
+    {
+     "t": "p",
+     "html": "\"Qualidade é a adequação ao uso\" — Joseph Juran (1988)"
+    },
+    {
+     "t": "p",
+     "html": "\"Qualidade de software é o grau em que um sistema, componente ou processo atende aos requisitos especificados e às necessidades e expectativas do cliente ou usuário\" — IEEE Std 610.12"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A norma ISO/IEC 25010 (successor da ISO/IEC 9126) define qualidade de produto de software como o conjunto de características que determinam a capacidade do software de satisfazer necessidades explícitas e implícitas dos usuários. Essa norma organiza a qualidade em oito características principais: funcionalidade adequada, eficiência de desempenho, compatibilidade, usabilidade, confiabilidade, segurança, manutenibilidade e portabilidade."
+  },
+  {
+   "t": "h3",
+   "texto": "Por que a Qualidade de Software é Importante?"
+  },
+  {
+   "t": "p",
+   "html": "A importância da qualidade de software transcende aspectos puramente técnicos. Ela impacta diretamente a segurança das pessoas, a reputação das organizações e os custos de desenvolvimento e manutenção. Alguns exemplos históricos ilustram bem essa relevância:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Custo de correção tardia: </strong>O custo de corrigir um defeito encontrado em produção pode ser até 100 vezes maior do que se detectado durante a análise de requisitos.",
+    "<strong>Segurança crítica: </strong>Falhas de software em sistemas de aviação, medicina e energia nuclear podem custar vidas humanas, como evidenciado pelo caso do sistema Therac-25 nos anos 1980.",
+    "<strong>Impacto financeiro: </strong>O NIST estimou que defeitos de software custam à economia americana mais de 60 bilhões de dólares por ano.",
+    "<strong>Reputação organizacional: </strong>Produtos com baixa qualidade comprometem a imagem da empresa e resultam em perda de clientes e oportunidades de mercado."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Além disso, a qualidade está intrinsecamente ligada à satisfação do usuário. Um software tecnicamente correto, mas difícil de usar, não atende plenamente às expectativas. Por isso, a qualidade deve ser pensada em todas as dimensões: técnica, funcional e de experiência."
+  },
+  {
+   "t": "h3",
+   "texto": "Qualidade de Produto vs. Qualidade de Processo"
+  },
+  {
+   "t": "p",
+   "html": "É fundamental distinguir dois enfoques distintos, porém complementares, de qualidade em software:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Dimensão",
+    "Foco",
+    "Exemplos de Práticas"
+   ],
+   "linhas": [
+    [
+     "Qualidade de Produto",
+     "Características do software entregue",
+     "Testes, revisões de código, métricas de qualidade"
+    ],
+    [
+     "Qualidade de Processo",
+     "Metodologia usada para desenvolver",
+     "CMMI, MPS.BR, ISO 9001, Scrum com práticas ágeis"
+    ],
+    [
+     "Qualidade em Uso",
+     "Experiência real do usuário final",
+     "Testes de usabilidade, satisfação do cliente, NPS"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Um processo de qualidade tende a produzir produtos de qualidade. Entretanto, um bom processo não garante automaticamente um produto excelente — é necessário que as práticas de verificação e validação sejam aplicadas de forma contínua ao longo de todo o ciclo de desenvolvimento."
+  },
+  {
+   "t": "h2",
+   "id": "1-2-fatores-que-afetam-a-qualidade-do-software",
+   "texto": "1.2 Fatores que Afetam a Qualidade do Software"
+  },
+  {
+   "t": "p",
+   "html": "A qualidade de um produto de software é influenciada por uma série de fatores, tanto internos ao processo de desenvolvimento quanto externos ao ambiente de uso. Compreender esses fatores é essencial para que equipes de engenharia tomem decisões conscientes e preventivas."
+  },
+  {
+   "t": "h3",
+   "texto": "Fatores Internos ao Processo de Desenvolvimento"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Qualidade dos Requisitos: </strong>Requisitos ambíguos, incompletos ou inconsistentes são a principal fonte de defeitos de software. A elicitação cuidadosa e a validação dos requisitos com stakeholders reduzem significativamente os problemas futuros.",
+    "<strong>Competência da Equipe: </strong>A experiência técnica, o conhecimento do domínio e a capacidade de comunicação dos desenvolvedores influenciam diretamente a qualidade do código e das decisões de design.",
+    "<strong>Adoção de Boas Práticas: </strong>O uso de padrões de codificação, revisões por pares (code review), integração contínua (CI/CD) e testes automatizados são práticas que elevam consistentemente a qualidade.",
+    "<strong>Gestão de Configuração: </strong>O controle de versões, o gerenciamento de mudanças e a rastreabilidade entre requisitos, código e testes garantem integridade e consistência ao longo do projeto.",
+    "<strong>Ferramentas e Infraestrutura: </strong>Ambientes de desenvolvimento adequados, ferramentas de análise estática e plataformas de teste automatizado contribuem para a detecção precoce de defeitos."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Fatores Externos ao Processo"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Complexidade do Domínio: </strong>Sistemas financeiros, médicos ou de controle industrial exigem precisão e confiabilidade muito maiores do que aplicativos de entretenimento, aumentando o desafio de garantia de qualidade.",
+    "<strong>Mudanças de Requisitos: </strong>Alterações frequentes de escopo durante o desenvolvimento podem introduzir inconsistências e comprometer a integridade arquitetural do sistema.",
+    "<strong>Pressão de Prazo: </strong>Cronogramas agressivos frequentemente levam ao corte de atividades de teste e revisão, gerando débito técnico e aumentando a incidência de defeitos.",
+    "<strong>Ambiente de Execução: </strong>Variações em hardware, sistemas operacionais, redes e configurações de usuário podem expor comportamentos inesperados não detectados em ambiente de teste.",
+    "<strong>Dependências Externas: </strong>O uso de bibliotecas de terceiros, APIs e serviços externos introduz riscos de qualidade que estão parcialmente fora do controle da equipe de desenvolvimento."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "O Modelo de Fatores de McCall"
+  },
+  {
+   "t": "p",
+   "html": "Um dos modelos mais influentes para categorizar os fatores de qualidade de software foi proposto por Jim McCall em 1977. Ele organiza os fatores de qualidade em três perspectivas:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Perspectiva",
+    "Foco",
+    "Fatores de Qualidade"
+   ],
+   "linhas": [
+    [
+     "Revisão do Produto",
+     "Capacidade de mudança",
+     "Manutenibilidade, Flexibilidade, Testabilidade"
+    ],
+    [
+     "Transição do Produto",
+     "Adaptação a novos ambientes",
+     "Portabilidade, Reusabilidade, Interoperabilidade"
+    ],
+    [
+     "Operação do Produto",
+     "Características de execução",
+     "Correção, Confiabilidade, Eficiência, Integridade, Usabilidade"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Embora tenham surgido modelos mais recentes como a ISO/IEC 25010, o modelo de McCall ainda é amplamente utilizado no ensino de qualidade de software por sua clareza conceitual e pela forma intuitiva como organiza as preocupações das equipes de desenvolvimento."
+  },
+  {
+   "t": "h3",
+   "texto": "A Relação entre Qualidade e Custo"
+  },
+  {
+   "t": "p",
+   "html": "Uma concepção equivocada muito comum é a de que qualidade aumenta custos. Na realidade, a falta de qualidade é que eleva os custos — por meio de retrabalho, suporte, correção de defeitos em produção e perda de clientes. O custo da qualidade (CoQ) é dividido em:"
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Custo da Qualidade (Cost of Quality – CoQ)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "CUSTOS DE PREVENÇÃO: Atividades para evitar defeitos — treinamento, planejamento de testes, revisões de requisitos."
+    },
+    {
+     "t": "p",
+     "html": "CUSTOS DE AVALIAÇÃO: Atividades de verificação — inspeções, testes, auditorias de qualidade."
+    },
+    {
+     "t": "p",
+     "html": "CUSTOS DE FALHAS INTERNAS: Defeitos encontrados antes da entrega — retrabalho, correções, re-testes."
+    },
+    {
+     "t": "p",
+     "html": "CUSTOS DE FALHAS EXTERNAS: Defeitos encontrados após a entrega — suporte, recalls, penalidades, danos à reputação."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Investir em prevenção e avaliação reduz drasticamente os custos de falhas. Estudos mostram que cada R$ 1 investido em prevenção pode economizar entre R$ 5 e R$ 100 em correções posteriores, dependendo do estágio em que os defeitos são detectados e do domínio de aplicação."
+  }
+ ]
+}

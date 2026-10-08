@@ -1,0 +1,496 @@
+import type { Apostila } from './tipos'
+
+// Dois tipos de apostila:
+//
+// 1. Capítulo lido dentro do site: converta para src/data/capitulos/<id>.json e cadastre aqui
+//    com o mesmo id e o número do capítulo. Há um conversor para cada modelo de arquivo:
+//      - Word com títulos em fonte/cor manual (Legislação): ferramentas/converter_capitulo.py
+//      - Word com estilos de título e caixas em tabela (Qualidade): ferramentas/converter_word_estilos.py
+//      - LaTeX (.tex): ferramentas/converter_latex.py
+//    Todos tiram resumo, estudo de caso e exercícios, e recusam conteúdo com o nome da instituição.
+//
+// 2. PDF: copie o arquivo para public/apostilas e informe "arquivo: 'apostilas/nome.pdf'".
+export const apostilas: Apostila[] = [
+  // Legislação em Negócios Digitais
+  {
+    id: 'legislacao-cap1',
+    capitulo: 1,
+    titulo: 'Legislação de Proteção de Dados Pessoais',
+    disciplinaId: 'legislacao-em-negocios-digitais',
+    unidades: ['Legislação de Proteção de Dados Pessoais'],
+    descricao:
+      'LGPD e GDPR: dados pessoais e sensíveis, princípios e bases legais, responsabilidades das empresas, direitos dos titulares e sanções da ANPD.',
+  },
+  {
+    id: 'legislacao-cap2',
+    capitulo: 2,
+    titulo: 'Propriedade Intelectual e Direitos Autorais',
+    disciplinaId: 'legislacao-em-negocios-digitais',
+    unidades: ['Propriedade Intelectual e Direitos Autorais'],
+    descricao:
+      'Ramos da propriedade intelectual, direitos autorais no ambiente digital, patentes de software, marcas, licenças abertas e pirataria.',
+  },
+  {
+    id: 'legislacao-cap3',
+    capitulo: 3,
+    titulo: 'Comércio Eletrônico e Contratos Online',
+    disciplinaId: 'legislacao-em-negocios-digitais',
+    unidades: ['Comércio Eletrônico e Contratos Online'],
+    descricao:
+      'E-commerce no Brasil, Decreto 7.962/2013 e CDC, obrigações de lojas e marketplaces, pagamentos digitais, contratos e assinatura eletrônica.',
+  },
+  {
+    id: 'legislacao-cap4',
+    capitulo: 4,
+    titulo: 'Responsabilidade Digital e Crimes Cibernéticos',
+    disciplinaId: 'legislacao-em-negocios-digitais',
+    unidades: ['Responsabilidade Digital e Crimes Cibernéticos'],
+    descricao:
+      'Marco Civil da Internet, crimes cibernéticos na lei brasileira, golpes digitais, responsabilidade das plataformas, vazamentos e resposta a incidentes.',
+  },
+  {
+    id: 'legislacao-cap5',
+    capitulo: 5,
+    titulo: 'Regulamentação de Marketing Digital',
+    disciplinaId: 'legislacao-em-negocios-digitais',
+    unidades: ['Regulamentação de Marketing Digital'],
+    descricao:
+      'Publicidade enganosa e abusiva, influenciadores e o CONAR, publicidade segmentada, consentimento, e-mail marketing e públicos vulneráveis.',
+  },
+  {
+    id: 'legislacao-cap6',
+    capitulo: 6,
+    titulo: 'Aspectos Legais de Startups e Empreendedorismo Digital',
+    disciplinaId: 'legislacao-em-negocios-digitais',
+    unidades: ['Aspectos Legais de Startups e Empreendedorismo Digital'],
+    descricao:
+      'Marco Legal das Startups, estruturas jurídicas, captação de investimentos, investidor-anjo, propriedade intelectual, contratos e compliance.',
+  },
+  {
+    id: 'legislacao-cap7',
+    capitulo: 7,
+    titulo: 'Legislação Internacional em Negócios Digitais',
+    disciplinaId: 'legislacao-em-negocios-digitais',
+    unidades: ['Legislação Internacional em Negócios Digitais'],
+    descricao:
+      'Soberania digital, marcos legais internacionais, dados pessoais e tributação no plano global, comércio na OMC e conflitos de jurisdição.',
+  },
+  {
+    id: 'legislacao-cap8',
+    capitulo: 8,
+    titulo: 'Proteção ao Consumidor em Negócios Digitais',
+    disciplinaId: 'legislacao-em-negocios-digitais',
+    unidades: ['Proteção ao Consumidor em Negócios Digitais'],
+    descricao:
+      'Direitos do consumidor online, direito de arrependimento, devoluções, reembolsos e garantias, práticas abusivas e resolução de conflitos.',
+  },
+  {
+    // links das leis na íntegra; página em src/data/capitulos/legislacao-leis.json
+    id: 'legislacao-leis',
+    rotulo: 'Links',
+    grupo: 'Material complementar',
+    titulo: 'Textos da LGPD e do GDPR',
+    disciplinaId: 'legislacao-em-negocios-digitais',
+    descricao: 'Links para ler a LGPD (Lei nº 13.709/2018) e o GDPR, o regulamento europeu de proteção de dados.',
+  },
+
+  // Qualidade e Testes de Software
+  // Capítulos 1 a 11: ferramentas/converter_word_estilos.py (um capítulo por unidade)
+  // Capítulos 12 e 13: ferramentas/converter_latex.py <tex> <json> 12|13 (antigos capítulos 8 e 9;
+  // depois da conversão, as referências "Capítulo 7/8" no texto foram atualizadas para 11/12)
+  {
+    id: 'qualidade-cap1',
+    capitulo: 1,
+    titulo: 'Conceitos Básicos de Qualidade de Software',
+    disciplinaId: 'qualidade-e-testes-de-software',
+    unidades: ['Conceitos Básicos de Qualidade de Software'],
+    descricao:
+      'Definições clássicas de qualidade, qualidade de produto, processo e uso, fatores internos e externos, modelo de McCall e Custo da Qualidade.',
+  },
+  {
+    id: 'qualidade-cap2',
+    capitulo: 2,
+    titulo: 'Modelos de Qualidade de Software',
+    disciplinaId: 'qualidade-e-testes-de-software',
+    unidades: ['Modelos de Qualidade de Software'],
+    descricao:
+      'A ISO/IEC 9126 e suas seis características, da funcionalidade à portabilidade, e a evolução para a ISO/IEC 25010 (SQuaRE).',
+  },
+  {
+    id: 'qualidade-cap3',
+    capitulo: 3,
+    titulo: 'Modelos de Maturidade do Software',
+    disciplinaId: 'qualidade-e-testes-de-software',
+    unidades: ['Modelos de Maturidade do Software'],
+    descricao: 'CMM, CMMI e MPS.BR: níveis de maturidade, áreas de processo, comparativo e aplicação prática.',
+  },
+  {
+    id: 'qualidade-cap4',
+    capitulo: 4,
+    titulo: 'Testes de Software',
+    disciplinaId: 'qualidade-e-testes-de-software',
+    unidades: ['Testes de Software'],
+    descricao:
+      'Níveis de teste (unitário, integração, sistema e aceitação), técnicas de caixa branca e caixa preta, e testes alfa e beta.',
+  },
+  {
+    id: 'qualidade-cap5',
+    capitulo: 5,
+    titulo: 'Estratégias de Teste',
+    disciplinaId: 'qualidade-e-testes-de-software',
+    unidades: ['Estratégias de Teste'],
+    descricao:
+      'Planejamento da estratégia em 7 passos, análise de risco, plano de teste (IEEE 829) e combinação de técnicas em contextos ágeis.',
+  },
+  {
+    id: 'qualidade-cap6',
+    capitulo: 6,
+    titulo: 'Automação de Testes',
+    disciplinaId: 'qualidade-e-testes-de-software',
+    unidades: ['Automação de Testes'],
+    descricao:
+      'Vantagens e limites da automação, ROI, quando automatizar, Selenium, JUnit, TestNG e outras ferramentas como Cypress e Playwright.',
+  },
+  {
+    id: 'qualidade-cap7',
+    capitulo: 7,
+    titulo: 'Testes de Regressão',
+    disciplinaId: 'qualidade-e-testes-de-software',
+    unidades: ['Testes de Regressão'],
+    descricao:
+      'Quando fazer regressão, estratégias de seleção de casos, automação da suíte, regressão em CI/CD e manutenção da suíte.',
+  },
+  {
+    id: 'qualidade-cap8',
+    capitulo: 8,
+    titulo: 'Testes de Performance e Carga',
+    disciplinaId: 'qualidade-e-testes-de-software',
+    unidades: ['Testes de Performance e Carga'],
+    descricao:
+      'Desempenho e escalabilidade, métricas e percentis, testes de carga, estresse, pico e resistência, e ferramentas de performance.',
+  },
+  {
+    id: 'qualidade-cap9',
+    capitulo: 9,
+    titulo: 'Testes de Segurança',
+    disciplinaId: 'qualidade-e-testes-de-software',
+    unidades: ['Testes de Segurança'],
+    descricao:
+      'Conceitos de segurança, prevenção de vulnerabilidades, testes de penetração, OWASP ZAP e OWASP Top 10.',
+  },
+  {
+    id: 'qualidade-cap10',
+    capitulo: 10,
+    titulo: 'Gerenciamento de Defeitos e Relatórios',
+    disciplinaId: 'qualidade-e-testes-de-software',
+    unidades: ['Gerenciamento de Defeitos e Relatórios'],
+    descricao:
+      'Terminologia de defeitos, severidade e prioridade, como escrever um bom bug report, ciclo de vida, métricas e ferramentas.',
+  },
+  {
+    id: 'qualidade-cap11',
+    capitulo: 11,
+    titulo: 'Melhores Práticas de Teste e Garantia de Qualidade',
+    disciplinaId: 'qualidade-e-testes-de-software',
+    unidades: ['Melhores Práticas de Teste e Garantia de Qualidade'],
+    descricao:
+      'Fundamentos de QA, normas de qualidade, boas práticas de teste, CI/CD, práticas ágeis e melhoria contínua de processos.',
+  },
+  {
+    id: 'qualidade-cap12',
+    capitulo: 12,
+    grupo: 'Material prático',
+    titulo: 'Projeto Final',
+    disciplinaId: 'qualidade-e-testes-de-software',
+    descricao:
+      'A aplicação TaskFlow: testes unitários, de integração e E2E, performance com k6, pipeline de CI/CD e rubrica de avaliação.',
+  },
+  {
+    id: 'qualidade-cap13',
+    capitulo: 13,
+    grupo: 'Material prático',
+    titulo: 'Testes Práticos com Postman',
+    disciplinaId: 'qualidade-e-testes-de-software',
+    descricao: 'O que é uma API, métodos HTTP, collections, primeiros testes no Postman e como rodar tudo de uma vez.',
+  },
+
+  // Engenharia de Software
+  // Capítulos 1 e 4 a 12: Apostila_Completa.tex, separada com ferramentas/separar_latex.py e
+  // convertida com ferramentas/converter_latex.py.
+  // Capítulos 2 e 3: a versão nova (31/08) só existe em PDF -> ferramentas/converter_pdf_latex.py
+  // (cap. 2 com --trocar para remover uma referência institucional de uma tabela,
+  // juntar "Manutenibilidade" e quebrar a linha antes de RF03).
+  {
+    id: 'engsoft-cap1',
+    capitulo: 1,
+    titulo: 'Ciclo de Vida de Desenvolvimento de Software',
+    disciplinaId: 'engenharia-de-software-e-da-usabilidade',
+    unidades: ['Ciclo de Vida de Desenvolvimento de Software'],
+    descricao: 'Modelos de desenvolvimento (cascata, incremental, espiral, ágil), fases do ciclo de vida e comparativo entre os modelos.',
+  },
+  {
+    id: 'engsoft-cap2',
+    capitulo: 2,
+    titulo: 'Requisitos de Software',
+    disciplinaId: 'engenharia-de-software-e-da-usabilidade',
+    unidades: ['Requisitos de Software'],
+    descricao: 'Técnicas de elicitação, histórias de usuário, critérios de qualidade, MoSCoW, documentação e requisitos funcionais e não funcionais.',
+  },
+  {
+    id: 'engsoft-cap3',
+    capitulo: 3,
+    titulo: 'Arquitetura de Software',
+    disciplinaId: 'engenharia-de-software-e-da-usabilidade',
+    unidades: ['Arquitetura de Software'],
+    descricao: 'Design de sistemas e componentes, princípios SOLID, padrões arquiteturais e MVC, manutenção, modernização e substituição.',
+  },
+  {
+    id: 'engsoft-cap4',
+    capitulo: 4,
+    titulo: 'Programação Orientada a Objetos (POO)',
+    disciplinaId: 'engenharia-de-software-e-da-usabilidade',
+    unidades: ['Programação Orientada a Objetos'],
+    descricao: 'Classes e objetos, os quatro pilares da POO, herança, polimorfismo e abstração em profundidade, e princípios SOLID.',
+  },
+  {
+    id: 'engsoft-cap5',
+    capitulo: 5,
+    titulo: 'Testes de Software',
+    disciplinaId: 'engenharia-de-software-e-da-usabilidade',
+    unidades: ['Testes de Software'],
+    descricao: 'Conceitos de QA, caixa branca, preta e cinza, níveis de teste e pirâmide, automação de testes e CI/CD.',
+  },
+  {
+    id: 'engsoft-cap6',
+    capitulo: 6,
+    titulo: 'Qualidade de Software',
+    disciplinaId: 'engenharia-de-software-e-da-usabilidade',
+    unidades: ['Qualidade de Software'],
+    descricao: 'Controle de qualidade, QA vs. QC, métricas de produto e processo, CMMI e MPS.BR, custo da qualidade e DevOps.',
+  },
+  {
+    id: 'engsoft-cap7',
+    capitulo: 7,
+    titulo: 'Gestão da Configuração de Software',
+    disciplinaId: 'engenharia-de-software-e-da-usabilidade',
+    unidades: ['Gestão da Configuração'],
+    descricao: 'Itens de configuração, controle de versões com Git, estratégias de branching, auditoria e controle de mudanças.',
+  },
+  {
+    id: 'engsoft-cap8',
+    capitulo: 8,
+    titulo: 'Gestão de Projetos de Software',
+    disciplinaId: 'engenharia-de-software-e-da-usabilidade',
+    unidades: ['Gestão de Projetos de Software'],
+    descricao: 'Planejamento, execução e monitoramento de projetos, Scrum, Kanban e comparativo entre os dois.',
+  },
+  {
+    id: 'engsoft-cap9',
+    capitulo: 9,
+    titulo: 'Usabilidade e Experiência do Usuário (UX)',
+    disciplinaId: 'engenharia-de-software-e-da-usabilidade',
+    unidades: ['Usabilidade e Experiência do Usuário (UX)'],
+    descricao: 'UI vs. UX, as dez heurísticas de Nielsen, Gestalt e leis cognitivas, testes de usabilidade e design centrado no usuário.',
+  },
+  {
+    id: 'engsoft-cap10',
+    capitulo: 10,
+    titulo: 'Engenharia de Requisitos',
+    disciplinaId: 'engenharia-de-software-e-da-usabilidade',
+    unidades: ['Engenharia de Requisitos'],
+    descricao: 'Técnicas de elicitação, análise e priorização, especificação (ERS/SRS), critérios de aceitação e requisitos em contextos ágeis.',
+  },
+  {
+    id: 'engsoft-cap11',
+    capitulo: 11,
+    titulo: 'Interação Humano-Computador (IHC)',
+    disciplinaId: 'engenharia-de-software-e-da-usabilidade',
+    unidades: ['Interação Humano-Computador'],
+    descricao: 'Modelo de interação e affordances, paradigmas (CLI, GUI, toque, voz, AR/VR), design de interação, acessibilidade (WCAG) e avaliação.',
+  },
+  {
+    id: 'engsoft-cap12',
+    capitulo: 12,
+    grupo: 'Material complementar',
+    titulo: 'Segurança para Desenvolvimento de Software',
+    disciplinaId: 'engenharia-de-software-e-da-usabilidade',
+    descricao: 'DevOps e DevSecOps, ferramentas de segurança no pipeline, modelagem de ameaças com STRIDE e OWASP Top 10.',
+  },
+
+  // Gestão de Sistemas Digitais na Web
+  // Fonte: 02- APOSTILAS/LATEX/Capitulo*.tex (mesma versão dos PDFs de 11/08), ferramentas/converter_latex.py.
+  // O capítulo 2 (Cloud) não tem unidade própria no plano: ligado à unidade de Arquitetura.
+  {
+    id: 'gestaoweb-cap1',
+    capitulo: 1,
+    titulo: 'Arquitetura de Software e Web',
+    disciplinaId: 'gestao-de-sistemas-digitais-na-web',
+    unidades: ['Arquitetura de Sistemas na Web'],
+    descricao:
+      'Evolução das arquiteturas, protocolos, cliente-servidor, URL e HTTP, HTML/CSS/JavaScript, W3C, hipertexto e arquiteturas distribuídas com APIs.',
+  },
+  {
+    id: 'gestaoweb-cap2',
+    capitulo: 2,
+    titulo: 'Cloud Computing para Sistemas Web',
+    disciplinaId: 'gestao-de-sistemas-digitais-na-web',
+    unidades: ['Arquitetura de Sistemas na Web'],
+    descricao:
+      'Computação em nuvem, tipos de implantação, IaaS, PaaS, SaaS e BaaS, principais provedores, on-premises × cloud e migração para a nuvem.',
+  },
+  {
+    id: 'gestaoweb-cap3',
+    capitulo: 3,
+    titulo: 'Desenvolvimento de Aplicações Web',
+    disciplinaId: 'gestao-de-sistemas-digitais-na-web',
+    unidades: ['Desenvolvimento de Aplicações Web'],
+    descricao:
+      'Frontend × backend, sites estáticos e dinâmicos, JavaScript e TypeScript, bancos SQL e NoSQL, frameworks e design responsivo.',
+  },
+  {
+    id: 'gestaoweb-cap4',
+    capitulo: 4,
+    titulo: 'Gerenciamento de Conteúdo Web',
+    disciplinaId: 'gestao-de-sistemas-digitais-na-web',
+    unidades: ['Gerenciamento de Conteúdo Web'],
+    descricao: 'O que é um CMS, mercado e tendências, WordPress, Joomla, Drupal e outros, workflow de aprovações, SEO e ROI.',
+  },
+  {
+    id: 'gestaoweb-cap5',
+    capitulo: 5,
+    titulo: 'Segurança em Sistemas Web',
+    disciplinaId: 'gestao-de-sistemas-digitais-na-web',
+    unidades: ['Segurança em Sistemas Web'],
+    descricao:
+      'Tríade CIA, princípios de segurança, SQL Injection, XSS, CSRF, ransomware, DDoS e phishing, ferramentas, boas práticas, LGPD e GDPR.',
+  },
+  {
+    id: 'gestaoweb-cap6',
+    capitulo: 6,
+    titulo: 'Integração de Sistemas na Web',
+    disciplinaId: 'gestao-de-sistemas-digitais-na-web',
+    unidades: ['Integração de Sistemas na Web'],
+    descricao:
+      'Integração ponto a ponto, via middleware e por eventos, APIs de terceiros e autenticação, SOAP × REST e princípios RESTful.',
+  },
+  {
+    id: 'gestaoweb-cap7',
+    capitulo: 7,
+    titulo: 'Monitoramento e Análise de Desempenho',
+    disciplinaId: 'gestao-de-sistemas-digitais-na-web',
+    unidades: ['Monitoramento e Análise de Desempenho'],
+    descricao:
+      'Core Web Vitals, métricas de backend, ferramentas de monitoramento, otimizações, escalabilidade, testes de carga, SLI, SLO e error budget.',
+  },
+  {
+    id: 'gestaoweb-cap8',
+    capitulo: 8,
+    titulo: 'Gestão de Projetos de Desenvolvimento Web',
+    disciplinaId: 'gestao-de-sistemas-digitais-na-web',
+    unidades: ['Gestão de Projetos de Desenvolvimento Web'],
+    descricao:
+      'Os 7 passos para gerenciar um projeto: termo de abertura, EAP e requisitos, cronograma, comunicação, riscos, controle e encerramento.',
+  },
+  {
+    id: 'gestaoweb-cap9',
+    capitulo: 9,
+    titulo: 'Tecnologias Emergentes na Web',
+    disciplinaId: 'gestao-de-sistemas-digitais-na-web',
+    unidades: ['Tecnologias Emergentes na Web'],
+    descricao:
+      'Ciclo de vida das tecnologias, WebRTC, PWAs, WebAssembly, Web Components, Jamstack, serverless, edge computing e IA no frontend.',
+  },
+
+  // Programação e Design para Web II (apostila em módulos)
+  // Fonte: 02- APOSTILAS/Módulo 5/LATEX/modulos/modulo-0N.tex (24/08), convertida com
+  //   ferramentas/converter_latex.py --imagens <pasta> apostilas/web2
+  //     --sem-secao "O Projeto do Curso" --sem-secao "Continuando o Projeto" --sem-secao "Etapa"
+  // para ficar igual à versão de 12/09 (APOSTILAS NOVAS), que tirou o projeto do curso e as
+  // resoluções dos exercícios. O Projeto Portfólio não entra no site (decisão da professora).
+  // O Módulo 4 recebe as mudanças de 12/09 e perde as frases que citam o projeto com
+  //   ferramentas/ajustar_web2_modulo4.py
+  // A figura public/apostilas/web2/fluxograma-nodejs.png foi recortada para tirar um rodapé
+  // institucional; ao reconverter, não sobrescreva esse arquivo.
+  // Os módulos não seguem as unidades do plano de ensino, por isso não têm "unidades".
+  {
+    id: 'web2-cap1',
+    capitulo: 1,
+    rotulo: 'Módulo',
+    titulo: 'Node.js e Ecossistema NPM',
+    disciplinaId: 'programacao-e-design-para-web-ii',
+    descricao:
+      'O que é Node.js, npm e package.json, CommonJS vs ES Modules, servidor HTTP nativo, variáveis de ambiente e argumentos de linha de comando.',
+  },
+  {
+    id: 'web2-cap2',
+    capitulo: 2,
+    rotulo: 'Módulo',
+    titulo: 'React: Componentes e Props',
+    disciplinaId: 'programacao-e-design-para-web-ii',
+    descricao:
+      'O que é React, JSX, criação do projeto, componentes, props e children, renderização condicional, listas e a prop key.',
+  },
+  {
+    id: 'web2-cap3',
+    capitulo: 3,
+    rotulo: 'Módulo',
+    titulo: 'React: Hooks e Estado',
+    disciplinaId: 'programacao-e-design-para-web-ii',
+    descricao:
+      'Estado com useState, atualização correta, formulários controlados, estado como objeto, useEffect e o array de dependências.',
+  },
+  {
+    id: 'web2-cap4',
+    capitulo: 4,
+    rotulo: 'Módulo',
+    titulo: 'Next.js: App Router e Roteamento',
+    disciplinaId: 'programacao-e-design-para-web-ii',
+    descricao:
+      'O que é Next.js, App Router vs Pages Router, criação do projeto, estrutura de pastas, rotas por arquivos, o componente Link e layouts.',
+  },
+  {
+    id: 'web2-cap5',
+    capitulo: 5,
+    rotulo: 'Módulo',
+    titulo: 'Server e Client Components',
+    disciplinaId: 'programacao-e-design-para-web-ii',
+    descricao:
+      'Por que Server Components existem, a diretiva "use client", como misturar os dois tipos e como decidir entre server e client.',
+  },
+  {
+    // COMANDOS GITHUB.docx, convertido com ferramentas/converter_word_comandos.py
+    //   --remover-primeiro "Bem, nós iremos repassar" (parágrafo repetido fora do lugar)
+    //   e --trocar para corrigir digitação nos títulos (bransh, CHECOUT, GIR, hitórico, seu commits)
+    id: 'web2-git',
+    rotulo: 'Guia',
+    grupo: 'Material complementar',
+    titulo: 'Git e GitHub: Comandos Essenciais',
+    disciplinaId: 'programacao-e-design-para-web-ii',
+    descricao:
+      'Instalação e configuração no Windows, criação do repositório, add, commit, reset, branch, merge, stash, tag, fetch, pull, push e outros comandos.',
+  },
+  {
+    // "Como funciona o react.png" (infográfico da professora), com o rodapé do nome recortado, publicado em
+    // public/apostilas/web2/como-o-react-funciona.png; página em src/data/capitulos/web2-react.json
+    id: 'web2-react',
+    rotulo: 'Infográfico',
+    grupo: 'Material complementar',
+    titulo: 'Como o React Funciona',
+    disciplinaId: 'programacao-e-design-para-web-ii',
+    descricao:
+      'Infográfico do ciclo de renderização: componente, JSX, Virtual DOM, setState e o diffing que atualiza só o que mudou no DOM real.',
+  },
+  {
+    // "técnicas da engenharia de prompt.docx" (pasta INTELIGENCIA ARTIFICIAL): os 5 passos e o exemplo do Word;
+    // os frameworks (RTF, CTF, GRADE, PECRA, ROSES, SPARK, CREATE) reescritos em texto com exemplos de web, no
+    // lugar das capturas de tela do vídeo; infográfico em public/apostilas/web2/engenharia-de-prompt-rtf.png;
+    // página em src/data/capitulos/web2-prompt.json
+    id: 'web2-prompt',
+    rotulo: 'Guia',
+    grupo: 'Material complementar',
+    titulo: 'Técnicas de Engenharia de Prompt',
+    disciplinaId: 'programacao-e-design-para-web-ii',
+    descricao:
+      'Como escrever bons pedidos para ferramentas de IA: os 5 passos de um prompt e os frameworks RTF, CTF, GRADE, PECRA, ROSES, SPARK e CREATE, com exemplos de desenvolvimento web.',
+  },
+]

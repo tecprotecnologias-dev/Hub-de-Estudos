@@ -1,0 +1,273 @@
+{
+ "numero": 8,
+ "titulo": "Gestão de Projetos de Desenvolvimento Web",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, este material tratou de decisões técnicas: arquitetura, nuvem, código, conteúdo, segurança e desempenho. Mas nenhum sistema web nasce sozinho – ele é sempre o resultado do trabalho de uma equipe, com prazo, orçamento e escopo a gerenciar. Este capítulo apresenta os fundamentos da gestão de projetos aplicados ao contexto de desenvolvimento web: como estruturar, planejar, executar e encerrar um projeto de forma que ele entregue o que prometeu, no prazo combinado."
+  },
+  {
+   "t": "h2",
+   "id": "8-1-o-que-e-um-projeto",
+   "texto": "8.1 O que é um Projeto?"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    ""
+   ],
+   "linhas": [
+    [
+     "<strong>Projeto</strong>",
+     "Temporário e único – início e fim claramente definidos, com um resultado singular e exclusivo. Ex.: desenvolver um novo aplicativo"
+    ],
+    [
+     "<strong>Operação</strong>",
+     "Contínua e repetitiva – segue procedimentos já estabelecidos. Ex.: suporte técnico, folha de pagamento"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção — a confusão mais comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "É comum ouvir falar em “novos projetos” quando, na verdade, a pessoa está se referindo a atividades de rotina. A diferença fundamental é que um projeto exige planejamento específico, que considera o contexto único daquela situação – mesmo uma reforma de escritório, por exemplo, é um projeto único, com equipe, orçamento e características próprias, ainda que a empresa já tenha reformado outros espaços antes."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-2-classificacao-de-projetos-por-tamanho",
+   "texto": "8.2 Classificação de Projetos por Tamanho"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Critério",
+    "Pequeno",
+    "Médio",
+    "Grande"
+   ],
+   "linhas": [
+    [
+     "Duração",
+     "Semanas a 6 meses",
+     "6 a 12 meses",
+     "Acima de 12 meses"
+    ],
+    [
+     "Equipe",
+     "1 a 15 pessoas",
+     "5 a 20 pessoas",
+     "50+ pessoas"
+    ],
+    [
+     "Orçamento",
+     "Até R$ 50 mil",
+     "R$ 100 a 500 mil",
+     "Acima de R$ 500 mil"
+    ],
+    [
+     "Documentação",
+     "Mínima",
+     "Moderada",
+     "Extensa em todas as áreas"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Lógica fundamental — comece pequeno",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Se não há capacidade de gerenciar bem um pequeno projeto, dificilmente será possível gerenciar um grande. Os elementos básicos de gestão – escopo, cronograma, riscos – são a fundação: se ela for fraca, a estrutura desaba ao tentar sustentar um projeto maior. Projetos pessoais, trabalho voluntário e pequenas reformas são, na prática, algumas das melhores escolas de gestão de projetos."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-3-os-7-passos-para-gerenciar-qualquer-projeto",
+   "texto": "8.3 Os 7 Passos para Gerenciar Qualquer Projeto"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Passo",
+    "O que envolve"
+   ],
+   "linhas": [
+    [
+     "1. Iniciação",
+     "TAP – autoriza o projeto, designa recursos e alinha expectativas"
+    ],
+    [
+     "2. Escopo",
+     "EAP + Requisitos – define todas as entregas e suas características"
+    ],
+    [
+     "3. Cronograma",
+     "Tarefas com datas, durações, responsáveis e custos associados"
+    ],
+    [
+     "4. Planos de Apoio",
+     "Gerenciamento de riscos e plano de comunicações"
+    ],
+    [
+     "5. Execução",
+     "Mobilização de recursos e planejamento em ondas sucessivas"
+    ],
+    [
+     "6. Controle",
+     "Acompanhamento do status e gerenciamento de mudanças"
+    ],
+    [
+     "7. Encerramento",
+     "Aceitação formal, transição e lições aprendidas"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Esses sete passos não são burocracia – são o roteiro mínimo que separa um projeto conduzido de forma profissional de um projeto conduzido “no improviso”, mesmo quando o projeto em si é pequeno e a equipe, enxuta."
+  },
+  {
+   "t": "h2",
+   "id": "8-4-passo-1-tap-termo-de-abertura-do-projeto",
+   "texto": "8.4 Passo 1 — TAP: Termo de Abertura do Projeto"
+  },
+  {
+   "t": "p",
+   "html": "O TAP é o documento que autoriza formalmente o início do projeto. Ele deve conter, no mínimo: um objetivo SMART (<strong>Específico</strong>, <strong>Mensurável</strong>, <strong>Acordado</strong>, <strong>Realista</strong> e com <strong>Prazo</strong> definido), a justificativa do projeto, uma descrição preliminar em alto nível das principais entregas, as restrições já conhecidas (datas fixas, orçamento máximo, tecnologias obrigatórias), os riscos identificáveis desde o início, e a assinatura do patrocinador, que designa formalmente o gerente responsável."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático — objetivo SMART",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Não SMART:</strong> “Desenvolver um novo site para a empresa.”<br> <strong>SMART:</strong> “Desenvolver e lançar o novo site institucional da empresa, com até 8 páginas, otimizado para dispositivos móveis e integrado ao CRM atual, até o dia 30 de novembro.”<br> A diferença: o segundo é específico (o quê, quantas páginas), mensurável, acordado com os patrocinadores, realista e tem prazo definido."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-5-passo-2-eap-e-requisitos",
+   "texto": "8.5 Passo 2 — EAP e Requisitos"
+  },
+  {
+   "t": "p",
+   "html": "A EAP (Estrutura Analítica do Projeto) é uma hierarquia organizada de todas as entregas do projeto – contendo apenas o trabalho necessário, nem mais, nem menos. Os requisitos, por sua vez, são as necessidades quantificadas que servem como critério de aceitação: se o projeto atender aos requisitos definidos, ele será formalmente aceito pelo cliente ou patrocinador."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    ""
+   ],
+   "linhas": [
+    [
+     "<strong>Como garantir uma EAP completa</strong>",
+     "Opinião especializada de quem já fez projeto semelhante; revisão de lições aprendidas de projetos anteriores; <em>benchmarking</em> com outras organizações"
+    ],
+    [
+     "<strong>Risco de EAP incompleta</strong>",
+     "Instalar um sistema novo sem incluir o treinamento dos usuários finais – um esquecimento comum que compromete todo o resultado do projeto"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-6-passo-3-cronograma",
+   "texto": "8.6 Passo 3 — Cronograma"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "A fórmula do cronograma",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O cronograma integra três elementos: a EAP (o que será entregue), os recursos (quem vai fazer, e com o quê) e o orçamento (quanto vai custar). Em uma frase: <strong>cronograma = EAP + duração + responsáveis + custos</strong>. Para projetos pequenos, não é necessário nenhum software caro – uma planilha bem estruturada já cumpre o papel."
+    }
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Formato",
+    "Quando usar"
+   ],
+   "linhas": [
+    [
+     "Gráfico de Gantt",
+     "Sequência clara de tarefas com datas de início e fim bem definidas"
+    ],
+    [
+     "Kanban / Scrum",
+     "Trabalho iterativo, com colunas “A Fazer”, “Em Andamento” e “Concluído”"
+    ],
+    [
+     "Lista de tarefas",
+     "Equipes muito pequenas (1 a 3 pessoas), com checklist simples"
+    ],
+    [
+     "Calendário compartilhado",
+     "Comunicação de prazos com toda a equipe, em uma visão de 30 dias"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-7-planos-de-apoio-comunicacao-e-riscos",
+   "texto": "8.7 Planos de Apoio: Comunicação e Riscos"
+  },
+  {
+   "t": "p",
+   "html": "Um plano de comunicações define, para cada informação relevante do projeto, quem precisa recebê-la, por qual canal e com que frequência – evitando tanto o silêncio (que gera desalinhamento) quanto o excesso de reuniões (que consome tempo sem necessidade)."
+  },
+  {
+   "t": "p",
+   "html": "Um risco, para ser tratado como tal, precisa ter três características simultâneas: ser <strong>futuro</strong> (se já aconteceu, é um fato, não um risco), <strong>incerto</strong> (se é certo que vai acontecer, não é um risco – é um problema já conhecido) e ter <strong>impacto</strong> real sobre o projeto."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático — gerenciamento de um risco",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Risco #01: atraso na entrega de materiais impressos por falta de papel na gráfica. Validade: até a data de entrega prevista – depois disso, o risco expira. Resposta ativa: preparar uma versão digital como alternativa, caso o atraso se confirme. Resposta passiva: apenas monitorar, sem agir, a menos que o atraso realmente ocorra."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-8-execucao-controle-e-encerramento",
+   "texto": "8.8 Execução, Controle e Encerramento"
+  },
+  {
+   "t": "p",
+   "html": "Na execução, o <strong>planejamento em ondas sucessivas</strong> é a prática mais realista: o plano macro existe desde o início, mas os detalhes finos de cada etapa são adicionados apenas conforme a equipe se aproxima dela – de forma semelhante a um GPS que recalcula a rota sem nunca mudar o destino final."
+  },
+  {
+   "t": "p",
+   "html": "No controle, o acompanhamento diário costuma ser mais eficaz do que revisões mensais – assim como verificar o saldo da conta bancária diariamente é mais fácil do que reconstituir um mês inteiro de gastos de uma vez. Os indicadores RAG (verde, amarelo, vermelho) tornam esse acompanhamento visual e rápido de interpretar, e a chamada <strong>regra dos 30%</strong> sugere que, se uma mudança solicitada altera mais de 30% do escopo original, vale considerar tratá-la como um novo projeto, em vez de forçá-la dentro do projeto atual."
+  },
+  {
+   "t": "p",
+   "html": "No encerramento, existem duas “portas” que precisam ser fechadas: a porta externa, com a aceitação formal do cliente e a transição cuidadosa do resultado, e a porta interna, com o registro das lições aprendidas – o que deu certo, o que deu errado, e por quê. Essa segunda porta é frequentemente negligenciada, mas é exatamente ela que transforma experiência em conhecimento reutilizável para o próximo projeto."
+  }
+ ]
+}

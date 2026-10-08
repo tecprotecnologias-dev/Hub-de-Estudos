@@ -1,0 +1,523 @@
+{
+ "numero": 3,
+ "titulo": "Comércio Eletrônico e Contratos Online",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "O comércio eletrônico transformou radicalmente a forma como pessoas e empresas realizam negócios. No Brasil, o setor movimentou mais de R$ 185 bilhões em 2023 e segue em crescimento acelerado, impulsionado pela digitalização dos hábitos de consumo e pela expansão do acesso à internet. Nesse cenário, compreender as regras jurídicas que governam as transações online — desde a oferta do produto até a resolução de conflitos — é fundamental para empreendedores, gestores e profissionais do direito digital. Este capítulo explora as regulamentações do e-commerce e a validade dos contratos celebrados eletronicamente."
+  },
+  {
+   "t": "h2",
+   "id": "3-1-o-comercio-eletronico-no-brasil-panorama-e-evolucao",
+   "texto": "3.1 O Comércio Eletrônico no Brasil: Panorama e Evolução"
+  },
+  {
+   "t": "h3",
+   "texto": "Definição e Modelos de Negócio no E-commerce"
+  },
+  {
+   "t": "p",
+   "html": "Comércio eletrônico (e-commerce) é a atividade de compra e venda de produtos ou serviços por meio de canais digitais — sites, aplicativos, redes sociais ou plataformas de marketplace. Vai além da simples loja virtual: abrange todo o ecossistema de transações digitais, incluindo pagamentos, logística, atendimento e pós-venda."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Modelo</strong>",
+    "<strong>Descrição</strong>",
+    "<strong>Exemplos</strong>"
+   ],
+   "linhas": [
+    [
+     "B2C",
+     "Empresa vende diretamente ao consumidor final",
+     "Americanas, Shopee, Netshoes"
+    ],
+    [
+     "B2B",
+     "Transações entre empresas",
+     "Alibaba, Mercado B2B"
+    ],
+    [
+     "C2C",
+     "Consumidores vendem entre si",
+     "OLX, Enjoei, eBay"
+    ],
+    [
+     "D2C",
+     "Fabricante vende sem intermediários",
+     "Marcas próprias via Instagram Shop"
+    ],
+    [
+     "Marketplace",
+     "Plataforma que conecta vendedores e compradores",
+     "Mercado Livre, Amazon, Magalu"
+    ],
+    [
+     "Social Commerce",
+     "Vendas diretas por redes sociais",
+     "Instagram Shopping, TikTok Shop"
+    ],
+    [
+     "SaaS / Assinatura",
+     "Acesso a software ou conteúdo recorrente",
+     "Netflix, Adobe CC, Hotmart"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma mesma empresa pode operar em vários modelos simultaneamente: uma marca de roupas vende no próprio site (D2C), também está presente no Mercado Livre (marketplace) e ainda vende por transmissões ao vivo no Instagram (social commerce) — cada canal com obrigações legais praticamente idênticas em relação ao consumidor final, mas riscos contratuais diferentes em relação à plataforma intermediária."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Evolução Legal do E-commerce no Brasil"
+  },
+  {
+   "t": "p",
+   "html": "Antes de 2013, o comércio eletrônico brasileiro operava sem regulamentação específica, amparado apenas pelo CDC (Lei nº 8.078/1990). Com o crescimento das compras online e o aumento das reclamações de consumidores, o Governo Federal editou o Decreto nº 7.962/2013 — o Marco Regulatório do E-commerce —, que atuou como divisor de águas na proteção do consumidor digital no país."
+  },
+  {
+   "t": "h2",
+   "id": "3-2-legislacao-aplicavel-ao-e-commerce-decreto-7-962-2013-e-cdc",
+   "texto": "3.2 Legislação Aplicável ao E-commerce: Decreto 7.962/2013 e CDC"
+  },
+  {
+   "t": "p",
+   "html": "O Decreto nº 7.962/2013 regulamentou o art. 44 do CDC para o comércio eletrônico, estabelecendo três grandes eixos de obrigação. Seu descumprimento configura prática abusiva passível de sanções administrativas pelo PROCON e de indenização na esfera judicial."
+  },
+  {
+   "t": "h3",
+   "texto": "Os Três Eixos do Decreto nº 7.962/2013"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. Informações Claras (Art. 2º): razão social, CNPJ/CPF, endereço físico, telefone e e-mail, dados técnicos do produto, preço total com encargos e condições de pagamento.",
+    "2. Atendimento Facilitado (Art. 4º): sumário do contrato antes da compra, confirmação imediata do pedido e canal acessível para cancelamento e reclamações.",
+    "3. Direito de Arrependimento (Art. 5º): até 7 dias corridos após o recebimento, sem justificativa, com devolução integral dos valores, inclusive o frete."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "O CDC no Ambiente Digital"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Art. 30 — Oferta Vinculante:</strong> toda informação ou publicidade no site vincula o fornecedor, mesmo fora do contrato.",
+    "<strong>Art. 39, III:</strong> proibido enviar produto sem solicitação prévia; se ocorrer, é amostra grátis.",
+    "<strong>Art. 26:</strong> vícios devem ser reclamados em 30 dias (não duráveis) ou 90 dias (duráveis).",
+    "<strong>Art. 18:</strong> fornecedor responde por defeitos independentemente de culpa (responsabilidade objetiva)."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: Erro de Preço (Black Friday)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Erros de preço (ex.: TV por R$ 1,00) são fonte frequente de litígios. A jurisprudência é dividida: parte entende que o art. 30 obriga o cumprimento; outra reconhece o erro manifesto como excludente. Tendência do STJ: admitir invalidade em erro evidente e desproporcional — mas recomenda-se corrigir e comunicar o consumidor antes da expedição."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-3-obrigacoes-legais-das-lojas-virtuais-e-marketplaces",
+   "texto": "3.3 Obrigações Legais das Lojas Virtuais e Marketplaces"
+  },
+  {
+   "t": "h3",
+   "texto": "Checklist de Conformidade para Lojas Virtuais"
+  },
+  {
+   "t": "p",
+   "html": "Identificação do Fornecedor (CNPJ, endereço, contato visíveis); Política de Privacidade (LGPD); Termos e Condições claros; Preço Transparente (total, com encargos); Confirmação de Pedido automática; Prazo de Entrega informado e cumprido; Direito de Arrependimento com canal claro; SAC Digital acessível; Selos e Certificados (SSL, antifraude)."
+  },
+  {
+   "t": "h3",
+   "texto": "Responsabilidade dos Marketplaces"
+  },
+  {
+   "t": "p",
+   "html": "O STJ, no julgamento do REsp 1.599.2016 (Tema 938), firmou entendimento de que o marketplace responde solidariamente com o vendedor pelos danos causados ao consumidor, por fazer parte da cadeia de fornecimento."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Situação</strong>",
+    "<strong>Responsabilidade</strong>",
+    "<strong>Base Legal</strong>"
+   ],
+   "linhas": [
+    [
+     "Produto com defeito, vendedor terceiro",
+     "Solidária — consumidor pode acionar o marketplace direto",
+     "CDC art. 18; STJ Tema 938"
+    ],
+    [
+     "Produto não entregue por terceiro",
+     "Solidária — deve garantir reembolso ou entrega",
+     "CDC art. 35; STJ Tema 938"
+    ],
+    [
+     "Fraude por vendedor falso",
+     "Objetiva — falha na verificação do cadastro",
+     "CDC art. 14"
+    ],
+    [
+     "Anúncio com informação falsa",
+     "Solidária se o marketplace editou/aprovou",
+     "CDC art. 30 e 37"
+    ],
+    [
+     "Dados do consumidor vazados",
+     "Objetiva pela falha de segurança",
+     "LGPD art. 44; CDC art. 14"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-4-meios-de-pagamento-digital-e-regulamentacao",
+   "texto": "3.4 Meios de Pagamento Digital e Regulamentação"
+  },
+  {
+   "t": "p",
+   "html": "Regulamentados pelo BACEN. A Lei 12.865/2013 instituiu o marco dos pagamentos digitais, criando arranjos e instituições de pagamento supervisionados pelo Banco Central."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Cartão de Crédito/Débito:</strong> bandeiras e credenciadoras; normas do BACEN e regras de chargeback.",
+    "<strong>Boleto Bancário:</strong> vencimento padrão D+1; cancelamento automático após vencimento.",
+    "<strong>Pix:</strong> instantâneo, 24/7, sem custo para PF e MEI (Res. BCB nº 1/2020).",
+    "<strong>Carteiras Digitais:</strong> PayPal, PicPay, Mercado Pago — reguladas como Instituições de Pagamento.",
+    "<strong>Criptomoedas:</strong> Lei 14.478/2022 regula VASPs, exigindo autorização do BACEN.",
+    "<strong>BNPL:</strong> crédito parcelado no checkout; regras de crédito do BACEN e CDC."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Chargeback: Direitos, Deveres e Prevenção"
+  },
+  {
+   "t": "p",
+   "html": "Estorno de transação solicitado pelo portador do cartão à operadora, sem passar pelo comerciante. Proteção ao consumidor e um dos maiores desafios operacionais do e-commerce."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma loja que envia produtos sem exigir assinatura na entrega e sem rastreamento tem muito menos chance de reverter um chargeback por \"produto não recebido\" do que uma loja que documenta cada etapa da entrega — porque o ônus da prova de que a transação foi legítima e cumprida recai sobre o lojista, não sobre a operadora do cartão."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-5-contratos-digitais-conceito-formacao-e-validade",
+   "texto": "3.5 Contratos Digitais: Conceito, Formação e Validade"
+  },
+  {
+   "t": "h3",
+   "texto": "O que é um Contrato Digital?"
+  },
+  {
+   "t": "p",
+   "html": "Contrato digital é todo acordo de vontades celebrado por meio eletrônico. Plenamente válido e produz todos os efeitos jurídicos dos contratos tradicionais, desde que observados os requisitos do Código Civil (art. 104)."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Agente Capaz:</strong> partes com capacidade civil (menores de 16 anos são absolutamente incapazes).",
+    "<strong>Objeto Lícito, Possível, Determinado:</strong> não pode contrariar lei, moral ou bons costumes.",
+    "<strong>Forma Prescrita ou Não Defesa em Lei:</strong> contratos por clique (clickwrap) são válidos, salvo forma especial exigida."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Formação dos Contratos Digitais"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Tipo</strong>",
+    "<strong>Como se Forma</strong>",
+    "<strong>Exemplos</strong>"
+   ],
+   "linhas": [
+    [
+     "Clickwrap",
+     "Usuário clica em \"Li e aceito\"; registro de IP, data e hora",
+     "Instalação de software, checkout"
+    ],
+    [
+     "Browsewrap",
+     "Termos disponíveis no site; uso implica aceitação (mais frágil)",
+     "Termos de uso no rodapé"
+    ],
+    [
+     "Sign-wrap",
+     "Assinatura eletrônica do contrato",
+     "Prestação de serviço, locação"
+    ],
+    [
+     "Scroll-wrap",
+     "Usuário deve rolar até o fim antes de aceitar",
+     "Contratos de alto valor"
+    ],
+    [
+     "E-mail",
+     "Troca de e-mails com proposta e aceitação expressas",
+     "Acordos B2B, orçamentos"
+    ],
+    [
+     "EDI",
+     "Sistemas trocam pedidos automaticamente",
+     "Cadeias de suprimento, ERPs"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Um checkout de e-commerce que só tem um botão \"Finalizar Compra\", sem qualquer checkbox de aceite de termos visível, é juridicamente mais frágil do que um checkout que exige marcar \"Li e aceito os Termos de Uso e a Política de Privacidade\" antes de liberar o botão de pagamento — em uma disputa judicial, a segunda opção é muito mais fácil de provar como aceitação consciente."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Contratos de Adesão no E-commerce"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Clareza e Destaque:</strong> cláusulas que limitam direitos devem ter destaque especial.",
+    "<strong>Nulidade de Cláusulas Abusivas:</strong> são nulas cláusulas que excluam responsabilidade ou coloquem o consumidor em desvantagem exagerada.",
+    "<strong>Interpretação Pro Consumidor:</strong> em caso de ambiguidade, a interpretação favorece o aderente.",
+    "<strong>Limite da Boa-fé Objetiva:</strong> termos excessivamente longos e técnicos podem ter eficácia questionada judicialmente."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-6-assinatura-eletronica-tipos-legislacao-e-validade-juridica",
+   "texto": "3.6 Assinatura Eletrônica: Tipos, Legislação e Validade Jurídica"
+  },
+  {
+   "t": "p",
+   "html": "A MP nº 2.200-2/2001 criou a ICP-Brasil, conferindo presunção legal de autenticidade e integridade às assinaturas digitais de certificadoras credenciadas. A Lei nº 14.063/2020 avançou ao reconhecer múltiplos tipos de assinatura eletrônica."
+  },
+  {
+   "t": "h3",
+   "texto": "Os Três Tipos — Lei nº 14.063/2020"
+  },
+  {
+   "t": "p",
+   "html": "Simples (AES): qualquer método que identifique o signatário: e-mail, SMS, token, login/senha ou clique. Menor presunção legal."
+  },
+  {
+   "t": "p",
+   "html": "Avançada (AEA): certificado não-ICP ou outro método que vincule o signatário ao documento. Usada por DocuSign, Clicksign, D4Sign."
+  },
+  {
+   "t": "p",
+   "html": "Qualificada (AEQ): certificado emitido por AC credenciada pela ICP-Brasil (e-CPF, e-CNPJ). Máxima presunção legal; obrigatória para atos com o Poder Público."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Característica</strong>",
+    "<strong>Simples</strong>",
+    "<strong>Avançada</strong>",
+    "<strong>Qualificada</strong>"
+   ],
+   "linhas": [
+    [
+     "Tecnologia",
+     "Login, e-mail, SMS",
+     "Certificado não-ICP, biometria",
+     "Certificado ICP-Brasil"
+    ],
+    [
+     "Custo",
+     "Baixo / Gratuito",
+     "Médio (plataforma)",
+     "Alto (certificado anual)"
+    ],
+    [
+     "Presunção legal",
+     "Menor",
+     "Média",
+     "Máxima"
+    ],
+    [
+     "Obrigatória para",
+     "Atos cotidianos",
+     "Contratos empresariais",
+     "Atos com o Poder Público"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Certificado Digital ICP-Brasil"
+  },
+  {
+   "t": "p",
+   "html": "Identidade virtual que vincula uma chave criptográfica a uma pessoa física ou jurídica. Emitido por ACs credenciadas pelo ITI — tipo A1 (arquivo digital) ou A3 (token/cartão inteligente). Usos: NF-e, eSocial, contratos e procurações, sistemas governamentais, licitações eletrônicas, plataformas bancárias."
+  },
+  {
+   "t": "h3",
+   "texto": "Os Três Pilares da Validade do Contrato Eletrônico"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Autenticidade:</strong> é possível identificar quem assinou? (certificado digital, biometria, confirmação por e-mail/SMS vinculado ao CPF)",
+    "<strong>Integridade:</strong> o documento não foi alterado após a assinatura? (hash criptográfico, timestamp, blockchain)",
+    "<strong>Não Repúdio:</strong> o signatário não pode negar que assinou? (trilha de auditoria, log de acesso, ICP-Brasil)"
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: Contratos que Ainda Exigem Forma Especial",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Escritura pública — imóvel acima de 30 salários mínimos exige cartório (CC, art. 108)."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Testamento público — lavrado por tabelião, com testemunhas."
+  },
+  {
+   "t": "p",
+   "html": "Adoção — exige procedimento judicial."
+  },
+  {
+   "t": "p",
+   "html": "Casamento civil — presença física perante autoridade, embora a habilitação possa ser digital."
+  },
+  {
+   "t": "h2",
+   "id": "3-7-execucao-inadimplemento-e-resolucao-de-conflitos-online",
+   "texto": "3.7 Execução, Inadimplemento e Resolução de Conflitos Online"
+  },
+  {
+   "t": "p",
+   "html": "O descumprimento das obrigações contratuais configura inadimplemento e gera consequências jurídicas: indenização, rescisão contratual e, em alguns casos, execução judicial."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Prazo de Entrega:</strong> é parte do contrato; descumprimento gera cancelamento e indenização.",
+    "<strong>Inadimplemento do Consumidor:</strong> autoriza suspensão do serviço, juros moratórios e multa, nos limites do CDC.",
+    "<strong>Suspensão de Serviço Digital (SaaS):</strong> deve ser comunicada com antecedência, preservando os dados do usuário.",
+    "<strong>Resolução por Culpa do Fornecedor:</strong> dá direito à restituição integral e indenização por danos."
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Mecanismo</strong>",
+    "<strong>Descrição</strong>",
+    "<strong>Vantagens</strong>",
+    "<strong>Limitações</strong>"
+   ],
+   "linhas": [
+    [
+     "Consumidor.gov.br",
+     "Mediação federal gratuita",
+     "Rápido (~7 dias)",
+     "Só empresas cadastradas"
+    ],
+    [
+     "PROCON",
+     "Órgão de defesa do consumidor",
+     "Gratuito, coercitivo",
+     "Mais lento"
+    ],
+    [
+     "Juizado Especial",
+     "Até 40 SM, sem advogado (até 20 SM)",
+     "Rápido e gratuito",
+     "Limitado ao valor"
+    ],
+    [
+     "Mediação Online (ODR)",
+     "Câmaras digitais por videoconferência",
+     "Confidencial e flexível",
+     "Depende de adesão"
+    ],
+    [
+     "Arbitragem",
+     "Árbitro privado, decisão vinculante",
+     "Especializado e sigiloso",
+     "Custoso"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-8-comercio-eletronico-internacional-desafios-e-regulamentacao",
+   "texto": "3.8 Comércio Eletrônico Internacional: Desafios e Regulamentação"
+  },
+  {
+   "t": "h3",
+   "texto": "Principais Desafios do E-commerce Internacional"
+  },
+  {
+   "t": "p",
+   "html": "Tributação: no Remessa Conforme, desde agosto de 2024 (Lei nº 14.902/2024), compras de até US$ 50 pagam 20% de Imposto de Importação; de US$ 50 a US$ 3.000, 60%, com desconto de US$ 20 no imposto; o ICMS é cobrado à parte."
+  },
+  {
+   "t": "p",
+   "html": "Jurisdição e Lei Aplicável: definir qual país julga e qual lei se aplica depende de cláusulas contratuais e tratados."
+  },
+  {
+   "t": "p",
+   "html": "Proteção do Consumidor: CDC protege consumidores brasileiros mesmo em compras internacionais direcionadas ao Brasil."
+  },
+  {
+   "t": "p",
+   "html": "LGPD e GDPR: transferência internacional de dados exige cláusulas contratuais padrão ou garantias equivalentes."
+  },
+  {
+   "t": "p",
+   "html": "Logística e Devoluções: procedimentos alfandegários complexos dificultam o direito de arrependimento."
+  },
+  {
+   "t": "p",
+   "html": "Fraude e Segurança: maior risco em transações internacionais; 3D Secure (3DS2) é essencial."
+  }
+ ]
+}

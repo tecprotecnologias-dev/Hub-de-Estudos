@@ -1,0 +1,414 @@
+{
+ "numero": 2,
+ "titulo": "Requisitos de Software",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Requisitos de software são descrições do que um sistema deve fazer, como deve se comportar e quais restrições deve respeitar. Eles formam a base de todo o processo de desenvolvimento: um sistema construído sobre requisitos mal definidos tende ao fracasso, independentemente da qualidade técnica do código produzido."
+  },
+  {
+   "t": "p",
+   "html": "Uma pesquisa clássica do Standish Group (relatório CHAOS) aponta que grande parte dos projetos de software fracassa ou apresenta problemas graves justamente por falhas na etapa de requisitos – seja por requisitos incompletos, mal compreendidos ou que mudam sem controle ao longo do projeto."
+  },
+  {
+   "t": "p",
+   "html": "Saber trabalhar com requisitos é, portanto, uma das habilidades mais valorizadas e, ao mesmo tempo, mais negligenciadas na formação de profissionais de TI."
+  },
+  {
+   "t": "h2",
+   "id": "2-1-elicitacao-de-requisitos",
+   "texto": "2.1 Elicitação de Requisitos"
+  },
+  {
+   "t": "p",
+   "html": "Elicitar significa descobrir e levantar as necessidades dos stakeholders (partes interessadas: clientes, usuários, gestores, equipe técnica etc.). É um processo humano e comunicativo, repleto de desafios, pois as pessoas nem sempre sabem exatamente o que querem, ou têm dificuldade de expressar suas necessidades em termos que a equipe técnica consiga traduzir em software."
+  },
+  {
+   "t": "h3",
+   "texto": "Técnicas de Elicitação de Requisitos"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Entrevistas.</strong> Conversas estruturadas ou semiestruturadas com stakeholders. São eficientes para entender o contexto do negócio e capturar necessidades individuais. Exigem preparo prévio e escuta ativa do engenheiro de requisitos."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Ideal quando",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Há poucos stakeholders com conhecimento profundo do domínio; é necessário entender contexto e motivações."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Workshops (JAD).</strong> Sessões colaborativas (Joint Application Development) com múltiplos stakeholders ao mesmo tempo. Facilitam o alinhamento entre diferentes visões e a resolução de conflitos de requisitos ainda na fase inicial."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Ideal quando",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O projeto tem múltiplos stakeholders com visões conflitantes; há necessidade de consenso rápido."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Observação.</strong> O analista observa os usuários trabalhando em seu ambiente real, sem interferência (etnografia). Revela necessidades implícitas que os próprios usuários não conseguem verbalizar por estarem habituados às suas rotinas."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Ideal quando",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Os usuários têm dificuldade de verbalizar suas necessidades; o projeto envolve modernização de processos existentes."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Prototipagem.</strong> Criação de versões simplificadas e visuais do sistema (protótipos de baixa ou alta fidelidade) para que o usuário possa reagir de forma concreta. Muito eficaz para refinar requisitos de interface e interação."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Ideal quando",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Trata-se de requisitos de interface e UX; o usuário não consegue definir o que quer sem ver algo concreto."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Histórias de Usuário.</strong> Técnica ágil que descreve funcionalidades do ponto de vista do usuário no formato: “Como [quem], quero [o quê], para [por quê]”. Simples, centrada no valor e fácil de priorizar."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Ideal quando",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O contexto é ágil (Scrum, Kanban); a equipe prioriza comunicação sobre documentação formal."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Questionários.</strong> Conjuntos de perguntas enviados a um grande número de stakeholders. Permitem coletar dados quantitativos e qualitativos de forma escalável, sem a necessidade de encontros presenciais."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Ideal quando",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Há um grande número de usuários dispersos geograficamente; é preciso validar prioridades com muitas pessoas."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Formato de História de Usuário"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Estrutura padrão",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Como [tipo de usuário], quero [realizar uma ação / ter uma funcionalidade], para [alcançar um objetivo / obter um benefício]."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Exemplo 1:</strong> “Como cliente do banco, quero visualizar meu extrato dos últimos 90 dias, para controlar minhas despesas mensais.”"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Exemplo 2:</strong> “Como gerente de loja, quero gerar relatórios de vendas por período e por vendedor, para identificar os melhores desempenhos.”<br>Toda história de usuário deve vir acompanhada de <strong>critérios de aceitação</strong> (a Definition of Done da história) – para o Exemplo 1, isso significa que: o extrato deve exibir data, descrição e valor de cada transação; o usuário deve poder filtrar por período personalizado; e o relatório deve poder ser exportado em PDF."
+  },
+  {
+   "t": "h2",
+   "id": "2-2-analise-de-requisitos",
+   "texto": "2.2 Análise de Requisitos"
+  },
+  {
+   "t": "p",
+   "html": "Após a elicitação, os requisitos brutos precisam ser analisados criticamente. O objetivo é garantir que os requisitos coletados sejam de alta qualidade antes de serem documentados formalmente e utilizados como base para o desenvolvimento."
+  },
+  {
+   "t": "h3",
+   "texto": "Critérios de Qualidade dos Requisitos"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Critério",
+    "Descrição",
+    "Pergunta de Verificação"
+   ],
+   "linhas": [
+    [
+     "Completo",
+     "Cobre todas as necessidades sem lacunas",
+     "Existe alguma situação relevante não coberta?"
+    ],
+    [
+     "Consistente",
+     "Não contradiz outros requisitos",
+     "Há conflito com outro requisito existente?"
+    ],
+    [
+     "Viável",
+     "Pode ser implementado dentro das restrições do projeto",
+     "É tecnicamente e financeiramente possível?"
+    ],
+    [
+     "Verificável",
+     "É possível testar se o requisito foi atendido",
+     "Como saberemos que este requisito está satisfeito?"
+    ],
+    [
+     "Rastreável",
+     "Pode ser vinculado à sua origem e ao seu impacto",
+     "Qual stakeholder originou este requisito?"
+    ],
+    [
+     "Não ambíguo",
+     "Tem apenas uma interpretação possível",
+     "Dois leitores diferentes chegariam à mesma conclusão?"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Técnica MoSCoW de Priorização"
+  },
+  {
+   "t": "p",
+   "html": "Quando conflitos surgem entre requisitos de diferentes stakeholders, ou quando o escopo precisa ser negociado, a técnica MoSCoW é amplamente utilizada para classificar requisitos por importância e urgência:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Categoria",
+    "Significado",
+    "Ação"
+   ],
+   "linhas": [
+    [
+     "Must Have (M)",
+     "Requisito obrigatório – sem ele, o sistema não pode ser entregue",
+     "Deve estar no primeiro release, sem exceção"
+    ],
+    [
+     "Should Have (S)",
+     "Requisito importante mas não crítico – existe workaround",
+     "Alta prioridade, incluir se possível no release atual"
+    ],
+    [
+     "Could Have (C)",
+     "Desejável, mas de menor impacto – “seria legal ter”",
+     "Incluir apenas se houver tempo e orçamento disponíveis"
+    ],
+    [
+     "Won't Have (W)",
+     "Fora do escopo atual – pode ser considerado no futuro",
+     "Não será desenvolvido nesta versão; documentado para o backlog futuro"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-3-documentacao-de-requisitos",
+   "texto": "2.3 Documentação de Requisitos"
+  },
+  {
+   "t": "p",
+   "html": "Requisitos bem elicitados e analisados precisam ser registrados formalmente para que possam ser consultados, revisados e validados ao longo de todo o projeto. Os principais artefatos de documentação variam conforme o modelo de desenvolvimento adotado."
+  },
+  {
+   "t": "h3",
+   "texto": "Documento de Visão"
+  },
+  {
+   "t": "p",
+   "html": "Descreve o problema a ser resolvido, os stakeholders envolvidos e a proposta de valor do sistema de forma geral. É acessível a todos os públicos – técnicos e não técnicos."
+  },
+  {
+   "t": "h3",
+   "texto": "SRS (Software Requirements Specification)"
+  },
+  {
+   "t": "p",
+   "html": "O artefato mais completo e formal. Descreve em detalhes todos os requisitos funcionais e não funcionais, servindo como contrato técnico entre cliente e equipe de desenvolvimento. Baseado na norma IEEE 830."
+  },
+  {
+   "t": "h3",
+   "texto": "Backlog do Produto"
+  },
+  {
+   "t": "p",
+   "html": "No contexto ágil, substitui o SRS formal. É uma lista priorizada de histórias de usuário gerenciada continuamente pelo Product Owner. É vivo – cresce e se reorganiza ao longo do projeto."
+  },
+  {
+   "t": "h3",
+   "texto": "Casos de Uso"
+  },
+  {
+   "t": "p",
+   "html": "Diagramas e descrições narrativas das interações entre atores (usuários ou sistemas externos) e o sistema. Muito utilizados em metodologias orientadas a objetos com UML."
+  },
+  {
+   "t": "h3",
+   "texto": "Protótipos"
+  },
+  {
+   "t": "p",
+   "html": "Versões visuais do sistema que servem como forma de documentar e validar requisitos de interface e comportamento com o usuário antes do desenvolvimento."
+  },
+  {
+   "t": "h2",
+   "id": "2-4-requisitos-funcionais-e-nao-funcionais",
+   "texto": "2.4 Requisitos Funcionais e Não Funcionais"
+  },
+  {
+   "t": "p",
+   "html": "Uma das distinções mais importantes na engenharia de requisitos é a separação entre requisitos funcionais e não funcionais. Um erro comum entre iniciantes é tratar os requisitos não funcionais como secundários ou opcionais – na realidade, eles são tão críticos quanto os funcionais."
+  },
+  {
+   "t": "h3",
+   "texto": "Requisitos Funcionais (RF)"
+  },
+  {
+   "t": "p",
+   "html": "Definem o que o sistema deve fazer – as funções, serviços e comportamentos que o software deve oferecer ao usuário. Descrevem as ações que o sistema executa em resposta a entradas ou eventos."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplos de Requisitos Funcionais",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "RF01: o sistema deve permitir que o usuário realize login com e-mail e senha.<br>RF02: o sistema deve gerar relatórios de vendas por período, filtrando por produto e vendedor.<br>RF03: o sistema deve enviar uma notificação por e-mail ao cliente após a confirmação de um pedido.<br>RF04: o sistema deve calcular automaticamente o frete com base no CEP de destino e no peso do produto.<br>RF05: o sistema deve permitir ao administrador criar, editar, desativar e excluir contas de usuários."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Requisitos Não Funcionais (RNF)"
+  },
+  {
+   "t": "p",
+   "html": "Definem como o sistema deve se comportar – as qualidades, restrições e atributos que permeiam todo o sistema. Não descrevem funcionalidades isoladas, mas propriedades sistêmicas que impactam a experiência do usuário e a viabilidade técnica."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Categoria",
+    "Descrição",
+    "Exemplo Prático"
+   ],
+   "linhas": [
+    [
+     "Desempenho",
+     "Tempo de resposta, throughput, uso de recursos",
+     "O sistema deve responder a qualquer consulta em no máximo 2 segundos para até 1.000 usuários simultâneos"
+    ],
+    [
+     "Segurança",
+     "Controle de acesso, criptografia, autenticação, auditoria",
+     "Todas as senhas devem ser armazenadas com hash usando bcrypt com salt"
+    ],
+    [
+     "Usabilidade",
+     "Facilidade de aprendizado, eficiência, satisfação, acessibilidade",
+     "Um usuário sem treinamento deve conseguir realizar uma compra em no máximo 5 minutos"
+    ],
+    [
+     "Confiabilidade",
+     "Disponibilidade, tolerância a falhas, recuperação",
+     "O sistema deve ter disponibilidade de 99,9% ao mês (máx. 8,7 horas de downtime/ano)"
+    ],
+    [
+     "Manutenibilidade",
+     "Facilidade de modificar, corrigir e evoluir",
+     "Alterações em regras de negócio não devem exigir mudanças em mais de 3 classes"
+    ],
+    [
+     "Escalabilidade",
+     "Capacidade de crescer sem degradação",
+     "O sistema deve suportar crescimento de 10x no volume de dados sem refatoração de arquitetura"
+    ],
+    [
+     "Conformidade",
+     "Aderência a leis, normas e regulamentações",
+     "O sistema deve estar em conformidade com a LGPD (Lei nº 13.709/2018)"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Requisitos Funcionais vs. Não Funcionais"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aspecto",
+    "Requisitos Funcionais",
+    "Requisitos Não Funcionais"
+   ],
+   "linhas": [
+    [
+     "O que descreve",
+     "O que o sistema faz",
+     "Como o sistema se comporta"
+    ],
+    [
+     "Relacionado a",
+     "Funcionalidades específicas",
+     "Qualidades e restrições do sistema todo"
+    ],
+    [
+     "Visibilidade",
+     "Diretamente visível ao usuário",
+     "Muitas vezes invisível mas crítico"
+    ],
+    [
+     "Verificação",
+     "Testes funcionais (caixa preta)",
+     "Testes de performance, segurança, usabilidade"
+    ],
+    [
+     "Consequência de violação",
+     "Funcionalidade ausente ou incorreta",
+     "Sistema lento, inseguro, inacessível ou ilegal"
+    ],
+    [
+     "Exemplo",
+     "“O sistema deve calcular o IRPF”",
+     "“O cálculo deve ser concluído em menos de 1s”"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,621 @@
+{
+ "numero": 3,
+ "titulo": "Modelos de Maturidade do Software",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Desenvolver software com qualidade consistente não depende apenas do talento individual dos desenvolvedores, mas da maturidade dos processos que a organização adota. Os modelos de maturidade surgiram para avaliar e orientar a evolução das práticas de desenvolvimento de software nas organizações, permitindo que elas identifiquem onde estão e para onde precisam evoluir em termos de processo, gestão e qualidade."
+  },
+  {
+   "t": "h2",
+   "id": "3-1-introducao-aos-modelos-de-maturidade",
+   "texto": "3.1 Introdução aos Modelos de Maturidade"
+  },
+  {
+   "t": "p",
+   "html": "Um modelo de maturidade é uma estrutura que descreve os elementos essenciais de um processo eficaz em diferentes estágios de evolução. Ele permite que organizações avaliem seus processos atuais, identifiquem lacunas e planejem melhorias de forma gradual e sustentável."
+  },
+  {
+   "t": "h3",
+   "texto": "Por que maturidade de processo importa?"
+  },
+  {
+   "t": "p",
+   "html": "A qualidade de um produto de software é fortemente determinada pela qualidade do processo usado para desenvolvê-lo. Organizações com processos imaturos tendem a produzir software de qualidade variável, com prazos e orçamentos imprevisíveis. Já organizações com processos maduros conseguem entregar software de qualidade consistente, com maior previsibilidade e menor custo."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Previsibilidade: Processos maduros permitem estimar prazos e custos com maior precisão.",
+    "Consistência: Redução da variabilidade nos resultados entre diferentes projetos e equipes.",
+    "Melhoria contínua: A organização aprende com experiências anteriores e evolui sistematicamente.",
+    "Redução de riscos: Problemas são identificados e tratados de forma preventiva, não reativa.",
+    "Competitividade: Certificações em modelos de maturidade são exigidas em licitações e contratos internacionais."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Origem dos Modelos de Maturidade",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O conceito de maturidade de processo foi introduzido pelo SEI (Software Engineering Institute) da Universidade Carnegie Mellon, nos Estados Unidos, a partir de uma demanda do Departamento de Defesa americano que precisava de critérios para avaliar a capacidade de seus fornecedores de software. O resultado foi o CMM, publicado em 1991, que se tornaria a base para todos os modelos de maturidade subsequentes."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-2-cmm-capability-maturity-model",
+   "texto": "3.2 CMM – Capability Maturity Model"
+  },
+  {
+   "t": "p",
+   "html": "O CMM (Capability Maturity Model) foi desenvolvido pelo SEI e publicado em 1991. Foi o primeiro modelo amplamente adotado para avaliação da maturidade de processos de software. Sua premissa central é que a qualidade do software é uma função direta da qualidade do processo de desenvolvimento. O modelo organiza a evolução dos processos em cinco níveis de maturidade progressivos."
+  },
+  {
+   "t": "h3",
+   "texto": "Os Cinco Níveis de Maturidade do CMM"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Nível",
+    "Nome",
+    "Foco / Característica",
+    "Áreas de Processo / Práticas"
+   ],
+   "linhas": [
+    [
+     "1",
+     "Inicial",
+     "Processo imprevisível e reativo. Sucesso depende de esforço individual.",
+     "Sem processos definidos. Resultados inconsistentes."
+    ],
+    [
+     "2",
+     "Repetível",
+     "Processos básicos de gerenciamento de projetos estabelecidos.",
+     "Gerência de requisitos, planejamento, controle e garantia da qualidade."
+    ],
+    [
+     "3",
+     "Definido",
+     "Processos documentados e padronizados em toda a organização.",
+     "Definição de processos, treinamento, revisões entre pares, coordenação."
+    ],
+    [
+     "4",
+     "Gerenciado",
+     "Processos medidos e controlados quantitativamente.",
+     "Gerenciamento quantitativo de processos e desempenho do produto."
+    ],
+    [
+     "5",
+     "Otimizado",
+     "Foco em melhoria contínua e inovação nos processos.",
+     "Prevenção de defeitos, gestão de mudanças tecnológicas e de processos."
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A progressão pelos níveis do CMM é cumulativa: uma organização no nível 3, por exemplo, deve ter consolidado todas as práticas dos níveis 1 e 2. Não é possível pular níveis — a tentativa de fazê-lo geralmente resulta em instabilidade e retrocesso."
+  },
+  {
+   "t": "h3",
+   "texto": "Áreas-Chave de Processo (KPAs) do CMM"
+  },
+  {
+   "t": "p",
+   "html": "Cada nível de maturidade do CMM (exceto o nível 1) é composto por Áreas-Chave de Processo (KPAs – Key Process Areas), que representam os temas que a organização deve dominar para atingir e manter aquele nível:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Nível",
+    "Áreas-Chave de Processo (KPAs)"
+   ],
+   "linhas": [
+    [
+     "Nível 2 – Repetível",
+     "Gerência de Requisitos, Planejamento de Projetos, Monitoramento e Controle, Gestão de Subcontratados, Garantia da Qualidade, Gestão de Configuração"
+    ],
+    [
+     "Nível 3 – Definido",
+     "Foco no Processo Organizacional, Definição do Processo, Programa de Treinamento, Gestão Integrada, Engenharia de Produto de Software, Coordenação entre Grupos, Revisões Formais"
+    ],
+    [
+     "Nível 4 – Gerenciado",
+     "Gestão Quantitativa de Processos, Gestão da Qualidade do Software"
+    ],
+    [
+     "Nível 5 – Otimizado",
+     "Prevenção de Defeitos, Gestão de Mudanças Tecnológicas, Gestão de Mudanças de Processo"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Limitações do CMM",
+   "blocos": [
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "Apesar de seu sucesso, o CMM apresentava algumas limitações importantes:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Focava exclusivamente em processos de software, sem integrar engenharia de sistemas, hardware e serviços.",
+      "Existiam modelos CMM separados para diferentes disciplinas (software, sistemas, RH, aquisição), gerando inconsistências.",
+      "A avaliação era custosa e demorada, dificultando a adoção por pequenas e médias empresas."
+     ]
+    },
+    {
+     "t": "p",
+     "html": "Essas limitações levaram ao desenvolvimento do CMMI, seu sucessor."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-3-cmmi-capability-maturity-model-integration",
+   "texto": "3.3 CMMI – Capability Maturity Model Integration"
+  },
+  {
+   "t": "p",
+   "html": "O CMMI (Capability Maturity Model Integration) foi lançado pelo SEI em 2002 para superar as limitações do CMM. Como o próprio nome indica, ele integrou múltiplos modelos CMM existentes (para software, sistemas, engenharia de hardware e fornecedores) em um único modelo coerente. O CMMI evoluiu ao longo das versões 1.1, 1.2, 1.3 e atualmente está na versão 2.0 (2018), administrada pelo ISACA."
+  },
+  {
+   "t": "h3",
+   "texto": "Representações do CMMI"
+  },
+  {
+   "t": "p",
+   "html": "Uma das grandes inovações do CMMI foi oferecer duas representações distintas, permitindo que a organização escolha a abordagem mais adequada às suas necessidades:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Representação",
+    "Abordagem",
+    "Ideal Para",
+    "Resultado"
+   ],
+   "linhas": [
+    [
+     "Por Estágios (Staged)",
+     "Avalia a maturidade geral da organização em 5 níveis, de forma incremental.",
+     "Organizações que buscam certificação e benchmarking com o mercado.",
+     "Nível de Maturidade (ML 1 a 5)"
+    ],
+    [
+     "Contínua (Continuous)",
+     "Avalia o nível de capacidade de cada área de processo individualmente.",
+     "Organizações que querem melhorar áreas específicas de forma seletiva.",
+     "Nível de Capacidade (CL 0 a 3)"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Os Cinco Níveis de Maturidade do CMMI (Representação por Estágios)"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Nível",
+    "Nome",
+    "Foco / Característica",
+    "Áreas de Processo / Práticas"
+   ],
+   "linhas": [
+    [
+     "1",
+     "Inicial",
+     "Processos ad hoc e caóticos. Alta dependência de pessoas-chave.",
+     "Ausência de processos formais. Projetos frequentemente atrasam e excedem orçamento."
+    ],
+    [
+     "2",
+     "Gerenciado",
+     "Projetos planejados, executados e controlados de forma básica.",
+     "Gerência de requisitos, planejamento, monitoramento, gestão de fornecedores, QA."
+    ],
+    [
+     "3",
+     "Definido",
+     "Processos caracterizados para toda a organização e padronizados.",
+     "Definição de processo organizacional, treinamento, integração, gestão de riscos."
+    ],
+    [
+     "4",
+     "Gerenciado Quantitativamente",
+     "Uso de dados quantitativos para gerenciar processos.",
+     "Gerenciamento quantitativo de projetos e desempenho de processos organizacionais."
+    ],
+    [
+     "5",
+     "Em Otimização",
+     "Melhoria contínua baseada em dados e causas comuns de variação.",
+     "Gestão de desempenho organizacional e gerenciamento causal de defeitos."
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Constelações do CMMI"
+  },
+  {
+   "t": "p",
+   "html": "O CMMI é organizado em 'constelações', ou seja, versões adaptadas para diferentes contextos organizacionais. As três constelações principais são:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "CMMI-DEV (Development): Voltado para organizações que desenvolvem produtos e sistemas de software. É a constelação mais utilizada.",
+    "CMMI-SVC (Services): Voltado para organizações que entregam serviços — como suporte, operação e manutenção de sistemas.",
+    "CMMI-ACQ (Acquisition): Voltado para organizações que gerenciam a aquisição de produtos e serviços de fornecedores externos."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "CMMI v2.0 – Principais Mudanças",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A versão 2.0 do CMMI, lançada em 2018, trouxe mudanças significativas em relação à versão 1.3:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Simplificação da linguagem e da estrutura, tornando o modelo mais acessível.",
+      "Maior ênfase em desempenho de negócio — não apenas maturidade de processo.",
+      "Integração explícita com práticas ágeis (Scrum, Kanban, SAFe).",
+      "Novo foco em segurança cibernética e gestão de fornecedores.",
+      "Transferência da administração do SEI para o ISACA."
+     ]
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-4-mps-br-melhoria-de-processo-do-software-brasileiro",
+   "texto": "3.4 MPS.BR – Melhoria de Processo do Software Brasileiro"
+  },
+  {
+   "t": "p",
+   "html": "O MPS.BR (Melhoria de Processo do Software Brasileiro) é um programa nacional criado em 2003 pela SOFTEX (Associação para Promoção da Excelência do Software Brasileiro) com apoio do Ministério da Ciência e Tecnologia e do BNDES. Seu objetivo é oferecer um modelo de qualidade e maturidade de processos compatível com padrões internacionais, porém adaptado à realidade econômica e cultural das empresas brasileiras, especialmente as micro, pequenas e médias empresas (MPMEs)."
+  },
+  {
+   "t": "h3",
+   "texto": "Componentes do Programa MPS.BR"
+  },
+  {
+   "t": "p",
+   "html": "O MPS.BR é composto por três guias principais que se complementam:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "MR-MPS-SW (Modelo de Referência para Software): Define os processos, capacidades e resultados esperados para o desenvolvimento de software.",
+    "MA-MPS (Método de Avaliação): Define como as organizações devem ser avaliadas para obter a certificação em cada nível.",
+    "MN-MPS (Modelo de Negócio): Define o modelo de negócio para a implementação e avaliação do MPS.BR pelas Instituições Implementadoras (IIs) credenciadas."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Os Sete Níveis de Maturidade do MPS.BR"
+  },
+  {
+   "t": "p",
+   "html": "Ao contrário do CMM e do CMMI, que possuem 5 níveis, o MPS.BR define 7 níveis, identificados por letras de G (mais baixo) a A (mais alto). Essa granularidade maior permite que as empresas demonstrem evolução em etapas menores, o que é especialmente vantajoso para empresas de menor porte que não têm condições de investir em grandes saltos de maturidade de uma só vez."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Nível",
+    "Nome",
+    "Foco / Característica",
+    "Áreas de Processo / Práticas"
+   ],
+   "linhas": [
+    [
+     "G",
+     "Parcialmente Gerenciado",
+     "Gerência de projetos e requisitos básicos.",
+     "GRE – Gerência de Requisitos; GPR – Gerência de Projetos."
+    ],
+    [
+     "F",
+     "Gerenciado",
+     "Gerência de configuração, aquisição e medição.",
+     "GCO, AQU, MED, APR, GQA, RHU."
+    ],
+    [
+     "E",
+     "Parcialmente Definido",
+     "Avaliação e melhoria de processos, reutilização.",
+     "AMP, DRE, GRU, GRI."
+    ],
+    [
+     "D",
+     "Largamente Definido",
+     "Desenvolvimento de software e verificação/validação.",
+     "DES, ITE, INT, VER, VAL."
+    ],
+    [
+     "C",
+     "Definido",
+     "Gerência de riscos e decisões.",
+     "GRI, ARC."
+    ],
+    [
+     "B",
+     "Gerenciado Quantitativamente",
+     "Desempenho quantitativo de processos.",
+     "GPQ, DPO."
+    ],
+    [
+     "A",
+     "Em Otimização",
+     "Inovação e análise de causas de problemas.",
+     "IMP, ACD."
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Os níveis G e F do MPS.BR são equivalentes ao nível 2 do CMMI. Os níveis E, D e C correspondem ao nível 3 do CMMI. Os níveis B e A correspondem, respectivamente, aos níveis 4 e 5 do CMMI. Essa equivalência facilita a migração de organizações certificadas no MPS.BR para uma eventual certificação CMMI."
+  },
+  {
+   "t": "h3",
+   "texto": "Processos do MPS.BR"
+  },
+  {
+   "t": "p",
+   "html": "O MPS.BR define um conjunto de processos que as organizações devem implementar progressivamente. Cada processo possui um conjunto de resultados esperados (RE) que devem ser demonstrados durante a avaliação:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Sigla",
+    "Nome do Processo",
+    "Nível mínimo"
+   ],
+   "linhas": [
+    [
+     "GRE",
+     "Gerência de Requisitos",
+     "G"
+    ],
+    [
+     "GPR",
+     "Gerência de Projetos",
+     "G"
+    ],
+    [
+     "GCO",
+     "Gerência de Configuração",
+     "F"
+    ],
+    [
+     "AQU",
+     "Aquisição",
+     "F"
+    ],
+    [
+     "MED",
+     "Medição",
+     "F"
+    ],
+    [
+     "APR",
+     "Avaliação e Melhoria do Processo Organizacional",
+     "E"
+    ],
+    [
+     "DRE",
+     "Desenvolvimento de Requisitos",
+     "D"
+    ],
+    [
+     "DES",
+     "Design (Projeto do Software)",
+     "D"
+    ],
+    [
+     "ITE",
+     "Integração do Produto",
+     "D"
+    ],
+    [
+     "VER",
+     "Verificação",
+     "D"
+    ],
+    [
+     "VAL",
+     "Validação",
+     "D"
+    ],
+    [
+     "GRI",
+     "Gerência de Riscos",
+     "C"
+    ],
+    [
+     "GPQ",
+     "Gerência de Desempenho Quantitativo",
+     "B"
+    ],
+    [
+     "IMP",
+     "Inovação e Implantação na Organização",
+     "A"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Vantagens do MPS.BR para Empresas Brasileiras",
+   "blocos": [
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Custo de avaliação e implementação significativamente menor que o CMMI — cerca de 5 a 10 vezes mais barato.",
+      "Norma desenvolvida em português, com material de apoio e consultores disponíveis no Brasil.",
+      "7 níveis permitem progressão mais gradual, adequada ao porte e realidade das MPMEs.",
+      "Compatível com as normas ISO/IEC 12207 (processos de ciclo de vida) e ISO/IEC 15504 (SPICE).",
+      "Reconhecido pelo governo federal em processos licitatórios de TI.",
+      "Empresas certificadas no MPS.BR podem migrar para o CMMI com menor esforço adicional."
+     ]
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-5-comparativo-e-aplicacao-pratica",
+   "texto": "3.5 Comparativo e Aplicação Prática"
+  },
+  {
+   "t": "p",
+   "html": "CMM, CMMI e MPS.BR compartilham os mesmos princípios fundamentais: a ideia de que processos maduros produzem resultados mais previsíveis e de maior qualidade. No entanto, cada modelo possui características próprias que o tornam mais adequado a determinados contextos."
+  },
+  {
+   "t": "h3",
+   "texto": "Tabela Comparativa"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Critério",
+    "CMM",
+    "CMMI",
+    "MPS.BR"
+   ],
+   "linhas": [
+    [
+     "Origem",
+     "SEI / Carnegie Mellon (EUA)",
+     "SEI / ISACA (EUA)",
+     "SOFTEX (Brasil)"
+    ],
+    [
+     "Ano de criação",
+     "1991",
+     "2002 (v1.0)",
+     "2003"
+    ],
+    [
+     "Número de níveis",
+     "5 níveis",
+     "5 níveis",
+     "7 níveis (A a G)"
+    ],
+    [
+     "Escopo",
+     "Apenas software",
+     "Software, sistemas, serviços, aquisição",
+     "Software (versão SW)"
+    ],
+    [
+     "Público-alvo",
+     "Qualquer organização",
+     "Médias e grandes empresas",
+     "MPMEs brasileiras"
+    ],
+    [
+     "Custo de avaliação",
+     "Alto",
+     "Alto",
+     "Médio/Baixo"
+    ],
+    [
+     "Idioma principal",
+     "Inglês",
+     "Inglês",
+     "Português"
+    ],
+    [
+     "Compatibilidade",
+     "Base para o CMMI",
+     "ISO/IEC 15504, CMMI-DEV/SVC/ACQ",
+     "ISO 12207, ISO 15504, CMMI"
+    ],
+    [
+     "Situação atual",
+     "Descontinuado (substituído pelo CMMI)",
+     "Ativo — versão 2.0 (2018)",
+     "Ativo — versão 3.0"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Equivalência entre os Modelos"
+  },
+  {
+   "t": "p",
+   "html": "A tabela a seguir apresenta a equivalência aproximada entre os níveis do MPS.BR e do CMMI, facilitando a compreensão para organizações que planejam buscar certificações em ambos os modelos:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Nível CMMI",
+    "Nome CMMI",
+    "Nível MPS.BR equivalente"
+   ],
+   "linhas": [
+    [
+     "Nível 2",
+     "Gerenciado",
+     "Níveis G e F"
+    ],
+    [
+     "Nível 3",
+     "Definido",
+     "Níveis E, D e C"
+    ],
+    [
+     "Nível 4",
+     "Gerenciado Quantitativamente",
+     "Nível B"
+    ],
+    [
+     "Nível 5",
+     "Em Otimização",
+     "Nível A"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Quando adotar cada modelo?"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Adote o CMMI quando: a organização atua em mercados internacionais, participa de licitações do governo americano ou possui porte e recursos para investir em uma certificação de alto prestígio global.",
+    "Adote o MPS.BR quando: a organização é uma MPME brasileira, participa de licitações do governo federal brasileiro ou busca um caminho gradual e economicamente viável para atingir maturidade de processo.",
+    "Combine os dois quando: a organização atua tanto no mercado nacional quanto internacional e deseja maximizar a competitividade em ambos os cenários."
+   ]
+  }
+ ]
+}

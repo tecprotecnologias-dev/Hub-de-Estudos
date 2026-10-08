@@ -1,0 +1,224 @@
+{
+ "numero": 12,
+ "titulo": "Segurança para Desenvolvimento de Software",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "O custo médio global de uma violação de dados em 2023 foi de aproximadamente US$ 4,5 milhões (IBM Security). A abordagem tradicional de tratar segurança como uma camada adicionada ao final do desenvolvimento se mostrou insuficiente: o DevSecOps e o <em>Shift Left Security</em> integram segurança em cada fase do ciclo de vida, desde os requisitos até a produção. Este último capítulo encerra a apostila com os fundamentos de segurança que todo engenheiro de software – não apenas especialistas em segurança – deve dominar: a cultura DevSecOps, as ferramentas do <em>pipeline</em>, a modelagem de ameaças e o OWASP Top 10."
+  },
+  {
+   "t": "h2",
+   "id": "12-1-devops-e-devsecops-calms-e-shift-left-security",
+   "texto": "12.1 DevOps e DevSecOps: CALMS e Shift Left Security"
+  },
+  {
+   "t": "p",
+   "html": "Segurança não é responsabilidade apenas de especialistas em cibersegurança – é responsabilidade compartilhada de toda a equipe de desenvolvimento."
+  },
+  {
+   "t": "h3",
+   "texto": "Os Pilares do DevOps — CALMS"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Culture</strong> (colaboração e tolerância ao erro como aprendizado), <strong>Automation</strong> (automação de testes, <em>builds</em> e verificações de segurança), <strong>Lean</strong> (eliminação de desperdícios no fluxo de valor), <strong>Measurement</strong> (métricas DORA: <em>lead time</em>, frequência de <em>deploy</em>, MTTR) e <strong>Sharing</strong> (compartilhar conhecimento e responsabilidades entre times)."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Shift Left Security",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Mover as atividades de segurança para as fases mais iniciais do desenvolvimento, onde o custo de correção é menor. Abordagem tradicional: Planejamento → Dev → Testes → <em>Pentest</em> → Produção – vulnerabilidades descobertas em produção custam até 100x mais para corrigir. <em>Shift Left</em>: Threat Modeling + SAST/Secrets (Dev) + DAST (Testes) + Config Scan (Deploy) – segurança não é um portão no final, é uma propriedade construída ao longo de todo o processo."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "12-2-ferramentas-de-seguranca-no-pipeline-de-ci-cd",
+   "texto": "12.2 Ferramentas de Segurança no Pipeline de CI/CD"
+  },
+  {
+   "t": "p",
+   "html": "Cada tipo de ferramenta atua em uma fase específica do <em>pipeline</em>, cobrindo diferentes categorias de vulnerabilidades."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Ferramenta",
+    "O que Faz",
+    "Quando Executa"
+   ],
+   "linhas": [
+    [
+     "SAST",
+     "Analisa o código-fonte sem executá-lo",
+     "Codificação – a cada <em>commit</em>"
+    ],
+    [
+     "DAST",
+     "Testa a aplicação em execução, simulando ataques",
+     "Testes – contra <em>staging</em>"
+    ],
+    [
+     "SCA",
+     "Identifica vulnerabilidades em dependências de terceiros",
+     "<em>Build</em>"
+    ],
+    [
+     "Secrets Detection",
+     "Identifica credenciais e chaves <em>commitadas</em> por engano",
+     "Codificação – todo <em>commit</em>"
+    ],
+    [
+     "IaC Security Scan",
+     "Verifica configurações inseguras em Terraform, Docker, Kubernetes",
+     "<em>Build</em>/<em>Deploy</em>"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "12-3-modelagem-de-ameacas-stride",
+   "texto": "12.3 Modelagem de Ameaças: STRIDE"
+  },
+  {
+   "t": "p",
+   "html": "Realizada na fase de <em>design</em>, antes de qualquer linha de código – identifica sistematicamente ameaças potenciais e define contramedidas. Desenvolvida pela Microsoft."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    "Ameaça",
+    "Pergunta Central",
+    "Contramedida"
+   ],
+   "linhas": [
+    [
+     "S",
+     "<em>Spoofing</em>",
+     "Consegue se passar por outro usuário?",
+     "MFA, certificados"
+    ],
+    [
+     "T",
+     "<em>Tampering</em>",
+     "Consegue modificar dados?",
+     "Assinaturas digitais, HTTPS"
+    ],
+    [
+     "R",
+     "<em>Repudiation</em>",
+     "Pode negar uma ação maliciosa?",
+     "Logs de auditoria imutáveis"
+    ],
+    [
+     "I",
+     "<em>Info Disclosure</em>",
+     "Dados confidenciais podem ser expostos?",
+     "Criptografia, controle de acesso"
+    ],
+    [
+     "D",
+     "<em>Denial of Service</em>",
+     "Consegue tornar o sistema indisponível?",
+     "<em>Rate limiting</em>, WAF"
+    ],
+    [
+     "E",
+     "<em>Elevation of Privilege</em>",
+     "Consegue obter permissões superiores?",
+     "Menor privilégio, RBAC"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "12-4-owasp-top-10-2021",
+   "texto": "12.4 OWASP Top 10 — 2021"
+  },
+  {
+   "t": "p",
+   "html": "As dez categorias de vulnerabilidades mais críticas em aplicações web, mantidas pela OWASP."
+  },
+  {
+   "t": "h3",
+   "texto": "A01 — Broken Access Control e A02 — Cryptographic Failures"
+  },
+  {
+   "t": "p",
+   "html": "A01 é a categoria mais comum – presente em 94% das aplicações testadas – e ocorre quando usuários acessam recursos além de suas permissões (por exemplo, trocar um ID na URL para ver dados de outro usuário). Prevenção: controle de acesso sempre no servidor, nunca só no cliente. A02 trata da proteção inadequada de dados: senhas com <em>hash</em> MD5/SHA-1, chaves <em>hardcoded</em>. Prevenção: HTTPS, <em>bcrypt</em>/Argon2 para senhas, AES-256 para dados em repouso."
+  },
+  {
+   "t": "h3",
+   "texto": "A03 — Injection e A04 — Insecure Design"
+  },
+  {
+   "t": "p",
+   "html": "A03 ocorre quando dados não confiáveis são enviados a um interpretador – SQL Injection é o exemplo clássico. Prevenção mais eficaz: <em>prepared statements</em> (consultas parametrizadas). A04, introduzida em 2021, trata de falhas arquiteturais – ausência de um controle de segurança que deveria ter sido pensado desde o <em>design</em> (por exemplo, sem <em>rate limiting</em> em autenticação)."
+  },
+  {
+   "t": "h3",
+   "texto": "A05 a A10"
+  },
+  {
+   "t": "p",
+   "html": "A05 (<em>Security Misconfiguration</em>) é a vulnerabilidade mais comum na prática – credenciais padrão não alteradas. A06 (<em>Vulnerable Components</em>) trata de bibliotecas com vulnerabilidades conhecidas – o caso Log4Shell (2021) é referência. A07 (<em>Authentication Failures</em>) envolve falhas de <em>login</em> e sessão. A08 (<em>Integrity Failures</em>) inclui ataques à <em>supply chain</em>. A09 (<em>Logging Failures</em>) trata da ausência de monitoramento – o tempo médio para detectar uma violação sem monitoramento adequado é de 277 dias. A10 (SSRF) ocorre quando o servidor busca um recurso de uma URL fornecida pelo usuário sem validação."
+  },
+  {
+   "t": "h2",
+   "id": "12-5-integracao-devsecops-owasp-no-pipeline",
+   "texto": "12.5 Integração DevSecOps + OWASP no Pipeline"
+  },
+  {
+   "t": "p",
+   "html": "O <strong><em>Security Pipeline</em></strong> conecta STRIDE, as ferramentas da Seção 12.2 e o OWASP Top 10 em um fluxo contínuo: Planejamento (Threat Modeling) → Codificação (SAST, Secrets) → <em>Build</em> (SCA) → Testes (DAST) → <em>Staging</em> (IaC Scan) → Produção (WAF, SIEM) → <em>Feedback</em> (análise de incidentes <em>blameless</em>)."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Cinco princípios fundamentais de segurança",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Menor Privilégio</strong> (permissões mínimas necessárias); <strong>Defesa em Profundidade</strong> (múltiplas camadas independentes – <em>firewall</em>, WAF, autenticação, criptografia); <strong>Falha Segura</strong> (o sistema nega acesso por padrão quando falha); <strong>Segurança por Design</strong> (considerada desde o início); <strong>Validação de Entradas</strong> (toda entrada externa é não confiável)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "consideracoes-finais",
+   "texto": "Considerações Finais"
+  },
+  {
+   "t": "h3",
+   "texto": "O Profissional do Século XXI"
+  },
+  {
+   "t": "p",
+   "html": "Ao longo destes doze capítulos, percorremos a Engenharia de Software em duas dimensões complementares. A <strong>dimensão técnica</strong> nos levou do Ciclo de Vida de Desenvolvimento à Arquitetura, da Programação Orientada a Objetos aos Testes, da Qualidade à Gestão da Configuração, da Gestão de Projetos à Usabilidade, da Engenharia de Requisitos à Interação Humano-Computador, e finalmente à Segurança."
+  },
+  {
+   "t": "p",
+   "html": "Mas nenhum desses conhecimentos técnicos, isoladamente, forma um engenheiro de software completo. A <strong>dimensão humana</strong> – entender requisitos, gerenciar conflitos, comunicar com clareza, trabalhar em equipe, aprender continuamente e agir com ética – é o que conecta tudo o que foi estudado."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Reflexão final",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O verdadeiro engenheiro de software equilibra as duas dimensões: domina as ferramentas e os processos técnicos, mas nunca perde de vista que constrói soluções para pessoas reais, com problemas reais, em colaboração com outras pessoas. Que este equilíbrio guie sua trajetória profissional muito além desta disciplina."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,615 @@
+{
+ "numero": 2,
+ "titulo": "Propriedade Intelectual e Direitos Autorais",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "A propriedade intelectual é um dos ativos mais valiosos da economia digital. Músicas, filmes, textos, softwares, marcas, algoritmos e inventos tecnológicos são criações protegidas por leis que garantem a seus autores e titulares direitos exclusivos de uso, reprodução e comercialização. No ambiente digital, onde a cópia e a distribuição de conteúdo ocorrem de forma instantânea e global, compreender as regras de propriedade intelectual tornou-se indispensável para empreendedores, criadores de conteúdo, desenvolvedores e qualquer profissional que atue no ecossistema digital. Este capítulo percorre os principais ramos da PI — direito autoral, patentes e marcas —, os limites do uso legal de conteúdo de terceiros, as licenças abertas que flexibilizam a proteção tradicional e as consequências práticas de sua violação."
+  },
+  {
+   "t": "h2",
+   "id": "2-1-o-que-e-propriedade-intelectual-ramos-e-fundamentos",
+   "texto": "2.1 O que é Propriedade Intelectual? Ramos e Fundamentos"
+  },
+  {
+   "t": "p",
+   "html": "Propriedade intelectual (PI) é o conjunto de direitos conferidos pela lei a criadores e inventores sobre suas criações imateriais. Diferentemente da propriedade física, a PI recai sobre bens incorpóreos — uma ideia transformada em obra, uma invenção, um sinal distintivo. O sistema de PI tem dupla função: incentivar a criação e a inovação, ao garantir ao criador recompensa econômica; e, ao mesmo tempo, promover o acesso ao conhecimento, já que as proteções têm prazo definido e as obras caem em domínio público ao fim desse período."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Um mesmo produto digital pode reunir vários tipos de PI simultaneamente: um aplicativo de delivery tem o código-fonte protegido por direito autoral de software, o nome protegido como marca registrada, e eventualmente um algoritmo de roteirização patenteável se apresentar efeito técnico inovador. Entender qual ramo protege qual elemento é o primeiro passo para qualquer estratégia de PI."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Os Três Grandes Ramos da Propriedade Intelectual"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Direito Autoral:</strong> protege obras literárias, artísticas, científicas, musicais, audiovisuais e programas de computador. Proteção automática, sem necessidade de registro. Leis 9.610/1998 e 9.609/1998.",
+    "<strong>Propriedade Industrial:</strong> protege invenções (patentes), modelos de utilidade, desenhos industriais, marcas e indicações geográficas. Exige registro formal no INPI. Lei 9.279/1996.",
+    "<strong>Proteção Sui Generis:</strong> categorias especiais como topografias de circuitos integrados, cultivares e bases de dados, com proteção legal específica."
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Tipo de PI</strong>",
+    "<strong>O que protege</strong>",
+    "<strong>Prazo</strong>",
+    "<strong>Registro?</strong>"
+   ],
+   "linhas": [
+    [
+     "Direito Autoral",
+     "Obras literárias, musicais, audiovisuais, software",
+     "70 anos após morte do autor",
+     "Não (facultativo)"
+    ],
+    [
+     "Patente de Invenção",
+     "Invenções com novidade, atividade inventiva e aplicação industrial",
+     "20 anos do depósito",
+     "Sim (INPI)"
+    ],
+    [
+     "Modelo de Utilidade",
+     "Aperfeiçoamentos funcionais em objetos de uso prático",
+     "15 anos do depósito",
+     "Sim (INPI)"
+    ],
+    [
+     "Marca Registrada",
+     "Sinais distintivos de produtos e serviços",
+     "10 anos (renovável)",
+     "Sim (INPI)"
+    ],
+    [
+     "Desenho Industrial",
+     "Forma ornamental de objeto ou conjunto de linhas/cores",
+     "25 anos do depósito",
+     "Sim (INPI)"
+    ],
+    [
+     "Software (Lei 9.609)",
+     "Programas de computador como obra intelectual",
+     "50 anos da criação",
+     "Não (facultativo)"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-2-direitos-autorais-no-ambiente-digital",
+   "texto": "2.2 Direitos Autorais no Ambiente Digital"
+  },
+  {
+   "t": "h3",
+   "texto": "Fundamentos do Direito Autoral Brasileiro"
+  },
+  {
+   "t": "p",
+   "html": "A Lei de Direitos Autorais (LDA — Lei nº 9.610/1998) protege as criações do espírito humano expressas em qualquer forma tangível ou digital. O direito autoral nasce automaticamente no momento da criação da obra, independentemente de registro, publicação ou qualquer outra formalidade. O autor detém dois tipos de direitos sobre sua obra: morais e patrimoniais."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Tipo de Direito</strong>",
+    "<strong>Características</strong>",
+    "<strong>Exemplos</strong>"
+   ],
+   "linhas": [
+    [
+     "Direitos Morais",
+     "Inalienáveis, irrenunciáveis e imprescritíveis. Permanecem com o autor mesmo após a cessão dos direitos patrimoniais.",
+     "Direito de ter o nome na obra, de retirá-la de circulação, de manter sua integridade."
+    ],
+    [
+     "Direitos Patrimoniais",
+     "Transferíveis, cedíveis e com prazo determinado. Permitem a exploração econômica da obra.",
+     "Direito exclusivo de reproduzir, distribuir, comunicar, traduzir, adaptar e comercializar a obra."
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Quando um desenvolvedor cede os direitos patrimoniais de um software à empresa que o contratou, ele continua podendo exigir que seu nome seja citado como autor original do código (direito moral) — mesmo que não seja mais o dono comercial do programa. É por isso que raspar créditos de autoria de bibliotecas open source, mesmo permissivas, pode violar direitos morais."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Obras Protegidas no Ambiente Digital"
+  },
+  {
+   "t": "p",
+   "html": "Qualquer conteúdo original criado e publicado na internet está protegido pela LDA — posts, artigos, fotos, vídeos, podcasts, layouts, ícones — mesmo sem o símbolo ©."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>NÃO é protegido</strong>",
+    "<strong>Explicação</strong>"
+   ],
+   "linhas": [
+    [
+     "Ideias e conceitos",
+     "A proteção recai sobre a forma de expressão, não sobre a ideia em si"
+    ],
+    [
+     "Fatos e dados brutos",
+     "Notícias factuais e dados estatísticos não são protegidos"
+    ],
+    [
+     "Títulos e slogans curtos",
+     "Geralmente sem proteção autoral (podem ter proteção como marca)"
+    ],
+    [
+     "Obras em domínio público",
+     "Prazo de proteção expirado (70 anos após a morte do autor)"
+    ],
+    [
+     "Obras de autoria do Governo",
+     "Leis, decisões judiciais e atos normativos, salvo exceção"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Direitos Autorais de Software — Lei nº 9.609/1998"
+  },
+  {
+   "t": "p",
+   "html": "Os programas de computador têm proteção específica no Brasil, tratados como obra intelectual com regime semelhante ao das obras literárias. A proteção dura 50 anos a partir de 1º de janeiro do ano seguinte à publicação ou criação, e pertence originalmente ao desenvolvedor — pessoa física ou jurídica."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Proteção do Código:</strong> código-fonte e código objeto são igualmente protegidos, mesmo que o código-fonte não seja público.",
+    "<strong>Software Corporativo:</strong> o empregador é titular dos direitos sobre software desenvolvido por funcionários no exercício de suas funções, salvo contrato em contrário.",
+    "<strong>Licença de Uso (EULA):</strong> regula as condições de uso pelo usuário final, sem transferir a propriedade do programa.",
+    "<strong>Engenharia Reversa:</strong> permitida apenas para garantir interoperabilidade com outros programas, nos termos da lei."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Um desenvolvedor autônomo (freelancer), sem vínculo empregatício, que cria um software sob encomenda mantém a titularidade dos direitos sobre o código, salvo se houver contrato expresso de cessão. Isso surpreende muitos contratantes: diferentemente do empregado CLT (cuja titularidade é presumida do empregador), o freelancer só transfere seus direitos se isso estiver escrito no contrato."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-3-patentes-em-contexto-digital-software-e-inovacao",
+   "texto": "2.3 Patentes em Contexto Digital: Software e Inovação"
+  },
+  {
+   "t": "h3",
+   "texto": "O Sistema de Patentes e seus Requisitos"
+  },
+  {
+   "t": "p",
+   "html": "Uma patente é um direito exclusivo concedido pelo Estado a um inventor, que lhe garante o monopólio de exploração comercial da invenção por prazo determinado, em troca da divulgação pública do conhecimento técnico. Para ser patenteável, uma invenção deve atender a três requisitos cumulativos: novidade, atividade inventiva e aplicação industrial."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: Patentes de Software no Brasil — Uma Questão Controvertida",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A Lei de Propriedade Industrial (Lei 9.279/1996, art. 10, V) proíbe expressamente a concessão de patentes para \"programas de computador em si\". No entanto, o INPI admite o patenteamento de invenções implementadas por software quando a solução apresenta efeito técnico — ou seja, quando o software é parte inseparável de uma invenção que resolve um problema técnico de forma inovadora. Essa distinção é o coração do debate e gera considerável insegurança jurídica no setor de tecnologia."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Patentes Digitais no Cenário Internacional"
+  },
+  {
+   "t": "p",
+   "html": "Nos Estados Unidos e na Europa, o regime é distinto do brasileiro. O USPTO aceita patentes de software com maior amplitude, desde que a invenção produza um resultado útil, concreto e tangível. O EPO admite patentes de programas que produzam \"efeito técnico adicional\" além da simples interação software-hardware. Grandes empresas de tecnologia acumulam portfólios de patentes como estratégia competitiva — prática conhecida como patent thicket."
+  },
+  {
+   "t": "h3",
+   "texto": "Exemplos de Patentes Digitais Famosas"
+  },
+  {
+   "t": "p",
+   "html": "Amazon — 1-Click (1999–2017): processo de compra com um único clique, expirada em 2017."
+  },
+  {
+   "t": "p",
+   "html": "Apple — Slide to Unlock (2013): gesto de deslizar para desbloquear, gerou disputas bilionárias com a Samsung."
+  },
+  {
+   "t": "p",
+   "html": "Google — PageRank (1998–2018): algoritmo central do buscador, patenteado por Larry Page em Stanford."
+  },
+  {
+   "t": "p",
+   "html": "Qualcomm — CDMA/5G: centenas de patentes essenciais, licenciadas obrigatoriamente a fabricantes de smartphones."
+  },
+  {
+   "t": "h2",
+   "id": "2-4-marcas-registradas-no-ambiente-digital",
+   "texto": "2.4 Marcas Registradas no Ambiente Digital"
+  },
+  {
+   "t": "p",
+   "html": "A marca é um sinal distintivo que identifica produtos ou serviços de uma empresa no mercado. No ambiente digital, a proteção de marcas ganhou novos contornos com o surgimento de domínios de internet, nomes de usuário em redes sociais e identidades digitais. O registro de marca no INPI confere ao titular o direito exclusivo de uso em todo o território nacional, no segmento de mercado correspondente. O Brasil adota o sistema de first to file: entre dois interessados na mesma marca, tem prioridade quem depositar o pedido primeiro — não quem passou a usar a marca primeiro."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Duas startups podem criar, de forma totalmente independente, o mesmo nome de marca para produtos digitais diferentes. Se nenhuma delas registrar no INPI, a que usar o nome publicamente primeiro tem uma posição melhor para alegar direito de precedência — mas, se uma terceira empresa depositar o pedido de registro antes de qualquer uma delas, pode ser ela a deter o direito exclusivo, mesmo nunca tendo usado a marca antes."
+    }
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Conflito</strong>",
+    "<strong>Descrição</strong>",
+    "<strong>Como Resolver</strong>"
+   ],
+   "linhas": [
+    [
+     "Cybersquatting",
+     "Registro de domínio com nome de marca alheia para vender ao titular ou prejudicar o negócio",
+     "Ação judicial ou SACI-Adm (CGI.br) para domínios .br"
+    ],
+    [
+     "Typosquatting",
+     "Domínios com erros ortográficos intencionais de marcas famosas",
+     "Procedimento UDRP na ICANN"
+    ],
+    [
+     "Username Squatting",
+     "Registro de perfis em redes sociais com nomes de marcas alheias",
+     "Solicitação de remoção à plataforma com prova de titularidade"
+    ],
+    [
+     "Metatags e SEO",
+     "Uso de marcas alheias em metatags ou conteúdo oculto para atrair tráfego",
+     "Ação por concorrência desleal"
+    ],
+    [
+     "Keyword Advertising",
+     "Compra de palavras-chave que são marcas de concorrentes",
+     "Entendimento varia por jurisdição e plataforma"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-5-uso-legal-de-conteudo-protegido-por-direitos-autorais",
+   "texto": "2.5 Uso Legal de Conteúdo Protegido por Direitos Autorais"
+  },
+  {
+   "t": "p",
+   "html": "A Lei de Direitos Autorais prevê exceções que permitem determinados usos sem necessidade de autorização ou pagamento — as chamadas hipóteses de uso livre ou fair use (arts. 46 a 48 da LDA)."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Hipótese de Uso Livre</strong>",
+    "<strong>Condição</strong>"
+   ],
+   "linhas": [
+    [
+     "Citação para fins didáticos, críticos ou jornalísticos",
+     "Citando fonte e autor, na medida justificada"
+    ],
+    [
+     "Reprodução em jornais e periódicos",
+     "Notícias de atualidade, salvo proibição expressa"
+    ],
+    [
+     "Uso para fins educacionais",
+     "Sem intuito de lucro, com identificação da obra"
+    ],
+    [
+     "Representação teatral e musical em família",
+     "Sem cobrança de ingresso ou intenção de lucro"
+    ],
+    [
+     "Paródia e paráfrase",
+     "Sem descrédito à obra original"
+    ],
+    [
+     "Reprodução para deficientes sensoriais",
+     "Sem fins comerciais"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "O Conceito de Fair Use nos Estados Unidos"
+  },
+  {
+   "t": "p",
+   "html": "Nos EUA, o fair use é uma doutrina prevista na Seção 107 do Copyright Act, avaliada por quatro fatores conjuntos: propósito e caráter do uso, natureza da obra, quantidade usada e efeito no mercado."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Um professor que reproduz um trecho de dois parágrafos de um livro em slides de aula, sem fins lucrativos e com crédito ao autor, está amparado tanto pela hipótese de uso educacional da LDA brasileira quanto, caso o material fosse usado nos EUA, pelo fair use (uso pequeno, não comercial, transformativo). Já reproduzir o livro inteiro digitalizado para a turma baixar já não se encaixa em nenhuma dessas proteções."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Como Usar Conteúdo de Terceiros com Segurança"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Solicite autorização expressa e por escrito ao titular, sempre que possível.",
+    "Prefira conteúdos com licenças abertas (Creative Commons, domínio público).",
+    "Ao citar, indique sempre a fonte e o autor.",
+    "Use bancos de imagens licenciadas (Shutterstock, Adobe Stock) ou gratuitas (Unsplash, Pexels).",
+    "Nunca presuma domínio público — a ausência do © não implica ausência de proteção."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: Inteligência Artificial e Direitos Autorais",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O uso de IA generativa levanta questões complexas. Nos EUA, o Copyright Office já negou registro a obras geradas exclusivamente por IA, por ausência de autoria humana. No Brasil, a lei ainda não trata o tema diretamente, mas o entendimento predominante é de que obras sem autoria humana identificável não se qualificam para proteção. Modelos treinados com obras protegidas sem autorização podem ser responsabilizados — debate que já gerou ações bilionárias nos EUA e na Europa."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-6-licencas-abertas-creative-commons-e-open-source",
+   "texto": "2.6 Licenças Abertas: Creative Commons e Open Source"
+  },
+  {
+   "t": "h3",
+   "texto": "Creative Commons — A Flexibilização do Direito Autoral"
+  },
+  {
+   "t": "p",
+   "html": "Criadas em 2001 pelo jurista Lawrence Lessig como alternativa ao modelo \"todos os direitos reservados\", as licenças CC permitem que o autor defina com precisão quais usos de sua obra são permitidos, sem exigir negociação individual. Mais de 2 bilhões de obras já estão sob licenças CC no mundo."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Licença CC</strong>",
+    "<strong>O que permite</strong>"
+   ],
+   "linhas": [
+    [
+     "CC BY (Atribuição)",
+     "Uso livre para qualquer fim, inclusive comercial, com crédito ao autor"
+    ],
+    [
+     "CC BY-SA (Compartilha Igual)",
+     "Uso livre com crédito; derivadas devem usar a mesma licença"
+    ],
+    [
+     "CC BY-ND (Sem Derivações)",
+     "Uso livre com crédito; proibida a criação de obras derivadas"
+    ],
+    [
+     "CC BY-NC (Não Comercial)",
+     "Uso apenas para fins não comerciais, com crédito"
+    ],
+    [
+     "CC BY-NC-SA",
+     "Não comercial, com crédito e compartilhamento sob mesma licença"
+    ],
+    [
+     "CC BY-NC-ND",
+     "Uso mais restrito: não comercial, sem adaptações, com crédito"
+    ],
+    [
+     "CC Zero (CC0)",
+     "Autor renuncia a todos os direitos — equivalente ao domínio público"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Licenças de Software Open Source"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Permissivas (MIT, Apache 2.0, BSD):</strong> permitem incorporar o código a produtos proprietários, sem obrigação de liberar o código das modificações. Ex.: kernel do macOS usa código BSD.",
+    "<strong>Copyleft Forte (GPL):</strong> exige que qualquer software derivado seja distribuído sob a mesma licença GPL, mantendo as melhorias abertas. Ex.: Linux, WordPress, MySQL.",
+    "<strong>Copyleft Fraco (LGPL, MPL):</strong> permite uso como biblioteca em projetos proprietários, mas exige divulgar modificações na própria biblioteca. Ex.: Firefox usa MPL."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma empresa que usa uma biblioteca MIT dentro de seu SaaS proprietário não precisa abrir o restante do código — só manter o aviso de copyright original da biblioteca. Já se a mesma empresa incorporar uma biblioteca GPL v3 diretamente no núcleo do seu produto fechado, é obrigada, ao distribuir esse produto, a licenciar todo o conjunto sob GPL — o que, na prática, inviabiliza mantê-lo proprietário."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "boa-pratica",
+   "titulo": "Boa Prática: Como Escolher a Licença Certa",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Quer liberdade máxima e adoção ampla? Use MIT ou Apache 2.0."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Quer garantir que melhorias fiquem abertas? Use GPL v3."
+  },
+  {
+   "t": "p",
+   "html": "Está criando conteúdo (texto, imagem, vídeo)? Use Creative Commons, escolhendo os módulos (BY, NC, SA, ND) que refletem suas intenções."
+  },
+  {
+   "t": "p",
+   "html": "Quer liberar completamente? Use CC0 ou Unlicense."
+  },
+  {
+   "t": "h2",
+   "id": "2-7-infracoes-pirataria-digital-e-consequencias-legais",
+   "texto": "2.7 Infrações, Pirataria Digital e Consequências Legais"
+  },
+  {
+   "t": "p",
+   "html": "Viola direitos autorais qualquer ato de reproduzir, distribuir, executar, exibir, traduzir, adaptar ou comunicar obra protegida ao público sem autorização e fora das hipóteses de uso livre."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Pirataria de conteúdo:</strong> download, compartilhamento ou streaming sem licença.",
+    "<strong>Uso indevido em mídias digitais:</strong> imagens, vídeos ou músicas de terceiros sem licença.",
+    "<strong>Reprodução não autorizada de texto:</strong> artigos ou livros integrais sem autorização.",
+    "<strong>Pirataria de software:</strong> distribuição sem licença válida ou crackeamento.",
+    "<strong>IA e scraping de conteúdo:</strong> treinamento de modelos com obras protegidas sem autorização."
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Sanção</strong>",
+    "<strong>Base Legal</strong>",
+    "<strong>Consequência</strong>"
+   ],
+   "linhas": [
+    [
+     "Indenização civil",
+     "LDA arts. 102-103; CC art. 186",
+     "Perdas e danos, podendo chegar ao valor de 3.000 exemplares da obra"
+    ],
+    [
+     "Crime de violação autoral",
+     "CP, arts. 184-186",
+     "Detenção de 3 meses a 1 ano; reclusão de 2 a 4 anos com intuito de lucro"
+    ],
+    [
+     "Apreensão de exemplares",
+     "LDA art. 102",
+     "Apreensão e destruição dos exemplares ilícitos"
+    ],
+    [
+     "Remoção de conteúdo (DMCA)",
+     "DMCA (EUA) / Marco Civil (BR)",
+     "Takedown notice: remoção mediante notificação do titular"
+    ],
+    [
+     "Bloqueio de monetização",
+     "Políticas de plataformas",
+     "Demonetização, remoção de conteúdo e encerramento de conta"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "O Sistema DMCA e os Takedown Notices"
+  },
+  {
+   "t": "p",
+   "html": "O Digital Millennium Copyright Act (1998) criou o mecanismo de notificação e remoção (notice and takedown), padrão global no combate à pirataria online."
+  },
+  {
+   "t": "h3",
+   "texto": "Como Funciona o DMCA Takedown"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. Identificação — o titular identifica conteúdo infrator em uma plataforma.",
+    "2. Notificação — envia notificação formal identificando a obra e declarando boa-fé.",
+    "3. Remoção — a plataforma remove o conteúdo e notifica o usuário.",
+    "4. Counter-notice — o usuário pode contestar, caso o uso seja legítimo (fair use).",
+    "5. Restauração — se o titular não agir judicialmente em 14 dias, o conteúdo pode ser restaurado."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-8-propriedade-intelectual-em-startups-e-empresas-digitais",
+   "texto": "2.8 Propriedade Intelectual em Startups e Empresas Digitais"
+  },
+  {
+   "t": "p",
+   "html": "Para startups, PI não é só conformidade legal — é ativo estratégico que influencia a atratividade para investidores e a competitividade no mercado. Investidores institucionais e fundos de venture capital avaliam criteriosamente o portfólio de PI de uma startup antes de realizar aportes."
+  },
+  {
+   "t": "h3",
+   "texto": "Checklist de Propriedade Intelectual para Startups"
+  },
+  {
+   "t": "p",
+   "html": "Registro de Marca: registre no INPI antes de lançar. Análise leva 18-24 meses, mas o depósito garante prioridade."
+  },
+  {
+   "t": "p",
+   "html": "NDAs: celebre acordos de confidencialidade com colaboradores, parceiros e investidores."
+  },
+  {
+   "t": "p",
+   "html": "Cláusulas de PI: inclua nos contratos de trabalho a titularidade da empresa sobre o software produzido."
+  },
+  {
+   "t": "p",
+   "html": "Proteção do Código: repositório privado com controle de acesso. Considere registro facultativo no INPI."
+  },
+  {
+   "t": "p",
+   "html": "Due Diligence de PI: verifique se a solução não viola patentes de terceiros (INPI, Google Patents)."
+  },
+  {
+   "t": "p",
+   "html": "Política Open Source: defina regras claras sobre uso de bibliotecas, verificando compatibilidade de licenças."
+  },
+  {
+   "t": "p",
+   "html": "Segredo Industrial: controles de acesso a código, dados de clientes e algoritmos proprietários."
+  }
+ ]
+}

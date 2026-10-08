@@ -1,0 +1,948 @@
+{
+ "numero": 8,
+ "titulo": "Testes de Performance e Carga",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Um software pode ser funcional, seguro e fácil de usar e ainda assim falhar de forma catastrófica quando submetido à demanda real de seus usuários. Sistemas que funcionam perfeitamente com 10 usuários simultâneos podem travar, responder lentamente ou simplesmente cair quando 10.000 usuários os acessam ao mesmo tempo. Os testes de performance e carga existem para revelar esses limites antes que os usuários reais os encontrem — muitas vezes da pior forma possível."
+  },
+  {
+   "t": "h2",
+   "id": "8-1-desempenho-e-escalabilidade-de-software",
+   "texto": "8.1 Desempenho e Escalabilidade de Software"
+  },
+  {
+   "t": "p",
+   "html": "Desempenho de software é a capacidade do sistema de responder adequadamente a requisições dentro de um tempo aceitável, utilizando uma quantidade razoável de recursos computacionais. Escalabilidade é a capacidade do sistema de manter esse desempenho mesmo quando a demanda cresce — seja em número de usuários, volume de dados ou complexidade das operações."
+  },
+  {
+   "t": "h3",
+   "texto": "Desempenho vs. Escalabilidade"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Conceito",
+    "Definição",
+    "Pergunta que responde",
+    "Exemplo"
+   ],
+   "linhas": [
+    [
+     "Desempenho",
+     "Quão rápido e eficiente o sistema responde a uma carga específica",
+     "O sistema responde em menos de 2 segundos para 500 usuários?",
+     "Tempo de resposta do checkout: 1,2s em carga normal"
+    ],
+    [
+     "Escalabilidade",
+     "Capacidade de manter desempenho aceitável conforme a carga aumenta",
+     "O sistema mantém boa performance quando a carga dobra ou triplica?",
+     "De 500 para 5.000 usuários sem degradação perceptível"
+    ],
+    [
+     "Capacidade",
+     "Volume máximo de carga que o sistema suporta antes de degradar",
+     "Qual é o número máximo de usuários simultâneos que o sistema suporta?",
+     "Sistema suporta até 8.000 usuários antes de degradar"
+    ],
+    [
+     "Disponibilidade",
+     "Percentual do tempo em que o sistema está operacional e acessível",
+     "O sistema está disponível 99,9% do tempo (SLA)?",
+     "Uptime de 99,95% nos últimos 12 meses"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Tipos de Escalabilidade"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Escalabilidade Vertical (Scale Up): </strong>Aumentar os recursos de uma única máquina — mais CPU, mais RAM, disco mais rápido. É limitada pelo hardware máximo disponível e geralmente mais cara.",
+    "<strong>Escalabilidade Horizontal (Scale Out): </strong>Adicionar mais máquinas ao pool de servidores. É a abordagem preferida em arquiteturas de nuvem modernas (microserviços, Kubernetes), pois oferece escalabilidade quase ilimitada.",
+    "<strong>Escalabilidade Elástica: </strong>Capacidade de aumentar e diminuir automaticamente os recursos conforme a demanda varia — característica essencial de sistemas em nuvem com auto-scaling."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Por que Testar Performance é Crítico?",
+   "blocos": [
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "Casos reais de falha de performance que causaram prejuízos bilionários:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Black Friday / e-commerce: sistemas que travam no pico de demanda causam perda direta de vendas e dano à marca.",
+      "Amazon: estudos internos estimam que cada 100ms de latência adicional reduz as vendas em 1%.",
+      "Google: uma página que demora 0,5s a mais para carregar reduz o tráfego em 20%.",
+      "Knight Capital Group (2012): falha de software causou prejuízo de US$ 440 milhões em 45 minutos.",
+      "Healthcare.gov (2013): o site do governo americano colapsou no lançamento por falta de testes de carga adequados."
+     ]
+    },
+    {
+     "t": "p",
+     "html": "Esses exemplos mostram que performance não é um detalhe técnico — é um requisito de negócio crítico."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-2-metricas-de-performance",
+   "texto": "8.2 Métricas de Performance"
+  },
+  {
+   "t": "p",
+   "html": "Medir performance sem métricas bem definidas é como correr uma prova sem saber onde fica a linha de chegada. As métricas de performance traduzem o comportamento do sistema em números objetivos que podem ser comparados com metas (SLAs) e monitorados ao longo do tempo."
+  },
+  {
+   "t": "h3",
+   "texto": "Principais Métricas de Performance"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Métrica",
+    "Definição",
+    "Unidade",
+    "Meta Típica",
+    "Impacto se violada"
+   ],
+   "linhas": [
+    [
+     "Tempo de Resposta (Response Time)",
+     "Tempo total desde o envio da requisição até o recebimento da resposta completa",
+     "ms / s",
+     "&lt; 2s p/ 95% das req.",
+     "Abandono de página; insatisfação do usuário"
+    ],
+    [
+     "Latência",
+     "Tempo de ida e volta de um pacote de dados pela rede (sem o tempo de processamento)",
+     "ms",
+     "&lt; 100ms",
+     "Lentidão percebida, especialmente em tempo real"
+    ],
+    [
+     "Throughput (Vazão)",
+     "Número de requisições processadas por unidade de tempo",
+     "req/s, TPS",
+     "Definida pelo SLA",
+     "Filas de espera; timeouts em cascata"
+    ],
+    [
+     "Taxa de Erros (Error Rate)",
+     "Percentual de requisições que resultam em erro (4xx, 5xx, timeout)",
+     "%",
+     "&lt; 1%",
+     "Funcionalidades indisponíveis; perda de dados"
+    ],
+    [
+     "Uso de CPU",
+     "Percentual de capacidade de processamento utilizada sob carga",
+     "%",
+     "&lt; 70% em pico",
+     "Lentidão geral; travamento do sistema"
+    ],
+    [
+     "Uso de Memória (RAM)",
+     "Quantidade de memória consumida pela aplicação sob carga",
+     "MB / GB",
+     "&lt; 80% disponível",
+     "Garbage collection excessiva; crashes por OOM"
+    ],
+    [
+     "Conexões Simultâneas",
+     "Número máximo de conexões ativas ao mesmo tempo",
+     "Nº",
+     "Depende da arquitetura",
+     "Connection pool esgotado; erros de conexão"
+    ],
+    [
+     "TTFB (Time to First Byte)",
+     "Tempo até o primeiro byte da resposta chegar ao cliente",
+     "ms",
+     "&lt; 200ms",
+     "Percepção de lentidão; queda no SEO"
+    ],
+    [
+     "Apdex (Application Performance Index)",
+     "Índice de satisfação do usuário baseado no tempo de resposta (0 a 1)",
+     "0 a 1",
+     "&gt; 0,85",
+     "Insatisfação mensurável do usuário final"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Percentis: a Forma Correta de Medir Tempo de Resposta"
+  },
+  {
+   "t": "p",
+   "html": "Usar apenas a média do tempo de resposta é enganoso. A média pode parecer boa mesmo quando uma fração significativa dos usuários experimenta tempos muito altos. A indústria utiliza percentis para uma visão mais completa e justa:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Percentil",
+    "Significado",
+    "Interpretação prática"
+   ],
+   "linhas": [
+    [
+     "P50 (Mediana)",
+     "50% das requisições responderam em até X ms",
+     "Tempo de resposta do usuário 'típico'"
+    ],
+    [
+     "P90",
+     "90% das requisições responderam em até X ms",
+     "9 em cada 10 usuários tiveram essa experiência ou melhor"
+    ],
+    [
+     "P95",
+     "95% das requisições responderam em até X ms",
+     "Métrica mais usada em SLAs — só 5% podem ser piores"
+    ],
+    [
+     "P99",
+     "99% das requisições responderam em até X ms",
+     "Revela o comportamento em casos extremos (cauda longa)"
+    ],
+    [
+     "P99,9",
+     "99,9% das requisições responderam em até X ms",
+     "Usado em sistemas de altíssima criticidade (fintech, saúde)"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo de SLA com Percentis",
+   "blocos": [
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "Um SLA bem definido para um sistema de e-commerce poderia ser:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "P50 (mediana): tempo de resposta &lt; 500ms",
+      "P95: tempo de resposta &lt; 1.500ms",
+      "P99: tempo de resposta &lt; 3.000ms",
+      "Taxa de erros: &lt; 0,5% das requisições",
+      "Disponibilidade: &gt; 99,9% (equivale a menos de 8,7 horas de downtime por ano)",
+      "Throughput mínimo: 1.000 requisições por segundo em horário de pico"
+     ]
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-3-tipos-de-testes-de-performance",
+   "texto": "8.3 Tipos de Testes de Performance"
+  },
+  {
+   "t": "p",
+   "html": "O universo dos testes de performance é composto por várias modalidades, cada uma com um objetivo específico e um perfil de carga distinto. Conhecer as diferenças entre elas é essencial para montar uma estratégia de performance completa."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Teste de Carga (Load Test)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Objetivo: Verificar se o sistema opera corretamente sob a carga esperada em produção. Simula o volume de usuários e transações previsto para o uso normal e de pico."
+    },
+    {
+     "t": "p",
+     "html": "Métricas: Tempo de resposta (P95, P99), throughput, taxa de erros, uso de CPU e memória"
+    },
+    {
+     "t": "p",
+     "html": "<strong>Ferramentas: JMeter, Gatling, k6, Locust</strong>"
+    },
+    {
+     "t": "p",
+     "html": "Exemplo: Simular 10.000 usuários acessando um e-commerce simultaneamente durante a Black Friday"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Teste de Estresse (Stress Test)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Objetivo: Empurrar o sistema além de seus limites operacionais para descobrir onde ele quebra, como se comporta sob pressão extrema e como se recupera após o pico."
+    },
+    {
+     "t": "p",
+     "html": "Métricas: Ponto de falha, comportamento de degradação, tempo de recuperação"
+    },
+    {
+     "t": "p",
+     "html": "<strong>Ferramentas: JMeter, Gatling, k6, Artillery</strong>"
+    },
+    {
+     "t": "p",
+     "html": "Exemplo: Aumentar gradualmente a carga de 10.000 até 50.000 usuários para encontrar o ponto de colapso do sistema"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Teste de Volume (Volume Test)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Objetivo: Avaliar o comportamento do sistema quando submetido a grandes volumes de dados — não necessariamente muitos usuários, mas operações com datasets enormes."
+    },
+    {
+     "t": "p",
+     "html": "Métricas: Tempo de processamento, uso de disco, desempenho de consultas ao banco de dados"
+    },
+    {
+     "t": "p",
+     "html": "<strong>Ferramentas: JMeter (JDBC), scripts SQL customizados, dbUnit</strong>"
+    },
+    {
+     "t": "p",
+     "html": "Exemplo: Executar relatórios sobre um banco de dados com 500 milhões de registros e verificar o tempo de resposta"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Teste de Pico (Spike Test)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Objetivo: Avaliar como o sistema reage a aumentos repentinos e drásticos na carga — um pico instantâneo de usuários — e se consegue retornar ao normal rapidamente."
+    },
+    {
+     "t": "p",
+     "html": "Métricas: Tempo de resposta durante o pico, taxa de erros no pico, tempo para retorno à normalidade"
+    },
+    {
+     "t": "p",
+     "html": "<strong>Ferramentas: k6, Gatling, Artillery, Locust</strong>"
+    },
+    {
+     "t": "p",
+     "html": "Exemplo: Simular o efeito 'slashdot': de 500 para 20.000 usuários em 30 segundos após uma matéria viral na mídia"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Teste de Resistência / Endurance (Soak Test)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Objetivo: Executar o sistema sob carga normal durante um período prolongado (horas ou dias) para detectar problemas que só aparecem com o tempo: vazamentos de memória, degradação progressiva, acúmulo de conexões."
+    },
+    {
+     "t": "p",
+     "html": "Métricas: Tendência do tempo de resposta ao longo do tempo, crescimento de memória (heap), erros acumulados"
+    },
+    {
+     "t": "p",
+     "html": "<strong>Ferramentas: JMeter (execução longa), Gatling, k6 (duração configurável)</strong>"
+    },
+    {
+     "t": "p",
+     "html": "Exemplo: Manter 2.000 usuários simultâneos por 24 horas e monitorar se o sistema degrada progressivamente"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Teste de Escalabilidade (Scalability Test)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Objetivo: Determinar a capacidade de escalonamento do sistema — até quanto a performance melhora quando mais recursos (servidores, CPUs) são adicionados."
+    },
+    {
+     "t": "p",
+     "html": "Métricas: Throughput por instância, tempo de resposta em diferentes configurações de infraestrutura"
+    },
+    {
+     "t": "p",
+     "html": "<strong>Ferramentas: JMeter + AWS Auto Scaling, k6, Gatling em cloud</strong>"
+    },
+    {
+     "t": "p",
+     "html": "Exemplo: Testar com 1, 2, 4 e 8 instâncias do servidor para verificar se a capacidade dobra a cada instância adicionada"
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-4-testes-de-carga",
+   "texto": "8.4 Testes de Carga"
+  },
+  {
+   "t": "p",
+   "html": "O teste de carga é o tipo de teste de performance mais comumente realizado e o ponto de partida de qualquer estratégia de performance. Seu objetivo é garantir que o sistema funcione adequadamente quando submetido ao volume de usuários e transações esperado em produção — tanto em condições normais quanto em picos previstos."
+  },
+  {
+   "t": "h3",
+   "texto": "Planejamento do Teste de Carga"
+  },
+  {
+   "t": "p",
+   "html": "Um teste de carga bem planejado responde perguntas específicas sobre a capacidade do sistema. Antes de executar qualquer teste, é necessário definir claramente:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Carga esperada (baseline): </strong>Qual é o número médio de usuários simultâneos em condições normais? Essa informação vem de métricas de produção ou estimativas de negócio.",
+    "<strong>Carga de pico: </strong>Qual é o maior volume de acessos esperado? Campanhas de marketing, Black Friday, lançamentos de produtos — todos criam picos que devem ser planejados.",
+    "<strong>Perfil de uso (workload model): </strong>Quais operações os usuários realizam? Em qual proporção? Um modelo de workload realista simula navegação, buscas, compras e pagamentos nas proporções corretas.",
+    "<strong>Critérios de aprovação: </strong>Quais são os limites aceitáveis de tempo de resposta, taxa de erros e uso de recursos? Esses critérios devem estar definidos antes do teste.",
+    "<strong>Ambiente de teste: </strong>O ambiente onde o teste é executado deve ser o mais próximo possível do ambiente de produção em termos de hardware, rede e configuração de software."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Perfis de Carga no Teste de Carga"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Perfil",
+    "Descrição",
+    "Curva de Carga",
+    "Objetivo"
+   ],
+   "linhas": [
+    [
+     "Ramp-up",
+     "A carga aumenta gradualmente até atingir o volume alvo",
+     "0 → N usuários (linear)",
+     "Evitar choque inicial; observar comportamento durante a subida"
+    ],
+    [
+     "Steady State",
+     "A carga é mantida constante no volume alvo por um período definido",
+     "N usuários constante",
+     "Verificar estabilidade sob carga sustentada"
+    ],
+    [
+     "Ramp-down",
+     "A carga diminui gradualmente até zero",
+     "N → 0 usuários (linear)",
+     "Observar como o sistema libera recursos e se recupera"
+    ],
+    [
+     "Completo",
+     "Ramp-up + Steady State + Ramp-down em sequência",
+     "Curva em trapézio",
+     "Ciclo completo de teste para validação abrangente"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Análise dos Resultados do Teste de Carga"
+  },
+  {
+   "t": "p",
+   "html": "Os resultados de um teste de carga devem ser analisados em múltiplas dimensões para que os gargalos sejam identificados com precisão. Uma simples degradação no tempo de resposta pode ter origem em camadas muito diferentes da arquitetura:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Sintoma Observado",
+    "Possível Causa",
+    "Onde Investigar"
+   ],
+   "linhas": [
+    [
+     "Tempo de resposta aumenta com a carga",
+     "Gargalo de CPU, thread pool cheio ou query lenta",
+     "CPU, connection pool, APM (Datadog, New Relic)"
+    ],
+    [
+     "Alta taxa de erros (5xx)",
+     "Servidor sobrecarregado, timeout de banco ou fila cheia",
+     "Logs de aplicação, banco de dados, filas"
+    ],
+    [
+     "Memória cresce continuamente",
+     "Vazamento de memória (memory leak)",
+     "Heap dump, profiler (VisualVM, YourKit)"
+    ],
+    [
+     "Throughput estagna mesmo com mais carga",
+     "Gargalo identificado — ponto de saturação atingido",
+     "Bottleneck analysis, thread dump"
+    ],
+    [
+     "Degradação só após horas de teste",
+     "Acúmulo de conexões, cache não-expirado, memory leak",
+     "Teste de resistência (soak test)"
+    ],
+    [
+     "Comportamento normal até N usuários, depois colapso",
+     "Limite de recursos atingido abruptamente",
+     "Connection limits, max threads, memory limits"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-5-testes-de-estresse",
+   "texto": "8.5 Testes de Estresse"
+  },
+  {
+   "t": "p",
+   "html": "Se o teste de carga verifica o comportamento dentro dos limites esperados, o teste de estresse deliberadamente ultrapassa esses limites. Seu objetivo não é verificar se o sistema funciona bem — é descobrir o que acontece quando ele não consegue mais funcionar. Como o sistema falha? Com graciosidade ou catastroficamente? E depois da falha, consegue se recuperar sozinho?"
+  },
+  {
+   "t": "h3",
+   "texto": "Objetivos Específicos do Teste de Estresse"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Identificar o ponto de falha: </strong>Qual é a carga máxima absoluta que o sistema suporta antes de colapsar completamente? Essa informação define a capacidade real do sistema.",
+    "<strong>Observar o comportamento de degradação: </strong>O sistema falha bruscamente (cliff) ou degrada gradualmente (graceful degradation)? Sistemas bem projetados degradam de forma progressiva, mantendo funcionalidades críticas mesmo sob estresse extremo.",
+    "<strong>Verificar a recuperação: </strong>Após o pico de estresse, o sistema consegue retornar ao funcionamento normal sozinho? Quanto tempo leva? É necessária intervenção manual?",
+    "<strong>Descobrir comportamentos inesperados: </strong>Deadlocks, data corruption, mensagens de erro inadequadas e comportamentos imprevisíveis frequentemente só aparecem sob estresse extremo.",
+    "<strong>Validar mecanismos de proteção: </strong>Circuit breakers, rate limiting, auto-scaling e health checks devem ser verificados para confirmar que funcionam como esperado sob pressão máxima."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Padrões de Estresse: Como Aumentar a Carga"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Padrão",
+    "Como funciona",
+    "O que revela"
+   ],
+   "linhas": [
+    [
+     "Rampa constante",
+     "Aumenta a carga de forma linear e contínua até o sistema falhar",
+     "Ponto exato de saturação e curva de degradação"
+    ],
+    [
+     "Escada (Step load)",
+     "Aumenta em degraus fixos (ex: +500 usuários a cada 5 min)",
+     "Comportamento em cada nível de carga; identifica gargalos por camada"
+    ],
+    [
+     "Pico instantâneo",
+     "Aplica carga máxima de forma imediata, sem ramp-up",
+     "Resiliência a picos súbitos; comportamento do auto-scaling"
+    ],
+    [
+     "Estresse prolongado",
+     "Mantém carga acima do limite por horas",
+     "Capacidade de recuperação espontânea; degradação progressiva"
+    ],
+    [
+     "Carga assimétrica",
+     "Estresse em apenas uma parte do sistema (ex: apenas o banco)",
+     "Isolamento de gargalos em componentes específicos"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Graceful Degradation: o Ideal sob Estresse",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Um sistema bem projetado deve exibir 'graceful degradation' — degradação graciosa — sob estresse:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Funcionalidades críticas continuam disponíveis mesmo quando as secundárias falham",
+      "Mensagens de erro claras e úteis são exibidas aos usuários (não stack traces ou páginas em branco)",
+      "Filas e circuit breakers evitam a propagação de falhas em cascata",
+      "O sistema retorna automaticamente ao normal quando a carga diminui"
+     ]
+    },
+    {
+     "t": "p",
+     "html": "ANTI-PADRÃO: Um sistema que cai completamente quando a carga aumenta 10% acima do limite não exibe graceful degradation — exibe falha catastrófica."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-6-ferramentas-de-teste-de-performance",
+   "texto": "8.6 Ferramentas de Teste de Performance"
+  },
+  {
+   "t": "p",
+   "html": "O ecossistema de ferramentas para testes de performance é vasto e diversificado. A escolha da ferramenta adequada depende da arquitetura do sistema testado, da linguagem de scripting preferida da equipe, do orçamento disponível e da escala dos testes planejados."
+  },
+  {
+   "t": "h3",
+   "texto": "Apache JMeter"
+  },
+  {
+   "t": "p",
+   "html": "O JMeter é a ferramenta de teste de performance open source mais utilizada no mundo. Desenvolvido pela Apache Software Foundation, ele oferece uma interface gráfica para criação de planos de teste, suporte a múltiplos protocolos e um rico ecossistema de plugins. É a escolha padrão em muitas equipes de QA pelo seu equilíbrio entre funcionalidade, custo e comunidade."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aspecto",
+    "JMeter"
+   ],
+   "linhas": [
+    [
+     "Licença",
+     "Open Source (Apache License 2.0) — gratuito"
+    ],
+    [
+     "Protocolos",
+     "HTTP/HTTPS, FTP, JDBC, SOAP, REST, WebSocket, LDAP, JMS, SMTP"
+    ],
+    [
+     "Interface",
+     "GUI para criação + CLI para execução em CI/CD"
+    ],
+    [
+     "Scripting",
+     "Sem código (GUI) ou com Groovy/BeanShell para scripts avançados"
+    ],
+    [
+     "Relatórios",
+     "Dashboard HTML nativo, integração com Grafana e InfluxDB"
+    ],
+    [
+     "Paralelismo",
+     "Threads por plano de teste; distributed testing com Remote JMeter"
+    ],
+    [
+     "Plugins",
+     "JMeter Plugins Manager: grafos, samplers extras, timer avançado"
+    ],
+    [
+     "Ponto fraco",
+     "Consome muita memória em testes de larga escala; GUI pesada"
+    ],
+    [
+     "Ideal para",
+     "Equipes QA com perfil menos técnico; testes de API e web com GUI"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Gatling"
+  },
+  {
+   "t": "p",
+   "html": "O Gatling é um framework de teste de performance de alta performance desenvolvido em Scala, com foco em escalabilidade e code-first. Seus scripts são escritos em uma DSL (Domain Specific Language) expressiva que torna os cenários de teste legíveis e fáceis de versionar no Git. É significativamente mais eficiente que o JMeter em termos de consumo de recursos por usuário virtual simulado."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aspecto",
+    "Gatling"
+   ],
+   "linhas": [
+    [
+     "Licença",
+     "Open Source (versão Community) + Gatling Enterprise (pago)"
+    ],
+    [
+     "Linguagem",
+     "Scala (versão clássica) ou Java/Kotlin (Gatling 3.7+)"
+    ],
+    [
+     "Protocolos",
+     "HTTP/HTTPS, WebSocket, JMS, gRPC (via plugin)"
+    ],
+    [
+     "Relatórios",
+     "Relatórios HTML interativos e detalhados gerados automaticamente"
+    ],
+    [
+     "Eficiência",
+     "Muito mais eficiente que JMeter: simula 10x mais usuários com os mesmos recursos"
+    ],
+    [
+     "Integração CI/CD",
+     "Plugin Maven e SBT; integração nativa com Jenkins e GitLab CI"
+    ],
+    [
+     "Ponto fraco",
+     "Curva de aprendizado maior (Scala); menos plugins disponíveis que JMeter"
+    ],
+    [
+     "Ideal para",
+     "Desenvolvedores; projetos que valorizam código versionável; alta escala"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "k6 (Grafana k6)"
+  },
+  {
+   "t": "p",
+   "html": "O k6 é uma ferramenta moderna de teste de performance desenvolvida pela Grafana Labs, com foco em developer experience. Os scripts são escritos em JavaScript/TypeScript, tornando-o acessível para a maioria dos desenvolvedores. É altamente eficiente e oferece excelente integração com o ecossistema de observabilidade da Grafana (Grafana, Prometheus, InfluxDB)."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aspecto",
+    "k6"
+   ],
+   "linhas": [
+    [
+     "Licença",
+     "Open Source (AGPLv3) + k6 Cloud (pago)"
+    ],
+    [
+     "Linguagem",
+     "JavaScript / TypeScript (ES6+)"
+    ],
+    [
+     "Protocolos",
+     "HTTP/HTTPS, WebSocket, gRPC, Browser (Chromium)"
+    ],
+    [
+     "Relatórios",
+     "Saída em terminal, JSON, CSV; integração nativa com Grafana e Prometheus"
+    ],
+    [
+     "Eficiência",
+     "Alta: implementado em Go; muito eficiente em recursos"
+    ],
+    [
+     "Integração CI/CD",
+     "CLI nativo para pipelines; GitHub Actions, GitLab CI, Jenkins"
+    ],
+    [
+     "Diferencial",
+     "Browser testing integrado; extensível via xk6; excelente DX para devs JS"
+    ],
+    [
+     "Ideal para",
+     "Equipes de desenvolvimento; ambientes cloud-native; integração com Grafana"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Locust"
+  },
+  {
+   "t": "p",
+   "html": "O Locust é um framework de teste de carga open source escrito em Python, onde os cenários de teste são definidos como código Python puro. Sua interface web em tempo real permite monitorar os resultados durante a execução e ajustar a carga dinamicamente."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aspecto",
+    "Locust"
+   ],
+   "linhas": [
+    [
+     "Licença",
+     "Open Source (MIT) — gratuito"
+    ],
+    [
+     "Linguagem",
+     "Python — cenários definidos como classes Python"
+    ],
+    [
+     "Protocolos",
+     "HTTP nativo; qualquer protocolo via extensões Python"
+    ],
+    [
+     "Interface",
+     "Web UI em tempo real para monitoramento e controle da carga"
+    ],
+    [
+     "Distribuição",
+     "Suporte a execução distribuída em múltiplas máquinas"
+    ],
+    [
+     "Ideal para",
+     "Equipes Python; prototipagem rápida; cenários customizados complexos"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Comparativo das Ferramentas"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Critério",
+    "JMeter",
+    "Gatling",
+    "k6",
+    "Locust"
+   ],
+   "linhas": [
+    [
+     "Linguagem de script",
+     "GUI / Groovy",
+     "Scala / Java",
+     "JavaScript",
+     "Python"
+    ],
+    [
+     "Curva de aprendizado",
+     "Baixa",
+     "Média-Alta",
+     "Baixa-Média",
+     "Baixa (Python)"
+    ],
+    [
+     "Eficiência de recursos",
+     "Média",
+     "Alta",
+     "Muito Alta",
+     "Média"
+    ],
+    [
+     "Relatórios nativos",
+     "Médios",
+     "Excelentes",
+     "Básicos (CLI)",
+     "Básicos (Web UI)"
+    ],
+    [
+     "Integração CI/CD",
+     "Boa",
+     "Excelente",
+     "Excelente",
+     "Boa"
+    ],
+    [
+     "Protocolos",
+     "Muito amplo",
+     "HTTP + WS",
+     "HTTP + gRPC",
+     "HTTP + custom"
+    ],
+    [
+     "Comunidade",
+     "Muito grande",
+     "Grande",
+     "Crescente",
+     "Média"
+    ],
+    [
+     "Custo",
+     "Gratuito",
+     "Gratuito/Pago",
+     "Gratuito/Pago",
+     "Gratuito"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-7-processo-e-boas-praticas",
+   "texto": "8.7 Processo e Boas Práticas"
+  },
+  {
+   "t": "p",
+   "html": "Realizar testes de performance de forma eficaz requer mais do que simplesmente executar uma ferramenta. É necessário seguir um processo estruturado que garanta resultados confiáveis, ambientes controlados e análises significativas."
+  },
+  {
+   "t": "h3",
+   "texto": "Processo de Teste de Performance"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>1. Definição de objetivos e SLAs: </strong>Antes de qualquer teste, definir claramente o que constitui 'aprovação'. Sem metas numéricas definidas (P95 &lt; 2s, error rate &lt; 1%), não é possível avaliar os resultados objetivamente.",
+    "<strong>2. Modelagem de carga: </strong>Construir um modelo de workload que reflita o uso real do sistema: quais endpoints são mais acessados, em qual proporção, com quais dados e em qual horário.",
+    "<strong>3. Preparação do ambiente: </strong>Garantir que o ambiente de teste seja representativo da produção em hardware, rede, banco de dados e configuração. Resultados em ambientes subproporcionais são enganosos.",
+    "<strong>4. Preparação dos dados de teste: </strong>O banco de dados deve ter volume similar ao de produção. Testar com banco vazio produz resultados completamente diferentes do ambiente real.",
+    "<strong>5. Execução incremental: </strong>Iniciar com carga baixa e aumentar gradualmente. Identificar gargalos em cada nível antes de prosseguir para a próxima etapa.",
+    "<strong>6. Monitoramento durante a execução: </strong>Monitorar CPU, memória, I/O, conexões de banco e logs de aplicação em tempo real durante os testes. Um resultado de tempo de resposta sem contexto de recursos é incompleto.",
+    "<strong>7. Análise e diagnóstico: </strong>Correlacionar os resultados do teste com métricas de infraestrutura para identificar a causa raiz dos gargalos — não apenas os sintomas.",
+    "<strong>8. Otimização e re-teste: </strong>Após identificar e corrigir um gargalo, re-executar os testes para validar que a melhoria foi eficaz e que não surgiram novos problemas."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Boas Práticas de Testes de Performance"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Teste cedo e com frequência: </strong>Integre testes de performance básicos ao pipeline CI/CD para detectar regressões de performance logo após serem introduzidas, não apenas antes do release.",
+    "<strong>Defina baselines: </strong>Registre os resultados de cada teste para criar uma baseline histórica. Comparar com versões anteriores revela regressões de performance que podem passar despercebidas.",
+    "<strong>Isole variáveis: </strong>Mude apenas uma coisa de cada vez. Testar múltiplas mudanças simultaneamente impossibilita identificar qual delas causou uma melhora ou piora nos resultados.",
+    "<strong>Use think time realista: </strong>Usuários reais não enviam requisições continuamente sem pausa. Configure think time (tempo entre ações) para simular o comportamento humano real.",
+    "<strong>Monitore do lado do cliente e do servidor: </strong>Correlacione métricas de tempo de resposta do cliente (o que o usuário vê) com métricas do servidor (CPU, memória, banco de dados) para diagnóstico completo."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Performance Testing em DevOps / CI-CD",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em times com cultura DevOps, os testes de performance são integrados ao pipeline:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Testes de performance unitária: micro-benchmarks executados a cada commit (JMH para Java, pytest-benchmark para Python)",
+      "Testes de carga básicos: executados a cada merge na branch principal (k6 ou Gatling no pipeline)",
+      "Testes de carga completos: executados semanalmente ou antes de releases (JMeter em ambiente dedicado)",
+      "Monitoramento contínuo em produção: APM tools (Datadog, New Relic, Dynatrace) monitoram performance 24/7"
+     ]
+    },
+    {
+     "t": "p",
+     "html": "O objetivo é detectar regressões de performance tão logo sejam introduzidas, e não semanas depois durante um teste pontual antes do release."
+    }
+   ]
+  }
+ ]
+}

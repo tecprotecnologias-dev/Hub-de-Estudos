@@ -1,0 +1,738 @@
+{
+ "numero": 10,
+ "titulo": "Gerenciamento de Defeitos e Relatórios",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Encontrar defeitos é apenas metade do trabalho de um testador. A outra metade — igualmente crítica — é garantir que esses defeitos sejam comunicados com clareza, rastreados com rigor e resolvidos de forma verificada. Um defeito mal documentado pode ser ignorado, mal interpretado ou simplesmente perdido no fluxo de desenvolvimento. Um sistema eficaz de gerenciamento de defeitos transforma descobertas brutas em informações acionáveis que impulsionam a qualidade do produto e a eficiência da equipe."
+  },
+  {
+   "t": "h2",
+   "id": "10-1-o-que-e-um-defeito-conceitos-e-terminologia",
+   "texto": "10.1 O que é um Defeito? Conceitos e Terminologia"
+  },
+  {
+   "t": "p",
+   "html": "A indústria de software utiliza diversos termos relacionados a problemas em software, muitas vezes de forma intercambiável. Compreender as distinções entre esses conceitos é fundamental para uma comunicação precisa entre membros da equipe."
+  },
+  {
+   "t": "h3",
+   "texto": "Terminologia Fundamental"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Termo",
+    "Definição",
+    "Exemplo"
+   ],
+   "linhas": [
+    [
+     "Erro (Error)",
+     "Ação humana que produz resultado incorreto; engano cometido por um desenvolvedor, analista ou testador",
+     "Desenvolvedor usa operador &lt; em vez de &lt;= em uma condição de validação"
+    ],
+    [
+     "Defeito / Bug / Falha (Defect/Fault)",
+     "Imperfeição ou deficiência no produto de trabalho que pode causar falha no software ou não atender a um requisito",
+     "O código resultante do erro acima, presente no repositório e aguardando execução"
+    ],
+    [
+     "Falha (Failure)",
+     "Comportamento incorreto observável do sistema em relação ao esperado; ocorre quando o defeito é executado",
+     "Data de vencimento aceita valores impossíveis (ex.: 31/02/2025) por conta do defeito"
+    ],
+    [
+     "Incidente (Incident)",
+     "Qualquer evento que requer investigação — pode ou não ser causado por um defeito",
+     "Sistema lento em determinado horário — pode ser defeito ou pico de carga"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Na prática, o termo \"bug\" é amplamente utilizado de forma informal para qualquer um desses conceitos. Em contextos formais, como documentação de projetos e relatórios de qualidade, prefere-se \"defeito\" pela precisão técnica que o termo carrega."
+  },
+  {
+   "t": "h3",
+   "texto": "Origem dos Defeitos"
+  },
+  {
+   "t": "p",
+   "html": "Defeitos podem surgir em qualquer fase do ciclo de vida do desenvolvimento. Estudos do setor indicam que a distribuição típica das origens é:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Requisitos incorretos ou ambíguos: definições incompletas, contraditórias ou mal interpretadas — responsáveis por 40 a 50% dos defeitos em sistemas complexos",
+    "Erros de design e arquitetura: decisões estruturais incorretas que propagam defeitos por múltiplos componentes",
+    "Erros de implementação: lógica incorreta, condições de borda não tratadas, uso incorreto de APIs e bibliotecas",
+    "Erros de integração: incompatibilidades entre componentes, contratos de API violados, formatos de dados divergentes",
+    "Ambiente e configuração: diferenças entre ambientes de desenvolvimento, teste e produção",
+    "Regressão: uma correção ou nova funcionalidade que introduz defeitos em funcionalidades já funcionais"
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "10-2-identificacao-e-classificacao-de-defeitos",
+   "texto": "10.2 Identificação e Classificação de Defeitos"
+  },
+  {
+   "t": "p",
+   "html": "Classificar defeitos de forma consistente é essencial para priorizar correções, gerar métricas significativas e comunicar o impacto ao time. Dois eixos principais de classificação são utilizados: severidade e prioridade."
+  },
+  {
+   "t": "h3",
+   "texto": "Severidade vs. Prioridade"
+  },
+  {
+   "t": "p",
+   "html": "Severidade e prioridade são conceitos distintos e freqüentemente confundidos. A severidade descreve o impacto técnico do defeito no sistema. A prioridade descreve a urgência com que o defeito precisa ser corrigido do ponto de vista do negócio."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Combinação",
+    "Significado",
+    "Exemplo"
+   ],
+   "linhas": [
+    [
+     "Alta severidade + Alta prioridade",
+     "Defeito crítico que precisa ser corrigido imediatamente",
+     "Sistema de pagamento não processa transações — impacto direto na receita"
+    ],
+    [
+     "Alta severidade + Baixa prioridade",
+     "Impacto técnico grande, mas cenário pouco frequente",
+     "Crash ao importar arquivo no formato XLS 1997 — uso raríssimo"
+    ],
+    [
+     "Baixa severidade + Alta prioridade",
+     "Problema cosmético de alto impacto na imagem da marca",
+     "Logo do cliente errado na página inicial antes do lançamento"
+    ],
+    [
+     "Baixa severidade + Baixa prioridade",
+     "Defeito minor que pode esperar ciclos futuros",
+     "Espaçamento incorreto em tela raramente acessada"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Níveis de Severidade"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Nível",
+    "Descrição",
+    "Impacto",
+    "Resposta típica"
+   ],
+   "linhas": [
+    [
+     "Crítico (S1)",
+     "Sistema inoperante; funcionalidade principal indisponível; perda de dados",
+     "Critíco para o negócio",
+     "Correção imediata; hotfix em produção"
+    ],
+    [
+     "Alto (S2)",
+     "Funcionalidade principal comprometida sem workaround viável",
+     "Alto impacto operacional",
+     "Correção na sprint atual"
+    ],
+    [
+     "Médio (S3)",
+     "Funcionalidade afetada, mas existe workaround aceitável",
+     "Incomodo operacional",
+     "Correção planejada"
+    ],
+    [
+     "Baixo (S4)",
+     "Problema minor de usabilidade ou cosmético",
+     "Impacto mínimo",
+     "Backlog de melhorias"
+    ],
+    [
+     "Trivial (S5)",
+     "Erros de ortografia, inconsistências visuais insignificantes",
+     "Imperceptível ao usuário",
+     "Oportunista / quando conveniente"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Classificação por Tipo"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Funcional: </strong>O software não se comporta conforme os requisitos funcionais especificados. Ex.: botão de salvar não persiste os dados."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Interface (UI/UX): </strong>Problemas visuais, de layout, responsividade ou acessibilidade. Ex.: campo cortado em resolução mobile."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Performance: </strong>O sistema responde lentamente, consome recursos excessivos ou não escala. Ex.: relatório demora 45 segundos para carregar."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Segurança: </strong>Vulnerabilidades que comprometem a confidencialidade, integridade ou disponibilidade. Ex.: senha visível no log de aplicação."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Compatibilidade: </strong>Comportamento incorreto em determinado navegador, SO ou dispositivo. Ex.: funcionalidade quebrada no Safari."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Usabilidade: </strong>Dificuldade de uso que não viola requisitos mas impacta negativamente a experiência. Ex.: fluxo de checkout confuso."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Regressão: </strong>Funcionalidade que funcionava corretamente parou de funcionar após uma mudança. Ex.: exportação de PDF quebrou após atualização."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Dados: </strong>Problemas de validação, armazenamento ou exibição de dados. Ex.: valor monétário arredondado incorretamente."
+  },
+  {
+   "t": "h2",
+   "id": "10-3-registro-de-defeitos-como-escrever-um-bom-bug-report",
+   "texto": "10.3 Registro de Defeitos: Como Escrever um Bom Bug Report"
+  },
+  {
+   "t": "p",
+   "html": "Um bug report de qualidade é a diferença entre um defeito que é corrigido rapidamente e um que fica semanas em estado \"não reproduzível\" ou \"informações insuficientes\". O testador que documenta defeitos com precisão e completude agrega valor imenso à equipe."
+  },
+  {
+   "t": "h3",
+   "texto": "Anatomia de um Bug Report Completo"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Campo",
+    "Descrição e boas práticas"
+   ],
+   "linhas": [
+    [
+     "Título / Sumário",
+     "Descrição concisa e objetiva do problema. Deve responder: O QUÊ acontece + ONDE acontece + QUANDO/COMO acontece. Ex.: \"Erro 500 ao salvar perfil de usuário com e-mail já cadastrado\""
+    ],
+    [
+     "ID",
+     "Identificador único gerado automaticamente pela ferramenta de rastreamento (ex.: BUG-1042, PROJ-237)"
+    ],
+    [
+     "Severidade",
+     "Nível de impacto técnico: Crítico, Alto, Médio, Baixo, Trivial"
+    ],
+    [
+     "Prioridade",
+     "Urgência de correção do ponto de vista do negócio: Alta, Média, Baixa"
+    ],
+    [
+     "Ambiente",
+     "Sistema operacional, navegador/versão, URL do ambiente, build/versão da aplicação testada"
+    ],
+    [
+     "Pré-condições",
+     "Estado do sistema necessário antes de executar os passos. Ex.: \"Usuário logado como Admin; banco de dados com pelo menos 100 registros\""
+    ],
+    [
+     "Passos para reproduzir",
+     "Sequência numerada e precisa de ações que reproduzem o defeito. Cada passo deve ser atômico e inequívoco"
+    ],
+    [
+     "Resultado obtido",
+     "O que o sistema fez (comportamento atual). Ser preciso: incluir mensagens de erro, códigos HTTP, valores exibidos"
+    ],
+    [
+     "Resultado esperado",
+     "O que o sistema deveria ter feito (comportamento correto). Idealmente referenciando o requisito ou critério de aceitação"
+    ],
+    [
+     "Evidências",
+     "Screenshots, vídeos, logs, arquivos de dump. Quanto mais evidência, menos tempo o desenvolvedor gasta na investigação"
+    ],
+    [
+     "Frequência de reprodução",
+     "Sempre / Intermitente (X em Y tentativas) / Apenas uma vez. Defeitos intermitentes exigem informações adicionais"
+    ],
+    [
+     "Componente / Módulo",
+     "Parte do sistema afetada. Facilita o roteamento do defeito para o desenvolvedor correto"
+    ],
+    [
+     "Versão / Build",
+     "Versão exata do software em que o defeito foi encontrado"
+    ],
+    [
+     "Reportado por",
+     "Nome do testador e data de abertura do defeito"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Exemplo de Bug Report Bem Escrito"
+  },
+  {
+   "t": "p",
+   "html": "Título: \"Erro 422 ao tentar alterar senha com caracteres especiais (&amp;, @, #) via tela de perfil\""
+  },
+  {
+   "t": "p",
+   "html": "Severidade: Alto | Prioridade: Alta | Componente: Gestão de Usuários | Ambiente: Chrome 121 / Windows 11 / Staging v2.4.1"
+  },
+  {
+   "t": "p",
+   "html": "Pré-condições: Usuário autenticado com perfil comum; navegar até Menu &gt; Minha Conta &gt; Segurança."
+  },
+  {
+   "t": "p",
+   "html": "Passos para reproduzir: (1) Clicar em \"Alterar senha\"; (2) Preencher \"Senha atual\" com senha válida; (3) Preencher \"Nova senha\" com \"Teste@2024#\"; (4) Confirmar nova senha com o mesmo valor; (5) Clicar em \"Salvar\"."
+  },
+  {
+   "t": "p",
+   "html": "Resultado obtido: Exibida mensagem de erro genérica \"Não foi possível salvar as alterações\" e no log do servidor consta HTTP 422 com mensagem \"Invalid character in password field\"."
+  },
+  {
+   "t": "p",
+   "html": "Resultado esperado: Senha alterada com sucesso; mensagem de confirmação exibida. A política de senhas documentada permite caracteres especiais (@, #, &amp;, !, *)."
+  },
+  {
+   "t": "h3",
+   "texto": "Antipadrões: O Que Evitar em um Bug Report"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Títulos vagos como \"Sistema com erro\" ou \"Não funciona\" — não indicam o contexto nem o impacto",
+    "Passos de reprodução incompletos ou ambíguos que impedem o desenvolvedor de reproduzir o defeito",
+    "Ausência de evidências (prints, logs) em defeitos visuais ou de mensagens de erro",
+    "Misturar múltiplos defeitos em um único bug report — cada defeito deve ser reportado separadamente",
+    "Reportar sugestões de melhoria como se fossem defeitos — usar categoria de enhancement ou improvement",
+    "Omitir a versão ou ambiente testado, dificultando a reprodução e verificação da correção"
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "10-4-ciclo-de-vida-de-um-defeito",
+   "texto": "10.4 Ciclo de Vida de um Defeito"
+  },
+  {
+   "t": "p",
+   "html": "Todo defeito percorre um conjunto de estados desde sua descoberta até seu fechamento definitivo. Esse fluxo — chamado de ciclo de vida do defeito — varia entre organizações e ferramentas, mas compartilha estados fundamentais comuns."
+  },
+  {
+   "t": "h3",
+   "texto": "Estados do Ciclo de Vida"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Novo (New/Open): </strong>O defeito foi identificado e registrado pelo testador. Ainda não foi avaliado ou atribuído."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Em Triagem (Triage): </strong>Um líder técnico, scrum master ou QA lead avalia o defeito, verifica sua validade, define severidade/prioridade e atribui ao desenvolvedor responsável."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Em Andamento / Atribuído (In Progress/Assigned): </strong>O desenvolvedor está ativamente trabalhando na correção."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Resolvido / Corrigido (Resolved/Fixed): </strong>O desenvolvedor implementou e commitou a correção. O defeito aguarda verificação pelo testador."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Em Verificação (In Verification): </strong>O testador está re-executando os testes para confirmar que o defeito foi corrigido e que não há regressões."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Fechado (Closed): </strong>A correção foi verificada e aprovada pelo testador. O defeito está encerrado."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Reaberto (Reopened): </strong>O testador verificou que o defeito não foi corrigido de forma adequada ou que a correção introduziu uma regressão. O ciclo reinicia."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Duplicado (Duplicate): </strong>O defeito já foi reportado anteriormente. O registro atual é fechado com referência ao original."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Não Reproduzível (Cannot Reproduce): </strong>O desenvolvedor ou QA não conseguiu reproduzir o defeito com as informações fornecidas. Solicita-se mais detalhes ao reportante."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Won't Fix / Adiado (Deferred): </strong>O defeito foi reconhecido mas decidiu-se não corrigi-lo neste ciclo — por baixo impacto, custo de correção alto, ou cenário a ser descontinuado."
+  },
+  {
+   "t": "h3",
+   "texto": "Fluxo Típico do Ciclo de Vida"
+  },
+  {
+   "t": "p",
+   "html": "O fluxo padrão segue a progressão: Novo → Em Triagem → Atribuído → Em Andamento → Resolvido → Em Verificação → Fechado. Em caso de correção insuficiente, o estado Reaberto devolve o defeito para o desenvolvedor. Defeitos inválidos ou duplicados são fechados diretamente da triagem."
+  },
+  {
+   "t": "p",
+   "html": "Alguns fluxos incluem um estado adicional de \"Aguardando Informação\" quando o desenvolvedor precisa de esclarecimentos do testador, e \"Aguardando Ambiente\" quando a correção depende de uma janela de deploy para ser verificada."
+  },
+  {
+   "t": "h3",
+   "texto": "Responsabilidades por Estado"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Estado",
+    "Responsável",
+    "Ação esperada"
+   ],
+   "linhas": [
+    [
+     "Novo",
+     "Testador (QA)",
+     "Documentar com completude; anexar evidências; definir severidade inicial"
+    ],
+    [
+     "Triagem",
+     "QA Lead / Tech Lead",
+     "Validar, priorizar, atribuir ao dev correto"
+    ],
+    [
+     "Em Andamento",
+     "Desenvolvedor",
+     "Investigar causa raiz; implementar correção; documentar abordagem"
+    ],
+    [
+     "Resolvido",
+     "Desenvolvedor",
+     "Indicar build/commit da correção; notificar testador"
+    ],
+    [
+     "Em Verificação",
+     "Testador (QA)",
+     "Reprovar ou fechar; verificar regressões relacionadas"
+    ],
+    [
+     "Reaberto",
+     "Testador (QA)",
+     "Documentar por que a correção foi insuficiente; adicionar novas evidências"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "10-5-acompanhamento-e-metricas-de-defeitos",
+   "texto": "10.5 Acompanhamento e Métricas de Defeitos"
+  },
+  {
+   "t": "p",
+   "html": "Métricas de defeitos transformam dados brutos de rastreamento em inteligência sobre a qualidade do produto e a eficiência do processo. Sem métricas consistentes, decisões como \"o produto está pronto para release?\" dependem de percepções subjetivas em vez de dados objetivos."
+  },
+  {
+   "t": "h3",
+   "texto": "Métricas Fundamentais"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Total de defeitos abertos (Open Defects): </strong>Número de defeitos ativos no sistema. É um indicador direto do estado de qualidade do produto."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Taxa de detecção de defeitos (Defect Detection Rate): </strong>Número de defeitos encontrados por unidade de tempo ou por ciclo de teste. Indica a eficiência do processo de testes."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Taxa de correção de defeitos (Defect Fix Rate): </strong>Número de defeitos corrigidos e verificados por sprint ou ciclo. Comparação com a taxa de detecção indica se o backlog de defeitos está crescendo ou reduzindo."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Taxa de rejeição/reabertura (Defect Rejection Rate): </strong>Percentual de defeitos corrigidos que são reabertos por correção insuficiente. Alta taxa indica qualidade baixa nas correções."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Densidade de defeitos (Defect Density): </strong>Número de defeitos por ponto de função, por KLOC (mil linhas de código) ou por caso de teste. Permite comparar a qualidade entre módulos ou versões."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Tempo médio de resolução (MTTR — Mean Time To Resolve): </strong>Tempo médio entre a abertura e o fechamento de um defeito. Indica a agilidade do time de desenvolvimento na resolução de problemas."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Eficiência de detecção (DDE — Defect Detection Efficiency): </strong>Percentual de defeitos encontrados antes da entrega ao cliente em relação ao total. DDE = Defeitos encontrados internamente / (Defeitos internos + Defeitos reportados em produção) × 100."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Distribuição por severidade: </strong>Proporção de defeitos críticos, altos, médios e baixos. Alta concentração em críticos/altos indica risco elevado para o release."
+  },
+  {
+   "t": "h3",
+   "texto": "Indicadores de Prontidão para Release"
+  },
+  {
+   "t": "p",
+   "html": "Antes de um release, a equipe precisa avaliar se o produto atingiu um nível aceitável de qualidade. Os critérios típicos incluem:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Zero defeitos abertos de severidade Crítica (S1)",
+    "Número de defeitos de severidade Alta (S2) abertos abaixo do limiar definido (ex.: no máximo 3)",
+    "DDE acima de 90% (menos de 10% dos defeitos chegando ao cliente)",
+    "Taxa de reabertura abaixo de 10%",
+    "Todos os defeitos de alta prioridade verificados e fechados",
+    "Nenhum defeito novo de alta severidade introduzido nas últimas 48h de teste"
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Burn Down de Defeitos"
+  },
+  {
+   "t": "p",
+   "html": "O Defect Burn Down chart é uma visualização que mostra a evolução do número de defeitos abertos ao longo do tempo em uma sprint ou ciclo de testes. Uma curva descendente consistente indica progresso saudável. Uma curva estagnada ou crescente sinaliza risco de não cumprimento do release."
+  },
+  {
+   "t": "h2",
+   "id": "10-6-ferramentas-de-gerenciamento-de-defeitos",
+   "texto": "10.6 Ferramentas de Gerenciamento de Defeitos"
+  },
+  {
+   "t": "p",
+   "html": "Ferramentas de gerenciamento de defeitos centralizam o registro, o rastreamento e a comunicação sobre defeitos, substituindo planilhas isoladas e e-mails por um sistema colaborativo com histórico, notificações e métricas integradas. A escolha da ferramenta impacta diretamente a eficiência do processo de qualidade."
+  },
+  {
+   "t": "h3",
+   "texto": "Jira (Atlassian)"
+  },
+  {
+   "t": "p",
+   "html": "O Jira é a plataforma de rastreamento de issues mais utilizada globalmente, especialmente em times ágeis. Originalmente criado para rastreamento de bugs, evoluiu para uma plataforma completa de gerenciamento de projetos. Oferece workflows customizáveis, integração nativa com ferramentas como Confluence, Bitbucket e Jenkins, e amplo ecossistema de plugins."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Recurso",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "Issues e Tipos",
+     "Bug, Story, Task, Epic e tipos customizados; cada tipo com campos e workflows próprios"
+    ],
+    [
+     "Workflows",
+     "Estados e transições totalmente customizáveis com condições, validações e pós-funções"
+    ],
+    [
+     "Campos customizados",
+     "Criação de campos específicos: ambiente, versão afetada, componente, frequência de reprodução"
+    ],
+    [
+     "Integração com código",
+     "Link de commits e PRs do Git ao defeito; visualização de em qual branch a correção está"
+    ],
+    [
+     "Dashboards e Relatórios",
+     "Burn down, velocity, defect aging, cumulative flow diagram — tudo configurável"
+    ],
+    [
+     "Automações",
+     "Regras de automação para transições, atribuições e notificações sem código"
+    ],
+    [
+     "Integração com testes",
+     "Plugins como Zephyr e Xray integram casos de teste e execuções diretamente ao Jira"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "GitHub Issues / GitLab Issues"
+  },
+  {
+   "t": "p",
+   "html": "Para times que já utilizam GitHub ou GitLab como repositório de código, as issues nativas oferecem uma alternativa leve e integrada ao fluxo de desenvolvimento. A vantagem principal é a proximi-dade com o código: cada issue pode ser referenciada em commits, pull requests e releases, criando rastreabilidade automática entre o defeito e sua correção."
+  },
+  {
+   "t": "p",
+   "html": "Recursos relevantes incluem: labels para classificação de tipo e severidade, milestones para agrupamento por release, projetos Kanban integrados, templates de issues para padronizar bug reports e integração nativa com GitHub Actions e GitLab CI para fechar issues automaticamente ao mergi-ar um PR com a correção."
+  },
+  {
+   "t": "h3",
+   "texto": "Bugzilla"
+  },
+  {
+   "t": "p",
+   "html": "O Bugzilla é um dos sistemas de rastreamento de bugs open source mais antigos e consolidados, desenvolvido pela Mozilla Foundation. Embora sua interface seja mais antiga, ele oferece funcionalidades robustas como busca avançada, dependências entre bugs, blóques de progressão, votação em defeitos e relatórios detalhados. É amplamente utilizado em projetos open source e organizações que necessitam de soluções gratuitas e autogerenciadas."
+  },
+  {
+   "t": "h3",
+   "texto": "Azure DevOps (Work Items)"
+  },
+  {
+   "t": "p",
+   "html": "A plataforma Microsoft Azure DevOps oferece rastreamento de work items completamente integrado com repositórios Git, pipelines CI/CD, planos de teste e análise de dados com Power BI. É a escolha natural para times que utilizam o ecossistema Microsoft (.NET, Azure, Visual Studio). Suporta metodologias ágeis (Scrum, Kanban, CMMI) com workflows pré-configurados."
+  },
+  {
+   "t": "h3",
+   "texto": "Quadro Comparativo das Ferramentas"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Critério",
+    "Jira",
+    "GitHub Issues",
+    "Bugzilla",
+    "Azure DevOps"
+   ],
+   "linhas": [
+    [
+     "Custo",
+     "Pago (free até 10 users)",
+     "Incluído no GitHub",
+     "Open Source (gratuito)",
+     "Pago (free tier)"
+    ],
+    [
+     "Integração com código",
+     "Via plugins (Bitbucket/GitHub)",
+     "Nativa e excelente",
+     "Limitada",
+     "Nativa (Azure Repos)"
+    ],
+    [
+     "Customização de workflow",
+     "Muito alta",
+     "Limitada (labels)",
+     "Alta",
+     "Alta"
+    ],
+    [
+     "Relatórios nativos",
+     "Muito bons",
+     "Básicos",
+     "Médios",
+     "Excelentes (Power BI)"
+    ],
+    [
+     "Curva de aprendizado",
+     "Média-Alta",
+     "Baixa",
+     "Média",
+     "Média"
+    ],
+    [
+     "Ecossistema",
+     "Muito amplo",
+     "GitHub/Actions",
+     "Open source",
+     "Microsoft"
+    ],
+    [
+     "Ideal para",
+     "Times ágeis; empresas",
+     "Devs; projetos OSS",
+     "Orgão/projetos OSS",
+     "Ecossistema Microsoft"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "10-7-processo-e-boas-praticas",
+   "texto": "10.7 Processo e Boas Práticas"
+  },
+  {
+   "t": "p",
+   "html": "Ter uma ferramenta de rastreamento e saber escrever bons bug reports é necessário, mas não suficiente. Um processo bem definido garante que todos na equipe sigam o mesmo fluxo, que nenhum defeito seja perdido e que as métricas geradas sejam confiáveis."
+  },
+  {
+   "t": "h3",
+   "texto": "Processo de Gerenciamento de Defeitos"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Detecção: </strong>Defeitos podem ser encontrados por testes manuais, testes automatizados, code reviews, monitoramento de produção ou relatos de usuários. Todos devem ser registrados no sistema centralizado."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Registro: </strong>O testador documenta o defeito seguindo o template padronizado da equipe. Evidências são anexadas e a severidade inicial é atribuída."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Triagem: </strong>Sessões periódicas (diárias em sprints, semanais em projetos tradicionais) onde QA Lead e Tech Lead revisam novos defeitos, validam, classificam e atribuem."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Investigação e correção: </strong>O desenvolvedor analisa a causa raiz, implementa a correção com teste unitário correspondente e atualiza o status com informações sobre a correção."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Verificação: </strong>O testador confirma a correção no ambiente correto, executa testes de regressão nos componentes relacionados e fecha ou reabre o defeito com justificativa."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Análise causal (Root Cause Analysis): </strong>Defeitos recorrentes ou críticos devem ser analisados em reuniões de retrospectiva para identificar a causa raiz e implementar melhorias de processo que previnam defeitos semelhantes no futuro."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Relatórios e acompanhamento: </strong>Geração periódica de relatórios de qualidade para stakeholders, mostrando tendências, evolução das métricas e prontidão para release."
+  },
+  {
+   "t": "h3",
+   "texto": "Boas Práticas de Gerenciamento de Defeitos"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Um defeito por registro: </strong>Nunca agrupe múltiplos defeitos em um único ticket. Isso dificulta o rastreamento, a priorização e as métricas."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Padronize o template de bug report: </strong>Crie um template obrigatório na ferramenta de rastreamento. Campos obrigatórios garantem que informações essenciais nunca sejam omitidas."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Nunca feche sem verificar: </strong>Apenas o testador que reportou (ou outro membro da equipe QA) deve fechar um defeito após verificar a correção. Desenvolvedores não devem fechar seus próprios defeitos."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Mantenha a comunicação no ticket: </strong>Toda discussão sobre o defeito (esclarecimentos, descobertas da investigação, razon da abordagem) deve ser registrada no ticket, não em chats efêmeros."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Integre com o controle de versão: </strong>Referencie o ID do defeito em commits e PRs. Isso cria rastreabilidade bidirecional entre o código corrigido e o defeito reportado."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Faça triagem regularmente: </strong>Um backlog de defeitos não triados é uma dívida técnica oculta. Triagens regulares garantem que defeitos importantes não fiquem esquecidos."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Analise causas raiz periódicamente: </strong>Use retrospectivas para identificar padrões nos defeitos — um módulo com alta densidade de defeitos pode indicar necessidade de refatoração ou melhor cobertura de testes."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Diferencie defeito de melhoria: </strong>Um comportamento que não estava especificado mas que o usuário considera indesejável pode ser uma melhoria (enhancement), não um defeito. Classificar corretamente mantém as métricas precisas."
+  }
+ ]
+}

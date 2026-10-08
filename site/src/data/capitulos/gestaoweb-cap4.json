@@ -1,0 +1,341 @@
+{
+ "numero": 4,
+ "titulo": "Gerenciamento de Conteúdo Web",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Depois de decidir arquitetura, hospedagem e tecnologias de desenvolvimento, uma pergunta prática permanece: quem, no dia a dia, vai publicar e atualizar o conteúdo do site? Nem toda mudança de texto ou imagem deveria exigir a intervenção de um desenvolvedor – e é exatamente esse problema que os Sistemas de Gerenciamento de Conteúdo (CMS) resolvem. Este capítulo apresenta o conceito de CMS, as principais plataformas do mercado e as boas práticas de gestão de conteúdo que vão muito além de “publicar um texto”."
+  },
+  {
+   "t": "h2",
+   "id": "4-1-o-que-e-um-cms",
+   "texto": "4.1 O que é um CMS?"
+  },
+  {
+   "t": "p",
+   "html": "Um CMS (<em>Content Management System</em>) é um software que permite criar, editar, organizar e publicar conteúdo digital sem que seja necessário escrever código. É como um “Word para sites”: você escreve, formata e publica através de uma interface visual amigável, sem precisar entender uma linha sequer de HTML, CSS ou PHP."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    ""
+   ],
+   "linhas": [
+    [
+     "<strong>Sem CMS</strong>",
+     "Toda alteração exige editar código diretamente; qualquer mudança demanda conhecimento técnico; publicar algo pode levar horas"
+    ],
+    [
+     "<strong>Com CMS</strong>",
+     "Interface visual para criar e editar; qualquer pessoa da equipe pode publicar; controle de versões, fluxos de aprovação e SEO já integrados"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O mercado global de CMS movimentou US$ 31,7 bilhões em 2024, com projeção de chegar a US$ 57,3 bilhões até 2030 – um crescimento que reflete o quanto empresas de todos os portes passaram a depender de plataformas estruturadas para gerenciar sua presença digital."
+  },
+  {
+   "t": "h2",
+   "id": "4-2-o-cms-em-numeros-mercado-global",
+   "texto": "4.2 O CMS em Números – Mercado Global"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Plataforma",
+    "Participação de mercado (2025)"
+   ],
+   "linhas": [
+    [
+     "WordPress",
+     "43,4% de todos os sites da internet – 61,3% entre sites que usam algum CMS conhecido"
+    ],
+    [
+     "Shopify",
+     "6,7% do mercado total de CMS – líder isolado em e-commerce"
+    ],
+    [
+     "Wix",
+     "4,6% – plataforma de crescimento mais rápido nos últimos dez anos"
+    ],
+    [
+     "Squarespace",
+     "3,2% – forte em design premium e portfólios"
+    ],
+    [
+     "Joomla + Drupal",
+     "3,3% juntos, contra 14,8% em 2014 – declínio contínuo e acentuado"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Atualização 2025 — Adoção de CMS em alta",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Sites sem nenhum CMS caíram de 37% para 28,6% em 2025, evidenciando uma tendência clara de adoção de plataformas estruturadas mesmo por sites simples. Shopify cresceu de 0,1% (2014) para 6,7% hoje; Wix, de 0,1% para 4,6% no mesmo período. O WordPress atingiu seu pico de participação entre CMSs em 2022 (65,2%) e vem se estabilizando desde então – um sinal de maturidade do mercado, não de declínio da plataforma."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-3-tendencias-de-gerenciamento-de-conteudo",
+   "texto": "4.3 Tendências de Gerenciamento de Conteúdo"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tendência",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "IA Generativa",
+     "Escreve rascunhos de artigos, sugere legendas e otimiza títulos para SEO"
+    ],
+    [
+     "CMS Headless",
+     "Separa o gerenciamento do conteúdo da sua exibição – distribui o mesmo conteúdo em site, app e IoT"
+    ],
+    [
+     "Personalização Automática",
+     "Sistemas adaptam o conteúdo exibido ao comportamento de cada usuário (como a Netflix faz)"
+    ],
+    [
+     "Conteúdo Omnichannel",
+     "Um único artigo se transforma automaticamente em posts para vários canais diferentes"
+    ],
+    [
+     "Colaboração em Tempo Real",
+     "Múltiplas pessoas editam o mesmo conteúdo simultaneamente, com histórico de versões"
+    ],
+    [
+     "Acessibilidade Obrigatória",
+     "Texto alternativo em imagens, contraste adequado e estrutura semântica – requisito legal em diversas jurisdições"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O <strong>CMS Headless</strong> merece atenção especial: ao desacoplar o backend (onde o conteúdo é criado e armazenado) do frontend (onde ele é exibido), uma mesma peça de conteúdo pode alimentar simultaneamente um site, um aplicativo mobile e até um painel em uma loja física – um único ponto de criação, múltiplos pontos de consumo."
+  },
+  {
+   "t": "h2",
+   "id": "4-4-wordpress-joomla-e-drupal",
+   "texto": "4.4 WordPress, Joomla e Drupal"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "CMS",
+    "Vantagens",
+    "Limitações"
+   ],
+   "linhas": [
+    [
+     "WordPress",
+     "Maior comunidade do mundo, 70 mil+ plugins, gratuito",
+     "Alvo frequente de ataques por ser o mais popular; performance exige otimização"
+    ],
+    [
+     "Joomla",
+     "ACL granular, suporte multilíngue nativo",
+     "Ecossistema em forte declínio, mercado de trabalho limitado"
+    ],
+    [
+     "Drupal",
+     "Segurança excepcional, escalável a milhões de acessos",
+     "Curva de aprendizado íngreme, exige equipe técnica qualificada"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo real — Por que a Receita Federal usaria Drupal",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Um portal com milhões de contribuintes, contadores com acessos especiais e autenticação integrada a outras bases governamentais não pode tolerar margem de erro: um bug não é apenas “o site fora do ar”, é um potencial desastre de escala nacional. É justamente nesse tipo de cenário que a segurança e a escalabilidade do Drupal justificam sua maior complexidade de implantação."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-5-shopify-wix-squarespace-magento-e-ghost",
+   "texto": "4.5 Shopify, Wix, Squarespace, Magento e Ghost"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "CMS",
+    "Ideal para"
+   ],
+   "linhas": [
+    [
+     "Shopify",
+     "Pequenas e médias empresas que querem vender online rapidamente, sem gerenciar infraestrutura"
+    ],
+    [
+     "Wix",
+     "Pequenos empreendedores e profissionais autônomos, com editor <em>drag-and-drop</em> intuitivo"
+    ],
+    [
+     "Squarespace",
+     "Criativos e marcas premium que valorizam estética – templates de altíssimo nível visual"
+    ],
+    [
+     "Magento (Adobe Commerce)",
+     "Grandes varejistas e distribuidoras B2B, com escalabilidade verdadeiramente empresarial"
+    ],
+    [
+     "Ghost",
+     "Jornalistas, newsletters pagas e publicações por assinatura – velocidade e memberships nativos"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Cada uma dessas plataformas troca flexibilidade por simplicidade em proporções diferentes: o Wix oferece a curva de aprendizado mais suave, mas ao custo de customização limitada; o Magento oferece controle quase ilimitado, mas exige meses de implementação e uma equipe técnica dedicada. Entender essa troca é mais importante do que decorar as características de cada plataforma isoladamente."
+  },
+  {
+   "t": "h2",
+   "id": "4-6-comparativo-qual-cms-escolher",
+   "texto": "4.6 Comparativo: Qual CMS Escolher?"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Cenário",
+    "CMS recomendado"
+   ],
+   "linhas": [
+    [
+     "Blog ou site corporativo",
+     "WordPress – ecossistema mais maduro e maior comunidade"
+    ],
+    [
+     "Governo, banco, grande organização",
+     "Drupal – segurança máxima e escalabilidade extrema"
+    ],
+    [
+     "Loja virtual sem equipe técnica",
+     "Shopify – tudo incluso, no ar em poucas horas"
+    ],
+    [
+     "Site simples e criativo",
+     "Wix ou Squarespace – dificuldade muito baixa a baixa"
+    ],
+    [
+     "E-commerce de grande escala",
+     "Magento – escalabilidade empresarial e recursos B2B nativos"
+    ],
+    [
+     "Newsletter ou publicação paga",
+     "Ghost – velocidade e assinaturas integradas via Stripe"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-7-workflow-e-gestao-de-aprovacoes",
+   "texto": "4.7 Workflow e Gestão de Aprovações"
+  },
+  {
+   "t": "p",
+   "html": "Em qualquer organização com mais de uma pessoa produzindo conteúdo, publicar sem um fluxo de aprovação é um convite ao erro – um texto com informação incorreta, um tom inadequado à marca, ou até um problema jurídico podem ir ao ar sem que ninguém tenha revisado antes."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Etapa",
+    "Responsável e objetivo"
+   ],
+   "linhas": [
+    [
+     "1. Rascunho",
+     "Autor ou redator cria o conteúdo inicial – texto, imagens, links"
+    ],
+    [
+     "2. Revisão",
+     "Editor verifica gramática, adequação e coerência com o tema"
+    ],
+    [
+     "3. Aprovação",
+     "Gerente (e, quando necessário, jurídico) autoriza a publicação"
+    ],
+    [
+     "4. Publicação",
+     "Conteúdo vai ao ar, de forma manual, automatizada ou agendada"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-8-seo-e-analise-de-conteudo",
+   "texto": "4.8 SEO e Análise de Conteúdo"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Prática",
+    "Impacto"
+   ],
+   "linhas": [
+    [
+     "URLs amigáveis",
+     "<code>site.com/receitas/bolo</code> em vez de <code>site.com/p?id=123</code> – melhora ranqueamento e confiança"
+    ],
+    [
+     "Meta tags bem escritas",
+     "Títulos e descrições atrativos aumentam a taxa de cliques nos resultados de busca"
+    ],
+    [
+     "Otimização de imagens",
+     "Reduz tempo de carregamento e melhora o tráfego vindo do Google Imagens"
+    ],
+    [
+     "Estrutura de cabeçalhos",
+     "H1, H2 e H3 ajudam os mecanismos de busca a entender a hierarquia do conteúdo"
+    ],
+    [
+     "Core Web Vitals",
+     "Métricas de velocidade e estabilidade que influenciam diretamente o ranqueamento no Google"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Publicar bem não é suficiente sem medir o resultado. Métricas como tempo na página, taxa de rejeição, <em>heatmaps</em> (mapas de calor que mostram onde os usuários realmente clicam) e testes A/B (que comparam versões diferentes de um mesmo título ou botão) transformam a produção de conteúdo de uma atividade artística em uma prática orientada a dados."
+  },
+  {
+   "t": "h2",
+   "id": "4-9-migracao-manutencao-e-roi-de-cms",
+   "texto": "4.9 Migração, Manutenção e ROI de CMS"
+  },
+  {
+   "t": "p",
+   "html": "Migrar de um CMS para outro exige planejamento cuidadoso: auditar todo o conteúdo existente, mapear funcionalidades que precisam ser replicadas na nova plataforma, e testar tudo em um ambiente de cópia antes de colocar a nova versão no ar. A manutenção preventiva – aplicar atualizações de segurança em até 48 horas após seu lançamento – é o que separa sites que nunca sofrem um ataque bem-sucedido daqueles que viram manchete por vazamento de dados."
+  },
+  {
+   "t": "quadro",
+   "tipo": "boa-pratica",
+   "titulo": "ROI de um CMS bem gerido",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Um CMS com SEO integrado e boas práticas de conteúdo bem seguidas pode gerar até 30% mais tráfego orgânico – ou seja, visitantes que chegam ao site sem custo de anúncio pago. Esse é o retorno sobre investimento (ROI) mais tangível de investir tempo e disciplina na gestão de conteúdo, e não apenas na escolha da plataforma em si."
+    }
+   ]
+  }
+ ]
+}

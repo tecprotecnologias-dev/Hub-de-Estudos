@@ -1,0 +1,16 @@
+{
+ "numero": null,
+ "titulo": "Como o React Funciona",
+ "blocos": [
+  {
+   "t": "p",
+   "html": "Infográfico do ciclo de renderização do React: do componente ao DOM real, passando pela Virtual DOM e pelo <em>diffing</em> (reconciliação) que acontece a cada mudança de estado."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/como-o-react-funciona.png",
+   "grande": true,
+   "alt": "Infográfico \"Como o React funciona\". O componente retorna JSX, que gera a Virtual DOM (objeto JavaScript em memória); na primeira renderização ela vira o DOM real. Uma interação do usuário chama setState, o componente roda de novo e gera uma nova Virtual DOM; o diffing compara a nova com a antiga e aplica no DOM real só as diferenças. Exemplo: entre a Virtual DOM antiga (contador 3) e a nova (contador 4), a única diferença é o número do contador, então só esse texto é atualizado na tela."
+  }
+ ]
+}

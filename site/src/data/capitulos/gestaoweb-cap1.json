@@ -1,0 +1,451 @@
+{
+ "numero": 1,
+ "titulo": "Arquitetura de Software e Web",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Todo sistema web que um usuário acessa – uma loja virtual, uma rede social, um aplicativo bancário – é resultado de decisões estruturais tomadas muito antes de a primeira linha de código ser escrita. Essas decisões definem como os componentes do sistema se comunicam, onde os dados ficam armazenados, como o sistema cresce quando o número de usuários aumenta, e o que acontece quando uma parte dele falha. Esse conjunto de decisões é o que chamamos de <strong>arquitetura de software</strong>. Este capítulo apresenta os fundamentos que sustentam toda a disciplina: os protocolos que permitem que máquinas diferentes conversem entre si, a arquitetura cliente-servidor que rege a quase totalidade da web atual, as tecnologias centrais (HTTP, URL, HTML) e os modelos mais modernos de arquitetura – distribuída, em microsserviços e orientada a APIs – que sustentam os sistemas de grande escala que usamos todos os dias."
+  },
+  {
+   "t": "h2",
+   "id": "1-1-o-que-e-arquitetura-de-software",
+   "texto": "1.1 O que é Arquitetura de Software?"
+  },
+  {
+   "t": "p",
+   "html": "Arquitetura de software é o conjunto de decisões de alto nível que definem a estrutura e a forma de comunicação entre os componentes de um sistema. Assim como a planta de uma construção civil precede o levantamento das paredes, essas decisões são tomadas antes da implementação, com o objetivo de evitar problemas estruturais que só apareceriam – e seriam muito mais caros de corrigir – depois que o sistema já estivesse em produção."
+  },
+  {
+   "t": "p",
+   "html": "Não existe uma arquitetura única e universalmente ideal. A escolha depende das necessidades do cliente, do orçamento e dos recursos disponíveis, do conhecimento técnico da equipe e da expectativa de crescimento do sistema. Um blog pessoal e o sistema de um banco multinacional resolvem problemas completamente diferentes, e por isso adotam arquiteturas completamente diferentes – aplicar a arquitetura errada ao contexto errado é uma das causas mais comuns de projetos que não escalam ou que custam caro demais para manter."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Um pequeno escritório de contabilidade que atende 30 clientes não precisa de uma arquitetura de microsserviços com múltiplos servidores distribuídos – isso adicionaria complexidade e custo sem nenhum benefício real. Já uma plataforma de streaming com milhões de usuários simultâneos não pode rodar em um único servidor monolítico – ela precisaria de uma arquitetura distribuída desde o primeiro dia, sob pena de cair na primeira semana de operação."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-2-evolucao-das-arquiteturas-de-sistema",
+   "texto": "1.2 Evolução das Arquiteturas de Sistema"
+  },
+  {
+   "t": "p",
+   "html": "A forma como os sistemas de software são estruturados evoluiu significativamente ao longo das décadas, acompanhando as transformações tecnológicas e as demandas crescentes das organizações. Cada geração de arquitetura resolveu as limitações da anterior – e, ao mesmo tempo, introduziu novos desafios que a geração seguinte precisou enfrentar."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Arquitetura",
+    "Característica principal"
+   ],
+   "linhas": [
+    [
+     "Mainframes",
+     "Processamento inteiramente centralizado – todo o sistema roda em uma única máquina de grande porte"
+    ],
+    [
+     "Microcomputadores",
+     "Ferramentas mais acessíveis e independentes de uma plataforma centralizada"
+    ],
+    [
+     "Arquitetura em 2 Camadas",
+     "Aplicação roda no cliente; banco de dados fica no servidor"
+    ],
+    [
+     "Arquitetura em 3 Camadas",
+     "Regras de negócio isoladas em um servidor de aplicação dedicado, separado do banco de dados"
+    ],
+    [
+     "Arquitetura Web",
+     "Apresentação entregue via navegador, desacoplando definitivamente as três camadas"
+    ],
+    [
+     "Microsserviços",
+     "Serviços independentes, altamente escaláveis, cada um responsável por uma parte específica do sistema"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Essa evolução não é apenas histórica – ela é também uma escala de complexidade crescente. Sistemas modernos frequentemente combinam elementos de mais de uma geração: um e-commerce de médio porte pode ter uma arquitetura em 3 camadas para o site principal e, ao mesmo tempo, usar microsserviços específicos para funcionalidades que exigem escala isolada, como recomendação de produtos ou processamento de pagamentos."
+  },
+  {
+   "t": "h2",
+   "id": "1-3-protocolos-de-comunicacao",
+   "texto": "1.3 Protocolos de Comunicação"
+  },
+  {
+   "t": "p",
+   "html": "Para que computadores em redes diferentes possam trocar informações, são necessários <strong>protocolos de comunicação</strong> – conjuntos de regras que definem como uma máquina solicita e recebe dados de outra. Como na internet a comunicação passa por diversos intermediários (roteadores, provedores, servidores DNS), essas regras precisam ser universalmente padronizadas: se cada rede seguisse suas próprias convenções, a internet global como a conhecemos simplesmente não existiria."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Protocolo",
+    "Função"
+   ],
+   "linhas": [
+    [
+     "IP",
+     "Endereça e roteia pacotes de dados até o destino correto na rede"
+    ],
+    [
+     "TCP",
+     "Estabelece conexão confiável, ordenada e verificada entre origem e destino"
+    ],
+    [
+     "UDP",
+     "Envia dados rapidamente, sem garantia de entrega – base do moderno HTTP/3"
+    ],
+    [
+     "HTTP / HTTPS",
+     "Padroniza (e, no caso do HTTPS, protege com criptografia) as requisições e respostas na web"
+    ],
+    [
+     "FTP",
+     "Transfere arquivos entre computadores conectados em rede"
+    ],
+    [
+     "SMTP",
+     "Rege o envio de mensagens de e-mail entre servidores de correio eletrônico"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Atualização 2025 — HTTP/3",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O HTTP/3 (RFC 9114, 2022) é a versão mais recente do protocolo HTTP. Diferente das versões anteriores, que rodam sobre TCP, o HTTP/3 roda sobre UDP através de um novo protocolo chamado QUIC. Essa mudança elimina o chamado <em>head-of-line blocking</em> – quando a perda de um único pacote atrasa todos os demais – e reduz significativamente a latência. Em 2025, mais de 35% dos sites monitorados globalmente já haviam adotado o HTTP/3, e todos os navegadores modernos (Chrome, Firefox, Edge, Safari) o suportam nativamente."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-4-arquitetura-cliente-servidor",
+   "texto": "1.4 Arquitetura Cliente-Servidor"
+  },
+  {
+   "t": "p",
+   "html": "Quando uma aplicação roda em mais de uma máquina, é comum adotar a arquitetura cliente-servidor. Nesse modelo, o <strong>cliente</strong> – que pode ser qualquer computador, smartphone ou outro dispositivo – inicia a requisição, enquanto o <strong>servidor</strong> a processa e retorna uma resposta. Essa relação é semelhante ao atendimento de um banco: o caixa (servidor) só age quando o cliente chega com uma demanda específica, seguindo um protocolo pré-estabelecido – ele não sai procurando clientes para atender por conta própria."
+  },
+  {
+   "t": "p",
+   "html": "Antes da popularização da web, cada serviço digital exigia a instalação de um software cliente específico, e qualquer atualização precisava ser replicada manualmente em cada máquina dos usuários. A arquitetura web mudou esse cenário por completo: hoje, um único navegador acessa praticamente qualquer serviço, e uma atualização feita no servidor reflete instantaneamente para todos os usuários, sem que nenhum deles precise instalar absolutamente nada."
+  },
+  {
+   "t": "h2",
+   "id": "1-5-url-uniform-resource-locator",
+   "texto": "1.5 URL — Uniform Resource Locator"
+  },
+  {
+   "t": "p",
+   "html": "Uma URL é um endereço padronizado para identificar e localizar recursos na web. É importante notar que o recurso identificado nem sempre é um objeto físico – por exemplo, a URL de um álbum musical em uma loja virtual não aponta para o CD físico, mas para a página que o <em>descreve</em>, com título, faixas, capa e preço."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Componente",
+    "Exemplo e função"
+   ],
+   "linhas": [
+    [
+     "Esquema / Protocolo",
+     "<code>http://</code> – define o protocolo usado (http, https, ftp, mailto...)"
+    ],
+    [
+     "Subdomínio",
+     "<code>www</code> – subdivisão do domínio, pode ser omitido"
+    ],
+    [
+     "Domínio + Tipo + País",
+     "<code>loja.com.br</code> – nome registrado, categoria e país"
+    ],
+    [
+     "Porta",
+     "<code>:80</code> – 80 (HTTP) e 443 (HTTPS) são as portas padrão"
+    ],
+    [
+     "Caminho / Recurso",
+     "<code>/musica/cd.php</code> – localização do recurso dentro do servidor"
+    ],
+    [
+     "Parâmetros",
+     "<code>?id=37&amp;sessao=AB7</code> – dados adicionais enviados ao servidor"
+    ],
+    [
+     "Fragmento",
+     "<code>#detalhes</code> – direciona o navegador a uma seção específica do recurso"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Boas práticas na construção de URLs",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Prefira URLs descritivas (<code>/pos/marketing</code> em vez de <code>?nivel=pos&amp;cod=34</code>), evite expor a tecnologia usada (uma extensão como <code>.php</code> pode mudar e quebrar o endereço no futuro), mantenha-as curtas e fáceis de memorizar, e prefira letras minúsculas com hífens para separar palavras (<code>/meus-produtos</code>). URLs estáveis ao longo do tempo são valorizadas tanto pelos usuários quanto pelos mecanismos de busca."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-6-http-hypertext-transfer-protocol",
+   "texto": "1.6 HTTP — Hypertext Transfer Protocol"
+  },
+  {
+   "t": "p",
+   "html": "O HTTP é o protocolo que padroniza a comunicação entre o cliente (geralmente um navegador) e o servidor na web. Cada interação segue um ciclo de requisição-resposta e é, por definição, <strong>stateless</strong> (sem estado) – ou seja, cada requisição é tratada de forma independente das anteriores, sem que o servidor precise guardar memória da conversa entre uma chamada e outra."
+  },
+  {
+   "t": "h3",
+   "texto": "Métodos HTTP"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Método",
+    "Função"
+   ],
+   "linhas": [
+    [
+     "GET",
+     "Solicita um recurso do servidor – acessar uma página, buscar produtos"
+    ],
+    [
+     "POST",
+     "Envia dados para o servidor criar um novo recurso – um formulário, um login"
+    ],
+    [
+     "PUT",
+     "Atualiza por completo um recurso já existente"
+    ],
+    [
+     "PATCH",
+     "Atualiza parcialmente um recurso – por exemplo, apenas o e-mail de um cadastro"
+    ],
+    [
+     "DELETE",
+     "Remove um recurso do servidor"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Códigos de status HTTP"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Faixa",
+    "Significado e exemplos"
+   ],
+   "linhas": [
+    [
+     "1xx — Informativo",
+     "A solicitação foi recebida e o processamento continua (100 Continue)"
+    ],
+    [
+     "2xx — Sucesso",
+     "A requisição foi processada com êxito (200 OK, 201 Created, 204 No Content)"
+    ],
+    [
+     "3xx — Redirecionamento",
+     "O recurso foi movido ou não foi modificado (301 Moved Permanently, 304 Not Modified)"
+    ],
+    [
+     "4xx — Erro do cliente",
+     "A requisição contém um erro (400 Bad Request, 401 Unauthorized, 404 Not Found)"
+    ],
+    [
+     "5xx — Erro do servidor",
+     "O servidor falhou ao processar uma requisição válida (500 Internal Server Error, 502 Bad Gateway)"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Cada requisição HTTP carrega um cabeçalho (com informações como a versão do protocolo, o <em>User-Agent</em>, os tipos de conteúdo aceitos e eventuais cookies) e, no caso de métodos como POST, um corpo – usado para transportar os dados efetivamente enviados ao servidor."
+  },
+  {
+   "t": "h2",
+   "id": "1-7-html-css-e-javascript",
+   "texto": "1.7 HTML, CSS e JavaScript"
+  },
+  {
+   "t": "p",
+   "html": "O HTML (<em>HyperText Markup Language</em>) é a linguagem padrão para estruturar páginas web, usando etiquetas (<em>tags</em>) para marcar elementos como títulos, parágrafos, listas, links e formulários. Um documento HTML é composto por três partes fundamentais: a tag <code>&lt;html&gt;</code>, que envolve todo o documento; a <code>&lt;head&gt;</code>, que contém metadados, o título da aba e as referências a folhas de estilo e scripts; e o <code>&lt;body&gt;</code>, onde fica todo o conteúdo efetivamente visível."
+  },
+  {
+   "t": "p",
+   "html": "O HTML, no entanto, nunca trabalha sozinho. O CSS (<em>Cascading Style Sheets</em>) é responsável pela apresentação visual – cores, fontes, espaçamento e layout responsivo –, enquanto o JavaScript adiciona comportamento e interatividade: validação de formulários, atualização de conteúdo sem recarregar a página, e comunicação assíncrona com o servidor."
+  },
+  {
+   "t": "h2",
+   "id": "1-8-w3c-e-a-padronizacao-da-web",
+   "texto": "1.8 W3C e a Padronização da Web"
+  },
+  {
+   "t": "p",
+   "html": "O W3C (<em>World Wide Web Consortium</em>) é um consórcio internacional criado por Tim Berners-Lee – o próprio inventor da Web – com o objetivo de coordenar a evolução dos padrões fundamentais: HTML, CSS, HTTP, JavaScript e URL. O trabalho do W3C garante que esses padrões funcionem de forma consistente em qualquer navegador, dispositivo e idioma, e que respeitem requisitos de acessibilidade para pessoas com deficiência."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O HTML5 começou como um esforço fora da estrutura formal do W3C, foi progressivamente incorporado ao consórcio e levou mais de dez anos até se tornar, de fato, um padrão oficial, em 2014. O CSS3, por sua vez, foi dividido em módulos independentes – Grid, Flexbox, Animations – justamente para poder evoluir e ser adotado em ritmos diferentes, sem que todo o padrão precisasse aguardar o módulo mais lento."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-9-hipertexto-e-hipermidia",
+   "texto": "1.9 Hipertexto e Hipermídia"
+  },
+  {
+   "t": "p",
+   "html": "O hipertexto é um texto organizado em blocos interligados, permitindo uma navegação não linear: o usuário escolhe seu próprio caminho, em vez de seguir uma sequência única e obrigatória, como em um livro impresso. Quando a esse conceito somamos outros tipos de mídia – áudio, vídeo, imagens, serviços interativos –, temos a <strong>hipermídia</strong>, que é a base de praticamente toda a experiência que temos hoje na web."
+  },
+  {
+   "t": "p",
+   "html": "Na prática, o hipertexto é implementado em HTML através do elemento de âncora (<code>&lt;a href&gt;</code>), que carrega uma URL de destino – estável e independente da tecnologia usada internamente pelo servidor. A navegação do usuário pode acontecer de diversas formas: digitando a URL diretamente, usando favoritos e histórico, clicando em links, ou chegando por meio de uma busca ou de uma rede social."
+  },
+  {
+   "t": "h2",
+   "id": "1-10-arquiteturas-distribuidas-microsservicos-e-apis",
+   "texto": "1.10 Arquiteturas Distribuídas, Microsserviços e APIs"
+  },
+  {
+   "t": "p",
+   "html": "Arquiteturas distribuídas, microsserviços e APIs são conceitos profundamente interligados no desenvolvimento moderno de software. Uma <strong>arquitetura distribuída</strong> é aquela em que múltiplos componentes de um sistema são executados em máquinas diferentes, comunicando-se entre si para formar um todo coerente – em oposição aos sistemas monolíticos, em que tudo roda em uma única máquina."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    ""
+   ],
+   "linhas": [
+    [
+     "<strong>Vantagens</strong>",
+     "Maior escalabilidade (recursos alocados por demanda), maior resiliência (uma falha isolada não derruba todo o sistema), flexibilidade tecnológica e equipes trabalhando em paralelo"
+    ],
+    [
+     "<strong>Desafios</strong>",
+     "Maior complexidade de gerenciamento, necessidade de ferramentas robustas de monitoramento, dificuldade de manter consistência de dados e latência na comunicação entre serviços"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A <strong>arquitetura de microsserviços</strong> é uma forma específica de arquitetura distribuída: ela divide uma aplicação em pequenos serviços independentes, cada um responsável por um processo de negócio específico e bem delimitado, comunicando-se entre si por meio de <strong>APIs</strong>. Cada serviço pode ser desenvolvido, implantado e escalado de forma totalmente separada dos demais – inclusive usando linguagens de programação e bancos de dados diferentes."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático — Decomposição por domínio",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Um e-commerce típico pode ser decomposto nos microsserviços de catálogo, carrinho, pagamento, estoque e notificações. Uma rede social pode dividir-se em posts, comentários, mensagens diretas, feed e notificações. Em ambos os casos, cada serviço escala de forma independente: em uma Black Friday, o serviço de pagamento pode precisar de dez vezes mais capacidade do que o serviço de notificações, e a arquitetura de microsserviços permite fazer exatamente esse ajuste, sem desperdiçar recursos nos serviços que não estão sob pressão."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "As <strong>APIs</strong> (<em>Application Programming Interfaces</em>) são os mecanismos que permitem essa comunicação entre softwares diferentes. Elas definem regras e protocolos para que sistemas troquem informações de forma padronizada, e podem ser internas (usadas apenas entre serviços da mesma aplicação) ou externas (disponibilizadas para sistemas de terceiros)."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo de acesso",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "Aberta / Pública",
+     "Disponível para qualquer desenvolvedor – API do Google Maps, por exemplo"
+    ],
+    [
+     "Privada",
+     "Uso exclusivamente interno, entre microsserviços da mesma organização"
+    ],
+    [
+     "De Parceiro",
+     "Disponibilizada apenas a parceiros estratégicos de negócio (B2B)"
+    ],
+    [
+     "Composta",
+     "Combina múltiplas APIs em uma única chamada, simplificando o consumo"
+    ]
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Arquitetura",
+    "Característica"
+   ],
+   "linhas": [
+    [
+     "REST",
+     "Usa métodos HTTP e JSON, sem estado – a mais adotada no mercado atual"
+    ],
+    [
+     "GraphQL",
+     "O cliente solicita exatamente os dados de que precisa, nem mais nem menos"
+    ],
+    [
+     "SOAP",
+     "Protocolo baseado em XML, mais rígido – comum em sistemas legados, bancos e governo"
+    ],
+    [
+     "gRPC",
+     "Protocolo binário de altíssima performance, usado sobretudo entre microsserviços"
+    ],
+    [
+     "WebSocket / Webhooks",
+     "Comunicação em tempo real e notificação orientada a eventos"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Melhores Práticas no Desenvolvimento de APIs"
+  },
+  {
+   "t": "p",
+   "html": "Escolher a arquitetura certa para o contexto e a equipe técnica disponível; padronizar os protocolos para facilitar a integração entre times; aplicar criptografia (SSL/TLS) para proteger os dados em trânsito; adotar versionamento explícito (<code>/v1/</code>, <code>/v2/</code>) para poder evoluir a API sem quebrar sistemas que já a utilizam; e manter documentação clara e atualizada, que reduz erros de integração e melhora a experiência de quem consome a API."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Saiba Mais — Gateway, Roteador e Firewall",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O <strong>gateway</strong> é a ponte entre redes ou sistemas que usam protocolos distintos, traduzindo e direcionando dados de uma rede para outra. O <strong>roteador</strong> encaminha pacotes dentro de uma rede ou entre redes diferentes, determinando o melhor caminho com base em endereços IP. O <strong>firewall</strong> controla o tráfego de entrada e saída de uma rede, bloqueando acessos não autorizados. Resumindo em uma frase: o gateway <strong>conecta</strong>, o roteador <strong>direciona</strong>, e o firewall <strong>protege</strong>."
+    }
+   ]
+  }
+ ]
+}

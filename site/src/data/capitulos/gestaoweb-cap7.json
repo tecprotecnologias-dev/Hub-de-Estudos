@@ -1,0 +1,324 @@
+{
+ "numero": 7,
+ "titulo": "Monitoramento e Análise de Desempenho",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Um sistema pode ter arquitetura elegante, hospedagem em nuvem, desenvolvimento cuidadoso e segurança robusta – e ainda assim decepcionar o usuário se for lento. Este capítulo trata de um problema silencioso, mas decisivo: como saber se o sistema está funcionando bem, antes que o usuário precise reclamar para você descobrir que não estava. Vamos estudar as métricas que importam, as ferramentas para medi-las, e as estratégias de escalabilidade que garantem que o sistema continue rápido mesmo sob pressão."
+  },
+  {
+   "t": "h2",
+   "id": "7-1-por-que-monitorar",
+   "texto": "7.1 Por que Monitorar?"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Analogia",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Monitoramento é o painel de instrumentos de um carro – mostra velocidade, temperatura do motor e pressão do óleo em tempo real. Análise é o engenheiro que pega esses dados e diz: “o motor está esquentando demais, vamos ajustar antes que quebre”. Sem esse painel, você está dirigindo no escuro, e só vai descobrir o problema quando o motor já tiver fundido."
+    }
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Objetivo",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "Identificar gargalos",
+     "Descobrir exatamente onde o sistema está lento, antes que o usuário perceba"
+    ],
+    [
+     "Detectar problemas cedo",
+     "O ideal é saber do problema antes que o usuário precise ligar reclamando"
+    ],
+    [
+     "Decisões baseadas em dados",
+     "Um e-commerce na Black Friday precisa de dados reais, não de suposições"
+    ],
+    [
+     "Garantir SLA",
+     "Cumprir os acordos de nível de serviço firmados com clientes e parceiros"
+    ],
+    [
+     "Otimizar custos",
+     "Ajustar a infraestrutura para não pagar por capacidade ociosa"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O monitoramento deve começar desde o primeiro <em>commit</em> do projeto – não apenas depois que o sistema já está em produção com 100 mil usuários e algo já deu errado."
+  },
+  {
+   "t": "h2",
+   "id": "7-2-core-web-vitals-metricas-de-frontend",
+   "texto": "7.2 Core Web Vitals – Métricas de Frontend"
+  },
+  {
+   "t": "p",
+   "html": "O Google criou um conjunto de métricas padronizadas, chamado <strong>Core Web Vitals</strong>, para avaliar a experiência real do usuário – e essas métricas influenciam diretamente o ranqueamento nas buscas."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Métrica",
+    "O que mede",
+    "Meta recomendada"
+   ],
+   "linhas": [
+    [
+     "FCP",
+     "Tempo até o primeiro conteúdo aparecer na tela",
+     "Menor que 1,8 segundo"
+    ],
+    [
+     "LCP",
+     "Tempo até o maior elemento visível carregar",
+     "Menor que 2,5 segundos"
+    ],
+    [
+     "FID",
+     "Atraso até a primeira interação do usuário ser respondida",
+     "Menor que 100 milissegundos"
+    ],
+    [
+     "CLS",
+     "Estabilidade visual – quanto o layout “pula” durante o carregamento",
+     "Menor que 0,1"
+    ],
+    [
+     "TTFB",
+     "Tempo até o primeiro byte de resposta do servidor",
+     "Menor que 600 milissegundos"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-3-metricas-de-performance-do-backend",
+   "texto": "7.3 Métricas de Performance do Backend"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Métrica",
+    "Meta e observação"
+   ],
+   "linhas": [
+    [
+     "Tempo de resposta da API",
+     "Ideal abaixo de 200ms, aceitável até 1s – otimizar queries e usar cache"
+    ],
+    [
+     "Taxa de requisições (RPS)",
+     "Deve ser dimensionada com base em uma linha-base específica do sistema"
+    ],
+    [
+     "Taxa de erro",
+     "Abaixo de 0,1% é saudável; acima de 1% já é sinal de problema"
+    ],
+    [
+     "Uso de CPU",
+     "Manter abaixo de 70% para ter margem em picos inesperados"
+    ],
+    [
+     "Uso de memória",
+     "Deve permanecer estável – crescimento contínuo geralmente indica vazamento de memória"
+    ],
+    [
+     "Latência de banco de dados",
+     "Consultas simples abaixo de 10ms; consultas complexas abaixo de 100ms"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-4-ferramentas-de-monitoramento",
+   "texto": "7.4 Ferramentas de Monitoramento"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Ferramenta",
+    "Uso"
+   ],
+   "linhas": [
+    [
+     "Google Lighthouse",
+     "Auditoria automatizada de 0 a 100 em Performance, Acessibilidade e SEO"
+    ],
+    [
+     "WebPageTest",
+     "Testa a partir de localizações reais ao redor do mundo, com filme do carregamento"
+    ],
+    [
+     "Chrome DevTools",
+     "Mostra exatamente qual função JavaScript causou lentidão, e por quê"
+    ],
+    [
+     "New Relic / Datadog",
+     "APM completo – instrumentação automática, machine learning para detectar anomalias"
+    ],
+    [
+     "Prometheus + Grafana",
+     "Padrão <em>open-source</em> de fato em ambientes Kubernetes"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-5-otimizacoes-de-frontend-e-backend",
+   "texto": "7.5 Otimizações de Frontend e Backend"
+  },
+  {
+   "t": "p",
+   "html": "No frontend: imagens em formatos modernos (WebP/AVIF) com <em>lazy loading</em>, minificação e compressão (Gzip/Brotli), divisão do código em pacotes menores carregados sob demanda (<em>code splitting</em>), cache local via <em>Service Worker</em>, e uso de CDN para reduzir a distância física entre o usuário e o conteúdo."
+  },
+  {
+   "t": "p",
+   "html": "No backend: cache em múltiplos níveis (Redis/Memcached), otimização de consultas SQL com índices bem posicionados, <em>connection pooling</em> para reutilizar conexões com o banco de dados, <em>rate limiting</em> para proteger contra sobrecarga, e logs estruturados em formato JSON, que facilitam a análise automatizada de grandes volumes de eventos."
+  },
+  {
+   "t": "h2",
+   "id": "7-6-escalabilidade-vertical-horizontal",
+   "texto": "7.6 Escalabilidade Vertical × Horizontal"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    ""
+   ],
+   "linhas": [
+    [
+     "<strong>Vertical (Scale Up)</strong>",
+     "Aumentar a capacidade do mesmo servidor – mais RAM, mais CPU. Simples, mas limitada pelo hardware físico e é um ponto único de falha"
+    ],
+    [
+     "<strong>Horizontal (Scale Out)</strong>",
+     "Adicionar mais servidores ou instâncias. Teoricamente ilimitada, mas exige arquitetura distribuída e aplicação <em>stateless</em>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A escalabilidade horizontal só é possível, na prática, se a aplicação seguir o princípio <em>stateless</em> estudado no Capítulo 6 – se cada servidor guardasse estado próprio, adicionar mais servidores criaria inconsistências em vez de resolver o problema de capacidade."
+  },
+  {
+   "t": "h2",
+   "id": "7-7-padroes-de-arquitetura-escalavel",
+   "texto": "7.7 Padrões de Arquitetura Escalável"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Padrão",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "Load Balancing",
+     "Distribui o tráfego entre servidores, redirecionando automaticamente se um falhar"
+    ],
+    [
+     "Microsserviços",
+     "Cada serviço escala de forma independente, conforme sua própria demanda"
+    ],
+    [
+     "Message Queues",
+     "Comunicação assíncrona (Kafka, RabbitMQ) que aumenta a resiliência do sistema"
+    ],
+    [
+     "Auto Scaling",
+     "Aumenta ou diminui a quantidade de servidores automaticamente, com base na demanda real"
+    ],
+    [
+     "Sharding",
+     "Particiona os dados horizontalmente entre múltiplos servidores de banco de dados"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-8-testes-de-carga-e-de-stress",
+   "texto": "7.8 Testes de Carga e de Stress"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Diferença conceitual",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Teste de Carga</strong> simula o volume normal (ou esperado) de usuários, para validar que os SLOs serão cumpridos nas condições reais de uso. <strong>Teste de Stress</strong> empurra o sistema deliberadamente além do limite esperado, para descobrir o ponto exato em que ele quebra – informação essencial para saber quanta margem de segurança o sistema realmente tem."
+    }
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Ferramenta",
+    "Característica"
+   ],
+   "linhas": [
+    [
+     "Apache JMeter",
+     "Interface gráfica (Java), relatórios detalhados"
+    ],
+    [
+     "K6",
+     "JavaScript, leve, fácil integração com pipelines de CI/CD"
+    ],
+    [
+     "Locust",
+     "Python, interface web em tempo real, altamente escalável"
+    ],
+    [
+     "Gatling",
+     "Scala/Java, alto desempenho para volumes muito grandes"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-9-sli-slo-e-error-budget",
+   "texto": "7.9 SLI, SLO e Error Budget"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Termo",
+    "Definição"
+   ],
+   "linhas": [
+    [
+     "SLI",
+     "Métrica técnica que mede a qualidade real do serviço – ex.: latência P95 abaixo de 200ms"
+    ],
+    [
+     "SLO",
+     "Meta mínima aceitável baseada nos SLIs – ex.: 99% das requisições em menos de 500ms"
+    ],
+    [
+     "Error Budget",
+     "Quantidade máxima de falhas toleradas antes de violar o SLO"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O <strong>Error Budget</strong> tem uma consequência prática importante na rotina de uma equipe: quando ele se esgota, a prioridade deixa de ser lançar novas funcionalidades e passa a ser, temporariamente, estabilizar o sistema – um mecanismo que equilibra, de forma objetiva e não emocional, a pressão por velocidade de desenvolvimento com a necessidade de confiabilidade."
+  }
+ ]
+}

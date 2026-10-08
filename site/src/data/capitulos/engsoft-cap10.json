@@ -1,0 +1,177 @@
+{
+ "numero": 10,
+ "titulo": "Engenharia de Requisitos",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Engenharia de Requisitos é a disciplina responsável por descobrir, documentar, analisar, validar e gerenciar as necessidades e restrições que um sistema deve satisfazer – o elo crítico entre o problema do mundo real e a solução técnica. O custo de corrigir um erro de requisito cresce exponencialmente conforme o projeto avança: a correção durante os testes pode custar vinte vezes mais do que na fase de requisitos. Este capítulo aprofunda o que foi introduzido no Capítulo 2, com foco nos desafios da elicitação, na especificação formal (ERS/SRS, IEEE 830) e na adaptação dos requisitos a contextos ágeis."
+  },
+  {
+   "t": "h2",
+   "id": "10-1-desafios-da-elicitacao-e-tecnicas-de-levantamento",
+   "texto": "10.1 Desafios da Elicitação e Técnicas de Levantamento"
+  },
+  {
+   "t": "p",
+   "html": "A elicitação envolve habilidades além do técnico: escuta ativa, empatia, facilitação de conflitos e capacidade de traduzir linguagem de negócio em requisitos de sistema."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Desafio",
+    "Descrição",
+    "Como Endereçar"
+   ],
+   "linhas": [
+    [
+     "Conhecimento Tácito",
+     "Usuários sabem fazer, mas têm dificuldade de verbalizar",
+     "Observação etnográfica, análise de tarefas"
+    ],
+    [
+     "Expectativas Implícitas",
+     "<em>Stakeholders</em> omitem requisitos que consideram óbvios",
+     "Prototipagem rápida"
+    ],
+    [
+     "Conflitos de Interesse",
+     "Necessidades e prioridades conflitantes",
+     "<em>Workshops</em> JAD com facilitador neutro"
+    ],
+    [
+     "Volatilidade",
+     "Requisitos mudam – negócios evoluem, leis se atualizam",
+     "Gestão de mudanças, arquitetura flexível"
+    ],
+    [
+     "Escopo Inflado",
+     "Dificuldade de distinguir o essencial do desejável",
+     "MoSCoW, valor vs. esforço"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "As técnicas de elicitação já apresentadas no Capítulo 2 – entrevistas, <em>workshops</em> JAD, observação, prototipagem, histórias de usuário – ganham aqui uma técnica adicional: <strong>Casos de Uso</strong>, que descrevem interações entre atores e o sistema, com fluxo principal e fluxos alternativos ou de exceção, documentados por meio de diagramas UML e descrição textual – particularmente úteis em sistemas orientados a objetos, por documentarem exceções frequentemente negligenciadas em outras técnicas."
+  },
+  {
+   "t": "h2",
+   "id": "10-2-analise-priorizacao-e-modelagem-de-requisitos",
+   "texto": "10.2 Análise, Priorização e Modelagem de Requisitos"
+  },
+  {
+   "t": "p",
+   "html": "Após a elicitação, os requisitos brutos precisam ser analisados quanto a seis atributos de qualidade: <strong>Completo</strong> (cobre todas as situações relevantes?), <strong>Correto</strong> (representa fielmente a necessidade?), <strong>Não Ambíguo</strong> (uma única interpretação possível?), <strong>Verificável</strong> (é possível testar?), <strong>Rastreável</strong> (pode ser vinculado à origem?) e <strong>Viável</strong> (pode ser implementado nas restrições do projeto?)."
+  },
+  {
+   "t": "quadro",
+   "tipo": "boa-pratica",
+   "titulo": "MoSCoW — Regra prática",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A técnica <em>Must/Should/Could/Won't Have</em>, já apresentada no Capítulo 2, ganha aqui uma regra prática importante: o conjunto de requisitos <em>Must Have</em> não deve ultrapassar 60% do esforço total do projeto. Se ultrapassar, sobra pouco espaço de negociação – sintoma do próprio problema de Escopo Inflado."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "10-3-especificacao-ers-srs-criterios-de-aceitacao-e-rastreabilidade",
+   "texto": "10.3 Especificação: ERS/SRS, Critérios de Aceitação e Rastreabilidade"
+  },
+  {
+   "t": "p",
+   "html": "O ERS/SRS (<em>Software Requirements Specification</em>, IEEE 830 / ISO 29148) é o artefato mais completo e formal da Engenharia de Requisitos – serve como contrato técnico entre cliente e equipe."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Seção",
+    "Conteúdo"
+   ],
+   "linhas": [
+    [
+     "1. Introdução",
+     "Propósito, escopo, definições, referências"
+    ],
+    [
+     "2. Descrição Geral",
+     "Perspectiva do produto, funções principais, restrições"
+    ],
+    [
+     "3. Requisitos Funcionais",
+     "Detalhamento de cada funcionalidade"
+    ],
+    [
+     "4. Requisitos Não Funcionais",
+     "Desempenho, segurança, usabilidade, conformidade"
+    ],
+    [
+     "5. Requisitos de Interface",
+     "Interfaces de usuário, hardware e sistemas externos"
+    ],
+    [
+     "6. Apêndices",
+     "Modelos de dados, diagramas UML, glossário"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Critérios de Aceitação em BDD"
+  },
+  {
+   "t": "p",
+   "html": "Além do formato textual do SRS, critérios de aceitação escritos em Gherkin conectam requisitos diretamente a testes automatizáveis."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "História: “Como cliente do banco, quero redefinir minha senha, para recuperar acesso quando a esquecer.”<br> Critério 1: Dado que o usuário clica em “Esqueci minha senha” → Quando informa o e-mail e confirma → Então recebe e-mail com link válido por duas horas.<br> Critério 2: Dado que o usuário acessa o link após duas horas → Quando tenta usá-lo → Então vê “Link expirado – solicite um novo”."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Rastreabilidade e Gestão de Mudanças"
+  },
+  {
+   "t": "p",
+   "html": "A matriz de rastreabilidade registra as relações entre requisitos, casos de uso, componentes e casos de teste, permitindo análise de impacto: “se alterar isto, o que mais precisa ser revisado?”."
+  },
+  {
+   "t": "h2",
+   "id": "10-4-requisitos-em-contextos-ageis",
+   "texto": "10.4 Requisitos em Contextos Ágeis"
+  },
+  {
+   "t": "p",
+   "html": "Em projetos ágeis, a especificação é deliberadamente mais leve e evolutiva. O objetivo não é eliminar documentação – é ter a quantidade certa, no momento certo."
+  },
+  {
+   "t": "h3",
+   "texto": "Critério INVEST"
+  },
+  {
+   "t": "p",
+   "html": "Seis letras que definem uma boa história de usuário: <strong>Independente</strong> (pode entrar em uma <em>sprint</em> sem depender de outra história), <strong>Negociável</strong> (equipe e PO podem ajustar escopo), <strong>Valiosa</strong> (resolve um problema real do usuário), <strong>Estimável</strong> (a equipe consegue dar <em>story points</em>), <strong>Small/Pequena</strong> (completável em um a três dias) e <strong>Testável</strong> (existe critério objetivo de conclusão)."
+  },
+  {
+   "t": "h3",
+   "texto": "Tradicional, Ágil e Híbrida"
+  },
+  {
+   "t": "p",
+   "html": "A abordagem <strong>Tradicional</strong> usa SRS completo aprovado antes do desenvolvimento, com detalhamento <em>upfront</em>. A abordagem <strong>Ágil</strong> usa <em>Product Backlog</em> priorizado e evolutivo, com detalhamento <em>Just-In-Time</em>. A abordagem <strong>Híbrida</strong> combina um <em>Vision Document</em> e <em>Roadmap</em> tradicional (RNFs e requisitos arquiteturais documentados formalmente) com um <em>Backlog</em> ágil detalhado – especialmente relevante para sistemas com requisitos regulatórios (LGPD, BACEN), que exigem documentação formal e auditável."
+  }
+ ]
+}

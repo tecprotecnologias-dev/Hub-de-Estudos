@@ -1,0 +1,261 @@
+{
+ "numero": 6,
+ "titulo": "Integração de Sistemas na Web",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Nenhum sistema web moderno vive isolado. Uma loja virtual precisa conversar com um gateway de pagamento, um sistema de emissão de nota fiscal e uma ferramenta de envio de e-mails. Um aplicativo de delivery precisa conversar com mapas, sistemas de geolocalização e serviços de notificação por SMS. Este capítulo explora como sistemas diferentes se conectam entre si – as arquiteturas de integração disponíveis, como consumir APIs de terceiros com segurança, e os princípios que tornam uma API bem projetada."
+  },
+  {
+   "t": "h2",
+   "id": "6-1-por-que-integrar-sistemas",
+   "texto": "6.1 Por que Integrar Sistemas?"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    ""
+   ],
+   "linhas": [
+    [
+     "<strong>Sem integração</strong>",
+     "Cada venda exige entrada manual em 4 ou 5 sistemas diferentes; informações isoladas em silos desconexos; erros humanos e retrabalho constante"
+    ],
+    [
+     "<strong>Com integração</strong>",
+     "Uma compra dispara automaticamente a cobrança, a baixa no estoque e o registro no CRM – sem intervenção manual"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O problema, porém, é que conectar sistemas “todos com todos” cresce em complexidade muito mais rápido do que se imagina. Com apenas 3 sistemas, são necessárias 3 conexões diretas; com 10 sistemas, já são 45 conexões possíveis; com 20 sistemas, 190. A fórmula é n × (n-1) / 2, e o resultado prático, quando levado longe demais, é conhecido informalmente como <strong>arquitetura espaguete</strong> – um emaranhado de conexões praticamente impossível de manter ou de entender de forma completa."
+  },
+  {
+   "t": "h2",
+   "id": "6-2-integracao-ponto-a-ponto",
+   "texto": "6.2 Integração Ponto a Ponto"
+  },
+  {
+   "t": "p",
+   "html": "Na integração <strong>ponto a ponto</strong>, cada sistema se comunica diretamente com outro, por meio de uma conexão dedicada entre os dois. É a abordagem mais simples de implementar – e a mais perigosa de deixar crescer sem controle."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Quando usar (e quando evitar)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Ideal quando há apenas 2 ou 3 sistemas envolvidos, com uma integração simples e pouco provável de crescer no futuro. Deve ser evitada quando a empresa já planeja adicionar mais sistemas – nesse caso, investir desde já em uma arquitetura de Hub/Middleware ou baseada em eventos evita a “arquitetura espaguete” antes mesmo que ela comece a se formar."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-3-integracao-via-hub-middleware",
+   "texto": "6.3 Integração via Hub/Middleware"
+  },
+  {
+   "t": "p",
+   "html": "Um <strong>Hub</strong> (ou <em>Middleware</em>) é um componente central que orquestra toda a comunicação entre os sistemas – de forma análoga a uma central telefônica, que conecta chamadas sem que cada telefone precise ter um fio direto para todos os outros."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    ""
+   ],
+   "linhas": [
+    [
+     "<strong>Vantagens</strong>",
+     "10 sistemas exigem apenas 10 conexões (contra 45 no modelo ponto a ponto); transformação de dados entre formatos diferentes; monitoramento centralizado"
+    ],
+    [
+     "<strong>Desafios</strong>",
+     "Ponto único de falha – se o Hub cair, todas as integrações param; custo inicial de implantação mais alto; exige manutenção especializada"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Ferramentas como MuleSoft, Apache Camel, WSO2 e gateways como o Kong ou o Amazon API Gateway são exemplos consolidados de Hub/Middleware usados no mercado."
+  },
+  {
+   "t": "h2",
+   "id": "6-4-integracao-baseada-em-eventos-eda",
+   "texto": "6.4 Integração Baseada em Eventos (EDA)"
+  },
+  {
+   "t": "p",
+   "html": "Na arquitetura orientada a eventos (<em>Event-Driven Architecture</em>, ou EDA), os sistemas não se chamam diretamente uns aos outros – eles publicam e assinam <strong>eventos</strong>. Quando algo relevante acontece (por exemplo, um pedido é finalizado), o sistema de origem publica um evento, e todos os sistemas interessados – estoque, financeiro, logística – o recebem e processam de forma independente e paralela, sem que o sistema de origem precise saber quem são eles."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Ao publicar o evento <code>PedidoFinalizado</code>, o sistema de estoque dá baixa nos produtos vendidos, o sistema financeiro gera a cobrança, e o sistema de logística inicia a separação do pedido – todos ao mesmo tempo, sem que nenhum dependa diretamente dos demais. Se, no futuro, um novo sistema de análise de fraude quiser também reagir a esse mesmo evento, basta ele se inscrever – nada no sistema original precisa ser alterado."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Esse desacoplamento forte é o que torna a EDA especialmente adequada a sistemas de grande escala, arquiteturas de microsserviços e cenários de alto volume assíncrono. Ferramentas como Apache Kafka, RabbitMQ, AWS SNS/SQS e Azure Service Bus são as escolhas mais comuns do mercado."
+  },
+  {
+   "t": "h2",
+   "id": "6-5-apis-de-terceiros",
+   "texto": "6.5 APIs de Terceiros"
+  },
+  {
+   "t": "p",
+   "html": "Integrar uma API de terceiros costuma economizar dias ou semanas de desenvolvimento em comparação com construir a mesma funcionalidade do zero – e ainda oferece acesso a investimentos bilionários que seriam inviáveis para uma única empresa replicar, como a certificação PCI-DSS de um gateway de pagamento ou os anos de refinamento de um serviço de mapas."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Categoria",
+    "Exemplos",
+    "Uso típico"
+   ],
+   "linhas": [
+    [
+     "Pagamento",
+     "Stripe, PayPal, Mercado Pago",
+     "Cartão, boleto e PIX, já certificados"
+    ],
+    [
+     "Comunicação",
+     "Twilio, SendGrid, Mailgun",
+     "SMS, e-mail e WhatsApp programaticamente"
+    ],
+    [
+     "Autenticação",
+     "Google Sign-In, Auth0",
+     "Login social, sem gerenciar senhas"
+    ],
+    [
+     "Mapas e Geo",
+     "Google Maps, Mapbox",
+     "Rotas e geocodificação"
+    ],
+    [
+     "IA",
+     "OpenAI GPT, Google Vision",
+     "Geração de texto, reconhecimento de imagem"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-6-autenticacao-em-apis-de-terceiros",
+   "texto": "6.6 Autenticação em APIs de Terceiros"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Método",
+    "Como funciona"
+   ],
+   "linhas": [
+    [
+     "API Keys",
+     "String alfanumérica enviada no cabeçalho HTTP – forma mais simples, mas deve nunca ser exposta no frontend"
+    ],
+    [
+     "OAuth 2.0",
+     "O usuário autoriza diretamente no provedor original – a aplicação nunca vê a senha do usuário"
+    ],
+    [
+     "JWT",
+     "Tokens assinados digitalmente, <em>stateless</em> – ideal para comunicação entre microsserviços"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Além do método de autenticação escolhido, algumas práticas são universais: nunca expor chaves de API no frontend ou em repositórios públicos, sempre usar HTTPS, respeitar os limites de requisições (<em>rate limits</em>) impostos pela API, configurar alertas de custo, e ler a documentação – incluindo o ambiente de testes (<em>sandbox</em>) – antes de integrar em produção."
+  },
+  {
+   "t": "h2",
+   "id": "6-7-soap-rest",
+   "texto": "6.7 SOAP × REST"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    "SOAP",
+    "REST"
+   ],
+   "linhas": [
+    [
+     "Formato",
+     "XML rígido (Envelope, Header, Body)",
+     "JSON leve e flexível"
+    ],
+    [
+     "Origem",
+     "Protocolo clássico, anos 1990",
+     "Estilo arquitetural (Roy Fielding, 2000)"
+    ],
+    [
+     "Uso típico",
+     "Sistemas legados, bancos, governo",
+     "APIs públicas, mobile, microsserviços"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O SOAP não desapareceu – ele permanece presente em sistemas legados de grande porte, sobretudo em bancos e no setor público, onde a robustez de recursos como transações distribuídas garantidas ainda justifica sua maior complexidade. Mas para a esmagadora maioria dos projetos novos, o REST se tornou o padrão de fato."
+  },
+  {
+   "t": "h2",
+   "id": "6-8-principios-de-uma-api-restful",
+   "texto": "6.8 Princípios de uma API RESTful"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Princípio",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "Cliente-Servidor",
+     "O servidor expõe recursos; a mesma API pode servir simultaneamente web, mobile e sistemas externos"
+    ],
+    [
+     "Stateless",
+     "Cada requisição contém tudo o que o servidor precisa – sem sessão armazenada entre chamadas"
+    ],
+    [
+     "Cacheável",
+     "Respostas indicam, via cabeçalhos, se podem ser armazenadas em cache – reduzindo latência"
+    ],
+    [
+     "Interface Uniforme",
+     "URLs identificam recursos (substantivos, não verbos); verbos HTTP com semântica correta"
+    ],
+    [
+     "Sistema em Camadas",
+     "O cliente não precisa saber se há balanceadores de carga ou gateways no meio do caminho"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O princípio <strong>stateless</strong> tem uma consequência direta e importante para a escalabilidade: como nenhuma informação de sessão fica guardada em um servidor específico, é possível adicionar mais servidores atrás de um balanceador de carga sem se preocupar em manter o estado sincronizado entre eles – qualquer servidor pode atender qualquer requisição a qualquer momento."
+  }
+ ]
+}

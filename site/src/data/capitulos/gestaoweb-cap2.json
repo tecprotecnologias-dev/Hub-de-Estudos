@@ -1,0 +1,304 @@
+{
+ "numero": 2,
+ "titulo": "Cloud Computing para Sistemas Web",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "No Capítulo 1, vimos que um sistema web depende de servidores que processam requisições e devolvem respostas. Mas onde ficam, fisicamente, esses servidores? Até pouco mais de uma década atrás, a resposta quase sempre era: numa sala com ar-condicionado dentro da própria empresa. Hoje, a resposta mais comum é: em algum data center de um provedor de nuvem, compartilhado com milhares de outras aplicações, mas isolado e escalável como se fosse exclusivo. Este capítulo explica essa mudança – como a computação em nuvem funciona, quais são seus modelos e provedores, e em que situações ainda faz sentido manter um sistema fora dela."
+  },
+  {
+   "t": "h2",
+   "id": "2-1-o-que-e-computacao-em-nuvem",
+   "texto": "2.1 O que é Computação em Nuvem?"
+  },
+  {
+   "t": "p",
+   "html": "Computação em nuvem (<em>cloud computing</em>) é um modelo de fornecimento de recursos de TI – servidores, armazenamento, redes e softwares – entregues pela internet. Em vez de comprar, configurar e manter sua própria infraestrutura física, uma organização simplesmente contrata e usa esses recursos, pagando apenas pelo que efetivamente consome."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Analogia",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Pense no consumo de energia elétrica. Você não constrói sua própria usina para ligar a geladeira em casa – você contrata uma concessionária e paga pela quantidade de energia que consome todo mês. A computação em nuvem funciona da mesma forma com poder computacional: você usa e paga pelo que consumiu, sem precisar construir e manter sua própria “usina” de servidores."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A ideia de computação compartilhada remonta à década de 1960, mas só se tornou tecnicamente e economicamente viável com o avanço da internet de banda larga nos anos 2000. Hoje, a nuvem está presente até em serviços que usamos sem perceber que são “nuvem” – o YouTube, o Gmail, o Spotify e o Google Workspace rodam inteiramente sobre infraestrutura de nuvem."
+  },
+  {
+   "t": "h2",
+   "id": "2-2-principais-vantagens-da-computacao-em-nuvem",
+   "texto": "2.2 Principais Vantagens da Computação em Nuvem"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Vantagem",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "Acessibilidade",
+     "Arquivos e aplicações disponíveis de qualquer lugar e dispositivo com internet"
+    ],
+    [
+     "Escalabilidade e Elasticidade",
+     "Recursos ajustados automaticamente, para cima ou para baixo, conforme a demanda"
+    ],
+    [
+     "Redução de Custos",
+     "Modelo <em>pay-as-you-go</em> – paga-se apenas pelo que é efetivamente consumido"
+    ],
+    [
+     "Segurança",
+     "Criptografia avançada, autenticação multifator e backups automáticos oferecidos pelo provedor"
+    ],
+    [
+     "Colaboração em Tempo Real",
+     "Equipes distribuídas editam os mesmos arquivos simultaneamente"
+    ],
+    [
+     "Disponibilidade e Continuidade",
+     "Acordos de nível de serviço (SLA) de alta disponibilidade e planos de recuperação de desastres"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A elasticidade merece destaque especial: é ela que permite que um e-commerce que normalmente usa 10 servidores passe a usar 200 durante a Black Friday, e volte a usar 10 no dia seguinte – pagando apenas pelas horas em que efetivamente precisou da capacidade extra, algo praticamente impossível com servidores próprios comprados e instalados fisicamente."
+  },
+  {
+   "t": "h2",
+   "id": "2-3-tipos-de-implantacao-publica-privada-hibrida-e-comunitaria",
+   "texto": "2.3 Tipos de Implantação: Pública, Privada, Híbrida e Comunitária"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "Pública",
+     "Infraestrutura compartilhada entre diversos clientes (AWS, Azure, GCP) – menor custo, escalabilidade imediata"
+    ],
+    [
+     "Privada",
+     "Infraestrutura exclusiva de uma única organização – maior controle e segurança, porém custo mais alto"
+    ],
+    [
+     "Híbrida",
+     "Combina infraestrutura local (ou privada) com nuvem pública – flexibilidade aliada à escalabilidade"
+    ],
+    [
+     "Comunitária",
+     "Compartilhada por organizações com requisitos semelhantes, como órgãos governamentais de um mesmo setor"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Na prática, a escolha entre esses modelos raramente é binária: a maioria das grandes organizações utiliza uma combinação deliberada, mantendo dados sensíveis em ambientes privados e usando a nuvem pública para cargas de trabalho que exigem elasticidade – exatamente o raciocínio por trás do modelo híbrido, que retomaremos na Seção 2.6."
+  },
+  {
+   "t": "h2",
+   "id": "2-4-modelos-de-servico-iaas-paas-saas-e-baas",
+   "texto": "2.4 Modelos de Serviço: IaaS, PaaS, SaaS e BaaS"
+  },
+  {
+   "t": "p",
+   "html": "Os modelos de serviço em nuvem definem a divisão de responsabilidade entre o provedor e o cliente: quanto mais completo o serviço contratado, menor a responsabilidade técnica do cliente – e menor também o controle que ele tem sobre o ambiente."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Modelo",
+    "O que oferece",
+    "Exemplos"
+   ],
+   "linhas": [
+    [
+     "IaaS",
+     "Servidores virtuais, armazenamento e redes configuráveis – máximo controle do cliente",
+     "Amazon EC2, Azure VMs, Google Compute Engine"
+    ],
+    [
+     "PaaS",
+     "Ambiente pronto para desenvolver e implantar aplicações, sem gerenciar o sistema operacional",
+     "Heroku, Google App Engine, AWS Elastic Beanstalk"
+    ],
+    [
+     "SaaS",
+     "Aplicação completa, pronta para uso, acessada diretamente pelo navegador",
+     "Gmail, Salesforce, Netflix, Slack"
+    ],
+    [
+     "BaaS / FaaS",
+     "Backend ou funções específicas sob demanda – autenticação, banco de dados, notificações",
+     "Firebase, Supabase, AWS Lambda"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Atualização 2025 — BaaS em expansão",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Firebase (Google) e Supabase são as plataformas de BaaS mais adotadas em 2025. O Supabase, em particular, ganhou força por ser <em>open-source</em> e construído sobre PostgreSQL – oferecendo SQL completo, autenticação, armazenamento e funções <em>serverless</em> com maior controle sobre os dados do que soluções totalmente proprietárias."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O IaaS é a escolha certa quando a organização precisa de controle total sobre o ambiente – por exemplo, para hospedar um sistema legado com requisitos muito específicos de configuração. O PaaS é ideal quando a equipe quer focar exclusivamente em escrever código, sem se preocupar com servidores. O SaaS elimina qualquer responsabilidade técnica: a organização simplesmente usa. O BaaS/FaaS, por fim, terceiriza pedaços específicos do backend, sendo especialmente popular entre times pequenos e startups que precisam validar uma ideia rapidamente."
+  },
+  {
+   "t": "h2",
+   "id": "2-5-principais-provedores-de-nuvem",
+   "texto": "2.5 Principais Provedores de Nuvem"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Provedor",
+    "Posição no mercado"
+   ],
+   "linhas": [
+    [
+     "Amazon AWS",
+     "Líder de mercado desde o início da computação em nuvem moderna – maior portfólio de serviços"
+    ],
+    [
+     "Microsoft Azure",
+     "Forte integração com o ecossistema Microsoft – crescimento acelerado em empresas corporativas"
+    ],
+    [
+     "Google Cloud",
+     "Crescimento mais rápido entre os três grandes – liderança em inteligência artificial e análise de dados"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Atualização 2025 — Mercado Global de Nuvem",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "No terceiro trimestre de 2025, o mercado global de infraestrutura em nuvem atingiu US$ 106,9 bilhões em receita trimestral – a primeira vez que ultrapassou a marca de US$ 100 bilhões. Os chamados “Big Three” (AWS, Azure e Google Cloud) controlam juntos mais de 63% desse mercado, e os serviços de IA generativa hospedados em nuvem cresceram 160% no mesmo período. O modelo <em>multi-cloud</em> – usar mais de um provedor simultaneamente – já é adotado por 89% das grandes empresas."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-6-on-premises-cloud-hibrido",
+   "texto": "2.6 On-Premises × Cloud × Híbrido"
+  },
+  {
+   "t": "p",
+   "html": "<strong>On-premises</strong> é o termo técnico para infraestrutura mantida fisicamente dentro da própria organização – o modelo predominante antes da popularização da nuvem, e que ainda é a escolha certa em determinados contextos."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Critério",
+    "On-Premises",
+    "Cloud",
+    "Híbrido"
+   ],
+   "linhas": [
+    [
+     "Custo inicial",
+     "Alto",
+     "Baixo (pay-as-you-go)",
+     "Médio"
+    ],
+    [
+     "Controle",
+     "Total",
+     "Limitado",
+     "Parcial (crítico local)"
+    ],
+    [
+     "Escalabilidade",
+     "Lenta e cara",
+     "Imediata",
+     "Flexível"
+    ],
+    [
+     "Conformidade",
+     "Total controle",
+     "Pode ser desafiadora",
+     "Adequada a setores regulados"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático — Banco com modelo híbrido",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em um banco, as transações e os dados sensíveis dos clientes costumam ficar em um data center próprio (on-premises), garantindo segurança e conformidade com as normas do Banco Central. Já a análise de grandes volumes de dados (Big Data), a geração de relatórios e os testes de novas funcionalidades rodam na nuvem pública. O resultado: segurança e desempenho garantidos para as transações mais críticas, e escalabilidade e inovação disponíveis para tudo o mais."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-7-desafios-da-migracao-para-a-nuvem",
+   "texto": "2.7 Desafios da Migração para a Nuvem"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Desafio",
+    "Como mitigar"
+   ],
+   "linhas": [
+    [
+     "Planejamento insuficiente",
+     "Inventariar todas as aplicações e classificá-las por complexidade antes de migrar"
+    ],
+    [
+     "Arquitetura inadequada",
+     "Refatoração gradual, começando pelas partes menos críticas do sistema"
+    ],
+    [
+     "Falta de testes",
+     "Implementar testes automatizados antes e durante todo o processo de migração"
+    ],
+    [
+     "Gestão de custos",
+     "Usar ferramentas de FinOps e configurar alertas automáticos de gasto"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Vale destacar um fenômeno cada vez mais comum: a <strong>repatriação de dados</strong> – quando uma empresa que migrou totalmente para a nuvem decide trazer parte da infraestrutura de volta para servidores próprios. Os motivos mais frequentes são custos que se revelaram mais altos do que o esperado, exigências de conformidade em setores regulados (financeiro, saúde), questões de desempenho e latência em aplicações muito sensíveis a tempo de resposta, e a complexidade de migrar sistemas legados que nunca foram desenhados para rodar em nuvem."
+  },
+  {
+   "t": "h2",
+   "id": "2-8-boas-praticas-para-migracao-e-operacao-em-nuvem",
+   "texto": "2.8 Boas Práticas para Migração e Operação em Nuvem"
+  },
+  {
+   "t": "p",
+   "html": "Mapear todas as aplicações, dados e dependências antes de iniciar qualquer migração; adotar refatoração gradual, testando partes pequenas na nuvem antes de migrar o sistema inteiro; implementar monitoramento contínuo de desempenho <em>e</em> de custos, já que os dois costumam andar juntos na nuvem; avaliar honestamente se um modelo híbrido não seria mais adequado do que uma migração total; e treinar as equipes internas em gestão de nuvem e segurança antes – não depois – da migração efetivamente acontecer."
+  }
+ ]
+}

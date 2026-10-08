@@ -1,0 +1,850 @@
+{
+ "numero": 1,
+ "titulo": "Legislação de Proteção de Dados Pessoais",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "A proteção de dados pessoais consolidou-se, nos últimos anos, como um dos temas mais relevantes — e urgentes — para qualquer organização que opere no ambiente digital. O volume de informações geradas diariamente por usuários em sites, redes sociais, aplicativos e dispositivos conectados cresce em ritmo exponencial, e esse crescimento trouxe consigo a necessidade de marcos legais capazes de assegurar o uso ético, transparente e responsável dessas informações. Uma simples navegação em um site de compras, por exemplo, já é suficiente para gerar dezenas de registros de dados pessoais — páginas visitadas, produtos pesquisados, localização aproximada e forma de pagamento utilizada — que, se tratados de forma inadequada, podem expor o consumidor a riscos que vão do simples incômodo até o golpe financeiro. Este capítulo apresenta os conceitos fundamentais sobre dados pessoais, as principais legislações globais que regulam a matéria — com destaque para a LGPD brasileira e o GDPR europeu —, as responsabilidades impostas às empresas em cada etapa do tratamento de dados e os direitos assegurados aos titulares dessas informações."
+  },
+  {
+   "t": "h2",
+   "id": "1-1-o-que-sao-dados-pessoais-conceitos-e-classificacoes",
+   "texto": "1.1 O que são Dados Pessoais? Conceitos e Classificações"
+  },
+  {
+   "t": "h3",
+   "texto": "Definição de Dado Pessoal"
+  },
+  {
+   "t": "p",
+   "html": "Dado pessoal é qualquer informação relacionada a uma pessoa natural identificada ou identificável. Essa definição — ampla e propositalmente aberta — é adotada tanto pela LGPD (art. 5º, I) quanto pelo GDPR (art. 4º), e seu efeito prático é importante: não apenas o nome ou o número do CPF de alguém constituem dados pessoais. Qualquer informação que, isoladamente ou combinada a outras, permita identificar um indivíduo específico se enquadra nessa categoria. É justamente esse caráter relacional que torna o conceito desafiador na prática: dados que, isoladamente, parecem inofensivos podem se tornar identificadores poderosos quando cruzados entre si."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O CEP de um bairro e a informação de que uma pessoa é \"a única moradora com mais de 80 anos no quarteirão\" não identificam ninguém isoladamente — mas, combinados, podem apontar para uma única pessoa real. Por essa razão, a LGPD e o GDPR tratam como dado pessoal não apenas os identificadores diretos (nome, CPF), mas também os indiretos, quando sua combinação permite a identificação do titular."
+    }
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Categoria</strong>",
+    "<strong>Exemplos</strong>"
+   ],
+   "linhas": [
+    [
+     "Dados de identificação",
+     "Nome completo, CPF, RG, passaporte, número de matrícula"
+    ],
+    [
+     "Dados de contato",
+     "Endereço residencial, e-mail, número de telefone"
+    ],
+    [
+     "Dados comportamentais",
+     "Histórico de navegação, localização GPS, hábitos de compra"
+    ],
+    [
+     "Dados biométricos",
+     "Impressão digital, reconhecimento facial, íris, voz"
+    ],
+    [
+     "Dados financeiros",
+     "Número de cartão de crédito, histórico de transações, renda declarada"
+    ],
+    [
+     "Dados de dispositivos",
+     "Endereço IP, identificador de dispositivo (IMEI), cookies"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Dados Pessoais Sensíveis"
+  },
+  {
+   "t": "p",
+   "html": "Dentro do gênero \"dado pessoal\", a lei distingue uma categoria especial: os dados pessoais sensíveis. Por sua natureza, esse tipo de informação pode gerar discriminação ou prejuízos mais graves ao titular caso seja mal utilizado — por isso, tanto a LGPD (art. 5º, II) quanto o GDPR (art. 9º) exigem cuidados redobrados para o seu tratamento, com restrições mais rígidas sobre as hipóteses de coleta e uso. Como regra prática de orientação: quanto mais sensível o dado, mais restrita deve ser a base legal que autoriza sua coleta, e maior o risco jurídico e reputacional em caso de vazamento."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Um aplicativo de monitoramento de ciclo menstrual trata, por natureza, dados de saúde — categoria sensível. Diferentemente de um cadastro comum de e-commerce, esse aplicativo não pode se apoiar em \"legítimo interesse\" para justificar a coleta: precisa, em regra, do consentimento específico e destacado do titular, informado exatamente sobre essa finalidade."
+    }
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Categoria</strong>",
+    "<strong>Exemplos</strong>",
+    "<strong>Proteção Adicional</strong>"
+   ],
+   "linhas": [
+    [
+     "Origem racial ou étnica",
+     "Cor da pele declarada, ancestralidade",
+     "Consentimento específico obrigatório"
+    ],
+    [
+     "Dados de saúde",
+     "Prontuários, diagnósticos, exames",
+     "Uso restrito a finalidades de saúde"
+    ],
+    [
+     "Convicção religiosa",
+     "Religião praticada, afiliação religiosa",
+     "Vedada coleta para fins discriminatórios"
+    ],
+    [
+     "Opinião política",
+     "Filiação partidária, posição política",
+     "Proteção reforçada em pleitos eleitorais"
+    ],
+    [
+     "Vida sexual",
+     "Orientação sexual, vida íntima",
+     "Sigilo absoluto salvo consentimento"
+    ],
+    [
+     "Dado genético",
+     "DNA, perfil genético",
+     "Coleta restrita a finalidades científicas"
+    ],
+    [
+     "Dado biométrico",
+     "Digital, face, íris usados para identificação",
+     "Proteção máxima pela LGPD e GDPR"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Dado Anonimizado × Dado Pseudonimizado"
+  },
+  {
+   "t": "p",
+   "html": "É importante distinguir dois conceitos frequentemente confundidos na prática empresarial. O dado anonimizado é aquele que, após processo técnico irreversível, não permite mais identificar seu titular — e, por isso, deixa de ser considerado dado pessoal pela LGPD, podendo circular com muito mais liberdade. Já o dado pseudonimizado substitui informações identificadoras por um código ou apelido, mas ainda permite a reidentificação do titular mediante o uso de informações adicionais mantidas separadamente. Por essa razão, dados pseudonimizados continuam sendo considerados dados pessoais e permanecem sob o alcance integral da lei."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma pesquisa acadêmica que publica apenas estatísticas agregadas (\"32% dos entrevistados de 18 a 24 anos preferem X\") trabalha com dados anonimizados. Já um e-commerce que substitui o nome do cliente por um código interno (\"cliente_00457\") em seus relatórios de análise, mas mantém, em outra base de dados, a tabela que liga esse código ao nome real, está lidando com pseudonimização — e continua obrigado a cumprir a LGPD sobre esses registros."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-2-panorama-das-legislacoes-internacionais-de-protecao-de-dados",
+   "texto": "1.2 Panorama das Legislações Internacionais de Proteção de Dados"
+  },
+  {
+   "t": "p",
+   "html": "Nos últimos anos, mais de 130 países adotaram legislações específicas de proteção de dados pessoais. Essa tendência global reflete o reconhecimento crescente de que a privacidade é um direito humano fundamental, e que a livre circulação de dados — essencial para a economia digital — precisa ser equilibrada com garantias efetivas aos indivíduos. O movimento foi impulsionado, sobretudo, pelo GDPR europeu, cuja influência moldou, direta ou indiretamente, legislações em praticamente todos os continentes, inclusive a LGPD brasileira."
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma startup brasileira de SaaS que vende assinaturas para clientes na Alemanha e na França precisa cumprir o GDPR mesmo não tendo qualquer sede ou funcionário na Europa — basta que ela trate dados de titulares localizados no território europeu para estar sujeita ao regulamento."
+    }
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>País / Região</strong>",
+    "<strong>Legislação</strong>",
+    "<strong>Vigência</strong>",
+    "<strong>Autoridade</strong>"
+   ],
+   "linhas": [
+    [
+     "União Europeia",
+     "GDPR — General Data Protection Regulation",
+     "Maio/2018",
+     "EDPB + DPAs nacionais"
+    ],
+    [
+     "Brasil",
+     "LGPD — Lei nº 13.709/2018",
+     "Set/2020",
+     "ANPD"
+    ],
+    [
+     "EUA (Califórnia)",
+     "CCPA / CPRA",
+     "Jan/2020 e Jan/2023",
+     "CPPA"
+    ],
+    [
+     "Argentina",
+     "Lei 25.326 / Projeto de reforma",
+     "2000 / em revisão",
+     "AAIP"
+    ],
+    [
+     "China",
+     "PIPL — Personal Information Protection Law",
+     "Nov/2021",
+     "CAC"
+    ],
+    [
+     "Reino Unido",
+     "UK GDPR + Data Protection Act 2018",
+     "Jan/2021",
+     "ICO"
+    ],
+    [
+     "Japão",
+     "APPI (reforma 2022)",
+     "Abr/2022",
+     "PPC"
+    ],
+    [
+     "Canadá",
+     "PIPEDA / Bill C-27 (em tramitação)",
+     "2000 / pendente",
+     "OPC"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: Aplicação Extraterritorial das Leis de Dados",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Tanto o GDPR quanto a LGPD possuem efeito extraterritorial. Isso significa que uma empresa brasileira que trate dados de cidadãos europeus deve cumprir o GDPR, mesmo que não possua sede na Europa. Da mesma forma, empresas estrangeiras que tratem dados de pessoas localizadas no Brasil estão sujeitas à LGPD. Ignorar essa realidade pode resultar em multas milionárias e bloqueio de operações."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-3-a-lgpd-lei-geral-de-protecao-de-dados-no-brasil",
+   "texto": "1.3 A LGPD — Lei Geral de Proteção de Dados no Brasil"
+  },
+  {
+   "t": "h3",
+   "texto": "Histórico e Contexto"
+  },
+  {
+   "t": "p",
+   "html": "A Lei nº 13.709/2018, conhecida como LGPD, foi sancionada em agosto de 2018 e entrou em vigor em setembro de 2020, com as sanções administrativas passando a ser aplicadas somente a partir de agosto de 2021 — um período de transição pensado para dar tempo às empresas de se adequarem. Sua criação foi motivada pela necessidade de o Brasil dispor de uma legislação unificada e moderna sobre proteção de dados, em substituição a um conjunto fragmentado de normas esparsas (como dispositivos pontuais do Código de Defesa do Consumidor e do Marco Civil da Internet) que tratavam o tema de forma incompleta e insuficiente para a complexidade da economia digital."
+  },
+  {
+   "t": "h3",
+   "texto": "Princípios Fundamentais da LGPD"
+  },
+  {
+   "t": "p",
+   "html": "A LGPD é estruturada em torno de dez princípios (art. 6º) que devem nortear toda atividade de tratamento de dados pessoais no Brasil — funcionando como uma espécie de \"bússola interpretativa\" para qualquer situação não expressamente prevista na lei:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Princípio</strong>",
+    "<strong>O que estabelece</strong>"
+   ],
+   "linhas": [
+    [
+     "1. Finalidade",
+     "Propósitos legítimos, específicos, explícitos e informados ao titular"
+    ],
+    [
+     "2. Adequação",
+     "Compatibilidade do tratamento com as finalidades informadas"
+    ],
+    [
+     "3. Necessidade",
+     "Limitação do tratamento ao mínimo necessário para a finalidade"
+    ],
+    [
+     "4. Livre Acesso",
+     "Consulta facilitada e gratuita sobre a forma e duração do tratamento"
+    ],
+    [
+     "5. Qualidade dos Dados",
+     "Exatidão, clareza, relevância e atualização dos dados"
+    ],
+    [
+     "6. Transparência",
+     "Informações claras, precisas e facilmente acessíveis"
+    ],
+    [
+     "7. Segurança",
+     "Medidas técnicas e administrativas contra acessos não autorizados"
+    ],
+    [
+     "8. Prevenção",
+     "Medidas para prevenir a ocorrência de danos"
+    ],
+    [
+     "9. Não Discriminação",
+     "Vedado o tratamento para fins discriminatórios ilícitos ou abusivos"
+    ],
+    [
+     "10. Responsabilização",
+     "Demonstração de medidas eficazes de cumprimento da lei"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O princípio da necessidade é frequentemente violado por formulários de cadastro excessivamente longos. Um aplicativo de delivery de comida que exige, no cadastro, informações sobre estado civil ou religião do usuário está coletando dados que não guardam relação com a finalidade do serviço — violação clara do princípio da necessidade, ainda que o usuário tenha \"aceitado\" os termos de uso."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Hipóteses Legais de Tratamento"
+  },
+  {
+   "t": "p",
+   "html": "O tratamento de dados pessoais só é lícito quando fundamentado em uma das dez hipóteses previstas no art. 7º da LGPD. Para dados pessoais sensíveis, essas hipóteses são ainda mais restritas, conforme o art. 11. Conhecer essas bases legais é essencial para que as empresas justifiquem suas atividades de tratamento de forma legítima — e para que consigam responder, com segurança, à pergunta \"com base em que eu posso tratar este dado?\" para cada finalidade do negócio."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Base Legal</strong>",
+    "<strong>Descrição</strong>",
+    "<strong>Exemplo Prático</strong>"
+   ],
+   "linhas": [
+    [
+     "Consentimento",
+     "Manifestação livre, informada e inequívoca do titular",
+     "Newsletter de e-mail marketing"
+    ],
+    [
+     "Legítimo Interesse",
+     "Interesses legítimos do controlador, sem prejudicar o titular",
+     "Prevenção a fraudes internas"
+    ],
+    [
+     "Execução de Contrato",
+     "Tratamento necessário para cumprir contrato com o titular",
+     "Dados de entrega em e-commerce"
+    ],
+    [
+     "Obrigação Legal",
+     "Cumprimento de obrigação legal ou regulatória",
+     "Retenção de dados fiscais"
+    ],
+    [
+     "Políticas Públicas",
+     "Execução de políticas públicas pela Administração",
+     "Programas sociais governamentais"
+    ],
+    [
+     "Estudos por Órgão de Pesquisa",
+     "Pesquisa com dados anonimizados sempre que possível",
+     "Pesquisas acadêmicas e científicas"
+    ],
+    [
+     "Exercício de Direitos",
+     "Em processo judicial, administrativo ou arbitral",
+     "Litígio com ex-funcionário"
+    ],
+    [
+     "Proteção da Vida",
+     "Proteção da vida ou da incolumidade física do titular",
+     "Emergências médicas"
+    ],
+    [
+     "Tutela da Saúde",
+     "Procedimentos realizados por profissionais de saúde",
+     "Prontuário médico eletrônico"
+    ],
+    [
+     "Proteção ao Crédito",
+     "Atividades de proteção ao crédito",
+     "Consulta a bureau de crédito"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Um mesmo e-commerce costuma usar bases legais diferentes para dados diferentes dentro da mesma compra: o endereço de entrega é tratado com base na execução de contrato; o CPF exigido na nota fiscal, com base em obrigação legal; e o envio de ofertas por e-mail após a compra, com base no consentimento (ou, em alguns casos, no legítimo interesse, se a relação com o cliente for recente e o opt-out for simples). Identificar a base correta para cada finalidade — em vez de usar uma única base \"genérica\" para tudo — é uma das exigências mais frequentemente negligenciadas pelas empresas."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-4-o-gdpr-regulamento-europeu-de-protecao-de-dados",
+   "texto": "1.4 O GDPR — Regulamento Europeu de Proteção de Dados"
+  },
+  {
+   "t": "h3",
+   "texto": "O que é o GDPR e por que é tão relevante?"
+  },
+  {
+   "t": "p",
+   "html": "O GDPR (General Data Protection Regulation), em vigor desde maio de 2018, é considerado o regulamento de proteção de dados mais abrangente e rigoroso do mundo. Ele se aplica a qualquer organização que processe dados de cidadãos ou residentes da União Europeia, independentemente de onde a organização esteja sediada. Por conta dessa abrangência territorial — combinada às pesadas multas previstas — o GDPR influenciou diretamente a elaboração da LGPD brasileira e de dezenas de outras legislações ao redor do globo, consolidando-se como uma espécie de \"padrão-ouro\" regulatório internacional."
+  },
+  {
+   "t": "h3",
+   "texto": "Principais Conceitos do GDPR"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Conceito</strong>",
+    "<strong>Definição</strong>"
+   ],
+   "linhas": [
+    [
+     "Controlador (Controller)",
+     "Pessoa ou organização que determina os propósitos e meios do tratamento de dados"
+    ],
+    [
+     "Operador (Processor)",
+     "Pessoa ou organização que trata dados em nome do controlador"
+    ],
+    [
+     "Titular (Data Subject)",
+     "Pessoa natural cujos dados são tratados"
+    ],
+    [
+     "DPO (Data Protection Officer)",
+     "Encarregado de proteção de dados, obrigatório em determinadas organizações"
+    ],
+    [
+     "DPIA",
+     "Avaliação de impacto à proteção de dados, exigida para tratamentos de alto risco"
+    ],
+    [
+     "Privacy by Design",
+     "Incorporação da privacidade desde a concepção de sistemas e processos"
+    ],
+    [
+     "Privacy by Default",
+     "Configurações de privacidade mais restritivas ativas por padrão"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Privacy by Design e Privacy by Default são frequentemente confundidos, mas não são a mesma coisa. Um aplicativo de rede social que, desde a fase de projeto, criptografa mensagens de ponta a ponta pratica Privacy by Design. Já um aplicativo cujo perfil do usuário nasce configurado como \"privado\" — exigindo uma ação explícita do usuário para torná-lo público — pratica Privacy by Default. O primeiro é uma decisão de arquitetura; o segundo, uma decisão sobre a configuração inicial entregue ao usuário."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Sanções do GDPR"
+  },
+  {
+   "t": "p",
+   "html": "O GDPR prevê dois níveis de multa administrativa, que podem ser aplicados cumulativamente com outras medidas corretivas pelas autoridades nacionais de proteção de dados (DPAs):"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Infrações menos graves:</strong> multa de até € 10 milhões ou 2% do faturamento global anual da empresa (o que for maior), aplicável a violações de requisitos técnicos e organizacionais.",
+    "<strong>Infrações mais graves:</strong> multa de até € 20 milhões ou 4% do faturamento global anual da empresa (o que for maior), aplicável a violações dos princípios fundamentais e dos direitos dos titulares."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Casos Emblemáticos de Multas pelo GDPR"
+  },
+  {
+   "t": "p",
+   "html": "Meta (2023): € 1,2 bilhão pela autoridade irlandesa, por transferência ilegal de dados para os EUA."
+  },
+  {
+   "t": "p",
+   "html": "Amazon (2021): € 746 milhões pela autoridade luxemburguesa, por violações de cookies."
+  },
+  {
+   "t": "p",
+   "html": "WhatsApp (2021): € 225 milhões, por falta de transparência no processamento de dados dos usuários."
+  },
+  {
+   "t": "p",
+   "html": "Google (2019): € 50 milhões pela CNIL francesa, por falta de transparência no consentimento."
+  },
+  {
+   "t": "h3",
+   "texto": "LGPD vs. GDPR — Convergências e Diferenças"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Aspecto</strong>",
+    "<strong>LGPD (Brasil)</strong>",
+    "<strong>GDPR (Europa)</strong>"
+   ],
+   "linhas": [
+    [
+     "Vigência",
+     "Setembro de 2020",
+     "Maio de 2018"
+    ],
+    [
+     "Autoridade Reguladora",
+     "ANPD",
+     "EDPB + DPAs nacionais"
+    ],
+    [
+     "Multa máxima",
+     "2% do fat. (limite R$ 50 mi)",
+     "4% do fat. global (até € 20 mi)"
+    ],
+    [
+     "Bases legais",
+     "10 hipóteses de tratamento",
+     "6 bases legais"
+    ],
+    [
+     "DPO / Encarregado",
+     "Obrigatório p/ controladores e operadores",
+     "Obrigatório em casos específicos"
+    ],
+    [
+     "Notificação de incidente",
+     "Prazo razoável (ANPD)",
+     "72 horas para a autoridade"
+    ],
+    [
+     "Direito ao esquecimento",
+     "Previsto (eliminação dos dados)",
+     "Expressamente previsto"
+    ],
+    [
+     "Transferência internacional",
+     "Permitida com garantias",
+     "Permitida com garantias (SCCs, BCRs)"
+    ],
+    [
+     "Cookies",
+     "Não regulado diretamente",
+     "Regulado pela ePrivacy Directive"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-5-responsabilidades-das-empresas-coleta-armazenamento-e-uso",
+   "texto": "1.5 Responsabilidades das Empresas: Coleta, Armazenamento e Uso"
+  },
+  {
+   "t": "p",
+   "html": "A LGPD e o GDPR impõem obrigações concretas às empresas em todas as etapas do ciclo de vida dos dados pessoais — não basta cumprir a lei apenas no momento da coleta. O não cumprimento dessas obrigações pode resultar em sanções administrativas, responsabilidade civil e danos reputacionais significativos, muitas vezes mais custosos do que a própria multa. Para fins didáticos, essas responsabilidades costumam ser organizadas em três grandes fases: coleta, armazenamento e uso."
+  },
+  {
+   "t": "h3",
+   "texto": "Fase 1 — Coleta de Dados"
+  },
+  {
+   "t": "p",
+   "html": "A coleta de dados deve respeitar os princípios da finalidade, adequação e necessidade. Antes de coletar qualquer dado pessoal, a empresa deve ser capaz de responder a três perguntas simples, mas frequentemente negligenciadas: Para que vou usar esse dado? Esse dado é realmente necessário? Tenho uma base legal que autorize sua coleta?"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Finalidade prévia:</strong> definir e documentar a finalidade específica antes de iniciar a coleta.",
+    "<strong>Base legal:</strong> garantir que a coleta esteja amparada em uma das bases legais da LGPD/GDPR.",
+    "<strong>Transparência:</strong> informar ao titular, de forma clara e acessível, o que será coletado, por quê, por quanto tempo e quem terá acesso.",
+    "<strong>Minimização:</strong> coletar apenas os dados estritamente necessários para a finalidade declarada.",
+    "<strong>Registro de consentimento:</strong> quando a base legal for o consentimento, este deve ser específico, livre, informado e registrável."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "boa-pratica",
+   "titulo": "Boa Prática: Política de Privacidade Clara",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A Política de Privacidade é o principal instrumento de transparência com os titulares. Ela deve ser redigida em linguagem clara e simples, sem jargões jurídicos excessivos, e deve indicar: quais dados são coletados, a finalidade e a base legal de cada tratamento, os prazos de retenção, com quem os dados são compartilhados, como o titular pode exercer seus direitos e quem é o Encarregado (DPO)."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Fase 2 — Armazenamento de Dados"
+  },
+  {
+   "t": "p",
+   "html": "Os dados pessoais devem ser armazenados com segurança, pelo tempo estritamente necessário para a finalidade que justificou sua coleta. Após esse prazo, devem ser eliminados, anonimizados ou bloqueados, salvo quando houver obrigação legal de retenção — como ocorre, por exemplo, com documentos fiscais, que a legislação tributária brasileira exige manter por até cinco anos."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Obrigação</strong>",
+    "<strong>Descrição</strong>",
+    "<strong>Consequência do Descumprimento</strong>"
+   ],
+   "linhas": [
+    [
+     "Prazo de Retenção",
+     "Definir e respeitar o período máximo de guarda dos dados",
+     "Violação do princípio da necessidade; sanção da ANPD"
+    ],
+    [
+     "Segurança Técnica",
+     "Criptografia, controle de acesso, firewalls, backups seguros",
+     "Responsabilidade em caso de vazamento"
+    ],
+    [
+     "Registro de Atividades",
+     "Manter Relatório de Impacto (RIPD) e registros de tratamento",
+     "Sanção e dificuldade de defesa em litígios"
+    ],
+    [
+     "Transferência Internacional",
+     "Garantir proteção equivalente ao transferir dados ao exterior",
+     "Bloqueio das transferências pela ANPD"
+    ],
+    [
+     "Gestão de Terceiros",
+     "Contratos com operadores e fornecedores com cláusulas de proteção de dados",
+     "Corresponsabilidade por falhas de terceiros"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma empresa que mantém, por \"segurança\", os dados de cartões de crédito de clientes que não compram há cinco anos — sem qualquer finalidade ativa para esses dados — descumpre o princípio da necessidade e amplia desnecessariamente sua superfície de risco: quanto mais dados antigos e sem uso uma empresa acumula, maior o impacto de um eventual vazamento."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Fase 3 — Uso e Compartilhamento de Dados"
+  },
+  {
+   "t": "p",
+   "html": "O uso dos dados pessoais deve ser estritamente limitado à finalidade para a qual foram coletados. O compartilhamento com terceiros — parceiros, fornecedores, plataformas de marketing — exige cuidados adicionais e, em muitos casos, o consentimento do titular ou outro fundamento legal específico."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Limitação de finalidade:</strong> os dados só podem ser usados para as finalidades informadas ao titular no momento da coleta.",
+    "<strong>Contratos com terceiros:</strong> o compartilhamento com parceiros e fornecedores deve ser amparado por contrato de operação de dados, com cláusulas de proteção e confidencialidade.",
+    "<strong>Proibição de venda indevida:</strong> a venda de dados pessoais a terceiros sem base legal e sem conhecimento do titular é ilegal sob a LGPD e o GDPR.",
+    "<strong>Mudança de finalidade:</strong> antes de usar dados para finalidade diversa da original, a empresa deve verificar compatibilidade ou obter novo consentimento.",
+    "<strong>Decisões automatizadas:</strong> em decisões que afetem o titular (como análise de crédito ou seleção de candidatos), este tem direito de solicitar revisão humana."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: Violação de Dados — O que Fazer?",
+   "blocos": [
+    {
+     "t": "lista",
+     "numerada": true,
+     "itens": [
+      "1. Contenção imediata: isolar os sistemas afetados e identificar a extensão do incidente.",
+      "2. Avaliação de risco: analisar quais dados foram comprometidos e quais os riscos para os titulares.",
+      "3. Notificação à ANPD: comunicar o incidente em prazo razoável (o GDPR exige 72 horas).",
+      "4. Notificação aos titulares: quando o incidente puder acarretar risco ou dano relevante.",
+      "5. Documentação: registrar todas as ações tomadas, o escopo do incidente e as medidas de remediação."
+     ]
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-6-direitos-dos-titulares-de-dados",
+   "texto": "1.6 Direitos dos Titulares de Dados"
+  },
+  {
+   "t": "p",
+   "html": "Tanto a LGPD quanto o GDPR conferem um conjunto robusto de direitos aos titulares de dados pessoais. As empresas devem criar mecanismos eficientes para responder às solicitações dos titulares de forma gratuita e em prazo razoável — a LGPD não define prazo específico para a maioria das solicitações, enquanto o GDPR estipula 30 dias, prorrogáveis por mais 60 dias em casos complexos."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Direito</strong>",
+    "<strong>O que garante</strong>"
+   ],
+   "linhas": [
+    [
+     "Acesso",
+     "Confirmação da existência e acesso aos dados pessoais tratados pela empresa"
+    ],
+    [
+     "Correção",
+     "Correção de dados incompletos, inexatos ou desatualizados"
+    ],
+    [
+     "Anonimização, Bloqueio ou Eliminação",
+     "Para dados desnecessários, excessivos ou tratados em desconformidade com a lei"
+    ],
+    [
+     "Portabilidade",
+     "Receber os dados em formato estruturado e interoperável, para transferência a outro fornecedor"
+    ],
+    [
+     "Eliminação",
+     "Solicitar a eliminação dos dados tratados com base no consentimento, após sua revogação"
+    ],
+    [
+     "Informação sobre compartilhamento",
+     "Saber com quais entidades públicas e privadas os dados foram compartilhados"
+    ],
+    [
+     "Revogação do Consentimento",
+     "Retirar o consentimento a qualquer momento, sem ônus para o titular"
+    ],
+    [
+     "Oposição",
+     "Opor-se ao tratamento realizado em descumprimento da lei"
+    ],
+    [
+     "Revisão de decisão automatizada",
+     "Solicitar revisão humana de decisões tomadas exclusivamente por algoritmos"
+    ],
+    [
+     "Petição à ANPD",
+     "Apresentar queixa contra o controlador à Autoridade Nacional de Proteção de Dados"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O direito de portabilidade é a base jurídica de iniciativas como o Open Finance brasileiro: ao autorizar a portabilidade de seu histórico financeiro de um banco tradicional para uma fintech concorrente, o titular exerce, na prática, esse direito garantido pela LGPD — permitindo maior concorrência e melhores ofertas de crédito, sem que o banco original possa se recusar a fornecer os dados."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-7-sancoes-fiscalizacao-e-a-anpd",
+   "texto": "1.7 Sanções, Fiscalização e a ANPD"
+  },
+  {
+   "t": "h3",
+   "texto": "A Autoridade Nacional de Proteção de Dados — ANPD"
+  },
+  {
+   "t": "p",
+   "html": "A ANPD é a autoridade brasileira responsável por zelar pela proteção dos dados pessoais, fiscalizar o cumprimento da LGPD, aplicar sanções e editar normas complementares. Criada pelo Decreto nº 10.474/2020, a ANPD passou a operar com autonomia técnica e decisória, tornando-se peça fundamental para a efetividade prática da LGPD no Brasil — sem uma autoridade fiscalizadora atuante, a lei correria o risco de permanecer como uma declaração de princípios sem força coercitiva real."
+  },
+  {
+   "t": "h3",
+   "texto": "Sanções Previstas na LGPD (Art. 52)"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Sanção</strong>",
+    "<strong>Descrição</strong>"
+   ],
+   "linhas": [
+    [
+     "Advertência",
+     "Com indicação de prazo para adoção de medidas corretivas"
+    ],
+    [
+     "Multa simples",
+     "Até 2% do faturamento da empresa no último exercício (limite de R$ 50 milhões por infração)"
+    ],
+    [
+     "Multa diária",
+     "Observado o limite total de R$ 50 milhões por infração"
+    ],
+    [
+     "Publicização da infração",
+     "Divulgação pública da infração após apuração e confirmação"
+    ],
+    [
+     "Bloqueio dos dados",
+     "Suspensão temporária do banco de dados a que se refere a infração"
+    ],
+    [
+     "Eliminação dos dados",
+     "Exclusão dos dados pessoais a que se refere a infração"
+    ],
+    [
+     "Suspensão parcial",
+     "Suspensão do funcionamento do banco de dados por até 6 meses"
+    ],
+    [
+     "Proibição de tratamento",
+     "Proibição total ou parcial de atividades relacionadas ao tratamento de dados"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma sanção de \"advertência\" costuma ser o primeiro passo da ANPD diante de uma infração de baixa gravidade e sem histórico de reincidência — funcionando como uma notificação formal para que a empresa corrija a irregularidade dentro de um prazo determinado, antes que penalidades mais severas, como a multa, sejam de fato aplicadas."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Como se Preparar para a Conformidade com a LGPD"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. Mapeamento de dados (Data Mapping): identifique todos os dados pessoais que a empresa coleta, trata e armazena.",
+    "2. Revisão de contratos: adeque contratos com fornecedores, parceiros e clientes para incluir cláusulas de proteção de dados.",
+    "3. Nomeação do Encarregado (DPO): designe um responsável pelo tratamento de dados e pelo canal de comunicação com a ANPD e os titulares.",
+    "4. Treinamento da equipe: capacite colaboradores sobre as obrigações da LGPD e boas práticas de segurança da informação.",
+    "5. Elaboração do RIPD: produza o Relatório de Impacto à Proteção de Dados para tratamentos de alto risco.",
+    "6. Revisão da Política de Privacidade: garanta que a política seja clara, atualizada e facilmente acessível aos titulares.",
+    "7. Canal de atendimento ao titular: implante um canal específico para receber e responder solicitações dos titulares de dados."
+   ]
+  }
+ ]
+}

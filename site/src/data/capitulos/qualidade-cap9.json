@@ -1,0 +1,555 @@
+{
+ "numero": 9,
+ "titulo": "Testes de Segurança",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Segurança não é uma funcionalidade que se adiciona ao final do desenvolvimento — é uma propriedade que precisa ser construída desde o início e continuamente verificada. Um sistema funcionalmente perfeito que pode ser invadido, ter seus dados roubados ou ser derrubado por um ataque externo representa um risco inaceitável para seus usuários e para o negócio. Os testes de segurança existem para identificar essas vulnerabilidades antes que agentes mal-intencionados o façam — transformando fraquezas desconhecidas em riscos gerenciáveis e corrigíveis."
+  },
+  {
+   "t": "h2",
+   "id": "9-1-seguranca-em-software-conceitos-fundamentais",
+   "texto": "9.1 Segurança em Software: Conceitos Fundamentais"
+  },
+  {
+   "t": "p",
+   "html": "Segurança de software abrange um conjunto de práticas, processos e técnicas destinadas a proteger sistemas de informação contra acesso não autorizado, uso indevido, divulgação, alteração ou destruição. O modelo fundamental que orienta toda análise de segurança é a tríade CIA: Confidencialidade, Integridade e Disponibilidade."
+  },
+  {
+   "t": "h3",
+   "texto": "A Tríade CIA"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Propriedade",
+    "Definição",
+    "Exemplo de violação"
+   ],
+   "linhas": [
+    [
+     "Confidencialidade",
+     "Garantir que informações sejam acessíveis apenas a partes autorizadas",
+     "Vazamento de dados de cartões de crédito por SQL Injection"
+    ],
+    [
+     "Integridade",
+     "Garantir que informações não sejam alteradas de forma não autorizada",
+     "Alteração de preços em um banco de dados por um atacante"
+    ],
+    [
+     "Disponibilidade",
+     "Garantir que sistemas e dados estejam disponíveis quando necessário",
+     "Derrubada de serviço por ataque DDoS"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Conceitos Essenciais"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Vulnerabilidade: </strong>Uma fraqueza em um sistema que pode ser explorada por um atacante para comprometer a segurança. Pode ser resultado de falhas de código, configuração incorreta, design inadequado ou dependências desatualizadas."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Ameaça: </strong>Qualquer circunstância ou evento com potencial para explorar uma vulnerabilidade e causar danos. Pode ser humana (hackers, insiders mal-intencionados) ou não-humana (desastres naturais, falhas de hardware)."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Risco: </strong>A combinação da probabilidade de uma ameaça explorar uma vulnerabilidade com o impacto resultante. Risco = Probabilidade × Impacto."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Vetor de Ataque: </strong>O caminho ou meio pelo qual um atacante pode obter acesso a um sistema para entregar uma carga maliciosa ou explorar uma vulnerabilidade."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Superfície de Ataque: </strong>O conjunto total de pontos de entrada disponíveis para um atacante — APIs expostas, interfaces de usuário, endpoints de rede e dependências de terceiros."
+  },
+  {
+   "t": "h2",
+   "id": "9-2-identificacao-e-prevencao-de-vulnerabilidades",
+   "texto": "9.2 Identificação e Prevenção de Vulnerabilidades"
+  },
+  {
+   "t": "p",
+   "html": "Identificar vulnerabilidades antes que sejam exploradas é o objetivo central dos testes de segurança. Essa identificação pode ocorrer em diferentes momentos do ciclo de desenvolvimento — desde a análise estática de código até testes dinâmicos em produção — e utiliza diversas técnicas complementares."
+  },
+  {
+   "t": "h3",
+   "texto": "Técnicas de Identificação"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Análise Estática de Segurança (SAST — Static Application Security Testing): </strong>Examina o código-fonte, bytecode ou binários sem executar a aplicação. Identifica padrões de código inseguro como uso de funções depreciadas, concatenação de SQL sem parametrização e ausência de validação de entrada. Ferramentas como SonarQube, Checkmarx e Bandit operam nesta modalidade."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Análise Dinâmica de Segurança (DAST — Dynamic Application Security Testing): </strong>Testa a aplicação em execução, simulando ataques externos sem acesso ao código-fonte. Identifica vulnerabilidades que só se manifestam em runtime, como XSS, CSRF e redirecionamentos abertos. O OWASP ZAP é a principal ferramenta open source desta categoria."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Análise de Composição de Software (SCA — Software Composition Analysis): </strong>Verifica dependências de terceiros (bibliotecas, frameworks) em busca de vulnerabilidades conhecidas catalogadas em bases como o CVE (Common Vulnerabilities and Exposures). Ferramentas como OWASP Dependency-Check e Snyk automatizam essa verificação."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Modelagem de Ameaças (Threat Modeling): </strong>Análise sistemática do design do sistema para identificar possíveis ameaças e vulnerabilidades antes mesmo de escrever código. A metodologia STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege) é amplamente utilizada."
+  },
+  {
+   "t": "h3",
+   "texto": "Principais Vulnerabilidades e suas Prevenções"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Vulnerabilidade",
+    "Como ocorre",
+    "Como prevenir"
+   ],
+   "linhas": [
+    [
+     "SQL Injection",
+     "Entrada do usuário é incluída diretamente em queries SQL sem saneamento",
+     "Queries parametrizadas / Prepared Statements; ORM; validação de entrada"
+    ],
+    [
+     "Cross-Site Scripting (XSS)",
+     "Scripts maliciosos são injetados e executados no navegador de outros usuários",
+     "Encode de saída HTML; Content Security Policy (CSP); sanitização de input"
+    ],
+    [
+     "Autenticação Quebrada",
+     "Senhas fracas, sessões sem expiração, tokens previsíveis",
+     "MFA; senhas fortes; tokens seguros com expiração adequada; HTTPS"
+    ],
+    [
+     "Exposição de Dados Sensíveis",
+     "Dados transmitidos ou armazenados sem criptografia adequada",
+     "TLS/HTTPS; criptografia em repouso; não logar dados sensíveis"
+    ],
+    [
+     "Controle de Acesso Quebrado",
+     "Usuários acessam recursos ou funcionalidades sem permissão adequada",
+     "Modelo de menor privilégio; verificação de autorização no servidor"
+    ],
+    [
+     "Configuração Insegura",
+     "Configurações padrão inseguras, diretórios expostos, erros detalhados",
+     "Hardening de servidores; remoção de defaults; mensagens de erro genéricas"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Shift-Left Security: Segurança desde o Início"
+  },
+  {
+   "t": "p",
+   "html": "O conceito de Shift-Left Security propõe mover as atividades de segurança para as fases mais iniciais do ciclo de desenvolvimento, reduzindo drasticamente o custo de correção. Estudos do NIST indicam que vulnerabilidades corrigidas em produção custam até 30 vezes mais do que as corrigidas durante o design."
+  },
+  {
+   "t": "p",
+   "html": "Na prática, isso significa: incluir requisitos de segurança nas histórias de usuário, realizar revisões de código com foco em segurança, integrar ferramentas SAST ao pipeline CI/CD e treinar desenvolvedores em práticas de codificação segura."
+  },
+  {
+   "t": "h2",
+   "id": "9-3-testes-de-penetracao-e-avaliacao-de-seguranca",
+   "texto": "9.3 Testes de Penetração e Avaliação de Segurança"
+  },
+  {
+   "t": "p",
+   "html": "Testes de penetração (pentests) são simulações controladas de ataques reais realizadas por profissionais de segurança — chamados de ethical hackers ou pen testers — com autorização explícita da organização. O objetivo é identificar vulnerabilidades exploráveis que ferramentas automatizadas podem não detectar, avaliando o real impacto de um ataque bem-sucedido."
+  },
+  {
+   "t": "h3",
+   "texto": "Tipos de Pentest por Conhecimento"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo",
+    "Características",
+    "Quando usar"
+   ],
+   "linhas": [
+    [
+     "Black Box",
+     "O pen tester não tem conhecimento prévio do sistema. Simula um atacante externo sem acesso privilegiado.",
+     "Avaliar a postura de segurança do ponto de vista de um atacante externo desconhecido"
+    ],
+    [
+     "White Box",
+     "O pen tester tem acesso total: código-fonte, arquitetura, credenciais. Teste mais completo e preciso.",
+     "Avaliações aprofundadas; auditoria de código; maximizar cobertura de vulnerabilidades"
+    ],
+    [
+     "Gray Box",
+     "Conhecimento parcial — tipicamente credenciais de usuário comum. Simula um usuário legítimo mal-intencionado.",
+     "Simular ameaças internas ou usuários autenticados que tentam elevar privilégios"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Metodologia de Pentest: As 5 Fases"
+  },
+  {
+   "t": "p",
+   "html": "<strong>1. Reconhecimento (Reconnaissance): </strong>Coleta de informações públicas sobre o alvo — domínios, IPs, tecnologias, colaboradores, dados vazados. Técnicas como OSINT (Open Source Intelligence), varredura de DNS e análise de cabeçalhos HTTP são utilizadas."
+  },
+  {
+   "t": "p",
+   "html": "<strong>2. Varredura e Enumeração (Scanning): </strong>Identificação de portas abertas, serviços em execução, versões de software e possíveis pontos de entrada. Ferramentas como Nmap, Nikto e dirbuster são empregadas nesta fase."
+  },
+  {
+   "t": "p",
+   "html": "<strong>3. Obtenção de Acesso (Exploitation): </strong>Exploração das vulnerabilidades identificadas para obter acesso não autorizado. O pen tester utiliza técnicas manuais combinadas com frameworks como Metasploit."
+  },
+  {
+   "t": "p",
+   "html": "<strong>4. Manutenção de Acesso (Post-Exploitation): </strong>Avaliação do que seria possível fazer com o acesso obtido — movimento lateral, escalação de privilégios, exfiltreação de dados. Demonstra o real impacto do ataque."
+  },
+  {
+   "t": "p",
+   "html": "<strong>5. Relatório (Reporting): </strong>Documentação detalhada de todas as vulnerabilidades encontradas, com classificação por severidade (crítico, alto, médio, baixo), prova de conceito (PoC) e recomendações de remediação priorizadas."
+  },
+  {
+   "t": "h3",
+   "texto": "Classificação de Severidade de Vulnerabilidades (CVSS)"
+  },
+  {
+   "t": "p",
+   "html": "O Common Vulnerability Scoring System (CVSS) é o padrão internacional para classificar a severidade de vulnerabilidades. A pontuação varia de 0 a 10 e considera fatores como vetor de acesso, complexidade, privilégios necessários e impacto na CIA."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Classificação",
+    "Pontuação CVSS",
+    "Exemplo",
+    "Resposta recomendada"
+   ],
+   "linhas": [
+    [
+     "Crítico",
+     "9.0 – 10.0",
+     "RCE sem autenticação, SQL Injection direto em dados sensíveis",
+     "Correção imediata (horas)"
+    ],
+    [
+     "Alto",
+     "7.0 – 8.9",
+     "Elevação de privilégios, SSRF, XSS persistente",
+     "Correção urgente (dias)"
+    ],
+    [
+     "Médio",
+     "4.0 – 6.9",
+     "CSRF, XSS refletido, exposição de informações não críticas",
+     "Correção planejada (semanas)"
+    ],
+    [
+     "Baixo",
+     "0.1 – 3.9",
+     "Informações de versão expostas, clickjacking sem impacto direto",
+     "Correção no próximo ciclo"
+    ],
+    [
+     "Nenhum",
+     "0.0",
+     "Achados informativos sem risco imediato",
+     "Registrar e monitorar"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "9-4-owasp-zap-e-ferramentas-de-seguranca",
+   "texto": "9.4 OWASP ZAP e Ferramentas de Segurança"
+  },
+  {
+   "t": "p",
+   "html": "O ecossistema de ferramentas para testes de segurança é rico e diversificado. A escolha das ferramentas adequadas depende do tipo de teste, da arquitetura da aplicação e do nível de profundidade desejado."
+  },
+  {
+   "t": "h3",
+   "texto": "OWASP ZAP (Zed Attack Proxy)"
+  },
+  {
+   "t": "p",
+   "html": "O OWASP ZAP é a ferramenta de segurança de aplicações web open source mais utilizada no mundo. Mantido pela OWASP (Open Worldwide Application Security Project), ele atua como um proxy interceptador entre o navegador e a aplicação, permitindo inspecionar, modificar e replayer requisições HTTP/HTTPS."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Recurso",
+    "Descrição"
+   ],
+   "linhas": [
+    [
+     "Interceptação de Tráfego",
+     "Captura e modifica requisições entre cliente e servidor em tempo real, permitindo análise manual detalhada"
+    ],
+    [
+     "Spider / Crawler",
+     "Mapeia automaticamente todos os endpoints da aplicação, construíndo uma árvore de URLs e recursos descobertos"
+    ],
+    [
+     "Varredura Ativa (Active Scan)",
+     "Envia payloads maliciosos automaticamente para identificar vulnerabilidades como XSS, SQL Injection e Path Traversal"
+    ],
+    [
+     "Varredura Passiva (Passive Scan)",
+     "Analisa o tráfego capturado sem enviar requisições extras, identificando problemas de headers de segurança e configuração"
+    ],
+    [
+     "Fuzzer",
+     "Envia grandes volumes de dados inesperados ou malformados para identificar comportamentos anômalos e falhas de validação"
+    ],
+    [
+     "API REST",
+     "Permite integração com pipelines CI/CD para varreduras automatizadas a cada build ou deploy"
+    ],
+    [
+     "Relatórios",
+     "Gera relatórios HTML, XML e JSON com todas as vulnerabilidades encontradas, classificadas por severidade e com detalhes técnicos"
+    ],
+    [
+     "Modo Daemon (Headless)",
+     "Execução via linha de comando sem interface gráfica, ideal para ambientes de CI/CD (Docker, Jenkins, GitHub Actions)"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Integrando o ZAP ao Pipeline CI/CD"
+  },
+  {
+   "t": "p",
+   "html": "Uma das maiores vantagens do OWASP ZAP é sua capacidade de ser executado de forma completamente automática. O ZAP pode ser iniciado via Docker e configurado com scripts de automação (Automation Framework) para realizar varreduras completas e retornar códigos de saída que indicam sucesso ou falha do pipeline."
+  },
+  {
+   "t": "p",
+   "html": "Exemplo de workflow típico em CI/CD: (1) Build e deploy da aplicação em ambiente de staging; (2) Execução do ZAP em modo daemon com o plano de automação configurado; (3) Análise dos resultados — falha do pipeline se vulnerabilidades de alta ou crítica severidade forem encontradas; (4) Relatório publicado como artefato do build para análise da equipe."
+  },
+  {
+   "t": "h3",
+   "texto": "Outras Ferramentas Essenciais"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Burp Suite (PortSwigger): </strong>O proxy de segurança mais completo do mercado, com edição Community gratuita e Professional paga. Amplamente usado por pen testers profissionais por sua flexibilidade e profundidade de análise."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Nmap: </strong>Ferramenta de varredura de rede para descoberta de hosts, portas abertas e serviços em execução. Essencial para a fase de reconhecimento."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Metasploit Framework: </strong>Plataforma de exploração de vulnerabilidades com extensa biblioteca de exploits. Utilizado na fase de exploitation para demonstrar o impacto real de vulnerabilidades."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Nikto: </strong>Scanner de vulnerabilidades de servidores web que verifica mais de 6.700 arquivos/programas perigosos e configurações inseguras."
+  },
+  {
+   "t": "p",
+   "html": "<strong>sqlmap: </strong>Ferramenta automatizada para detecção e exploração de vulnerabilidades SQL Injection, suportando múltiplos tipos de bancos de dados."
+  },
+  {
+   "t": "p",
+   "html": "<strong>OWASP Dependency-Check: </strong>Analisa dependências de projetos (Java, .NET, Node.js, Python) em busca de vulnerabilidades conhecidas catalogadas no NVD (National Vulnerability Database)."
+  },
+  {
+   "t": "h2",
+   "id": "9-5-owasp-top-10",
+   "texto": "9.5 OWASP Top 10"
+  },
+  {
+   "t": "p",
+   "html": "O OWASP Top 10 é o documento de consciência mais reconhecido mundialmente sobre segurança em aplicações web. Publicado e atualizado periodicamente pela OWASP, ele lista as dez categorias de risco de segurança mais críticas, baseadas em dados reais de vulnerabilidades identificadas em aplicações ao redor do mundo. A versão mais recente é a de 2021."
+  },
+  {
+   "t": "h3",
+   "texto": "OWASP Top 10 — 2021"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "#",
+    "Categoria",
+    "Descrição",
+    "Exemplo típico"
+   ],
+   "linhas": [
+    [
+     "A01",
+     "Broken Access Control",
+     "Falhas que permitem usuários agirem fora de suas permissões autorizadas",
+     "Acessar o perfil de outro usuário alterando o ID na URL"
+    ],
+    [
+     "A02",
+     "Cryptographic Failures",
+     "Exposição de dados sensíveis por falha ou ausência de criptografia adequada",
+     "Senhas armazenadas em MD5; transmissão de dados sensíveis via HTTP"
+    ],
+    [
+     "A03",
+     "Injection",
+     "Inserção de código malicioso via input não saneado (SQL, NoSQL, LDAP, OS Command)",
+     "SQL Injection: ' OR 1=1 -- para bypassar autenticação"
+    ],
+    [
+     "A04",
+     "Insecure Design",
+     "Falhas de design que não consideraram segurança, não corrigíveis apenas com implementação",
+     "Recuperação de senha baseada em perguntas trivialmente adivinhaíveis"
+    ],
+    [
+     "A05",
+     "Security Misconfiguration",
+     "Configurações padrão inseguras, diretórios exibindo listagem, headers de segurança ausentes",
+     "Servidor com modo DEBUG ativo em produção exibindo stack traces"
+    ],
+    [
+     "A06",
+     "Vulnerable and Outdated Components",
+     "Uso de bibliotecas, frameworks ou componentes com vulnerabilidades conhecidas e não corrigidas",
+     "Aplicação usando Log4j 2.14 vulnerável ao Log4Shell (CVE-2021-44228)"
+    ],
+    [
+     "A07",
+     "Identification and Authentication Failures",
+     "Falhas em mecanismos de autenticação que permitem comprometimento de senhas, chaves ou tokens de sessão",
+     "Sessões que não expiram; ataques de brute force sem rate limiting"
+    ],
+    [
+     "A08",
+     "Software and Data Integrity Failures",
+     "Código e infraestrutura que não protegem contra violações de integridade; atualizações sem verificação",
+     "Ataques supply chain: dependência maliciosa publicada no npm/PyPI"
+    ],
+    [
+     "A09",
+     "Security Logging and Monitoring Failures",
+     "Logs insuficientes que impedem detecção de ataques e resposta a incidentes",
+     "Sistema sem logs de autenticação falha; incidente não detectado por meses"
+    ],
+    [
+     "A10",
+     "Server-Side Request Forgery (SSRF)",
+     "Aplicação busca recurso remoto sem validar a URL fornecida pelo usuário",
+     "Acessar http://169.254.169.254 para roubar credenciais de instâncias AWS"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Aprofundamento: A01 — Broken Access Control"
+  },
+  {
+   "t": "p",
+   "html": "Broken Access Control (Controle de Acesso Quebrado) ocupa o primeiro lugar no OWASP Top 10 2021 e representa a categoria de maior incidência. Os problemas mais comuns incluem: violação de princípio do menor privilégio, IDOR (Insecure Direct Object References), CORS mal configurado permitindo acesso de origens não autorizadas, e elevação de privilégio atuando como usuário sem estar autenticado ou como administrador quando logado como usuário comum."
+  },
+  {
+   "t": "h3",
+   "texto": "Aprofundamento: A03 — Injection"
+  },
+  {
+   "t": "p",
+   "html": "Injection é a categoria mais antiga e ainda uma das mais críticas. Além do SQL Injection, inclui: OS Command Injection (execução de comandos do sistema operacional), LDAP Injection, XML Injection e Expression Language Injection. A defesa fundamental é tratar todo dado externo como não confiável: usar queries parametrizadas, APIs seguras e validação rigorosa de entrada."
+  },
+  {
+   "t": "h2",
+   "id": "9-6-processo-e-boas-praticas",
+   "texto": "9.6 Processo e Boas Práticas"
+  },
+  {
+   "t": "p",
+   "html": "Implementar testes de segurança de forma eficaz requer um processo estruturado que vá além da execução pontual de ferramentas. A segurança precisa ser integrada ao ciclo de vida do desenvolvimento — uma abordagem conhecida como DevSecOps."
+  },
+  {
+   "t": "h3",
+   "texto": "Ciclo de Vida de Segurança no Desenvolvimento (SDLC Seguro)"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Requisitos: </strong>Incluir requisitos de segurança desde a definição das histórias de usuário. Definir critérios de aceitação de segurança e realizar modelagem de ameaças para novas funcionalidades."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Design: </strong>Revisar a arquitetura com foco em segurança. Aplicar padrões como defesa em profundidade, menor privilégio e separação de responsabilidades."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Implementação: </strong>Treinamento em codificação segura; guias de padrões de código seguro; revisão de código com checklist de segurança; SAST integrado ao IDE e ao pre-commit."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Teste: </strong>SAST, DAST e SCA no pipeline CI/CD; testes de segurança funcionais (autoriçação, autenticação, validação de entrada); pentests periódicos por equipes especializadas."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Deploy: </strong>Hardening de servidores e containers; configuração segura de cloud; gerenciamento de segredos (secrets management — Vault, AWS Secrets Manager)."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Operação: </strong>Monitoramento contínuo; gestão de patches e atualizações de dependências; plano de resposta a incidentes; programa de Bug Bounty."
+  },
+  {
+   "t": "h3",
+   "texto": "Boas Práticas de Testes de Segurança"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Automatize, mas não apenas automatize: </strong>Ferramentas automatizadas encontram cerca de 30-40% das vulnerabilidades. Pentest manual é essencial para identificar vulnerabilidades lógicas e de negócio que scanners não detectam."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Teste em ambiente representativo: </strong>Sempre que possível, realize testes em ambientes que espelham produção. Vulnerabilidades de configuração só aparecem em ambientes com configuração similar à produção."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Trate segurança como requisição não funcional: </strong>Inclua critérios de aceitação de segurança nas definition of done (DoD) das sprints."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Gestão de vulnerabilidades: </strong>Mantenha um registro rastreado de todas as vulnerabilidades identificadas, com responsável, prazo e status de correção. Use ferramentas como Jira ou DefectDojo."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Realize pentests periódicos: </strong>Além da automação contínua no CI/CD, agende pentests manuais ao menos uma vez ao ano e sempre após mudanças arquiteturais significativas."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Treine a equipe: </strong>Desenvolvedores treinados em segurança são o controle mais eficaz e econômico. Plataformas como OWASP WebGoat, OWASP Juice Shop e Hack The Box oferecem ambientes práticos de aprendizado."
+  },
+  {
+   "t": "h3",
+   "texto": "DevSecOps: Segurança no Pipeline"
+  },
+  {
+   "t": "p",
+   "html": "Em times com cultura DevSecOps, a segurança é integrada ao pipeline de forma incremental e automatizada:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Commit / PR: SAST (SonarQube, Semgrep) analisa o código automaticamente; secret scanning detecta credenciais acidentalmente commitadas",
+    "Build: SCA (OWASP Dependency-Check, Snyk) verifica dependências com vulnerabilidades conhecidas",
+    "Staging: DAST (OWASP ZAP) realiza varredura da aplicação em execução; testes de segurança funcionais automatizados",
+    "Produção: WAF (Web Application Firewall); monitoramento de comportamento anômalo; alertas de intrusão (IDS/IPS)",
+    "Periódico: Pentests manuais; revisão de configurações cloud; atualização de dependências e patches de segurança"
+   ]
+  }
+ ]
+}

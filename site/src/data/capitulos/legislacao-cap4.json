@@ -1,0 +1,587 @@
+{
+ "numero": 4,
+ "titulo": "Responsabilidade Digital e Crimes Cibernéticos",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "A expansão do ambiente digital trouxe oportunidades sem precedentes para a economia, a comunicação e o acesso ao conhecimento. Mas também abriu novos vetores de risco: crimes cibernéticos, fraudes online, invasões de sistemas, vazamentos de dados e ataques a infraestruturas críticas tornaram-se ameaças concretas para empresas, governos e cidadãos. No Brasil, estima-se que os crimes cibernéticos causem prejuízos superiores a R$ 100 bilhões por ano. Compreender as responsabilidades legais nesse cenário — tanto das vítimas quanto das empresas que armazenam dados e operam plataformas digitais — é fundamental para qualquer profissional que atue no ecossistema digital."
+  },
+  {
+   "t": "h2",
+   "id": "4-1-o-ambiente-digital-e-a-evolucao-dos-crimes-ciberneticos",
+   "texto": "4.1 O Ambiente Digital e a Evolução dos Crimes Cibernéticos"
+  },
+  {
+   "t": "h3",
+   "texto": "O que são Crimes Cibernéticos?"
+  },
+  {
+   "t": "p",
+   "html": "Crimes cibernéticos são ilícitos penais praticados com uso de dispositivos eletrônicos e redes de comunicação como instrumento ou alvo da conduta criminosa. Classificam-se em duas categorias."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Categoria</strong>",
+    "<strong>Descrição</strong>",
+    "<strong>Exemplos</strong>"
+   ],
+   "linhas": [
+    [
+     "Crimes Cibernéticos Puros",
+     "O sistema informático é o alvo da conduta. Sem tecnologia, o crime não existiria.",
+     "Invasão de dispositivo, DDoS, malware, ransomware"
+    ],
+    [
+     "Crimes Cibernéticos Impróprios",
+     "O meio digital é usado para praticar crime já previsto no direito penal tradicional.",
+     "Estelionato via internet, ameaça por WhatsApp, calúnia em redes sociais"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Exemplo prático",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Um funcionário que invade o sistema de um concorrente para roubar segredos comerciais comete crime cibernético puro (art. 154-A do CP): o próprio ato de invadir já é o crime, independentemente do que faça com os dados depois. Já um golpista que usa um perfil falso no Instagram para aplicar um golpe de venda de produto inexistente comete estelionato (crime tradicional, art. 171), apenas praticado por meio digital — é um crime impróprio."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Evolução do Cenário de Ameaças"
+  },
+  {
+   "t": "p",
+   "html": "O cibercrime evoluiu de ataques isolados por hackers individuais para operações sofisticadas conduzidas por organizações criminosas transnacionais. O modelo Cybercrime as a Service (CaaS) permitiu que qualquer pessoa, sem conhecimento técnico avançado, contrate serviços de ataque na dark web — como aluguel de botnets ou venda de ransomware pronto."
+  },
+  {
+   "t": "h3",
+   "texto": "Linha do Tempo da Legislação Brasileira"
+  },
+  {
+   "t": "p",
+   "html": "2012 — Lei Carolina Dieckmann (Lei 12.737): tipificou a invasão de dispositivo informático."
+  },
+  {
+   "t": "p",
+   "html": "2014 — Marco Civil da Internet (Lei 12.965): responsabilidade civil dos provedores."
+  },
+  {
+   "t": "p",
+   "html": "2018 — LGPD (Lei 13.709): obrigações de segurança e responsabilização por vazamentos."
+  },
+  {
+   "t": "p",
+   "html": "2021 — Lei 14.155/2021: agravou penas para estelionato digital e fraude eletrônica."
+  },
+  {
+   "t": "p",
+   "html": "2023 — Estratégia Nacional de Segurança Cibernética (E-Ciber 2.0)."
+  },
+  {
+   "t": "h2",
+   "id": "4-2-marco-civil-da-internet-principios-e-responsabilidade-civil",
+   "texto": "4.2 Marco Civil da Internet: Princípios e Responsabilidade Civil"
+  },
+  {
+   "t": "p",
+   "html": "A Lei nº 12.965/2014 (MCI) é considerada a \"Constituição da internet\" brasileira. Estabelece princípios, garantias, direitos e deveres para o uso da internet no Brasil."
+  },
+  {
+   "t": "h3",
+   "texto": "Princípios Fundamentais — Art. 3º"
+  },
+  {
+   "t": "p",
+   "html": "Neutralidade de Rede: provedores não podem discriminar pacotes de dados por origem, destino, serviço ou aplicação."
+  },
+  {
+   "t": "p",
+   "html": "Privacidade: proteção de dados pessoais e comunicações, vedada a cessão a terceiros sem consentimento."
+  },
+  {
+   "t": "p",
+   "html": "Liberdade de Expressão: garantia da livre expressão online, vedada a censura prévia."
+  },
+  {
+   "t": "p",
+   "html": "Responsabilização dos Agentes: cada agente responde na medida de sua participação nos danos causados."
+  },
+  {
+   "t": "h3",
+   "texto": "Regime de Responsabilidade Civil dos Provedores"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Tipo de Provedor</strong>",
+    "<strong>Responsabilidade</strong>",
+    "<strong>Condição</strong>"
+   ],
+   "linhas": [
+    [
+     "Provedor de Conexão",
+     "Não responde por conteúdo gerado por usuários",
+     "Não há hipótese de responsabilização"
+    ],
+    [
+     "Provedor de Aplicação (geral)",
+     "Não responde civilmente pelo conteúdo de terceiros",
+     "Somente se descumprir ordem judicial (art. 19)"
+    ],
+    [
+     "Provedor (nudez/sexo sem consentimento)",
+     "Responde se não remover após notificação extrajudicial",
+     "Notificação do ofendido (art. 21)"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: O Debate sobre o Art. 19 do Marco Civil",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O art. 19 do MCI — que exige ordem judicial para responsabilizar plataformas pela remoção de conteúdo — está sob intensa discussão no Brasil. O STF, ao julgar os Temas 987 e 533, debateu a constitucionalidade desse modelo, questionando se ele protege adequadamente vítimas de desinformação, discurso de ódio e conteúdo ilegal. Em 2023, o PL 2.630 (PL das Fake News) tentou alterar esse regime, mas enfrentou forte resistência."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-3-crimes-ciberneticos-tipificacao-penal-no-brasil",
+   "texto": "4.3 Crimes Cibernéticos: Tipificação Penal no Brasil"
+  },
+  {
+   "t": "h3",
+   "texto": "Lei nº 12.737/2012 — Lei Carolina Dieckmann"
+  },
+  {
+   "t": "p",
+   "html": "Primeira legislação brasileira a tipificar crimes contra sistemas informáticos. Inseriu os arts. 154-A e 154-B no Código Penal."
+  },
+  {
+   "t": "h3",
+   "texto": "Crimes Tipificados"
+  },
+  {
+   "t": "p",
+   "html": "Art. 154-A — Invasão de Dispositivo: invadir dispositivo alheio violando mecanismo de segurança. Pena: detenção 1-4 anos + multa."
+  },
+  {
+   "t": "p",
+   "html": "Art. 266, §1º — Interrupção de Serviço: interromper serviço telemático ou de utilidade pública. Pena: detenção 1-3 anos + multa."
+  },
+  {
+   "t": "p",
+   "html": "Art. 298, § Único — Falsificação de Cartão: falsificar cartão de crédito/débito. Pena: reclusão 2-8 anos + multa."
+  },
+  {
+   "t": "h3",
+   "texto": "Lei nº 14.155/2021 — Endurecimento das Penas"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Crime</strong>",
+    "<strong>Pena Anterior</strong>",
+    "<strong>Pena Após a Lei</strong>",
+    "<strong>Qualificadora</strong>"
+   ],
+   "linhas": [
+    [
+     "Furto mediante fraude",
+     "Reclusão 2-8 anos",
+     "Reclusão 4-8 anos + multa",
+     "Via dispositivo eletrônico ou rede"
+    ],
+    [
+     "Estelionato",
+     "Reclusão 1-5 anos",
+     "Reclusão 4-8 anos + multa",
+     "Via dispositivo, rede social ou e-mail"
+    ],
+    [
+     "Invasão de dispositivo",
+     "Detenção 3m-1 ano",
+     "Detenção 1-4 anos + multa",
+     "Vantagem econômica: +1/6 a 2/3"
+    ],
+    [
+     "Organização criminosa digital",
+     "—",
+     "Aumento de 1/3",
+     "Grupo usa meios eletrônicos"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Outros Crimes Digitais"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Crime</strong>",
+    "<strong>Tipificação</strong>",
+    "<strong>Pena</strong>"
+   ],
+   "linhas": [
+    [
+     "Ameaça digital",
+     "CP, art. 147",
+     "Detenção 1-6 meses ou multa"
+    ],
+    [
+     "Injúria, calúnia e difamação online",
+     "CP, arts. 138-140",
+     "Detenção 3 meses-2 anos; injúria racial: 2-5 anos"
+    ],
+    [
+     "Stalking digital",
+     "CP, art. 147-A (Lei 14.132/2021)",
+     "Reclusão 6 meses-2 anos + multa"
+    ],
+    [
+     "Pornografia de vingança (NCII)",
+     "Lei 13.718/2018, art. 218-C",
+     "Reclusão 1-5 anos"
+    ],
+    [
+     "Crimes contra crianças (ECA digital)",
+     "ECA, arts. 241-A a 241-E",
+     "Reclusão 3-8 anos + multa"
+    ],
+    [
+     "Phishing e fraude bancária online",
+     "CP art. 171 + Lei 14.155/2021",
+     "Reclusão 4-8 anos + multa"
+    ],
+    [
+     "Ransomware com extorsão",
+     "CP art. 158 + art. 154-A",
+     "Reclusão 4-10 anos + multa"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-4-golpes-e-fraudes-digitais-as-ameacas-mais-comuns",
+   "texto": "4.4 Golpes e Fraudes Digitais: As Ameaças Mais Comuns"
+  },
+  {
+   "t": "h3",
+   "texto": "As Ameaças Mais Comuns"
+  },
+  {
+   "t": "p",
+   "html": "Phishing: e-mails/SMS falsos que imitam instituições legítimas. Variantes: spear phishing, vishing, smishing."
+  },
+  {
+   "t": "p",
+   "html": "Ransomware: criptografa arquivos e exige resgate. Ataque ao STJ (2020) paralisou o tribunal por semanas."
+  },
+  {
+   "t": "p",
+   "html": "Engenharia Social: manipulação psicológica explorando confiança, urgência e medo."
+  },
+  {
+   "t": "p",
+   "html": "Golpe do Pix / Falsa Central: criminosos se passam por funcionários do banco para obter transferências ou tokens."
+  },
+  {
+   "t": "p",
+   "html": "Clonagem de WhatsApp: obtém o código de verificação e assume o número para aplicar golpes nos contatos."
+  },
+  {
+   "t": "p",
+   "html": "Deepfake e Fraude de Identidade: IA generativa cria vídeos/áudios falsos para fraude de autenticação e extorsão."
+  },
+  {
+   "t": "p",
+   "html": "Credential Stuffing: tentativas automatizadas com credenciais vazadas, explorando reuso de senhas."
+  },
+  {
+   "t": "p",
+   "html": "Man-in-the-Middle: interceptação de comunicação para roubar dados, especialmente em Wi-Fi público."
+  },
+  {
+   "t": "quadro",
+   "tipo": "boa-pratica",
+   "titulo": "Boa Prática: Como Empresas Podem se Proteger",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Autenticação Multifator (MFA); Treinamento Contínuo (a maioria das brechas começa com erro humano); Política de Senhas Robusta; Backup 3-2-1 (3 cópias, 2 mídias, 1 offsite); Monitoramento e SOC 24/7; Plano de Resposta a Incidentes documentado e testado."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-5-responsabilidade-das-plataformas-digitais",
+   "texto": "4.5 Responsabilidade das Plataformas Digitais"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Situação</strong>",
+    "<strong>Responsabilidade</strong>",
+    "<strong>Fundamento</strong>"
+   ],
+   "linhas": [
+    [
+     "Conteúdo ilícito denunciado sem ordem judicial",
+     "Não responde, salvo nudez/sexo sem consentimento",
+     "MCI, art. 19 e 21"
+    ],
+    [
+     "Descumprimento de ordem judicial de remoção",
+     "Responde solidariamente pelos danos",
+     "MCI, art. 19, §1º"
+    ],
+    [
+     "Conteúdo de abuso sexual infantil (CSAM)",
+     "Remoção e notificação imediatas, sem ordem judicial",
+     "ECA art. 241-A; Lei 11.829/2008"
+    ],
+    [
+     "Falha de segurança que expõe dados",
+     "Responsabilidade objetiva pelos danos",
+     "LGPD art. 44; CDC art. 14"
+    ],
+    [
+     "Fraude por perfil falso verificado",
+     "Responsabilidade por falha na verificação",
+     "CDC art. 14; CC art. 186"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Obrigações de Guarda de Registros"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Provedores de Conexão (Art. 13):</strong> registros de IP, data, hora e duração devem ser guardados por 1 ano, sob sigilo.",
+    "<strong>Provedores de Aplicação (Art. 15):</strong> registros de acesso a aplicações devem ser guardados por 6 meses.",
+    "<strong>Guarda Cautelar (Art. 13, §2º):</strong> autoridades podem requisitar guarda por prazo superior a 60 dias, mediante requerimento judicial.",
+    "<strong>Quebra de Sigilo (Art. 22):</strong> exige ordem judicial, salvo investigação de crimes graves com autorização legal específica."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-6-violacoes-de-seguranca-e-vazamentos-de-dados",
+   "texto": "4.6 Violações de Segurança e Vazamentos de Dados"
+  },
+  {
+   "t": "p",
+   "html": "Sob a LGPD (art. 46) e o GDPR (art. 4º, nº 12), um data breach é qualquer evento que resulte em acesso não autorizado, perda, destruição, alteração ou comunicação inadequada de dados pessoais."
+  },
+  {
+   "t": "h3",
+   "texto": "Tipos de Incidentes de Segurança"
+  },
+  {
+   "t": "p",
+   "html": "Violação de Confidencialidade: acesso ou divulgação não autorizados. Ex.: banco de dados exposto por configuração incorreta."
+  },
+  {
+   "t": "p",
+   "html": "Violação de Integridade: alteração não autorizada. Ex.: ransomware que modifica registros médicos."
+  },
+  {
+   "t": "p",
+   "html": "Violação de Disponibilidade: perda de acesso ou destruição. Ex.: DDoS que derruba sistema hospitalar."
+  },
+  {
+   "t": "p",
+   "html": "Insider Threat: funcionário ou prestador que acessa ou exfiltra dados sem autorização."
+  },
+  {
+   "t": "p",
+   "html": "Vazamento por Terceiro: fornecedor sofre incidente e expõe dados do controlador."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Incidente</strong>",
+    "<strong>Ano</strong>",
+    "<strong>Dados Expostos</strong>",
+    "<strong>Impacto</strong>"
+   ],
+   "linhas": [
+    [
+     "Min. da Saúde (Coronavac)",
+     "2021",
+     "223 mi de CPFs e dados de saúde",
+     "Maior vazamento do Brasil"
+    ],
+    [
+     "Serasa Experian",
+     "2021",
+     "220 mi de CPFs e dados biométricos",
+     "Circulou em fóruns da dark web"
+    ],
+    [
+     "LinkedIn Brasil",
+     "2021",
+     "500 mi de perfis globais",
+     "Usado para spear phishing"
+    ],
+    [
+     "DETRAN",
+     "2021",
+     "100 mi de veículos e proprietários",
+     "Golpes de seguro e clonagem"
+    ],
+    [
+     "Ataque ao STJ",
+     "2020",
+     "Processos judiciais e dados internos",
+     "Paralisação por 2 semanas"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Consequências Legais de um Vazamento"
+  },
+  {
+   "t": "p",
+   "html": "Administrativa (LGPD): ANPD pode aplicar multa de até R$ 50 milhões, bloqueio, eliminação e publicização do incidente."
+  },
+  {
+   "t": "p",
+   "html": "Civil: ações individuais ou coletivas por danos. STJ reconhece dano moral in re ipsa em dados sensíveis."
+  },
+  {
+   "t": "p",
+   "html": "Penal: dirigentes podem responder por violação de sigilo ou omissão dolosa em negligência grave."
+  },
+  {
+   "t": "p",
+   "html": "Regulatória Setorial: setores financeiro, saúde e telecom sujeitos a sanções de seus reguladores (BACEN, ANS, ANATEL)."
+  },
+  {
+   "t": "p",
+   "html": "Reputacional e Financeira: custo médio global de um data breach em 2024: US$ 4,88 milhões (IBM)."
+  },
+  {
+   "t": "h2",
+   "id": "4-7-resposta-a-incidentes-obrigacoes-legais-e-boas-praticas",
+   "texto": "4.7 Resposta a Incidentes: Obrigações Legais e Boas Práticas"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<strong>Obrigação</strong>",
+    "<strong>LGPD (Brasil)</strong>",
+    "<strong>GDPR (Europa)</strong>"
+   ],
+   "linhas": [
+    [
+     "Notificação à Autoridade",
+     "Prazo razoável (ANPD orienta: até 3 dias úteis, alto risco)",
+     "Obrigatório em até 72 horas"
+    ],
+    [
+     "Notificação aos Titulares",
+     "Quando houver risco ou dano relevante",
+     "Sem demora, quando houver alto risco"
+    ],
+    [
+     "Conteúdo da Notificação",
+     "Natureza dos dados, titulares, medidas, contato do DPO",
+     "Descrição, categorias, nº de titulares, DPO"
+    ],
+    [
+     "Registro Interno",
+     "Manter registros de todos os incidentes",
+     "Registro obrigatório (accountability)"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Plano de Resposta a Incidentes (PRI) — NIST SP 800-61"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. Preparação: políticas, equipe CSIRT, ferramentas de monitoramento, playbooks e treinamentos. A fase mais importante — feita ANTES do incidente.",
+    "2. Detecção e Análise: identificação por SIEM, IDS/IPS ou relatos; análise de escopo, vetor de ataque e impacto; classificação de severidade.",
+    "3. Contenção e Recuperação: isolar sistemas, eliminar a ameaça, revogar credenciais e restaurar a partir de backups íntegros.",
+    "4. Pós-Incidente: análise forense, documentação, atualização de controles, notificações legais e comunicação com stakeholders."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Checklist Jurídico Imediato após um Incidente"
+  },
+  {
+   "t": "p",
+   "html": "Hora 0-6: acionar o time de segurança e o DPO; isolar sistemas afetados; documentar tudo com timestamp."
+  },
+  {
+   "t": "p",
+   "html": "Hora 6-24: avaliar o escopo — quais dados, quantos titulares, qual a sensibilidade."
+  },
+  {
+   "t": "p",
+   "html": "Hora 24-72: acionar o jurídico; avaliar a obrigação de notificação à ANPD; preparar comunicação."
+  },
+  {
+   "t": "p",
+   "html": "Até 3 dias úteis (alto risco): notificar a ANPD conforme o art. 48 da LGPD."
+  },
+  {
+   "t": "p",
+   "html": "Sempre: notificar os titulares afetados e preservar todas as evidências — logs, e-mails e registros do incidente."
+  },
+  {
+   "t": "h2",
+   "id": "4-8-cooperacao-internacional-no-combate-ao-cibercrime",
+   "texto": "4.8 Cooperação Internacional no Combate ao Cibercrime"
+  },
+  {
+   "t": "p",
+   "html": "O cibercrime é transnacional por natureza: um ransomware pode ser planejado na Europa, executado por servidores na Ásia, com vítimas no Brasil e resgate pago em criptomoedas em paraísos fiscais."
+  },
+  {
+   "t": "h3",
+   "texto": "Instrumentos de Cooperação Internacional"
+  },
+  {
+   "t": "p",
+   "html": "Convenção de Budapeste (2001): principal tratado internacional sobre cibercrime. O Brasil iniciou a adesão em 2023."
+  },
+  {
+   "t": "p",
+   "html": "INTERPOL Cybercrime Division: coordena operações internacionais (ex.: Operação HAECHI, Operação Synergia)."
+  },
+  {
+   "t": "p",
+   "html": "Grupo de Lyon-Roma (G7): especialistas em cibercrime dos países do G7, coordenando respostas a grandes ameaças."
+  },
+  {
+   "t": "p",
+   "html": "MLAT: tratados bilaterais de assistência jurídica mútua para troca de evidências entre países."
+  },
+  {
+   "t": "p",
+   "html": "CERT.br e Rede de CERTs: coordena resposta a incidentes e troca informações via redes como o FIRST."
+  }
+ ]
+}

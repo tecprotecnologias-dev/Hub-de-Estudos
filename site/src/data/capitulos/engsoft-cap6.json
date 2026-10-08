@@ -1,0 +1,193 @@
+{
+ "numero": 6,
+ "titulo": "Qualidade de Software",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "A norma ISO/IEC 25010 define qualidade como o grau em que um sistema satisfaz os requisitos do cliente, as necessidades dos usuários e os objetivos do negócio. Qualidade não é um atributo que se adiciona ao final do projeto – ela precisa ser construída ao longo de todo o ciclo de desenvolvimento, por meio de processos disciplinados, métricas objetivas e uma cultura organizacional comprometida com a excelência. Este capítulo aprofunda o Controle de Qualidade (QC), a distinção entre QA e QC, as métricas que orientam decisões, os modelos de maturidade CMMI e MPS.BR, e o raciocínio econômico por trás do investimento em qualidade."
+  },
+  {
+   "t": "h2",
+   "id": "6-1-qc-controle-de-qualidade",
+   "texto": "6.1 QC — Controle de Qualidade"
+  },
+  {
+   "t": "p",
+   "html": "Conjunto de atividades operacionais focadas em identificar defeitos no produto – uma atividade técnica, orientada ao produto, que atua sobre o artefato já produzido. As principais atividades de QC são: <strong>Revisão de Código</strong> (análise por pares antes da integração, uma das práticas de maior retorno sobre investimento); <strong>Inspeção de Software</strong> (<em>Fagan Inspection</em>, processo formal com papéis definidos); <strong>Análise Estática de Código</strong> (ferramentas como SonarQube, ESLint, Semgrep); <strong>Execução de Testes</strong> (unitários, integração, sistema, aceitação); e <strong>Gerenciamento de Defeitos</strong> (registrar, classificar, priorizar e rastrear com ferramentas como Jira ou Azure DevOps)."
+  },
+  {
+   "t": "h2",
+   "id": "6-2-qa-vs-qc-a-distincao-fundamental",
+   "texto": "6.2 QA vs. QC — A Distinção Fundamental"
+  },
+  {
+   "t": "p",
+   "html": "Distinção recorrente em provas e concursos. Embora usados como sinônimos no mercado informal, têm significados precisos e complementares."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Dimensão",
+    "QA — <em>Quality Assurance</em>",
+    "QC — <em>Quality Control</em>"
+   ],
+   "linhas": [
+    [
+     "Orientação",
+     "Processo",
+     "Produto"
+    ],
+    [
+     "Abordagem",
+     "Proativo – previne defeitos",
+     "Reativo – detecta defeitos"
+    ],
+    [
+     "Quando atua",
+     "Em todas as fases do ciclo de vida",
+     "Principalmente após a produção do artefato"
+    ],
+    [
+     "Responsável",
+     "Toda a organização",
+     "Equipe técnica de QA, testadores, desenvolvedores"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Como fixar a diferença",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "QC é “encontrar defeitos no produto que já foi criado” – inspecionar uma peça fabricada, executar testes para encontrar <em>bugs</em>. QA é “melhorar o processo para que defeitos não sejam criados” – treinar os operários, estabelecer processos que previnam a introdução de <em>bugs</em>. Na prática moderna, as equipes atuam em ambas as frentes: QA sem QC resulta em ótimos processos que nunca verificam o resultado; QC sem QA resulta em uma equipe “apagando incêndios” eternamente."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-3-metricas-de-qualidade-de-produto-e-processo",
+   "texto": "6.3 Métricas de Qualidade de Produto e Processo"
+  },
+  {
+   "t": "p",
+   "html": "“Você não pode gerenciar o que não pode medir.” As métricas se dividem em duas categorias: métricas de produto e métricas de processo."
+  },
+  {
+   "t": "h3",
+   "texto": "Métricas de Produto"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Cobertura de Testes</strong>: percentual do código-fonte exercitado pelos testes automatizados (meta típica: 70–80% em módulos críticos; alta cobertura não garante ausência de <em>bugs</em>). <strong>Densidade de Defeitos</strong>: número de defeitos dividido pelo tamanho do software. <strong>Taxa de Defeitos Escapados</strong>: percentual de defeitos encontrados em produção sobre o total (organizações maduras alcançam menos de 1%). <strong>Complexidade Ciclomática</strong>: número de caminhos de execução independentes no código (acima de 20, o método deve ser refatorado). <strong>Débito Técnico</strong>: custo futuro estimado do trabalho adicional causado por decisões técnicas inadequadas tomadas para ganhar velocidade – assim como dívida financeira, acumula “juros” com o tempo."
+  },
+  {
+   "t": "h3",
+   "texto": "Métricas de Processo"
+  },
+  {
+   "t": "p",
+   "html": "<em>Lead Time</em> (tempo desde a solicitação até a entrega em produção), <em>Cycle Time</em> (tempo que uma tarefa leva do início até a entrega), <em>Velocity</em> (pontos entregues por <em>sprint</em>), Taxa de Retrabalho, Taxa de Sucesso de <em>Build</em>, MTBF (tempo médio entre falhas) e MTTR (tempo médio para restaurar após uma falha)."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "A Lei de Goodhart",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "“Quando uma medida se torna uma meta, ela deixa de ser uma boa medida.” Forçar 100% de cobertura de testes leva equipes a criar testes sem valor que só “passam por” o código; pressionar por <em>velocity</em> alta faz histórias ficarem artificialmente pequenas. Métricas devem ser usadas para entender e melhorar, não para punir e pressionar."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-4-modelos-de-maturidade-cmmi-e-mps-br",
+   "texto": "6.4 Modelos de Maturidade: CMMI e MPS.BR"
+  },
+  {
+   "t": "p",
+   "html": "Avaliam e orientam a evolução da capacidade dos processos de uma organização. Quanto mais maduro o processo, mais previsível, mensurável e melhorável é o desenvolvimento."
+  },
+  {
+   "t": "h3",
+   "texto": "CMMI — Capability Maturity Model Integration"
+  },
+  {
+   "t": "p",
+   "html": "Desenvolvido pelo SEI (<em>Software Engineering Institute</em>) da Carnegie Mellon University – cinco níveis de maturidade: <strong>1 Inicial</strong> (caótico, dependente de heróis individuais); <strong>2 Gerenciado</strong> (processos básicos de projeto); <strong>3 Definido</strong> (processos padronizados para toda a organização); <strong>4 Gerenciado Quantitativamente</strong> (medido e controlado estatisticamente); <strong>5 Em Otimização</strong> (melhoria contínua sem instabilidade)."
+  },
+  {
+   "t": "h3",
+   "texto": "MPS.BR"
+  },
+  {
+   "t": "p",
+   "html": "Desenvolvido pela SOFTEX – modelo nacional equivalente ao CMMI, adaptado a empresas de pequeno e médio porte, com sete níveis (G a A) e reconhecimento em licitações públicas de TI no Brasil."
+  },
+  {
+   "t": "h2",
+   "id": "6-5-custo-da-qualidade-e-qualidade-na-cultura-devops",
+   "texto": "6.5 Custo da Qualidade e Qualidade na Cultura DevOps"
+  },
+  {
+   "t": "h3",
+   "texto": "Custo da Qualidade (CoQ)"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Categoria",
+    "Definição",
+    "Exemplos"
+   ],
+   "linhas": [
+    [
+     "Prevenção",
+     "Investimentos para evitar defeitos",
+     "Treinamento, revisão de requisitos, automação de testes"
+    ],
+    [
+     "Avaliação",
+     "Custos de verificar a qualidade",
+     "Execução de testes, auditorias, inspeções"
+    ],
+    [
+     "Falha Interna",
+     "Corrigir defeitos antes da entrega",
+     "Retrabalho, re-testes"
+    ],
+    [
+     "Falha Externa",
+     "Defeitos que chegaram ao cliente",
+     "Suporte emergencial, dano à reputação"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "boa-pratica",
+   "titulo": "A Regra dos 10x",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Corrigir um defeito nos Requisitos custa 1x; no Design, 5x; na Implementação, 10x; nos Testes, 20x; em Produção, 100x ou mais. Investir cedo em prevenção é sempre mais barato do que pagar depois."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Qualidade na Cultura DevOps"
+  },
+  {
+   "t": "p",
+   "html": "Em uma cultura DevOps madura, a qualidade não é responsabilidade de um departamento isolado – é uma propriedade emergente de toda a cadeia de entrega: Integração Contínua (testes a cada <em>commit</em>), Entrega Contínua (<em>pipeline</em> sempre em estado <em>deployável</em>), Monitoramento em Produção (a produção como ambiente de aprendizado contínuo) e Cultura <em>Blameless</em> (<em>post-mortems</em> sem culpa, focados em aprender e melhorar o processo)."
+  }
+ ]
+}

@@ -1,0 +1,989 @@
+{
+ "numero": 6,
+ "titulo": "Automação de Testes",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "À medida que os sistemas de software crescem em complexidade e os ciclos de entrega se tornam cada vez mais curtos, a execução manual de centenas ou milhares de casos de teste torna-se inviável. A automação de testes surge como resposta a esse desafio: ela permite que casos de teste sejam escritos uma vez e executados repetidamente, de forma rápida, precisa e sem intervenção humana, liberando as equipes para atividades de maior valor como testes exploratórios e análise de requisitos."
+  },
+  {
+   "t": "h2",
+   "id": "6-1-o-que-e-automacao-de-testes",
+   "texto": "6.1 O que é Automação de Testes?"
+  },
+  {
+   "t": "p",
+   "html": "Automação de testes é o processo de usar ferramentas e scripts de software para executar casos de teste, comparar resultados esperados com resultados reais e gerar relatórios de forma automática, sem intervenção manual durante a execução. O testador escreve o script de automação uma vez e pode executá-lo centenas de vezes ao longo do ciclo de vida do projeto."
+  },
+  {
+   "t": "p",
+   "html": "É importante compreender que a automação não substitui o teste manual — ela o complementa. Testes exploratórios, avaliações de usabilidade e verificações visuais complexas ainda demandam julgamento humano. A automação é mais eficaz quando aplicada a testes repetitivos, determinísticos e de alto volume."
+  },
+  {
+   "t": "h3",
+   "texto": "Componentes de um Sistema de Automação de Testes"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Componente",
+    "Função",
+    "Exemplo"
+   ],
+   "linhas": [
+    [
+     "Framework de teste",
+     "Estrutura que organiza, executa e reporta os testes automatizados",
+     "JUnit, TestNG, pytest, NUnit"
+    ],
+    [
+     "Scripts de teste",
+     "Código que implementa os casos de teste e as asserções",
+     "Arquivo .java com @Test, arquivo .py com def test_"
+    ],
+    [
+     "Dados de teste",
+     "Entradas e saídas esperadas usadas pelos scripts",
+     "Planilha Excel, banco de dados, arquivos JSON/CSV"
+    ],
+    [
+     "Ambiente de execução",
+     "Infraestrutura onde os testes são executados",
+     "Servidor CI, contêiner Docker, máquina virtual, Selenium Grid"
+    ],
+    [
+     "Relatórios",
+     "Saída gerada após a execução com resultados e métricas",
+     "Relatório HTML do Allure, dashboard do Jenkins, Extent Reports"
+    ],
+    [
+     "Integração CI/CD",
+     "Pipeline que dispara a execução automática a cada build",
+     "GitHub Actions, Jenkins, GitLab CI, Azure DevOps"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Automação de Testes vs. Teste Manual",
+   "blocos": [
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "TESTE MANUAL"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Executado por uma pessoa que interage diretamente com o sistema",
+      "Excelente para testes exploratórios, usabilidade e análises subjetivas",
+      "Lento e caro para testes de regressão com muitos casos de teste",
+      "Sujeito a erros humanos e variação de execução"
+     ]
+    },
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "TESTE AUTOMATIZADO"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Executado por scripts sem intervenção humana",
+      "Ideal para regressão, smoke tests, testes de carga e pipelines CI/CD",
+      "Rápido, consistente e repetível",
+      "Requer investimento inicial em desenvolvimento e manutenção dos scripts"
+     ]
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-2-vantagens-e-limitacoes-da-automacao",
+   "texto": "6.2 Vantagens e Limitações da Automação"
+  },
+  {
+   "t": "p",
+   "html": "A decisão de automatizar testes deve ser baseada em uma análise clara dos benefícios e das limitações. A automação traz ganhos expressivos quando bem aplicada, mas pode se tornar um fardo se implementada sem planejamento adequado."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Vantagens da Automação",
+    "Limitações e Cuidados"
+   ],
+   "linhas": [
+    [
+     "✓  Execução rápida de centenas de testes em minutos",
+     "✗  Alto custo inicial — desenvolvimento dos scripts exige tempo e habilidade"
+    ],
+    [
+     "✓  Regressão contínua — testes rodam a cada commit no CI/CD",
+     "✗  Manutenção contínua — scripts quebram quando a UI ou API muda"
+    ],
+    [
+     "✓  Consistência — elimina variação e erro humano na execução",
+     "✗  Não detecta problemas visuais subjetivos ou de usabilidade"
+    ],
+    [
+     "✓  Reutilização — scripts escritos uma vez, usados muitas vezes",
+     "✗  Cobertura limitada — não substitui testes exploratórios"
+    ],
+    [
+     "✓  Cobertura ampliada — possível testar mais cenários em menos tempo",
+     "✗  Falsos positivos/negativos — scripts frágeis geram alertas enganosos"
+    ],
+    [
+     "✓  Feedback imediato — defeitos identificados logo após o commit",
+     "✗  Curva de aprendizado — equipe precisa dominar as ferramentas"
+    ],
+    [
+     "✓  Execução paralela — testes simultâneos em múltiplos ambientes",
+     "✗  Não avalia experiência do usuário de forma holística"
+    ],
+    [
+     "✓  Métricas precisas — relatórios detalhados e rastreáveis gerados automaticamente",
+     "✗  Ambiente instável pode causar falhas não relacionadas ao código"
+    ],
+    [
+     "✓  Redução de custo a longo prazo — ROI positivo após o período de amortização",
+     "✗  Scripts podem tornar-se difíceis de manter (código sujo)"
+    ],
+    [
+     "✓  Suporte a testes de carga — simula milhares de usuários simultâneos",
+     "✗  ROI negativo em projetos curtos ou com UI muito instável"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Retorno sobre Investimento (ROI) na Automação"
+  },
+  {
+   "t": "p",
+   "html": "O ROI da automação de testes é calculado comparando o custo de desenvolver e manter os scripts com a economia gerada pela redução de esforço manual. A fórmula simplificada considera:"
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Cálculo de ROI da Automação",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Custo do teste manual = (Nº de casos × Tempo por caso × Custo/hora × Nº de execuções)"
+    },
+    {
+     "t": "p",
+     "html": "Custo da automação    = (Tempo de desenvolvimento × Custo/hora) + Manutenção"
+    },
+    {
+     "t": "p",
+     "html": "ROI = (Custo Manual Economizado - Custo da Automação) / Custo da Automação × 100%"
+    },
+    {
+     "t": "p",
+     "html": "Exemplo: 500 casos de teste × 5 min × R$50/h = R$2.083 por ciclo manual."
+    },
+    {
+     "t": "p",
+     "html": "Se o sistema tem 20 releases/ano: R$41.666/ano em testes manuais."
+    },
+    {
+     "t": "p",
+     "html": "Automação: R$15.000 de desenvolvimento + R$3.000/ano de manutenção = ROI positivo a partir do 5° mês."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-3-quando-automatizar-e-quando-nao-automatizar",
+   "texto": "6.3 Quando Automatizar e Quando não Automatizar"
+  },
+  {
+   "t": "p",
+   "html": "Uma das decisões mais importantes na automação de testes é saber onde aplicá-la. Automatizar o que não deveria ser automatizado gera desperdício; não automatizar o que deveria gera gargalos. A regra geral é: automatize o que é repetitivo, determinístico e de alto valor para o negócio."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Cenário",
+    "Automatizar?",
+    "Justificativa"
+   ],
+   "linhas": [
+    [
+     "Testes de regressão executados a cada release",
+     "SIM",
+     "Alto volume, frequência alta, resultado previsível"
+    ],
+    [
+     "Smoke tests após cada build do CI/CD",
+     "SIM",
+     "Frequência máxima, tempo de execução deve ser mínimo"
+    ],
+    [
+     "Testes de carga e desempenho",
+     "SIM",
+     "Impossível simular milhares de usuários manualmente"
+    ],
+    [
+     "Testes unitários (lógica de negócio)",
+     "SIM",
+     "Base da pirâmide, devem rodar a cada commit"
+    ],
+    [
+     "Testes de API / serviços REST",
+     "SIM",
+     "Rápidos, determinísticos, alta reutilização"
+    ],
+    [
+     "Testes exploratórios",
+     "NÃO",
+     "Requerem criatividade e julgamento humano"
+    ],
+    [
+     "Testes de usabilidade subjetiva",
+     "NÃO",
+     "Avaliação humana é insubstituível"
+    ],
+    [
+     "Funcionalidade que muda muito frequentemente",
+     "NÃO",
+     "Custo de manutenção supera o benefício"
+    ],
+    [
+     "Testes executados apenas uma vez",
+     "NÃO",
+     "ROI negativo — não compensa o esforço de automação"
+    ],
+    [
+     "Validação visual de layout e design",
+     "PARCIAL",
+     "Ferramentas de visual testing (Percy, Applitools) ajudam, mas têm limitações"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Critérios para Priorizar a Automação",
+   "blocos": [
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "Priorize a automação de testes que atendam a maioria desses critérios:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Executados com frequência (pelo menos a cada sprint ou release)",
+      "Propensos a erros humanos quando executados manualmente",
+      "Com resultado claramente determinístico (sem ambiguidade no pass/fail)",
+      "Que cobrem funcionalidades críticas de negócio (login, pagamento, etc.)",
+      "Que fazem parte do caminho crítico do usuário (happy path)",
+      "Que têm dados de teste estáveis e bem definidos"
+     ]
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-4-ferramentas-de-automacao-selenium",
+   "texto": "6.4 Ferramentas de Automação: Selenium"
+  },
+  {
+   "t": "p",
+   "html": "O Selenium é o framework de automação de testes de interface web mais utilizado no mundo. Lançado em 2004 por Jason Huggins na ThoughtWorks, ele permite controlar navegadores web de forma programática, simulando ações do usuário como cliques, preenchimento de formulários, navegação entre páginas e verificação de conteúdo. É um projeto de código aberto mantido pela comunidade e pela Fundação Software Freedom Conservancy."
+  },
+  {
+   "t": "h3",
+   "texto": "Componentes do Ecossistema Selenium"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Selenium WebDriver (Core)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "API principal para controlar navegadores diretamente. Interage com Chrome, Firefox, Edge, Safari via drivers nativos (ChromeDriver, GeckoDriver). É a base de todo o ecossistema Selenium moderno."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Linguagens/Plataformas: Java, Python, C#, Ruby, JS, Kotlin</strong>"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Selenium IDE (Gravador)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Ferramenta de gravação e reprodução de testes diretamente no navegador, sem necessidade de codificação. Ideal para iniciantes e para gerar scripts base que podem ser refinados. Exporta para múltiplas linguagens."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Linguagens/Plataformas: Chrome e Firefox (extensão)</strong>"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Selenium Grid (Distribuição)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Permite a execução paralela de testes em múltiplas máquinas e múltiplos navegadores simultaneamente. Reduz drasticamente o tempo total de execução em suítes grandes. Suporta execução em nuvem (Sauce Labs, BrowserStack)."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Linguagens/Plataformas: Qualquer linguagem suportada pelo WebDriver</strong>"
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Exemplo de Estrutura de Teste com Selenium WebDriver"
+  },
+  {
+   "t": "p",
+   "html": "A estrutura de um teste automatizado com Selenium segue sempre o mesmo fluxo lógico, independente da linguagem de programação utilizada:"
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Fluxo de um Teste Selenium (pseudocódigo)",
+   "blocos": [
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "1. CONFIGURAÇÃO (Setup):"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Inicializar o driver do navegador (ex: ChromeDriver)",
+      "Configurar tempo de espera implícito e explícito",
+      "Navegar para a URL inicial do sistema"
+     ]
+    },
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "2. EXECUÇÃO DO CENÁRIO:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Localizar elementos da página (By.id, By.xpath, By.cssSelector)",
+      "Realizar ações: click(), sendKeys(), submit(), clear()",
+      "Aguardar carregamento de elementos dinâmicos (WebDriverWait)"
+     ]
+    },
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "3. VERIFICAÇÃO (Assertions):"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Comparar o resultado atual com o resultado esperado",
+      "Ex: assertEquals(textoAtual, 'Bem-vindo, usuário!')"
+     ]
+    },
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "4. LIMPEZA (Teardown):"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Fechar o navegador: driver.quit()",
+      "Limpar dados de teste criados durante a execução"
+     ]
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Page Object Model (POM) — Padrão de Design para Selenium"
+  },
+  {
+   "t": "p",
+   "html": "O Page Object Model é o padrão de design mais adotado em projetos Selenium. Ele separa a lógica de localização de elementos (a estrutura da página) da lógica dos testes (os cenários de negócio). Cada página do sistema corresponde a uma classe no código de automação."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Sem POM",
+    "Com POM (recomendado)"
+   ],
+   "linhas": [
+    [
+     "Localizadores de elementos espalhados por todos os testes",
+     "Localizadores centralizados em classes de Page Object"
+    ],
+    [
+     "Mudança na UI exige alteração em todos os testes afetados",
+     "Mudança na UI exige alteração em apenas uma classe"
+    ],
+    [
+     "Código duplicado e difícil de manter",
+     "Código reutilizável, legível e fácil de manter"
+    ],
+    [
+     "Sem separação entre 'o que testar' e 'como acessar'",
+     "Clara separação de responsabilidades"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Alternativas Modernas ao Selenium",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Embora o Selenium seja a referência histórica, ferramentas mais modernas têm ganhado espaço:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Playwright (Microsoft, 2020): suporte nativo a múltiplos navegadores, execução mais estável, API moderna",
+      "Cypress: executa dentro do navegador, excelente para testes de frontend com JavaScript/TypeScript",
+      "Puppeteer (Google): controla Chrome/Chromium via protocolo DevTools, ideal para Node.js",
+      "WebdriverIO: wrapper sobre WebDriver com sintaxe simplificada e grande ecossistema de plugins"
+     ]
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-5-ferramentas-de-automacao-junit-e-testng",
+   "texto": "6.5 Ferramentas de Automação: JUnit e TestNG"
+  },
+  {
+   "t": "p",
+   "html": "JUnit e TestNG são os dois frameworks de teste unitário mais utilizados no ecossistema Java. Enquanto o JUnit é o padrão historicamente estabelecido e amplamente integrado a IDEs e ferramentas de build, o TestNG surgiu como uma alternativa mais flexível e completa, especialmente para testes de integração e suítes complexas. Ambos são frequentemente combinados com Selenium para testes de interface."
+  },
+  {
+   "t": "h3",
+   "texto": "JUnit"
+  },
+  {
+   "t": "p",
+   "html": "O JUnit é o framework de teste unitário padrão para Java, criado por Kent Beck e Erich Gamma em 1997. É parte integrante da prática TDD e é suportado nativamente por todas as principais IDEs Java (IntelliJ IDEA, Eclipse, VS Code) e pelas ferramentas de build Maven e Gradle."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "JUnit 5 (Teste Unitário)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Versão atual do JUnit, dividida em três módulos: JUnit Platform (execução), JUnit Jupiter (API de testes) e JUnit Vintage (compatibilidade com JUnit 3 e 4). Introduziu extensões, testes parametrizados avançados e melhor suporte a lambdas e streams."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Linguagens/Plataformas: Java, Kotlin, Groovy</strong>"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Anotações Principais do JUnit 5</strong>"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Anotação",
+    "Função",
+    "Quando usar"
+   ],
+   "linhas": [
+    [
+     "@Test",
+     "Marca um método como caso de teste",
+     "Em todo método que representa um cenário de teste"
+    ],
+    [
+     "@BeforeEach",
+     "Executa antes de cada teste",
+     "Inicialização de objetos e dados de teste"
+    ],
+    [
+     "@AfterEach",
+     "Executa após cada teste",
+     "Limpeza de recursos após cada execução"
+    ],
+    [
+     "@BeforeAll",
+     "Executa uma vez antes de todos os testes da classe",
+     "Configuração pesada: banco de dados, servidor"
+    ],
+    [
+     "@AfterAll",
+     "Executa uma vez após todos os testes da classe",
+     "Encerramento de recursos compartilhados"
+    ],
+    [
+     "@ParameterizedTest",
+     "Executa o mesmo teste com múltiplas entradas",
+     "Testes com variação de dados de entrada"
+    ],
+    [
+     "@Disabled",
+     "Desativa temporariamente um teste",
+     "Testes em manutenção ou com bug conhecido"
+    ],
+    [
+     "@DisplayName",
+     "Define um nome legível para o teste",
+     "Documentação e relatórios mais claros"
+    ],
+    [
+     "@Nested",
+     "Organiza testes em classes internas para melhor estruturação",
+     "Agrupar testes relacionados a um mesmo cenário"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "TestNG"
+  },
+  {
+   "t": "p",
+   "html": "O TestNG (Test Next Generation) foi criado por Cédric Beust em 2004, inspirado no JUnit mas com funcionalidades adicionais voltadas para testes de integração e cenários mais complexos. Seu diferencial é o controle fino sobre a ordem de execução, a organização em grupos e a poderosa injeção de parâmetros via XML."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "TestNG (Teste de Integração / Unitário)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Framework de testes avançado com suporte a agrupamento, dependências entre testes, execução paralela, relatórios detalhados (HTML) e configuração via arquivo XML. Amplamente usado com Selenium para testes de sistema."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Linguagens/Plataformas: Java, Kotlin</strong>"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<strong>Principais Diferenças: JUnit 5 vs TestNG</strong>"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Característica",
+    "JUnit 5",
+    "TestNG"
+   ],
+   "linhas": [
+    [
+     "Foco principal",
+     "Testes unitários",
+     "Testes de integração e sistema"
+    ],
+    [
+     "Configuração",
+     "Anotações Java",
+     "Anotações + arquivo testng.xml"
+    ],
+    [
+     "Agrupamento de testes",
+     "Tags e filtros",
+     "groups= com dependências entre grupos"
+    ],
+    [
+     "Execução paralela",
+     "Plugin Maven/Gradle",
+     "Suporte nativo via testng.xml"
+    ],
+    [
+     "Dependência entre testes",
+     "Não suportado nativamente",
+     "dependsOnMethods e dependsOnGroups"
+    ],
+    [
+     "Data Providers",
+     "@ParameterizedTest + sources",
+     "@DataProvider — mais flexível"
+    ],
+    [
+     "Relatórios",
+     "Terceiros (Allure, Surefire)",
+     "Relatório HTML nativo integrado"
+    ],
+    [
+     "Integração com Selenium",
+     "Comum via JUnit 5 + Selenium",
+     "Muito comum — padrão em muitos frameworks"
+    ],
+    [
+     "Suporte da comunidade",
+     "Amplíssimo — padrão do ecossistema Java",
+     "Grande, especialmente em automação web"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-6-outras-ferramentas-importantes",
+   "texto": "6.6 Outras Ferramentas Importantes"
+  },
+  {
+   "t": "p",
+   "html": "Além de Selenium, JUnit e TestNG, o ecossistema de automação de testes conta com diversas outras ferramentas especializadas para diferentes linguagens, camadas e tipos de teste. Conhecer esse panorama é fundamental para montar uma estratégia de automação completa e adequada ao contexto do projeto."
+  },
+  {
+   "t": "h3",
+   "texto": "Frameworks por Linguagem e Camada"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "pytest (Teste Unitário / Integração)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Principal framework de testes para Python. Sintaxe simples, poderoso sistema de fixtures, plugins para cobertura (pytest-cov), BDD (pytest-bdd) e execução paralela (pytest-xdist). Suporta testes unitários e de integração."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Linguagens/Plataformas: Python</strong>"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Cypress (Teste de Interface Web)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Framework moderno que executa testes diretamente no navegador, com acesso ao DOM em tempo real. Oferece recarregamento automático, gravação de vídeo, capturas de tela e depuração visual. Excelente para React, Angular e Vue."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Linguagens/Plataformas: JavaScript / TypeScript</strong>"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Playwright (Teste de Interface Web)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Desenvolvido pela Microsoft. Suporta Chrome, Firefox e Safari com uma única API. Execução paralela, rastreamento de rede, interceptação de requisições e captura de vídeo. Considerado o sucessor moderno do Selenium."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Linguagens/Plataformas: JavaScript, Python, Java, C#</strong>"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Appium (Teste Mobile)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Framework open source para automação de aplicativos iOS e Android. Usa a mesma API do Selenium WebDriver. Suporta apps nativos, híbridos e web mobile. Amplamente utilizado com TestNG e JUnit."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Linguagens/Plataformas: Java, Python, JavaScript, Ruby</strong>"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Postman / Newman (Teste de API)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Postman é a ferramenta visual mais popular para teste de APIs. Newman é sua versão CLI, permitindo a execução das coleções Postman em pipelines CI/CD. Suporta scripts de pré e pós-requisição em JavaScript."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Linguagens/Plataformas: REST, SOAP, GraphQL</strong>"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "JMeter (Teste de Desempenho)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Ferramenta da Apache para testes de carga e desempenho. Simula múltiplos usuários acessando o sistema simultaneamente. Suporta HTTP, HTTPS, FTP, JDBC, WebSocket e outras interfaces. Gera relatórios detalhados de throughput e tempo de resposta."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Linguagens/Plataformas: Independente de linguagem</strong>"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Cucumber (BDD / Teste de Aceitação)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Framework BDD que permite escrever cenários de teste em linguagem natural (Gherkin: Given/When/Then). Facilita a colaboração entre negócio e técnica. Amplamente integrado com Selenium, Playwright e Appium."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Linguagens/Plataformas: Java, JavaScript, Ruby, Python</strong>"
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "SonarQube (Qualidade de Código / Análise Estática)",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Plataforma de análise contínua de qualidade de código. Identifica bugs, vulnerabilidades, code smells e mede cobertura de testes. Integra-se a pipelines CI/CD e define quality gates que bloqueiam builds com problemas."
+    },
+    {
+     "t": "p",
+     "html": "<strong>Linguagens/Plataformas: Java, Python, JS, C#, PHP e mais</strong>"
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Visão Geral do Ecossistema por Tipo de Teste"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo de Teste",
+    "Ferramentas Recomendadas",
+    "Linguagem Principal"
+   ],
+   "linhas": [
+    [
+     "Unitário (Java)",
+     "JUnit 5, Mockito, AssertJ",
+     "Java / Kotlin"
+    ],
+    [
+     "Unitário (Python)",
+     "pytest, unittest, mock",
+     "Python"
+    ],
+    [
+     "Unitário (JavaScript)",
+     "Jest, Mocha, Vitest",
+     "JavaScript / TypeScript"
+    ],
+    [
+     "Unitário (.NET)",
+     "NUnit, xUnit, MSTest",
+     "C# / VB.NET"
+    ],
+    [
+     "Interface Web",
+     "Selenium, Cypress, Playwright, WebdriverIO",
+     "Java, JS, Python, C#"
+    ],
+    [
+     "Mobile",
+     "Appium, Espresso (Android), XCTest (iOS)",
+     "Java, Swift, Kotlin"
+    ],
+    [
+     "API / Serviços",
+     "Postman, RestAssured, Karate, Insomnia",
+     "JavaScript, Java"
+    ],
+    [
+     "BDD / Aceitação",
+     "Cucumber, Behave, SpecFlow, Robot Framework",
+     "Java, Python, C#"
+    ],
+    [
+     "Desempenho / Carga",
+     "JMeter, Gatling, k6, Locust",
+     "Java, Scala, JS, Python"
+    ],
+    [
+     "Qualidade de Código",
+     "SonarQube, Checkstyle, PMD, ESLint",
+     "Multi-linguagem"
+    ],
+    [
+     "Segurança",
+     "OWASP ZAP, Burp Suite, Snyk",
+     "Multi-linguagem"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-7-boas-praticas-e-implementacao",
+   "texto": "6.7 Boas Práticas e Implementação"
+  },
+  {
+   "t": "p",
+   "html": "Implementar automação de testes com sucesso vai além de escolher as ferramentas certas. As boas práticas determinam se a automação se tornará um ativo valioso e sustentável ou um passivo difícil de manter. Times que negligenciam essas práticas frequentemente acabam com suítes de automação frágeis, lentas e que geram mais problemas do que resolvem."
+  },
+  {
+   "t": "h3",
+   "texto": "Boas Práticas de Desenvolvimento de Scripts"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Siga o princípio FIRST: </strong>Testes devem ser Fast (rápidos), Independent (independentes), Repeatable (repetíveis), Self-validating (auto-verificáveis) e Timely (escritos no momento certo).",
+    "<strong>Use o padrão Page Object Model: </strong>Separe a lógica de acesso à UI da lógica dos testes. Facilita a manutenção quando a interface muda.",
+    "<strong>Nomeie testes de forma descritiva: </strong>O nome do teste deve deixar claro o que está sendo testado e qual é o resultado esperado. Ex: deveRetornarErroQuandoSenhaIncorreta().",
+    "<strong>Evite dependências entre testes: </strong>Cada teste deve ser executável de forma isolada, sem depender do estado criado por outro teste.",
+    "<strong>Use dados de teste gerenciados: </strong>Dados hardcoded tornam os testes frágeis. Use factories, fixtures ou bancos de dados de teste dedicados.",
+    "<strong>Gerencie esperas de forma explícita: </strong>Evite Thread.sleep(). Use esperas explícitas (WebDriverWait) para elementos dinâmicos, tornando os testes mais robustos.",
+    "<strong>Revise e refatore os scripts regularmente: </strong>Scripts de teste também acumulam débito técnico. Reserve tempo para refatoração e limpeza da suíte de automação."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Pirâmide de Automação: Distribuição Ideal"
+  },
+  {
+   "t": "p",
+   "html": "A quantidade e distribuição dos testes automatizados deve seguir a pirâmide de testes. Uma distribuição desequilibrada — com excesso de testes de UI e poucos unitários — gera suítes lentas, frágeis e caras de manter (conhecido como 'cone de sorvete de testes')."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Nível",
+    "% Ideal",
+    "Ferramenta Típica",
+    "Característica"
+   ],
+   "linhas": [
+    [
+     "Unitários (base)",
+     "60% a 70%",
+     "JUnit, pytest, Jest",
+     "Rápidos, baratos, alta cobertura de lógica"
+    ],
+    [
+     "Integração (meio)",
+     "20% a 25%",
+     "TestNG, RestAssured, pytest",
+     "Médio custo, verificam contratos entre módulos"
+    ],
+    [
+     "Sistema/UI (topo)",
+     "5% a 15%",
+     "Selenium, Cypress, Playwright",
+     "Lentos, caros, validam fluxos críticos de ponta a ponta"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Integração ao Pipeline CI/CD"
+  },
+  {
+   "t": "p",
+   "html": "A automação de testes atinge seu potencial máximo quando integrada a um pipeline de integração e entrega contínua. Cada etapa do pipeline deve ter sua própria suíte de testes, balanceando velocidade de feedback com profundidade de verificação:"
+  },
+  {
+   "t": "quadro",
+   "tipo": "exemplo",
+   "titulo": "Pipeline CI/CD com Testes Automatizados",
+   "blocos": [
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "ETAPA 1 — COMMIT (&lt; 5 minutos):"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Análise estática de código (SonarQube, ESLint)",
+      "Testes unitários completos",
+      "Feedback imediato ao desenvolvedor"
+     ]
+    },
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "ETAPA 2 — BUILD (&lt; 15 minutos):"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Compilação e empacotamento",
+      "Testes de integração e contrato de API",
+      "Verificação de cobertura de código (quality gate)"
+     ]
+    },
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "ETAPA 3 — STAGING (&lt; 45 minutos):"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Testes de sistema e regressão (Selenium/Playwright)",
+      "Testes de desempenho básico",
+      "Testes de segurança automatizados (OWASP ZAP)"
+     ]
+    },
+    {
+     "t": "p",
+     "estilo": "destaque",
+     "html": "ETAPA 4 — PRÉ-PRODUÇÃO:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "Testes de aceitação automatizados (BDD/Cucumber)",
+      "Testes de carga completos (JMeter/k6)",
+      "Aprovação manual (gate humano) antes do deploy em produção"
+     ]
+    }
+   ]
+  }
+ ]
+}

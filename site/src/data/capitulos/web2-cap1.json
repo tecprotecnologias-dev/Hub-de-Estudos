@@ -1,0 +1,230 @@
+{
+ "numero": 1,
+ "titulo": "Node.js e Ecossistema NPM",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "1-1-o-que-e-node-js",
+   "texto": "1.1 O que é Node.js?"
+  },
+  {
+   "t": "p",
+   "html": "Node.js é um ambiente de execução JavaScript fora do navegador. Ele usa o motor V8 do Chrome – o mesmo que executa JS nas abas do seu <em>browser</em> – mas sem DOM, sem <code>window</code>, sem APIs visuais. Em vez disso, expõe APIs de sistema: acesso ao sistema de arquivos, rede, processos, variáveis de ambiente."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Node.js é tipo um compilador do JavaScript?\" – Não! Um compilador (como em Java ou C) transforma todo o código-fonte, de uma vez, em um arquivo executável separado, antes de rodar. O Node.js não faz isso: ele lê e executa o seu arquivo <code>.js</code> diretamente, na hora, sem gerar nenhum executável."
+    },
+    {
+     "t": "p",
+     "html": "A palavra certa é <strong>runtime</strong> (ambiente de execução). Pense assim: JavaScript é o idioma; o motor V8 é quem \"fala\" esse idioma. O navegador é um lugar onde o V8 trabalha (com acesso à tela, botões, formulários). O Node.js é <em>outro</em> lugar onde esse mesmo V8 trabalha – só que com acesso a arquivos, rede e outros recursos do computador. Mesma linguagem, mesmo motor, ambiente diferente."
+    }
+   ]
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web2/fluxograma-nodejs.png",
+   "alt": "fluxograma nodejs"
+  },
+  {
+   "t": "p",
+   "html": "Criado por Ryan Dahl em 2009, o Node.js foi revolucionário por trazer o modelo assíncrono e não bloqueante do JavaScript para o servidor. Em vez de criar uma <em>thread</em> por requisição (modelo tradicional de servidores como Apache), o Node trata centenas de conexões simultâneas com uma única <em>thread</em> via Event Loop – o mesmo mecanismo que faz o <code>fetch</code> funcionar no navegador sem congelar a página."
+  },
+  {
+   "t": "p",
+   "html": "Para o desenvolvimento web moderno, Node.js é indispensável mesmo que você não escreva código de servidor: o npm (gerenciador de pacotes), o Vite (<em>bundler</em>), o compilador TypeScript, o ESLint, o Tailwind – todos rodam sobre Node.js. Você não precisa saber construir servidores para precisar do Node instalado."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Contexto",
+    "JavaScript no Navegador",
+    "JavaScript no Node.js"
+   ],
+   "linhas": [
+    [
+     "Motor",
+     "V8 (Chrome/Edge) ou SpiderMonkey (Firefox)",
+     "V8"
+    ],
+    [
+     "Acesso ao DOM",
+     "Sim – <code>document</code>, <code>window</code>, <code>fetch</code>, <code>localStorage</code>",
+     "Não"
+    ],
+    [
+     "Acesso ao sistema",
+     "Não – <em>sandbox</em> de segurança",
+     "Sim – <code>fs</code>, <code>path</code>, <code>os</code>, <code>http</code>, <code>child_process</code>"
+    ],
+    [
+     "Variáveis de ambiente",
+     "Não diretamente",
+     "<code>process.env.NOME_DA_VAR</code>"
+    ],
+    [
+     "Módulos",
+     "ES Modules (<code>import</code>/<code>export</code>)",
+     "CommonJS (<code>require</code>) + ES Modules"
+    ],
+    [
+     "Uso principal",
+     "Interfaces visuais, interatividade",
+     "Servidores, CLIs, ferramentas, <em>scripts</em>"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "O que é \"o terminal\"?",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Ao longo deste curso, \"terminal\" é um termo genérico para a janela onde você digita comandos – não é uma ferramenta específica. Dependendo do seu sistema, ele tem nomes diferentes:"
+    },
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "<strong>Windows</strong>: Prompt de Comando (<code>cmd</code>) ou PowerShell",
+      "<strong>Mac</strong>: o aplicativo Terminal",
+      "<strong>Linux</strong>: geralmente também chamado de Terminal"
+     ]
+    },
+    {
+     "t": "p",
+     "html": "Recomendação para este curso: use o <strong>terminal integrado do VS Code</strong> (<em>View</em> → <em>Terminal</em>, ou o atalho <code>Ctrl + `</code>). Ele abre automaticamente o terminal padrão do seu sistema, já na pasta certa do projeto – evitando o passo extra de navegar até a pasta manualmente, e funcionando da mesma forma em qualquer sistema operacional."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-2-npm-gerenciador-de-pacotes",
+   "texto": "1.2 npm – Gerenciador de Pacotes"
+  },
+  {
+   "t": "p",
+   "html": "npm (<em>Node Package Manager</em>) é o maior repositório de <em>software open source</em> do mundo, com mais de 2 milhões de pacotes. Ele gerencia as dependências do seu projeto – bibliotecas de terceiros que seu código precisa para funcionar."
+  },
+  {
+   "t": "codigo",
+   "texto": "# Verificar versoes instaladas\n$ node --version   # v20.x.x ou superior\n$ npm --version    # 10.x.x\n\n# Criar projeto novo (gera package.json)\n$ npm init -y      # -y aceita todos os defaults\n\n# INSTALAR PACOTES\n$ npm install express        # dependencia de producao (vai para \"dependencies\")\n$ npm install -D typescript  # dependencia de desenvolvimento (\"devDependencies\")\n$ npm install -g nodemon     # instalacao global -- disponivel em qualquer pasta\n\n# ATALHOS\n$ npm i axios            # i = install\n$ npm i -D @types/node   # tipos TypeScript para Node\n\n# REMOVER\n$ npm uninstall lodash\n$ npm un lodash           # atalho\n\n# LISTAR\n$ npm list        # dependencias do projeto\n$ npm list -g     # pacotes globais\n$ npm outdated    # pacotes com versoes mais novas disponiveis\n$ npm update      # atualizar todos para versoes compativeis\n\n# EXECUTAR SCRIPTS do package.json\n$ npm run dev     # executa script \"dev\"\n$ npm run build   # executa script \"build\"\n$ npm start       # atalho para \"start\" (sem run)\n$ npm test        # atalho para \"test\""
+  },
+  {
+   "t": "h2",
+   "id": "1-3-package-json-o-coracao-do-projeto",
+   "texto": "1.3 package.json – O Coração do Projeto"
+  },
+  {
+   "t": "p",
+   "html": "O <code>package.json</code> é o arquivo de configuração central de qualquer projeto Node.js. Ele descreve o projeto, lista as dependências e define os <em>scripts</em> que podem ser executados."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Nunca edite o <code>package-lock.json</code> manualmente – ele é gerado automaticamente pelo npm para garantir reprodutibilidade nas instalações."
+    }
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "{\n  \"name\": \"meu-projeto\",\n  \"version\": \"1.0.0\",\n  \"description\": \"Aplicacao web fullstack com Next.js\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",         // npm run dev -> inicia servidor de desenvolvimento\n    \"build\": \"next build\",     // npm run build -> compila para producao\n    \"start\": \"next start\",     // npm start -> inicia servidor de producao\n    \"lint\": \"next lint\",       // npm run lint -> verifica erros de codigo\n    \"db:push\": \"prisma db push\",       // sincroniza schema com banco\n    \"db:studio\": \"prisma studio\"       // abre interface visual do banco\n  },\n  \"dependencies\": {\n    \"next\": \"14.x.x\",          // versoes de producao -- instaladas em deploy\n    \"react\": \"18.x.x\",\n    \"react-dom\": \"18.x.x\",\n    \"@prisma/client\": \"5.x.x\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"5.x.x\",     // so em desenvolvimento -- nao vao para producao\n    \"@types/node\": \"20.x.x\",\n    \"@types/react\": \"18.x.x\",\n    \"prisma\": \"5.x.x\",\n    \"tailwindcss\": \"3.x.x\",\n    \"eslint\": \"8.x.x\"\n  }\n}"
+  },
+  {
+   "t": "h2",
+   "id": "1-4-modulos-commonjs-vs-es-modules",
+   "texto": "1.4 Módulos: CommonJS vs ES Modules"
+  },
+  {
+   "t": "p",
+   "html": "Node.js suportou historicamente o sistema CommonJS de módulos (<code>require</code>/<code>module.exports</code>). O padrão moderno são os ES Modules (<code>import</code>/<code>export</code>), que o Node.js também suporta. Next.js e projetos TypeScript modernos usam ES Modules por padrão."
+  },
+  {
+   "t": "codigo",
+   "texto": "// --- COMMONJS (formato legado, ainda muito comum) ---\n\n// Exportar (arquivo: utils.js)\nfunction somar(a, b) { return a + b; }\nconst PI = 3.14159;\n\nmodule.exports = { somar, PI };   // exportar objeto\nmodule.exports = somar;           // exportar funcao diretamente\n\n// Importar\nconst { somar, PI } = require(\"./utils\");\nconst fs = require(\"fs\");            // modulo nativo\nconst express = require(\"express\");  // pacote npm\n\n\n// --- ES MODULES (formato moderno -- padrao em Next.js/TS) ---\n\n// Exportar (arquivo: utils.ts)\nexport function somar(a: number, b: number): number { return a + b; }\nexport const PI = 3.14159;\nexport default function principal() {}   // exportacao padrao\n\n// Importar\nimport { somar, PI } from \"./utils\";\nimport principal from \"./utils\";\nimport * as Utils from \"./utils\";   // importar tudo com namespace\n\n// Modulos nativos do Node.js com ES Modules\nimport { readFile, writeFile } from \"fs/promises\";\nimport { join, dirname } from \"path\";\nimport { fileURLToPath } from \"url\";\n\n// __dirname nao existe em ESM -- equivalente:\nconst __filename = fileURLToPath(import.meta.url);\nconst __dirname = dirname(__filename);"
+  },
+  {
+   "t": "h2",
+   "id": "1-5-servidor-http-com-node-js-nativo",
+   "texto": "1.5 Servidor HTTP com Node.js Nativo"
+  },
+  {
+   "t": "p",
+   "html": "Antes de <em>frameworks</em> como Express e Next.js, o Node.js já vinha com um módulo <code>http</code> embutido para criar servidores. Entender como ele funciona ajuda a desmistificar o que os <em>frameworks</em> fazem por baixo dos panos."
+  },
+  {
+   "t": "codigo",
+   "texto": "// servidor.js -- servidor HTTP basico sem framework\nimport { createServer } from \"http\";\nimport { readFile } from \"fs/promises\";\nimport { join, extname } from \"path\";\n\nconst PORT = process.env.PORT || 3000;\n\nconst MIME = {\n  \".html\": \"text/html\",\n  \".css\": \"text/css\",\n  \".js\": \"application/javascript\",\n  \".json\": \"application/json\",\n  \".png\": \"image/png\",\n};\n\nconst server = createServer(async (req, res) => {\n  // req = IncomingMessage (dados da requisicao)\n  // res = ServerResponse (o que enviamos de volta)\n  const url = req.url === \"/\" ? \"/index.html\" : req.url;\n  const filePath = join(process.cwd(), \"public\", url);\n\n  try {\n    const content = await readFile(filePath);\n    const ext = extname(filePath);\n    const mime = MIME[ext] || \"application/octet-stream\";\n\n    res.writeHead(200, { \"Content-Type\": mime });\n    res.end(content);\n  } catch {\n    res.writeHead(404, { \"Content-Type\": \"text/plain\" });\n    res.end(\"404 -- Arquivo nao encontrado\");\n  }\n});\n\nserver.listen(PORT, () => {\n  console.log(`Servidor rodando em http://localhost:${PORT}`);\n});"
+  },
+  {
+   "t": "h2",
+   "id": "1-6-variaveis-de-ambiente",
+   "texto": "1.6 Variáveis de Ambiente"
+  },
+  {
+   "t": "p",
+   "html": "Variáveis de ambiente guardam informações sensíveis (senhas, <em>tokens</em>, chaves de API) e configurações que mudam entre ambientes (desenvolvimento, teste, produção)."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Nunca inclua senhas ou chaves no código-fonte – elas acabariam no Git e ficariam expostas publicamente."
+    }
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "# Instalar dotenv\n$ npm install dotenv\n\n# .env -- na raiz do projeto (NUNCA commitar!)\nDATABASE_URL=\"postgresql://user:senha@localhost:5432/meubanco\"\nNEXTAUTH_SECRET=\"uma-string-aleatoria-longa-aqui\"\nNEXTAUTH_URL=\"http://localhost:3000\"\nNEXT_PUBLIC_API_URL=\"http://localhost:3000/api\"\n\n# Prefixo NEXT_PUBLIC_ = exposta no browser (Next.js)\n# Sem prefixo = apenas no servidor (segura)\n\n# .gitignore -- adicionar obrigatoriamente\n.env\n.env.local\n.env.*.local"
+  },
+  {
+   "t": "codigo",
+   "texto": "// Usar variaveis de ambiente em Node.js puro\nimport \"dotenv/config\";   // carrega o .env automaticamente\n\nconst db = process.env.DATABASE_URL;\nconst port = Number(process.env.PORT) || 3000;\n\nif (!db) throw new Error(\"DATABASE_URL nao definida no .env!\");\n\n// Em Next.js -- nao precisa de dotenv, ja e automatico:\n// Variaveis server-side (so no servidor)\nconst secret = process.env.NEXTAUTH_SECRET;\n\n// Variaveis publicas (disponiveis no browser)\nconst apiUrl = process.env.NEXT_PUBLIC_API_URL;"
+  },
+  {
+   "t": "h2",
+   "id": "1-7-argumentos-de-linha-de-comando-e-manipulacao-de-arquivos",
+   "texto": "1.7 Argumentos de Linha de Comando e Manipulação de Arquivos"
+  },
+  {
+   "t": "p",
+   "html": "Toda ferramenta de linha de comando (CLI) precisa ler o que o usuário digitou depois do nome do <em>script</em>. O Node.js disponibiliza isso em <code>process.argv</code> – um <em>array</em> com todos os argumentos da chamada."
+  },
+  {
+   "t": "codigo",
+   "texto": "// Se o usuario executar:\n// node tasks.js add \"Estudar Node.js\"\n\nconsole.log(process.argv);\n// [\n//   '/caminho/para/node',        // [0] caminho do executavel do Node\n//   '/caminho/para/tasks.js',    // [1] caminho do script\n//   'add',                       // [2] primeiro argumento real\n//   'Estudar Node.js'            // [3] segundo argumento real\n// ]\n\n// Na pratica, sempre descartamos os dois primeiros com slice(2)\nconst args = process.argv.slice(2);\nconst comando = args[0];   // \"add\"\nconst valor = args[1];     // \"Estudar Node.js\"\n\nconsole.log(comando, valor);"
+  },
+  {
+   "t": "p",
+   "html": "Combinando <code>process.argv</code> com o módulo <code>fs/promises</code> (já importado na seção 1.4), conseguimos ler e escrever um arquivo JSON de verdade – a base de qualquer CLI que precisa \"lembrar\" de informações entre execuções:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// tasks.js -- CLI simples de tarefas usando um arquivo JSON como \"banco de dados\"\nimport { readFile, writeFile } from \"fs/promises\";\n\nconst ARQUIVO = \"tarefas.json\";\n\n// Le o arquivo JSON; se ainda nao existir, comeca com uma lista vazia\nasync function carregarTarefas() {\n  try {\n    const conteudo = await readFile(ARQUIVO, \"utf-8\");\n    return JSON.parse(conteudo);\n  } catch {\n    return [];   // arquivo ainda nao existe na primeira execucao\n  }\n}\n\n// Grava a lista inteira de volta no arquivo, formatada\nasync function salvarTarefas(tarefas) {\n  await writeFile(ARQUIVO, JSON.stringify(tarefas, null, 2));\n}\n\nasync function main() {\n  const [comando, valor] = process.argv.slice(2);\n  const tarefas = await carregarTarefas();\n\n  if (comando === \"add\") {\n    tarefas.push({ id: tarefas.length + 1, texto: valor, feita: false });\n    await salvarTarefas(tarefas);\n    console.log(`Tarefa adicionada: \"${valor}\"`);\n\n  } else if (comando === \"list\") {\n    tarefas.forEach(t => {\n      console.log(`${t.feita ? \"[x]\" : \"[ ]\"} ${t.id} - ${t.texto}`);\n    });\n\n  } else if (comando === \"done\") {\n    const id = Number(valor);\n    const tarefa = tarefas.find(t => t.id === id);\n    if (tarefa) {\n      tarefa.feita = true;\n      await salvarTarefas(tarefas);\n      console.log(`Tarefa ${id} marcada como feita.`);\n    } else {\n      console.log(`Tarefa ${id} nao encontrada.`);\n    }\n\n  } else {\n    console.log(\"Uso: node tasks.js [add \\\"texto\\\" | list | done <id>]\");\n  }\n}\n\nmain();"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Repare no <code>try/catch</code> de <code>carregarTarefas()</code>: na primeira execução, o arquivo <code>tarefas.json</code> ainda não existe, e <code>readFile</code> lançaria um erro. Tratar esse caso (retornando uma lista vazia) evita que o programa quebre logo no primeiro uso – um cuidado comum em qualquer CLI que lê arquivos de configuração ou dados."
+    }
+   ]
+  }
+ ]
+}
