@@ -75,6 +75,23 @@ def tipografia(t):
     return t
 
 
+SIMBOLOS_MAT = {'le': '\u2264', 'ge': '\u2265', 'cdot': '\u00b7', 'Omega': '\u03a9', 'Theta': '\u0398',
+                'log': 'log', 'ln': 'ln', 'infty': '\u221e', 'neq': '\u2260', 'pm': '\u00b1'}
+
+
+def matematica(mat):
+    """Fórmula LaTeX simples em HTML: símbolos viram caracteres e potências/índices viram <sup>/<sub>."""
+    mat = re.sub(r'\\text\s*\{([^}]*)\}', r'\1', mat)
+    for nome, simb in {**SIMBOLOS, **SIMBOLOS_MAT}.items():
+        mat = re.sub(r'\\' + nome + r'(?![a-zA-Z])', lambda _, s=simb: s, mat)
+    mat = re.sub(r'\\[,;:!]', ' ', mat).replace('\\', '')
+    mat = html.escape(mat, quote=False)
+    for marca, tag in (('^', 'sup'), ('_', 'sub')):
+        mat = re.sub(re.escape(marca) + r'\{([^}]*)\}', rf'<{tag}>\1</{tag}>', mat)
+        mat = re.sub(re.escape(marca) + r'([\w*])', rf'<{tag}>\1</{tag}>', mat)
+    return re.sub(r'\s+', ' ', mat.replace('{', '').replace('}', '')).strip()
+
+
 def inline(s, codigo=False):
     """Converte texto LaTeX de um parágrafo em HTML simples."""
     out = []
@@ -98,13 +115,17 @@ def inline(s, codigo=False):
             texto += '\u00a0'
             i += 1
             continue
-        if c == '$':
-            fim = s.find('$', i + 1)
-            mat = s[i + 1:fim]
-            for nome, simb in SIMBOLOS.items():
-                mat = re.sub(r'\\' + nome + r'(?![a-zA-Z])', lambda _, s=simb: s, mat)
-            texto += mat.replace('\\', '').replace('{', '').replace('}', '')
-            i = fim + 1
+        if c == '$' or s.startswith('\\[', i):
+            # $...$ no meio do texto ou \[...\] em destaque (no site vira o próprio parágrafo)
+            fecha = '$' if c == '$' else '\\]'
+            ini = i + (1 if c == '$' else 2)
+            fim = s.find(fecha, ini)
+            if codigo:
+                texto += s[ini:fim]
+            else:
+                descarregar()
+                out.append(matematica(s[ini:fim]))
+            i = fim + len(fecha)
             continue
         if c in '{}':
             i += 1

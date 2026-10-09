@@ -413,6 +413,15 @@ export const apostilas: Apostila[] = [
     descricao:
       'Passagem de parâmetros por valor e por referência, ponteiros, memória dinâmica com new e delete, structs, classes e templates, com comparações em Python.',
   },
+  {
+    // gráfico: apostilas/algoritmos-ii/imagens/capitulo-02_crescimento.tex (pgfplots) -> public/apostilas/alg2
+    id: 'alg2-cap2',
+    capitulo: 2,
+    titulo: 'Complexidade de Algoritmos',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-ii',
+    descricao:
+      'Análise experimental e de complexidade, melhor, pior e caso médio, notação Big O, as principais classes de complexidade, análise de código passo a passo e complexidade de espaço.',
+  },
 
   // Programação e Design para Web II (apostila em módulos)
   // Fonte: 02- APOSTILAS/Módulo 5/LATEX/modulos/modulo-0N.tex (24/08), convertida com
