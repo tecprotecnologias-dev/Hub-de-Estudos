@@ -1,0 +1,13 @@
+% Capítulo 6: árvore geradora mínima do grafo de exemplo.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-grafos}
+\begin{document}
+\begin{tikzpicture}
+  \grafoexemplo{A/C, C/B, B/D, D/E, E/F}{vertice}
+  \node[legenda, align=center] at (3.8,-2.5)
+    {em laranja: as 5 estradas que ligam as 6 cidades com o menor total,\\
+     2 + 1 + 5 + 2 + 3 = 13 km};
+\end{tikzpicture}
+\end{document}

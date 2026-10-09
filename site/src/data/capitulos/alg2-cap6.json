@@ -1,0 +1,440 @@
+{
+ "numero": 6,
+ "titulo": "Grafos",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "A árvore do Capítulo 5 representa hierarquias: cada nó tem um único pai. Muitas relações, porém, não têm hierarquia nenhuma. Uma cidade se liga a várias outras por estradas, uma pessoa é amiga de várias outras, uma página da web aponta para muitas páginas, e todas podem formar ciclos. A estrutura que representa qualquer rede de ligações é o <strong>grafo</strong>. Neste capítulo você vai aprender a guardar um grafo na memória, a percorrê-lo e a resolver dois problemas clássicos: encontrar o caminho mais curto e ligar todos os pontos com o menor custo."
+  },
+  {
+   "t": "h2",
+   "id": "6-1-vertices-e-arestas",
+   "texto": "6.1 Vértices e arestas"
+  },
+  {
+   "t": "p",
+   "html": "Um grafo é formado por um conjunto de <strong>vértices</strong> (os pontos) e um conjunto de <strong>arestas</strong> (as ligações entre pares de vértices). Uma árvore é um caso particular de grafo: um grafo conectado e sem ciclos."
+  },
+  {
+   "t": "p",
+   "html": "As arestas podem ter ou não um sentido:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-06_tipos.png",
+   "alt": "capitulo 06 tipos"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Em um grafo <strong>não dirigido</strong>, a aresta liga os dois vértices nos dois sentidos, como uma amizade ou uma estrada de mão dupla.",
+    "Em um grafo <strong>dirigido</strong> (ou <strong>dígrafo</strong>), cada aresta tem origem e destino e é desenhada como uma seta, como “seguir” alguém em uma rede social ou um pré-requisito entre disciplinas."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Quando cada aresta tem um número associado, como uma distância, um tempo ou um custo, o grafo é <strong>ponderado</strong>, e esse número é o <strong>peso</strong> da aresta. O grafo abaixo será usado como exemplo em todo o capítulo: seis cidades e as estradas entre elas, com as distâncias em quilômetros."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-06_grafo.png",
+   "alt": "capitulo 06 grafo"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Termo",
+    "Significado"
+   ],
+   "linhas": [
+    [
+     "adjacentes (vizinhos)",
+     "dois vértices ligados por uma aresta; no exemplo, B e D"
+    ],
+    [
+     "grau",
+     "número de arestas de um vértice; o grau de C é 4"
+    ],
+    [
+     "caminho",
+     "sequência de vértices em que cada um é vizinho do seguinte, como A, C, E, F"
+    ],
+    [
+     "ciclo",
+     "caminho que começa e termina no mesmo vértice, como A, B, C, A"
+    ],
+    [
+     "conexo",
+     "grafo em que existe caminho entre quaisquer dois vértices"
+    ],
+    [
+     "componente conexo",
+     "cada “pedaço” de um grafo que não é conexo"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Nos algoritmos, é costume chamar o número de vértices de V e o número de arestas de E (do inglês <em>edges</em>). O exemplo tem V = 6 e E = 9."
+  },
+  {
+   "t": "h2",
+   "id": "6-2-representando-um-grafo",
+   "texto": "6.2 Representando um grafo"
+  },
+  {
+   "t": "p",
+   "html": "Existem duas formas principais de guardar um grafo na memória. Para numerá-los, os vértices recebem índices: A é 0, B é 1, e assim por diante."
+  },
+  {
+   "t": "h3",
+   "texto": "Matriz de adjacência"
+  },
+  {
+   "t": "p",
+   "html": "A <strong>matriz de adjacência</strong> é uma tabela V × V em que a posição <code>[i][j]</code> diz se existe aresta de <code>i</code> para <code>j</code> (ou guarda o peso dela). No grafo de amizades da primeira figura:"
+  },
+  {
+   "t": "codigo",
+   "texto": "int main() {\n    const int N = 4;\n    const string nomes[N] = {\"Ana\", \"Bia\", \"Caio\", \"Davi\"};\n    bool amigos[N][N] = {};                  // começa tudo false\n\n    amigos[0][1] = amigos[1][0] = true;      // Ana e Bia\n    amigos[0][2] = amigos[2][0] = true;      // Ana e Caio\n    amigos[1][2] = amigos[2][1] = true;      // Bia e Caio\n    amigos[1][3] = amigos[3][1] = true;      // Bia e Davi\n\n    cout << boolalpha << amigos[0][3] << endl;   // false: consulta em O(1)\n\n    for (int v = 0; v < N; v++) {\n        int grau = 0;\n        for (int u = 0; u < N; u++) {        // percorre a linha inteira: O(V)\n            if (amigos[v][u]) grau++;\n        }\n        cout << nomes[v] << \": \" << grau << endl;   // Ana: 2, Bia: 3, Caio: 2, Davi: 1\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "Em um grafo não dirigido, a matriz é <strong>simétrica</strong>: cada aresta é marcada duas vezes. A vantagem é saber em O(1) se dois vértices são vizinhos. A desvantagem é a memória: são sempre V<sup>2</sup> posições, mesmo que haja poucas arestas. Uma rede social com um milhão de pessoas precisaria de um trilhão de posições, quase todas <code>false</code>."
+  },
+  {
+   "t": "h3",
+   "texto": "Lista de adjacência"
+  },
+  {
+   "t": "p",
+   "html": "A <strong>lista de adjacência</strong> guarda, para cada vértice, apenas a lista dos seus vizinhos. Em C++, a forma mais simples é um <code>vector</code> de <code>vector</code>s: a posição <code>v</code> contém os vizinhos de <code>v</code>, cada um com o peso da aresta."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nstruct Aresta {\n    int destino;\n    int peso;\n};\n\nclass Grafo {\nprivate:\n    vector<vector<Aresta>> adjacentes;   // uma lista de vizinhos por vértice\n\npublic:\n    explicit Grafo(int n) : adjacentes(n) {}\n\n    int vertices() const { return static_cast<int>(adjacentes.size()); }\n\n    void ligar(int a, int b, int peso = 1) {   // aresta não dirigida\n        adjacentes[a].push_back({b, peso});\n        adjacentes[b].push_back({a, peso});\n    }\n\n    const vector<Aresta> &vizinhos(int v) const { return adjacentes[v]; }\n};"
+  },
+  {
+   "t": "p",
+   "html": "Repare que não há <code>new</code> nem <code>delete</code>: o <code>vector</code> cuida da própria memória e a libera sozinho quando o grafo deixa de existir. Para um grafo dirigido, basta <code>ligar</code> acrescentar só a primeira das duas linhas."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Operação",
+    "Matriz",
+    "Lista"
+   ],
+   "linhas": [
+    [
+     "memória",
+     "O(V<sup>2</sup>)",
+     "O(V + E)"
+    ],
+    [
+     "existe aresta entre u e v?",
+     "O(1)",
+     "O(grau de u)"
+    ],
+    [
+     "percorrer os vizinhos de v",
+     "O(V)",
+     "O(grau de v)"
+    ],
+    [
+     "percorrer o grafo inteiro",
+     "O(V<sup>2</sup>)",
+     "O(V + E)"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A maioria dos grafos reais é <strong>esparsa</strong>: cada vértice tem poucos vizinhos em comparação com o total. Por isso a lista de adjacência é a escolha padrão, e é a que usaremos no resto do capítulo. A matriz compensa em grafos pequenos ou <strong>densos</strong>, com quase todas as arestas possíveis."
+  },
+  {
+   "t": "h2",
+   "id": "6-3-busca-em-largura",
+   "texto": "6.3 Busca em largura"
+  },
+  {
+   "t": "p",
+   "html": "Percorrer um grafo é mais delicado do que percorrer uma árvore, por dois motivos: não existe uma raiz natural, e os ciclos fazem um vértice ser alcançável por vários caminhos. Para não visitar o mesmo vértice duas vezes, nem entrar em um ciclo infinito, os percursos <strong>marcam</strong> cada vértice já descoberto."
+  },
+  {
+   "t": "p",
+   "html": "A <strong>busca em largura</strong> (BFS, do inglês <em>breadth-first search</em>) é a generalização do percurso em largura da árvore. Ela parte de um vértice de origem, descobre todos os seus vizinhos, depois os vizinhos dos vizinhos, e assim por diante, em camadas. Assim como na árvore, quem organiza as camadas é uma <strong>fila</strong>."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-06_largura.png",
+   "alt": "capitulo 06 largura"
+  },
+  {
+   "t": "p",
+   "html": "Como cada camada fica uma aresta mais longe da origem, a BFS calcula, de brinde, o <strong>menor número de arestas</strong> entre a origem e cada vértice. Em um mapa sem distâncias, ou em uma rede social (“quantos amigos de amigos separam duas pessoas?”), esse é exatamente o caminho mais curto."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nvector<int> largura(const Grafo &g, int origem, vector<int> &pai) {\n    vector<int> distancia(g.vertices(), -1);   // -1: ainda não descoberto\n    pai.assign(g.vertices(), -1);\n    queue<int> fila;\n    distancia[origem] = 0;\n    fila.push(origem);\n    while (!fila.empty()) {\n        int v = fila.front();\n        fila.pop();\n        for (const Aresta &a : g.vizinhos(v)) {\n            if (distancia[a.destino] == -1) {   // primeira vez que aparece\n                distancia[a.destino] = distancia[v] + 1;\n                pai[a.destino] = v;             // foi descoberto a partir de v\n                fila.push(a.destino);\n            }\n        }\n    }\n    return distancia;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O vetor <code>distancia</code> faz o papel da marcação: -1 significa “ainda não descoberto”. O vetor <code>pai</code> guarda de qual vértice cada um foi descoberto; seguindo os pais a partir de qualquer vértice, você refaz o caminho até a origem. As arestas <code>pai</code>–filho formam uma árvore, chamada <strong>árvore de busca</strong>."
+  },
+  {
+   "t": "p",
+   "html": "Cada vértice entra na fila uma única vez, e a lista de vizinhos de cada um é percorrida uma única vez. O custo total é O(V + E)."
+  },
+  {
+   "t": "h2",
+   "id": "6-4-busca-em-profundidade",
+   "texto": "6.4 Busca em profundidade"
+  },
+  {
+   "t": "p",
+   "html": "A <strong>busca em profundidade</strong> (DFS, do inglês <em>depth-first search</em>) faz o contrário: em vez de avançar em camadas, ela segue um caminho até não haver mais para onde ir e só então volta para tentar outra direção, como alguém explorando um labirinto com a mão sempre na parede. Ela é naturalmente recursiva, e a pilha que guarda o caminho de volta é a própria pilha de execução do Capítulo 4."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nvoid profundidade(const Grafo &g, int v, vector<bool> &visitado, vector<int> &pai) {\n    visitado[v] = true;\n    for (const Aresta &a : g.vizinhos(v)) {\n        if (!visitado[a.destino]) {\n            pai[a.destino] = v;\n            profundidade(g, a.destino, visitado, pai);   // mergulha antes de olhar o próximo vizinho\n        }\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "Partindo de A no grafo das cidades, as duas buscas descobrem os mesmos vértices, mas por caminhos bem diferentes. As arestas das árvores de busca mostram isso:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Busca",
+    "Árvore de busca",
+    "Formato"
+   ],
+   "linhas": [
+    [
+     "largura (BFS)",
+     "A-B, A-C, B-D, C-E, D-F",
+     "larga e baixa: altura 3"
+    ],
+    [
+     "profundidade (DFS)",
+     "A-B, B-C, C-D, D-E, E-F",
+     "um único caminho: altura 5"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A DFS também custa O(V + E) e serve de base para muitos algoritmos. Um dos mais simples é <strong>contar os componentes conexos</strong>: chame a DFS a partir de cada vértice ainda não visitado; cada chamada feita pelo laço principal descobre um componente inteiro."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nint contarComponentes(const Grafo &g) {\n    vector<bool> visitado(g.vertices(), false);\n    vector<int> pai(g.vertices(), -1);\n    int componentes = 0;\n    for (int v = 0; v < g.vertices(); v++) {\n        if (!visitado[v]) {                    // começa um grupo novo\n            componentes++;\n            profundidade(g, v, visitado, pai);\n        }\n    }\n    return componentes;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O programa completo monta o grafo das cidades, executa as duas buscas e conta os componentes de uma rede com três grupos separados:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <queue>\n\nstruct Aresta {\n    int destino;\n    int peso;\n};\n\nclass Grafo {\nprivate:\n    vector<vector<Aresta>> adjacentes;   // uma lista de vizinhos por vértice\n\npublic:\n    explicit Grafo(int n) : adjacentes(n) {}\n\n    int vertices() const { return static_cast<int>(adjacentes.size()); }\n\n    void ligar(int a, int b, int peso = 1) {   // aresta não dirigida\n        adjacentes[a].push_back({b, peso});\n        adjacentes[b].push_back({a, peso});\n    }\n\n    const vector<Aresta> &vizinhos(int v) const { return adjacentes[v]; }\n};\n\nconst string NOMES = \"ABCDEF\";\n\nvector<int> largura(const Grafo &g, int origem, vector<int> &pai) {\n    vector<int> distancia(g.vertices(), -1);   // -1: ainda não descoberto\n    pai.assign(g.vertices(), -1);\n    queue<int> fila;\n    distancia[origem] = 0;\n    fila.push(origem);\n    while (!fila.empty()) {\n        int v = fila.front();\n        fila.pop();\n        for (const Aresta &a : g.vizinhos(v)) {\n            if (distancia[a.destino] == -1) {   // primeira vez que aparece\n                distancia[a.destino] = distancia[v] + 1;\n                pai[a.destino] = v;             // foi descoberto a partir de v\n                fila.push(a.destino);\n            }\n        }\n    }\n    return distancia;\n}\n\nvoid profundidade(const Grafo &g, int v, vector<bool> &visitado, vector<int> &pai) {\n    visitado[v] = true;\n    for (const Aresta &a : g.vizinhos(v)) {\n        if (!visitado[a.destino]) {\n            pai[a.destino] = v;\n            profundidade(g, a.destino, visitado, pai);   // mergulha antes de olhar o próximo vizinho\n        }\n    }\n}\n\nint contarComponentes(const Grafo &g) {\n    vector<bool> visitado(g.vertices(), false);\n    vector<int> pai(g.vertices(), -1);\n    int componentes = 0;\n    for (int v = 0; v < g.vertices(); v++) {\n        if (!visitado[v]) {                    // começa um grupo novo\n            componentes++;\n            profundidade(g, v, visitado, pai);\n        }\n    }\n    return componentes;\n}\n\nvoid mostrarArvoreDeBusca(const vector<int> &pai) {\n    for (int v = 0; v < static_cast<int>(pai.size()); v++) {\n        if (pai[v] != -1) {\n            cout << NOMES[pai[v]] << \"-\" << NOMES[v] << \" \";\n        }\n    }\n    cout << endl;\n}\n\nint main() {\n    enum { A, B, C, D, E, F };\n    Grafo mapa(6);\n    mapa.ligar(A, B, 4);\n    mapa.ligar(A, C, 2);\n    mapa.ligar(B, C, 1);\n    mapa.ligar(B, D, 5);\n    mapa.ligar(C, D, 8);\n    mapa.ligar(C, E, 7);\n    mapa.ligar(D, E, 2);\n    mapa.ligar(D, F, 6);\n    mapa.ligar(E, F, 3);\n\n    vector<int> pai;\n    vector<int> distancia = largura(mapa, A, pai);\n    for (int v = 0; v < mapa.vertices(); v++) {\n        cout << NOMES[v] << \"=\" << distancia[v] << \" \";\n    }\n    cout << endl;                  // A=0 B=1 C=1 D=2 E=2 F=3\n    mostrarArvoreDeBusca(pai);     // A-B A-C B-D C-E D-F\n\n    vector<bool> visitado(mapa.vertices(), false);\n    pai.assign(mapa.vertices(), -1);\n    profundidade(mapa, A, visitado, pai);\n    mostrarArvoreDeBusca(pai);     // A-B B-C C-D D-E E-F\n\n    Grafo rede(7);                 // grupos {0, 1, 2}, {3, 4} e {5, 6}\n    rede.ligar(0, 1);\n    rede.ligar(1, 2);\n    rede.ligar(3, 4);\n    rede.ligar(5, 6);\n    cout << contarComponentes(rede) << \" componentes\" << endl;   // 3 componentes\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>enum</code> dentro do <code>main</code> dá nomes aos índices: <code>A</code> vale 0, <code>B</code> vale 1, e assim por diante. Isso deixa as chamadas a <code>ligar</code> tão legíveis quanto a figura."
+  },
+  {
+   "t": "h3",
+   "texto": "Ordenação topológica"
+  },
+  {
+   "t": "p",
+   "html": "Uma aplicação importante dos grafos dirigidos é decidir uma ordem que respeite dependências: em que ordem cursar disciplinas com pré-requisitos, compilar arquivos que dependem uns dos outros ou executar as etapas de um projeto. Essa ordem se chama <strong>ordenação topológica</strong>, e só existe se o grafo não tiver ciclos (um grafo dirigido sem ciclos é chamado de DAG, do inglês <em>directed acyclic graph</em>)."
+  },
+  {
+   "t": "p",
+   "html": "Um jeito simples de calculá-la, conhecido como algoritmo de Kahn, usa uma fila: conte quantos pré-requisitos faltam para cada vértice; os que não têm nenhum podem ser feitos já e entram na fila. Cada vez que um vértice sai da fila, ele é “cumprido” e diminui a contagem dos que dependem dele; quem chegar a zero entra na fila."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <queue>\n\nvector<int> ordemTopologica(const vector<vector<int>> &depois) {\n    int n = static_cast<int>(depois.size());\n    vector<int> faltam(n, 0);               // pré-requisitos ainda não cumpridos\n    for (const vector<int> &lista : depois) {\n        for (int v : lista) faltam[v]++;\n    }\n    queue<int> prontas;\n    for (int v = 0; v < n; v++) {\n        if (faltam[v] == 0) prontas.push(v);\n    }\n    vector<int> ordem;\n    while (!prontas.empty()) {\n        int v = prontas.front();\n        prontas.pop();\n        ordem.push_back(v);\n        for (int w : depois[v]) {\n            faltam[w]--;\n            if (faltam[w] == 0) prontas.push(w);   // último pré-requisito cumprido\n        }\n    }\n    return ordem;                           // se faltou alguém, havia um ciclo\n}\n\nint main() {\n    const vector<string> disciplinas = {\"Algoritmos I\", \"Algoritmos II\", \"Banco de Dados\",\n                                        \"Programação Web\", \"Engenharia de Software\", \"Projeto Final\"};\n    enum { ALG1, ALG2, BD, WEB, ENG, PROJ };\n    vector<vector<int>> depois(6);          // depois[a]: disciplinas que exigem a\n    depois[ALG1] = {ALG2, BD};\n    depois[ALG2] = {WEB, ENG};\n    depois[BD] = {WEB};\n    depois[WEB] = {PROJ};\n    depois[ENG] = {PROJ};\n\n    for (int d : ordemTopologica(depois)) {\n        cout << disciplinas[d] << endl;\n    }\n    // Algoritmos I, Algoritmos II, Banco de Dados,\n    // Engenharia de Software, Programação Web, Projeto Final\n\n    depois[PROJ] = {ALG1};                  // erro de cadastro: cria um ciclo\n    cout << ordemTopologica(depois).size() << \" de 6\" << endl;   // 0 de 6\n}"
+  },
+  {
+   "t": "p",
+   "html": "Quando há um ciclo, os vértices do ciclo esperam uns pelos outros e nunca chegam a zero. Por isso o algoritmo também serve para <strong>detectar ciclos</strong>: se a ordem tiver menos vértices que o grafo, existe uma dependência circular."
+  },
+  {
+   "t": "h2",
+   "id": "6-5-caminho-minimo-algoritmo-de-dijkstra",
+   "texto": "6.5 Caminho mínimo: algoritmo de Dijkstra"
+  },
+  {
+   "t": "p",
+   "html": "A BFS encontra o caminho com menos <strong>arestas</strong>, mas no mapa das cidades isso não basta: de A até F, o caminho A, B, D, F tem só três estradas e soma 4 + 5 + 6 = 15 km, enquanto A, C, E, F também tem três e soma 12 km. Quando as arestas têm pesos, o caminho mínimo é o de menor <strong>soma de pesos</strong>, e o algoritmo clássico para encontrá-lo foi criado por Edsger Dijkstra."
+  },
+  {
+   "t": "p",
+   "html": "A ideia é parecida com a da BFS, trocando a fila comum por uma <strong>fila de prioridade</strong>, que sempre entrega o vértice com a <strong>menor distância conhecida</strong> até o momento:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. A origem começa com distância 0; todos os outros, com “infinito”.",
+    "2. Retire da fila o vértice <code>v</code> com a menor distância. Essa distância é definitiva: como os pesos não são negativos, nenhum outro caminho pode ficar mais curto passando por vértices mais distantes.",
+    "3. Para cada vizinho de <code>v</code>, verifique se chegar a ele passando por <code>v</code> é mais curto do que o melhor caminho conhecido. Se for, atualize a distância (isso se chama <strong>relaxar</strong> a aresta) e coloque o vizinho na fila.",
+    "4. Repita até a fila esvaziar."
+   ]
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-06_dijkstra.png",
+   "alt": "capitulo 06 dijkstra"
+  },
+  {
+   "t": "p",
+   "html": "A fila de prioridade do C++ é a <code>priority_queue</code>. Por padrão ela entrega o <strong>maior</strong> elemento; com <code>greater&lt;&gt;</code>, passa a entregar o menor. Guardamos pares (distância, vértice), porque os pares são comparados primeiro pelo primeiro campo. Por dentro, ela é um <em>heap</em>, estrutura que você vai construir no Capítulo 8, e insere e retira em O(log n)."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nvector<int> dijkstra(const Grafo &g, int origem, vector<int> &anterior) {\n    vector<int> distancia(g.vertices(), INFINITO);\n    anterior.assign(g.vertices(), -1);\n    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> fila;   // (distância, vértice)\n    distancia[origem] = 0;\n    fila.push({0, origem});\n    while (!fila.empty()) {\n        auto [d, v] = fila.top();               // o mais próximo ainda na fila\n        fila.pop();\n        if (d > distancia[v]) continue;         // registro antigo: já achamos caminho melhor\n        for (const Aresta &a : g.vizinhos(v)) {\n            int nova = d + a.peso;\n            if (nova < distancia[a.destino]) {  // relaxa a aresta\n                distancia[a.destino] = nova;\n                anterior[a.destino] = v;\n                fila.push({nova, a.destino});\n            }\n        }\n    }\n    return distancia;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Um vértice pode entrar na fila mais de uma vez, sempre que sua distância melhora. A linha <code>if (d &gt; distancia[v]) continue;</code> descarta as entradas antigas, que ficaram desatualizadas. Com lista de adjacência e <em>heap</em>, o custo é O((V + E) log V)."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Pesos negativos",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O Dijkstra só funciona com pesos <strong>maiores ou iguais a zero</strong>. Com um peso negativo, um vértice já tratado como definitivo poderia ficar mais perto depois, por um caminho que passa pela aresta negativa, e o algoritmo não volta para corrigir. Para esses grafos existe o algoritmo de Bellman-Ford, mais lento: O(V · E)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-6-arvore-geradora-minima",
+   "texto": "6.6 Árvore geradora mínima"
+  },
+  {
+   "t": "p",
+   "html": "Agora o problema é outro. A prefeitura quer asfaltar estradas de modo que seja possível ir de qualquer cidade a qualquer outra, gastando o mínimo possível. Não é preciso asfaltar todas: basta escolher um conjunto de estradas que <strong>conecte todos os vértices</strong> com a <strong>menor soma de pesos</strong>. Esse conjunto não terá ciclos (um ciclo sempre tem uma estrada dispensável), então será uma árvore com V - 1 arestas, chamada <strong>árvore geradora mínima</strong> (AGM, ou MST, do inglês <em>minimum spanning tree</em>)."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-06_agm.png",
+   "alt": "capitulo 06 agm"
+  },
+  {
+   "t": "p",
+   "html": "Compare com a figura do Dijkstra: as respostas são diferentes. A AGM usa a estrada D-E e não a C-E, porque o objetivo dela é o menor <strong>total</strong> da rede, e não o menor caminho a partir de uma cidade. Para ir de A até F pela AGM, você percorreria 2 + 1 + 5 + 2 + 3 = 13 km, mais do que os 12 km do Dijkstra."
+  },
+  {
+   "t": "p",
+   "html": "O <strong>algoritmo de Prim</strong> constrói a AGM a partir de um vértice qualquer. A cada passo, ele escolhe a aresta <strong>mais barata</strong> que liga a árvore já construída a um vértice ainda de fora. É, de novo, um trabalho para a fila de prioridade, agora guardando (peso, de onde, para onde):"
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nint prim(const Grafo &g, vector<pair<int, int>> &escolhidas) {\n    vector<bool> naArvore(g.vertices(), false);\n    priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>, greater<>> fila;   // (peso, de, para)\n    fila.push({0, -1, 0});                      // começa pelo vértice 0, sem aresta\n    int total = 0;\n    while (!fila.empty()) {\n        auto [peso, de, v] = fila.top();        // a aresta mais barata disponível\n        fila.pop();\n        if (naArvore[v]) continue;              // criaria um ciclo\n        naArvore[v] = true;\n        total += peso;\n        if (de != -1) escolhidas.push_back({de, v});\n        for (const Aresta &a : g.vizinhos(v)) {\n            if (!naArvore[a.destino]) fila.push({a.peso, v, a.destino});\n        }\n    }\n    return total;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O Prim é um <strong>algoritmo guloso</strong>: a cada passo, faz a escolha que parece melhor naquele momento, sem voltar atrás, e mesmo assim chega à melhor resposta. Você vai estudar essa família de algoritmos no Capítulo 9, junto com o <strong>algoritmo de Kruskal</strong>, outra forma gulosa de construir a AGM. O custo do Prim com <em>heap</em> também é O((V + E) log V)."
+  },
+  {
+   "t": "p",
+   "html": "Este é o programa completo dos dois algoritmos:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <queue>\n#include <tuple>\n#include <limits>       // numeric_limits\n#include <functional>   // greater\n#include <algorithm>    // reverse\n\nstruct Aresta {\n    int destino;\n    int peso;\n};\n\nclass Grafo {\nprivate:\n    vector<vector<Aresta>> adjacentes;   // uma lista de vizinhos por vértice\n\npublic:\n    explicit Grafo(int n) : adjacentes(n) {}\n\n    int vertices() const { return static_cast<int>(adjacentes.size()); }\n\n    void ligar(int a, int b, int peso = 1) {   // aresta não dirigida\n        adjacentes[a].push_back({b, peso});\n        adjacentes[b].push_back({a, peso});\n    }\n\n    const vector<Aresta> &vizinhos(int v) const { return adjacentes[v]; }\n};\n\nconst string NOMES = \"ABCDEF\";\nconst int INFINITO = numeric_limits<int>::max();\n\nvector<int> dijkstra(const Grafo &g, int origem, vector<int> &anterior) {\n    vector<int> distancia(g.vertices(), INFINITO);\n    anterior.assign(g.vertices(), -1);\n    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> fila;   // (distância, vértice)\n    distancia[origem] = 0;\n    fila.push({0, origem});\n    while (!fila.empty()) {\n        auto [d, v] = fila.top();               // o mais próximo ainda na fila\n        fila.pop();\n        if (d > distancia[v]) continue;         // registro antigo: já achamos caminho melhor\n        for (const Aresta &a : g.vizinhos(v)) {\n            int nova = d + a.peso;\n            if (nova < distancia[a.destino]) {  // relaxa a aresta\n                distancia[a.destino] = nova;\n                anterior[a.destino] = v;\n                fila.push({nova, a.destino});\n            }\n        }\n    }\n    return distancia;\n}\n\nstring caminho(const vector<int> &anterior, int destino) {\n    string resultado;\n    for (int v = destino; v != -1; v = anterior[v]) {   // volta pelos anteriores\n        resultado += NOMES[v];\n    }\n    reverse(resultado.begin(), resultado.end());        // da origem ao destino\n    return resultado;\n}\n\nint prim(const Grafo &g, vector<pair<int, int>> &escolhidas) {\n    vector<bool> naArvore(g.vertices(), false);\n    priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>, greater<>> fila;   // (peso, de, para)\n    fila.push({0, -1, 0});                      // começa pelo vértice 0, sem aresta\n    int total = 0;\n    while (!fila.empty()) {\n        auto [peso, de, v] = fila.top();        // a aresta mais barata disponível\n        fila.pop();\n        if (naArvore[v]) continue;              // criaria um ciclo\n        naArvore[v] = true;\n        total += peso;\n        if (de != -1) escolhidas.push_back({de, v});\n        for (const Aresta &a : g.vizinhos(v)) {\n            if (!naArvore[a.destino]) fila.push({a.peso, v, a.destino});\n        }\n    }\n    return total;\n}\n\nint main() {\n    enum { A, B, C, D, E, F };\n    Grafo mapa(6);\n    mapa.ligar(A, B, 4);\n    mapa.ligar(A, C, 2);\n    mapa.ligar(B, C, 1);\n    mapa.ligar(B, D, 5);\n    mapa.ligar(C, D, 8);\n    mapa.ligar(C, E, 7);\n    mapa.ligar(D, E, 2);\n    mapa.ligar(D, F, 6);\n    mapa.ligar(E, F, 3);\n\n    vector<int> anterior;\n    vector<int> distancia = dijkstra(mapa, A, anterior);\n    for (int v = 0; v < mapa.vertices(); v++) {\n        cout << NOMES[v] << \": \" << distancia[v] << \" km, \" << caminho(anterior, v) << endl;\n    }\n    // A: 0 km, A     B: 3 km, ACB    C: 2 km, AC\n    // D: 8 km, ACBD  E: 9 km, ACE    F: 12 km, ACEF\n\n    vector<pair<int, int>> escolhidas;\n    int total = prim(mapa, escolhidas);\n    for (const auto &[de, para] : escolhidas) {\n        cout << NOMES[de] << \"-\" << NOMES[para] << \" \";\n    }\n    cout << endl;                                   // A-C C-B B-D D-E E-F\n    cout << \"Total: \" << total << \" km\" << endl;    // Total: 13 km\n}"
+  },
+  {
+   "t": "p",
+   "html": "Os dois algoritmos são quase iguais: a diferença está no que vai para a fila. O Dijkstra prioriza a distância <strong>acumulada desde a origem</strong> (<code>d + a.peso</code>); o Prim prioriza apenas o <strong>peso da aresta</strong> (<code>a.peso</code>)."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Algoritmo",
+    "Resolve",
+    "Custo"
+   ],
+   "linhas": [
+    [
+     "BFS",
+     "menor número de arestas; percorrer",
+     "O(V + E)"
+    ],
+    [
+     "DFS",
+     "percorrer; componentes; ciclos",
+     "O(V + E)"
+    ],
+    [
+     "Kahn",
+     "ordenação topológica",
+     "O(V + E)"
+    ],
+    [
+     "Dijkstra",
+     "menor caminho com pesos ≥ 0",
+     "O((V + E) log V)"
+    ],
+    [
+     "Prim",
+     "árvore geradora mínima",
+     "O((V + E) log V)"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Comparando com Python",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em Python, um grafo costuma ser um dicionário que leva cada vértice à lista de seus vizinhos, e os vértices podem ser os próprios nomes, sem precisar de índices. A fila da BFS é o <code>deque</code> do Capítulo 4, e a fila de prioridade do Dijkstra é o módulo <code>heapq</code>, que mantém uma lista comum organizada como <em>heap</em> (sempre com o menor na frente):"
+    },
+    {
+     "t": "codigo",
+     "texto": "import heapq\nfrom collections import deque\n\nmapa = {\n    'A': [('B', 4), ('C', 2)],\n    'B': [('A', 4), ('C', 1), ('D', 5)],\n    'C': [('A', 2), ('B', 1), ('D', 8), ('E', 7)],\n    'D': [('B', 5), ('C', 8), ('E', 2), ('F', 6)],\n    'E': [('C', 7), ('D', 2), ('F', 3)],\n    'F': [('D', 6), ('E', 3)],\n}\n\ndef largura(grafo, origem):\n    distancia = {origem: 0}\n    fila = deque([origem])\n    while fila:\n        v = fila.popleft()\n        for vizinho, _ in grafo[v]:\n            if vizinho not in distancia:\n                distancia[vizinho] = distancia[v] + 1\n                fila.append(vizinho)\n    return distancia\n\ndef dijkstra(grafo, origem):\n    distancia = {v: float('inf') for v in grafo}\n    distancia[origem] = 0\n    fila = [(0, origem)]\n    while fila:\n        d, v = heapq.heappop(fila)\n        if d > distancia[v]:\n            continue\n        for vizinho, peso in grafo[v]:\n            if d + peso < distancia[vizinho]:\n                distancia[vizinho] = d + peso\n                heapq.heappush(fila, (d + peso, vizinho))\n    return distancia\n\nprint(largura(mapa, 'A'))    # {'A': 0, 'B': 1, 'C': 1, 'D': 2, 'E': 2, 'F': 3}\nprint(dijkstra(mapa, 'A'))   # {'A': 0, 'B': 3, 'C': 2, 'D': 8, 'E': 9, 'F': 12}"
+    },
+    {
+     "t": "p",
+     "html": "O <code>float('inf')</code> faz o papel do “infinito” e, como em Python os inteiros não têm limite, não existe o risco de estouro que existe no C++ ao somar um peso a <code>numeric_limits&lt;int&gt;::max()</code>. Para grafos grandes, a biblioteca externa <code>networkx</code> já traz todos esses algoritmos prontos."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Esquecer de marcar os visitados.</strong> Em um grafo com ciclos, a busca volta a vértices já vistos e entra em um laço sem fim, ou em uma recursão que estoura a pilha.",
+    "<strong>Marcar na hora errada na BFS.</strong> Marque o vértice quando ele <em>entra</em> na fila, e não quando sai. Do contrário, o mesmo vértice pode ser colocado na fila várias vezes.",
+    "<strong>Ligar a aresta em um só sentido em um grafo não dirigido.</strong> Cada aresta precisa aparecer na lista dos dois vértices. Esquecer uma das duas transforma o grafo em dirigido sem você perceber.",
+    "<strong>Usar matriz de adjacência em grafos grandes e esparsos.</strong> A memória cresce com V<sup>2</sup>; com cem mil vértices, já são dez bilhões de posições.",
+    "<strong>Usar a BFS para o caminho mínimo em grafo ponderado.</strong> A BFS conta arestas, não soma pesos. Com pesos, use o Dijkstra.",
+    "<strong>Usar o Dijkstra com pesos negativos.</strong> O resultado pode sair errado, sem nenhum aviso.",
+    "<strong>Somar ao “infinito”.</strong> Em C++, <code>numeric_limits&lt;int&gt;::max() + 1</code> estoura. Só some a distâncias que já não sejam infinitas, como o Dijkstra faz ao partir apenas de vértices retirados da fila.",
+    "<strong>Esquecer o <code>greater&lt;&gt;</code> na <code>priority_queue</code>.</strong> Sem ele, a fila entrega o <em>maior</em> elemento primeiro, e o Dijkstra e o Prim dão respostas erradas.",
+    "<strong>Confundir caminho mínimo com árvore geradora mínima.</strong> São problemas diferentes, com respostas diferentes, como as duas figuras do capítulo mostram."
+   ]
+  }
+ ]
+}

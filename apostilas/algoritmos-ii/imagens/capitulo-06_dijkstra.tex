@@ -1,0 +1,19 @@
+% Capítulo 6: resultado do algoritmo de Dijkstra a partir de A.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-grafos}
+\begin{document}
+\begin{tikzpicture}
+  \grafoexemplo{A/C, C/B, B/D, C/E, E/F}{vertice}
+  \node[dist, above=1mm of A] {0};
+  \node[dist, above=1mm of B] {3};
+  \node[dist, below=1mm of C] {2};
+  \node[dist, above=1mm of D] {8};
+  \node[dist, below=1mm of E] {9};
+  \node[dist, above=1mm of F] {12};
+  \node[legenda, align=center] at (3.8,-2.75)
+    {em laranja: a menor distância de A até cada cidade e as estradas usadas;\\
+     de A até F, o melhor caminho é A, C, E, F, com 12 km};
+\end{tikzpicture}
+\end{document}

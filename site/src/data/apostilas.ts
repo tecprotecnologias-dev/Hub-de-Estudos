@@ -447,6 +447,14 @@ export const apostilas: Apostila[] = [
     descricao:
       'Terminologia, árvores binárias, percursos (pré-ordem, em ordem, pós-ordem e em largura), árvore binária de busca com inserção, busca e remoção, árvores degeneradas e árvores AVL com rotações.',
   },
+  {
+    id: 'alg2-cap6',
+    capitulo: 6,
+    titulo: 'Grafos',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-ii',
+    descricao:
+      'Vértices e arestas, matriz e lista de adjacência, busca em largura e em profundidade, componentes conexos, ordenação topológica, caminho mínimo com Dijkstra e árvore geradora mínima com Prim.',
+  },
 
   // Programação e Design para Web II (apostila em módulos)
   // Fonte: 02- APOSTILAS/Módulo 5/LATEX/modulos/modulo-0N.tex (24/08), convertida com

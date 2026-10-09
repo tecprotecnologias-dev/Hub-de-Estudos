@@ -1,0 +1,22 @@
+% Capítulo 6: busca em largura a partir de A, em camadas (número de arestas).
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-grafos}
+\begin{document}
+\begin{tikzpicture}
+  \posicoes
+  \foreach \a/\b/\p in \arestasexemplo { \draw[aresta] (p\a) -- (p\b); }
+  \node[destaque] (A) at (pA) {A};
+  \foreach \v in {B,C} { \node[vertice, fill=laranja!30] (\v) at (p\v) {\v}; }
+  \foreach \v in {D,E} { \node[vertice, fill=laranja!15] (\v) at (p\v) {\v}; }
+  \node[vertice, fill=white] (F) at (pF) {F};
+  \node[dist, above=1mm of A] {0};
+  \node[dist, above=1mm of B] {1};
+  \node[dist, below=1mm of C] {1};
+  \node[dist, above=1mm of D] {2};
+  \node[dist, below=1mm of E] {2};
+  \node[dist, above=1mm of F] {3};
+  \node[legenda] at (3.8,-2.4) {em laranja: quantas arestas separam cada cidade de A (os pesos são ignorados)};
+\end{tikzpicture}
+\end{document}
