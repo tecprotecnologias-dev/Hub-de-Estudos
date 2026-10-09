@@ -759,10 +759,6 @@ button.aba.ativa {
   margin: 0.5rem 0 0.4rem;
 }
 
-.lista-capitulos strong {
-  color: var(--primaria);
-}
-
 .capitulo {
   background: var(--superficie);
   border: 1px solid var(--borda);
@@ -953,10 +949,6 @@ button.aba.ativa {
   .leitura {
     grid-template-columns: minmax(0, 1fr);
     gap: 1rem;
-  }
-
-  .outros-capitulos {
-    display: none;
   }
 
   .capitulo-cabecalho h1 {

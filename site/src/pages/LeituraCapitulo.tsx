@@ -133,8 +133,8 @@ export default function LeituraCapitulo() {
   return (
     <div className="leitura">
       <aside className="sumario no-print">
-        <Link to={`/disciplina/${apostila.disciplinaId}`} className="voltar">
-          {nomeDisciplina(apostila.disciplinaId)}
+        <Link to={`/apostilas?disciplina=${apostila.disciplinaId}`} className="voltar">
+          Apostilas de {nomeDisciplina(apostila.disciplinaId)}
         </Link>
         <details open={sumarioAberto} hidden={secoes.length === 0}>
           <summary className="sumario-titulo">Neste {(apostila.rotulo ?? 'Capítulo').toLowerCase()}</summary>
@@ -154,22 +154,6 @@ export default function LeituraCapitulo() {
           ))}
           </ol>
         </details>
-        {irmaos.length > 1 && (
-          <div className="outros-capitulos">
-            <p className="sumario-titulo">Material da disciplina</p>
-            <ol className="lista-capitulos">
-              {irmaos.map((a) => (
-                <li key={a.id}>
-                  {a.id === id ? (
-                    <strong>{a.titulo}</strong>
-                  ) : (
-                    <Link to={`/apostila/${a.id}`}>{a.titulo}</Link>
-                  )}
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
       </aside>
 
       <article className="capitulo">
