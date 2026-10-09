@@ -431,6 +431,14 @@ export const apostilas: Apostila[] = [
     descricao:
       'Tipo abstrato de dados, nós e ponteiros, inserção, busca e remoção passo a passo, listas simples, duplas e circulares, e quando usar vetor ou lista.',
   },
+  {
+    id: 'alg2-cap4',
+    capitulo: 4,
+    titulo: 'Pilhas e Filas',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-ii',
+    descricao:
+      'LIFO e FIFO, pilha e fila genéricas com nós encadeados, parênteses balanceados, notação pós-fixa, fila circular em vetor e as versões prontas do C++ e do Python.',
+  },
 
   // Programação e Design para Web II (apostila em módulos)
   // Fonte: 02- APOSTILAS/Módulo 5/LATEX/modulos/modulo-0N.tex (24/08), convertida com

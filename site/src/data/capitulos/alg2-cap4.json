@@ -1,0 +1,350 @@
+{
+ "numero": 4,
+ "titulo": "Pilhas e Filas",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "A lista encadeada do Capítulo 3 permite inserir e remover em qualquer ponto. Muitos problemas, porém, precisam do contrário: de uma estrutura que <strong>restringe</strong> onde se pode inserir e remover. Essas restrições não são uma limitação, e sim uma garantia de ordem. Neste capítulo você vai construir as duas estruturas restritas mais usadas da computação: a <strong>pilha</strong> e a <strong>fila</strong>. Ambas serão genéricas, com templates (Capítulo 1), e construídas com nós encadeados (Capítulo 3)."
+  },
+  {
+   "t": "h2",
+   "id": "4-1-estruturas-com-regras-de-acesso",
+   "texto": "4.1 Estruturas com regras de acesso"
+  },
+  {
+   "t": "p",
+   "html": "Pense em uma pilha de pratos: você coloca um prato sempre em cima e, quando precisa de um, pega o de cima. O último prato colocado é o primeiro a ser usado. Agora pense na fila de um banco: quem chega vai para o final, e quem é atendido sai pela frente. O primeiro a chegar é o primeiro a sair."
+  },
+  {
+   "t": "p",
+   "html": "Essas duas regras têm nomes:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>LIFO</strong> (<em>Last In, First Out</em>, o último a entrar é o primeiro a sair): é a regra da <strong>pilha</strong>.",
+    "<strong>FIFO</strong> (<em>First In, First Out</em>, o primeiro a entrar é o primeiro a sair): é a regra da <strong>fila</strong>."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Você usa as duas o tempo todo, mesmo sem perceber. O botão de desfazer (Ctrl+Z) de um editor é uma pilha: desfaz primeiro a última ação. Os documentos enviados para uma impressora formam uma fila: são impressos na ordem em que chegaram."
+  },
+  {
+   "t": "h2",
+   "id": "4-2-a-pilha",
+   "texto": "4.2 A pilha"
+  },
+  {
+   "t": "p",
+   "html": "Em uma pilha, todas as operações acontecem em uma única ponta, chamada <strong>topo</strong>."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-04_pilha.png",
+   "alt": "capitulo 04 pilha"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Operação",
+    "O que faz",
+    "Custo"
+   ],
+   "linhas": [
+    [
+     "<code>empilhar(v)</code>",
+     "coloca <code>v</code> no topo (<em>push</em>)",
+     "O(1)"
+    ],
+    [
+     "<code>desempilhar()</code>",
+     "retira e devolve o topo (<em>pop</em>)",
+     "O(1)"
+    ],
+    [
+     "<code>espiar()</code>",
+     "devolve o topo sem retirar (<em>top</em>)",
+     "O(1)"
+    ],
+    [
+     "<code>vazia()</code>",
+     "diz se não há elementos",
+     "O(1)"
+    ],
+    [
+     "<code>quantidade()</code>",
+     "quantos elementos há",
+     "O(1)"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-3-pilha-com-nos-encadeados",
+   "texto": "4.3 Pilha com nós encadeados"
+  },
+  {
+   "t": "p",
+   "html": "Na lista encadeada, inserir e remover no <strong>início</strong> custa O(1). Então basta usar o início da lista como topo da pilha: empilhar é inserir no início, desempilhar é remover do início. Cada nó aponta para o que está <strong>abaixo</strong> dele."
+  },
+  {
+   "t": "p",
+   "html": "Repare em duas novidades. O nó agora fica <strong>dentro</strong> da classe, porque só a pilha precisa conhecê-lo. E desempilhar uma pilha vazia é um erro de quem chama: em vez de devolver um valor inventado, a função <strong>lança uma exceção</strong> com <code>throw</code>, que interrompe a operação e pode ser tratada com <code>try</code>/<code>catch</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <stdexcept>   // runtime_error\n\ntemplate <typename T>\nclass Pilha {\nprivate:\n    struct No {\n        T valor;\n        No *abaixo;    // o nó que está embaixo deste\n    };\n    No *topo = nullptr;\n    int tamanho = 0;\n\npublic:\n    Pilha() = default;\n    ~Pilha() {\n        while (!vazia()) {\n            desempilhar();\n        }\n    }\n    Pilha(const Pilha &) = delete;\n    Pilha &operator=(const Pilha &) = delete;\n\n    bool vazia() const { return topo == nullptr; }\n    int quantidade() const { return tamanho; }\n\n    void empilhar(const T &valor) {\n        topo = new No{valor, topo};   // o novo nó fica por cima do antigo topo\n        tamanho++;\n    }\n\n    T desempilhar() {\n        if (vazia()) {\n            throw runtime_error(\"pilha vazia\");\n        }\n        No *velho = topo;\n        T valor = velho->valor;\n        topo = topo->abaixo;\n        delete velho;\n        tamanho--;\n        return valor;\n    }\n\n    const T &espiar() const {\n        if (vazia()) {\n            throw runtime_error(\"pilha vazia\");\n        }\n        return topo->valor;\n    }\n};\n\nint main() {\n    Pilha<int> p;\n    for (int v = 10; v <= 40; v += 10) {\n        p.empilhar(v);                       // 10, 20, 30, 40\n    }\n    cout << \"Topo: \" << p.espiar() << endl;  // 40\n    cout << p.desempilhar() << endl;         // 40\n    cout << p.desempilhar() << endl;         // 30\n    cout << \"Restam \" << p.quantidade() << endl;  // 2\n\n    Pilha<string> vazia;\n    try {\n        vazia.desempilhar();\n    } catch (const runtime_error &erro) {\n        cout << \"Erro: \" << erro.what() << endl;  // Erro: pilha vazia\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "Como a classe é um template, a mesma pilha serve para <code>int</code>, <code>string</code>, <code>char</code> ou qualquer outro tipo. Todas as operações são O(1): nenhuma percorre a estrutura."
+  },
+  {
+   "t": "h2",
+   "id": "4-4-aplicacoes-da-pilha",
+   "texto": "4.4 Aplicações da pilha"
+  },
+  {
+   "t": "h3",
+   "texto": "Verificar se os parênteses estão balanceados"
+  },
+  {
+   "t": "p",
+   "html": "Compiladores e editores de código precisam conferir se cada <code>(</code>, <code>[</code> e <code>{</code> foi fechado na ordem certa. A expressão <code>{[(2+3)*4]}</code> está correta; <code>(2+3]</code> e <code>((1+2)</code> não estão."
+  },
+  {
+   "t": "p",
+   "html": "A pilha resolve isso de forma natural: cada símbolo que abre é empilhado; cada símbolo que fecha precisa combinar com o topo. O último aberto deve ser o primeiro fechado, exatamente a regra LIFO."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho: usa a classe Pilha da seção 4.3\nbool balanceado(const string &expressao) {\n    Pilha<char> abertos;\n    for (char c : expressao) {\n        if (c == '(' || c == '[' || c == '{') {\n            abertos.empilhar(c);\n        } else if (c == ')' || c == ']' || c == '}') {\n            if (abertos.vazia()) {\n                return false;                 // fechou algo que não foi aberto\n            }\n            char a = abertos.desempilhar();\n            if ((c == ')' && a != '(') || (c == ']' && a != '[') || (c == '}' && a != '{')) {\n                return false;                 // fechou com o tipo errado\n            }\n        }\n    }\n    return abertos.vazia();                   // sobrou algo aberto?\n}"
+  },
+  {
+   "t": "h3",
+   "texto": "Calcular expressões em notação pós-fixa"
+  },
+  {
+   "t": "p",
+   "html": "Na notação que usamos no dia a dia, o operador fica entre os números: (3 + 4) · 2. Na <strong>notação pós-fixa</strong>, o operador vem depois dos operandos: <code>3 4 + 2 *</code>. Ela dispensa parênteses e é muito fácil de calcular com uma pilha, por isso calculadoras e compiladores a usam internamente."
+  },
+  {
+   "t": "p",
+   "html": "A regra é: número, empilha; operador, desempilha dois números, faz a conta e empilha o resultado. No final, o resultado é o único valor na pilha."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Lido",
+    "Ação",
+    "Pilha (topo à direita)"
+   ],
+   "linhas": [
+    [
+     "<code>3</code>",
+     "empilha",
+     "3"
+    ],
+    [
+     "<code>4</code>",
+     "empilha",
+     "3 4"
+    ],
+    [
+     "<code>+</code>",
+     "desempilha 4 e 3, empilha 3 + 4",
+     "7"
+    ],
+    [
+     "<code>2</code>",
+     "empilha",
+     "7 2"
+    ],
+    [
+     "<code>*</code>",
+     "desempilha 2 e 7, empilha 7 · 2",
+     "14"
+    ]
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho: usa a classe Pilha da seção 4.3\n#include <sstream>   // istringstream: lê a expressão palavra por palavra\n\ndouble avaliarPosfixa(const string &expressao) {\n    Pilha<double> p;\n    istringstream entrada(expressao);\n    string item;\n    while (entrada >> item) {\n        if (item == \"+\" || item == \"-\" || item == \"*\" || item == \"/\") {\n            double b = p.desempilhar();   // o segundo operando sai primeiro\n            double a = p.desempilhar();\n            if (item == \"+\") p.empilhar(a + b);\n            else if (item == \"-\") p.empilhar(a - b);\n            else if (item == \"*\") p.empilhar(a * b);\n            else p.empilhar(a / b);\n        } else {\n            p.empilhar(stod(item));       // converte o texto em número\n        }\n    }\n    return p.desempilhar();\n}"
+  },
+  {
+   "t": "p",
+   "html": "Veja as duas aplicações funcionando juntas. Para o programa ficar mais curto, a pilha aparece em versão resumida, só com as operações usadas aqui:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <stdexcept>\n#include <sstream>\n\ntemplate <typename T>\nclass Pilha {\nprivate:\n    struct No {\n        T valor;\n        No *abaixo;\n    };\n    No *topo = nullptr;\n\npublic:\n    Pilha() = default;\n    ~Pilha() { while (!vazia()) desempilhar(); }\n    Pilha(const Pilha &) = delete;\n    Pilha &operator=(const Pilha &) = delete;\n\n    bool vazia() const { return topo == nullptr; }\n    void empilhar(const T &valor) { topo = new No{valor, topo}; }\n    T desempilhar() {\n        if (vazia()) throw runtime_error(\"pilha vazia\");\n        No *velho = topo;\n        T valor = velho->valor;\n        topo = topo->abaixo;\n        delete velho;\n        return valor;\n    }\n};\n\nbool balanceado(const string &expressao) {\n    Pilha<char> abertos;\n    for (char c : expressao) {\n        if (c == '(' || c == '[' || c == '{') {\n            abertos.empilhar(c);\n        } else if (c == ')' || c == ']' || c == '}') {\n            if (abertos.vazia()) {\n                return false;\n            }\n            char a = abertos.desempilhar();\n            if ((c == ')' && a != '(') || (c == ']' && a != '[') || (c == '}' && a != '{')) {\n                return false;\n            }\n        }\n    }\n    return abertos.vazia();\n}\n\ndouble avaliarPosfixa(const string &expressao) {\n    Pilha<double> p;\n    istringstream entrada(expressao);\n    string item;\n    while (entrada >> item) {\n        if (item == \"+\" || item == \"-\" || item == \"*\" || item == \"/\") {\n            double b = p.desempilhar();\n            double a = p.desempilhar();\n            if (item == \"+\") p.empilhar(a + b);\n            else if (item == \"-\") p.empilhar(a - b);\n            else if (item == \"*\") p.empilhar(a * b);\n            else p.empilhar(a / b);\n        } else {\n            p.empilhar(stod(item));\n        }\n    }\n    return p.desempilhar();\n}\n\nint main() {\n    cout << boolalpha;\n    cout << balanceado(\"{[(2+3)*4]}\") << endl;   // true\n    cout << balanceado(\"(2+3]\") << endl;         // false\n    cout << balanceado(\"((1+2)\") << endl;        // false\n    cout << balanceado(\")(\") << endl;            // false\n\n    cout << avaliarPosfixa(\"3 4 + 2 *\") << endl;          // 14\n    cout << avaliarPosfixa(\"5 1 2 + 4 * + 3 -\") << endl;  // 14\n}"
+  },
+  {
+   "t": "h3",
+   "texto": "A pilha de execução"
+  },
+  {
+   "t": "p",
+   "html": "Você já conhece uma pilha muito importante: a <strong>pilha de execução</strong> do programa, citada nos Capítulos 1 e 2. Cada vez que uma função é chamada, um espaço com suas variáveis é empilhado; quando a função termina, esse espaço é desempilhado e o programa volta ao ponto em que estava. Por isso uma recursão sem fim causa o erro conhecido como <em>stack overflow</em> (estouro da pilha): as chamadas são empilhadas até não caber mais nenhuma."
+  },
+  {
+   "t": "h2",
+   "id": "4-5-a-fila",
+   "texto": "4.5 A fila"
+  },
+  {
+   "t": "p",
+   "html": "Em uma fila, os elementos entram por uma ponta (o <strong>fim</strong>) e saem pela outra (o <strong>início</strong>)."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-04_fila.png",
+   "alt": "capitulo 04 fila"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Operação",
+    "O que faz",
+    "Custo"
+   ],
+   "linhas": [
+    [
+     "<code>enfileirar(v)</code>",
+     "coloca <code>v</code> no fim (<em>enqueue</em>)",
+     "O(1)"
+    ],
+    [
+     "<code>desenfileirar()</code>",
+     "retira e devolve o início (<em>dequeue</em>)",
+     "O(1)"
+    ],
+    [
+     "<code>frente()</code>",
+     "devolve o início sem retirar",
+     "O(1)"
+    ],
+    [
+     "<code>vazia()</code>",
+     "diz se não há elementos",
+     "O(1)"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-6-fila-com-nos-encadeados",
+   "texto": "4.6 Fila com nós encadeados"
+  },
+  {
+   "t": "p",
+   "html": "A lista encadeada com ponteiro para o fim (Capítulo 3) já tem tudo que a fila precisa: inserir no fim e remover do início, ambos em O(1)."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <stdexcept>\n\ntemplate <typename T>\nclass Fila {\nprivate:\n    struct No {\n        T valor;\n        No *proximo;\n    };\n    No *inicio = nullptr;   // de onde sai\n    No *fim = nullptr;      // por onde entra\n    int tamanho = 0;\n\npublic:\n    Fila() = default;\n    ~Fila() {\n        while (!vazia()) {\n            desenfileirar();\n        }\n    }\n    Fila(const Fila &) = delete;\n    Fila &operator=(const Fila &) = delete;\n\n    bool vazia() const { return inicio == nullptr; }\n    int quantidade() const { return tamanho; }\n\n    void enfileirar(const T &valor) {\n        No *novo = new No{valor, nullptr};\n        if (fim == nullptr) {\n            inicio = novo;          // fila vazia: o novo é o primeiro\n        } else {\n            fim->proximo = novo;    // entra atrás do último\n        }\n        fim = novo;\n        tamanho++;\n    }\n\n    T desenfileirar() {\n        if (vazia()) {\n            throw runtime_error(\"fila vazia\");\n        }\n        No *velho = inicio;\n        T valor = velho->valor;\n        inicio = inicio->proximo;\n        if (inicio == nullptr) {\n            fim = nullptr;          // a fila ficou vazia\n        }\n        delete velho;\n        tamanho--;\n        return valor;\n    }\n\n    const T &frente() const {\n        if (vazia()) {\n            throw runtime_error(\"fila vazia\");\n        }\n        return inicio->valor;\n    }\n};\n\nint main() {\n    Fila<string> atendimento;\n    atendimento.enfileirar(\"Ana\");\n    atendimento.enfileirar(\"Bia\");\n    atendimento.enfileirar(\"Caio\");\n\n    cout << \"Proximo a ser atendido: \" << atendimento.frente() << endl;  // Ana\n    while (!atendimento.vazia()) {\n        cout << \"Atendendo \" << atendimento.desenfileirar() << endl;     // Ana, Bia, Caio\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare no cuidado em <code>desenfileirar</code>: quando o último elemento sai, <code>fim</code> também precisa voltar a <code>nullptr</code>. Se isso for esquecido, o próximo <code>enfileirar</code> vai ligar o novo nó a um nó que já foi apagado."
+  },
+  {
+   "t": "h2",
+   "id": "4-7-fila-circular-em-vetor",
+   "texto": "4.7 Fila circular em vetor"
+  },
+  {
+   "t": "p",
+   "html": "Também é possível fazer uma fila com um vetor de tamanho fixo, o que evita alocar um nó a cada inserção. A ideia ingênua seria remover sempre da posição 0 e deslocar os demais elementos, mas isso custaria O(n) a cada saída."
+  },
+  {
+   "t": "p",
+   "html": "A solução é a <strong>fila circular</strong>: em vez de mover os elementos, movemos os índices. <code>inicio</code> indica onde está o primeiro elemento e <code>fim</code> indica onde entra o próximo. Quando um índice passa da última posição, ele volta para a posição 0, como se o vetor fosse um anel. Quem faz essa volta é o operador de resto da divisão, <code>%</code>."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-04_fila_circular.png",
+   "alt": "capitulo 04 fila circular"
+  },
+  {
+   "t": "p",
+   "html": "Na figura, a fila tem capacidade 6 e contém, na ordem de saída, A (posição 4), B (posição 5) e C (posição 0). O próximo elemento entrará na posição 1."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <stdexcept>\n\ntemplate <typename T>\nclass FilaCircular {\nprivate:\n    T *dados;\n    int capacidade;\n    int inicio = 0;    // posição do primeiro elemento\n    int fim = 0;       // posição onde entra o próximo\n    int tamanho = 0;\n\npublic:\n    explicit FilaCircular(int cap) : dados(new T[cap]), capacidade(cap) {}\n    ~FilaCircular() { delete[] dados; }\n    FilaCircular(const FilaCircular &) = delete;\n    FilaCircular &operator=(const FilaCircular &) = delete;\n\n    bool vazia() const { return tamanho == 0; }\n    bool cheia() const { return tamanho == capacidade; }\n\n    bool enfileirar(const T &valor) {\n        if (cheia()) {\n            return false;                     // não há espaço\n        }\n        dados[fim] = valor;\n        fim = (fim + 1) % capacidade;         // depois da última, volta para 0\n        tamanho++;\n        return true;\n    }\n\n    T desenfileirar() {\n        if (vazia()) {\n            throw runtime_error(\"fila vazia\");\n        }\n        T valor = dados[inicio];\n        inicio = (inicio + 1) % capacidade;\n        tamanho--;\n        return valor;\n    }\n};\n\nint main() {\n    FilaCircular<int> f(6);\n    for (int v = 1; v <= 6; v++) {\n        f.enfileirar(v);                         // ocupa as posições 0 a 5\n    }\n    cout << boolalpha << f.enfileirar(7) << endl;  // false: está cheia\n\n    cout << f.desenfileirar() << \" \";            // 1\n    cout << f.desenfileirar() << endl;           // 2\n\n    f.enfileirar(7);                             // entra na posição 0 (deu a volta)\n    f.enfileirar(8);                             // entra na posição 1\n    while (!f.vazia()) {\n        cout << f.desenfileirar() << \" \";        // 3 4 5 6 7 8\n    }\n    cout << endl;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A fila circular faz todas as operações em O(1) e não aloca memória a cada inserção, mas tem capacidade fixa. É muito usada em sistemas que recebem dados continuamente, como teclados, placas de rede e players de áudio, onde é chamada de <em>buffer</em> circular."
+  },
+  {
+   "t": "h2",
+   "id": "4-8-aplicacoes-da-fila",
+   "texto": "4.8 Aplicações da fila"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Atendimento por ordem de chegada</strong>: senhas de banco, pedidos de uma lanchonete, chamados de suporte.",
+    "<strong>Fila de impressão</strong>: os documentos são impressos na ordem em que foram enviados.",
+    "<strong>Escalonamento de processos</strong>: o sistema operacional reveza o processador entre os programas usando filas.",
+    "<strong>Busca em largura em grafos</strong>: no Capítulo 6, a fila vai garantir que um grafo seja explorado em camadas, primeiro os vizinhos mais próximos."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-9-pilhas-e-filas-prontas",
+   "texto": "4.9 Pilhas e filas prontas"
+  },
+  {
+   "t": "p",
+   "html": "A biblioteca padrão do C++ oferece <code>stack</code> (pilha), <code>queue</code> (fila) e <code>deque</code>, uma fila de duas pontas que permite inserir e remover no início e no fim. Atenção a um detalhe: no C++, <code>pop()</code> retira o elemento, mas <strong>não o devolve</strong>. Para ler o valor, use <code>top()</code> (pilha) ou <code>front()</code> (fila) antes de chamar <code>pop()</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <stack>\n#include <queue>\n\nint main() {\n    stack<int> pilha;\n    pilha.push(10);\n    pilha.push(20);\n    cout << pilha.top() << endl;    // 20: lê o topo\n    pilha.pop();                    // retira, sem devolver\n\n    queue<string> fila;\n    fila.push(\"Ana\");\n    fila.push(\"Bia\");\n    cout << fila.front() << endl;   // Ana: lê o início\n    fila.pop();\n    cout << fila.size() << endl;    // 1\n}"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Comparando com Python",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em Python, a própria <code>list</code> funciona bem como pilha, porque <code>append</code> e <code>pop</code> no fim custam O(1). Para fila, porém, <strong>não</strong> use a lista: <code>lista.pop(0)</code> desloca todos os elementos e custa O(n). Use o <code>deque</code>:"
+    },
+    {
+     "t": "codigo",
+     "texto": "from collections import deque\n\npilha = []\npilha.append(10)\npilha.append(20)\nprint(pilha.pop())        # 20, O(1)\n\nfila = deque()\nfila.append(\"Ana\")        # enfileirar, O(1)\nfila.append(\"Bia\")\nprint(fila.popleft())     # Ana, desenfileirar em O(1)"
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Desempilhar ou desenfileirar uma estrutura vazia.</strong> Sempre verifique <code>vazia()</code> antes, ou trate a exceção. Na STL do C++, chamar <code>top()</code> ou <code>pop()</code> em uma pilha vazia tem comportamento indefinido.",
+    "<strong>Esperar que o <code>pop()</code> da STL devolva o valor.</strong> Ele só retira. Leia com <code>top()</code> ou <code>front()</code> antes.",
+    "<strong>Inverter a ordem dos operandos.</strong> Na pós-fixa, o primeiro valor desempilhado é o <em>segundo</em> operando: em <code>8 2 -</code>, a conta é 8 - 2, não 2 - 8.",
+    "<strong>Não zerar o <code>fim</code> quando a fila esvazia.</strong> Ao retirar o último elemento, <code>fim</code> deve voltar a <code>nullptr</code>.",
+    "<strong>Esquecer o resto da divisão na fila circular.</strong> Sem <code>% capacidade</code>, o índice passa do fim do vetor e o programa escreve fora da memória reservada.",
+    "<strong>Confundir fila cheia com fila vazia.</strong> Na fila circular, <code>inicio == fim</code> acontece nos dois casos. Por isso guardamos o <code>tamanho</code>.",
+    "<strong>Usar <code>lista.pop(0)</code> como fila em Python.</strong> Cada saída custa O(n); com muitos elementos, o programa fica lento. Use <code>deque</code>."
+   ]
+  }
+ ]
+}

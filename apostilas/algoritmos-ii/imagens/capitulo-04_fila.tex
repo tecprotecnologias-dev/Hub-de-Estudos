@@ -1,0 +1,22 @@
+% Capítulo 4: fila (FIFO): entra no fim, sai pelo início.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-nos}
+\tikzset{caixa/.style={draw=navy, line width=0.9pt, minimum width=12mm, minimum height=8mm,
+                        fill=laranja!12, font=\sffamily\small}}
+\begin{document}
+\begin{tikzpicture}
+  \node[caixa, fill=laranja!35] (a) at (0,0) {Ana};
+  \node[caixa, right=0mm of a] (b) {Bia};
+  \node[caixa, right=0mm of b] (c) {Caio};
+  \node[caixa, right=0mm of c] (d) {Davi};
+  \node[rotulo, above=5mm of a] (ini) {início};
+  \node[rotulo, above=5mm of d] (fim) {fim};
+  \draw[seta] (ini) -- (a.north);
+  \draw[seta] (fim) -- (d.north);
+  \draw[seta] (a.west) -- ++(-1.3,0) node[left, font=\sffamily\scriptsize, text=navy, align=center] {sai\\(desenfileirar)};
+  \draw[setanova] ($(d.east)+(1.3,0)$) node[right, font=\sffamily\scriptsize, text=laranja, align=center] {entra\\(enfileirar)} -- (d.east);
+  \node[legenda, below=3mm of b, xshift=6mm] {o primeiro a entrar é o primeiro a sair (FIFO)};
+\end{tikzpicture}
+\end{document}

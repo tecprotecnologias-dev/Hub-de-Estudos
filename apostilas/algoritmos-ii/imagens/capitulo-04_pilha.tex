@@ -1,0 +1,22 @@
+% Capítulo 4: pilha (LIFO) com empilhar e desempilhar no topo.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-nos}
+\tikzset{caixa/.style={draw=navy, line width=0.9pt, minimum width=18mm, minimum height=7mm,
+                        fill=laranja!12, font=\sffamily\small}}
+\begin{document}
+\begin{tikzpicture}
+  \node[caixa] (c1) at (0,0) {10};
+  \node[caixa, above=0mm of c1] (c2) {20};
+  \node[caixa, above=0mm of c2] (c3) {30};
+  \node[caixa, above=0mm of c3, fill=laranja!35] (c4) {40};
+  \node[rotulo, right=6mm of c4] (topo) {topo};
+  \draw[seta] (topo) -- (c4.east);
+  \draw[setanova] ($(c4.north)+(-1.6,1.0)$) node[above, font=\sffamily\scriptsize, text=laranja] {empilhar (push)}
+        to[out=-90, in=180] ($(c4.north west)+(0,0.15)$);
+  \draw[seta] ($(c4.north east)+(0,0.15)$) to[out=0, in=-90]
+        ($(c4.north)+(1.6,1.0)$) node[above, font=\sffamily\scriptsize, text=navy] {desempilhar (pop)};
+  \node[legenda, below=3mm of c1] {o último a entrar é o primeiro a sair (LIFO)};
+\end{tikzpicture}
+\end{document}
