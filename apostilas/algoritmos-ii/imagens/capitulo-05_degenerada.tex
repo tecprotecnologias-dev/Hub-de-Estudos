@@ -1,0 +1,22 @@
+% Capítulo 5: as mesmas chaves inseridas em ordem (degenerada) e em outra ordem (balanceada).
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-arvores}
+\begin{document}
+\begin{tikzpicture}[arvore]
+  % degenerada: 10, 20, 30, 40, 50
+  \node[vertice] (d) at (0,0) {10}
+    child[missing] child {node[vertice] {20}
+      child[missing] child {node[vertice] {30}
+        child[missing] child {node[vertice] {40}
+          child[missing] child {node[vertice] {50}}}}};
+  \node[legenda, above=3mm of d, align=center] {inserindo 10, 20, 30, 40, 50\\altura 4: parece uma lista};
+
+  % balanceada: 30, 20, 40, 10, 50
+  \node[vertice] (b) at (7,0) {30}
+    child {node[vertice] {20} child {node[vertice] {10}} child[missing]}
+    child {node[vertice] {40} child[missing] child {node[vertice] {50}}};
+  \node[legenda, above=3mm of b, align=center] {inserindo 30, 20, 40, 10, 50\\altura 2: equilibrada};
+\end{tikzpicture}
+\end{document}

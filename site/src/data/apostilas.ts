@@ -439,6 +439,14 @@ export const apostilas: Apostila[] = [
     descricao:
       'LIFO e FIFO, pilha e fila genéricas com nós encadeados, parênteses balanceados, notação pós-fixa, fila circular em vetor e as versões prontas do C++ e do Python.',
   },
+  {
+    id: 'alg2-cap5',
+    capitulo: 5,
+    titulo: 'Árvores',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-ii',
+    descricao:
+      'Terminologia, árvores binárias, percursos (pré-ordem, em ordem, pós-ordem e em largura), árvore binária de busca com inserção, busca e remoção, árvores degeneradas e árvores AVL com rotações.',
+  },
 
   // Programação e Design para Web II (apostila em módulos)
   // Fonte: 02- APOSTILAS/Módulo 5/LATEX/modulos/modulo-0N.tex (24/08), convertida com

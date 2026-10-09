@@ -1,0 +1,546 @@
+{
+ "numero": 5,
+ "titulo": "Árvores",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Listas, pilhas e filas são estruturas <strong>lineares</strong>: cada elemento tem, no máximo, um anterior e um seguinte. Muitos dados do mundo real, porém, não são assim. As pastas do seu computador, o organograma de uma empresa e a estrutura de uma página HTML são <strong>hierárquicos</strong>: um item contém outros, que contêm outros. Neste capítulo você vai estudar a estrutura que representa hierarquias, a <strong>árvore</strong>, e uma de suas versões mais úteis, a <strong>árvore binária de busca</strong>, que permite procurar um valor entre milhões em poucas comparações."
+  },
+  {
+   "t": "h2",
+   "id": "5-1-organizacao-hierarquica",
+   "texto": "5.1 Organização hierárquica"
+  },
+  {
+   "t": "p",
+   "html": "Uma árvore é formada por <strong>nós</strong> ligados por <strong>arestas</strong>. Existe um nó especial no topo, a <strong>raiz</strong>, e cada um dos outros nós tem exatamente um nó acima dele. Diferente das árvores da natureza, na computação a raiz é desenhada em cima e a árvore cresce para baixo."
+  },
+  {
+   "t": "p",
+   "html": "Um bom exemplo é a expressão (3 + 5) · 4 - 2. O operador que é calculado por último, o -, fica na raiz; seus dois operandos ficam abaixo dele, e assim por diante, até os números, que ficam nas pontas:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-05_termos.png",
+   "alt": "capitulo 05 termos"
+  },
+  {
+   "t": "p",
+   "html": "Repare que os parênteses desapareceram: a própria forma da árvore diz que a soma acontece antes da multiplicação, porque ela está mais embaixo. Os termos abaixo serão usados em todo o capítulo:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Termo",
+    "Significado"
+   ],
+   "linhas": [
+    [
+     "raiz",
+     "o único nó sem pai; no exemplo, o -"
+    ],
+    [
+     "pai e filho",
+     "se uma aresta liga A (acima) a B (abaixo), A é o pai e B é o filho"
+    ],
+    [
+     "irmãos",
+     "nós com o mesmo pai, como o + e o 4"
+    ],
+    [
+     "folha",
+     "nó sem filhos; no exemplo, os números 3, 5, 4 e 2"
+    ],
+    [
+     "nó interno",
+     "nó que tem pelo menos um filho"
+    ],
+    [
+     "subárvore",
+     "um nó junto com todos os seus descendentes; ela também é uma árvore"
+    ],
+    [
+     "caminho",
+     "sequência de nós ligados por arestas, de cima para baixo"
+    ],
+    [
+     "nível (profundidade)",
+     "número de arestas da raiz até o nó; a raiz está no nível 0"
+    ],
+    [
+     "altura",
+     "maior nível da árvore, ou seja, o caminho mais longo da raiz até uma folha"
+    ],
+    [
+     "grau",
+     "número de filhos de um nó"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Por que a árvore é recursiva",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Cada filho da raiz é, ele mesmo, a raiz de uma árvore menor. Essa é a ideia mais importante do capítulo: <strong>uma árvore é uma raiz ligada a subárvores</strong>. Por isso quase todas as funções sobre árvores são recursivas e muito curtas: elas resolvem o problema para a raiz e deixam a recursão resolver para as subárvores, como você praticou no Capítulo 1."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-2-a-arvore-binaria",
+   "texto": "5.2 A árvore binária"
+  },
+  {
+   "t": "p",
+   "html": "Quando cada nó tem <strong>no máximo dois filhos</strong>, a árvore é chamada de <strong>binária</strong>. Os filhos são distinguidos pela posição: o filho da <strong>esquerda</strong> e o filho da <strong>direita</strong>. A árvore da expressão é binária, porque cada operador tem exatamente dois operandos."
+  },
+  {
+   "t": "p",
+   "html": "O nó de uma árvore binária lembra o nó da lista duplamente encadeada do Capítulo 3: um valor e dois ponteiros. A diferença está no significado dos ponteiros, que agora apontam para <strong>baixo</strong>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nstruct No {\n    string valor;\n    No *esquerda;\n    No *direita;\n};\n\nNo *novo(const string &valor, No *esquerda = nullptr, No *direita = nullptr) {\n    return new No{valor, esquerda, direita};\n}"
+  },
+  {
+   "t": "p",
+   "html": "Um ponteiro <code>nullptr</code> significa “não há filho deste lado”. Uma folha tem os dois ponteiros nulos, e a árvore inteira é acessada a partir de um único ponteiro para a raiz, assim como a lista era acessada pelo ponteiro para o início."
+  },
+  {
+   "t": "p",
+   "html": "Alguns formatos de árvore binária recebem nomes próprios:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Estritamente binária</strong>: todo nó tem zero ou dois filhos, nunca um só. A árvore da expressão é estritamente binária.",
+    "<strong>Cheia</strong>: estritamente binária e com todas as folhas no mesmo nível. Uma árvore cheia de altura h tem 2<sup>h+1</sup> - 1 nós.",
+    "<strong>Completa</strong>: todos os níveis estão cheios, exceto talvez o último, que é preenchido da esquerda para a direita. Você vai reencontrar esse formato no Capítulo 8, no <em>heapsort</em>."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A conta da árvore cheia mostra algo valioso: com altura 9, cabem 2<sup>10</sup> - 1 = 1023 nós; com altura 19, mais de um milhão. Uma árvore bem formada é <strong>baixa</strong>, mesmo com muitos nós. Guarde essa ideia para a Seção 5.5."
+  },
+  {
+   "t": "h2",
+   "id": "5-3-percorrendo-uma-arvore",
+   "texto": "5.3 Percorrendo uma árvore"
+  },
+  {
+   "t": "p",
+   "html": "Percorrer uma estrutura é visitar cada elemento uma vez. Na lista existe uma só ordem natural, do início ao fim. Na árvore binária, em cada nó há três coisas a fazer (visitar o próprio nó, percorrer a subárvore esquerda e percorrer a direita), e a ordem escolhida dá nome ao percurso:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Pré-ordem</strong>: primeiro o nó, depois a esquerda, depois a direita.",
+    "<strong>Em ordem</strong> (ou ordem simétrica): primeiro a esquerda, depois o nó, depois a direita.",
+    "<strong>Pós-ordem</strong>: primeiro a esquerda, depois a direita, por último o nó."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "As três funções são idênticas, mudando apenas a posição da linha que imprime:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nvoid preOrdem(No *no) {\n    if (no == nullptr) return;     // árvore vazia: nada a fazer\n    cout << no->valor << \" \";      // 1. o próprio nó\n    preOrdem(no->esquerda);        // 2. subárvore esquerda\n    preOrdem(no->direita);         // 3. subárvore direita\n}\n\nvoid emOrdem(No *no) {\n    if (no == nullptr) return;\n    emOrdem(no->esquerda);\n    cout << no->valor << \" \";\n    emOrdem(no->direita);\n}\n\nvoid posOrdem(No *no) {\n    if (no == nullptr) return;\n    posOrdem(no->esquerda);\n    posOrdem(no->direita);\n    cout << no->valor << \" \";\n}"
+  },
+  {
+   "t": "p",
+   "html": "Aplicados à árvore da expressão, os percursos produzem:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Percurso",
+    "Resultado",
+    "Observação"
+   ],
+   "linhas": [
+    [
+     "pré-ordem",
+     "<code>- * + 3 5 4 2</code>",
+     "operador antes dos operandos (notação prefixa)"
+    ],
+    [
+     "em ordem",
+     "<code>3 + 5 * 4 - 2</code>",
+     "a forma como escrevemos, mas sem os parênteses"
+    ],
+    [
+     "pós-ordem",
+     "<code>3 5 + 4 * 2 -</code>",
+     "a notação pós-fixa do Capítulo 4"
+    ],
+    [
+     "em largura",
+     "<code>- * 2 + 4 3 5</code>",
+     "nível por nível, da esquerda para a direita"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A pós-ordem gerou exatamente a notação que a pilha do Capítulo 4 sabia calcular. E o percurso em ordem perdeu os parênteses: se você quiser a expressão correta, basta imprimir um “(” antes da subárvore esquerda e um “)” depois da direita."
+  },
+  {
+   "t": "p",
+   "html": "O último percurso da tabela, <strong>em largura</strong>, não é recursivo: ele visita a raiz, depois todos os nós do nível 1, depois os do nível 2, e assim por diante. Para isso, usa uma <strong>fila</strong>: cada nó visitado coloca seus filhos no final da fila, e eles serão visitados depois de todos os nós que já estavam esperando. É o FIFO do Capítulo 4 trabalhando a favor da árvore."
+  },
+  {
+   "t": "p",
+   "html": "O programa completo monta a árvore da expressão, faz os quatro percursos e usa a mesma ideia recursiva para calcular a altura, contar as folhas e até <strong>avaliar</strong> a expressão:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <algorithm>   // max\n#include <queue>\n\nstruct No {\n    string valor;\n    No *esquerda;\n    No *direita;\n};\n\nNo *novo(const string &valor, No *esquerda = nullptr, No *direita = nullptr) {\n    return new No{valor, esquerda, direita};\n}\n\nvoid preOrdem(No *no) {\n    if (no == nullptr) return;     // árvore vazia: nada a fazer\n    cout << no->valor << \" \";      // 1. o próprio nó\n    preOrdem(no->esquerda);        // 2. subárvore esquerda\n    preOrdem(no->direita);         // 3. subárvore direita\n}\n\nvoid emOrdem(No *no) {\n    if (no == nullptr) return;\n    emOrdem(no->esquerda);\n    cout << no->valor << \" \";\n    emOrdem(no->direita);\n}\n\nvoid posOrdem(No *no) {\n    if (no == nullptr) return;\n    posOrdem(no->esquerda);\n    posOrdem(no->direita);\n    cout << no->valor << \" \";\n}\n\nvoid emLargura(No *raiz) {\n    if (raiz == nullptr) return;\n    queue<No *> fila;\n    fila.push(raiz);\n    while (!fila.empty()) {\n        No *atual = fila.front();\n        fila.pop();\n        cout << atual->valor << \" \";\n        if (atual->esquerda != nullptr) fila.push(atual->esquerda);\n        if (atual->direita != nullptr) fila.push(atual->direita);\n    }\n}\n\nint altura(No *no) {\n    if (no == nullptr) return -1;  // árvore vazia: assim, uma folha tem altura 0\n    return 1 + max(altura(no->esquerda), altura(no->direita));\n}\n\nint contarFolhas(No *no) {\n    if (no == nullptr) return 0;\n    if (no->esquerda == nullptr && no->direita == nullptr) return 1;\n    return contarFolhas(no->esquerda) + contarFolhas(no->direita);\n}\n\ndouble avaliar(No *no) {\n    if (no->esquerda == nullptr && no->direita == nullptr) {\n        return stod(no->valor);    // folha: é um número\n    }\n    double a = avaliar(no->esquerda);\n    double b = avaliar(no->direita);\n    if (no->valor == \"+\") return a + b;\n    if (no->valor == \"-\") return a - b;\n    if (no->valor == \"*\") return a * b;\n    return a / b;\n}\n\nvoid liberar(No *no) {\n    if (no == nullptr) return;\n    liberar(no->esquerda);         // pós-ordem: os filhos antes do pai\n    liberar(no->direita);\n    delete no;\n}\n\nint main() {\n    // (3 + 5) * 4 - 2\n    No *raiz = novo(\"-\",\n                    novo(\"*\",\n                         novo(\"+\", novo(\"3\"), novo(\"5\")),\n                         novo(\"4\")),\n                    novo(\"2\"));\n\n    cout << \"Pré-ordem:  \"; preOrdem(raiz);  cout << endl;  // - * + 3 5 4 2\n    cout << \"Em ordem:   \"; emOrdem(raiz);   cout << endl;  // 3 + 5 * 4 - 2\n    cout << \"Pós-ordem:  \"; posOrdem(raiz);  cout << endl;  // 3 5 + 4 * 2 -\n    cout << \"Em largura: \"; emLargura(raiz); cout << endl;  // - * 2 + 4 3 5\n\n    cout << \"Altura: \" << altura(raiz) << endl;            // 3\n    cout << \"Folhas: \" << contarFolhas(raiz) << endl;      // 4\n    cout << \"Valor: \" << avaliar(raiz) << endl;            // 30\n\n    liberar(raiz);\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare em <code>liberar</code>: ela é uma pós-ordem. Os filhos precisam ser apagados <strong>antes</strong> do pai, porque depois do <code>delete</code> do pai os ponteiros para os filhos não podem mais ser lidos. Todos os percursos visitam cada nó uma única vez, então custam O(n)."
+  },
+  {
+   "t": "h2",
+   "id": "5-4-arvore-binaria-de-busca",
+   "texto": "5.4 Árvore binária de busca"
+  },
+  {
+   "t": "p",
+   "html": "Na lista encadeada, procurar um valor exige olhar os elementos um a um: O(n). A <strong>árvore binária de busca</strong> (ABB, ou BST, do inglês <em>binary search tree</em>) organiza os valores de forma que cada comparação descarte uma parte inteira da árvore. Para isso, ela segue uma única regra, válida em <strong>todos</strong> os nós:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "todos os valores da subárvore <strong>esquerda</strong> são <strong>menores</strong> que o valor do nó;",
+    "todos os valores da subárvore <strong>direita</strong> são <strong>maiores</strong> que o valor do nó."
+   ]
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-05_abb.png",
+   "alt": "capitulo 05 abb"
+  },
+  {
+   "t": "h3",
+   "texto": "Buscar"
+  },
+  {
+   "t": "p",
+   "html": "Para procurar o 60 na árvore acima, compare com a raiz: 60 é maior que 50, então ele só pode estar à direita. Agora compare com o 70: 60 é menor, então desça à esquerda. Achou. Foram três comparações, e a metade esquerda da árvore nem foi olhada. É a mesma ideia da <strong>busca binária</strong> em um vetor ordenado, que você verá no Capítulo 7, só que agora em uma estrutura que aceita inserções e remoções."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\n    bool contem(int valor) const {\n        No *atual = raiz;\n        while (atual != nullptr) {\n            if (valor == atual->valor) return true;\n            atual = (valor < atual->valor) ? atual->esquerda : atual->direita;\n        }\n        return false;\n    }"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>menor</strong> valor da árvore é o nó mais à esquerda, e o <strong>maior</strong> é o nó mais à direita: basta descer sempre para o mesmo lado até não haver mais filho."
+  },
+  {
+   "t": "h3",
+   "texto": "Inserir"
+  },
+  {
+   "t": "p",
+   "html": "Inserir é buscar o lugar onde o valor deveria estar. Quando a busca chega a um ponteiro nulo, é ali que o novo nó entra, sempre como <strong>folha</strong>. A versão recursiva fica curta: ela recebe a raiz de uma subárvore, insere o valor do lado certo e devolve a raiz, que muda apenas quando a subárvore estava vazia."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\n    static No *inserir(No *no, int valor) {\n        if (no == nullptr) {\n            return new No{valor};           // achou o lugar: nova folha\n        }\n        if (valor < no->valor) {\n            no->esquerda = inserir(no->esquerda, valor);\n        } else if (valor > no->valor) {\n            no->direita = inserir(no->direita, valor);\n        }\n        // valor igual: já está na árvore, nada a fazer\n        return no;\n    }"
+  },
+  {
+   "t": "p",
+   "html": "A linha <code>no-&gt;esquerda = inserir(no-&gt;esquerda, valor)</code> é o truque que evita casos especiais: ela reconecta o filho, quer ele tenha mudado (era nulo e virou o nó novo), quer não. Esta implementação não guarda valores repetidos; quando for preciso, cada nó pode ter um contador de ocorrências."
+  },
+  {
+   "t": "h3",
+   "texto": "Percorrer em ordem"
+  },
+  {
+   "t": "p",
+   "html": "Pela regra da ABB, o percurso em ordem visita primeiro todos os menores, depois o nó, depois todos os maiores. O resultado é que ele imprime os valores <strong>ordenados</strong>. Na árvore da figura: <code>20 30 40 50 60 70 80</code>. Uma ABB, portanto, é também uma forma de manter dados sempre em ordem."
+  },
+  {
+   "t": "h3",
+   "texto": "Remover"
+  },
+  {
+   "t": "p",
+   "html": "A remoção é a operação mais delicada, porque o nó removido pode ter filhos que precisam continuar na árvore. Há três casos:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. <strong>O nó é uma folha.</strong> Basta apagá-lo e deixar nulo o ponteiro do pai.",
+    "2. <strong>O nó tem um filho.</strong> O filho ocupa o lugar dele: o pai passa a apontar diretamente para o neto. A regra da ABB continua valendo, porque toda a subárvore do filho estava do mesmo lado do pai.",
+    "3. <strong>O nó tem dois filhos.</strong> Nenhum dos filhos pode simplesmente subir, pois o outro ficaria sem lugar. A solução é encontrar o <strong>sucessor</strong>: o menor valor da subárvore direita. Ele é maior que tudo à esquerda e menor que todo o resto à direita, então pode ocupar o lugar do nó removido. Copiamos o valor do sucessor para o nó e removemos o sucessor lá de baixo, o que cai no caso 1 ou 2, já que o sucessor não tem filho à esquerda."
+   ]
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-05_remocao.png",
+   "alt": "capitulo 05 remocao"
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\n    static No *remover(No *no, int valor) {\n        if (no == nullptr) {\n            return nullptr;                 // o valor não está na árvore\n        }\n        if (valor < no->valor) {\n            no->esquerda = remover(no->esquerda, valor);\n        } else if (valor > no->valor) {\n            no->direita = remover(no->direita, valor);\n        } else if (no->esquerda == nullptr) {   // casos 1 e 2: no máximo um filho\n            No *filho = no->direita;\n            delete no;\n            return filho;\n        } else if (no->direita == nullptr) {\n            No *filho = no->esquerda;\n            delete no;\n            return filho;\n        } else {                                // caso 3: dois filhos\n            No *sucessor = no->direita;\n            while (sucessor->esquerda != nullptr) {\n                sucessor = sucessor->esquerda;\n            }\n            no->valor = sucessor->valor;        // o sucessor sobe\n            no->direita = remover(no->direita, sucessor->valor);  // e sai lá de baixo\n        }\n        return no;\n    }"
+  },
+  {
+   "t": "p",
+   "html": "Os casos 1 e 2 foram tratados juntos: se não há filho à esquerda, quem sobe é o da direita, e se este também for nulo, o pai simplesmente recebe <code>nullptr</code>. O programa completo aparece no final da próxima seção."
+  },
+  {
+   "t": "h2",
+   "id": "5-5-arvores-balanceadas-e-degeneradas",
+   "texto": "5.5 Árvores balanceadas e degeneradas"
+  },
+  {
+   "t": "p",
+   "html": "Buscar, inserir e remover descem um único caminho da raiz até, no máximo, uma folha. O custo dessas operações é, então, O(h), em que h é a altura da árvore. A questão é: qual é a altura?"
+  },
+  {
+   "t": "p",
+   "html": "Depende da <strong>ordem de inserção</strong>. As mesmas cinco chaves podem formar árvores muito diferentes:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-05_degenerada.png",
+   "alt": "capitulo 05 degenerada"
+  },
+  {
+   "t": "p",
+   "html": "Quando os valores chegam já ordenados, cada novo nó vira filho direito do anterior, e a árvore <strong>degenera</strong> em algo igual a uma lista encadeada: altura n - 1 e busca O(n). Quando a árvore está <strong>balanceada</strong>, isto é, com as subárvores de cada nó de alturas parecidas, a altura fica perto de log<sub>2</sub> n, como você viu na conta da árvore cheia."
+  },
+  {
+   "t": "p",
+   "html": "O experimento abaixo insere os números de 1 a 1000 de duas formas: em ordem crescente, e começando sempre pelo elemento do meio de cada intervalo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nvoid inserirDoMeio(ArvoreBusca &arvore, int inicio, int fim) {\n    if (inicio > fim) return;\n    int meio = (inicio + fim) / 2;\n    arvore.inserir(meio);\n    inserirDoMeio(arvore, inicio, meio - 1);\n    inserirDoMeio(arvore, meio + 1, fim);\n}\n\n    ArvoreBusca crescente, equilibrada;\n    for (int v = 1; v <= 1000; v++) {\n        crescente.inserir(v);\n    }\n    inserirDoMeio(equilibrada, 1, 1000);\n    cout << \"Altura (crescente): \" << crescente.altura() << endl;     // 999\n    cout << \"Altura (do meio): \" << equilibrada.altura() << endl;     // 9"
+  },
+  {
+   "t": "p",
+   "html": "São os mesmos mil valores. Em uma árvore, achar o último exige percorrer mil nós; na outra, no máximo dez."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Operação",
+    "ABB balanceada",
+    "ABB degenerada"
+   ],
+   "linhas": [
+    [
+     "buscar",
+     "O(log n)",
+     "O(n)"
+    ],
+    [
+     "inserir",
+     "O(log n)",
+     "O(n)"
+    ],
+    [
+     "remover",
+     "O(log n)",
+     "O(n)"
+    ],
+    [
+     "mínimo e máximo",
+     "O(log n)",
+     "O(n)"
+    ],
+    [
+     "percorrer tudo",
+     "O(n)",
+     "O(n)"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Este é o programa completo da árvore binária de busca, com o experimento das alturas:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <algorithm>   // max\n#include <stdexcept>   // runtime_error\n\nclass ArvoreBusca {\nprivate:\n    struct No {\n        int valor;\n        No *esquerda = nullptr;\n        No *direita = nullptr;\n    };\n    No *raiz = nullptr;\n\n    static No *inserir(No *no, int valor) {\n        if (no == nullptr) {\n            return new No{valor};           // achou o lugar: nova folha\n        }\n        if (valor < no->valor) {\n            no->esquerda = inserir(no->esquerda, valor);\n        } else if (valor > no->valor) {\n            no->direita = inserir(no->direita, valor);\n        }\n        // valor igual: já está na árvore, nada a fazer\n        return no;\n    }\n\n    static No *remover(No *no, int valor) {\n        if (no == nullptr) {\n            return nullptr;                 // o valor não está na árvore\n        }\n        if (valor < no->valor) {\n            no->esquerda = remover(no->esquerda, valor);\n        } else if (valor > no->valor) {\n            no->direita = remover(no->direita, valor);\n        } else if (no->esquerda == nullptr) {   // casos 1 e 2: no máximo um filho\n            No *filho = no->direita;\n            delete no;\n            return filho;\n        } else if (no->direita == nullptr) {\n            No *filho = no->esquerda;\n            delete no;\n            return filho;\n        } else {                                // caso 3: dois filhos\n            No *sucessor = no->direita;\n            while (sucessor->esquerda != nullptr) {\n                sucessor = sucessor->esquerda;\n            }\n            no->valor = sucessor->valor;        // o sucessor sobe\n            no->direita = remover(no->direita, sucessor->valor);  // e sai lá de baixo\n        }\n        return no;\n    }\n\n    static void emOrdem(No *no) {\n        if (no == nullptr) return;\n        emOrdem(no->esquerda);\n        cout << no->valor << \" \";\n        emOrdem(no->direita);\n    }\n\n    static int altura(No *no) {\n        if (no == nullptr) return -1;\n        return 1 + max(altura(no->esquerda), altura(no->direita));\n    }\n\n    static void liberar(No *no) {\n        if (no == nullptr) return;\n        liberar(no->esquerda);\n        liberar(no->direita);\n        delete no;\n    }\n\npublic:\n    ArvoreBusca() = default;\n    ~ArvoreBusca() { liberar(raiz); }\n    ArvoreBusca(const ArvoreBusca &) = delete;\n    ArvoreBusca &operator=(const ArvoreBusca &) = delete;\n\n    void inserir(int valor) { raiz = inserir(raiz, valor); }\n    void remover(int valor) { raiz = remover(raiz, valor); }\n\n    bool contem(int valor) const {\n        No *atual = raiz;\n        while (atual != nullptr) {\n            if (valor == atual->valor) return true;\n            atual = (valor < atual->valor) ? atual->esquerda : atual->direita;\n        }\n        return false;\n    }\n\n    int minimo() const {\n        if (raiz == nullptr) throw runtime_error(\"árvore vazia\");\n        No *atual = raiz;\n        while (atual->esquerda != nullptr) atual = atual->esquerda;\n        return atual->valor;\n    }\n\n    int maximo() const {\n        if (raiz == nullptr) throw runtime_error(\"árvore vazia\");\n        No *atual = raiz;\n        while (atual->direita != nullptr) atual = atual->direita;\n        return atual->valor;\n    }\n\n    int altura() const { return altura(raiz); }\n    void imprimir() const { emOrdem(raiz); cout << endl; }\n};\n\nvoid inserirDoMeio(ArvoreBusca &arvore, int inicio, int fim) {\n    if (inicio > fim) return;\n    int meio = (inicio + fim) / 2;\n    arvore.inserir(meio);\n    inserirDoMeio(arvore, inicio, meio - 1);\n    inserirDoMeio(arvore, meio + 1, fim);\n}\n\nint main() {\n    ArvoreBusca arvore;\n    for (int v : {50, 30, 70, 20, 40, 60, 80}) {\n        arvore.inserir(v);\n    }\n    arvore.imprimir();                                   // 20 30 40 50 60 70 80\n    cout << boolalpha << arvore.contem(60) << endl;      // true\n    cout << arvore.contem(65) << endl;                   // false\n    cout << arvore.minimo() << \" \" << arvore.maximo() << endl;  // 20 80\n    cout << \"Altura: \" << arvore.altura() << endl;       // 2\n\n    arvore.remover(30);   // dois filhos: o sucessor 40 sobe\n    arvore.remover(40);   // agora o 40 tem um filho só, o 20\n    arvore.remover(80);   // folha\n    arvore.imprimir();                                   // 20 50 60 70\n\n    ArvoreBusca crescente, equilibrada;\n    for (int v = 1; v <= 1000; v++) {\n        crescente.inserir(v);\n    }\n    inserirDoMeio(equilibrada, 1, 1000);\n    cout << \"Altura (crescente): \" << crescente.altura() << endl;     // 999\n    cout << \"Altura (do meio): \" << equilibrada.altura() << endl;     // 9\n}"
+  },
+  {
+   "t": "p",
+   "html": "As funções recursivas ficaram <code>private</code> e <code>static</code>: quem usa a classe chama <code>inserir(valor)</code> sem precisar saber que existem nós, e a versão interna recebe a subárvore em que deve trabalhar. É o mesmo encapsulamento da pilha e da fila do Capítulo 4."
+  },
+  {
+   "t": "h2",
+   "id": "5-6-arvores-avl",
+   "texto": "5.6 Árvores AVL"
+  },
+  {
+   "t": "p",
+   "html": "Na prática, você raramente controla a ordem em que os dados chegam. Cadastros por data, códigos sequenciais e nomes já ordenados são comuns, e são justamente o pior caso da ABB. A solução é uma árvore que <strong>se rebalanceia sozinha</strong> a cada inserção. A primeira delas, e a mais conhecida, é a <strong>árvore AVL</strong>, nome que vem das iniciais de seus criadores, Adelson-Velsky e Landis."
+  },
+  {
+   "t": "h3",
+   "texto": "Fator de balanceamento"
+  },
+  {
+   "t": "p",
+   "html": "Cada nó da AVL guarda a própria altura. Com ela, calcula-se o <strong>fator de balanceamento</strong>:"
+  },
+  {
+   "t": "p",
+   "html": "fator = altura da subárvore esquerda - altura da subárvore direita"
+  },
+  {
+   "t": "p",
+   "html": "A AVL exige que, em <strong>todos</strong> os nós, o fator seja -1, 0 ou +1. Fator +2 significa que o nó pesa demais à esquerda; -2, que pesa demais à direita. Essa regra garante que a altura da AVL nunca passa de cerca de 1,44 log<sub>2</sub> n, então todas as operações ficam em O(log n)."
+  },
+  {
+   "t": "h3",
+   "texto": "Rotações"
+  },
+  {
+   "t": "p",
+   "html": "Quando uma inserção deixa algum nó com fator ± 2, a árvore é consertada com uma <strong>rotação</strong>: uma troca de poucos ponteiros que faz um filho subir e o pai descer, <strong>mantendo a regra da ABB</strong>."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-05_rotacao.png",
+   "alt": "capitulo 05 rotacao"
+  },
+  {
+   "t": "p",
+   "html": "Na rotação à direita da figura, o 20 sobe e o 30 vira seu filho direito. A subárvore B, que estava à direita do 20, tem valores entre 20 e 30; por isso ela passa a ficar à esquerda do 30, e a ordem continua correta. A rotação à esquerda é o espelho dessa."
+  },
+  {
+   "t": "p",
+   "html": "Há quatro situações de desequilíbrio, nomeadas pelo caminho do nó desequilibrado até o ponto onde entrou o novo valor:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Caso",
+    "Como identificar",
+    "Correção"
+   ],
+   "linhas": [
+    [
+     "esquerda-esquerda",
+     "fator +2, filho esquerdo com fator ≥ 0",
+     "rotação simples à direita"
+    ],
+    [
+     "direita-direita",
+     "fator -2, filho direito com fator ≤ 0",
+     "rotação simples à esquerda"
+    ],
+    [
+     "esquerda-direita",
+     "fator +2, filho esquerdo com fator -1",
+     "rotação dupla: à esquerda no filho, depois à direita no nó"
+    ],
+    [
+     "direita-esquerda",
+     "fator -2, filho direito com fator +1",
+     "rotação dupla: à direita no filho, depois à esquerda no nó"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Nos casos “em linha” (esquerda-esquerda e direita-direita), uma rotação basta. Nos casos “em zigue-zague”, a primeira rotação endireita o zigue-zague, transformando-o no caso em linha, e a segunda resolve. Por exemplo, ao inserir 30, 10 e 20, o 20 entra à direita do 10, que está à esquerda do 30: é o caso esquerda-direita, e o resultado final tem o 20 na raiz."
+  },
+  {
+   "t": "h3",
+   "texto": "Inserção na AVL"
+  },
+  {
+   "t": "p",
+   "html": "A inserção é a mesma da ABB, com um passo a mais: na volta da recursão, cada nó do caminho atualiza sua altura e, se precisar, é rebalanceado. Como a recursão volta de baixo para cima, o primeiro nó desequilibrado encontrado é o mais próximo da inserção, que é exatamente o que deve ser corrigido."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <algorithm>   // max\n\nstruct NoAVL {\n    int valor;\n    int altura = 0;                // uma folha tem altura 0\n    NoAVL *esquerda = nullptr;\n    NoAVL *direita = nullptr;\n};\n\nint altura(NoAVL *no) { return no == nullptr ? -1 : no->altura; }\n\nint fator(NoAVL *no) { return altura(no->esquerda) - altura(no->direita); }\n\nvoid atualizar(NoAVL *no) {\n    no->altura = 1 + max(altura(no->esquerda), altura(no->direita));\n}\n\nNoAVL *rotacaoDireita(NoAVL *y) {\n    NoAVL *x = y->esquerda;\n    NoAVL *b = x->direita;\n    x->direita = y;                // y desce para a direita de x\n    y->esquerda = b;               // a subárvore B muda de pai\n    atualizar(y);                  // y primeiro, porque agora está embaixo\n    atualizar(x);\n    return x;                      // x é a nova raiz desta subárvore\n}\n\nNoAVL *rotacaoEsquerda(NoAVL *x) {\n    NoAVL *y = x->direita;\n    NoAVL *b = y->esquerda;\n    y->esquerda = x;\n    x->direita = b;\n    atualizar(x);\n    atualizar(y);\n    return y;\n}\n\nNoAVL *balancear(NoAVL *no) {\n    atualizar(no);\n    int f = fator(no);\n    if (f > 1) {                                   // pesa à esquerda\n        if (fator(no->esquerda) < 0) {             // zigue-zague: esquerda-direita\n            no->esquerda = rotacaoEsquerda(no->esquerda);\n        }\n        return rotacaoDireita(no);\n    }\n    if (f < -1) {                                  // pesa à direita\n        if (fator(no->direita) > 0) {              // zigue-zague: direita-esquerda\n            no->direita = rotacaoDireita(no->direita);\n        }\n        return rotacaoEsquerda(no);\n    }\n    return no;                                     // já está equilibrado\n}\n\nNoAVL *inserir(NoAVL *no, int valor) {\n    if (no == nullptr) return new NoAVL{valor};\n    if (valor < no->valor) {\n        no->esquerda = inserir(no->esquerda, valor);\n    } else if (valor > no->valor) {\n        no->direita = inserir(no->direita, valor);\n    } else {\n        return no;                                 // repetido: nada muda\n    }\n    return balancear(no);                          // conserta na volta da recursão\n}\n\nvoid preOrdem(NoAVL *no) {\n    if (no == nullptr) return;\n    cout << no->valor << \" \";\n    preOrdem(no->esquerda);\n    preOrdem(no->direita);\n}\n\nvoid liberar(NoAVL *no) {\n    if (no == nullptr) return;\n    liberar(no->esquerda);\n    liberar(no->direita);\n    delete no;\n}\n\nint main() {\n    NoAVL *raiz = nullptr;\n    for (int v : {30, 10, 20}) {                   // caso esquerda-direita\n        raiz = inserir(raiz, v);\n    }\n    preOrdem(raiz); cout << endl;                  // 20 10 30\n    liberar(raiz);\n\n    raiz = nullptr;\n    for (int v = 1; v <= 7; v++) {                 // em ordem crescente\n        raiz = inserir(raiz, v);\n    }\n    preOrdem(raiz); cout << endl;                  // 4 2 1 3 6 5 7\n    cout << \"Altura: \" << altura(raiz) << endl;    // 2\n    liberar(raiz);\n\n    raiz = nullptr;\n    for (int v = 1; v <= 1000; v++) {\n        raiz = inserir(raiz, v);\n    }\n    cout << \"Altura com 1000: \" << altura(raiz) << endl;   // 9\n    liberar(raiz);\n}"
+  },
+  {
+   "t": "p",
+   "html": "Inserir de 1 a 7 em ordem crescente, que na ABB comum produziria uma “lista” de altura 6, gera na AVL uma árvore cheia de altura 2, com o 4 na raiz. E os mil valores crescentes, que deixaram a ABB com altura 999, ficam com altura 9. Cada rotação custa O(1), pois mexe em poucos ponteiros, e há no máximo uma correção (simples ou dupla) por inserção; o custo total continua O(log n)."
+  },
+  {
+   "t": "p",
+   "html": "A remoção na AVL segue a mesma ideia: remove-se como na ABB e chama-se <code>balancear</code> na volta da recursão. A diferença é que, na remoção, pode ser preciso rebalancear vários nós no caminho até a raiz."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Outras árvores balanceadas",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A AVL não é a única. A <strong>árvore rubro-negra</strong> (<em>red-black tree</em>) usa uma regra mais folgada, baseada em cores nos nós, e faz menos rotações nas inserções e remoções; ela é a base do <code>std::set</code> e do <code>std::map</code> do C++. Já as <strong>árvores B</strong> têm nós com muitos filhos e são usadas em bancos de dados e sistemas de arquivos, em que cada nó corresponde a um bloco do disco."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-7-arvores-prontas",
+   "texto": "5.7 Árvores prontas"
+  },
+  {
+   "t": "p",
+   "html": "Em projetos reais, você usará as árvores balanceadas da biblioteca padrão. O <code>std::set</code> guarda valores sem repetição e o <code>std::map</code> guarda pares chave-valor; ambos mantêm os elementos <strong>ordenados</strong> e fazem inserção, busca e remoção em O(log n)."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <set>\n#include <map>\n\nint main() {\n    set<int> numeros = {50, 30, 70, 20, 40};\n    numeros.insert(60);\n    numeros.insert(30);                     // repetido: ignorado\n    numeros.erase(70);\n    for (int n : numeros) {\n        cout << n << \" \";                   // sempre em ordem\n    }\n    cout << endl;                           // 20 30 40 50 60\n    cout << numeros.count(40) << endl;      // 1: está no conjunto\n\n    map<string, int> idades;\n    idades[\"Caio\"] = 20;\n    idades[\"Ana\"] = 19;\n    idades[\"Bia\"] = 21;\n    for (const auto &[nome, idade] : idades) {\n        cout << nome << \": \" << idade << endl;  // Ana: 19, Bia: 21, Caio: 20\n    }\n}"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Comparando com Python",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Python não tem uma árvore de busca na biblioteca padrão. O <code>dict</code> e o <code>set</code> usam <strong>tabelas hash</strong>, que buscam em O(1) em média, mas não guardam as chaves em ordem: para percorrê-las ordenadas, é preciso chamar <code>sorted</code>, que custa O(n log n) a cada vez. Quando a ordem importa, você pode escrever sua própria árvore, e o código fica parecido com o do C++, sem ponteiros explícitos nem <code>delete</code>, porque o coletor de lixo libera os nós:"
+    },
+    {
+     "t": "codigo",
+     "texto": "class No:\n    def __init__(self, valor):\n        self.valor = valor\n        self.esquerda = None\n        self.direita = None\n\ndef inserir(no, valor):\n    if no is None:\n        return No(valor)\n    if valor < no.valor:\n        no.esquerda = inserir(no.esquerda, valor)\n    elif valor > no.valor:\n        no.direita = inserir(no.direita, valor)\n    return no\n\ndef em_ordem(no):\n    if no is not None:\n        yield from em_ordem(no.esquerda)\n        yield no.valor\n        yield from em_ordem(no.direita)\n\nraiz = None\nfor v in [50, 30, 70, 20, 40]:\n    raiz = inserir(raiz, v)\nprint(list(em_ordem(raiz)))    # [20, 30, 40, 50, 70]"
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Esquecer o caso da árvore vazia.</strong> Toda função recursiva sobre árvores precisa começar testando <code>nullptr</code>. Sem isso, a recursão acessa um ponteiro nulo ao chegar abaixo de uma folha.",
+    "<strong>Não reconectar o filho na inserção recursiva.</strong> Chamar apenas <code>inserir(no-&gt;esquerda, valor)</code>, sem atribuir o resultado a <code>no-&gt;esquerda</code>, cria o nó novo e o perde: ele nunca é ligado à árvore e a memória vaza.",
+    "<strong>Liberar o pai antes dos filhos.</strong> Depois do <code>delete</code> de um nó, seus ponteiros não podem mais ser lidos. Libere sempre em pós-ordem.",
+    "<strong>Conferir a regra da ABB só com os filhos diretos.</strong> A regra vale para a subárvore inteira: um valor 55 na subárvore esquerda do 50 quebra a árvore, mesmo que ele seja menor que o pai imediato.",
+    "<strong>Escolher o sucessor errado na remoção.</strong> O sucessor é o <em>menor</em> valor da subárvore <em>direita</em> (desça uma vez à direita e depois sempre à esquerda). Também funciona usar o <em>maior</em> da subárvore esquerda, mas não misture as duas ideias.",
+    "<strong>Supor que a ABB é sempre O(log n).</strong> Isso só vale se ela estiver balanceada. Com dados ordenados, uma ABB comum vira uma lista.",
+    "<strong>Atualizar as alturas na ordem errada na rotação.</strong> O nó que desceu deve ser atualizado antes do que subiu, porque a altura do novo pai depende da altura do novo filho.",
+    "<strong>Esperar ordem do <code>dict</code> ou do <code>set</code> do Python.</strong> O <code>dict</code> preserva a ordem de inserção, não a ordem das chaves, e o <code>set</code> não garante ordem nenhuma."
+   ]
+  }
+ ]
+}

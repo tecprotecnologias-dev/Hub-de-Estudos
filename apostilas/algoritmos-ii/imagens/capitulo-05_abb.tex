@@ -1,0 +1,18 @@
+% Capítulo 5: árvore binária de busca com 7 chaves.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-arvores}
+\begin{document}
+\begin{tikzpicture}[arvore, level 1/.style={sibling distance=36mm}, level 2/.style={sibling distance=18mm}]
+  \node[vertice] (r) {50}
+    child {node[vertice] {30}
+      child {node[vertice] {20}}
+      child {node[vertice] {40}}}
+    child {node[vertice] {70}
+      child {node[vertice] {60}}
+      child {node[vertice] {80}}};
+  \node[legenda, below=27mm of r, align=center]
+    {à esquerda de cada nó, só valores menores; à direita, só valores maiores};
+\end{tikzpicture}
+\end{document}

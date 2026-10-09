@@ -1,0 +1,27 @@
+% Capítulo 5: remover um nó com dois filhos (30), trocando pelo sucessor (40).
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-arvores}
+\begin{document}
+\begin{tikzpicture}[arvore, level 1/.style={sibling distance=26mm}, level 2/.style={sibling distance=13mm}]
+  % antes
+  \node[vertice] (a) at (0,0) {50}
+    child {node[destaque] (a30) {30}
+      child {node[vertice] {20}}
+      child {node[vertice] (a40) {40}}}
+    child {node[vertice] {70}};
+  \node[legenda, above=3mm of a, align=center] {antes: remover o 30 (tem dois filhos)};
+  \draw[setanova] (a40) to[out=60, in=-20] (a30);
+  \node[legenda, text=laranja, align=left, below right=1mm and -2mm of a40]
+    {o sucessor (menor valor da subárvore\\direita) sobe para o lugar do 30};
+
+  % depois
+  \node[vertice] (b) at (7.2,0) {50}
+    child {node[destaque] {40}
+      child {node[vertice] {20}}
+      child[missing]}
+    child {node[vertice] {70}};
+  \node[legenda, above=3mm of b, align=center] {depois: o 40 ocupa o lugar do 30};
+\end{tikzpicture}
+\end{document}
