@@ -1,0 +1,194 @@
+\documentclass[a5paper, 10pt]{article}
+
+% ============================================================
+% Algoritmos e Estruturas de Dados em C++ (TecPro Tecnologias)
+% Mesmo modelo do livro "Node.js, Express e MySQL": cada capítulo fica em
+% capitulos/capitulo-NN.tex e vira página do site com
+% site/ferramentas/converter_latex.py (modelo "livro").
+% ============================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, calc}
+\usepackage[table]{xcolor}
+
+% Cores do logo da TecPro
+\definecolor{navy}{RGB}{23,45,80}
+\definecolor{laranja}{RGB}{250,110,29}
+\definecolor{cinzalogo}{RGB}{107,114,126}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+\usepackage{parskip}
+\usepackage{fvextra}
+\usepackage{array}
+
+\setlength{\emergencystretch}{2.5em}
+\AtBeginDocument{\renewcommand{\contentsname}{Sumário}}
+
+\geometry{
+  a5paper,
+  twoside,
+  bindingoffset=8mm,
+  inner=16mm,
+  outer=12mm,
+  top=15mm,
+  bottom=18mm
+}
+
+% os títulos já trazem a numeração ("Capítulo 1 -- ...", "1.1 ...")
+\setcounter{secnumdepth}{0}
+
+\definecolor{headergray}{HTML}{1F2937}
+\definecolor{rowgray}{HTML}{E5E7EB}
+\definecolor{boxgray}{HTML}{F3F4F6}
+\definecolor{borderblack}{HTML}{111111}
+
+\newcommand{\tblheader}[1]{\textcolor{white}{\textbf{#1}}}
+
+\newenvironment{destaque}[1]
+  {\par\noindent\textbf{#1}\par\vspace{2pt}\hrule\vspace{6pt}}
+  {\par\vspace{6pt}\hrule\vspace{10pt}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{codigo}{
+  colback=boxgray,
+  colframe=borderblack,
+  boxrule=0.4pt,
+  arc=1.5mm,
+  left=6pt, right=6pt, top=5pt, bottom=5pt,
+  fontupper=\ttfamily\footnotesize,
+  breakable
+}
+
+\begin{document}
+
+% ============================================================
+% CAPA
+% ============================================================
+\begin{titlepage}
+\centering
+
+\vspace*{1.1cm}
+
+\includegraphics[width=2.3cm]{icone_tecpro.png}
+
+\vspace{0.3cm}
+
+{\Large \textbf{\textcolor{navy}{Tec}\textcolor{laranja}{Pro}}}\\[1pt]
+{\footnotesize \textcolor{cinzalogo}{T E C N O L O G I A S}}
+
+\vspace{0.2cm}
+
+{\footnotesize \textcolor{cinzalogo}{Desenvolvimento, Apostilas e Cursos Online}}
+
+\vspace{1cm}
+
+% ícones genéricos dos temas do livro
+\begin{tikzpicture}[baseline]
+
+  % --- C++ ---
+  \begin{scope}[shift={(0,0)}]
+    \node[font=\Large\bfseries, text=navy] at (0,0.15) {C++};
+    \node[font=\tiny, text=cinzalogo] at (0,-0.55) {Linguagem};
+  \end{scope}
+
+  % --- Lista encadeada: três nós ligados ---
+  \begin{scope}[shift={(2.5,0)}]
+    \foreach \x in {-0.6,0,0.6} {
+      \draw[navy, line width=1pt, fill=laranja!12] (\x-0.2,0) rectangle (\x+0.2,0.3);
+    }
+    \draw[-{Stealth}, navy, line width=0.8pt] (-0.4,0.15) -- (-0.2,0.15);
+    \draw[-{Stealth}, navy, line width=0.8pt] (0.2,0.15) -- (0.4,0.15);
+    \node[font=\tiny, text=cinzalogo] at (0,-0.55) {Listas};
+  \end{scope}
+
+  % --- Árvore binária ---
+  \begin{scope}[shift={(5.0,0)}]
+    \draw[navy, line width=1pt] (0,0.45) -- (-0.35,0.0) (0,0.45) -- (0.35,0.0);
+    \foreach \p in {(0,0.45),(-0.35,0.0),(0.35,0.0)} {
+      \filldraw[draw=navy, line width=1pt, fill=laranja!12] \p circle (0.12);
+    }
+    \node[font=\tiny, text=cinzalogo] at (0,-0.55) {Árvores};
+  \end{scope}
+
+  % --- Complexidade ---
+  \begin{scope}[shift={(7.5,0)}]
+    \node[font=\Large\bfseries, text=navy] at (0,0.15) {$O(n)$};
+    \node[font=\tiny, text=cinzalogo] at (0,-0.55) {Complexidade};
+  \end{scope}
+
+\end{tikzpicture}
+
+\vspace{1.3cm}
+
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[navy] (current page.south west) rectangle
+    ($(current page.south east)!0.32!(current page.north east)$);
+  \draw[laranja, line width=3.2pt]
+    ($(current page.south west)!0.32!(current page.north west)$) --
+    ($(current page.south east)!0.32!(current page.north east)$);
+  \begin{scope}[opacity=0.16]
+    \draw[laranja, line width=5mm, line cap=round]
+      ($(current page.south east)+(-14mm,10mm)$) --
+      ($(current page.south east)+(-6mm,17mm)$) --
+      ($(current page.south east)+(-14mm,24mm)$);
+  \end{scope}
+  \node[align=center, text width=0.84\paperwidth] at
+    ($(current page.south west)!0.20!(current page.north west)+(0.5\paperwidth,0)$)
+    {\color{white}\LARGE\bfseries Algoritmos e Estruturas de Dados};
+  \node[align=center, text width=0.78\paperwidth] at
+    ($(current page.south west)!0.08!(current page.north west)+(0.5\paperwidth,0)$)
+    {\color{laranja}\normalsize Em C++, com comparações em Python};
+\end{tikzpicture}
+
+\vfill
+
+\end{titlepage}
+
+% ============================================================
+% FICHA TÉCNICA
+% ============================================================
+\thispagestyle{empty}
+\vspace*{\fill}
+
+\begin{center}
+{\large \textbf{Algoritmos e Estruturas de Dados}}\\[2pt]
+{\small Em C++, com comparações em Python}
+
+\vspace{1cm}
+
+\rule{3cm}{0.4pt}
+
+\vspace{0.4cm}
+
+\textbf{TecPro Tecnologias}\\
+{\footnotesize Desenvolvimento, Apostilas e Cursos Online}
+
+\vspace{0.5cm}
+
+{\footnotesize 2026}
+\end{center}
+
+\vspace*{\fill}
+
+\noindent\footnotesize Todos os direitos reservados. Nenhuma parte desta publicação pode ser reproduzida, armazenada ou transmitida de qualquer forma, ou por qualquer meio, sem autorização prévia da TecPro Tecnologias.
+
+\newpage
+
+\tableofcontents
+\newpage
+
+% ============================================================
+% CAPÍTULOS
+% ============================================================
+\input{capitulos/capitulo-01}
+
+\end{document}

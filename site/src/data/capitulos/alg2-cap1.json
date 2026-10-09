@@ -1,0 +1,434 @@
+{
+ "numero": 1,
+ "titulo": "Revisão de C++: Funções, Ponteiros e Classes",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Antes de construir listas, pilhas, árvores e grafos, você precisa dominar as ferramentas que essas estruturas usam o tempo todo: funções, ponteiros, memória dinâmica, structs e classes. Este capítulo revisa esses recursos do C++ com um objetivo claro: deixar você pronto para os próximos capítulos, em que cada estrutura de dados será construída do zero."
+  },
+  {
+   "t": "h2",
+   "id": "1-1-por-que-estudar-estruturas-de-dados-em-c",
+   "texto": "1.1 Por que estudar estruturas de dados em C++?"
+  },
+  {
+   "t": "p",
+   "html": "Em linguagens como Python, Java ou JavaScript, a memória é administrada automaticamente. Você cria uma lista, adiciona elementos e nunca precisa pensar onde eles estão guardados. Isso é ótimo para produtividade, mas esconde justamente o que queremos entender nesta disciplina: <strong>como os dados são organizados na memória</strong>."
+  },
+  {
+   "t": "p",
+   "html": "Em C++, você enxerga e controla essa organização. Uma lista encadeada deixa de ser uma caixa-preta e passa a ser o que ela realmente é: um conjunto de blocos de memória, cada um apontando para o próximo. Quando você entende isso, passa a entender também por que uma operação é rápida ou lenta, e esse é o centro da análise de algoritmos."
+  },
+  {
+   "t": "p",
+   "html": "Ao longo do livro, sempre que ajudar a entender um conceito, vamos mostrar como a mesma ideia aparece em Python. Assim você vê as duas faces da moeda: o que acontece <em>por dentro</em> (C++) e como isso costuma ficar <em>escondido</em> em uma linguagem de mais alto nível (Python)."
+  },
+  {
+   "t": "h2",
+   "id": "1-2-estrutura-de-um-programa-em-c",
+   "texto": "1.2 Estrutura de um programa em C++"
+  },
+  {
+   "t": "p",
+   "html": "Todo programa em C++ começa a ser executado pela função <code>main</code>. Veja um programa completo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>   // biblioteca de entrada e saída (cin, cout)\nusing namespace std;  // permite escrever cout em vez de std::cout\n\nint main() {\n    int idade;\n    cout << \"Digite sua idade: \";\n    cin >> idade;                       // lê um valor do teclado\n    cout << \"Daqui a 10 anos voce tera \" << idade + 10 << \" anos\" << endl;\n    return 0;                           // 0 indica que terminou sem erro\n}"
+  },
+  {
+   "t": "p",
+   "html": "Alguns pontos importantes:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<code>#include</code> traz uma biblioteca para o programa. A <code>iostream</code> oferece <code>cin</code> (entrada) e <code>cout</code> (saída).",
+    "Todo comando termina com <code>;</code> e todo bloco fica entre <code>{</code> e <code>}</code>.",
+    "C++ diferencia letras maiúsculas de minúsculas: <code>idade</code> e <code>Idade</code> são variáveis diferentes.",
+    "O programa precisa ser <strong>compilado</strong> antes de rodar. Com o compilador g++, por exemplo: <code>g++ programa.cpp -o programa</code>."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Comparando com Python",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em Python, o mesmo programa não precisa de <code>main</code>, de tipos nem de compilação, porque é interpretado linha a linha:"
+    },
+    {
+     "t": "codigo",
+     "texto": "idade = int(input(\"Digite sua idade: \"))\nprint(f\"Daqui a 10 anos voce tera {idade + 10} anos\")"
+    },
+    {
+     "t": "p",
+     "html": "Em C++, o compilador verifica os tipos antes de o programa rodar. Muitos erros que em Python só aparecem durante a execução, em C++ aparecem já na compilação."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-3-tipos-variaveis-e-vetores",
+   "texto": "1.3 Tipos, variáveis e vetores"
+  },
+  {
+   "t": "p",
+   "html": "Uma variável é um espaço na memória com um nome e um tipo. O tipo define quanto espaço ela ocupa e que valores pode guardar."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo",
+    "Guarda",
+    "Exemplo"
+   ],
+   "linhas": [
+    [
+     "<code>int</code>",
+     "números inteiros",
+     "<code>int qtd = 10;</code>"
+    ],
+    [
+     "<code>double</code>",
+     "números com casas decimais",
+     "<code>double nota = 8.5;</code>"
+    ],
+    [
+     "<code>char</code>",
+     "um caractere",
+     "<code>char letra = 'A';</code>"
+    ],
+    [
+     "<code>bool</code>",
+     "verdadeiro ou falso",
+     "<code>bool ok = true;</code>"
+    ],
+    [
+     "<code>string</code>",
+     "texto (precisa de <code>&lt;string&gt;</code>)",
+     "<code>string nome = \"Ana\";</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Um <strong>vetor</strong> (array) guarda vários valores do mesmo tipo, um ao lado do outro na memória. Os índices começam em 0:"
+  },
+  {
+   "t": "codigo",
+   "texto": "int notas[5] = {7, 9, 6, 10, 8};   // 5 inteiros seguidos na memória\n\nfor (int i = 0; i < 5; i++) {\n    cout << \"Nota \" << i << \": \" << notas[i] << endl;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O vetor tem uma limitação que vai motivar vários capítulos deste livro: o <strong>tamanho é fixo</strong>. Se você declarou espaço para 5 notas e chegou uma sexta, não há onde colocá-la. Inserir um elemento no meio também é trabalhoso, porque todos os seguintes precisam ser deslocados uma posição. As estruturas que vamos construir, como as listas encadeadas, existem justamente para contornar essas limitações."
+  },
+  {
+   "t": "h2",
+   "id": "1-4-funcoes-e-passagem-de-parametros",
+   "texto": "1.4 Funções e passagem de parâmetros"
+  },
+  {
+   "t": "p",
+   "html": "Uma função é um trecho de código com nome, que recebe dados (parâmetros), faz um trabalho e pode devolver um resultado. Funções evitam repetir código e deixam o programa mais fácil de ler e de manter."
+  },
+  {
+   "t": "codigo",
+   "texto": "// recebe os três coeficientes e diz se a equação tem raízes reais\nbool temRaizReal(double a, double b, double c) {\n    double delta = b * b - 4 * a * c;\n    return delta >= 0;\n}\n\n// void: a função não devolve valor, só executa uma ação\nvoid imprimirVetor(int v[], int tamanho) {\n    for (int i = 0; i < tamanho; i++) {\n        cout << v[i] << \" \";\n    }\n    cout << endl;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O ponto mais importante para este livro é <strong>como os parâmetros chegam à função</strong>. Em C++ há três formas."
+  },
+  {
+   "t": "h3",
+   "texto": "Por valor: a função recebe uma cópia"
+  },
+  {
+   "t": "codigo",
+   "texto": "void dobrar(int x) {\n    x = x * 2;          // altera só a cópia\n}\n\nint main() {\n    int n = 5;\n    dobrar(n);\n    cout << n << endl;  // imprime 5: o n original não mudou\n}"
+  },
+  {
+   "t": "h3",
+   "texto": "Por referência: a função trabalha na variável original"
+  },
+  {
+   "t": "p",
+   "html": "Basta acrescentar <code>&amp;</code> depois do tipo do parâmetro. A função passa a usar a própria variável de quem chamou, sem cópia:"
+  },
+  {
+   "t": "codigo",
+   "texto": "void dobrar(int &x) {\n    x = x * 2;          // altera a variável original\n}\n\nvoid trocar(int &a, int &b) {\n    int auxiliar = a;\n    a = b;\n    b = auxiliar;\n}\n\nint main() {\n    int n = 5;\n    dobrar(n);\n    cout << n << endl;  // imprime 10\n\n    int p = 1, q = 2;\n    trocar(p, q);\n    cout << p << \" \" << q << endl;  // imprime 2 1\n}"
+  },
+  {
+   "t": "h3",
+   "texto": "Por referência constante: sem cópia e sem alteração"
+  },
+  {
+   "t": "p",
+   "html": "Quando o dado é grande (um texto longo, um vetor de milhares de itens) e a função só precisa ler, use <code>const</code> <code>&amp;</code>. Você evita a cópia, que custa tempo e memória, e o compilador garante que a função não altera o original:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <string>\n\nint contarVogais(const string &texto) {\n    int total = 0;\n    for (char c : texto) {\n        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {\n            total++;\n        }\n    }\n    return total;\n}"
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Comparando com Python",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Python não deixa você escolher. Números e textos se comportam como se fossem passados por valor, porque não podem ser alterados (são <em>imutáveis</em>). Já listas e dicionários são passados de forma que a função pode modificá-los:"
+    },
+    {
+     "t": "codigo",
+     "texto": "def dobrar(x):\n    x = x * 2          # cria um novo número só dentro da função\n\ndef adicionar(lista):\n    lista.append(99)   # modifica a lista original\n\nn = 5\ndobrar(n)\nprint(n)       # 5\n\nnumeros = [1, 2]\nadicionar(numeros)\nprint(numeros) # [1, 2, 99]"
+    },
+    {
+     "t": "p",
+     "html": "Em C++ essa decisão é sua e fica escrita na assinatura da função, o que torna o comportamento explícito."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-5-ponteiros",
+   "texto": "1.5 Ponteiros"
+  },
+  {
+   "t": "p",
+   "html": "Toda variável ocupa uma posição na memória, e cada posição tem um <strong>endereço</strong>, como o número de uma casa em uma rua. Um <strong>ponteiro</strong> é uma variável que guarda um endereço: em vez de guardar um valor, ele aponta para onde o valor está."
+  },
+  {
+   "t": "p",
+   "html": "Dois operadores fazem todo o trabalho:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<code>&amp;variavel</code> devolve o <strong>endereço</strong> da variável;",
+    "<code>*ponteiro</code> acessa o <strong>valor</strong> que está no endereço guardado (isso se chama <em>desreferenciar</em>)."
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "int idade = 20;\nint *p = &idade;      // p guarda o endereço de idade\n\ncout << idade << endl;  // 20\ncout << p << endl;      // um endereço, por exemplo 0x61fe14\ncout << *p << endl;     // 20: o valor que está no endereço\n\n*p = 21;                // altera idade através do ponteiro\ncout << idade << endl;  // 21"
+  },
+  {
+   "t": "p",
+   "html": "Uma forma de visualizar o que aconteceu na memória:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Variável",
+    "Endereço",
+    "Conteúdo"
+   ],
+   "linhas": [
+    [
+     "<code>idade</code>",
+     "<code>0x61fe14</code>",
+     "<code>21</code>"
+    ],
+    [
+     "<code>p</code>",
+     "<code>0x61fe18</code>",
+     "<code>0x61fe14</code> (aponta para <code>idade</code>)"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Um ponteiro que não aponta para nada deve valer <code>nullptr</code>. Você vai usar muito esse valor: é ele que marca o fim de uma lista encadeada ou um galho vazio de uma árvore. Antes de desreferenciar um ponteiro, verifique se ele não é nulo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "int *q = nullptr;   // não aponta para nada\n\nif (q != nullptr) {\n    cout << *q << endl;  // só acessa se for seguro\n}"
+  },
+  {
+   "t": "quadro",
+   "tipo": "boa-pratica",
+   "titulo": "Referência ou ponteiro?",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Os dois permitem trabalhar com a variável original, mas têm diferenças. Uma <strong>referência</strong> (<code>int &amp;r = x;</code>) é um apelido: precisa nascer ligada a uma variável e nunca muda de alvo. Um <strong>ponteiro</strong> pode começar vazio (<code>nullptr</code>) e pode passar a apontar para outro lugar. Por isso as estruturas de dados usam ponteiros: um nó de uma lista precisa poder apontar para <em>nenhum</em> nó, ou mudar de vizinho quando você insere ou remove elementos."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-6-memoria-dinamica-new-e-delete",
+   "texto": "1.6 Memória dinâmica: new e delete"
+  },
+  {
+   "t": "p",
+   "html": "As variáveis declaradas dentro de uma função ficam em uma área chamada <strong>pilha de execução</strong> (<em>stack</em>). Elas são criadas quando a função começa e destruídas automaticamente quando ela termina. Isso é prático, mas tem um limite: você não consegue criar, durante a execução, quantos elementos quiser e mantê-los vivos depois que a função acabar."
+  },
+  {
+   "t": "p",
+   "html": "Para isso existe a memória dinâmica, ou <strong>heap</strong>. Com <code>new</code>, você pede ao sistema um espaço que continua existindo até você mesmo liberá-lo com <code>delete</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "int *p = new int;     // reserva espaço para um int no heap\n*p = 42;\ncout << *p << endl;   // 42\ndelete p;             // devolve o espaço\np = nullptr;          // boa prática: não deixar o endereço antigo\n\n// vetor com tamanho decidido durante a execução\nint n;\ncout << \"Quantos valores? \";\ncin >> n;\nint *valores = new int[n];   // n inteiros no heap\nfor (int i = 0; i < n; i++) {\n    valores[i] = i * i;\n}\ndelete[] valores;            // vetor: libera com delete[]"
+  },
+  {
+   "t": "p",
+   "html": "Toda estrutura de dados dinâmica deste livro funciona assim: cada novo elemento é criado com <code>new</code> e, quando sai da estrutura, é liberado com <code>delete</code>."
+  },
+  {
+   "t": "quadro",
+   "tipo": "boa-pratica",
+   "titulo": "Regra de ouro da memória dinâmica",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Para cada <code>new</code> deve existir exatamente um <code>delete</code> (e para cada <code>new[]</code>, um <code>delete[]</code>). Se você esquecer o <code>delete</code>, o espaço fica preso até o programa terminar: é o chamado <strong>vazamento de memória</strong> (<em>memory leak</em>). Se fizer <code>delete</code> duas vezes, ou usar o ponteiro depois do <code>delete</code>, o comportamento é imprevisível e o programa pode travar."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Comparando com Python",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em Python não existe <code>delete</code> para liberar memória. O próprio interpretador percebe quando um objeto não é mais usado por ninguém e o remove: é a <strong>coleta de lixo</strong> (<em>garbage collection</em>). Isso evita vazamentos e ponteiros inválidos, mas tem um custo: você perde o controle de quando a memória é liberada e de quanto espaço cada estrutura realmente ocupa."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-7-structs-agrupando-dados",
+   "texto": "1.7 Structs: agrupando dados"
+  },
+  {
+   "t": "p",
+   "html": "Uma <code>struct</code> junta vários dados relacionados em um único tipo novo. Em vez de ter variáveis soltas para nome, idade e matrícula de um aluno, você cria o tipo <code>Aluno</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "struct Aluno {\n    string nome;\n    int matricula;\n    double media;\n};\n\nint main() {\n    Aluno a;\n    a.nome = \"Ana\";          // o ponto acessa cada campo\n    a.matricula = 2026001;\n    a.media = 8.7;\n\n    Aluno *p = &a;\n    cout << p->nome << endl; // com ponteiro, usa-se a seta ->\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare no operador <code>-&gt;</code>: quando você tem um <strong>ponteiro</strong> para uma struct, <code>p-&gt;nome</code> é o mesmo que <code>(*p).nome</code>. Ele vai aparecer em praticamente todo o código dos próximos capítulos."
+  },
+  {
+   "t": "h3",
+   "texto": "Uma prévia: o nó de uma lista encadeada"
+  },
+  {
+   "t": "p",
+   "html": "Uma struct pode ter um campo que é ponteiro para o próprio tipo. Essa ideia simples é a base das listas encadeadas e das árvores:"
+  },
+  {
+   "t": "codigo",
+   "texto": "struct No {\n    int valor;\n    No *proximo;   // aponta para o próximo nó (ou nullptr)\n};\n\nint main() {\n    // cria três nós no heap\n    No *a = new No{10, nullptr};\n    No *b = new No{20, nullptr};\n    No *c = new No{30, nullptr};\n\n    // liga os nós: a -> b -> c\n    a->proximo = b;\n    b->proximo = c;\n\n    // percorre a cadeia a partir do primeiro nó\n    for (No *atual = a; atual != nullptr; atual = atual->proximo) {\n        cout << atual->valor << \" \";   // 10 20 30\n    }\n    cout << endl;\n\n    delete a;\n    delete b;\n    delete c;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Os três nós podem estar em qualquer lugar da memória, não precisam estar lado a lado como num vetor. O que os mantém em ordem são os ponteiros. Por isso, para inserir um valor no meio, basta mudar dois ponteiros, sem deslocar nenhum elemento. No Capítulo 3, essa ideia vira uma lista completa."
+  },
+  {
+   "t": "h2",
+   "id": "1-8-classes-dados-e-comportamento-juntos",
+   "texto": "1.8 Classes: dados e comportamento juntos"
+  },
+  {
+   "t": "p",
+   "html": "Uma classe vai além da struct: ela reúne os dados e as funções que trabalham com eles, e controla quem pode acessar o quê. Esse controle se chama <strong>encapsulamento</strong>. Os dados ficam em <code>private</code>, protegidos de alterações indevidas, e o acesso acontece por funções públicas, os <strong>métodos</strong>."
+  },
+  {
+   "t": "p",
+   "html": "Como exemplo, veja uma classe que resolve o problema do tamanho fixo dos vetores: um vetor que cresce sozinho quando enche."
+  },
+  {
+   "t": "codigo",
+   "texto": "class VetorDinamico {\nprivate:\n    int *dados;        // vetor no heap\n    int tamanho;       // quantos elementos estão em uso\n    int capacidade;    // quantos cabem antes de crescer\n\n    void crescer() {\n        capacidade = capacidade * 2;\n        int *novo = new int[capacidade];\n        for (int i = 0; i < tamanho; i++) {\n            novo[i] = dados[i];      // copia os elementos antigos\n        }\n        delete[] dados;              // libera o vetor antigo\n        dados = novo;\n    }\n\npublic:\n    // construtor: executado quando o objeto é criado\n    VetorDinamico() {\n        capacidade = 2;\n        tamanho = 0;\n        dados = new int[capacidade];\n    }\n\n    // destrutor: executado quando o objeto deixa de existir\n    ~VetorDinamico() {\n        delete[] dados;\n    }\n\n    void adicionar(int valor) {\n        if (tamanho == capacidade) {\n            crescer();\n        }\n        dados[tamanho] = valor;\n        tamanho++;\n    }\n\n    int obter(int indice) const {\n        return dados[indice];\n    }\n\n    int quantidade() const {\n        return tamanho;\n    }\n};\n\nint main() {\n    VetorDinamico v;\n    for (int i = 1; i <= 10; i++) {\n        v.adicionar(i * 10);   // cresce sozinho: 2, 4, 8, 16 posições\n    }\n    for (int i = 0; i < v.quantidade(); i++) {\n        cout << v.obter(i) << \" \";\n    }\n    cout << endl;\n}   // aqui o destrutor libera a memória automaticamente"
+  },
+  {
+   "t": "p",
+   "html": "Repare em três ideias que vão se repetir ao longo do livro:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Construtor</strong> (<code>VetorDinamico()</code>): prepara o objeto quando ele nasce. Tem o mesmo nome da classe e não tem tipo de retorno.",
+    "<strong>Destrutor</strong> (<code>textasciitilde VetorDinamico()</code>): libera os recursos quando o objeto deixa de existir. Assim, quem usa a classe não precisa se lembrar de chamar <code>delete</code>.",
+    "<strong>Métodos <code>const</code></strong>: <code>obter</code> e <code>quantidade</code> apenas consultam o objeto, e o <code>const</code> garante que não alteram nada."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Todas as estruturas dos próximos capítulos (lista, pilha, fila, árvore) serão classes com esse formato: dados privados, métodos públicos para as operações e um destrutor que libera os nós."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Comparando com Python",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A lista do Python (<code>list</code>) funciona exatamente como o <code>VetorDinamico</code>: por dentro, ela reserva espaço sobrando e, quando enche, cria um espaço maior e copia os elementos. Você só não vê esse trabalho. A mesma classe em Python ficaria assim:"
+    },
+    {
+     "t": "codigo",
+     "texto": "class Contador:\n    def __init__(self):        # construtor\n        self._total = 0        # o _ indica \"uso interno\"\n\n    def incrementar(self):\n        self._total += 1\n\n    def valor(self):\n        return self._total"
+    },
+    {
+     "t": "p",
+     "html": "Em Python, o <code>private</code> é só uma convenção (o sublinhado), e não existe destrutor para liberar memória, porque a coleta de lixo cuida disso."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-9-templates-estruturas-para-qualquer-tipo",
+   "texto": "1.9 Templates: estruturas para qualquer tipo"
+  },
+  {
+   "t": "p",
+   "html": "O <code>VetorDinamico</code> só guarda <code>int</code>. Se você precisar de um vetor de <code>double</code> ou de <code>string</code>, teria de copiar a classe inteira trocando o tipo. Os <strong>templates</strong> resolvem isso: você escreve o código uma vez, com um tipo genérico <code>T</code>, e o compilador gera a versão de cada tipo usado."
+  },
+  {
+   "t": "codigo",
+   "texto": "// função genérica: funciona com int, double, string...\ntemplate <typename T>\nT maior(T a, T b) {\n    return (a > b) ? a : b;\n}\n\n// struct genérica: o nó pode guardar qualquer tipo\ntemplate <typename T>\nstruct NoGenerico {\n    T valor;\n    NoGenerico<T> *proximo;\n};\n\nint main() {\n    cout << maior(3, 7) << endl;                          // 7\n    cout << maior(2.5, 1.5) << endl;                      // 2.5\n    cout << maior(string(\"ana\"), string(\"bia\")) << endl;  // bia\n\n    NoGenerico<string> *n = new NoGenerico<string>{\"oi\", nullptr};\n    cout << n->valor << endl;\n    delete n;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A biblioteca padrão do C++ (STL) já traz estruturas prontas feitas com templates, como <code>vector</code>, <code>list</code>, <code>stack</code>, <code>queue</code> e <code>map</code>. Neste livro vamos construir as nossas versões, porque o objetivo é entender como elas funcionam por dentro. Depois de entender, use as da STL nos seus projetos: são testadas e otimizadas."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Usar um ponteiro não inicializado.</strong> Declarar <code>int *p;</code> e depois fazer <code>*p = 5;</code> escreve em um endereço aleatório. Inicialize sempre: com um endereço válido ou com <code>nullptr</code>.",
+    "<strong>Desreferenciar <code>nullptr</code>.</strong> Acessar <code>p-&gt;valor</code> quando <code>p</code> é nulo derruba o programa. Em listas e árvores, confira se o ponteiro não é nulo antes de usá-lo.",
+    "<strong>Esquecer o <code>delete</code>.</strong> Cada <code>new</code> sem o <code>delete</code> correspondente é memória perdida. Em classes, libere no destrutor.",
+    "<strong>Usar <code>delete</code> em vez de <code>delete[]</code>.</strong> O que foi criado com <code>new[]</code> deve ser liberado com <code>delete[]</code>.",
+    "<strong>Usar o ponteiro depois do <code>delete</code>.</strong> O espaço já foi devolvido, e o endereço antigo não é mais seu. Depois de liberar, faça <code>p = nullptr;</code>.",
+    "<strong>Esperar que uma função altere um parâmetro passado por valor.</strong> Se a função precisa modificar a variável de quem chamou, use referência (<code>&amp;</code>) ou ponteiro.",
+    "<strong>Acessar um vetor fora dos limites.</strong> Em um vetor de 5 posições, os índices vão de 0 a 4. C++ não avisa quando você acessa <code>v[5]</code>: o programa simplesmente lê ou estraga outra área da memória."
+   ]
+  }
+ ]
+}

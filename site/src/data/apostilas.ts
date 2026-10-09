@@ -401,6 +401,19 @@ export const apostilas: Apostila[] = [
       'Ciclo de vida das tecnologias, WebRTC, PWAs, WebAssembly, Web Components, Jamstack, serverless, edge computing e IA no frontend.',
   },
 
+  // Algoritmos e Linguagem de Programação II — "Algoritmos e Estruturas de Dados" (TecPro)
+  // Texto próprio, escrito a partir da ementa (temas dos slides de EDA usados só como roteiro).
+  // Fonte: apostilas/algoritmos-ii/capitulos/capitulo-NN.tex (raiz do repositório), convertida com
+  // ferramentas/converter_latex.py; o código é testado com apostilas/algoritmos-ii/testar_codigo.py
+  {
+    id: 'alg2-cap1',
+    capitulo: 1,
+    titulo: 'Revisão de C++: Funções, Ponteiros e Classes',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-ii',
+    descricao:
+      'Passagem de parâmetros por valor e por referência, ponteiros, memória dinâmica com new e delete, structs, classes e templates, com comparações em Python.',
+  },
+
   // Programação e Design para Web II (apostila em módulos)
   // Fonte: 02- APOSTILAS/Módulo 5/LATEX/modulos/modulo-0N.tex (24/08), convertida com
   //   ferramentas/converter_latex.py --imagens <pasta> apostilas/web2
