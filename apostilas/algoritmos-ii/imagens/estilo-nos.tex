@@ -1,0 +1,22 @@
+% Estilo comum das figuras de listas (incluído pelas figuras dos capítulos 3 e 4).
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes.multipart, calc}
+\definecolor{navy}{RGB}{23,45,80}
+\definecolor{laranja}{RGB}{250,110,29}
+\definecolor{cinzalogo}{RGB}{107,114,126}
+\tikzset{
+  no/.style={rectangle split, rectangle split horizontal, rectangle split parts=2,
+             draw=navy, line width=0.9pt, minimum height=7mm,
+             rectangle split part fill={laranja!15, white}, font=\sffamily\small},
+  no3/.style={rectangle split, rectangle split horizontal, rectangle split parts=3,
+              draw=navy, line width=0.9pt, minimum height=7mm,
+              rectangle split part fill={white, laranja!15, white}, font=\sffamily\small},
+  seta/.style={-{Stealth[length=2.2mm]}, navy, line width=0.9pt},
+  setanova/.style={-{Stealth[length=2.2mm]}, laranja, line width=1.3pt},
+  rotulo/.style={font=\sffamily\small\bfseries, text=navy},
+  nulo/.style={font=\sffamily\scriptsize, text=cinzalogo},
+  passo/.style={font=\sffamily\small, text=cinzalogo, anchor=west},
+  legenda/.style={font=\sffamily\scriptsize, text=cinzalogo},
+}
+% seta que sai do meio da caixa do ponteiro (última parte do nó), na horizontal
+\newcommand{\liga}[3][seta]{\draw[#1] ([xshift=-2.3mm]#2.east) -- #3;}

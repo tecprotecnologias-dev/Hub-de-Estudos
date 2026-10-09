@@ -1,0 +1,25 @@
+% Capítulo 3: lista duplamente encadeada.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-nos}
+\begin{document}
+\begin{tikzpicture}[node distance=10mm]
+  \node[no3] (a) at (0,0) {\phantom{x} \nodepart{two} 10 \nodepart{three} \phantom{x}};
+  \node[no3, right=of a] (b) {\phantom{x} \nodepart{two} 20 \nodepart{three} \phantom{x}};
+  \node[no3, right=of b] (c) {\phantom{x} \nodepart{two} 30 \nodepart{three} \phantom{x}};
+  \node[nulo, left=7mm of a] (n0) {nullptr};
+  \node[nulo, right=7mm of c] (n1) {nullptr};
+  \node[rotulo, above=6mm of a] (ini) {inicio};
+  \node[rotulo, above=6mm of c] (fim) {fim};
+  \draw[seta] (ini) -- (a.north);
+  \draw[seta] (fim) -- (c.north);
+  \draw[seta] ([yshift=1.2mm]a.east) -- ([yshift=1.2mm]b.west);
+  \draw[seta] ([yshift=-1.2mm]b.west) -- ([yshift=-1.2mm]a.east);
+  \draw[seta] ([yshift=1.2mm]b.east) -- ([yshift=1.2mm]c.west);
+  \draw[seta] ([yshift=-1.2mm]c.west) -- ([yshift=-1.2mm]b.east);
+  \draw[seta] (a.west) -- (n0);
+  \draw[seta] (c.east) -- (n1);
+  \node[legenda, below=4mm of b] {cada nó guarda: ponteiro \textbf{anterior} | \textbf{valor} | ponteiro \textbf{próximo}};
+\end{tikzpicture}
+\end{document}

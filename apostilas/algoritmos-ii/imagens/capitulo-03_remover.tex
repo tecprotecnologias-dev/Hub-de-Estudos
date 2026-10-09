@@ -1,0 +1,23 @@
+% Capítulo 3: remover um nó do meio da lista.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-nos}
+\begin{document}
+\begin{tikzpicture}[node distance=13mm]
+  \node[rotulo] (ini) at (0,0) {inicio};
+  \node[no, right=7mm of ini] (a) {10 \nodepart{two} \phantom{x}};
+  \node[no, right=of a, draw=laranja, dashed] (b) {20 \nodepart{two} \phantom{x}};
+  \node[no, right=of b] (c) {30 \nodepart{two} \phantom{x}};
+  \node[nulo, right=7mm of c] (n) {nullptr};
+  \draw[seta] (ini) -- (a.west);
+  \liga[seta, densely dashed, draw=cinzalogo]{a}{(b.west)}
+  \liga{b}{(c.west)}
+  \liga{c}{(n)}
+  \draw[setanova] ([xshift=-2.3mm]a.north east) to[out=70, in=110] (c.north);
+  \node[legenda, text=laranja, above=9mm of b] {anterior->proximo = atual->proximo};
+  \node[rotulo, below=3mm of a] {anterior};
+  \node[rotulo, below=3mm of b, text=laranja] {atual};
+  \node[legenda, below=7.5mm of b] {(depois: delete atual)};
+\end{tikzpicture}
+\end{document}

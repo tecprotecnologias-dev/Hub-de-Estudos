@@ -38,6 +38,7 @@ SIMBOLOS = {
     'quad': ' ', 'qquad': ' ', 'textbackslash': '\\', 'S': '\u00a7',
 }
 DESCARTAR = {'noindent', 'bigskip', 'medskip', 'smallskip', 'newpage', 'centering', 'small', 'large',
+             'footnotesize', 'scriptsize', 'tiny', 'normalsize',
              'Large', 'huge', 'Huge', 'bfseries', 'itshape', 'par', 'hfill', 'clearpage', 'raggedright'}
 DESCARTAR_COM_ARGS = {'vspace': 1, 'hspace': 1, 'addcontentsline': 3, 'thispagestyle': 1, 'setcounter': 2,
                       'label': 1, 'color': 1, 'rowcolor': 1, 'includegraphics': 1}

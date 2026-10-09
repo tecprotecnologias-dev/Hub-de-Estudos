@@ -29,6 +29,10 @@ def main():
     falhas = 0
     with tempfile.TemporaryDirectory() as tmp:
         for n, codigo in enumerate(trechos, 1):
+            if codigo.lstrip().startswith('// trecho'):
+                # pedaço de uma classe mostrada completa (e testada) mais adiante no capítulo
+                print(f'{n:2d} trecho (testado no programa completo)')
+                continue
             if eh_python(codigo):
                 arq = os.path.join(tmp, f't{n}.py')
                 open(arq, 'w', encoding='utf-8').write(codigo)

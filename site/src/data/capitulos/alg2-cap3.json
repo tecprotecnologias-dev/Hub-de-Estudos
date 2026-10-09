@@ -1,0 +1,393 @@
+{
+ "numero": 3,
+ "titulo": "Listas Encadeadas",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Em Algoritmos I você trabalhou com vetores: uma sequência de posições lado a lado na memória, com tamanho definido na criação. Neste capítulo você vai construir uma estrutura que cresce e encolhe conforme a necessidade, sem desperdiçar espaço e sem deslocar elementos: a <strong>lista encadeada</strong>. Ela é a primeira estrutura dinâmica do livro e a base de várias outras, como pilhas, filas e grafos."
+  },
+  {
+   "t": "h2",
+   "id": "3-1-quando-o-vetor-nao-basta",
+   "texto": "3.1 Quando o vetor não basta"
+  },
+  {
+   "t": "p",
+   "html": "Imagine um sistema que registra os pedidos de uma loja ao longo do dia. Não dá para saber quantos pedidos vão chegar. Se você criar um vetor de 1.000 posições e chegarem 30 pedidos, desperdiçou memória; se chegarem 1.500, faltou espaço. O vetor dinâmico do Capítulo 1 resolve parte do problema, mas cada vez que enche precisa copiar tudo para um espaço maior."
+  },
+  {
+   "t": "p",
+   "html": "Há um segundo problema: inserir ou remover <strong>no meio</strong>. Para colocar um pedido urgente na frente da fila de um vetor, todos os outros precisam andar uma posição. Com 1 milhão de pedidos, isso é 1 milhão de movimentações."
+  },
+  {
+   "t": "p",
+   "html": "A lista encadeada resolve as duas questões com uma ideia simples: cada elemento fica em um <strong>nó</strong> criado separadamente na memória, e cada nó guarda, além do valor, um <strong>ponteiro para o próximo</strong>. Os nós podem estar em qualquer lugar da memória; o que os mantém em ordem são os ponteiros."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-03_lista.png",
+   "alt": "capitulo 03 lista"
+  },
+  {
+   "t": "p",
+   "html": "A lista só precisa guardar onde está o primeiro nó (<code>inicio</code>). A partir dele, seguindo os ponteiros, chega-se a todos os outros. O último nó aponta para <code>nullptr</code>, que marca o fim."
+  },
+  {
+   "t": "h2",
+   "id": "3-2-tipo-abstrato-de-dados",
+   "texto": "3.2 Tipo Abstrato de Dados"
+  },
+  {
+   "t": "p",
+   "html": "Antes de programar, vale separar duas perguntas: <em>o que</em> a lista faz e <em>como</em> ela faz. A resposta à primeira pergunta é a <strong>interface</strong>: o conjunto de operações que quem usa a lista pode chamar. Um <strong>Tipo Abstrato de Dados</strong> (TAD) é justamente isso: um tipo definido pelas operações que oferece, sem expor como elas são implementadas."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Operação",
+    "O que faz"
+   ],
+   "linhas": [
+    [
+     "<code>inserirInicio(v)</code>",
+     "coloca o valor <code>v</code> no começo"
+    ],
+    [
+     "<code>inserirFim(v)</code>",
+     "coloca o valor <code>v</code> no final"
+    ],
+    [
+     "<code>inserirNaPosicao(p, v)</code>",
+     "coloca <code>v</code> na posição <code>p</code>"
+    ],
+    [
+     "<code>remover(v)</code>",
+     "retira a primeira ocorrência de <code>v</code>"
+    ],
+    [
+     "<code>contem(v)</code>",
+     "diz se <code>v</code> está na lista"
+    ],
+    [
+     "<code>quantidade()</code>",
+     "quantos elementos a lista tem"
+    ],
+    [
+     "<code>vazia()</code>",
+     "diz se a lista está vazia"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A mesma interface poderia ser implementada com um vetor ou com nós encadeados. Quem usa a lista não precisa saber qual das duas foi escolhida: chama as mesmas operações e recebe os mesmos resultados. O que muda é o <strong>custo</strong> de cada operação, e é por isso que estudamos as implementações."
+  },
+  {
+   "t": "h2",
+   "id": "3-3-o-no-e-a-classe-listaencadeada",
+   "texto": "3.3 O nó e a classe ListaEncadeada"
+  },
+  {
+   "t": "p",
+   "html": "O nó é uma struct com o valor e o ponteiro para o próximo, como você viu no Capítulo 1. A lista é uma classe que guarda o ponteiro para o primeiro nó, um ponteiro para o último (veremos por quê) e a quantidade de elementos:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho: o nó e os dados da classe ListaEncadeada\nstruct No {\n    int valor;\n    No *proximo;\n};\n\nclass ListaEncadeada {\nprivate:\n    No *inicio;    // primeiro nó (nullptr se a lista estiver vazia)\n    No *fim;       // último nó\n    int tamanho;   // quantidade de elementos\n    // ... operações (a seguir)\n};"
+  },
+  {
+   "t": "p",
+   "html": "Uma lista recém-criada não tem nós: <code>inicio</code> e <code>fim</code> valem <code>nullptr</code> e o tamanho é zero. Esse estado é a <strong>lista vazia</strong>, e toda operação precisa tratá-lo com cuidado."
+  },
+  {
+   "t": "h2",
+   "id": "3-4-inserindo-elementos",
+   "texto": "3.4 Inserindo elementos"
+  },
+  {
+   "t": "h3",
+   "texto": "No início: O(1)"
+  },
+  {
+   "t": "p",
+   "html": "Inserir no início exige só dois passos, não importa quantos elementos a lista tenha: o novo nó aponta para o atual primeiro, e <code>inicio</code> passa a apontar para o novo nó."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-03_inserir_inicio.png",
+   "alt": "capitulo 03 inserir inicio"
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho da classe ListaEncadeada\nvoid inserirInicio(int valor) {\n    No *novo = new No{valor, inicio};  // passo 1: aponta para o atual início\n    inicio = novo;                     // passo 2: início passa a ser o novo nó\n    if (fim == nullptr) {              // a lista estava vazia:\n        fim = novo;                    // o novo nó também é o último\n    }\n    tamanho++;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A ordem dos passos importa. Se você fizer primeiro <code>inicio = novo</code>, perde a referência para o antigo primeiro nó, e o resto da lista fica inacessível."
+  },
+  {
+   "t": "h3",
+   "texto": "No fim: O(1) graças ao ponteiro fim"
+  },
+  {
+   "t": "p",
+   "html": "Sem o ponteiro <code>fim</code>, inserir no final exigiria percorrer a lista inteira até achar o último nó: O(n). Guardando um ponteiro para o último, basta ligá-lo ao novo nó:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho da classe ListaEncadeada\nvoid inserirFim(int valor) {\n    No *novo = new No{valor, nullptr};\n    if (fim == nullptr) {        // lista vazia: o novo nó é o primeiro e o último\n        inicio = novo;\n        fim = novo;\n    } else {\n        fim->proximo = novo;     // o antigo último aponta para o novo\n        fim = novo;              // e o novo passa a ser o último\n    }\n    tamanho++;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Esse é um exemplo de troca entre espaço e tempo: um ponteiro a mais na classe transforma uma operação O(n) em O(1)."
+  },
+  {
+   "t": "h3",
+   "texto": "Em uma posição qualquer: O(n)"
+  },
+  {
+   "t": "p",
+   "html": "Para inserir na posição <code>p</code>, é preciso caminhar até o nó da posição <code>p - 1</code> e ligar o novo nó depois dele. A caminhada custa O(n); a ligação em si, O(1)."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho da classe ListaEncadeada\nbool inserirNaPosicao(int pos, int valor) {\n    if (pos < 0 || pos > tamanho) return false;          // posição inválida\n    if (pos == 0) { inserirInicio(valor); return true; }\n    if (pos == tamanho) { inserirFim(valor); return true; }\n\n    No *anterior = inicio;\n    for (int i = 0; i < pos - 1; i++) {                  // caminha até pos - 1\n        anterior = anterior->proximo;\n    }\n    anterior->proximo = new No{valor, anterior->proximo};\n    tamanho++;\n    return true;\n}"
+  },
+  {
+   "t": "h2",
+   "id": "3-5-percorrendo-e-buscando",
+   "texto": "3.5 Percorrendo e buscando"
+  },
+  {
+   "t": "p",
+   "html": "Percorrer a lista é sempre o mesmo movimento: começar em <code>inicio</code> e seguir <code>proximo</code> até chegar em <code>nullptr</code>. Buscar um valor é percorrer comparando, e por isso custa O(n) no pior caso, como a busca sequencial do Capítulo 2."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho da classe ListaEncadeada\nbool contem(int valor) const {\n    for (No *atual = inicio; atual != nullptr; atual = atual->proximo) {\n        if (atual->valor == valor) {\n            return true;\n        }\n    }\n    return false;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare que não existe atalho para chegar ao quinto elemento: é preciso passar pelos quatro anteriores. Acessar uma posição por índice, que no vetor é O(1), na lista encadeada é O(n). Essa é a principal desvantagem da lista."
+  },
+  {
+   "t": "h2",
+   "id": "3-6-removendo-elementos",
+   "texto": "3.6 Removendo elementos"
+  },
+  {
+   "t": "p",
+   "html": "Para remover um nó, o nó <strong>anterior</strong> a ele passa a apontar para o <strong>seguinte</strong>. O nó removido fica fora da corrente e pode ser liberado com <code>delete</code>."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-03_remover.png",
+   "alt": "capitulo 03 remover"
+  },
+  {
+   "t": "p",
+   "html": "Como cada nó só conhece o próximo, a busca precisa andar com <strong>dois ponteiros</strong>: <code>atual</code>, que procura o valor, e <code>anterior</code>, que fica um passo atrás. A remoção ainda precisa tratar casos especiais: lista vazia, valor ausente, remoção do primeiro nó e remoção do último."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho da classe ListaEncadeada\nbool remover(int valor) {\n    No *anterior = nullptr;\n    No *atual = inicio;\n    while (atual != nullptr && atual->valor != valor) {\n        anterior = atual;\n        atual = atual->proximo;\n    }\n    if (atual == nullptr) {              // não encontrou (ou lista vazia)\n        return false;\n    }\n    if (anterior == nullptr) {           // era o primeiro nó\n        inicio = atual->proximo;\n    } else {                             // estava no meio ou no fim\n        anterior->proximo = atual->proximo;\n    }\n    if (atual == fim) {                  // era o último nó\n        fim = anterior;\n    }\n    delete atual;\n    tamanho--;\n    return true;\n}"
+  },
+  {
+   "t": "h2",
+   "id": "3-7-o-programa-completo",
+   "texto": "3.7 O programa completo"
+  },
+  {
+   "t": "p",
+   "html": "Juntando as operações, a classe fica assim. Repare no destrutor, que percorre a lista liberando cada nó, e nas duas linhas com <code>= delete</code>, explicadas logo depois do código."
+  },
+  {
+   "t": "codigo",
+   "texto": "struct No {\n    int valor;\n    No *proximo;\n};\n\nclass ListaEncadeada {\nprivate:\n    No *inicio;\n    No *fim;\n    int tamanho;\n\npublic:\n    ListaEncadeada() : inicio(nullptr), fim(nullptr), tamanho(0) {}\n\n    // libera todos os nós quando a lista deixa de existir\n    ~ListaEncadeada() {\n        No *atual = inicio;\n        while (atual != nullptr) {\n            No *seguinte = atual->proximo;  // guarda antes de apagar\n            delete atual;\n            atual = seguinte;\n        }\n    }\n\n    // impede cópias: duas listas não podem dividir os mesmos nós\n    ListaEncadeada(const ListaEncadeada &) = delete;\n    ListaEncadeada &operator=(const ListaEncadeada &) = delete;\n\n    bool vazia() const { return tamanho == 0; }\n    int quantidade() const { return tamanho; }\n\n    void inserirInicio(int valor) {\n        No *novo = new No{valor, inicio};\n        inicio = novo;\n        if (fim == nullptr) {\n            fim = novo;\n        }\n        tamanho++;\n    }\n\n    void inserirFim(int valor) {\n        No *novo = new No{valor, nullptr};\n        if (fim == nullptr) {\n            inicio = novo;\n            fim = novo;\n        } else {\n            fim->proximo = novo;\n            fim = novo;\n        }\n        tamanho++;\n    }\n\n    bool inserirNaPosicao(int pos, int valor) {\n        if (pos < 0 || pos > tamanho) return false;\n        if (pos == 0) { inserirInicio(valor); return true; }\n        if (pos == tamanho) { inserirFim(valor); return true; }\n        No *anterior = inicio;\n        for (int i = 0; i < pos - 1; i++) {\n            anterior = anterior->proximo;\n        }\n        anterior->proximo = new No{valor, anterior->proximo};\n        tamanho++;\n        return true;\n    }\n\n    bool contem(int valor) const {\n        for (No *atual = inicio; atual != nullptr; atual = atual->proximo) {\n            if (atual->valor == valor) {\n                return true;\n            }\n        }\n        return false;\n    }\n\n    bool remover(int valor) {\n        No *anterior = nullptr;\n        No *atual = inicio;\n        while (atual != nullptr && atual->valor != valor) {\n            anterior = atual;\n            atual = atual->proximo;\n        }\n        if (atual == nullptr) {\n            return false;\n        }\n        if (anterior == nullptr) {\n            inicio = atual->proximo;\n        } else {\n            anterior->proximo = atual->proximo;\n        }\n        if (atual == fim) {\n            fim = anterior;\n        }\n        delete atual;\n        tamanho--;\n        return true;\n    }\n\n    void imprimir() const {\n        cout << \"[ \";\n        for (No *atual = inicio; atual != nullptr; atual = atual->proximo) {\n            cout << atual->valor << \" \";\n        }\n        cout << \"]\" << endl;\n    }\n};\n\nint main() {\n    ListaEncadeada lista;\n    lista.inserirFim(20);\n    lista.inserirFim(30);\n    lista.inserirInicio(10);\n    lista.imprimir();                      // [ 10 20 30 ]\n\n    lista.inserirNaPosicao(2, 25);\n    lista.imprimir();                      // [ 10 20 25 30 ]\n\n    cout << boolalpha << lista.contem(25) << endl;   // true\n\n    lista.remover(10);                     // remove o primeiro\n    lista.remover(30);                     // remove o último\n    lista.remover(99);                     // não existe: nada acontece\n    lista.imprimir();                      // [ 20 25 ]\n    cout << lista.quantidade() << endl;    // 2\n}"
+  },
+  {
+   "t": "quadro",
+   "tipo": "boa-pratica",
+   "titulo": "Por que proibir cópias?",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Sem as linhas com <code>= delete</code>, o C++ permitiria escrever <code>ListaEncadeada outra = lista;</code>. A cópia automática copiaria só os ponteiros, e as duas listas passariam a apontar para os <strong>mesmos nós</strong>. Quando a primeira deixasse de existir, o destrutor liberaria os nós; quando a segunda deixasse de existir, tentaria liberá-los de novo, e o programa travaria. Proibir a cópia é a forma mais simples de evitar o problema. Uma classe que precisa ser copiável deve implementar a cópia nó por nó."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-8-lista-duplamente-encadeada",
+   "texto": "3.8 Lista duplamente encadeada"
+  },
+  {
+   "t": "p",
+   "html": "Na lista simples, cada nó só conhece o próximo. Isso tem duas consequências incômodas: não dá para percorrer a lista de trás para frente, e remover o último nó custa O(n), porque é preciso encontrar o penúltimo caminhando desde o início."
+  },
+  {
+   "t": "p",
+   "html": "A <strong>lista duplamente encadeada</strong> acrescenta em cada nó um ponteiro para o <strong>anterior</strong>:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-03_dupla.png",
+   "alt": "capitulo 03 dupla"
+  },
+  {
+   "t": "p",
+   "html": "Com os dois ponteiros, inserir e remover nas duas pontas custa O(1), e a lista pode ser percorrida nos dois sentidos. O preço é um ponteiro a mais por nó e mais cuidado: cada operação precisa manter <code>anterior</code> e <code>proximo</code> coerentes."
+  },
+  {
+   "t": "codigo",
+   "texto": "struct NoDuplo {\n    int valor;\n    NoDuplo *anterior;\n    NoDuplo *proximo;\n};\n\nclass ListaDupla {\nprivate:\n    NoDuplo *inicio;\n    NoDuplo *fim;\n    int tamanho;\n\npublic:\n    ListaDupla() : inicio(nullptr), fim(nullptr), tamanho(0) {}\n\n    ~ListaDupla() {\n        while (!vazia()) {\n            removerInicio();\n        }\n    }\n\n    ListaDupla(const ListaDupla &) = delete;\n    ListaDupla &operator=(const ListaDupla &) = delete;\n\n    bool vazia() const { return tamanho == 0; }\n\n    void inserirInicio(int valor) {\n        NoDuplo *novo = new NoDuplo{valor, nullptr, inicio};\n        if (inicio == nullptr) {\n            fim = novo;\n        } else {\n            inicio->anterior = novo;\n        }\n        inicio = novo;\n        tamanho++;\n    }\n\n    void inserirFim(int valor) {\n        NoDuplo *novo = new NoDuplo{valor, fim, nullptr};\n        if (fim == nullptr) {\n            inicio = novo;\n        } else {\n            fim->proximo = novo;\n        }\n        fim = novo;\n        tamanho++;\n    }\n\n    // as duas remoções são O(1): não é preciso procurar o vizinho\n    bool removerInicio() {\n        if (vazia()) return false;\n        NoDuplo *velho = inicio;\n        inicio = inicio->proximo;\n        if (inicio == nullptr) {\n            fim = nullptr;           // a lista ficou vazia\n        } else {\n            inicio->anterior = nullptr;\n        }\n        delete velho;\n        tamanho--;\n        return true;\n    }\n\n    bool removerFim() {\n        if (vazia()) return false;\n        NoDuplo *velho = fim;\n        fim = fim->anterior;         // o penúltimo, sem precisar procurar\n        if (fim == nullptr) {\n            inicio = nullptr;\n        } else {\n            fim->proximo = nullptr;\n        }\n        delete velho;\n        tamanho--;\n        return true;\n    }\n\n    void imprimir() const {\n        for (NoDuplo *a = inicio; a != nullptr; a = a->proximo) cout << a->valor << \" \";\n        cout << endl;\n    }\n\n    void imprimirInvertido() const {\n        for (NoDuplo *a = fim; a != nullptr; a = a->anterior) cout << a->valor << \" \";\n        cout << endl;\n    }\n};\n\nint main() {\n    ListaDupla lista;\n    lista.inserirFim(20);\n    lista.inserirFim(30);\n    lista.inserirInicio(10);\n    lista.imprimir();            // 10 20 30\n    lista.imprimirInvertido();   // 30 20 10\n    lista.removerFim();\n    lista.removerInicio();\n    lista.imprimir();            // 20\n}"
+  },
+  {
+   "t": "h2",
+   "id": "3-9-lista-circular",
+   "texto": "3.9 Lista circular"
+  },
+  {
+   "t": "p",
+   "html": "Em uma <strong>lista circular</strong>, o último nó não aponta para <code>nullptr</code>: aponta de volta para o primeiro. A lista vira um anel, sem começo nem fim naturais."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-03_circular.png",
+   "alt": "capitulo 03 circular"
+  },
+  {
+   "t": "p",
+   "html": "Ela é útil sempre que os elementos são atendidos em rodízio, voltando ao primeiro depois do último: turnos de um jogo, a fila de processos que dividem o processador, as músicas de uma playlist em repetição."
+  },
+  {
+   "t": "p",
+   "html": "Um detalhe elegante: basta guardar um ponteiro para o <strong>último</strong> nó. O primeiro é sempre <code>ultimo-&gt;proximo</code>, então as duas pontas ficam acessíveis em O(1) com um único ponteiro."
+  },
+  {
+   "t": "codigo",
+   "texto": "struct Jogador {\n    string nome;\n    Jogador *proximo;\n};\n\nclass Rodizio {\nprivate:\n    Jogador *ultimo = nullptr;   // ultimo->proximo é o primeiro\n\npublic:\n    ~Rodizio() {\n        if (ultimo == nullptr) return;\n        Jogador *atual = ultimo->proximo;\n        ultimo->proximo = nullptr;          // abre o anel para poder parar\n        while (atual != nullptr) {\n            Jogador *seguinte = atual->proximo;\n            delete atual;\n            atual = seguinte;\n        }\n    }\n\n    Rodizio() = default;\n    Rodizio(const Rodizio &) = delete;\n    Rodizio &operator=(const Rodizio &) = delete;\n\n    void adicionar(const string &nome) {\n        Jogador *novo = new Jogador{nome, nullptr};\n        if (ultimo == nullptr) {\n            novo->proximo = novo;           // um só jogador: aponta para si mesmo\n        } else {\n            novo->proximo = ultimo->proximo; // o novo aponta para o primeiro\n            ultimo->proximo = novo;          // o antigo último aponta para o novo\n        }\n        ultimo = novo;                       // o novo passa a ser o último\n    }\n\n    void jogar(int turnos) const {\n        if (ultimo == nullptr) return;\n        Jogador *vez = ultimo->proximo;      // começa pelo primeiro\n        for (int t = 1; t <= turnos; t++) {\n            cout << \"Turno \" << t << \": \" << vez->nome << endl;\n            vez = vez->proximo;              // depois do último, volta ao primeiro\n        }\n    }\n};\n\nint main() {\n    Rodizio jogo;\n    jogo.adicionar(\"Ana\");\n    jogo.adicionar(\"Bia\");\n    jogo.adicionar(\"Caio\");\n    jogo.jogar(5);   // Ana, Bia, Caio, Ana, Bia\n}"
+  },
+  {
+   "t": "p",
+   "html": "Cuidado com a parada: em uma lista circular, percorrer até encontrar <code>nullptr</code> gera um laço infinito. Por isso o percurso para por contagem (como em <code>jogar</code>) ou ao voltar ao nó de partida, e o destrutor “abre” o anel antes de liberar os nós."
+  },
+  {
+   "t": "h2",
+   "id": "3-10-vetor-ou-lista-encadeada",
+   "texto": "3.10 Vetor ou lista encadeada?"
+  },
+  {
+   "t": "p",
+   "html": "Nenhuma das duas estruturas é melhor em tudo. A escolha depende de quais operações o seu problema faz com mais frequência:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Operação",
+    "Vetor",
+    "Lista simples",
+    "Lista dupla"
+   ],
+   "linhas": [
+    [
+     "Acessar a posição i",
+     "O(1)",
+     "O(n)",
+     "O(n)"
+    ],
+    [
+     "Inserir no início",
+     "O(n)",
+     "O(1)",
+     "O(1)"
+    ],
+    [
+     "Inserir no fim",
+     "O(1)*",
+     "O(1)",
+     "O(1)"
+    ],
+    [
+     "Remover do início",
+     "O(n)",
+     "O(1)",
+     "O(1)"
+    ],
+    [
+     "Remover do fim",
+     "O(1)",
+     "O(n)",
+     "O(1)"
+    ],
+    [
+     "Buscar um valor",
+     "O(n)",
+     "O(n)",
+     "O(n)"
+    ],
+    [
+     "Memória extra por elemento",
+     "nenhuma",
+     "1 ponteiro",
+     "2 ponteiros"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "* No vetor dinâmico, quase sempre O(1); de vez em quando, quando enche, a cópia para um espaço maior custa O(n). Na média, continua O(1): dizemos que é O(1) <strong>amortizado</strong>."
+  },
+  {
+   "t": "p",
+   "html": "Em resumo: prefira o <strong>vetor</strong> quando o acesso por posição for frequente e as inserções acontecerem no fim; prefira a <strong>lista</strong> quando houver muitas inserções e remoções nas pontas ou no meio de uma sequência que você já está percorrendo. Na prática, vetores também se beneficiam de estarem contínuos na memória, o que o processador aproveita muito bem; por isso, para listas pequenas, o vetor costuma ser mais rápido mesmo quando a tabela sugere o contrário."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Comparando com Python",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A <code>list</code> do Python é um vetor dinâmico, não uma lista encadeada: acessar <code>lista[i]</code> é O(1), mas <code>lista.insert(0, x)</code> é O(n). Quando você precisa inserir e remover nas duas pontas, a escolha certa é o <code>deque</code>, do módulo <code>collections</code>, implementado com blocos encadeados. E, se quiser, dá para escrever uma lista encadeada em Python com a mesma ideia de nós:"
+    },
+    {
+     "t": "codigo",
+     "texto": "from collections import deque\n\nclass No:\n    def __init__(self, valor, proximo=None):\n        self.valor = valor\n        self.proximo = proximo     # referência para o próximo nó (ou None)\n\ninicio = No(10, No(20, No(30)))   # 10 -> 20 -> 30\natual = inicio\nwhile atual is not None:\n    print(atual.valor, end=\" \")\n    atual = atual.proximo\nprint()\n\npedidos = deque([20, 30])\npedidos.appendleft(10)           # O(1), como inserirInicio\npedidos.append(40)               # O(1), como inserirFim\nprint(pedidos.popleft())         # 10, O(1)"
+    },
+    {
+     "t": "p",
+     "html": "Em Python não há <code>delete</code>: quando nenhum nó aponta mais para um objeto, a coleta de lixo o remove."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A biblioteca padrão do C++ também oferece listas prontas: <code>std::forward_list</code> (simplesmente encadeada) e <code>std::list</code> (duplamente encadeada). Agora que você sabe como funcionam por dentro, use-as nos seus projetos."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Perder o resto da lista.</strong> Ao inserir no início, atualizar <code>inicio</code> antes de ligar o novo nó ao antigo primeiro deixa todos os outros nós inacessíveis.",
+    "<strong>Esquecer a lista vazia.</strong> Toda operação precisa funcionar quando <code>inicio</code> é <code>nullptr</code>. Acessar <code>inicio-&gt;valor</code> em uma lista vazia derruba o programa.",
+    "<strong>Não atualizar o ponteiro <code>fim</code>.</strong> Ao remover o último nó, <code>fim</code> precisa passar a apontar para o anterior (ou para <code>nullptr</code>, se a lista ficou vazia).",
+    "<strong>Usar o nó depois do <code>delete</code>.</strong> No destrutor, guarde o <code>proximo</code> em uma variável <em>antes</em> de liberar o nó atual.",
+    "<strong>Esquecer o destrutor.</strong> Sem ele, todos os nós ficam presos na memória quando a lista deixa de existir.",
+    "<strong>Copiar uma lista sem tratar a cópia.</strong> A cópia automática divide os mesmos nós entre duas listas e causa <code>delete</code> duplo. Proíba a cópia ou implemente-a nó por nó.",
+    "<strong>Esquecer um dos ponteiros na lista dupla.</strong> Cada inserção e remoção precisa atualizar <code>anterior</code> e <code>proximo</code> dos vizinhos.",
+    "<strong>Laço infinito na lista circular.</strong> Na lista circular, nenhum nó aponta para <code>nullptr</code>: o percurso precisa parar por contagem ou ao voltar ao início."
+   ]
+  }
+ ]
+}

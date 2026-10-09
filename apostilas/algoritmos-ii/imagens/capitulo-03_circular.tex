@@ -1,0 +1,20 @@
+% Capítulo 3: lista circular (o último nó aponta para o primeiro).
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-nos}
+\begin{document}
+\begin{tikzpicture}[node distance=9mm]
+  \node[rotulo] (ini) {inicio};
+  \node[no, right=7mm of ini] (a) {Ana \nodepart{two} \phantom{x}};
+  \node[no, right=of a] (b) {Bia \nodepart{two} \phantom{x}};
+  \node[no, right=of b] (c) {Caio \nodepart{two} \phantom{x}};
+  \node[no, right=of c] (d) {Davi \nodepart{two} \phantom{x}};
+  \draw[seta] (ini) -- (a.west);
+  \liga{a}{(b.west)}
+  \liga{b}{(c.west)}
+  \liga{c}{(d.west)}
+  \draw[setanova] ([xshift=-2.3mm]d.east) -- ++(0.75,0) -- ++(0,-0.9) -| (a.south);
+  \node[legenda, text=laranja, below=7mm of b, xshift=8mm] {o último nó aponta de volta para o primeiro};
+\end{tikzpicture}
+\end{document}

@@ -422,6 +422,15 @@ export const apostilas: Apostila[] = [
     descricao:
       'Análise experimental e de complexidade, melhor, pior e caso médio, notação Big O, as principais classes de complexidade, análise de código passo a passo e complexidade de espaço.',
   },
+  {
+    // figuras: apostilas/algoritmos-ii/imagens/capitulo-03_*.tex (TikZ, estilo-nos.tex)
+    id: 'alg2-cap3',
+    capitulo: 3,
+    titulo: 'Listas Encadeadas',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-ii',
+    descricao:
+      'Tipo abstrato de dados, nós e ponteiros, inserção, busca e remoção passo a passo, listas simples, duplas e circulares, e quando usar vetor ou lista.',
+  },
 
   // Programação e Design para Web II (apostila em módulos)
   // Fonte: 02- APOSTILAS/Módulo 5/LATEX/modulos/modulo-0N.tex (24/08), convertida com

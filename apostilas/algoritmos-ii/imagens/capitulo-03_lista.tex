@@ -1,0 +1,19 @@
+% Capítulo 3: lista simplesmente encadeada com três nós.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-nos}
+\begin{document}
+\begin{tikzpicture}[node distance=9mm]
+  \node[rotulo] (ini) {inicio};
+  \node[no, right=7mm of ini] (a) {10 \nodepart{two} \phantom{x}};
+  \node[no, right=of a] (b) {20 \nodepart{two} \phantom{x}};
+  \node[no, right=of b] (c) {30 \nodepart{two} \phantom{x}};
+  \node[nulo, right=7mm of c] (n) {nullptr};
+  \draw[seta] (ini) -- (a.west);
+  \liga{a}{(b.west)}
+  \liga{b}{(c.west)}
+  \liga{c}{(n)}
+  \node[legenda, below=4mm of b] {cada nó guarda um \textbf{valor} e um ponteiro para o \textbf{próximo}};
+\end{tikzpicture}
+\end{document}
