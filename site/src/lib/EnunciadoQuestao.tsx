@@ -24,8 +24,22 @@ function Parte({ parte }: { parte: ParteContexto }) {
   }
 }
 
-/** Texto motivador, caso aplicado, enunciado e itens (a, b, c...) de uma questão. */
-export default function EnunciadoQuestao({ q }: { q: Questao }) {
+/** Linhas em branco para o aluno escrever a resposta na prova impressa. */
+export function LinhasResposta({ quantidade }: { quantidade: number }) {
+  return (
+    <div className="linhas-resposta">
+      {Array.from({ length: quantidade }, (_, i) => (
+        <span key={i} />
+      ))}
+    </div>
+  )
+}
+
+/**
+ * Texto motivador, caso aplicado, enunciado e itens (a, b, c...) de uma questão.
+ * Com `linhasPorItem`, cada item ganha suas linhas de resposta logo abaixo (prova impressa).
+ */
+export default function EnunciadoQuestao({ q, linhasPorItem }: { q: Questao; linhasPorItem?: number }) {
   return (
     <>
       {q.texto && (
@@ -47,7 +61,10 @@ export default function EnunciadoQuestao({ q }: { q: Questao }) {
       {q.tipo === 'discursiva' && q.itens && q.itens.length > 0 && (
         <ul className="itens-discursiva">
           {q.itens.map((it, i) => (
-            <li key={i}>{it}</li>
+            <li key={i}>
+              {it}
+              {linhasPorItem ? <LinhasResposta quantidade={linhasPorItem} /> : null}
+            </li>
           ))}
         </ul>
       )}

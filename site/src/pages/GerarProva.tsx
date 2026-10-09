@@ -5,7 +5,7 @@ import Filtros from '../lib/Filtros'
 import { embaralhar, embaralharAlternativas, filtrar, FILTRO_VAZIO, LETRAS, nomeDisciplina, type Filtro } from '../lib/util'
 import { apostilas } from '../data/apostilas'
 import { rotuloApostila } from '../lib/capitulos'
-import EnunciadoQuestao from '../lib/EnunciadoQuestao'
+import EnunciadoQuestao, { LinhasResposta } from '../lib/EnunciadoQuestao'
 
 function nomeCapitulo(id: string) {
   const a = apostilas.find((x) => x.id === id)
@@ -22,7 +22,7 @@ function resumoQuestao(q: Questao) {
 
 const TIPOS = ['P1', 'P2', '2ª Chamada', 'Prova final'] as const
 
-/** linhas para resposta de cada questão discursiva na prova impressa */
+/** linhas para resposta de cada questão discursiva (ou de cada item a, b, c...) na prova impressa */
 const LINHAS_RESPOSTA = 4
 
 /**
@@ -227,7 +227,10 @@ export default function GerarProva() {
                   <span>Questão {n + 1}</span>
                   <span className="valor-questao">Valor: {valorDe(q.id)}</span>
                 </div>
-                <EnunciadoQuestao q={q} />
+                <EnunciadoQuestao
+                  q={q}
+                  linhasPorItem={q.tipo === 'discursiva' && !q.pratica ? LINHAS_RESPOSTA : undefined}
+                />
                 {q.tipo === 'objetiva' ? (
                   <ol className="alts-prova">
                     {q.alternativas.map((a, i) => (
@@ -236,12 +239,8 @@ export default function GerarProva() {
                       </li>
                     ))}
                   </ol>
-                ) : q.pratica ? null : (
-                  <div className="linhas-resposta">
-                    {Array.from({ length: LINHAS_RESPOSTA }, (_, i) => (
-                      <span key={i} />
-                    ))}
-                  </div>
+                ) : q.pratica || q.itens?.length ? null : (
+                  <LinhasResposta quantidade={LINHAS_RESPOSTA} />
                 )}
               </section>
             ))}
