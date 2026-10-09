@@ -408,7 +408,7 @@ export const apostilas: Apostila[] = [
   {
     id: 'alg2-cap1',
     capitulo: 1,
-    titulo: 'Revisão de C++: Funções, Ponteiros e Classes',
+    titulo: 'Fundamentos de C++ para Estruturas de Dados',
     disciplinaId: 'algoritmos-e-linguagem-de-programacao-ii',
     descricao:
       'Passagem de parâmetros por valor e por referência, ponteiros, memória dinâmica com new e delete, structs, classes e templates, com comparações em Python.',
