@@ -345,6 +345,12 @@ export default function GerarProva() {
             </li>
           ))}
         </ul>
+        {visiveis.length === 0 && (
+          <p className="dica">
+            Ainda não há questões cadastradas para este filtro. Escolha outra disciplina ou outro capítulo (o número entre
+            parênteses mostra quantas questões cada um tem).
+          </p>
+        )}
       </section>
 
       {escolhidas.length > 0 && (
@@ -399,6 +405,9 @@ export default function GerarProva() {
       <button disabled={!selecionadas.length} onClick={gerar}>
         Gerar prova
       </button>
+      {!selecionadas.length && (
+        <p className="dica">Marque pelo menos uma questão na etapa 2, ou use o botão Sortear, para liberar o botão.</p>
+      )}
     </>
   )
 }
