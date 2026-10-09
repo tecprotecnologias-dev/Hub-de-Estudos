@@ -1,6 +1,5 @@
 import { disciplinas } from '../data/disciplinas'
-import { questoes } from '../data/questoes'
-import { apostilasDaDisciplina, rotuloApostila } from './capitulos'
+import { apostilasDaDisciplina, questoesDaProva, rotuloApostila } from './capitulos'
 import { buscarDisciplina, nomePeriodo, PERIODOS, type Filtro } from './util'
 
 interface Props {
@@ -8,7 +7,7 @@ interface Props {
   onChange: (f: Filtro) => void
 }
 
-const contar = (pred: (q: (typeof questoes)[number]) => boolean) => questoes.filter(pred).length
+const contar = (pred: (q: (typeof questoesDaProva)[number]) => boolean) => questoesDaProva.filter(pred).length
 
 /** Filtros do banco de questões (usado no gerador de provas). */
 export default function Filtros({ valor, onChange }: Props) {
@@ -16,7 +15,8 @@ export default function Filtros({ valor, onChange }: Props) {
     (d) => (!valor.periodo || String(d.periodo) === valor.periodo) && apostilasDaDisciplina(d.id).length > 0,
   )
   const disciplina = buscarDisciplina(valor.disciplinaId)
-  const capitulos = disciplina ? apostilasDaDisciplina(disciplina.id) : []
+  // só os capítulos da disciplina: material complementar não entra nas provas
+  const capitulos = disciplina ? apostilasDaDisciplina(disciplina.id).filter((a) => !a.grupo) : []
 
   return (
     <div className="filtros">

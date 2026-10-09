@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
-import { questoes } from '../data/questoes'
 import { NOMES_NIVEL, type Questao } from '../data/tipos'
 import Filtros from '../lib/Filtros'
 import { embaralhar, embaralharAlternativas, filtrar, FILTRO_VAZIO, LETRAS, nomeDisciplina, type Filtro } from '../lib/util'
 import { apostilas } from '../data/apostilas'
-import { rotuloApostila } from '../lib/capitulos'
+import { questoesDaProva as questoes, rotuloApostila } from '../lib/capitulos'
 import EnunciadoQuestao, { LinhasResposta } from '../lib/EnunciadoQuestao'
 
 function nomeCapitulo(id: string) {

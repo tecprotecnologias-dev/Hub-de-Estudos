@@ -1,4 +1,5 @@
 import { apostilas } from '../data/apostilas'
+import { questoes } from '../data/questoes'
 import type { Apostila, ConteudoCapitulo } from '../data/tipos'
 
 // Cada capítulo é carregado só quando o aluno abre, para o site continuar leve.
@@ -8,6 +9,14 @@ export async function carregarCapitulo(id: string): Promise<ConteudoCapitulo | n
   const carregar = arquivos[`../data/capitulos/${id}.json`]
   return carregar ? carregar() : null
 }
+
+/** Capítulo de material complementar (cadastrado com grupo): fica fora do gerador de provas. */
+export function ehComplementar(capituloId: string) {
+  return !!apostilas.find((a) => a.id === capituloId)?.grupo
+}
+
+/** Banco do gerador de provas: só questões dos capítulos principais das disciplinas. */
+export const questoesDaProva = questoes.filter((q) => !ehComplementar(q.capituloId))
 
 /** Apostilas da disciplina, com os capítulos em ordem. */
 export function apostilasDaDisciplina(disciplinaId: string): Apostila[] {
