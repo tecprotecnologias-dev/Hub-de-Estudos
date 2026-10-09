@@ -61,7 +61,7 @@ export interface QuestaoDiscursiva extends QuestaoBase {
   resolucao?: ParteResolucao[]
   /** resposta esperada, mostrada quando o aluno clica em "Ver resposta esperada" */
   respostaEsperada?: string
-  /** linhas para resposta na prova impressa (padrão: 6) */
+  /** sem uso na prova impressa, que tem sempre 4 linhas por discursiva (ver GerarProva) */
   linhas?: number
 }
 

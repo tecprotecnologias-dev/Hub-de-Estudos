@@ -5,7 +5,7 @@ import Filtros from '../lib/Filtros'
 import { embaralhar, embaralharAlternativas, filtrar, FILTRO_VAZIO, LETRAS, nomeDisciplina, type Filtro } from '../lib/util'
 import { apostilas } from '../data/apostilas'
 import { rotuloApostila } from '../lib/capitulos'
-import EnunciadoQuestao, { Resolucao } from '../lib/EnunciadoQuestao'
+import EnunciadoQuestao from '../lib/EnunciadoQuestao'
 
 function nomeCapitulo(id: string) {
   const a = apostilas.find((x) => x.id === id)
@@ -21,6 +21,9 @@ function resumoQuestao(q: Questao) {
 }
 
 const TIPOS = ['P1', 'P2', '2ª Chamada', 'Prova final'] as const
+
+/** linhas para resposta de cada questão discursiva na prova impressa */
+const LINHAS_RESPOSTA = 4
 
 /**
  * Cabeçalho no modelo da folha de prova (tabela com logos, aluno/período/matrícula,
@@ -235,7 +238,7 @@ export default function GerarProva() {
                   </ol>
                 ) : q.pratica ? null : (
                   <div className="linhas-resposta">
-                    {Array.from({ length: q.linhas ?? 6 }, (_, i) => (
+                    {Array.from({ length: LINHAS_RESPOSTA }, (_, i) => (
                       <span key={i} />
                     ))}
                   </div>
@@ -244,32 +247,6 @@ export default function GerarProva() {
             ))}
           </article>
         ))}
-
-        <article className="folha gabarito">
-          <h2>Gabarito</h2>
-          {versoes.map((v) => (
-            <div key={v.nome}>
-              {v.nome && <h3>{v.nome}</h3>}
-              <p>
-                {v.questoes.map((q, i) =>
-                  q.tipo === 'objetiva' ? (
-                    <span key={q.id} className="item-gabarito">
-                      {i + 1}-{LETRAS[q.correta]}
-                    </span>
-                  ) : null,
-                )}
-              </p>
-              {v.questoes.map((q, i) =>
-                q.tipo === 'discursiva' ? (
-                  <div key={q.id} className="gabarito-discursiva">
-                    <strong>{i + 1}.</strong> {q.respostaEsperada || (q.resolucao ? '' : 'Resposta pessoal.')}
-                    {q.resolucao && <Resolucao partes={q.resolucao} />}
-                  </div>
-                ) : null,
-              )}
-            </div>
-          ))}
-        </article>
       </>
     )
   }
