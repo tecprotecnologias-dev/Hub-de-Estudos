@@ -1,6 +1,6 @@
 \section{Capítulo 10 -- Programação funcional}
 
-Até aqui, quase todos os programas deste livro foram escritos no estilo \textbf{imperativo}: uma sequência de comandos que alteram variáveis passo a passo, dizendo ao computador \textbf{como} fazer cada coisa. A \textbf{programação funcional} é outro jeito de pensar. Nela, o programa é montado juntando funções que recebem valores e devolvem valores novos, sem alterar nada pelo caminho, e o código descreve \textbf{o que} deve ser feito. Linguagens como Haskell e Elixir são inteiramente funcionais; C++, Python, Java e JavaScript são multiparadigma e incorporaram as ideias principais. Neste capítulo você vai conhecer essas ideias e usá-las em C++: funções puras, imutabilidade, funções anônimas (\textit{lambdas}), capturas e as funções de ordem superior da biblioteca padrão, que você já usou com a \texttt{sort} nos Capítulos 8 e 9.
+Até aqui, quase todos os programas desta apostila foram escritos no estilo \textbf{imperativo}: uma sequência de comandos que alteram variáveis passo a passo, dizendo ao computador \textbf{como} fazer cada coisa. A \textbf{programação funcional} é outro jeito de pensar. Nela, o programa é montado juntando funções que recebem valores e devolvem valores novos, sem alterar nada pelo caminho, e o código descreve \textbf{o que} deve ser feito. Linguagens como Haskell e Elixir são inteiramente funcionais; C++, Python, Java e JavaScript são multiparadigma e incorporaram as ideias principais. Neste capítulo você vai conhecer essas ideias e usá-las em C++: funções puras, imutabilidade, funções anônimas (\textit{lambdas}), capturas e as funções de ordem superior da biblioteca padrão, que você já usou com a \texttt{sort} nos Capítulos 8 e 9.
 
 \subsection{10.1 Dois estilos para o mesmo problema}
 
@@ -410,7 +410,7 @@ A ordem importa: \texttt{h1} e \texttt{h2} combinam as mesmas duas funções e d
 As lambdas \texttt{semEspacos} e \texttt{minusculas} recebem a \texttt{string} por valor e devolvem a cópia alterada, sem mexer no texto original: são funções puras, mesmo alterando uma variável internamente. A linha com \texttt{erase} e \texttt{remove} é a forma padrão de apagar elementos de um vetor ou texto em C++: a \texttt{remove} empurra para o fim os que devem sair, e a \texttt{erase} corta esse fim.
 
 \begin{destaque}{Ranges no C++20}
-As versões mais novas do C++ (a partir do C++20) trazem as \textit{ranges}, que permitem encadear as etapas com o operador \texttt{|}, de forma parecida com uma linha de comandos: \texttt{numeros | views::filter(par) | views::transform(quadrado)}. As etapas são \textbf{preguiçosas}: nada é calculado nem copiado até que os elementos sejam percorridos. Este livro usa o C++17, mas vale saber que o estilo funcional em C++ continua evoluindo nessa direção.
+As versões mais novas do C++ (a partir do C++20) trazem as \textit{ranges}, que permitem encadear as etapas com o operador \texttt{|}, de forma parecida com uma linha de comandos: \texttt{numeros | views::filter(par) | views::transform(quadrado)}. As etapas são \textbf{preguiçosas}: nada é calculado nem copiado até que os elementos sejam percorridos. Esta apostila usa o C++17, mas vale saber que o estilo funcional em C++ continua evoluindo nessa direção.
 \end{destaque}
 
 \subsection{10.7 Quando usar o estilo funcional}

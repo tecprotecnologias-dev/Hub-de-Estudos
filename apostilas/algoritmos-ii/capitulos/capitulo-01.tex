@@ -17,7 +17,7 @@ Em linguagens como Python, Java ou JavaScript, a memória é administrada automa
 
 Em C++, você enxerga e controla essa organização. Uma lista encadeada deixa de ser uma caixa-preta e passa a ser o que ela realmente é: um conjunto de blocos de memória, cada um apontando para o próximo. Quando você entende isso, passa a entender também por que uma operação é rápida ou lenta, e esse é o centro da análise de algoritmos.
 
-Ao longo do livro, sempre que ajudar a entender um conceito, vamos mostrar como a mesma ideia aparece em Python. Assim você vê as duas faces da moeda: o que acontece \textit{por dentro} (C++) e como isso costuma ficar \textit{escondido} em uma linguagem de mais alto nível (Python).
+Ao longo da apostila, sempre que ajudar a entender um conceito, vamos mostrar como a mesma ideia aparece em Python. Assim você vê as duas faces da moeda: o que acontece \textit{por dentro} (C++) e como isso costuma ficar \textit{escondido} em uma linguagem de mais alto nível (Python).
 
 \subsection{1.2 Estrutura de um programa em C++}
 
@@ -91,7 +91,7 @@ for (int i = 0; i < 5; i++) {
 \end{Verbatim}
 \end{codigo}
 
-O vetor tem uma limitação que vai motivar vários capítulos deste livro: o \textbf{tamanho é fixo}. Se você declarou espaço para 5 notas e chegou uma sexta, não há onde colocá-la. Inserir um elemento no meio também é trabalhoso, porque todos os seguintes precisam ser deslocados uma posição. As estruturas que vamos construir, como as listas encadeadas, existem justamente para contornar essas limitações.
+O vetor tem uma limitação que vai motivar vários capítulos desta apostila: o \textbf{tamanho é fixo}. Se você declarou espaço para 5 notas e chegou uma sexta, não há onde colocá-la. Inserir um elemento no meio também é trabalhoso, porque todos os seguintes precisam ser deslocados uma posição. As estruturas que vamos construir, como as listas encadeadas, existem justamente para contornar essas limitações.
 
 \subsection{1.4 Funções e passagem de parâmetros}
 
@@ -115,7 +115,7 @@ void imprimirVetor(int v[], int tamanho) {
 \end{Verbatim}
 \end{codigo}
 
-O ponto mais importante para este livro é \textbf{como os parâmetros chegam à função}. Em C++ há três formas.
+O ponto mais importante para esta apostila é \textbf{como os parâmetros chegam à função}. Em C++ há três formas.
 
 \subsubsection{Por valor: a função recebe uma cópia}
 
@@ -286,7 +286,7 @@ delete[] valores;            // vetor: libera com delete[]
 \end{Verbatim}
 \end{codigo}
 
-Toda estrutura de dados dinâmica deste livro funciona assim: cada novo elemento é criado com \texttt{new} e, quando sai da estrutura, é liberado com \texttt{delete}.
+Toda estrutura de dados dinâmica desta apostila funciona assim: cada novo elemento é criado com \texttt{new} e, quando sai da estrutura, é liberado com \texttt{delete}.
 
 \begin{destaque}{Regra de ouro da memória dinâmica}
 Para cada \texttt{new} deve existir exatamente um \texttt{delete} (e para cada \texttt{new[]}, um \texttt{delete[]}). Se você esquecer o \texttt{delete}, o espaço fica preso até o programa terminar: é o chamado \textbf{vazamento de memória} (\textit{memory leak}). Se fizer \texttt{delete} duas vezes, ou usar o ponteiro depois do \texttt{delete}, o comportamento é imprevisível e o programa pode travar.
@@ -425,7 +425,7 @@ int main() {
 \end{Verbatim}
 \end{codigo}
 
-Repare em três ideias que vão se repetir ao longo do livro:
+Repare em três ideias que vão se repetir ao longo da apostila:
 
 \begin{itemize}
   \item \textbf{Construtor} (\texttt{VetorDinamico()}): prepara o objeto quando ele nasce. Tem o mesmo nome da classe e não tem tipo de retorno.
@@ -486,7 +486,7 @@ int main() {
 \end{Verbatim}
 \end{codigo}
 
-A biblioteca padrão do C++ (STL) já traz estruturas prontas feitas com templates, como \texttt{vector}, \texttt{list}, \texttt{stack}, \texttt{queue} e \texttt{map}. Neste livro vamos construir as nossas versões, porque o objetivo é entender como elas funcionam por dentro. Depois de entender, use as da STL nos seus projetos: são testadas e otimizadas.
+A biblioteca padrão do C++ (STL) já traz estruturas prontas feitas com templates, como \texttt{vector}, \texttt{list}, \texttt{stack}, \texttt{queue} e \texttt{map}. Nesta apostila vamos construir as nossas versões, porque o objetivo é entender como elas funcionam por dentro. Depois de entender, use as da STL nos seus projetos: são testadas e otimizadas.
 
 \subsection{Erros Comuns}
 

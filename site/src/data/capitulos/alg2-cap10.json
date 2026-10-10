@@ -9,7 +9,7 @@
   },
   {
    "t": "p",
-   "html": "Até aqui, quase todos os programas deste livro foram escritos no estilo <strong>imperativo</strong>: uma sequência de comandos que alteram variáveis passo a passo, dizendo ao computador <strong>como</strong> fazer cada coisa. A <strong>programação funcional</strong> é outro jeito de pensar. Nela, o programa é montado juntando funções que recebem valores e devolvem valores novos, sem alterar nada pelo caminho, e o código descreve <strong>o que</strong> deve ser feito. Linguagens como Haskell e Elixir são inteiramente funcionais; C++, Python, Java e JavaScript são multiparadigma e incorporaram as ideias principais. Neste capítulo você vai conhecer essas ideias e usá-las em C++: funções puras, imutabilidade, funções anônimas (<em>lambdas</em>), capturas e as funções de ordem superior da biblioteca padrão, que você já usou com a <code>sort</code> nos Capítulos 8 e 9."
+   "html": "Até aqui, quase todos os programas desta apostila foram escritos no estilo <strong>imperativo</strong>: uma sequência de comandos que alteram variáveis passo a passo, dizendo ao computador <strong>como</strong> fazer cada coisa. A <strong>programação funcional</strong> é outro jeito de pensar. Nela, o programa é montado juntando funções que recebem valores e devolvem valores novos, sem alterar nada pelo caminho, e o código descreve <strong>o que</strong> deve ser feito. Linguagens como Haskell e Elixir são inteiramente funcionais; C++, Python, Java e JavaScript são multiparadigma e incorporaram as ideias principais. Neste capítulo você vai conhecer essas ideias e usá-las em C++: funções puras, imutabilidade, funções anônimas (<em>lambdas</em>), capturas e as funções de ordem superior da biblioteca padrão, que você já usou com a <code>sort</code> nos Capítulos 8 e 9."
   },
   {
    "t": "h2",
@@ -284,7 +284,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "As versões mais novas do C++ (a partir do C++20) trazem as <em>ranges</em>, que permitem encadear as etapas com o operador <code>|</code>, de forma parecida com uma linha de comandos: <code>numeros | views::filter(par) | views::transform(quadrado)</code>. As etapas são <strong>preguiçosas</strong>: nada é calculado nem copiado até que os elementos sejam percorridos. Este livro usa o C++17, mas vale saber que o estilo funcional em C++ continua evoluindo nessa direção."
+     "html": "As versões mais novas do C++ (a partir do C++20) trazem as <em>ranges</em>, que permitem encadear as etapas com o operador <code>|</code>, de forma parecida com uma linha de comandos: <code>numeros | views::filter(par) | views::transform(quadrado)</code>. As etapas são <strong>preguiçosas</strong>: nada é calculado nem copiado até que os elementos sejam percorridos. Esta apostila usa o C++17, mas vale saber que o estilo funcional em C++ continua evoluindo nessa direção."
     }
    ]
   },
