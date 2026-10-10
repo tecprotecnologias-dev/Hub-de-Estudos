@@ -1,0 +1,31 @@
+% Capítulo 9: algoritmo de Kruskal no grafo das cidades do capítulo 6.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-grafos}
+\tikzset{
+  recusada/.style={draw=cinzalogo, dashed, line width=1.2pt},
+  ordem/.style={circle, fill=laranja, text=white, font=\sffamily\scriptsize\bfseries,
+                inner sep=0pt, minimum size=4mm},
+}
+\begin{document}
+\begin{tikzpicture}
+  \posicoes
+  \foreach \a/\b/\p in \arestasexemplo { \draw[aresta] (p\a) -- (p\b); }
+  \foreach \a/\b in {B/C, A/C, D/E, E/F, B/D} { \draw[arestaforte] (p\a) -- (p\b); }
+  \draw[white, line width=2.4pt] (pA) -- (pB);
+  \draw[recusada] (pA) -- (pB);
+  \foreach \a/\b/\p in \arestasexemplo { \path (p\a) -- node[peso] {\p} (p\b); }
+  \foreach \v in {A,B,C,D,E,F} { \node[vertice] (\v) at (p\v) {\v}; }
+  % ordem em que as arestas entram na árvore
+  \node[ordem] at ($(pB)!0.5!(pC) + (0.45, 0)$) {1};
+  \node[ordem] at ($(pA)!0.5!(pC) + (0.3, -0.4)$) {2};
+  \node[ordem] at ($(pD)!0.5!(pE) + (0.45, 0)$) {3};
+  \node[ordem] at ($(pE)!0.5!(pF) + (0.3, -0.4)$) {4};
+  \node[ordem] at ($(pB)!0.5!(pD) + (0, 0.4)$) {5};
+  \node[legenda, text=cinzalogo] at ($(pA)!0.5!(pB) + (-0.55, 0.35)$) {fecharia ciclo};
+  \node[legenda, align=center] at (3.8, -2.5)
+    {em laranja, as arestas na ordem em que entram: das mais leves para as mais pesadas;\\
+     a A-B (peso 4) é recusada, porque A e B já estão ligadas por A-C-B. Total: 13 km};
+\end{tikzpicture}
+\end{document}

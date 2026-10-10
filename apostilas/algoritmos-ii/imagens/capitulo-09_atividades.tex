@@ -1,0 +1,29 @@
+% Capítulo 9: seleção de atividades, palestras ordenadas pelo horário de término.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-vetores}
+\tikzset{
+  barra/.style={draw=cinzalogo, fill=cinzalogo!15, line width=0.6pt, rounded corners=1pt},
+  escolhida/.style={draw=laranja, fill=laranja!45, line width=0.9pt, rounded corners=1pt},
+  nome/.style={font=\sffamily\small, text=navy, anchor=east},
+}
+\begin{document}
+\begin{tikzpicture}[x=0.75cm, y=0.62cm]
+  % eixo das horas (8h às 17h)
+  \foreach \h in {8,...,17} {
+    \draw[cinzalogo!40] (\h, 0.6) -- (\h, -7.6);
+    \node[indice] at (\h, 0.95) {\h h};
+  }
+  \foreach \nome/\ini/\fim/\estilo [count=\k from 0] in
+    {Abertura/8/10/escolhida, Redes/10/11/escolhida, Python/9/12/barra,
+     Banco de Dados/11/13/escolhida, Segurança/12/14/barra, Nuvem/13/15/escolhida,
+     IA/14/16/barra, Carreira/15/17/escolhida} {
+    \draw[\estilo] (\ini, -\k - 0.3) rectangle (\fim, -\k + 0.3);
+    \node[nome] at (7.8, -\k) {\nome};
+  }
+  \node[legenda, align=center] at (12.5, -8.5)
+    {de cima para baixo, em ordem de término; em laranja, as 5 escolhidas:\\
+     cada uma é a que termina primeiro entre as que começam depois da anterior};
+\end{tikzpicture}
+\end{document}

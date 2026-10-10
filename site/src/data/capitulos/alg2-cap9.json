@@ -1,0 +1,516 @@
+{
+ "numero": 9,
+ "titulo": "Algoritmos gulosos e programação dinâmica",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Muitos problemas pedem não uma resposta qualquer, mas a <strong>melhor</strong> resposta: o troco com menos moedas, o maior número de reuniões em uma sala, a rede de estradas mais barata, a mochila com o maior valor. Esses são os <strong>problemas de otimização</strong>. Testar todas as possibilidades quase sempre é inviável, porque elas crescem de forma exponencial. Neste capítulo você vai conhecer duas técnicas para resolvê-los de forma eficiente: os <strong>algoritmos gulosos</strong>, que tomam a melhor decisão do momento e nunca voltam atrás, e a <strong>programação dinâmica</strong>, que resolve cada subproblema uma única vez e guarda a resposta. No caminho, você vai ver o algoritmo de Kruskal, prometido no Capítulo 6."
+  },
+  {
+   "t": "h2",
+   "id": "9-1-algoritmos-gulosos",
+   "texto": "9.1 Algoritmos gulosos"
+  },
+  {
+   "t": "p",
+   "html": "Um algoritmo <strong>guloso</strong> constrói a solução passo a passo e, a cada passo, faz a escolha que parece melhor <strong>naquele momento</strong>, sem pensar nas consequências e sem desfazer escolhas anteriores. Você já conhece três: o Dijkstra, que sempre trata o vértice mais próximo; o Prim, que sempre pega a aresta mais barata; e a ordenação por seleção, que sempre busca o menor elemento."
+  },
+  {
+   "t": "p",
+   "html": "O exemplo mais familiar é o troco. Para dar 87 centavos com as moedas brasileiras (1 real, 50, 25, 10, 5 e 1 centavo), qualquer caixa faz assim: usa a maior moeda que ainda cabe, desconta, e repete. São 50 + 25 + 10 + 1 + 1, cinco moedas, e não há como usar menos."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n\n// usa sempre a maior moeda que ainda cabe\n// (as moedas precisam estar em ordem decrescente)\nvector<int> trocoGuloso(const vector<int> &moedas, int valor) {\n    vector<int> usadas;\n    for (int m : moedas) {\n        while (valor >= m) {\n            usadas.push_back(m);\n            valor -= m;\n        }\n    }\n    return usadas;\n}\n\nvoid mostrar(const vector<int> &v) {\n    for (int x : v) cout << x << \" \";\n    cout << endl;\n}\n\nint main() {\n    mostrar(trocoGuloso({100, 50, 25, 10, 5, 1}, 87));\n    // 50 25 10 1 1\n    mostrar(trocoGuloso({4, 3, 1}, 6));   // 4 1 1\n}"
+  },
+  {
+   "t": "p",
+   "html": "A segunda chamada mostra o perigo. Com moedas de 4, 3 e 1, o guloso dá 6 como 4 + 1 + 1, três moedas, mas 3 + 3 usa só duas. A primeira escolha, a moeda de 4, parecia a melhor e estragou o resto. Com as moedas brasileiras o guloso sempre acerta, mas isso é uma propriedade daquele conjunto de moedas, e não do algoritmo."
+  },
+  {
+   "t": "p",
+   "html": "Um algoritmo guloso só dá a resposta ótima quando o problema tem duas propriedades:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Escolha gulosa</strong>: existe uma solução ótima que começa pela escolha gulosa. Ou seja, fazer a escolha que parece melhor agora nunca impede de chegar ao melhor resultado.",
+    "<strong>Subestrutura ótima</strong>: depois da escolha, o que sobra é um problema menor do mesmo tipo, e a solução ótima do todo contém a solução ótima dessa parte."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Quando as duas valem, o guloso costuma ser o algoritmo mais simples e mais rápido possível. Quando não valem, ele dá uma resposta que pode estar longe da melhor, sem nenhum aviso. Por isso, todo algoritmo guloso precisa de um argumento de que a escolha é segura, ou de um contraexemplo que mostre que não é."
+  },
+  {
+   "t": "h2",
+   "id": "9-2-selecao-de-atividades",
+   "texto": "9.2 Seleção de atividades"
+  },
+  {
+   "t": "p",
+   "html": "Um auditório recebe pedidos para várias palestras, cada uma com horário de início e de término, e duas palestras não podem acontecer ao mesmo tempo. Qual é o <strong>maior número</strong> de palestras que cabem na agenda?"
+  },
+  {
+   "t": "p",
+   "html": "Há várias escolhas gulosas possíveis, e a maioria falha. Escolher a que <strong>começa primeiro</strong> falha se ela durar o dia inteiro: uma única palestra ocupa o auditório. Escolher a <strong>mais curta</strong> falha se ela estiver bem no meio de outras duas que caberiam juntas. A escolha certa é a palestra que <strong>termina primeiro</strong>: ela deixa o auditório livre o mais cedo possível, sobrando o máximo de tempo para as outras."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-09_atividades.png",
+   "alt": "capitulo 09 atividades"
+  },
+  {
+   "t": "p",
+   "html": "Por que essa escolha é segura? Pegue qualquer agenda ótima. Se a primeira palestra dela não for a que termina primeiro, troque-a por esta: como ela termina mais cedo, não pode se sobrepor às seguintes, e a agenda continua com o mesmo número de palestras. Esse argumento de troca é a forma típica de provar que um guloso está correto."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <algorithm>   // sort\n\nstruct Palestra {\n    string nome;\n    int inicio, fim;   // horas\n};\n\n// recebe uma cópia: a lista original não é reordenada\nvector<Palestra> escolher(vector<Palestra> palestras) {\n    sort(palestras.begin(), palestras.end(),\n         [](const Palestra &a, const Palestra &b) {\n             return a.fim < b.fim;  // termina primeiro\n         });\n    vector<Palestra> escolhidas;\n    int livreDesde = 0;         // fim da última escolhida\n    for (const Palestra &p : palestras) {\n        if (p.inicio >= livreDesde) {   // não se sobrepõe\n            escolhidas.push_back(p);\n            livreDesde = p.fim;\n        }\n    }\n    return escolhidas;\n}\n\nint main() {\n    vector<Palestra> agenda = {\n        {\"Abertura\", 8, 10}, {\"Python\", 9, 12}, {\"Redes\", 10, 11},\n        {\"Banco de Dados\", 11, 13}, {\"Segurança\", 12, 14},\n        {\"Nuvem\", 13, 15}, {\"IA\", 14, 16}, {\"Carreira\", 15, 17}};\n    for (const Palestra &p : escolher(agenda)) {\n        cout << p.nome << \" (\" << p.inicio << \"h-\"\n             << p.fim << \"h)\" << endl;\n    }\n    // Abertura (8h-10h), Redes (10h-11h),\n    // Banco de Dados (11h-13h), Nuvem (13h-15h),\n    // Carreira (15h-17h)\n}"
+  },
+  {
+   "t": "p",
+   "html": "O critério de ordenação é a mesma função anônima (<em>lambda</em>) usada no Capítulo 8. Depois da ordenação, que custa O(n log n), uma única passada escolhe as palestras em O(n). O algoritmo inteiro é O(n log n)."
+  },
+  {
+   "t": "h2",
+   "id": "9-3-arvore-geradora-minima-algoritmo-de-kruskal",
+   "texto": "9.3 Árvore geradora mínima: algoritmo de Kruskal"
+  },
+  {
+   "t": "p",
+   "html": "No Capítulo 6, o Prim construiu a árvore geradora mínima a partir de um vértice, fazendo a árvore crescer aresta por aresta. O <strong>algoritmo de Kruskal</strong> é outra estratégia gulosa para o mesmo problema, ainda mais direta:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. Ordene todas as arestas da mais leve para a mais pesada.",
+    "2. Percorra as arestas nessa ordem. Aceite cada uma que ligue dois vértices que ainda <strong>não estão conectados</strong>; recuse as que fechariam um ciclo.",
+    "3. Pare quando tiver V - 1 arestas."
+   ]
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-09_kruskal.png",
+   "alt": "capitulo 09 kruskal"
+  },
+  {
+   "t": "p",
+   "html": "No grafo das cidades, o Kruskal escolhe exatamente as mesmas cinco estradas que o Prim, com o mesmo total de 13 km, mas em outra ordem: o Prim mantém uma única árvore que cresce, enquanto o Kruskal junta vários pedaços soltos que vão se unindo."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Aresta",
+    "Peso",
+    "Decisão"
+   ],
+   "linhas": [
+    [
+     "B-C",
+     "1",
+     "aceita: grupos {A} {B, C} {D} {E} {F}"
+    ],
+    [
+     "A-C",
+     "2",
+     "aceita: {A, B, C} {D} {E} {F}"
+    ],
+    [
+     "D-E",
+     "2",
+     "aceita: {A, B, C} {D, E} {F}"
+    ],
+    [
+     "E-F",
+     "3",
+     "aceita: {A, B, C} {D, E, F}"
+    ],
+    [
+     "A-B",
+     "4",
+     "recusada: A e B já estão no mesmo grupo"
+    ],
+    [
+     "B-D",
+     "5",
+     "aceita: {A, B, C, D, E, F}; são 5 arestas, fim"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Conjuntos disjuntos (union-find)"
+  },
+  {
+   "t": "p",
+   "html": "A pergunta que o Kruskal faz a cada aresta é: “estes dois vértices já estão no mesmo grupo?”. Percorrer o grafo para responder custaria caro. A estrutura certa é a de <strong>conjuntos disjuntos</strong> (<em>union-find</em>), que guarda grupos que não se misturam e oferece duas operações:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<code>raiz(x)</code>: devolve o representante do grupo de <code>x</code>. Dois elementos estão no mesmo grupo se tiverem a mesma raiz.",
+    "<code>unir(a, b)</code>: junta os grupos de <code>a</code> e <code>b</code> em um só."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Cada grupo é uma árvore guardada em um vetor <code>pai</code>, como o heap do Capítulo 8: <code>pai[x]</code> é o pai de <code>x</code>, e a raiz é quem é pai de si mesmo. Unir dois grupos é só pendurar a raiz de um embaixo da raiz do outro."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nclass ConjuntosDisjuntos {\nprivate:\n    vector<int> pai, tamanho;\n\npublic:\n    explicit ConjuntosDisjuntos(int n) : pai(n), tamanho(n, 1) {\n        for (int i = 0; i < n; i++) pai[i] = i;  // sozinhos\n    }\n\n    int raiz(int x) {\n        while (pai[x] != x) {\n            pai[x] = pai[pai[x]];   // pula para o avô\n            x = pai[x];\n        }\n        return x;\n    }\n\n    bool unir(int a, int b) {       // false se já estavam juntos\n        a = raiz(a);\n        b = raiz(b);\n        if (a == b) return false;\n        if (tamanho[a] < tamanho[b]) swap(a, b);\n        pai[b] = a;                 // menor embaixo do maior\n        tamanho[a] += tamanho[b];\n        return true;\n    }\n};"
+  },
+  {
+   "t": "p",
+   "html": "Dois truques mantêm as árvores baixas. Na união, o grupo <strong>menor</strong> é pendurado no maior, para a altura crescer o mínimo possível. E, a cada <code>raiz</code>, a linha <code>pai[x] = pai[pai[x]]</code> faz cada nó do caminho pular para o avô, encurtando o caminho para as próximas consultas. Com os dois juntos, cada operação custa, na prática, tempo constante."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <tuple>\n#include <algorithm>   // sort\n#include <utility>     // swap\n\nclass ConjuntosDisjuntos {\nprivate:\n    vector<int> pai, tamanho;\n\npublic:\n    explicit ConjuntosDisjuntos(int n) : pai(n), tamanho(n, 1) {\n        for (int i = 0; i < n; i++) pai[i] = i;  // sozinhos\n    }\n\n    int raiz(int x) {\n        while (pai[x] != x) {\n            pai[x] = pai[pai[x]];   // pula para o avô\n            x = pai[x];\n        }\n        return x;\n    }\n\n    bool unir(int a, int b) {       // false se já estavam juntos\n        a = raiz(a);\n        b = raiz(b);\n        if (a == b) return false;\n        if (tamanho[a] < tamanho[b]) swap(a, b);\n        pai[b] = a;                 // menor embaixo do maior\n        tamanho[a] += tamanho[b];\n        return true;\n    }\n};\n\nusing Ligacao = tuple<int, int, int>;   // (peso, de, para)\n\nint kruskal(int n, vector<Ligacao> arestas,\n            vector<Ligacao> &escolhidas) {\n    sort(arestas.begin(), arestas.end());   // pelo peso primeiro\n    ConjuntosDisjuntos grupos(n);\n    int total = 0;\n    for (const auto &[peso, de, para] : arestas) {\n        if (grupos.unir(de, para)) {        // não fecha ciclo\n            escolhidas.push_back({peso, de, para});\n            total += peso;\n            int usadas = static_cast<int>(escolhidas.size());\n            if (usadas == n - 1) break;       // árvore completa\n        }\n    }\n    return total;\n}\n\nint main() {\n    const string NOMES = \"ABCDEF\";\n    enum { A, B, C, D, E, F };\n    vector<Ligacao> estradas = {\n        {4, A, B}, {2, A, C}, {1, B, C}, {5, B, D}, {8, C, D},\n        {7, C, E}, {2, D, E}, {6, D, F}, {3, E, F}};\n    vector<Ligacao> escolhidas;\n    int total = kruskal(6, estradas, escolhidas);\n    for (const auto &[peso, de, para] : escolhidas) {\n        cout << NOMES[de] << \"-\" << NOMES[para] << \" \";\n    }\n    cout << endl;                           // B-C A-C D-E E-F B-D\n    cout << \"Total: \" << total << \" km\" << endl;   // Total: 13 km\n}"
+  },
+  {
+   "t": "p",
+   "html": "Como cada aresta é uma tupla (peso, de, para) e as tuplas são comparadas campo a campo, a <code>sort</code> ordena pelo peso sem precisar de critério próprio. O custo do Kruskal é dominado por essa ordenação: O(E log E). Ele costuma ser preferido ao Prim quando o grafo já vem como uma lista de arestas, e o Prim, quando vem como lista de adjacência."
+  },
+  {
+   "t": "h2",
+   "id": "9-4-programacao-dinamica",
+   "texto": "9.4 Programação dinâmica"
+  },
+  {
+   "t": "p",
+   "html": "Quando a escolha gulosa não é segura, como no troco com moedas de 4, 3 e 1, é preciso considerar todas as opções. A recursão faz isso naturalmente, mas costuma recalcular a mesma coisa muitas vezes. O exemplo clássico é a sequência de Fibonacci, em que cada termo é a soma dos dois anteriores: 0, 1, 1, 2, 3, 5, 8, 13…"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-09_fibonacci.png",
+   "alt": "capitulo 09 fibonacci"
+  },
+  {
+   "t": "p",
+   "html": "A recursão direta, <code>fib(n) = fib(n - 1) + fib(n - 2)</code>, abre duas chamadas por nível, e o número de chamadas cresce como 1,6<sup>n</sup>. Mas só existem n + 1 subproblemas diferentes: <code>fib(0)</code> até <code>fib(n)</code>. Todo o resto é repetição."
+  },
+  {
+   "t": "p",
+   "html": "A <strong>programação dinâmica</strong> resolve cada subproblema <strong>uma única vez</strong> e guarda a resposta em uma tabela. Ela se aplica quando o problema tem <strong>subestrutura ótima</strong>, como no guloso, e <strong>subproblemas sobrepostos</strong>: os mesmos subproblemas aparecem muitas vezes. Há dois jeitos de fazer isso:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Memorização</strong> (<em>memoization</em>, de cima para baixo): mantenha a recursão, mas antes de calcular, veja se a resposta já está guardada; depois de calcular, guarde.",
+    "<strong>Tabulação</strong> (de baixo para cima): preencha a tabela em um laço, dos casos menores para os maiores, de modo que cada posição só dependa de posições já preenchidas."
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n\nlong long chamadas = 0;\n\nlong long fibIngenuo(int n) {\n    chamadas++;\n    if (n < 2) return n;\n    return fibIngenuo(n - 1) + fibIngenuo(n - 2);\n}\n\n// memorização: memo[n] == -1 significa \"ainda não calculado\"\nlong long fibMemo(int n, vector<long long> &memo) {\n    if (n < 2) return n;\n    if (memo[n] != -1) return memo[n];       // já sabemos\n    memo[n] = fibMemo(n - 1, memo) + fibMemo(n - 2, memo);\n    return memo[n];\n}\n\n// tabulação: preenche de baixo para cima\nlong long fibTabela(int n) {\n    if (n < 2) return n;\n    vector<long long> f(n + 1);\n    f[0] = 0;\n    f[1] = 1;\n    for (int i = 2; i <= n; i++) f[i] = f[i - 1] + f[i - 2];\n    return f[n];\n}\n\nint main() {\n    cout << fibIngenuo(30) << \" em \" << chamadas\n         << \" chamadas\" << endl;     // 832040 em 2692537 chamadas\n    vector<long long> memo(91, -1);\n    cout << fibMemo(90, memo) << endl;   // 2880067194370816120\n    cout << fibTabela(90) << endl;       // 2880067194370816120\n}"
+  },
+  {
+   "t": "p",
+   "html": "As duas versões com tabela fazem O(n) somas. A diferença é brutal: a versão ingênua leva mais de 2,6 milhões de chamadas para <code>fib(30)</code>, e para <code>fib(90)</code> precisaria de cerca de 9 × 10<sup>18</sup> chamadas, quase 300 anos a um bilhão de chamadas por segundo; as outras calculam <code>fib(90)</code> instantaneamente. Na tabulação, como cada termo só depende dos dois anteriores, dá até para trocar o vetor por duas variáveis e usar memória O(1)."
+  },
+  {
+   "t": "p",
+   "html": "Para resolver um problema com programação dinâmica, siga sempre os mesmos passos:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. <strong>Defina o subproblema</strong> em palavras: “<code>menor[v]</code> é o menor número de moedas para formar o valor <code>v</code>”.",
+    "2. <strong>Escreva a recorrência</strong>: como a resposta de um subproblema se calcula a partir de subproblemas menores.",
+    "3. <strong>Defina os casos base</strong>: os subproblemas que se resolvem sem recorrência.",
+    "4. <strong>Escolha a ordem de cálculo</strong>: cada posição da tabela só pode usar posições já calculadas.",
+    "5. <strong>Reconstrua a solução</strong>, se o problema pedir a escolha e não só o valor: guarde qual opção gerou cada resposta."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "9-5-troco-com-o-menor-numero-de-moedas",
+   "texto": "9.5 Troco com o menor número de moedas"
+  },
+  {
+   "t": "p",
+   "html": "Voltando ao troco: seja <code>menor[v]</code> o menor número de moedas que somam <code>v</code>. A última moeda usada é alguma moeda <code>m</code>, e o que vem antes dela é um troco ótimo para <code>v - m</code>. Como não sabemos qual é <code>m</code>, testamos todas:"
+  },
+  {
+   "t": "p",
+   "html": "<code>menor[v] = 1 + min(menor[v - m])</code>, para cada moeda <code>m &lt;= v</code>, <br> com o caso base <code>menor[0] = 0</code>."
+  },
+  {
+   "t": "p",
+   "html": "Com moedas de 1, 3 e 4, a tabela fica assim. A linha “última moeda” guarda a moeda que deu o mínimo, e serve para reconstruir o troco: para 6, a última é 3; para 6 - 3 = 3, a última também é 3. O troco é 3 + 3."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "valor",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "linhas": [
+    [
+     "menor",
+     "0",
+     "1",
+     "2",
+     "1",
+     "1",
+     "2",
+     "2"
+    ],
+    [
+     "última moeda",
+     "–",
+     "1",
+     "1",
+     "3",
+     "4",
+     "1",
+     "3"
+    ]
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n\nvector<int> trocoMinimo(const vector<int> &moedas, int valor) {\n    const int INF = valor + 1;          // mais que o possível\n    vector<int> menor(valor + 1, INF), ultima(valor + 1, 0);\n    menor[0] = 0;                       // caso base\n    for (int v = 1; v <= valor; v++) {  // do menor ao maior\n        for (int m : moedas) {\n            if (m <= v && menor[v - m] + 1 < menor[v]) {\n                menor[v] = menor[v - m] + 1;\n                ultima[v] = m;          // para reconstruir\n            }\n        }\n    }\n    vector<int> usadas;\n    if (menor[valor] == INF) return usadas;   // impossível\n    for (int v = valor; v > 0; v -= ultima[v]) {\n        usadas.push_back(ultima[v]);\n    }\n    return usadas;\n}\n\nvoid mostrar(const vector<int> &v) {\n    for (int x : v) cout << x << \" \";\n    cout << endl;\n}\n\nint main() {\n    mostrar(trocoMinimo({1, 3, 4}, 6));     // 3 3\n    mostrar(trocoMinimo({1, 5, 10, 25, 50, 100}, 87));\n    // 1 1 10 25 50: as mesmas 5 moedas do guloso\n    cout << trocoMinimo({5, 10}, 7).size() << endl;   // 0\n}"
+  },
+  {
+   "t": "p",
+   "html": "A programação dinâmica acerta para qualquer conjunto de moedas e também descobre quando o troco é impossível, como 7 centavos só com moedas de 5 e 10. O preço é o custo: O(valor × número de moedas), contra o O(número de moedas usadas) do guloso."
+  },
+  {
+   "t": "h2",
+   "id": "9-6-o-problema-da-mochila",
+   "texto": "9.6 O problema da mochila"
+  },
+  {
+   "t": "p",
+   "html": "Uma pessoa vai acampar com uma mochila que aguenta 7 kg e precisa escolher o que levar. Cada item tem um peso e um valor (a utilidade dele na viagem), e cada um é levado inteiro ou deixado em casa. Qual combinação dá o maior valor sem passar do peso? É o <strong>problema da mochila 0/1</strong>."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Item",
+    "Peso",
+    "Valor",
+    "Valor por kg"
+   ],
+   "linhas": [
+    [
+     "lanterna",
+     "1 kg",
+     "1",
+     "1,00"
+    ],
+    [
+     "cantil",
+     "3 kg",
+     "4",
+     "1,33"
+    ],
+    [
+     "saco de dormir",
+     "4 kg",
+     "5",
+     "1,25"
+    ],
+    [
+     "barraca",
+     "5 kg",
+     "7",
+     "1,40"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A ideia gulosa seria levar primeiro o item com mais valor por quilo: a barraca (5 kg). Depois, só a lanterna cabe, e o total é 8. Mas o cantil com o saco de dormir pesam exatamente 7 kg e valem 9. O guloso falha."
+  },
+  {
+   "t": "p",
+   "html": "Na programação dinâmica, o subproblema é <code>melhor[i][c]</code>: o maior valor possível usando só os <code>i</code> primeiros itens com uma mochila de capacidade <code>c</code>. Para o item <code>i</code>, só há duas opções: deixá-lo, e a resposta é <code>melhor[i - 1][c]</code>; ou levá-lo, se couber, e a resposta é o valor dele mais <code>melhor[i - 1][c - peso]</code>. A resposta é a maior das duas."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "capacidade",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+   ],
+   "linhas": [
+    [
+     "nenhum item",
+     "0",
+     "0",
+     "0",
+     "0",
+     "0",
+     "0",
+     "0",
+     "0"
+    ],
+    [
+     "+ lanterna",
+     "0",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1"
+    ],
+    [
+     "+ cantil",
+     "0",
+     "1",
+     "1",
+     "4",
+     "5",
+     "5",
+     "5",
+     "5"
+    ],
+    [
+     "+ saco de dormir",
+     "0",
+     "1",
+     "1",
+     "4",
+     "5",
+     "6",
+     "6",
+     "9"
+    ],
+    [
+     "+ barraca",
+     "0",
+     "1",
+     "1",
+     "4",
+     "5",
+     "7",
+     "8",
+     "9"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A resposta está no canto inferior direito: 9. Para saber quais itens levar, refaça o caminho de baixo para cima: se <code>melhor[i][c]</code> for diferente de <code>melhor[i - 1][c]</code>, o item <code>i</code> foi levado, e a capacidade diminui do peso dele."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n\nstruct Item {\n    string nome;\n    int peso;\n    int valor;\n};\n\nint mochila(const vector<Item> &itens, int capacidade,\n            vector<string> &levados) {\n    int n = static_cast<int>(itens.size());\n    // melhor[i][c]: maior valor com os i primeiros itens e\n    // capacidade c\n    vector<vector<int>> melhor(n + 1,\n                               vector<int>(capacidade + 1, 0));\n    for (int i = 1; i <= n; i++) {\n        const Item &item = itens[i - 1];\n        for (int c = 0; c <= capacidade; c++) {\n            melhor[i][c] = melhor[i - 1][c];      // deixa\n            if (item.peso <= c) {                  // ou leva\n                int levando = melhor[i - 1][c - item.peso]\n                              + item.valor;\n                if (levando > melhor[i][c]) {\n                    melhor[i][c] = levando;\n                }\n            }\n        }\n    }\n    for (int i = n, c = capacidade; i > 0; i--) {  // de volta\n        if (melhor[i][c] != melhor[i - 1][c]) {\n            levados.push_back(itens[i - 1].nome);\n            c -= itens[i - 1].peso;\n        }\n    }\n    return melhor[n][capacidade];\n}\n\nint main() {\n    vector<Item> itens = {{\"lanterna\", 1, 1},\n                          {\"cantil\", 3, 4},\n                          {\"saco de dormir\", 4, 5},\n                          {\"barraca\", 5, 7}};\n    vector<string> levados;\n    cout << \"Valor: \" << mochila(itens, 7, levados) << endl;  // 9\n    for (const string &nome : levados) cout << nome << endl;\n    // saco de dormir, cantil\n}"
+  },
+  {
+   "t": "p",
+   "html": "O custo é O(n × capacidade), tanto de tempo quanto de memória. Isso é ótimo para capacidades pequenas, mas repare que depende do <strong>valor</strong> da capacidade, e não só da quantidade de itens: com uma capacidade de um bilhão, a tabela não caberia na memória. Nenhum algoritmo eficiente conhecido resolve a mochila 0/1 em todos os casos."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "A mochila fracionária",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Se os itens pudessem ser divididos, como arroz ou água, levando só uma parte, o guloso voltaria a funcionar: leve os itens de maior valor por quilo, e complete a mochila com a fração que couber do próximo. A pequena mudança no enunciado muda a técnica. Antes de escolher entre guloso e programação dinâmica, pergunte se uma escolha feita agora pode atrapalhar escolhas futuras."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "9-7-guloso-ou-programacao-dinamica",
+   "texto": "9.7 Guloso ou programação dinâmica?"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Técnica",
+    "Como decide",
+    "Exemplos"
+   ],
+   "linhas": [
+    [
+     "força bruta",
+     "testa todas as combinações; sempre certa, quase sempre lenta demais",
+     "testar todos os subconjuntos da mochila: 2<sup>n</sup>"
+    ],
+    [
+     "guloso",
+     "uma escolha por passo, sem voltar atrás; rápido, mas só correto com escolha gulosa",
+     "troco com moedas comuns, palestras, Dijkstra, Prim, Kruskal"
+    ],
+    [
+     "programação dinâmica",
+     "considera todas as opções de cada subproblema, mas resolve cada um uma vez",
+     "Fibonacci, troco com quaisquer moedas, mochila 0/1"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A programação dinâmica aparece em muito mais lugares do que parece. O corretor ortográfico que sugere a palavra mais parecida usa a <strong>distância de edição</strong>, o menor número de letras a inserir, remover ou trocar para transformar uma palavra em outra. Comparar duas versões de um arquivo, como faz o Git, usa a <strong>maior subsequência comum</strong>. E comparar sequências de DNA usa variações das duas. Todas são resolvidas com uma tabela preenchida exatamente como as deste capítulo."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Comparando com Python",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em Python, a memorização vem pronta: o decorador <code>@cache</code>, do módulo <code>functools</code>, guarda o resultado de cada chamada da função e o devolve direto nas chamadas repetidas. Basta colocá-lo antes da versão recursiva, sem mudar mais nada."
+    },
+    {
+     "t": "codigo",
+     "texto": "from functools import cache\n\n@cache\ndef fib(n):\n    if n < 2:\n        return n\n    return fib(n - 1) + fib(n - 2)\n\nprint(fib(90))   # 2880067194370816120, instantâneo\n\ndef troco_minimo(moedas, valor):\n    infinito = float('inf')\n    menor = [0] + [infinito] * valor\n    for v in range(1, valor + 1):\n        for m in moedas:\n            if m <= v and menor[v - m] + 1 < menor[v]:\n                menor[v] = menor[v - m] + 1\n    return menor[valor]\n\nprint(troco_minimo([1, 3, 4], 6))    # 2\nprint(troco_minimo([5, 10], 7))      # inf: impossível"
+    },
+    {
+     "t": "p",
+     "html": "Como os inteiros do Python não têm limite, <code>fib(200)</code> também funciona, enquanto o <code>long long</code> do C++ estoura depois de <code>fib(92)</code>. Mas cuidado: com recursões muito fundas, como <code>fib(5000)</code>, o Python atinge o limite de chamadas aninhadas, e a versão com tabela continua sendo a mais segura."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Usar um guloso sem provar que ele funciona.</strong> Uma escolha que parece óbvia, como a maior moeda ou o item mais valioso, pode dar respostas erradas sem nenhum aviso. Procure um contraexemplo pequeno antes de confiar.",
+    "<strong>Ordenar pelo critério errado na seleção de atividades.</strong> Ordenar pelo início ou pela duração parece razoável, mas só a ordem de término garante o máximo.",
+    "<strong>Esquecer a união pelo tamanho ou o encurtamento de caminho.</strong> Sem eles, as árvores do <em>union-find</em> podem virar listas, e cada <code>raiz</code> passa a custar O(n).",
+    "<strong>Memorizar sem marcar o que ainda não foi calculado.</strong> Se o valor inicial da tabela (como 0) também puder ser uma resposta válida, a função não sabe distinguir “calculado” de “vazio”. Use um valor impossível, como -1.",
+    "<strong>Preencher a tabela na ordem errada.</strong> Na tabulação, cada posição só pode usar posições já preenchidas. Ler uma posição ainda vazia dá uma resposta errada sem nenhum erro aparente.",
+    "<strong>Errar os casos base.</strong> Um <code>menor[0]</code> diferente de 0, ou uma linha “nenhum item” que não seja toda de zeros, contamina a tabela inteira.",
+    "<strong>Usar um “infinito” que estoura.</strong> Somar 1 a <code>numeric_limits&lt;int&gt;::max()</code> dá um número negativo. Use um infinito que caiba com folga, como <code>valor + 1</code> no troco.",
+    "<strong>Tentar programação dinâmica com tabelas gigantes.</strong> A tabela da mochila tem n × capacidade posições; se a capacidade for enorme, ela não cabe na memória."
+   ]
+  }
+ ]
+}

@@ -471,6 +471,14 @@ export const apostilas: Apostila[] = [
     descricao:
       'Estabilidade e ordenação no lugar; bubble sort, selection sort e insertion sort; merge sort e quicksort com dividir para conquistar; heap, heapsort e fila de prioridade; o limite de n log n e a ordenação da biblioteca padrão.',
   },
+  {
+    id: 'alg2-cap9',
+    capitulo: 9,
+    titulo: 'Algoritmos gulosos e programação dinâmica',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-ii',
+    descricao:
+      'Escolha gulosa e quando ela falha; troco e seleção de atividades; algoritmo de Kruskal com conjuntos disjuntos (union-find); programação dinâmica com memorização e tabulação; Fibonacci, troco mínimo e problema da mochila.',
+  },
 
   // Programação e Design para Web II (apostila em módulos)
   // Fonte: 02- APOSTILAS/Módulo 5/LATEX/modulos/modulo-0N.tex (24/08), convertida com
