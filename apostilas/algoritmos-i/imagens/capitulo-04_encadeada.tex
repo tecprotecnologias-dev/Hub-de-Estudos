@@ -1,0 +1,24 @@
+% Capítulo 4: decisões encadeadas (else if) para a situação do aluno.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-fluxo}
+\begin{document}
+\begin{tikzpicture}
+  \node[decisao] (d1) at (0, 0) {media < 0 ou\\media > 10?};
+  \node[decisao] (d2) at (0, -2.0) {media $\geq$ 6?};
+  \node[decisao] (d3) at (0, -4.0) {media $\geq$ 4?};
+  \node[es] (s1) at (5.2, 0) {``inválida''};
+  \node[es] (s2) at (5.2, -2.0) {``aprovado''};
+  \node[es] (s3) at (5.2, -4.0) {``prova final''};
+  \node[es] (s4) at (0, -5.9) {``reprovado''};
+  \draw[fluxo] (d1) -- node[resposta, above] {sim} (s1);
+  \draw[fluxo] (d2) -- node[resposta, above] {sim} (s2);
+  \draw[fluxo] (d3) -- node[resposta, above] {sim} (s3);
+  \draw[fluxo] (d1) -- node[resposta, right] {não} (d2);
+  \draw[fluxo] (d2) -- node[resposta, right] {não} (d3);
+  \draw[fluxo] (d3) -- node[resposta, right] {não} (s4);
+  \node[legenda, align=left, anchor=west] at (2.4, -5.9)
+    {as perguntas são feitas em ordem; a primeira\\resposta ``sim'' decide, e as demais nem são feitas};
+\end{tikzpicture}
+\end{document}

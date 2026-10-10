@@ -432,6 +432,15 @@ export const apostilas: Apostila[] = [
     descricao:
       'Variáveis e constantes, tipos de dados e seus limites, operadores aritméticos, divisão inteira e resto, conversões de tipo, operadores relacionais e lógicos, precedência e funções matemáticas.',
   },
+  {
+    id: 'alg1-cap4',
+    capitulo: 4,
+    titulo: 'Estruturas de decisão',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-i',
+    unidades: ['Linguagens de Programação'],
+    descricao:
+      'Decisão simples e composta, decisões encadeadas e aninhadas, escolha múltipla com switch, operador ternário, ano bissexto e as armadilhas que o compilador aceita.',
+  },
 
   // Algoritmos e Linguagem de Programação II — "Algoritmos e Estruturas de Dados" (TecPro)
   // Texto próprio, escrito a partir da ementa (temas dos slides de EDA usados só como roteiro).

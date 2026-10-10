@@ -1,0 +1,260 @@
+{
+ "numero": 4,
+ "titulo": "Estruturas de decisão",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, os programas executavam sempre os mesmos comandos, de cima para baixo, qualquer que fosse a entrada. Programas úteis precisam reagir aos dados: dar desconto só para compras acima de um valor, aprovar só quem atingiu a média, recusar uma senha errada. As <strong>estruturas de decisão</strong> (ou condicionais) escolhem quais comandos executar de acordo com uma condição. Neste capítulo você vai conhecer todas as formas de decisão do C++ e do Portugol, aprender a organizar decisões com várias alternativas e a evitar armadilhas que fazem o programa compilar, rodar e tomar a decisão errada."
+  },
+  {
+   "t": "h2",
+   "id": "4-1-decisao-simples-if",
+   "texto": "4.1 Decisão simples: if"
+  },
+  {
+   "t": "p",
+   "html": "A <strong>decisão simples</strong> executa um bloco de comandos somente se uma condição for verdadeira; se for falsa, o bloco é pulado e o programa segue. A condição é qualquer expressão que resulte em verdadeiro ou falso, normalmente construída com os operadores relacionais e lógicos do Capítulo 3."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-04_composta.png",
+   "alt": "capitulo 04 composta"
+  },
+  {
+   "t": "p",
+   "html": "O fluxograma da esquerda corresponde a uma loja que dá 10% de desconto em compras a partir de R$ 100:"
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"Desconto\"\nvar\n   compra: real\ninicio\n   escreva(\"Valor da compra: \")\n   leia(compra)\n   se compra >= 100 entao\n      compra <- compra * 0.9\n      escreval(\"Você ganhou 10% de desconto!\")\n   fimse\n   escreval(\"Total: R$ \", compra:8:2)\nfimalgoritmo"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    double compra;\n    cout << \"Valor da compra: \";\n    cin >> compra;\n    if (compra >= 100) {\n        compra = compra * 0.9;         // 10% de desconto\n        cout << \"Você ganhou 10% de desconto!\" << endl;\n    }\n    cout << fixed << setprecision(2) << \"Total: R$ \" << compra\n         << endl;\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Em C++, a condição fica <strong>entre parênteses</strong>, e os comandos controlados pelo <code>if</code> ficam entre chaves, formando um <strong>bloco</strong>. Se o bloco tiver um único comando, as chaves podem ser omitidas, mas é uma boa prática usá-las sempre: elas evitam que um comando acrescentado depois fique fora do <code>if</code> sem que ninguém perceba (Seção 4.7). No Portugol, o bloco termina com <code>fimse</code>."
+  },
+  {
+   "t": "h2",
+   "id": "4-2-decisao-composta-if-e-else",
+   "texto": "4.2 Decisão composta: if e else"
+  },
+  {
+   "t": "p",
+   "html": "A <strong>decisão composta</strong> escolhe entre dois caminhos: um para quando a condição é verdadeira, outro para quando é falsa. Exatamente um deles é executado, nunca os dois e nunca nenhum. É o fluxograma da direita na figura anterior."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cout << \"Digite um número inteiro: \";\n    cin >> n;\n    if (n % 2 == 0) {\n        cout << n << \" é par\" << endl;\n    } else {\n        cout << n << \" é ímpar\" << endl;\n    }\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Em Portugol, a parte do “senão” é escrita com <code>senao</code>, antes do <code>fimse</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"ParOuImpar\"\nvar\n   n: inteiro\ninicio\n   escreva(\"Digite um número inteiro: \")\n   leia(n)\n   se n mod 2 = 0 entao\n      escreval(n, \" é par\")\n   senao\n      escreval(n, \" é ímpar\")\n   fimse\nfimalgoritmo"
+  },
+  {
+   "t": "h2",
+   "id": "4-3-decisoes-encadeadas-else-if",
+   "texto": "4.3 Decisões encadeadas: else if"
+  },
+  {
+   "t": "p",
+   "html": "Muitos problemas têm mais de dois caminhos. A situação de um aluno, por exemplo, depende da média: inválida se estiver fora de 0 a 10, aprovado com 6 ou mais, prova final entre 4 e 6, reprovado abaixo de 4. Para isso, encadeiam-se várias decisões: cada <code>else</code> traz um novo <code>if</code>."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-04_encadeada.png",
+   "alt": "capitulo 04 encadeada"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double media;\n    cout << \"Média final: \";\n    cin >> media;\n    if (media < 0 || media > 10) {\n        cout << \"Média inválida\" << endl;\n    } else if (media >= 6) {\n        cout << \"Aprovado\" << endl;\n    } else if (media >= 4) {\n        cout << \"Prova final\" << endl;\n    } else {\n        cout << \"Reprovado\" << endl;\n    }\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "As condições são testadas <strong>em ordem</strong>, e a primeira verdadeira decide: as seguintes nem são avaliadas. Por isso, a ordem importa. Quando o programa chega em <code>media &gt;= 4</code>, já se sabe que a média não é maior ou igual a 6, senão o caminho anterior teria sido seguido; não é preciso escrever <code>media &gt;= 4 &amp;&amp; media &lt; 6</code>. Mas, se as duas condições fossem trocadas de lugar, uma média 9 cairia em “prova final”, porque 9 também é maior ou igual a 4."
+  },
+  {
+   "t": "p",
+   "html": "O Portugol do VisuAlg não tem uma palavra para “senão se”: os <code>se</code> ficam um dentro do outro, cada um com o seu <code>fimse</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"Situacao\"\nvar\n   media: real\ninicio\n   escreva(\"Média final: \")\n   leia(media)\n   se (media < 0) ou (media > 10) entao\n      escreval(\"Média inválida\")\n   senao\n      se media >= 6 entao\n         escreval(\"Aprovado\")\n      senao\n         se media >= 4 entao\n            escreval(\"Prova final\")\n         senao\n            escreval(\"Reprovado\")\n         fimse\n      fimse\n   fimse\nfimalgoritmo"
+  },
+  {
+   "t": "p",
+   "html": "Para testar uma decisão encadeada, use pelo menos um valor de cada faixa e os valores exatamente nas fronteiras: -1, 0, 3.9, 4, 5.9, 6, 10 e 11. A fronteira é onde mora o erro de usar <code>&gt;</code> no lugar de <code>&gt;=</code>."
+  },
+  {
+   "t": "h2",
+   "id": "4-4-decisoes-aninhadas",
+   "texto": "4.4 Decisões aninhadas"
+  },
+  {
+   "t": "p",
+   "html": "Uma decisão pode estar <strong>dentro</strong> de outra. Isso é útil quando uma pergunta só faz sentido depois que outra foi respondida. Para classificar um triângulo pelos lados, por exemplo, primeiro é preciso saber se os três lados formam um triângulo: cada lado tem de ser menor que a soma dos outros dois. Só então faz sentido perguntar se ele é equilátero, isósceles ou escaleno."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b, c;\n    cout << \"Lados do triângulo: \";\n    cin >> a >> b >> c;\n    if (a < b + c && b < a + c && c < a + b) {\n        if (a == b && b == c) {\n            cout << \"Equilátero\" << endl;   // três iguais\n        } else if (a == b || b == c || a == c) {\n            cout << \"Isósceles\" << endl;    // dois iguais\n        } else {\n            cout << \"Escaleno\" << endl;     // todos diferentes\n        }\n    } else {\n        cout << \"Esses lados não formam um triângulo\" << endl;\n    }\n    return 0;\n}\n// 3 3 3 -> Equilátero    5 5 8 -> Isósceles\n// 3 4 5 -> Escaleno      1 2 10 -> não formam um triângulo"
+  },
+  {
+   "t": "p",
+   "html": "O recuo deixa visível o que está dentro de quê. Com muitos níveis de aninhamento, porém, o código fica difícil de ler. Muitas vezes é possível trocar decisões aninhadas por uma única condição composta: “se tem nota e se tem frequência” é o mesmo que “se tem nota <strong>e</strong> frequência”."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nif (media >= 6) {                      // aninhado\n    if (frequencia >= 75) {\n        cout << \"Aprovado\" << endl;\n    }\n}\nif (media >= 6 && frequencia >= 75) {  // o mesmo, em um só if\n    cout << \"Aprovado\" << endl;\n}"
+  },
+  {
+   "t": "h2",
+   "id": "4-5-escolha-multipla-switch",
+   "texto": "4.5 Escolha múltipla: switch"
+  },
+  {
+   "t": "p",
+   "html": "Quando a decisão compara <strong>uma única variável</strong> com vários valores fixos, como a opção de um menu, o <code>switch</code> é mais claro que uma sequência de <code>else if</code>. Ele avalia a variável uma vez e salta direto para o <code>case</code> correspondente."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double a, b;\n    char operacao;\n    cout << \"Conta (ex.: 8 * 3): \";\n    cin >> a >> operacao >> b;\n    switch (operacao) {\n        case '+':\n            cout << a + b << endl;\n            break;\n        case '-':\n            cout << a - b << endl;\n            break;\n        case '*':\n        case 'x':                  // dois casos, mesmo código\n            cout << a * b << endl;\n            break;\n        case '/':\n            if (b != 0) {\n                cout << a / b << endl;\n            } else {\n                cout << \"Divisão por zero\" << endl;\n            }\n            break;\n        default:                        // nenhum dos casos acima\n            cout << \"Operação desconhecida\" << endl;\n    }\n    return 0;\n}\n// 8 * 3 -> 24        8 x 3 -> 24\n// 7 / 2 -> 3.5       5 / 0 -> Divisão por zero"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Cada <code>case</code> indica um valor possível. Ele precisa ser uma constante, de um tipo inteiro ou <code>char</code>: o <code>switch</code> não funciona com <code>double</code>, <code>string</code> nem com faixas como “de 4 a 6”.",
+    "O <code>break</code> encerra o <code>switch</code>. Sem ele, a execução <strong>continua no caso seguinte</strong>, mesmo que o valor seja outro. Às vezes isso é útil, como em <code>'*'</code> e <code>'x'</code>, que compartilham o mesmo código; na maioria das vezes, esquecer o <code>break</code> é um erro.",
+    "O <code>default</code> é executado quando nenhum caso corresponde, e funciona como o <code>else</code> final."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "No Portugol do VisuAlg, a mesma estrutura se chama <code>escolha</code>, e não precisa de <code>break</code>, porque cada caso termina sozinho:"
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"DiaDaSemana\"\nvar\n   dia: inteiro\ninicio\n   escreva(\"Dia (1 a 7): \")\n   leia(dia)\n   escolha dia\n   caso 1, 7\n      escreval(\"Fim de semana\")\n   caso 2, 3, 4, 5, 6\n      escreval(\"Dia útil\")\n   outrocaso\n      escreval(\"Dia inválido\")\n   fimescolha\nfimalgoritmo"
+  },
+  {
+   "t": "h2",
+   "id": "4-6-o-operador-ternario",
+   "texto": "4.6 O operador ternário"
+  },
+  {
+   "t": "p",
+   "html": "Quando a decisão só escolhe entre <strong>dois valores</strong>, o <strong>operador ternário</strong> <code>?:</code> faz isso em uma linha: <code>condição ? valor_se_verdadeiro : valor_se_falso</code>. Ele não substitui o <code>if</code> em geral; serve para escolher um valor, e não para executar blocos de comandos."
+  },
+  {
+   "t": "p",
+   "html": "O programa completo deste capítulo usa o ternário para verificar se um ano é <strong>bissexto</strong>. Pelo calendário gregoriano, um ano é bissexto se for divisível por 4, exceto os divisíveis por 100, que só são bissextos se também forem divisíveis por 400. Por isso 2024 e 2000 foram bissextos, mas 1900 não foi."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int ano;\n    cout << \"Ano: \";\n    cin >> ano;\n    bool bissexto = (ano % 4 == 0 && ano % 100 != 0)\n                    || ano % 400 == 0;\n    int dias = bissexto ? 366 : 365;\n    cout << ano << (bissexto ? \" é\" : \" não é\")\n         << \" bissexto e tem \" << dias << \" dias\" << endl;\n    return 0;\n}\n// 2024 é bissexto e tem 366 dias\n// 1900 não é bissexto e tem 365 dias"
+  },
+  {
+   "t": "p",
+   "html": "Repare que a regra inteira cabe em uma única expressão lógica, guardada na variável <code>bissexto</code>. Dar um nome à condição deixa o resto do programa muito mais legível do que repetir a expressão em cada <code>if</code>. Um teste de mesa com os casos que exercitam cada parte da regra:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Ano",
+    "% 4",
+    "% 100",
+    "% 400",
+    "Bissexto?"
+   ],
+   "linhas": [
+    [
+     "2023",
+     "3",
+     "23",
+     "23",
+     "não (não divide por 4)"
+    ],
+    [
+     "2024",
+     "0",
+     "24",
+     "24",
+     "sim"
+    ],
+    [
+     "1900",
+     "0",
+     "0",
+     "300",
+     "não (divide por 100)"
+    ],
+    [
+     "2000",
+     "0",
+     "0",
+     "0",
+     "sim (divide por 400)"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-7-armadilhas-das-decisoes",
+   "texto": "4.7 Armadilhas das decisões"
+  },
+  {
+   "t": "p",
+   "html": "Alguns erros com decisões passam pela compilação e só aparecem no resultado. O programa abaixo tem dois deles:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// erro: dois enganos que o compilador aceita\nint main() {\n    int saldo = 50;\n    if (saldo = 0) {                  // = no lugar de ==\n        cout << \"Sem saldo\" << endl;\n    }\n    if (saldo > 100);                 // ; logo depois do if\n    {\n        cout << \"Saldo alto\" << endl;\n    }\n    cout << saldo << endl;\n    return 0;\n}\n// Saída: Saldo alto\n//        0"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "Em <code>if (saldo = 0)</code>, o <code>=</code> <strong>atribui</strong> 0 ao saldo, em vez de compará-lo. O valor da atribuição, 0, é tratado como falso, então “Sem saldo” não aparece, mas o saldo foi zerado.",
+    "Em <code>if (saldo &gt; 100);</code>, o ponto e vírgula encerra o <code>if</code> com um comando vazio. O bloco entre chaves logo abaixo deixa de pertencer a ele e é executado sempre. Resultado: “Saldo alto” com saldo 0."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Os dois erros são avisados pelo g++ quando se compila com <code>-Wall -Wextra</code>: “<code>suggest parentheses around assignment used as truth value</code>” para o primeiro e “<code>suggest braces around empty body in an 'if' statement</code>” para o segundo. É mais um motivo para nunca ignorar os avisos."
+  },
+  {
+   "t": "p",
+   "html": "Um terceiro cuidado é o <code>else</code> sem chaves. Sem elas, cada <code>if</code> controla apenas o comando seguinte, e um <code>else</code> sempre pertence ao <code>if</code> mais próximo que ainda não tem <code>else</code>, não importa o recuo. Com chaves em todos os blocos, essa dúvida simplesmente não existe."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Usar <code>=</code> na condição.</strong> <code>if (x = 5)</code> atribui e é quase sempre verdadeiro. Para comparar, use <code>==</code>.",
+    "<strong>Colocar ponto e vírgula depois do <code>if</code>.</strong> <code>if (cond);</code> encerra a decisão ali, e o bloco seguinte é executado sempre.",
+    "<strong>Omitir as chaves.</strong> Um segundo comando acrescentado depois fica fora do <code>if</code>, mesmo com o recuo certo. Use chaves sempre.",
+    "<strong>Ordenar mal as condições encadeadas.</strong> Testar <code>media &gt;= 4</code> antes de <code>media &gt;= 6</code> faz toda média alta cair no caso errado. Do mais restritivo para o menos restritivo.",
+    "<strong>Esquecer o <code>break</code> no <code>switch</code>.</strong> A execução continua nos casos seguintes.",
+    "<strong>Usar <code>switch</code> com faixas ou textos.</strong> Cada <code>case</code> é um valor exato, inteiro ou <code>char</code>. Para faixas, use <code>else if</code>.",
+    "<strong>Esquecer um caso.</strong> Pergunte sempre o que acontece com os valores fora do esperado: média negativa, divisão por zero, opção inexistente do menu. Use <code>else</code> e <code>default</code> para tratá-los.",
+    "<strong>Testar só um caminho.</strong> Cada ramo da decisão precisa de pelo menos um teste, e cada fronteira, de um valor exatamente nela."
+   ]
+  }
+ ]
+}
