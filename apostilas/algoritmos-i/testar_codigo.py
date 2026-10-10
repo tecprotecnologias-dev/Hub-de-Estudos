@@ -35,7 +35,7 @@ def main():
                 print(f'{n:2d} Portugol (não é compilado)')
                 continue
             primeira = codigo.lstrip().split(chr(10), 1)[0]
-            if primeira.startswith('// erro') or primeira.startswith('$ ') or re.match(r'[\w.-]+\.cpp:', primeira):
+            if primeira.startswith(('// erro', '// saída')) or primeira.startswith('$ ') or re.match(r'[\w.-]+\.cpp:', primeira):
                 # código com erro proposital, comando de terminal ou mensagem do compilador
                 print(f'{n:2d} exemplo de erro ou terminal (não é compilado)')
                 continue

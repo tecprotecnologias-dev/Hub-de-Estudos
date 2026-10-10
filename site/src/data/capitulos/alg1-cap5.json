@@ -1,0 +1,358 @@
+{
+ "numero": 5,
+ "titulo": "Estruturas de repetição",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Imagine escrever um programa que mostra a tabuada do 7. Com o que vimos até aqui, seriam dez comandos <code>cout</code> quase iguais. E se fossem as notas de uma turma de 40 alunos? Ou de uma escola com 2 mil? Computadores são extraordinários justamente em repetir uma tarefa milhares ou bilhões de vezes, sem cansar e sem errar. As <strong>estruturas de repetição</strong> (ou <strong>laços</strong>, do inglês <em>loops</em>) executam um bloco de comandos várias vezes, enquanto uma condição for verdadeira. Neste capítulo você vai conhecer os três laços do C++ e do Portugol, os padrões de uso que aparecem em quase todo programa (contadores, acumuladores, maior e menor valor) e como evitar o erro mais típico das repetições: o laço que nunca termina."
+  },
+  {
+   "t": "h2",
+   "id": "5-1-repeticao-com-teste-no-inicio-while",
+   "texto": "5.1 Repetição com teste no início: while"
+  },
+  {
+   "t": "p",
+   "html": "O <code>while</code> (“enquanto”) testa uma condição; se ela for verdadeira, executa o bloco e volta a testar. Quando a condição fica falsa, o laço termina e o programa segue. Cada execução do bloco é chamada de <strong>iteração</strong> (ou volta)."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-05_while.png",
+   "alt": "capitulo 05 while"
+  },
+  {
+   "t": "p",
+   "html": "Como o teste vem antes, se a condição já começar falsa o bloco não é executado nenhuma vez. E algo dentro do bloco precisa, em algum momento, tornar a condição falsa; senão o laço nunca termina."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int contador = 5;\n    while (contador > 0) {\n        cout << contador << \" \";\n        contador--;               // aproxima o laço do fim\n    }\n    cout << \"Fogo!\" << endl;      // 5 4 3 2 1 Fogo!\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Em Portugol, o mesmo laço é escrito com <code>enquanto ... faca ... fimenquanto</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"ContagemRegressiva\"\nvar\n   contador: inteiro\ninicio\n   contador <- 5\n   enquanto contador > 0 faca\n      escreva(contador, \" \")\n      contador <- contador - 1\n   fimenquanto\n   escreval(\"Fogo!\")\nfimalgoritmo"
+  },
+  {
+   "t": "h3",
+   "texto": "Laço controlado por sentinela"
+  },
+  {
+   "t": "p",
+   "html": "O <code>while</code> é o laço certo quando <strong>não se sabe de antemão</strong> quantas vezes repetir. Um caso muito comum é ler dados até que o usuário digite um valor especial, chamado de <strong>sentinela</strong>, que indica o fim. O valor da sentinela não pode ser um dado válido: para somar valores positivos, o 0 funciona bem."
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"SomarCompras\"\nvar\n   valor, soma, quantos: inteiro\ninicio\n   soma <- 0\n   quantos <- 0\n   escreva(\"Valores das compras (0 para terminar): \")\n   leia(valor)                  // primeira leitura, antes do laço\n   enquanto valor <> 0 faca\n      soma <- soma + valor\n      quantos <- quantos + 1\n      leia(valor)               // próxima, no fim do bloco\n   fimenquanto\n   escreval(quantos, \" compras, total \", soma)\nfimalgoritmo"
+  },
+  {
+   "t": "p",
+   "html": "Repare no padrão: uma leitura antes do laço e outra no fim do bloco. Assim, a condição sempre testa o valor recém-lido, e a sentinela nunca entra na soma."
+  },
+  {
+   "t": "p",
+   "html": "Em C++, o mesmo padrão costuma ser escrito de forma mais curta, com a leitura dentro da própria condição. A expressão <code>cin &gt;&gt; valor</code> lê o valor e, além disso, resulta em verdadeiro se a leitura deu certo e em falso se falhou, por exemplo quando a entrada acabou ou o usuário digitou uma letra. Assim, o laço para tanto na sentinela quanto em uma entrada que termina sem ela, o que evita um laço infinito:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int valor, soma = 0, quantos = 0;\n    cout << \"Valores das compras (0 para terminar): \";\n    while (cin >> valor && valor != 0) {   // lê e testa\n        soma += valor;\n        quantos++;\n    }\n    cout << quantos << \" compras, total \" << soma << endl;\n    return 0;\n}\n// Entrada: 30 45 25 0  ->  3 compras, total 100"
+  },
+  {
+   "t": "h2",
+   "id": "5-2-repeticao-com-teste-no-fim-do-while",
+   "texto": "5.2 Repetição com teste no fim: do-while"
+  },
+  {
+   "t": "p",
+   "html": "O <code>do-while</code> (“faça enquanto”) executa o bloco <strong>primeiro</strong> e só depois testa a condição. Por isso, o bloco é executado <strong>pelo menos uma vez</strong>. Ele é ideal quando a primeira execução é obrigatória, como pedir um dado e repetir o pedido enquanto ele for inválido."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double nota;\n    do {\n        cout << \"Nota (0 a 10): \";\n        cin >> nota;\n        if (nota < 0 || nota > 10) {\n            cout << \"Nota inválida, tente de novo.\" << endl;\n        }\n    } while (nota < 0 || nota > 10);   // repete se inválida\n    cout << \"Nota registrada: \" << nota << endl;\n    return 0;\n}\n// Entrada: 30, depois 7.5  ->  Nota inválida...\n//                              Nota registrada: 7.5"
+  },
+  {
+   "t": "p",
+   "html": "Atenção ao ponto e vírgula depois do <code>while (...)</code> do <code>do-while</code>: ele é obrigatório, ao contrário do <code>while</code> comum."
+  },
+  {
+   "t": "p",
+   "html": "No Portugol, a estrutura equivalente é <code>repita ... ate</code>, com uma diferença importante: a condição do <code>ate</code> diz quando <strong>parar</strong>, e não quando continuar. O laço repete <strong>até</strong> a condição ficar verdadeira. Por isso, ela é o contrário da condição do <code>do-while</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"LerNota\"\nvar\n   nota: real\ninicio\n   repita\n      escreva(\"Nota (0 a 10): \")\n      leia(nota)\n   ate (nota >= 0) e (nota <= 10)    // para quando for válida\n   escreval(\"Nota registrada: \", nota)\nfimalgoritmo"
+  },
+  {
+   "t": "h2",
+   "id": "5-3-repeticao-com-contador-for",
+   "texto": "5.3 Repetição com contador: for"
+  },
+  {
+   "t": "p",
+   "html": "Quando se sabe <strong>quantas vezes</strong> repetir, o <code>for</code> (“para”) é o laço mais claro, porque reúne em uma única linha as três partes de um laço com contador: a inicialização, a condição e a atualização."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-05_for.png",
+   "alt": "capitulo 05 for"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cout << \"Tabuada do: \";\n    cin >> n;\n    for (int i = 1; i <= 10; i++) {\n        cout << n << \" x \" << i << \" = \" << n * i << endl;\n    }\n\n    for (int i = 10; i >= 0; i -= 2) {   // de 10 até 0, de 2 em 2\n        cout << i << \" \";\n    }\n    cout << endl;                        // 10 8 6 4 2 0\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A variável <code>i</code>, declarada dentro do <code>for</code>, só existe dentro do laço. O contador pode começar e terminar em qualquer valor, crescer ou diminuir, e andar de um em um ou em passos maiores: tudo depende das três partes."
+  },
+  {
+   "t": "p",
+   "html": "No Portugol, o laço com contador é o <code>para ... de ... ate ... faca</code>, com um <code>passo</code> opcional (que vale 1 quando omitido):"
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"Tabuada\"\nvar\n   n, i: inteiro\ninicio\n   escreva(\"Tabuada do: \")\n   leia(n)\n   para i de 1 ate 10 faca\n      escreval(n, \" x \", i, \" = \", n * i)\n   fimpara\n   para i de 10 ate 0 passo -2 faca\n      escreva(i, \" \")\n   fimpara\nfimalgoritmo"
+  },
+  {
+   "t": "p",
+   "html": "Os três laços são equivalentes, no sentido de que qualquer repetição pode ser escrita com qualquer um deles. A escolha é sobre clareza:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Laço",
+    "Portugol",
+    "Use quando"
+   ],
+   "linhas": [
+    [
+     "<code>for</code>",
+     "<code>para ... fimpara</code>",
+     "o número de repetições é conhecido"
+    ],
+    [
+     "<code>while</code>",
+     "<code>enquanto ... fimenquanto</code>",
+     "depende de algo que só se sabe durante a execução"
+    ],
+    [
+     "<code>do-while</code>",
+     "<code>repita ... ate</code>",
+     "a primeira execução é obrigatória"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-4-contadores-acumuladores-maior-e-menor",
+   "texto": "5.4 Contadores, acumuladores, maior e menor"
+  },
+  {
+   "t": "p",
+   "html": "Quase todo laço que processa dados usa um ou mais destes quatro padrões:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Contador</strong>: uma variável que começa em 0 e soma 1 a cada vez que algo acontece (<code>quantos++</code>). Com uma condição, conta só alguns casos: quantos aprovados, quantos negativos.",
+    "<strong>Acumulador</strong>: uma variável que começa em 0 e soma um valor a cada volta (<code>soma += nota</code>). No fim, guarda o total. Para multiplicar, o acumulador começa em 1.",
+    "<strong>Maior valor</strong>: compara cada dado com o maior visto até agora e o substitui quando encontra um maior.",
+    "<strong>Menor valor</strong>: o mesmo, com a comparação invertida."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O programa abaixo usa os quatro para analisar as notas de uma turma:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int alunos;\n    cout << \"Quantos alunos? \";\n    cin >> alunos;\n    double soma = 0;               // acumulador\n    int aprovados = 0;             // contador\n    double maior = 0, menor = 10;  // os extremos da faixa\n    for (int i = 1; i <= alunos; i++) {\n        double nota = 0;\n        cout << \"Nota do aluno \" << i << \": \";\n        cin >> nota;\n        soma += nota;\n        if (nota >= 6) aprovados++;\n        if (nota > maior) maior = nota;\n        if (nota < menor) menor = nota;\n    }\n    if (alunos > 0) {\n        cout << \"Média: \" << soma / alunos << endl;\n        cout << \"Aprovados: \" << aprovados << endl;\n        cout << \"Maior: \" << maior << \", menor: \" << menor\n             << endl;\n    }\n    return 0;\n}\n// 4 alunos com 7, 4.5, 9 e 6 -> Média: 6.625\n// Aprovados: 3    Maior: 9, menor: 4.5"
+  },
+  {
+   "t": "p",
+   "html": "O maior começa em 0 e o menor em 10, os extremos da faixa de notas: assim, a primeira nota lida sempre substitui os dois. Quando não há uma faixa conhecida, a forma mais segura é usar o <strong>primeiro valor lido</strong> como maior e menor iniciais. O <code>if (alunos &gt; 0)</code> evita dividir por zero quando a turma está vazia."
+  },
+  {
+   "t": "p",
+   "html": "Um teste de mesa mostra o laço trabalhando, volta a volta, com as notas 7, 4.5, 9 e 6:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "i",
+    "nota",
+    "soma",
+    "aprovados",
+    "maior",
+    "menor"
+   ],
+   "linhas": [
+    [
+     "–",
+     "–",
+     "0",
+     "0",
+     "0",
+     "10"
+    ],
+    [
+     "1",
+     "7",
+     "7",
+     "1",
+     "7",
+     "7"
+    ],
+    [
+     "2",
+     "4.5",
+     "11.5",
+     "1",
+     "7",
+     "4.5"
+    ],
+    [
+     "3",
+     "9",
+     "20.5",
+     "2",
+     "9",
+     "4.5"
+    ],
+    [
+     "4",
+     "6",
+     "26.5",
+     "3",
+     "9",
+     "4.5"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-5-interrompendo-um-laco-break-e-continue",
+   "texto": "5.5 Interrompendo um laço: break e continue"
+  },
+  {
+   "t": "p",
+   "html": "Dois comandos alteram o andamento normal de um laço:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<code>break</code> encerra o laço imediatamente, mesmo que a condição ainda seja verdadeira. É útil quando a resposta já foi encontrada e não faz sentido continuar procurando.",
+    "<code>continue</code> pula o resto da iteração atual e passa direto para a próxima."
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // break: o primeiro múltiplo de 7 maior que 50\n    for (int n = 51; n <= 100; n++) {\n        if (n % 7 == 0) {\n            cout << \"Encontrado: \" << n << endl;   // 56\n            break;                // não precisa olhar o resto\n        }\n    }\n\n    // continue: soma só os ímpares de 1 a 10\n    int soma = 0;\n    for (int i = 1; i <= 10; i++) {\n        if (i % 2 == 0) {\n            continue;                  // pula os pares\n        }\n        soma += i;\n    }\n    cout << \"Soma dos ímpares: \" << soma << endl;   // 25\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O Portugol do VisuAlg tem o comando <code>interrompa</code>, equivalente ao <code>break</code>, mas não tem equivalente ao <code>continue</code>. Use os dois com moderação: um laço com muitas saídas no meio é difícil de acompanhar. Muitas vezes, uma condição melhor no próprio laço ou um <code>if</code> resolvem o problema de forma mais clara."
+  },
+  {
+   "t": "h2",
+   "id": "5-6-lacos-aninhados",
+   "texto": "5.6 Laços aninhados"
+  },
+  {
+   "t": "p",
+   "html": "Um laço pode estar dentro de outro. Para cada volta do laço de fora, o laço de dentro é executado <strong>inteiro</strong>. Se o de fora dá 4 voltas e o de dentro, 5, o bloco mais interno é executado 4 × 5 = 20 vezes. Laços aninhados aparecem sempre que os dados têm linhas e colunas: tabelas, matrizes (Capítulo 7), imagens."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <iomanip>     // setw\nusing namespace std;\n\nint main() {\n    // um triângulo: a linha i tem i asteriscos\n    for (int linha = 1; linha <= 4; linha++) {\n        for (int j = 1; j <= linha; j++) {\n            cout << \"*\";\n        }\n        cout << endl;\n    }\n\n    // a tabela de multiplicação de 1 a 5\n    for (int i = 1; i <= 5; i++) {\n        for (int j = 1; j <= 5; j++) {\n            cout << setw(4) << i * j;  // 4 posições por número\n        }\n        cout << endl;\n    }\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A saída mostra o triângulo e a tabela, com as colunas alinhadas pelo <code>setw(4)</code>, que reserva 4 posições para cada número:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// saída\n*\n**\n***\n****\n   1   2   3   4   5\n   2   4   6   8  10\n   3   6   9  12  15\n   4   8  12  16  20\n   5  10  15  20  25"
+  },
+  {
+   "t": "p",
+   "html": "Repare que o limite do laço de dentro, no triângulo, depende da variável do laço de fora (<code>j &lt;= linha</code>): é isso que faz cada linha ter um asterisco a mais."
+  },
+  {
+   "t": "h2",
+   "id": "5-7-o-laco-que-nao-termina",
+   "texto": "5.7 O laço que não termina"
+  },
+  {
+   "t": "p",
+   "html": "Um <strong>laço infinito</strong> acontece quando a condição nunca fica falsa. O programa trava, ou fica mostrando a mesma coisa sem parar, e precisa ser interrompido à força (no terminal, com Ctrl+C). As causas mais comuns são:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "esquecer de atualizar a variável da condição, como o <code>contador--</code> do <code>while</code>;",
+    "atualizar na direção errada: <code>for (int i = 10; i &gt;= 0; i++)</code> se afasta da condição de parada em vez de se aproximar;",
+    "usar uma condição que nunca pode ser satisfeita, como <code>while (x != 10)</code> com <code>x</code> andando de 3 em 3 a partir de 0: ele passa por 9 e 12, mas nunca vale 10."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O erro oposto também é comum: o laço que executa <strong>uma vez a mais ou a menos</strong> do que deveria, por usar <code>&lt;</code> no lugar de <code>&lt;=</code>, ou começar em 0 no lugar de 1. Ele é tão frequente que tem nome em inglês, <em>off-by-one</em>. Antes de confiar em um laço, verifique a primeira e a última volta: com que valor do contador elas acontecem?"
+  },
+  {
+   "t": "h2",
+   "id": "5-8-um-programa-completo-numeros-primos",
+   "texto": "5.8 Um programa completo: números primos"
+  },
+  {
+   "t": "p",
+   "html": "Um número é <strong>primo</strong> quando é maior que 1 e só é divisível por 1 e por ele mesmo: 2, 3, 5, 7, 11, 13… Para saber se <code>n</code> é primo, basta procurar um divisor entre 2 e <code>n - 1</code>; se algum dividir, ele não é primo."
+  },
+  {
+   "t": "p",
+   "html": "Dá para procurar bem menos. Se <code>n</code> tiver um divisor maior que sua raiz quadrada, terá também um menor que ela: 36 = 4 × 9, e o 4 é menor que sqrt36 = 6. Então basta testar os divisores <code>d</code> enquanto <code>d * d &lt;= n</code>. Para um número perto de um milhão, isso reduz a busca de cerca de um milhão de divisões para mil. E, assim que um divisor aparece, o <code>break</code> encerra a busca."
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"Primo\"\nvar\n   n, d: inteiro\n   primo: logico\ninicio\n   escreva(\"Número: \")\n   leia(n)\n   primo <- n >= 2\n   d <- 2\n   enquanto (d * d <= n) e primo faca\n      se n mod d = 0 entao\n         primo <- falso\n      fimse\n      d <- d + 1\n   fimenquanto\n   se primo entao\n      escreval(n, \" é primo\")\n   senao\n      escreval(n, \" não é primo\")\n   fimse\nfimalgoritmo"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cout << \"Número: \";\n    cin >> n;\n    bool primo = n >= 2;              // 0 e 1 não são primos\n    for (int d = 2; d * d <= n; d++) {\n        if (n % d == 0) {\n            primo = false;            // achou um divisor\n            break;\n        }\n    }\n    cout << n << (primo ? \" é primo\" : \" não é primo\") << endl;\n    return 0;\n}\n// 2 -> é primo     9 -> não é primo    97 -> é primo\n// 1 -> não é primo     1000003 -> é primo"
+  },
+  {
+   "t": "p",
+   "html": "O Portugol usa a própria variável <code>primo</code> na condição do <code>enquanto</code> para parar a busca, em vez de um comando de interrupção: as duas formas são corretas. Para testar, inclua os casos especiais: 0, 1 e 2 (o único primo par), um quadrado perfeito como 9 ou 49 (que só tem o divisor exatamente na raiz e testa o <code>&lt;=</code>) e um primo grande."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Esquecer de atualizar a variável da condição.</strong> O laço nunca termina.",
+    "<strong>Errar o limite por um.</strong> <code>i &lt; 10</code> dá 10 voltas começando em 0, mas 9 começando em 1. Confira a primeira e a última volta.",
+    "<strong>Colocar ponto e vírgula depois do <code>for</code> ou do <code>while</code>.</strong> <code>for (...);</code> repete um comando vazio, e o bloco abaixo executa uma única vez.",
+    "<strong>Esquecer o ponto e vírgula do <code>do-while</code>.</strong> Ele é obrigatório depois de <code>while (condição)</code>.",
+    "<strong>Inverter a condição do <code>repita ... ate</code>.</strong> No Portugol ela diz quando parar, ao contrário do <code>do-while</code>.",
+    "<strong>Não inicializar contadores e acumuladores.</strong> Uma soma que começa com lixo dá lixo. Comece em 0 (ou em 1, para produtos).",
+    "<strong>Inicializar o maior ou o menor com um valor possível.</strong> Começar o maior em 0 falha se todos os dados forem negativos. Use um valor fora da faixa ou o primeiro dado lido.",
+    "<strong>Somar a sentinela.</strong> No laço com sentinela, leia antes do laço e no fim do bloco (ou, em C++, dentro da condição), para que o valor de parada nunca seja processado.",
+    "<strong>Dividir pela quantidade sem verificar se ela é zero.</strong> Uma média de nenhum valor não existe."
+   ]
+  }
+ ]
+}
