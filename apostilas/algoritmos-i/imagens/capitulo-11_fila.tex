@@ -1,0 +1,26 @@
+% Capítulo 11: fila circular de 5 posições depois de a volta acontecer.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-vetores}
+\tikzset{
+  casa/.append style={minimum width=12mm, minimum height=8mm},
+  ordem/.style={font=\sffamily\scriptsize\bfseries, text=laranja},
+}
+\begin{document}
+\begin{tikzpicture}[x=12mm]
+  \foreach \v/\e [count=\i from 0] in {6/parte, 7/parte, 3/marcada, 4/pronta, 5/pronta} {
+    \node[\e] (c\i) at (\i, 0) {\v};
+    \node[indice] at (\i, -0.62) {\i};
+  }
+  \node[rotulo, anchor=east] at (-0.7, 0) {dados};
+  \draw[seta] (2, 1.0) -- (c2.north);
+  \node[legenda, text=navy, anchor=west] at (2.05, 0.85) {\texttt{inicio = 2}};
+  \draw[seta, laranja] (c4.north) to[out=70, in=110, looseness=0.9] node[above, legenda, text=laranja] {o fim dá a volta: 6 e 7 vão para as posições 0 e 1} (c0.north);
+  \foreach \i/\o in {2/1, 3/2, 4/3, 0/4, 1/5} {
+    \node[ordem] at (\i, -1.0) {\o\textordmasculine};
+  }
+  \node[legenda, anchor=east] at (-0.7, -1.0) {ordem de saída};
+  \node[legenda, align=center] at (2, -1.75) {depois de enfileirar 1, 2, 3 e 4, desenfileirar duas vezes e enfileirar 5, 6 e 7:\\\texttt{tamanho = 5}, e a próxima posição livre seria \texttt{(2 + 5) \% 5 = 2}, ou seja, a fila está cheia};
+\end{tikzpicture}
+\end{document}

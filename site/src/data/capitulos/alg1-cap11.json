@@ -1,0 +1,265 @@
+{
+ "numero": 11,
+ "titulo": "Introdução às estruturas de dados",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "No fim do Capítulo 10, os dados de cada aluno estavam espalhados em dois vetores paralelos, e bastava esquecer de trocar um deles para os nomes se separarem das notas. O problema é de <strong>organização</strong>: os programas ficam mais simples e mais seguros quando os dados são guardados de uma forma que combina com o uso que se faz deles. Essa é a ideia de <strong>estrutura de dados</strong>. Neste capítulo você vai conhecer os <strong>registros</strong>, que reúnem dados diferentes sobre a mesma coisa, e três estruturas clássicas, cada uma com suas regras de entrada e saída: a <strong>pilha</strong>, a <strong>fila</strong> e a <strong>lista encadeada</strong>. Para construir a última, você também vai dar os primeiros passos com <strong>ponteiros</strong>."
+  },
+  {
+   "t": "h2",
+   "id": "11-1-registros",
+   "texto": "11.1 Registros"
+  },
+  {
+   "t": "p",
+   "html": "Um <strong>registro</strong> reúne, sob um único nome, várias informações que podem ser de tipos diferentes. Cada informação é um <strong>campo</strong>. Um aluno tem nome (texto), matrícula (inteiro) e nota (real); em vez de três variáveis soltas, um registro <code>Aluno</code> guarda as três juntas. Em C++, um registro é declarado com <code>struct</code>, e os campos são acessados com um ponto:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\nstruct Aluno {                 // um novo tipo, com três campos\n    string nome;\n    int matricula;\n    double nota;\n};\n\nint main() {\n    Aluno a;\n    a.nome = \"Ana\";\n    a.matricula = 2026001;\n    a.nota = 8.5;\n    Aluno b = {\"Bruno\", 2026002, 7.0};   // todos de uma vez\n    cout << a.nome << \" (\" << a.matricula << \"): \" << a.nota\n         << endl;                         // Ana (2026001): 8.5\n    Aluno c = a;                          // copia tudo\n    c.nota = 10;\n    cout << a.nota << \" \" << c.nota << \" \" << b.nome << endl;\n    return 0;                             // 8.5 10 Bruno\n}"
+  },
+  {
+   "t": "p",
+   "html": "A declaração <code>struct Aluno</code> cria um <strong>tipo novo</strong>, que se usa como <code>int</code> ou <code>string</code>: dá para declarar variáveis, copiar com <code>=</code>, passar para funções e devolver com <code>return</code>. Como um registro pode ser grande, a passagem por referência constante (Capítulo 6) é a forma usual de entregá-lo a uma função que só vai lê-lo: <code>void mostrar(const Aluno &amp;a)</code>."
+  },
+  {
+   "t": "p",
+   "html": "Na notação de Portugol usada em muitos livros, o registro é declarado com <code>tipo ... registro</code>. As ferramentas de Portugol variam no suporte a esse recurso, mas a ideia é a mesma:"
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"Registro\"\ntipo Aluno = registro\n   nome: caractere\n   matricula: inteiro\n   nota: real\nfimregistro\nvar\n   a: Aluno\ninicio\n   a.nome <- \"Ana\"\n   a.matricula <- 2026001\n   a.nota <- 8.5\n   escreval(a.nome, \": \", a.nota)\nfimalgoritmo"
+  },
+  {
+   "t": "h2",
+   "id": "11-2-vetores-de-registros",
+   "texto": "11.2 Vetores de registros"
+  },
+  {
+   "t": "p",
+   "html": "Registros e vetores se combinam naturalmente: um vetor de <code>Aluno</code> é a turma inteira, e <code>turma[i].nota</code> é a nota do aluno <code>i</code>. Agora, ao ordenar, cada aluno se move <strong>inteiro</strong>, e o problema dos vetores paralelos desaparece. Melhor ainda: o <code>sort</code> da biblioteca aceita um terceiro argumento, uma função que diz se um elemento deve vir antes de outro, e assim ordena registros pelo critério que se quiser."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <string>\n#include <vector>\n#include <algorithm>\nusing namespace std;\n\nstruct Aluno {\n    string nome;\n    double nota;\n};\n\n// a deve vir antes de b? Sim, se tiver nota maior.\nbool maiorNota(const Aluno &a, const Aluno &b) {\n    return a.nota > b.nota;\n}\n\nint main() {\n    vector<Aluno> turma = {\n        {\"Ana\", 7.5}, {\"Bruno\", 9.0}, {\"Carla\", 6.0},\n        {\"Diego\", 9.5}, {\"Elisa\", 8.0}, {\"Fabio\", 5.5}\n    };\n    turma.push_back({\"Gabi\", 8.7});          // mais um cadastro\n    sort(turma.begin(), turma.end(), maiorNota);\n    for (size_t i = 0; i < turma.size(); i++) {\n        cout << i + 1 << \"o \" << turma[i].nome << \" (\"\n             << turma[i].nota << \")\" << endl;\n    }\n    return 0;\n}\n// 1o Diego (9.5)  2o Bruno (9)  3o Gabi (8.7)  4o Elisa (8)\n// 5o Ana (7.5)    6o Carla (6)  7o Fabio (5.5)"
+  },
+  {
+   "t": "p",
+   "html": "Compare com o programa da Seção 10.8: não há mais dois vetores para manter em sincronia, a ordenação é uma única linha, e acrescentar um campo novo, como a matrícula, não exige mudar a ordenação."
+  },
+  {
+   "t": "h2",
+   "id": "11-3-estruturas-de-dados-e-suas-operacoes",
+   "texto": "11.3 Estruturas de dados e suas operações"
+  },
+  {
+   "t": "p",
+   "html": "Uma <strong>estrutura de dados</strong> é uma forma de organizar dados na memória junto com as <strong>operações</strong> que se pode fazer sobre eles: inserir, remover, procurar, percorrer. O vetor é a mais simples: acesso direto a qualquer posição, mas inserir no meio exige deslocar todos os elementos seguintes. Cada estrutura faz algumas operações muito bem e outras mal, e escolher a estrutura certa é, muitas vezes, o que separa um programa rápido de um lento."
+  },
+  {
+   "t": "p",
+   "html": "Ao estudar uma estrutura, vale separar duas perguntas. A primeira é <strong>o que</strong> ela faz: quais operações oferece e com que regras. A segunda é <strong>como</strong> ela faz: com vetores, com ponteiros, de que jeito. A descrição só da primeira parte é chamada de <strong>tipo abstrato de dados</strong>. Quem usa uma pilha precisa saber que o último a entrar é o primeiro a sair; não precisa saber se por dentro há um vetor. As próximas seções apresentam três tipos abstratos clássicos e uma forma simples de implementar cada um."
+  },
+  {
+   "t": "h2",
+   "id": "11-4-pilha",
+   "texto": "11.4 Pilha"
+  },
+  {
+   "t": "p",
+   "html": "Uma <strong>pilha</strong> funciona como uma pilha de pratos: um prato novo é colocado no topo, e o único que pode ser retirado é o do topo. O último a entrar é o primeiro a sair, regra conhecida pela sigla em inglês <strong>LIFO</strong> (<em>last in, first out</em>). As operações são <strong>empilhar</strong> (<em>push</em>), <strong>desempilhar</strong> (<em>pop</em>), consultar o <strong>topo</strong> e verificar se a pilha está <strong>vazia</strong>."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-11_pilha.png",
+   "alt": "capitulo 11 pilha"
+  },
+  {
+   "t": "p",
+   "html": "Pilhas estão por toda parte na computação: o botão “desfazer” de um editor guarda as ações em uma pilha, o botão “voltar” do navegador guarda as páginas visitadas, e a pilha de chamadas do Capítulo 6 é, como o nome diz, uma pilha. A implementação mais simples usa um vetor e um contador, <code>topo</code>, que indica quantos elementos há (e, portanto, a próxima posição livre):"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\nconst int MAX = 100;\n\nstruct Pilha {\n    char dados[MAX];\n    int topo = 0;              // quantos elementos há\n};\n\nbool vazia(const Pilha &p) { return p.topo == 0; }\n\nbool empilhar(Pilha &p, char x) {\n    if (p.topo == MAX) return false;   // pilha cheia\n    p.dados[p.topo] = x;\n    p.topo++;\n    return true;\n}\n\nchar desempilhar(Pilha &p) {           // só se não estiver vazia\n    p.topo--;\n    return p.dados[p.topo];\n}\n\nint main() {\n    Pilha p;\n    string palavra = \"ROMA\";\n    for (char c : palavra) empilhar(p, c);\n    while (!vazia(p)) cout << desempilhar(p);   // ao contrário\n    cout << endl;                               // AMOR\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "As funções recebem a pilha por referência, porque empilhar e desempilhar precisam alterá-la. O valor inicial <code>topo = 0</code>, escrito na própria declaração do registro, garante que toda pilha nova começa vazia. E quem chama <code>desempilhar</code> precisa verificar antes se a pilha não está vazia: desempilhar de uma pilha vazia levaria <code>topo</code> a -1 e acessaria uma posição fora do vetor."
+  },
+  {
+   "t": "h2",
+   "id": "11-5-fila",
+   "texto": "11.5 Fila"
+  },
+  {
+   "t": "p",
+   "html": "Uma <strong>fila</strong> funciona como a fila de um caixa: quem chega entra no <strong>fim</strong>, e quem é atendido sai do <strong>início</strong>. O primeiro a entrar é o primeiro a sair, regra conhecida como <strong>FIFO</strong> (<em>first in, first out</em>). As operações são <strong>enfileirar</strong>, <strong>desenfileirar</strong>, consultar o primeiro e verificar se está vazia. Filas organizam tudo o que precisa ser atendido na ordem de chegada: documentos esperando a impressora, mensagens esperando envio, pedidos em um sistema de vendas."
+  },
+  {
+   "t": "p",
+   "html": "Implementar uma fila com um vetor tem uma dificuldade. Se o início ficasse sempre na posição 0, cada saída obrigaria a deslocar todos os elementos uma posição para a frente. A solução é deixar o início andar: um índice <code>inicio</code> indica onde está o primeiro elemento, e um contador <code>tamanho</code> diz quantos há. Quando o fim chega à última posição do vetor, ele <strong>dá a volta</strong> e continua na posição 0, que já foi liberada. Por isso essa implementação se chama <strong>fila circular</strong>, e o resto da divisão (<code>%</code>) faz a volta, como na cifra de César do Capítulo 8."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-11_fila.png",
+   "alt": "capitulo 11 fila"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nconst int MAX = 5;             // pequeno, para ver a volta\n\nstruct Fila {\n    int dados[MAX];\n    int inicio = 0;            // posição do primeiro\n    int tamanho = 0;           // quantos elementos há\n};\n\nbool enfileirar(Fila &f, int x) {\n    if (f.tamanho == MAX) return false;        // fila cheia\n    int fim = (f.inicio + f.tamanho) % MAX;    // dá a volta\n    f.dados[fim] = x;\n    f.tamanho++;\n    return true;\n}\n\nint desenfileirar(Fila &f) {   // só se não estiver vazia\n    int x = f.dados[f.inicio];\n    f.inicio = (f.inicio + 1) % MAX;\n    f.tamanho--;\n    return x;\n}\n\nint main() {\n    Fila f;\n    for (int x = 1; x <= 4; x++) enfileirar(f, x);   // 1 2 3 4\n    int a = desenfileirar(f);\n    int b = desenfileirar(f);\n    cout << a << \" \" << b << endl;                   // 1 2\n    for (int x = 5; x <= 7; x++) enfileirar(f, x);   // 6 e 7 dão\n    while (f.tamanho > 0) {                          // a volta\n        cout << desenfileirar(f) << \" \";\n    }\n    cout << endl;                                    // 3 4 5 6 7\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Depois das duas primeiras saídas, as posições 0 e 1 do vetor ficam livres. O 5 ocupa a última posição, a 4, e o 6 e o 7 dão a volta e ocupam as posições 0 e 1. Mesmo assim, eles saem na ordem certa, porque o <code>inicio</code> também anda em círculo."
+  },
+  {
+   "t": "h2",
+   "id": "11-6-ponteiros-e-memoria-dinamica",
+   "texto": "11.6 Ponteiros e memória dinâmica"
+  },
+  {
+   "t": "p",
+   "html": "Pilhas e filas feitas com vetores têm um limite: a capacidade <code>MAX</code>, decidida antes de o programa rodar. Para estruturas que crescem e encolhem livremente, é preciso criar espaço na memória <strong>durante a execução</strong>, e para isso a linguagem C++ usa <strong>ponteiros</strong>."
+  },
+  {
+   "t": "p",
+   "html": "Um <strong>ponteiro</strong> é uma variável que guarda um <strong>endereço</strong> de memória, ou seja, a localização de outra variável (Capítulo 3). O operador <code>&amp;</code> dá o endereço de uma variável, e o operador <code>*</code> acessa o valor que está no endereço guardado pelo ponteiro:"
+  },
+  {
+   "t": "codigo",
+   "texto": "int x = 10;\nint *p = &x;           // p guarda o endereço de x\ncout << *p << endl;    // 10: o valor que está nesse endereço\n*p = 20;               // altera x através de p\ncout << x << endl;     // 20\n\nint *q = new int(5);   // cria um int durante a execução\ncout << *q << endl;    // 5\ndelete q;              // devolve a memória ao sistema\nq = nullptr;           // agora q não aponta para nada"
+  },
+  {
+   "t": "p",
+   "html": "O operador <code>new</code> reserva memória para um valor e devolve o endereço dela. Essa memória não some no fim do bloco, como uma variável local: ela fica reservada até o programa a devolver com <code>delete</code>. Esquecer o <code>delete</code> causa um <strong>vazamento de memória</strong>: a memória fica ocupada sem uso, e um programa que roda por muito tempo pode esgotá-la. Usar um ponteiro depois do <code>delete</code> é ainda pior, porque o endereço pode já pertencer a outra coisa. O valor especial <code>nullptr</code> indica um ponteiro que não aponta para nada, e é a forma segura de marcar “nenhum”."
+  },
+  {
+   "t": "p",
+   "html": "Os ponteiros são uma das partes mais delicadas do C++, e a programação moderna nessa linguagem procura usá-los o mínimo possível, preferindo <code>vector</code>, <code>string</code> e as estruturas da biblioteca, que cuidam da memória sozinhas. Mas eles são a melhor forma de entender como as estruturas encadeadas funcionam por dentro."
+  },
+  {
+   "t": "h2",
+   "id": "11-7-lista-encadeada",
+   "texto": "11.7 Lista encadeada"
+  },
+  {
+   "t": "p",
+   "html": "Em uma <strong>lista encadeada</strong>, cada elemento fica em um <strong>nó</strong>, um registro criado com <code>new</code> que guarda o valor e um ponteiro para o <strong>próximo</strong> nó. Os nós podem estar em qualquer lugar da memória: o que os une é a corrente de ponteiros. A lista em si é só um ponteiro para o primeiro nó, e o último nó aponta para <code>nullptr</code>."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-11_lista.png",
+   "alt": "capitulo 11 lista"
+  },
+  {
+   "t": "p",
+   "html": "A grande vantagem da lista é que inserir e remover não exige deslocar nada: basta <strong>religar os ponteiros</strong>. Para inserir no início, o novo nó aponta para o antigo primeiro e passa a ser o primeiro. Para remover um nó, o anterior passa a apontar para o seguinte, e o nó removido é devolvido com <code>delete</code>. A desvantagem é que não há acesso direto: para chegar ao quinto elemento, é preciso passar pelos quatro primeiros."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nstruct No {\n    int valor;\n    No *prox;                  // o próximo nó (nullptr no último)\n};\n\nvoid inserirNoInicio(No *&lista, int x) {\n    No *novo = new No;\n    novo->valor = x;\n    novo->prox = lista;        // aponta para o antigo primeiro\n    lista = novo;              // e passa a ser o primeiro\n}\n\nvoid mostrar(const No *lista) {\n    for (const No *p = lista; p != nullptr; p = p->prox) {\n        cout << p->valor << \" -> \";\n    }\n    cout << \"fim\" << endl;\n}\n\nbool remover(No *&lista, int x) {\n    No *anterior = nullptr;\n    No *p = lista;\n    while (p != nullptr && p->valor != x) {   // procura x\n        anterior = p;\n        p = p->prox;\n    }\n    if (p == nullptr) return false;           // não achou\n    if (anterior == nullptr) lista = p->prox; // era o primeiro\n    else anterior->prox = p->prox;            // pula o nó\n    delete p;\n    return true;\n}\n\nvoid liberar(No *&lista) {\n    while (lista != nullptr) {\n        No *p = lista;\n        lista = lista->prox;\n        delete p;\n    }\n}\n\nint main() {\n    No *lista = nullptr;                      // lista vazia\n    int valores[] = {40, 30, 20, 10};\n    for (int x : valores) inserirNoInicio(lista, x);\n    mostrar(lista);              // 10 -> 20 -> 30 -> 40 -> fim\n    remover(lista, 30);\n    mostrar(lista);              // 10 -> 20 -> 40 -> fim\n    liberar(lista);              // devolve todos os nós\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Três detalhes de sintaxe aparecem aqui. A seta <code>p-&gt;valor</code> é a forma curta de <code>(*p).valor</code>: o campo <code>valor</code> do nó para onde <code>p</code> aponta. O parâmetro <code>No *&amp;lista</code> é uma <strong>referência para um ponteiro</strong>: <code>inserirNoInicio</code> e <code>remover</code> precisam mudar <strong>qual</strong> é o primeiro nó, e por isso alteram o próprio ponteiro de quem chamou. E a função <code>liberar</code> percorre a lista devolvendo cada nó, porque todo <code>new</code> precisa de um <code>delete</code>."
+  },
+  {
+   "t": "h2",
+   "id": "11-8-as-estruturas-da-biblioteca",
+   "texto": "11.8 As estruturas da biblioteca"
+  },
+  {
+   "t": "p",
+   "html": "Implementar pilhas, filas e listas é o melhor jeito de entendê-las, mas em programas reais usam-se as versões prontas da biblioteca padrão do C++, testadas e eficientes, que cuidam da memória sozinhas: <code>stack</code> (pilha), <code>queue</code> (fila), <code>list</code> (lista duplamente encadeada) e o já conhecido <code>vector</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <string>\n#include <stack>\n#include <queue>\nusing namespace std;\n\nint main() {\n    stack<int> pilha;\n    pilha.push(1);\n    pilha.push(2);\n    pilha.push(3);\n    cout << pilha.top() << endl;       // 3: o último que entrou\n    pilha.pop();                       // remove o 3\n    cout << pilha.top() << \" \" << pilha.size() << endl;   // 2 2\n\n    queue<string> fila;\n    fila.push(\"Ana\");\n    fila.push(\"Bruno\");\n    cout << fila.front() << endl;      // Ana: a primeira\n    fila.pop();\n    cout << fila.front() << \" \" << fila.empty() << endl;\n    return 0;                          // Bruno 0\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare que <code>pop</code> remove o elemento, mas não o devolve: para ler e remover, consulta-se antes com <code>top</code> (na pilha) ou <code>front</code> (na fila). A tabela resume quando usar cada estrutura:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Estrutura",
+    "Faz bem",
+    "Faz mal"
+   ],
+   "linhas": [
+    [
+     "<code>vector</code>",
+     "acesso por posição; inserir e remover no fim",
+     "inserir e remover no início ou no meio"
+    ],
+    [
+     "<code>list</code>",
+     "inserir e remover em qualquer ponto já localizado",
+     "acesso por posição (precisa percorrer)"
+    ],
+    [
+     "<code>stack</code>",
+     "último a entrar, primeiro a sair",
+     "qualquer acesso que não seja o topo"
+    ],
+    [
+     "<code>queue</code>",
+     "primeiro a entrar, primeiro a sair",
+     "qualquer acesso que não seja as pontas"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Árvores, tabelas hash, grafos e outras estruturas, com a análise detalhada do custo de cada operação, são o assunto de um estudo próprio de estruturas de dados."
+  },
+  {
+   "t": "h2",
+   "id": "11-9-um-programa-completo-parenteses-balanceados",
+   "texto": "11.9 Um programa completo: parênteses balanceados"
+  },
+  {
+   "t": "p",
+   "html": "Compiladores, editores de código e calculadoras precisam verificar se os parênteses, colchetes e chaves de uma expressão estão <strong>balanceados</strong>: cada um que abre precisa ser fechado, pelo símbolo correspondente e na ordem certa. <code>{a[i] * (b + c)}</code> está correto; <code>(a + b]</code> e <code>(a + [b) - c]</code> não estão."
+  },
+  {
+   "t": "p",
+   "html": "A pilha resolve o problema com elegância, porque o último símbolo aberto é sempre o primeiro que precisa ser fechado. Percorre-se a expressão: cada símbolo que abre é empilhado; cada símbolo que fecha precisa corresponder ao que está no topo, que é desempilhado. No fim, a pilha precisa estar vazia, senão sobrou algo aberto."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <string>\n#include <stack>\nusing namespace std;\n\n// o símbolo que abre o par de quem fecha\nchar abertura(char fecha) {\n    if (fecha == ')') return '(';\n    if (fecha == ']') return '[';\n    return '{';\n}\n\nbool balanceado(const string &expr) {\n    stack<char> pilha;\n    for (char c : expr) {\n        if (c == '(' || c == '[' || c == '{') {\n            pilha.push(c);                        // abre: guarda\n        } else if (c == ')' || c == ']' || c == '}') {\n            if (pilha.empty()) return false;  // fecha sem abrir\n            if (pilha.top() != abertura(c)) {\n                return false;                 // par trocado\n            }\n            pilha.pop();                          // par completo\n        }\n    }\n    return pilha.empty();                     // sobrou aberto?\n}\n\nint main() {\n    string testes[] = {\"{a[i] * (b + c)}\", \"(a + b]\",\n                       \"(a + [b) - c]\", \"((x)\", \"x) + (y\"};\n    for (const string &t : testes) {\n        cout << t << \": \" << (balanceado(t) ? \"ok\" : \"erro\")\n             << endl;\n    }\n    string expr;\n    cout << \"Sua expressão: \";\n    getline(cin, expr);\n    cout << (balanceado(expr) ? \"balanceada\" : \"não balanceada\")\n         << endl;\n    return 0;\n}\n// {a[i] * (b + c)}: ok     (a + b]: erro     (a + [b) - c]: erro\n// ((x): erro               x) + (y: erro"
+  },
+  {
+   "t": "p",
+   "html": "Cada um dos testes exercita um tipo de erro diferente: o par trocado (<code>(a + b]</code>), o cruzamento (<code>(a + [b) - c]</code>), o símbolo que sobra aberto (<code>((x)</code>) e o que fecha sem ter sido aberto (<code>x) + (y</code>), que tem o mesmo número de aberturas e fechamentos, mas na ordem errada. Contar os símbolos não bastaria para pegar os três últimos casos; a pilha pega todos."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Esquecer o ponto e vírgula depois do <code>struct</code>.</strong> A declaração termina com <code>};</code>.",
+    "<strong>Passar registros grandes por valor sem necessidade.</strong> Use <code>const Aluno &amp;a</code> quando a função só lê.",
+    "<strong>Desempilhar de uma pilha vazia ou desenfileirar de uma fila vazia.</strong> Verifique antes com <code>vazia</code> ou <code>empty()</code>.",
+    "<strong>Esquecer a volta na fila circular.</strong> Sem o <code>% MAX</code>, os índices passam do fim do vetor.",
+    "<strong>Usar um ponteiro que não aponta para nada.</strong> Acessar <code>p-&gt;valor</code> com <code>p</code> igual a <code>nullptr</code>, ou com <code>p</code> não inicializado, encerra o programa ou corrompe a memória.",
+    "<strong>Esquecer o <code>delete</code>.</strong> Cada <code>new</code> precisa de um <code>delete</code>, senão há vazamento de memória.",
+    "<strong>Usar um nó depois do <code>delete</code>.</strong> Leia o <code>prox</code> antes de apagar o nó, como em <code>liberar</code>.",
+    "<strong>Perder o início da lista.</strong> Percorra com um ponteiro auxiliar (<code>p</code>); se o próprio <code>lista</code> andar, o começo da lista se perde.",
+    "<strong>Esperar que <code>pop()</code> devolva o elemento.</strong> Nas estruturas da biblioteca, leia com <code>top()</code> ou <code>front()</code> e depois remova com <code>pop()</code>."
+   ]
+  }
+ ]
+}
