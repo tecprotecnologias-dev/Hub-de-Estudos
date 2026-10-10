@@ -1,0 +1,41 @@
+% Capítulo 9: backtracking das 4 rainhas: dois becos sem saída e a primeira solução.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-fluxo}
+\tikzset{
+  rainha/.style={circle, fill=laranja, text=white, font=\sffamily\scriptsize\bfseries, inner sep=0pt, minimum size=4.6mm},
+  bloqueada/.style={font=\sffamily\small, text=cinzalogo},
+}
+% \tabuleiro{x}{rainhas: linha/coluna,...}{linha sem casa livre (-1 se nenhuma)}{legenda}
+\newcommand{\tabuleiro}[4]{%
+  \foreach \l in {0,...,3} {
+    \foreach \c in {0,...,3} {
+      \pgfmathtruncatemacro{\cor}{mod(\l + \c, 2)}
+      \ifnum\cor=0
+        \fill[azul!50] (#1 + \c*0.6, -\l*0.6) rectangle ++(0.6, 0.6);
+      \else
+        \fill[white] (#1 + \c*0.6, -\l*0.6) rectangle ++(0.6, 0.6);
+      \fi
+    }
+  }
+  \draw[navy, line width=0.8pt] (#1, -1.8) rectangle ++(2.4, 2.4);
+  \foreach \l/\c in {#2} {
+    \node[rainha] at (#1 + \c*0.6 + 0.3, -\l*0.6 + 0.3) {R};
+  }
+  \ifnum#3>-1
+    \foreach \c in {0,...,3} {
+      \node[bloqueada] at (#1 + \c*0.6 + 0.3, -#3*0.6 + 0.3) {$\times$};
+    }
+  \fi
+  \node[legenda, align=center, text width=30mm] at (#1 + 1.2, -2.45) {#4};
+}
+\begin{document}
+\begin{tikzpicture}
+  \tabuleiro{0}{0/0, 1/2}{2}{linha 2 sem casa livre:\\volta e muda a linha 1}
+  \tabuleiro{3.6}{0/0, 1/3, 2/1}{3}{linha 3 sem casa livre:\\volta (até a linha 0)}
+  \tabuleiro{7.2}{0/1, 1/3, 2/0, 3/2}{-1}{primeira solução}
+  \draw[fluxo] (2.6, -0.6) -- (3.4, -0.6);
+  \draw[fluxo] (6.2, -0.6) -- (7.0, -0.6);
+\end{tikzpicture}
+\end{document}

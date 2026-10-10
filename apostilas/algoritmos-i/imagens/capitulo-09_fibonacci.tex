@@ -1,0 +1,41 @@
+% Capítulo 9: árvore de chamadas de fib(5), com os cálculos repetidos destacados.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-fluxo}
+\tikzset{
+  f/.style={draw=navy, line width=0.8pt, rounded corners=2pt, fill=white, font=\ttfamily\scriptsize, inner sep=2.5pt},
+  f3/.style={f, fill=azul},
+  f2/.style={f, fill=laranja!40, draw=laranja},
+  edge from parent/.style={draw=navy, line width=0.6pt},
+}
+\begin{document}
+\begin{tikzpicture}[
+  level distance=11mm,
+  level 1/.style={sibling distance=64mm},
+  level 2/.style={sibling distance=34mm},
+  level 3/.style={sibling distance=18mm},
+  level 4/.style={sibling distance=13mm},
+]
+  \node[f] {fib(5)}
+    child { node[f] {fib(4)}
+      child { node[f3] {fib(3)}
+        child { node[f2] {fib(2)}
+          child { node[f] {fib(1)} }
+          child { node[f] {fib(0)} } }
+        child { node[f] {fib(1)} } }
+      child { node[f2] {fib(2)}
+        child { node[f] {fib(1)} }
+        child { node[f] {fib(0)} } } }
+    child { node[f3] {fib(3)}
+      child { node[f2] {fib(2)}
+        child { node[f] {fib(1)} }
+        child { node[f] {fib(0)} } }
+      child { node[f] {fib(1)} } };
+  \node[f3] at (-2.6, -5.4) {fib(3)};
+  \node[legenda, anchor=west] at (-2.0, -5.4) {calculado 2 vezes};
+  \node[f2] at (1.4, -5.4) {fib(2)};
+  \node[legenda, anchor=west] at (2.0, -5.4) {calculado 3 vezes};
+  \node[legenda] at (0, -6.0) {15 chamadas para um resultado (5) que um laço obtém em 4 somas};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,28 @@
+% Capítulo 9: Torres de Hanói com 3 discos, no início e no objetivo.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-fluxo}
+\tikzset{
+  disco/.style={draw=navy, line width=0.7pt, rounded corners=2pt, minimum height=3.5mm, inner sep=0pt, font=\sffamily\scriptsize\bfseries, text=navy},
+}
+% \pinos{x inicial}{título}{pino onde estão os discos (0, 1 ou 2)}
+\newcommand{\pinos}[3]{%
+  \node[rotulo] at (#1 + 2.2, 2.2) {#2};
+  \fill[navy] (#1 - 0.2, 0) rectangle (#1 + 4.6, 0.12);
+  \foreach \p/\nome in {0/A, 1/B, 2/C} {
+    \fill[navy] (#1 + \p*2.2 - 0.04, 0.12) rectangle (#1 + \p*2.2 + 0.04, 1.75);
+    \node[legenda] at (#1 + \p*2.2, -0.3) {\nome};
+  }
+  \node[disco, fill=laranja!60, minimum width=18mm] at (#1 + #3*2.2, 0.32) {3};
+  \node[disco, fill=laranja!35, minimum width=13mm] at (#1 + #3*2.2, 0.68) {2};
+  \node[disco, fill=azul, minimum width=8mm] at (#1 + #3*2.2, 1.04) {1};
+}
+\begin{document}
+\begin{tikzpicture}
+  \pinos{0}{início}{0}
+  \pinos{6.6}{objetivo}{2}
+  \draw[fluxo] (5.0, 1.0) -- (6.0, 1.0);
+  \node[legenda] at (5.5, -0.9) {um disco por vez; nunca um disco maior sobre um menor};
+\end{tikzpicture}
+\end{document}

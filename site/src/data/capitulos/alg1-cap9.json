@@ -1,0 +1,275 @@
+{
+ "numero": 9,
+ "titulo": "Recursão e backtracking",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "No Capítulo 6, as funções chamavam outras funções. Nada impede que uma função chame <strong>a si mesma</strong>, e essa ideia, a <strong>recursão</strong>, é uma das mais poderosas da programação. Muitos problemas são naturalmente definidos em termos de versões menores deles mesmos: o fatorial de 5 é 5 vezes o fatorial de 4; uma pasta contém arquivos e outras pastas; para mover uma pilha de discos, move-se uma pilha menor. Neste capítulo você vai aprender a escrever funções recursivas, a entender o que acontece na pilha de chamadas a cada uma delas, a reconhecer quando a recursão é uma boa escolha e quando é um desperdício, e a usá-la na técnica de <strong>backtracking</strong>, que explora sistematicamente todas as possibilidades de um problema."
+  },
+  {
+   "t": "h2",
+   "id": "9-1-uma-funcao-que-chama-a-si-mesma",
+   "texto": "9.1 Uma função que chama a si mesma"
+  },
+  {
+   "t": "p",
+   "html": "O fatorial de um número n, escrito n!, é o produto de todos os inteiros de 1 até n: 4! = 4 × 3 × 2 × 1 = 24. No Capítulo 5, ele seria calculado com um laço. Mas repare que 4! = 4 × 3!, e em geral n! = n × (n-1)!. Essa é uma <strong>definição recursiva</strong>: o fatorial é definido usando o próprio fatorial, de um número menor. Para que ela não continue para sempre, é preciso um ponto de parada: 1! = 1 (e, por convenção, 0! = 1)."
+  },
+  {
+   "t": "p",
+   "html": "Toda função recursiva tem essas duas partes:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "o <strong>caso base</strong>, um caso simples o bastante para ser respondido diretamente, sem recursão;",
+    "o <strong>caso recursivo</strong>, que resolve o problema usando a resposta de um problema <strong>menor</strong> do mesmo tipo, cada vez mais perto do caso base."
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nlong long fatorial(int n) {\n    if (n <= 1) return 1;              // caso base\n    return n * fatorial(n - 1);        // caso recursivo\n}\n\nint main() {\n    int n;\n    cout << \"n (0 a 20): \";\n    cin >> n;\n    if (n < 0 || n > 20) {\n        cout << \"Fora da faixa.\" << endl;   // 21! não cabe\n        return 0;\n    }\n    cout << n << \"! = \" << fatorial(n) << endl;\n    return 0;\n}\n// 4 -> 4! = 24        20 -> 20! = 2432902008176640000"
+  },
+  {
+   "t": "p",
+   "html": "O tipo <code>long long</code> guarda inteiros de até cerca de 9,2 × 10<sup>18</sup>. Como o fatorial cresce muito depressa, 20! é o maior que cabe nele, e por isso o programa recusa valores maiores."
+  },
+  {
+   "t": "p",
+   "html": "O Portugol também aceita funções recursivas, com a mesma estrutura:"
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"FatorialRecursivo\"\nvar\n   n: inteiro\n\nfuncao fatorial(k: inteiro): inteiro\ninicio\n   se k <= 1 entao\n      retorne 1\n   senao\n      retorne k * fatorial(k - 1)\n   fimse\nfimfuncao\n\ninicio\n   escreva(\"n: \")\n   leia(n)\n   escreval(n, \"! = \", fatorial(n))\nfimalgoritmo"
+  },
+  {
+   "t": "h2",
+   "id": "9-2-o-que-acontece-na-pilha-de-chamadas",
+   "texto": "9.2 O que acontece na pilha de chamadas"
+  },
+  {
+   "t": "p",
+   "html": "Uma chamada recursiva funciona exatamente como qualquer outra chamada (Seção 6.4): ela ganha seu próprio registro de ativação na pilha, com seu próprio <code>n</code>. A chamada <code>fatorial(4)</code> não termina enquanto não recebe a resposta de <code>fatorial(3)</code>, que espera <code>fatorial(2)</code>, que espera <code>fatorial(1)</code>. Por um momento, há quatro registros empilhados, cada um com um <code>n</code> diferente. Só então as respostas voltam, na ordem inversa, e cada chamada completa sua multiplicação:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-09_fatorial.png",
+   "alt": "capitulo 09 fatorial"
+  },
+  {
+   "t": "p",
+   "html": "Esse “ir e voltar” tem duas consequências práticas. Primeiro, o trabalho de cada chamada se divide em duas partes: o que ela faz <strong>antes</strong> da chamada recursiva (na descida) e o que ela faz <strong>depois</strong> (na volta). No fatorial, a multiplicação acontece na volta. Segundo, a pilha tem tamanho limitado, normalmente de alguns megabytes. Uma recursão muito profunda, ou uma sem caso base, enche a pilha, e o programa é encerrado com um erro de <strong>estouro de pilha</strong> (<em>stack overflow</em>):"
+  },
+  {
+   "t": "codigo",
+   "texto": "// erro: sem caso base, a recursão nunca termina\nlong long fatorial(int n) {\n    return n * fatorial(n - 1);   // 4, 3, 2, 1, 0, -1, -2...\n}"
+  },
+  {
+   "t": "p",
+   "html": "O mesmo acontece quando o caso base existe, mas a recursão nunca o alcança: se o teste fosse <code>if (n == 1)</code>, a chamada <code>fatorial(-3)</code> desceria para -4, -5… sem nunca passar pelo 1. É por isso que o programa usa <code>n &lt;= 1</code>. Por isso a regra da Seção 9.1: cada chamada recursiva precisa ser com um problema <strong>menor</strong>, que caminhe na direção do caso base."
+  },
+  {
+   "t": "h2",
+   "id": "9-3-pensando-recursivamente",
+   "texto": "9.3 Pensando recursivamente"
+  },
+  {
+   "t": "p",
+   "html": "Para escrever uma função recursiva, não tente acompanhar mentalmente todas as chamadas. Faça três perguntas: qual é o caso mais simples, que eu sei responder direto? Como diminuo o problema? E, <strong>supondo que a chamada recursiva já funciona</strong> para o problema menor, como uso a resposta dela para resolver o problema inteiro? Esse ato de confiança é o coração do raciocínio recursivo. Veja como ele resolve quatro problemas diferentes:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\n// b elevado a e: b^0 = 1; b^e = b * b^(e-1)\nlong long potencia(long long b, int e) {\n    if (e == 0) return 1;\n    return b * potencia(b, e - 1);\n}\n\n// soma dos n primeiros elementos: a soma dos n-1 primeiros\n// mais o último\nint soma(const int v[], int n) {\n    if (n == 0) return 0;              // vetor vazio\n    return soma(v, n - 1) + v[n - 1];\n}\n\n// inverter: o resto invertido, seguido da primeira letra\nstring inverter(const string &s) {\n    if (s.size() <= 1) return s;\n    return inverter(s.substr(1)) + s[0];\n}\n\n// máximo divisor comum, pelo algoritmo de Euclides\nint mdc(int a, int b) {\n    if (b == 0) return a;\n    return mdc(b, a % b);\n}\n\nint main() {\n    int v[] = {4, 8, 15, 16, 23, 42};\n    cout << potencia(2, 10) << endl;       // 1024\n    cout << soma(v, 6) << endl;            // 108\n    cout << inverter(\"recursão\") << endl;  // cuidado: acento!\n    cout << inverter(\"pilha\") << endl;     // ahlip\n    cout << mdc(48, 18) << endl;           // 6\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O algoritmo de Euclides, com mais de dois mil anos, usa um fato da aritmética: o MDC de <code>a</code> e <code>b</code> é igual ao MDC de <code>b</code> e do resto de <code>a</code> por <code>b</code>. A sequência de chamadas para 48 e 18 é <code>mdc(48, 18)</code>, <code>mdc(18, 12)</code>, <code>mdc(12, 6)</code> e <code>mdc(6, 0)</code>, que devolve 6. O <code>inverter(\"recursão\")</code> foi incluído de propósito, para lembrar a Seção 8.7: ele inverte os bytes, e o <code>ã</code>, que ocupa dois, sai embaralhado."
+  },
+  {
+   "t": "h2",
+   "id": "9-4-quando-a-recursao-desperdica-fibonacci",
+   "texto": "9.4 Quando a recursão desperdiça: Fibonacci"
+  },
+  {
+   "t": "p",
+   "html": "A sequência de Fibonacci começa com 0 e 1, e cada termo seguinte é a soma dos dois anteriores: 0, 1, 1, 2, 3, 5, 8, 13, 21… A definição é recursiva, e a função sai quase igual a ela: <code>fib(n) = fib(n - 1) + fib(n - 2)</code>, com <code>fib(0) = 0</code> e <code>fib(1) = 1</code> como casos base. Mas há um problema escondido. Cada chamada faz <strong>duas</strong> chamadas recursivas, e elas repetem o mesmo trabalho:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-09_fibonacci.png",
+   "alt": "capitulo 09 fibonacci"
+  },
+  {
+   "t": "p",
+   "html": "Só para calcular <code>fib(5)</code>, o <code>fib(2)</code> é calculado três vezes. Para valores maiores, a repetição explode: o número de chamadas cresce quase tão depressa quanto a própria sequência. O programa abaixo conta as chamadas e compara com uma versão que guarda cada resultado já calculado em um vetor e o consulta antes de recalcular. Essa técnica se chama <strong>memoização</strong>."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nlong long fib(int n, long long &chamadas) {\n    chamadas++;\n    if (n <= 1) return n;\n    return fib(n - 1, chamadas) + fib(n - 2, chamadas);\n}\n\nlong long fibMemo(int n, vector<long long> &memo) {\n    if (n <= 1) return n;\n    if (memo[n] != 0) return memo[n];        // já calculado\n    memo[n] = fibMemo(n - 1, memo) + fibMemo(n - 2, memo);\n    return memo[n];\n}\n\nint main() {\n    for (int n = 10; n <= 30; n += 10) {\n        long long chamadas = 0;\n        long long f = fib(n, chamadas);\n        cout << \"fib(\" << n << \") = \" << f << \", \"\n             << chamadas << \" chamadas\" << endl;\n    }\n    vector<long long> memo(91, 0);\n    cout << \"fib(90) = \" << fibMemo(90, memo) << endl;\n    return 0;\n}\n// fib(10) = 55, 177 chamadas\n// fib(20) = 6765, 21891 chamadas\n// fib(30) = 832040, 2692537 chamadas\n// fib(90) = 2880067194370816120"
+  },
+  {
+   "t": "p",
+   "html": "A versão simples precisa de quase 2,7 milhões de chamadas para <code>fib(30)</code>, e de mais de 330 milhões para <code>fib(40)</code>. Para <code>fib(90)</code>, ela levaria séculos. A versão com memoização calcula cada termo uma única vez e chega a <code>fib(90)</code> com menos de 200 chamadas. Um simples laço, que vai somando os dois últimos termos, resolveria com a mesma rapidez. A lição: uma definição recursiva elegante não é, necessariamente, um bom algoritmo."
+  },
+  {
+   "t": "h2",
+   "id": "9-5-recursao-ou-laco",
+   "texto": "9.5 Recursão ou laço?"
+  },
+  {
+   "t": "p",
+   "html": "Todo laço pode ser escrito como recursão, e toda recursão pode ser escrita com laços (às vezes com a ajuda de uma pilha explícita). A escolha é sobre clareza e custo:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Prefira o laço quando",
+    "Prefira a recursão quando"
+   ],
+   "linhas": [
+    [
+     "o problema é uma sequência simples de passos, como somar, contar, fatorial",
+     "o problema se divide em subproblemas do mesmo tipo, como pastas, árvores, Torres de Hanói"
+    ],
+    [
+     "a profundidade pode ser muito grande (milhares de níveis)",
+     "a profundidade é pequena, ou cresce devagar"
+    ],
+    [
+     "a versão recursiva repete trabalho, como no Fibonacci",
+     "é preciso explorar possibilidades e voltar atrás (backtracking)"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Cada chamada recursiva custa um pouco mais que uma volta de laço, porque precisa criar e destruir um registro na pilha. Nos exemplos simples da Seção 9.3, o laço seria um pouco mais eficiente. Nos problemas das próximas seções, a recursão é tão mais clara que a versão com laços quase ninguém escreveria."
+  },
+  {
+   "t": "h2",
+   "id": "9-6-as-torres-de-hanoi",
+   "texto": "9.6 As Torres de Hanói"
+  },
+  {
+   "t": "p",
+   "html": "O quebra-cabeça das Torres de Hanói tem três pinos e uma pilha de discos de tamanhos diferentes, todos no primeiro pino, do maior (embaixo) para o menor. O objetivo é levar a pilha inteira para o terceiro pino, movendo <strong>um disco por vez</strong> e <strong>nunca</strong> colocando um disco sobre outro menor."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-09_hanoi.png",
+   "alt": "capitulo 09 hanoi"
+  },
+  {
+   "t": "p",
+   "html": "Com laços, é difícil até começar. Com o raciocínio recursivo, a solução cabe em três frases. Para mover n discos de A para C, usando B como apoio:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. mova os n - 1 discos de cima de A para B (usando C como apoio);",
+    "2. mova o maior disco, que ficou sozinho, de A para C;",
+    "3. mova os n - 1 discos de B para C (usando A como apoio)."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Os passos 1 e 3 são o mesmo problema, com um disco a menos: é a “confiança” da Seção 9.3. O caso base é mover zero discos, que não exige nada."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nvoid hanoi(int n, char origem, char destino, char apoio,\n           int &movimentos) {\n    if (n == 0) return;                        // caso base\n    hanoi(n - 1, origem, apoio, destino, movimentos);\n    movimentos++;\n    cout << movimentos << \": disco \" << n << \" de \" << origem\n         << \" para \" << destino << endl;\n    hanoi(n - 1, apoio, destino, origem, movimentos);\n}\n\nint main() {\n    int movimentos = 0;\n    hanoi(3, 'A', 'C', 'B', movimentos);\n    cout << movimentos << \" movimentos\" << endl;   // 7\n    return 0;\n}\n// 1: disco 1 de A para C     5: disco 1 de B para A\n// 2: disco 2 de A para B     6: disco 2 de B para C\n// 3: disco 1 de C para B     7: disco 1 de A para C\n// 4: disco 3 de A para C"
+  },
+  {
+   "t": "p",
+   "html": "Cada disco a mais dobra o trabalho e acrescenta um movimento: com n discos, são 2<sup>n</sup> - 1 movimentos. Com 3 discos, 7; com 10, 1.023; com 64 discos, como na lenda que deu origem ao quebra-cabeça, mais de 18 quintilhões, o que levaria mais de 500 bilhões de anos a um movimento por segundo."
+  },
+  {
+   "t": "h2",
+   "id": "9-7-backtracking-tentar-avancar-e-voltar-atras",
+   "texto": "9.7 Backtracking: tentar, avançar e voltar atrás"
+  },
+  {
+   "t": "p",
+   "html": "Muitos problemas pedem que se encontre uma combinação de escolhas que satisfaça certas regras: preencher um sudoku, montar um horário sem conflitos, encontrar a saída de um labirinto. O <strong>backtracking</strong> (“voltar atrás”) resolve esse tipo de problema fazendo uma escolha de cada vez:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. se todas as escolhas já foram feitas, encontrou-se uma solução;",
+    "2. senão, para cada opção possível da próxima escolha: se ela não viola as regras, faça-a, continue recursivamente com as escolhas seguintes e, ao voltar, <strong>desfaça</strong> a escolha para tentar a próxima opção."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A recursão cuida de lembrar onde se estava: quando uma tentativa leva a um beco sem saída, a função simplesmente retorna, e a chamada anterior continua com sua próxima opção. Um exemplo simples é gerar todas as <strong>permutações</strong> de um texto, ou seja, todas as ordens possíveis de suas letras. A cada posição <code>k</code>, escolhe-se qual letra vai ocupá-la, trocando-a para lá; depois de permutar o resto, a troca é desfeita:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid permutar(string &s, int k) {\n    if (k == int(s.size())) {          // todas as posições feitas\n        cout << s << \" \";\n        return;\n    }\n    for (int i = k; i < int(s.size()); i++) {\n        swap(s[k], s[i]);              // põe s[i] na posição k\n        permutar(s, k + 1);            // permuta o resto\n        swap(s[k], s[i]);              // desfaz a escolha\n    }\n}\n\nint main() {\n    string s = \"ABC\";\n    permutar(s, 0);\n    cout << endl;                      // ABC ACB BAC BCA CBA CAB\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Sem o segundo <code>swap</code>, cada tentativa deixaria o texto alterado para a próxima, e o resultado sairia com repetições e faltas. Desfazer a escolha é o que permite que cada opção seja testada a partir do mesmo ponto de partida."
+  },
+  {
+   "t": "h2",
+   "id": "9-8-um-programa-completo-as-oito-rainhas",
+   "texto": "9.8 Um programa completo: as oito rainhas"
+  },
+  {
+   "t": "p",
+   "html": "O problema das oito rainhas é o exemplo clássico de backtracking: posicionar 8 rainhas em um tabuleiro de xadrez 8 × 8 de modo que nenhuma ataque outra. Como a rainha ataca na horizontal, na vertical e nas diagonais, não pode haver duas rainhas na mesma linha, na mesma coluna ou na mesma diagonal."
+  },
+  {
+   "t": "p",
+   "html": "Como cada linha terá exatamente uma rainha, a escolha a fazer, linha por linha, é a <strong>coluna</strong> da rainha daquela linha. O vetor <code>coluna</code> guarda essas escolhas: <code>coluna[l]</code> é a coluna da rainha da linha <code>l</code>. Duas rainhas estão na mesma diagonal quando a distância entre suas linhas é igual à distância entre suas colunas. A figura mostra o backtracking em ação em um tabuleiro 4 × 4:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-09_rainhas.png",
+   "alt": "capitulo 09 rainhas"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <cstdlib>     // abs\nusing namespace std;\n\nconst int N = 8;\n\n// a linha \"linha\" pode receber uma rainha na coluna \"col\"?\nbool livre(const int coluna[], int linha, int col) {\n    for (int l = 0; l < linha; l++) {\n        if (coluna[l] == col) return false;     // mesma coluna\n        if (abs(coluna[l] - col) == linha - l) { // mesma diagonal\n            return false;\n        }\n    }\n    return true;\n}\n\nvoid mostrar(const int coluna[]) {\n    for (int l = 0; l < N; l++) {\n        for (int c = 0; c < N; c++) {\n            cout << (coluna[l] == c ? \" R\" : \" .\");\n        }\n        cout << endl;\n    }\n}\n\nvoid posicionar(int coluna[], int linha, int &solucoes) {\n    if (linha == N) {                   // as N rainhas estão lá\n        solucoes++;\n        if (solucoes == 1) mostrar(coluna); // só a primeira\n        return;\n    }\n    for (int col = 0; col < N; col++) {\n        if (livre(coluna, linha, col)) {\n            coluna[linha] = col;            // escolhe e avança\n            posicionar(coluna, linha + 1, solucoes);\n        }        // a próxima volta do for sobrescreve a escolha\n    }\n}\n\nint main() {\n    int coluna[N];\n    int solucoes = 0;\n    posicionar(coluna, 0, solucoes);\n    cout << solucoes << \" soluções\" << endl;   // 92 soluções\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A primeira solução encontrada, mostrada pelo programa, é:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// saída\n R . . . . . . .\n . . . . R . . .\n . . . . . . . R\n . . . . . R . .\n . . R . . . . .\n . . . . . . R .\n . R . . . . . .\n . . . R . . . .\n92 soluções"
+  },
+  {
+   "t": "p",
+   "html": "Aqui, desfazer a escolha não exige um comando explícito: a próxima volta do laço grava outra coluna em <code>coluna[linha]</code>, e a função <code>livre</code> só olha as linhas anteriores à atual. Em vez de testar as 8<sup>8</sup> (mais de 16 milhões) formas de pôr uma rainha por linha, o backtracking abandona cada tentativa assim que um conflito aparece, e a função <code>posicionar</code> é chamada apenas 2.057 vezes. Mudando <code>N</code>, o programa resolve tabuleiros de outros tamanhos: há 2 soluções para N = 4, 10 para N = 5 e 4 para N = 6."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Esquecer o caso base.</strong> A recursão nunca para, e o programa termina com estouro de pilha.",
+    "<strong>Não diminuir o problema.</strong> Cada chamada recursiva precisa se aproximar do caso base; <code>f(n)</code> chamando <code>f(n)</code> é um laço infinito disfarçado.",
+    "<strong>Esquecer o <code>return</code> da chamada recursiva.</strong> Em uma função que devolve valor, escrever <code>fatorial(n - 1);</code> sem usar o resultado joga a resposta fora.",
+    "<strong>Usar recursão que repete trabalho.</strong> Como no Fibonacci, duas chamadas que resolvem os mesmos subproblemas fazem o tempo explodir. Use memoização ou um laço.",
+    "<strong>Recursão profunda demais.</strong> Uma soma recursiva de um vetor com um milhão de elementos cria um milhão de registros na pilha. Para sequências longas, use um laço.",
+    "<strong>Esquecer de desfazer a escolha no backtracking.</strong> A tentativa seguinte começa de um estado errado.",
+    "<strong>Tentar acompanhar todas as chamadas de cabeça.</strong> Confie que a chamada recursiva resolve o problema menor e verifique só o caso base e a combinação."
+   ]
+  }
+ ]
+}
