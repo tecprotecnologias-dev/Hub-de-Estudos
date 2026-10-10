@@ -13,7 +13,8 @@ export default function App() {
       <header className="topo no-print">
         <div className="topo-conteudo">
           <NavLink to="/" className="marca">
-            <img src={`${import.meta.env.BASE_URL}marca/tecpro-logo.png`} alt="TecPro Tecnologias" />
+            <img src={`${import.meta.env.BASE_URL}marca/tecpro-icone.png`} alt="" />
+            <span>Hub de Estudos</span>
           </NavLink>
           <nav>
             <NavLink to="/" end>
@@ -43,6 +44,9 @@ export default function App() {
           <Route path="/gerar-prova" element={<GerarProva />} />
         </Routes>
       </main>
+      <footer className="rodape no-print">
+        Desenvolvido por TecPro Tecnologias · <a href="tel:+5521983003074">(21) 98300-3074</a>
+      </footer>
     </HashRouter>
   )
 }

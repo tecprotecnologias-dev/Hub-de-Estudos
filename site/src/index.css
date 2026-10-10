@@ -57,16 +57,24 @@ h2 {
 .marca {
   display: flex;
   align-items: center;
+  gap: 0.6rem;
   text-decoration: none;
+  color: var(--texto);
+  font-size: 1.35rem;
+  font-weight: 700;
 }
 
 .marca img {
-  height: 54px;
+  height: 48px;
   width: auto;
   display: block;
 }
 
 @media (max-width: 600px) {
+  .marca {
+    font-size: 1.1rem;
+  }
+
   .marca img {
     height: 36px;
   }
@@ -95,6 +103,19 @@ nav a.active {
   max-width: 1000px;
   margin: 0 auto;
   padding: 1.5rem 1rem 3rem;
+}
+
+/* Rodapé */
+.rodape {
+  border-top: 1px solid var(--borda);
+  padding: 1.25rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+
+.rodape a {
+  color: var(--primaria);
 }
 
 /* Controles */

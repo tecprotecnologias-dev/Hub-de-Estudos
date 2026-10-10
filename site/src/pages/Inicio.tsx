@@ -13,7 +13,7 @@ export default function Inicio() {
   return (
     <>
       <section className="destaque">
-        <h1>Sala de estudos</h1>
+        <h1>Disciplinas</h1>
         <p>Escolha sua disciplina para estudar pelas apostilas e praticar com simulados.</p>
       </section>
 
