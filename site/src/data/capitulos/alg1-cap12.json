@@ -1,0 +1,319 @@
+{
+ "numero": 12,
+ "titulo": "Introdução à orientação a objetos",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "No Capítulo 11, a pilha era um registro com os dados (<code>dados</code> e <code>topo</code>) e, separadas dele, funções que operavam sobre esses dados (<code>empilhar</code>, <code>desempilhar</code>). Nada impedia, porém, que alguma parte do programa alterasse o <code>topo</code> diretamente e deixasse a pilha em um estado sem sentido. A <strong>programação orientada a objetos</strong> (POO) junta os dados e as operações em uma única unidade, o <strong>objeto</strong>, e controla quem pode mexer em quê. Ela é a forma dominante de organizar programas grandes, usada em linguagens como C++, Java, C#, Python e Kotlin. Neste capítulo você vai conhecer os conceitos básicos da orientação a objetos em C++ e, em seguida, dar os primeiros passos em <strong>Java</strong>, uma das linguagens mais usadas no mercado, desde a instalação do ambiente até um pequeno sistema completo."
+  },
+  {
+   "t": "h2",
+   "id": "12-1-classes-e-objetos",
+   "texto": "12.1 Classes e objetos"
+  },
+  {
+   "t": "p",
+   "html": "Uma <strong>classe</strong> é a descrição de um tipo de objeto: quais dados ele guarda, chamados de <strong>atributos</strong>, e o que ele sabe fazer, chamado de <strong>métodos</strong>. Um <strong>objeto</strong> é um exemplar concreto da classe, com seus próprios valores. A classe é o molde; os objetos são as peças feitas com ele. A classe <code>ContaBancaria</code> diz que toda conta tem um titular e um saldo, e que é possível depositar e sacar; a conta da Ana e a conta do Bruno são dois objetos dessa classe, cada um com o seu saldo."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-12_classe.png",
+   "alt": "capitulo 12 classe"
+  },
+  {
+   "t": "p",
+   "html": "Em C++, uma classe é declarada com <code>class</code>, de forma parecida com o <code>struct</code>, mas com os métodos dentro dela:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\nclass ContaBancaria {\nprivate:                      // só a própria classe enxerga\n    string titular;\n    double saldo;\n\npublic:                       // o que o resto pode usar\n    ContaBancaria(const string &nome, double inicial)\n        : titular(nome), saldo(inicial >= 0 ? inicial : 0) {}\n\n    bool depositar(double valor) {\n        if (valor <= 0) return false;\n        saldo += valor;\n        return true;\n    }\n\n    bool sacar(double valor) {\n        if (valor <= 0 || valor > saldo) return false;\n        saldo -= valor;\n        return true;\n    }\n\n    double getSaldo() const { return saldo; }\n    string getTitular() const { return titular; }\n};\n\nint main() {\n    ContaBancaria a(\"Ana\", 100);          // dois objetos\n    ContaBancaria b(\"Bruno\", 50);\n    a.depositar(50);\n    if (!b.sacar(80)) cout << \"Saque recusado\" << endl;\n    cout << a.getTitular() << \": \" << a.getSaldo() << endl;\n    cout << b.getTitular() << \": \" << b.getSaldo() << endl;\n    // b.saldo = 1000000;    erro: saldo é privado\n    return 0;\n}\n// Saque recusado    Ana: 150    Bruno: 50"
+  },
+  {
+   "t": "p",
+   "html": "Um método é chamado com o ponto, como um campo de registro: <code>a.depositar(50)</code> pede ao objeto <code>a</code> que deposite 50 <strong>na sua própria conta</strong>. Dentro do método, <code>saldo</code> é o saldo do objeto que recebeu a chamada; por isso o mesmo método serve para a conta da Ana e para a do Bruno. O <code>const</code> depois de <code>getSaldo()</code> promete que o método só consulta o objeto, sem alterá-lo."
+  },
+  {
+   "t": "h2",
+   "id": "12-2-construtores-e-encapsulamento",
+   "texto": "12.2 Construtores e encapsulamento"
+  },
+  {
+   "t": "p",
+   "html": "O método com o mesmo nome da classe, e sem tipo de retorno, é o <strong>construtor</strong>: ele é executado automaticamente quando o objeto é criado, e garante que todo objeto já nasce em um estado válido. A linha <code>: titular(nome), saldo(...)</code>, chamada de <strong>lista de inicialização</strong>, dá os valores iniciais aos atributos; aqui, um saldo inicial negativo vira 0."
+  },
+  {
+   "t": "p",
+   "html": "As palavras <code>private</code> e <code>public</code> controlam o acesso. Os atributos são <strong>privados</strong>: só os métodos da própria classe podem lê-los ou alterá-los, e a linha <code>b.saldo = 1000000</code> nem compila. O resto do programa só mexe no saldo por meio dos métodos <strong>públicos</strong>, e esses métodos garantem as regras do negócio: não se deposita valor negativo, e não se saca mais do que o saldo. Esse princípio, esconder os dados e expor só as operações, é o <strong>encapsulamento</strong>. Ele tem dois ganhos:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Segurança</strong>: as regras ficam em um único lugar, e nenhuma parte do programa consegue deixar uma conta com saldo inválido, nem por engano.",
+    "<strong>Liberdade para mudar</strong>: como ninguém depende de como os dados são guardados por dentro, a implementação pode mudar (guardar o saldo em centavos, registrar um histórico) sem quebrar o resto do programa."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Os métodos que só devolvem um atributo, como <code>getSaldo</code>, são chamados de <strong>getters</strong>. Note que não há um <code>setSaldo</code>: o saldo só muda por depósitos e saques, e é justamente isso que a classe quer garantir."
+  },
+  {
+   "t": "h2",
+   "id": "12-3-heranca-e-polimorfismo",
+   "texto": "12.3 Herança e polimorfismo"
+  },
+  {
+   "t": "p",
+   "html": "Muitas vezes, várias classes compartilham uma ideia comum. Um retângulo e um círculo são <strong>formas</strong>: os dois têm área, mas cada um a calcula de um jeito. A <strong>herança</strong> permite declarar uma classe <code>Forma</code> com o que é comum, e classes <code>Retangulo</code> e <code>Circulo</code> que <strong>herdam</strong> dela e completam o que é específico. A relação é de “é um”: todo retângulo <strong>é uma</strong> forma."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-12_heranca.png",
+   "alt": "capitulo 12 heranca"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\nclass Forma {\npublic:\n    virtual double area() const = 0;      // cada forma calcula\n    virtual string nome() const = 0;      // a sua\n    virtual ~Forma() {}\n};\n\nclass Retangulo : public Forma {          // Retangulo é uma Forma\nprivate:\n    double largura, altura;\npublic:\n    Retangulo(double l, double a) : largura(l), altura(a) {}\n    double area() const override { return largura * altura; }\n    string nome() const override { return \"retângulo\"; }\n};\n\nclass Circulo : public Forma {\nprivate:\n    double raio;\npublic:\n    Circulo(double r) : raio(r) {}\n    double area() const override {\n        return 3.14159265 * raio * raio;\n    }\n    string nome() const override { return \"círculo\"; }\n};\n\nvoid mostrar(const Forma &f) {            // aceita qualquer forma\n    cout << f.nome() << \": área \" << f.area() << endl;\n}\n\nint main() {\n    Retangulo r(3, 4);\n    Circulo c(1);\n    mostrar(r);                           // retângulo: área 12\n    mostrar(c);                           // círculo: área 3.14159\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A classe <code>Forma</code> declara os métodos <code>area</code> e <code>nome</code> como <code>virtual ... = 0</code>: ela diz que toda forma <strong>tem</strong> esses métodos, mas não os implementa. Por isso é uma <strong>classe abstrata</strong>, e não se pode criar um objeto <code>Forma</code> sozinho. Cada classe filha implementa os métodos com <code>override</code>, que pede ao compilador para conferir que eles realmente substituem os da classe mãe. O destrutor virtual (<code>textasciitilde Forma</code>) é uma exigência técnica do C++ para classes que serão herdadas."
+  },
+  {
+   "t": "p",
+   "html": "O ponto alto está na função <code>mostrar</code>. Ela recebe uma <code>Forma</code> qualquer e chama <code>f.area()</code> sem saber se é um retângulo ou um círculo, e mesmo assim o cálculo certo é executado. Esse comportamento, uma mesma chamada que se adapta ao tipo real do objeto, é o <strong>polimorfismo</strong>. Ele permite acrescentar um triângulo ao programa sem mudar nenhuma linha de <code>mostrar</code>."
+  },
+  {
+   "t": "p",
+   "html": "Classes, objetos, encapsulamento, herança e polimorfismo são os pilares da orientação a objetos. Eles aparecem, com sintaxes diferentes, em todas as linguagens orientadas a objetos. A partir daqui, vamos vê-los em Java."
+  },
+  {
+   "t": "h2",
+   "id": "12-4-conhecendo-o-java",
+   "texto": "12.4 Conhecendo o Java"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>Java</strong> foi lançado em 1995 e está até hoje entre as linguagens mais usadas no mundo, em sistemas de bancos e empresas, servidores web e aplicativos Android. Ele foi projetado desde o início para a orientação a objetos: todo código Java fica dentro de alguma classe."
+  },
+  {
+   "t": "p",
+   "html": "A principal diferença em relação ao C++ está na forma de execução. O compilador do C++ gera código de máquina para um processador e um sistema operacional específicos: um <code>.exe</code> do Windows não roda no Linux. O compilador do Java, o <code>javac</code>, gera um código intermediário, o <strong>bytecode</strong>, guardado em arquivos <code>.class</code>. Quem executa o bytecode é a <strong>máquina virtual Java</strong> (JVM), um programa que existe para cada sistema operacional. Assim, o mesmo <code>.class</code> roda em qualquer computador que tenha uma JVM, ideia resumida no lema “escreva uma vez, rode em qualquer lugar”."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-12_jvm.png",
+   "alt": "capitulo 12 jvm"
+  },
+  {
+   "t": "p",
+   "html": "O Java também cuida da memória sozinho: não há <code>delete</code>. Um componente da JVM, o <strong>coletor de lixo</strong> (<em>garbage collector</em>), descobre os objetos que nenhuma parte do programa usa mais e devolve a memória deles. Isso elimina os vazamentos e os ponteiros inválidos do Capítulo 11, ao custo de um pouco de controle sobre quando a memória é liberada."
+  },
+  {
+   "t": "h2",
+   "id": "12-5-preparando-o-ambiente-java",
+   "texto": "12.5 Preparando o ambiente Java"
+  },
+  {
+   "t": "p",
+   "html": "Para programar em Java é preciso o <strong>JDK</strong> (<em>Java Development Kit</em>), que traz o compilador <code>javac</code>, a máquina virtual e a biblioteca padrão. Os passos são:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. <strong>Baixe o JDK.</strong> Há distribuições gratuitas, como o Eclipse Temurin (do projeto Adoptium) e o Oracle JDK. Escolha a versão marcada como <strong>LTS</strong> (<em>long-term support</em>, suporte de longo prazo) mais recente, como o JDK 25, e o instalador do seu sistema operacional.",
+    "2. <strong>Instale.</strong> No Windows, durante a instalação, marque as opções que configuram o <code>PATH</code> e a variável <code>JAVA_HOME</code>, para que os comandos funcionem em qualquer pasta.",
+    "3. <strong>Confira.</strong> Abra um terminal novo e digite <code>java -version</code> e <code>javac -version</code>. Os dois devem mostrar a versão instalada. Se aparecer “comando não encontrado”, o <code>PATH</code> não foi configurado.",
+    "4. <strong>Escolha uma IDE.</strong> Um ambiente de desenvolvimento integrado reúne editor, compilação, execução e depurador. As mais usadas para Java são o IntelliJ IDEA (que tem uma versão gratuita), o Eclipse, o Apache NetBeans e o Visual Studio Code com as extensões de Java. Ao criar um projeto, a IDE pede para escolher o JDK: aponte para o que você instalou."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Para o primeiro programa, crie um arquivo chamado <code>Ola.java</code>. Em Java, uma classe pública precisa ficar em um arquivo com <strong>exatamente</strong> o mesmo nome dela, incluindo as maiúsculas:"
+  },
+  {
+   "t": "codigo",
+   "texto": "public class Ola {\n    public static void main(String[] args) {\n        System.out.println(\"Olá, Java!\");\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "Na IDE, basta clicar em executar. No terminal, compila-se com <code>javac</code>, que gera o <code>Ola.class</code>, e executa-se com <code>java</code>, informando o nome da classe (sem extensão):"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ javac Ola.java\n$ java Ola\nOlá, Java!"
+  },
+  {
+   "t": "p",
+   "html": "O <code>main</code> do Java tem sempre esse cabeçalho: <code>public</code> (pode ser chamado de fora), <code>static</code> (pertence à classe, e não a um objeto, porque ainda não há objetos quando o programa começa), <code>void</code> (não devolve nada) e o parâmetro <code>String[] args</code>, um vetor com os argumentos digitados no terminal. O <code>System.out.println</code> mostra um texto e pula a linha; o <code>System.out.print</code>, sem o <code>ln</code>, não pula."
+  },
+  {
+   "t": "h2",
+   "id": "12-6-do-c-para-o-java",
+   "texto": "12.6 Do C++ para o Java"
+  },
+  {
+   "t": "p",
+   "html": "Quem já programa em C++ reconhece quase toda a sintaxe do Java: tipos, operadores, <code>if</code>, <code>switch</code>, <code>while</code>, <code>for</code> e funções são praticamente iguais. As diferenças principais estão na tabela:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Recurso",
+    "C++",
+    "Java"
+   ],
+   "linhas": [
+    [
+     "saída",
+     "<code>cout &lt;&lt; x &lt;&lt; endl;</code>",
+     "<code>System.out.println(x);</code>"
+    ],
+    [
+     "entrada",
+     "<code>cin &gt;&gt; x;</code>",
+     "<code>x = entrada.nextInt();</code> (com <code>Scanner</code>)"
+    ],
+    [
+     "lógico",
+     "<code>bool</code>",
+     "<code>boolean</code>"
+    ],
+    [
+     "texto",
+     "<code>string</code>",
+     "<code>String</code>"
+    ],
+    [
+     "vetor",
+     "<code>int v[5];</code>",
+     "<code>int[] v = new int[5];</code>"
+    ],
+    [
+     "tamanho variável",
+     "<code>vector&lt;int&gt;</code>",
+     "<code>ArrayList&lt;Integer&gt;</code>"
+    ],
+    [
+     "funções",
+     "podem ficar fora de classes",
+     "sempre dentro de uma classe (métodos)"
+    ],
+    [
+     "memória",
+     "<code>new</code> e <code>delete</code>",
+     "<code>new</code>; o coletor de lixo libera"
+    ],
+    [
+     "comparar textos",
+     "<code>a == b</code>",
+     "<code>a.equals(b)</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Os vetores do Java sabem o próprio tamanho (<code>v.length</code>) e, ao contrário do C++, <strong>conferem os índices</strong>: acessar <code>v[5]</code> em um vetor de 5 elementos interrompe o programa com uma <code>ArrayIndexOutOfBoundsException</code>, em vez do comportamento indefinido do Capítulo 7. O programa abaixo lê notas com a classe <code>Scanner</code>, até o usuário digitar um valor negativo, e mostra a média:"
+  },
+  {
+   "t": "codigo",
+   "texto": "import java.util.ArrayList;\nimport java.util.Locale;\nimport java.util.Scanner;\n\npublic class MediaNotas {\n    public static void main(String[] args) {\n        Scanner entrada = new Scanner(System.in);\n        entrada.useLocale(Locale.US);      // 7.5 com ponto\n        ArrayList<Double> notas = new ArrayList<>();\n        System.out.print(\"Notas (negativo para terminar): \");\n        while (entrada.hasNextDouble()) {\n            double nota = entrada.nextDouble();\n            if (nota < 0) break;\n            notas.add(nota);\n        }\n        double soma = 0;\n        for (double nota : notas) soma += nota;\n        if (!notas.isEmpty()) {\n            System.out.println(notas.size() + \" notas, média \"\n                               + soma / notas.size());\n        }\n    }\n}\n// Entrada: 7 4.5 9 6 -1  ->  4 notas, média 6.625"
+  },
+  {
+   "t": "p",
+   "html": "O <code>Scanner</code> lê números conforme as convenções do idioma do computador. Em um computador configurado em português, ele espera a vírgula decimal (<code>7,5</code>) e recusa <code>7.5</code>. A linha com <code>Locale.US</code> fixa o ponto decimal, para que o programa se comporte igual em qualquer máquina. O <code>+</code> entre um texto e um número junta os dois em um texto, como na concatenação de strings do C++."
+  },
+  {
+   "t": "h2",
+   "id": "12-7-classes-em-java",
+   "texto": "12.7 Classes em Java"
+  },
+  {
+   "t": "p",
+   "html": "A conta bancária em Java fica muito parecida com a versão em C++. As diferenças: cada atributo e método recebe seu próprio <code>private</code> ou <code>public</code>, o construtor não tem lista de inicialização, e os objetos são sempre criados com <code>new</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "public class ContaBancaria {\n    private String titular;\n    private double saldo;\n\n    public ContaBancaria(String titular, double inicial) {\n        this.titular = titular;      // this: o atributo do objeto\n        this.saldo = inicial >= 0 ? inicial : 0;\n    }\n\n    public boolean depositar(double valor) {\n        if (valor <= 0) return false;\n        saldo += valor;\n        return true;\n    }\n\n    public boolean sacar(double valor) {\n        if (valor <= 0 || valor > saldo) return false;\n        saldo -= valor;\n        return true;\n    }\n\n    public double getSaldo() { return saldo; }\n    public String getTitular() { return titular; }\n\n    public static void main(String[] args) {\n        ContaBancaria a = new ContaBancaria(\"Ana\", 100);\n        ContaBancaria b = new ContaBancaria(\"Bruno\", 50);\n        a.depositar(50);\n        if (!b.sacar(80)) System.out.println(\"Saque recusado\");\n        System.out.println(a.getTitular() + \": \" + a.getSaldo());\n        System.out.println(b.getTitular() + \": \" + b.getSaldo());\n    }\n}\n// Saque recusado    Ana: 150.0    Bruno: 50.0"
+  },
+  {
+   "t": "p",
+   "html": "No construtor, o parâmetro <code>titular</code> tem o mesmo nome do atributo. A palavra <code>this</code>, que significa “este objeto”, desfaz a ambiguidade: <code>this.titular</code> é o atributo, e <code>titular</code> sozinho é o parâmetro. Repare também que o Java mostra <code>150.0</code>: um <code>double</code> sempre é exibido com a parte decimal."
+  },
+  {
+   "t": "p",
+   "html": "Em Java, uma variável de objeto, como <code>a</code>, guarda uma <strong>referência</strong> para o objeto, parecida com um ponteiro, mas sem aritmética nem <code>delete</code>. Por isso, <code>ContaBancaria c = a;</code> não copia a conta: <code>c</code> e <code>a</code> passam a ser dois nomes para o <strong>mesmo</strong> objeto, e um depósito feito por <code>c</code> aparece no saldo de <code>a</code>. Uma referência que não aponta para nenhum objeto vale <code>null</code>, o equivalente ao <code>nullptr</code>."
+  },
+  {
+   "t": "h2",
+   "id": "12-8-heranca-em-java",
+   "texto": "12.8 Herança em Java"
+  },
+  {
+   "t": "p",
+   "html": "A herança em Java usa a palavra <code>extends</code>, e a anotação <code>@Override</code> faz o papel do <code>override</code> do C++. Em Java, todos os métodos são polimórficos por padrão, sem precisar de <code>virtual</code>. Uma classe abstrata é marcada com <code>abstract</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "import java.util.ArrayList;\n\nabstract class Forma {\n    public abstract double area();\n    public abstract String nome();\n}\n\nclass Retangulo extends Forma {\n    private double largura, altura;\n\n    public Retangulo(double largura, double altura) {\n        this.largura = largura;\n        this.altura = altura;\n    }\n    @Override public double area() { return largura * altura; }\n    @Override public String nome() { return \"retângulo\"; }\n}\n\nclass Circulo extends Forma {\n    private double raio;\n\n    public Circulo(double raio) { this.raio = raio; }\n    @Override public double area() {\n        return Math.PI * raio * raio;\n    }\n    @Override public String nome() { return \"círculo\"; }\n}\n\npublic class Formas {\n    public static void main(String[] args) {\n        ArrayList<Forma> formas = new ArrayList<>();\n        formas.add(new Retangulo(3, 4));\n        formas.add(new Circulo(1));\n        formas.add(new Retangulo(2, 2.5));\n        for (Forma f : formas) {               // polimorfismo\n            System.out.println(f.nome() + \": área \" + f.area());\n        }\n    }\n}\n// retângulo: área 12.0\n// círculo: área 3.141592653589793\n// retângulo: área 5.0"
+  },
+  {
+   "t": "p",
+   "html": "A lista <code>formas</code> guarda objetos de classes diferentes, todos tratados como <code>Forma</code>, e o laço chama o <code>area()</code> de cada um sem saber qual é a classe real. Um arquivo pode ter várias classes, mas só uma pública, que dá nome ao arquivo: aqui, <code>Formas.java</code>."
+  },
+  {
+   "t": "h2",
+   "id": "12-9-um-programa-completo-uma-pequena-biblioteca",
+   "texto": "12.9 Um programa completo: uma pequena biblioteca"
+  },
+  {
+   "t": "p",
+   "html": "O programa abaixo reúne os conceitos do capítulo em um sistema de empréstimo de livros. A classe <code>Livro</code> encapsula os dados de um livro e a regra de que um livro emprestado não pode ser emprestado de novo. A classe <code>Biblioteca</code> guarda o acervo em um <code>ArrayList</code> e oferece cadastro, busca e listagem. O <code>main</code> só conversa com os objetos, por meio dos seus métodos públicos."
+  },
+  {
+   "t": "codigo",
+   "texto": "import java.util.ArrayList;\n\nclass Livro {\n    private String titulo;\n    private String autor;\n    private boolean emprestado = false;   // nasce disponível\n\n    public Livro(String titulo, String autor) {\n        this.titulo = titulo;\n        this.autor = autor;\n    }\n\n    public String getTitulo() { return titulo; }\n    public boolean isEmprestado() { return emprestado; }\n\n    public boolean emprestar() {\n        if (emprestado) return false;     // já está com alguém\n        emprestado = true;\n        return true;\n    }\n\n    public void devolver() { emprestado = false; }\n\n    @Override\n    public String toString() {            // o livro como texto\n        return titulo + \" (\" + autor + \")\"\n               + (emprestado ? \" - emprestado\" : \"\");\n    }\n}\n\nclass Biblioteca {\n    private ArrayList<Livro> acervo = new ArrayList<>();\n\n    public void cadastrar(Livro livro) { acervo.add(livro); }\n\n    public Livro buscar(String titulo) {\n        for (Livro l : acervo) {\n            if (l.getTitulo().equalsIgnoreCase(titulo)) return l;\n        }\n        return null;                      // não encontrado\n    }\n\n    public int disponiveis() {\n        int total = 0;\n        for (Livro l : acervo) {\n            if (!l.isEmprestado()) total++;\n        }\n        return total;\n    }\n\n    public void listar() {\n        for (Livro l : acervo) System.out.println(\"  \" + l);\n    }\n}\n\npublic class SistemaBiblioteca {\n    public static void main(String[] args) {\n        Biblioteca bib = new Biblioteca();\n        bib.cadastrar(new Livro(\"Dom Casmurro\",\n                                \"Machado de Assis\"));\n        bib.cadastrar(new Livro(\"Vidas Secas\",\n                                \"Graciliano Ramos\"));\n        bib.cadastrar(new Livro(\"O Cortiço\", \"Aluísio Azevedo\"));\n\n        Livro livro = bib.buscar(\"vidas secas\");  // minúsculas\n        if (livro != null) {\n            System.out.println(\"1o pedido: \" + livro.emprestar());\n            System.out.println(\"2o pedido: \" + livro.emprestar());\n        }\n        bib.listar();\n        System.out.println(bib.disponiveis() + \" disponíveis\");\n        if (bib.buscar(\"Iracema\") == null) {\n            System.out.println(\"Iracema não está no acervo\");\n        }\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "A saída mostra a regra do empréstimo funcionando: o primeiro pedido é aceito e o segundo, recusado, porque o livro já está emprestado."
+  },
+  {
+   "t": "codigo",
+   "texto": "// saída\n1o pedido: true\n2o pedido: false\n  Dom Casmurro (Machado de Assis)\n  Vidas Secas (Graciliano Ramos) - emprestado\n  O Cortiço (Aluísio Azevedo)\n2 disponíveis\nIracema não está no acervo"
+  },
+  {
+   "t": "p",
+   "html": "Três detalhes de Java aparecem aqui. O método <code>toString</code>, que toda classe herda de uma classe-mãe comum chamada <code>Object</code>, define como o objeto vira texto; por isso <code>\" \" + l</code> mostra o livro formatado. A busca compara títulos com <code>equalsIgnoreCase</code>, que ignora maiúsculas e minúsculas. E <code>buscar</code> devolve <code>null</code> quando não acha, o que obriga quem chama a testar antes de usar o resultado, como no <code>if (livro != null)</code>."
+  },
+  {
+   "t": "p",
+   "html": "Para continuar, experimente acrescentar ao sistema uma classe <code>Usuario</code>, um limite de livros por usuário, ou uma busca por autor. Cada nova regra deve ficar dentro da classe a que ela pertence: esse é o hábito central da orientação a objetos."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Deixar os atributos públicos.</strong> Qualquer parte do programa passa a poder quebrar as regras da classe. Atributos privados, métodos públicos.",
+    "<strong>Esquecer o ponto e vírgula depois da classe em C++.</strong> Como no <code>struct</code>, a declaração termina com <code>};</code>. Em Java, não há ponto e vírgula depois da classe.",
+    "<strong>Esquecer o <code>virtual</code> em C++.</strong> Sem ele, <code>mostrar(r)</code> chama o método de <code>Forma</code>, e não o do retângulo.",
+    "<strong>Nome do arquivo diferente do nome da classe pública em Java.</strong> A classe <code>Ola</code> precisa estar em <code>Ola.java</code>, com as mesmas maiúsculas.",
+    "<strong>Comparar textos com <code>==</code> em Java.</strong> O <code>==</code> compara se são o mesmo objeto, e não se têm o mesmo conteúdo. Use <code>a.equals(b)</code>.",
+    "<strong>Usar uma referência <code>null</code>.</strong> Chamar um método em <code>null</code> interrompe o programa com uma <code>NullPointerException</code>. Teste antes, como em <code>if (livro != null)</code>.",
+    "<strong>Achar que <code>b = a</code> copia o objeto em Java.</strong> As duas variáveis passam a apontar para o mesmo objeto.",
+    "<strong>Esquecer o <code>new</code> em Java.</strong> Declarar <code>ContaBancaria c;</code> não cria nenhuma conta; só <code>new ContaBancaria(...)</code> cria."
+   ]
+  }
+ ]
+}

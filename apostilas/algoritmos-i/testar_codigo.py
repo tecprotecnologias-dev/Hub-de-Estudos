@@ -7,6 +7,8 @@ Trechos com "int main" são compilados como estão; definições soltas (funçõ
 classes, templates) ganham um main vazio; comandos soltos são colocados dentro de um main.
 Todos recebem #include <iostream>, <string> e "using namespace std;" no início.
 Trechos em Python (def, print, input, class com ":") são executados com o Python.
+Trechos em Java ("public" sem dois-pontos, ou System.out) são compilados com javac -Xlint:all
+e, se tiverem main, executados com java.
 Algoritmos em Portugol (começam com algoritmo "Nome") são pulados, assim como código com erro
 proposital (começa com // erro), comandos de terminal (começam com $) e mensagens do compilador.
 """
@@ -22,6 +24,29 @@ DEFINICAO = re.compile(r'^\s*(template\b|struct\b|class\b|#include\b|(?:bool|voi
 
 def eh_python(codigo):
     return bool(re.search(r'^\s*(def |print\(|class \w+:|\w+ = int\(input)', codigo, re.M))
+
+
+def eh_java(codigo):
+    # linha começando com "public" seguido de palavra (em C++ é "public:", e a herança
+    # "class B : public A" não começa a linha) ou System.out
+    return bool(re.search(r'^\s*public\s+\w|System\.out', codigo, re.M))
+
+
+def testar_java(codigo, pasta):
+    """Compila com javac (avisos ligados) e, se houver main, executa a classe que o contém."""
+    publica = re.search(r'public\s+(?:abstract\s+|final\s+)?(?:class|interface)\s+(\w+)', codigo)
+    nome = publica.group(1) if publica else 'Trecho'
+    os.makedirs(pasta, exist_ok=True)
+    arq = os.path.join(pasta, nome + '.java')
+    open(arq, 'w', encoding='utf-8').write(codigo)
+    r = subprocess.run(['javac', '-Xlint:all', '-encoding', 'UTF-8', '-d', pasta, arq],
+                       capture_output=True, text=True)
+    if r.returncode != 0 or 'static void main' not in codigo:
+        return r
+    antes = codigo[:codigo.index('static void main')]
+    principal = re.findall(r'class\s+(\w+)', antes)[-1]
+    return subprocess.run(['java', '-Dstdout.encoding=UTF-8', '-cp', pasta, principal],
+                          input='30\n4\n', capture_output=True, text=True, encoding='utf-8', timeout=20)
 
 
 def main():
@@ -48,6 +73,9 @@ def main():
                 open(arq, 'w', encoding='utf-8').write(codigo)
                 r = subprocess.run([sys.executable, arq], input='30\n', capture_output=True, text=True)
                 tipo = 'Python'
+            elif eh_java(codigo):
+                r = testar_java(codigo, os.path.join(tmp, f'j{n}'))
+                tipo = 'Java'
             else:
                 if 'int main' in codigo:
                     fonte = PRELUDIO + codigo

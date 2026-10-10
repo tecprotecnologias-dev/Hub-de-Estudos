@@ -1,0 +1,30 @@
+% Capítulo 12: herança, com Forma abstrata e as classes Retangulo e Circulo.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-fluxo}
+\usetikzlibrary{shapes.multipart}
+\tikzset{
+  classe/.style={rectangle split, rectangle split parts=3, draw=navy, line width=0.9pt,
+                 rectangle split part fill={laranja!45, laranja!12, laranja!12},
+                 font=\ttfamily\scriptsize, align=left, inner sep=4pt, text width=34mm},
+  abstrata/.style={classe, rectangle split part fill={azul, azul!40, azul!40}},
+  herda/.style={-{Triangle[open, length=3mm, width=3mm]}, navy, line width=0.9pt},
+}
+\begin{document}
+\begin{tikzpicture}
+  \node[abstrata] (f) at (0, 0) {\centering\textbf{\textit{Forma}}\\{\sffamily\tiny (abstrata)}
+    \nodepart{two} (sem atributos)
+    \nodepart{three} + area()\\+ nome()};
+  \node[classe] (r) at (-2.6, -3.0) {\centering\textbf{Retangulo}
+    \nodepart{two} - largura, altura
+    \nodepart{three} + area(): largura * altura\\+ nome(): "retângulo"};
+  \node[classe] (c) at (2.6, -3.0) {\centering\textbf{Circulo}
+    \nodepart{two} - raio
+    \nodepart{three} + area(): pi * raio * raio\\+ nome(): "círculo"};
+  \coordinate (m) at (0, -1.55);
+  \draw[navy, line width=0.9pt] (r.north) |- (m) -| (c.north);
+  \draw[herda] (m) -- (f.south);
+  \node[legenda, anchor=west] at (0.15, -1.25) {é uma (herda de)};
+\end{tikzpicture}
+\end{document}

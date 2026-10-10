@@ -504,6 +504,15 @@ export const apostilas: Apostila[] = [
     descricao:
       'Registros (struct) e vetores de registros, tipos abstratos de dados, pilha, fila circular, ponteiros e memória dinâmica, lista encadeada, as estruturas da biblioteca e a verificação de parênteses balanceados.',
   },
+  {
+    id: 'alg1-cap12',
+    capitulo: 12,
+    titulo: 'Introdução à orientação a objetos',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-i',
+    unidades: ['Algoritmos e Estruturas de Dados'],
+    descricao:
+      'Classes e objetos, construtores, encapsulamento, herança e polimorfismo em C++; o Java e a JVM, instalação do JDK e da IDE, do C++ para o Java, classes e herança em Java e um sistema de biblioteca.',
+  },
 
   // Algoritmos e Linguagem de Programação II — "Algoritmos e Estruturas de Dados" (TecPro)
   // Texto próprio, escrito a partir da ementa (temas dos slides de EDA usados só como roteiro).
