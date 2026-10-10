@@ -1,0 +1,36 @@
+% Capítulo 10: filtrar, transformar e reduzir em sequência (soma dos quadrados dos pares).
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-vetores}
+\tikzset{
+  etapa/.style={font=\sffamily\small\bfseries, text=laranja, anchor=west},
+  funcao/.style={font=\ttfamily\small, text=navy, anchor=west},
+}
+\begin{document}
+\begin{tikzpicture}
+  \vetor{a}{0}{0}{1/casa, 2/parte, 3/casa, 4/parte, 5/casa, 6/parte}
+  \node[rotulo, anchor=east] at (-0.6, 0) {numeros};
+  \draw[seta] (2, -0.5) -- (2, -1.4);
+  \node[etapa] at (2.3, -0.8) {filtrar};
+  \node[funcao] at (2.3, -1.15) {x \% 2 == 0};
+
+  \vetor{b}{1.2}{-1.9}{2/parte, 4/parte, 6/parte}
+  \node[rotulo, anchor=east] at (-0.6, -1.9) {pares};
+  \draw[seta] (2, -2.4) -- (2, -3.3);
+  \node[etapa] at (2.3, -2.7) {transformar};
+  \node[funcao] at (2.3, -3.05) {x * x};
+
+  \vetor{c}{1.2}{-3.8}{4/pronta, 16/pronta, 36/pronta}
+  \node[rotulo, anchor=east] at (-0.6, -3.8) {quadrados};
+  \draw[seta] (2, -4.3) -- (2, -5.2);
+  \node[etapa] at (2.3, -4.6) {reduzir};
+  \node[funcao] at (2.3, -4.95) {soma + x, começando em 0};
+
+  \node[marcada] (r) at (2, -5.7) {56};
+  \node[rotulo, anchor=east] at (-0.6, -5.7) {resultado};
+  \node[legenda, align=center] at (2.4, -6.6)
+    {cada etapa recebe um vetor e uma função, e produz um vetor novo (ou um valor);\\
+     nenhuma altera o vetor original};
+\end{tikzpicture}
+\end{document}

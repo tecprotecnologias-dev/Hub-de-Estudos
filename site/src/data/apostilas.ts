@@ -479,6 +479,14 @@ export const apostilas: Apostila[] = [
     descricao:
       'Escolha gulosa e quando ela falha; troco e seleção de atividades; algoritmo de Kruskal com conjuntos disjuntos (union-find); programação dinâmica com memorização e tabulação; Fibonacci, troco mínimo e problema da mochila.',
   },
+  {
+    id: 'alg2-cap10',
+    capitulo: 10,
+    titulo: 'Programação funcional',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-ii',
+    descricao:
+      'Estilo imperativo e funcional; funções puras, efeitos colaterais e imutabilidade; lambdas e function; capturas por valor e por referência e closures; mapear, filtrar e reduzir com a biblioteca padrão; composição de funções.',
+  },
 
   // Programação e Design para Web II (apostila em módulos)
   // Fonte: 02- APOSTILAS/Módulo 5/LATEX/modulos/modulo-0N.tex (24/08), convertida com

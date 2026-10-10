@@ -1,0 +1,30 @@
+% Capítulo 10: captura por valor (cópia) e por referência em uma lambda.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-vetores}
+\tikzset{
+  caixa/.style={draw=navy, line width=0.9pt, rounded corners=2pt, minimum width=30mm,
+                minimum height=9mm, font=\ttfamily\small, align=center},
+  variavel/.style={caixa, fill=laranja!12},
+  lambda/.style={caixa, fill=azul},
+  titulo/.style={font=\sffamily\small\bfseries, text=navy},
+}
+\begin{document}
+\begin{tikzpicture}
+  \node[titulo] at (2.6, 1.3) {depois de \texttt{taxa = 20;}};
+  \node[variavel] (taxa) at (2.6, 0) {taxa = 20};
+  \node[legenda, above=0.5mm of taxa] {variável do main};
+
+  \node[lambda] (valor) at (0, -2.2) {porValor\\{[taxa]}};
+  \node[variavel, below=4mm of valor] (copia) {taxa = 10};
+  \node[legenda, below=0.5mm of copia] {cópia feita na criação};
+  \draw[seta] (valor) -- (copia);
+
+  \node[lambda] (ref) at (5.2, -2.2) {porReferencia\\{[\&taxa]}};
+  \draw[seta, laranja, line width=1.3pt] (ref.north) -- node[legenda, text=laranja, right=1mm] {enxerga a original} (taxa.south east);
+
+  \node[rotulo] at (0, -4.9) {porValor(1) = 11};
+  \node[rotulo] at (5.2, -4.9) {porReferencia(1) = 21};
+\end{tikzpicture}
+\end{document}

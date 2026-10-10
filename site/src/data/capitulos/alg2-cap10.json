@@ -1,0 +1,364 @@
+{
+ "numero": 10,
+ "titulo": "Programação funcional",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, quase todos os programas deste livro foram escritos no estilo <strong>imperativo</strong>: uma sequência de comandos que alteram variáveis passo a passo, dizendo ao computador <strong>como</strong> fazer cada coisa. A <strong>programação funcional</strong> é outro jeito de pensar. Nela, o programa é montado juntando funções que recebem valores e devolvem valores novos, sem alterar nada pelo caminho, e o código descreve <strong>o que</strong> deve ser feito. Linguagens como Haskell e Elixir são inteiramente funcionais; C++, Python, Java e JavaScript são multiparadigma e incorporaram as ideias principais. Neste capítulo você vai conhecer essas ideias e usá-las em C++: funções puras, imutabilidade, funções anônimas (<em>lambdas</em>), capturas e as funções de ordem superior da biblioteca padrão, que você já usou com a <code>sort</code> nos Capítulos 8 e 9."
+  },
+  {
+   "t": "h2",
+   "id": "10-1-dois-estilos-para-o-mesmo-problema",
+   "texto": "10.1 Dois estilos para o mesmo problema"
+  },
+  {
+   "t": "p",
+   "html": "Considere a tarefa de somar os quadrados dos números pares de um vetor. No estilo imperativo, um laço percorre o vetor, testa cada número e acumula o resultado em uma variável. No estilo funcional, a tarefa é descrita como três etapas encadeadas: <strong>filtrar</strong> os pares, <strong>transformar</strong> cada um no seu quadrado e <strong>reduzir</strong> a lista a um único valor, a soma."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-10_pipeline.png",
+   "alt": "capitulo 10 pipeline"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <numeric>     // accumulate\n#include <algorithm>   // copy_if, transform\n#include <iterator>    // back_inserter\n\nint main() {\n    const vector<int> numeros = {1, 2, 3, 4, 5, 6};\n\n    // imperativo: diz COMO fazer, passo a passo\n    int soma = 0;\n    for (int x : numeros) {\n        if (x % 2 == 0) soma += x * x;\n    }\n    cout << soma << endl;                          // 56\n\n    // funcional: diz O QUE fazer, em etapas\n    vector<int> pares, quadrados;\n    copy_if(numeros.begin(), numeros.end(),\n            back_inserter(pares),\n            [](int x) { return x % 2 == 0; });     // filtrar\n    transform(pares.begin(), pares.end(),\n              back_inserter(quadrados),\n              [](int x) { return x * x; });        // transformar\n    cout << accumulate(quadrados.begin(), quadrados.end(), 0)\n         << endl;                                  // 56: reduzir\n}"
+  },
+  {
+   "t": "p",
+   "html": "As expressões entre colchetes, como <code>[](int x) { return x * x; }</code>, são <strong>lambdas</strong>: funções sem nome, escritas no lugar onde são usadas. O <code>back_inserter(pares)</code> faz cada elemento produzido ser acrescentado ao fim de <code>pares</code> com <code>push_back</code>."
+  },
+  {
+   "t": "p",
+   "html": "Nesse exemplo pequeno, o laço é mais curto. A vantagem do estilo funcional aparece quando as etapas ficam complexas: cada uma é uma peça pequena, com um nome que diz o que faz, que pode ser testada sozinha e reaproveitada em outros lugares. Em C++ os dois estilos convivem, e saber quando usar cada um é parte do trabalho."
+  },
+  {
+   "t": "h2",
+   "id": "10-2-funcoes-puras-e-imutabilidade",
+   "texto": "10.2 Funções puras e imutabilidade"
+  },
+  {
+   "t": "p",
+   "html": "Uma função é <strong>pura</strong> quando cumpre duas condições:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "o resultado depende <strong>só dos parâmetros</strong>: chamada com os mesmos argumentos, devolve sempre o mesmo valor;",
+    "ela <strong>não tem efeitos colaterais</strong>: não altera variáveis globais, não modifica os parâmetros, não escreve na tela nem em arquivos."
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n\nint total = 0;                    // estado global\n\n// impura: depende de algo de fora e o altera\nint somarAoTotal(int x) {\n    total += x;\n    return total;\n}\n\n// pura: o resultado depende só dos parâmetros\nint somar(int a, int b) {\n    return a + b;\n}\n\n// impura: altera o vetor recebido\nvoid dobrarNoLugar(vector<int> &v) {\n    for (int &x : v) x *= 2;\n}\n\n// pura: devolve um vetor novo e não mexe no original\nvector<int> dobrado(const vector<int> &v) {\n    vector<int> resultado;\n    for (int x : v) resultado.push_back(x * 2);\n    return resultado;\n}\n\nint main() {\n    int a = somarAoTotal(5);\n    int b = somarAoTotal(5);\n    cout << a << \" \" << b << endl;   // 5 10: mesma chamada!\n    cout << somar(2, 3) << \" \" << somar(2, 3) << endl;   // 5 5\n\n    const vector<int> original = {1, 2, 3};\n    vector<int> novo = dobrado(original);\n    cout << original[0] << \" \" << novo[0] << endl;       // 1 2\n\n    vector<int> copia = original;\n    dobrarNoLugar(copia);\n    cout << copia[2] << endl;                            // 6\n}"
+  },
+  {
+   "t": "p",
+   "html": "Funções puras são mais fáceis de entender, porque basta olhar para elas mesmas, sem procurar quem mais mexe em cada variável. São mais fáceis de <strong>testar</strong>, como você verá no Capítulo 11: basta comparar a saída com o valor esperado. Podem ter o resultado <strong>memorizado</strong>, como na programação dinâmica do Capítulo 9, já que a mesma entrada sempre dá a mesma saída. E podem rodar <strong>em paralelo</strong> sem risco, porque não disputam nenhuma variável."
+  },
+  {
+   "t": "p",
+   "html": "Um programa útil, claro, precisa ler dados e mostrar resultados, e isso é efeito colateral. A ideia não é eliminá-los, e sim <strong>isolá-los</strong>: concentrar a entrada e a saída em poucos pontos, como o <code>main</code>, e deixar os cálculos em funções puras."
+  },
+  {
+   "t": "h3",
+   "texto": "Imutabilidade"
+  },
+  {
+   "t": "p",
+   "html": "A outra metade da ideia é a <strong>imutabilidade</strong>: em vez de alterar um valor, crie um novo. Em C++, a ferramenta para isso é o <code>const</code>. Uma variável <code>const</code> não pode ser alterada depois de criada, e um parâmetro <code>const vector&lt;int&gt; &amp;</code> deixa a função ler o vetor sem copiá-lo e sem poder modificá-lo. O compilador recusa qualquer tentativa de alteração, então o erro aparece na compilação e não durante a execução."
+  },
+  {
+   "t": "p",
+   "html": "Criar valores novos tem um custo: <code>dobrado</code> aloca um vetor inteiro, enquanto <code>dobrarNoLugar</code> não aloca nada. Em vetores enormes, ou em laços que rodam milhões de vezes, a versão que altera no lugar pode ser necessária. A regra prática é usar <code>const</code> sempre que possível e abrir mão da imutabilidade só quando houver um motivo concreto."
+  },
+  {
+   "t": "h2",
+   "id": "10-3-funcoes-como-valores",
+   "texto": "10.3 Funções como valores"
+  },
+  {
+   "t": "p",
+   "html": "Na programação funcional, funções são valores como quaisquer outros: podem ser guardadas em variáveis, passadas como parâmetro e devolvidas por outras funções. Em C++, o jeito mais prático de criar uma função no meio do código é a lambda:"
+  },
+  {
+   "t": "p",
+   "html": "<code>[captura](parâmetros) -&gt; tipo de retorno { corpo }</code>"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "A <strong>captura</strong>, entre colchetes, diz quais variáveis de fora a lambda pode usar (Seção 10.4). Os colchetes vazios significam “nenhuma”.",
+    "Os <strong>parâmetros</strong> e o <strong>corpo</strong> são os de uma função comum.",
+    "O <strong>tipo de retorno</strong> costuma ser omitido, porque o compilador o deduz do <code>return</code>. Ele só é necessário quando a dedução não é a desejada."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Cada lambda tem um tipo próprio, inventado pelo compilador, que não tem nome. Por isso, ela é guardada em uma variável <code>auto</code>. Quando é preciso dar um tipo explícito, por exemplo para guardar lambdas diferentes na mesma variável, usa-se a <code>function</code>, da biblioteca <code>&lt;functional&gt;</code>: <code>function&lt;int(int)&gt;</code> guarda qualquer coisa que possa ser chamada recebendo um <code>int</code> e devolvendo um <code>int</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <functional>   // function\n\n// recebe uma função como parâmetro e a aplica a cada elemento\nvector<int> aplicar(const vector<int> &v,\n                    const function<int(int)> &f) {\n    vector<int> resultado;\n    for (int x : v) resultado.push_back(f(x));\n    return resultado;\n}\n\nint triplo(int x) {                // função comum\n    return 3 * x;\n}\n\nint main() {\n    auto quadrado = [](int x) { return x * x; };\n    auto media = [](int a, int b) -> double {  // retorno dado\n        return (a + b) / 2.0;\n    };\n    cout << quadrado(7) << \" \" << media(6, 9) << endl;  // 49 7.5\n\n    function<int(int)> operacao = quadrado;\n    cout << operacao(4) << endl;                // 16\n    operacao = [](int x) { return -x; };        // outra lambda\n    cout << operacao(4) << endl;                // -4\n\n    vector<int> v = {1, 2, 3};\n    for (int x : aplicar(v, quadrado)) cout << x << \" \";\n    for (int x : aplicar(v, triplo)) cout << x << \" \";\n    cout << endl;                               // 1 4 9 3 6 9\n}"
+  },
+  {
+   "t": "p",
+   "html": "A função <code>aplicar</code> aceita tanto uma lambda quanto uma função comum, como <code>triplo</code>: para a <code>function</code>, basta que a coisa possa ser chamada do jeito certo. Uma função que recebe ou devolve outras funções é chamada de <strong>função de ordem superior</strong>."
+  },
+  {
+   "t": "h2",
+   "id": "10-4-capturas-e-closures",
+   "texto": "10.4 Capturas e closures"
+  },
+  {
+   "t": "p",
+   "html": "Uma lambda com colchetes vazios só enxerga os próprios parâmetros. Para usar uma variável de fora, ela precisa <strong>capturá-la</strong>, e há dois jeitos:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Por valor</strong>, <code>[taxa]</code>: a lambda guarda uma <strong>cópia</strong> da variável, feita no momento em que é criada. Mudanças posteriores na original não a afetam.",
+    "<strong>Por referência</strong>, <code>[&amp;taxa]</code>: a lambda guarda uma <strong>referência</strong> para a variável original e sempre enxerga o valor atual dela."
+   ]
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-10_captura.png",
+   "alt": "capitulo 10 captura"
+  },
+  {
+   "t": "p",
+   "html": "Uma lambda junto com as variáveis que capturou é chamada de <strong><em>closure</em></strong> (fechamento). Ela permite criar funções “configuradas”: uma função que devolve uma lambda, capturando os próprios parâmetros, funciona como uma fábrica de funções."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <functional>\n\n// fábrica: devolve uma função que soma n ao argumento\nfunction<int(int)> somador(int n) {\n    return [n](int x) { return x + n; };   // copia o n\n}\n\n// cada contador criado guarda a própria contagem\nfunction<int()> criarContador() {\n    int contagem = 0;\n    return [contagem]() mutable { return ++contagem; };\n}\n\nint main() {\n    int taxa = 10;\n    auto porValor = [taxa](int x) { return x + taxa; };\n    auto porReferencia = [&taxa](int x) { return x + taxa; };\n    taxa = 20;\n    cout << porValor(1) << \" \" << porReferencia(1) << endl;\n    // 11 21\n\n    auto mais5 = somador(5);\n    auto mais100 = somador(100);\n    cout << mais5(1) << \" \" << mais100(1) << endl;   // 6 101\n\n    auto c1 = criarContador();\n    auto c2 = criarContador();\n    c1();\n    c1();\n    cout << c1() << \" \" << c2() << endl;             // 3 1\n}"
+  },
+  {
+   "t": "p",
+   "html": "Por padrão, as cópias capturadas por valor são <code>const</code> dentro da lambda. Para alterá-las, como faz o contador, a lambda precisa ser marcada com <code>mutable</code>. Cada chamada a <code>criarContador</code> cria uma lambda nova, com a própria cópia de <code>contagem</code>: por isso <code>c1</code> e <code>c2</code> contam separadamente."
+  },
+  {
+   "t": "p",
+   "html": "Existem também as capturas automáticas: <code>[=]</code> captura por valor tudo o que a lambda usar, e <code>[&amp;]</code>, tudo por referência. Elas são práticas, mas escondem o que está sendo capturado; prefira listar as variáveis."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Cuidado com a referência que morre",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma variável local deixa de existir quando a função termina. Se uma lambda capturar essa variável por referência e for devolvida, ela vai apontar para uma memória que já foi liberada, o mesmo problema de um ponteiro usado depois do <code>delete</code>, visto no Capítulo 1. O comentário <code>ERRADO!</code> marca a linha: o <code>n</code> deixa de existir assim que <code>somadorErrado</code> termina. O programa compila, mas o resultado é imprevisível:"
+    },
+    {
+     "t": "codigo",
+     "texto": "// trecho\nfunction<int(int)> somadorErrado(int n) {\n    return [&n](int x) { return x + n; };   // ERRADO!\n}"
+    },
+    {
+     "t": "p",
+     "html": "A regra: lambdas que vão sobreviver à função onde foram criadas devem capturar <strong>por valor</strong>."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "10-5-mapear-filtrar-e-reduzir",
+   "texto": "10.5 Mapear, filtrar e reduzir"
+  },
+  {
+   "t": "p",
+   "html": "Três funções de ordem superior resolvem uma parte enorme dos problemas com coleções:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>mapear</strong> (<em>map</em>): aplica uma função a cada elemento e devolve a coleção dos resultados;",
+    "<strong>filtrar</strong> (<em>filter</em>): devolve só os elementos para os quais uma função responde <code>true</code>;",
+    "<strong>reduzir</strong> (<em>reduce</em> ou <em>fold</em>): combina todos os elementos em um único valor, usando uma função que junta o valor acumulado com o próximo elemento."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Para ver que não há mágica nelas, o programa abaixo implementa as três com <em>templates</em> (Capítulo 1) e as usa para analisar as notas de uma turma. O tipo do vetor devolvido por <code>mapear</code> é o tipo do que a função <code>f</code> devolve, obtido com <code>decltype</code>, que dá o tipo de uma expressão sem executá-la."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n\ntemplate <typename T, typename F>\nauto mapear(const vector<T> &v, F f) {\n    vector<decltype(f(v[0]))> resultado;\n    for (const T &x : v) resultado.push_back(f(x));\n    return resultado;\n}\n\ntemplate <typename T, typename F>\nvector<T> filtrar(const vector<T> &v, F manter) {\n    vector<T> resultado;\n    for (const T &x : v) {\n        if (manter(x)) resultado.push_back(x);\n    }\n    return resultado;\n}\n\ntemplate <typename T, typename A, typename F>\nA reduzir(const vector<T> &v, A inicial, F juntar) {\n    A acumulado = inicial;\n    for (const T &x : v) acumulado = juntar(acumulado, x);\n    return acumulado;\n}\n\nstruct Aluno {\n    string nome;\n    double nota;\n};\n\nint main() {\n    const vector<Aluno> turma = {{\"Ana\", 8.5}, {\"Bruno\", 5.0},\n                                 {\"Carla\", 9.0}, {\"Davi\", 4.5},\n                                 {\"Eva\", 7.0}};\n    auto aprovados = filtrar(turma, [](const Aluno &a) {\n        return a.nota >= 6;\n    });\n    auto nomes = mapear(aprovados, [](const Aluno &a) {\n        return a.nome;\n    });\n    double soma = reduzir(turma, 0.0,\n                          [](double s, const Aluno &a) {\n                              return s + a.nota;\n                          });\n    for (const string &nome : nomes) cout << nome << \" \";\n    cout << endl;                                 // Ana Carla Eva\n    cout << soma / turma.size() << endl;          // 6.8\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare no <code>0.0</code> passado a <code>reduzir</code>: o tipo do valor inicial é o tipo do acumulado. Com <code>0</code>, um <code>int</code>, as notas seriam somadas como inteiros e as casas decimais se perderiam."
+  },
+  {
+   "t": "h3",
+   "texto": "As versões da biblioteca padrão"
+  },
+  {
+   "t": "p",
+   "html": "A biblioteca <code>&lt;algorithm&gt;</code> (e a <code>&lt;numeric&gt;</code>, para a redução) traz versões prontas dessas funções e de várias outras. Elas trabalham com iteradores, como as buscas do Capítulo 7:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Função",
+    "O que faz"
+   ],
+   "linhas": [
+    [
+     "<code>transform</code>",
+     "mapear: aplica a função e grava os resultados no destino"
+    ],
+    [
+     "<code>copy_if</code>",
+     "filtrar: copia para o destino os que passam no teste"
+    ],
+    [
+     "<code>accumulate</code>",
+     "reduzir: combina tudo a partir de um valor inicial (soma, se nenhuma função for dada)"
+    ],
+    [
+     "<code>count_if</code>",
+     "conta quantos passam no teste"
+    ],
+    [
+     "<code>all_of</code>, <code>any_of</code>, <code>none_of</code>",
+     "todos, algum ou nenhum passa no teste?"
+    ],
+    [
+     "<code>find_if</code>",
+     "primeiro que passa no teste"
+    ],
+    [
+     "<code>max_element</code>, <code>min_element</code>",
+     "maior ou menor, segundo um critério"
+    ],
+    [
+     "<code>for_each</code>",
+     "executa a função para cada elemento"
+    ]
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <algorithm>\n#include <numeric>     // accumulate\n\nstruct Aluno {\n    string nome;\n    double nota;\n};\n\nint main() {\n    const vector<Aluno> turma = {{\"Ana\", 8.5}, {\"Bruno\", 5.0},\n                                 {\"Carla\", 9.0}, {\"Davi\", 4.5},\n                                 {\"Eva\", 7.0}};\n    auto reprovado = [](const Aluno &a) { return a.nota < 6; };\n\n    cout << count_if(turma.begin(), turma.end(), reprovado)\n         << \" reprovados\" << endl;                 // 2 reprovados\n\n    bool todosAcimaDe4 = all_of(turma.begin(), turma.end(),\n        [](const Aluno &a) { return a.nota > 4; });\n    bool algumDez = any_of(turma.begin(), turma.end(),\n        [](const Aluno &a) { return a.nota == 10; });\n    cout << boolalpha << todosAcimaDe4 << \" \" << algumDez\n         << endl;                                  // true false\n\n    auto melhor = max_element(turma.begin(), turma.end(),\n        [](const Aluno &a, const Aluno &b) {\n            return a.nota < b.nota;          // \"a vem antes\"\n        });\n    cout << melhor->nome << endl;                  // Carla\n\n    double soma = accumulate(turma.begin(), turma.end(), 0.0,\n        [](double s, const Aluno &a) { return s + a.nota; });\n    cout << soma << endl;                          // 34\n}"
+  },
+  {
+   "t": "p",
+   "html": "A lambda <code>reprovado</code> foi guardada em uma variável e usada pelo nome, o que deixa a linha do <code>count_if</code> quase uma frase em português. Dar nomes às condições é uma das formas mais simples de tornar o código legível."
+  },
+  {
+   "t": "h2",
+   "id": "10-6-composicao-de-funcoes",
+   "texto": "10.6 Composição de funções"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Compor</strong> duas funções é criar uma terceira que aplica uma e depois a outra: a composta de <code>f</code> com <code>g</code> é a função que leva <code>x</code> a <code>f(g(x))</code>. Como funções são valores, a composição também pode ser escrita como uma função de ordem superior, que recebe duas funções e devolve uma nova."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <string>\n#include <algorithm>   // transform, remove\n#include <cctype>      // tolower\n\n// devolve a função x -> f(g(x)): primeiro g, depois f\ntemplate <typename F, typename G>\nauto compor(F f, G g) {\n    return [f, g](auto x) { return f(g(x)); };\n}\n\nint main() {\n    auto dobro = [](int x) { return 2 * x; };\n    auto maisUm = [](int x) { return x + 1; };\n    auto h1 = compor(maisUm, dobro);    // 2x + 1\n    auto h2 = compor(dobro, maisUm);    // 2(x + 1)\n    cout << h1(5) << \" \" << h2(5) << endl;   // 11 12\n\n    auto semEspacos = [](string s) {\n        s.erase(remove(s.begin(), s.end(), ' '), s.end());\n        return s;\n    };\n    auto minusculas = [](string s) {\n        transform(s.begin(), s.end(), s.begin(),\n                  [](unsigned char c) { return tolower(c); });\n        return s;\n    };\n    auto normalizarEmail = compor(minusculas, semEspacos);\n    cout << normalizarEmail(\" Ana.Silva@Email.COM \") << endl;\n    // ana.silva@email.com\n}"
+  },
+  {
+   "t": "p",
+   "html": "A ordem importa: <code>h1</code> e <code>h2</code> combinam as mesmas duas funções e dão resultados diferentes. O parâmetro <code>auto x</code> faz da lambda devolvida uma <strong>lambda genérica</strong>, que aceita qualquer tipo, como um <em>template</em>; por isso a mesma <code>compor</code> serve para números e para textos."
+  },
+  {
+   "t": "p",
+   "html": "As lambdas <code>semEspacos</code> e <code>minusculas</code> recebem a <code>string</code> por valor e devolvem a cópia alterada, sem mexer no texto original: são funções puras, mesmo alterando uma variável internamente. A linha com <code>erase</code> e <code>remove</code> é a forma padrão de apagar elementos de um vetor ou texto em C++: a <code>remove</code> empurra para o fim os que devem sair, e a <code>erase</code> corta esse fim."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Ranges no C++20",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "As versões mais novas do C++ (a partir do C++20) trazem as <em>ranges</em>, que permitem encadear as etapas com o operador <code>|</code>, de forma parecida com uma linha de comandos: <code>numeros | views::filter(par) | views::transform(quadrado)</code>. As etapas são <strong>preguiçosas</strong>: nada é calculado nem copiado até que os elementos sejam percorridos. Este livro usa o C++17, mas vale saber que o estilo funcional em C++ continua evoluindo nessa direção."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "10-7-quando-usar-o-estilo-funcional",
+   "texto": "10.7 Quando usar o estilo funcional"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Combina bem",
+    "Combina menos"
+   ],
+   "linhas": [
+    [
+     "transformar, filtrar e resumir coleções",
+     "laços com muitas condições de parada e casos especiais"
+    ],
+    [
+     "regras de negócio e cálculos que podem ser funções puras",
+     "código cujo trabalho é o efeito colateral: ler, gravar, desenhar"
+    ],
+    [
+     "critérios de ordenação, busca e contagem",
+     "trechos em que copiar dados a cada etapa custaria caro"
+    ],
+    [
+     "código que precisa ser testado ou rodar em paralelo",
+     "equipes que ainda não conhecem o estilo"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O objetivo não é eliminar laços nem variáveis, mas ter mais uma ferramenta. Na prática, um bom programa C++ costuma misturar os dois estilos: estruturas de dados e entrada e saída escritas de forma imperativa, e cálculos e transformações escritos com funções puras e algoritmos da biblioteca."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Comparando com Python",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em Python, funções também são valores, e a palavra <code>lambda</code> cria funções anônimas de uma única expressão. As funções <code>map</code> e <code>filter</code> são nativas, e a <code>reduce</code> está no módulo <code>functools</code>. Mas o jeito mais comum de mapear e filtrar em Python são as <strong>compreensões de lista</strong>, que fazem as duas coisas em uma linha."
+    },
+    {
+     "t": "codigo",
+     "texto": "from functools import reduce\n\nnumeros = [1, 2, 3, 4, 5, 6]\npares = filter(lambda x: x % 2 == 0, numeros)\nquadrados = map(lambda x: x * x, pares)\nprint(reduce(lambda soma, x: soma + x, quadrados, 0))   # 56\n\nprint(sum(x * x for x in numeros if x % 2 == 0))   # 56\nprint([x * x for x in numeros if x % 2 == 0])      # [4, 16, 36]\n\ndef somador(n):\n    return lambda x: x + n        # closure: guarda o n\n\nmais5 = somador(5)\nprint(mais5(1))                   # 6\n\ndef criar_contador():\n    contagem = 0\n    def contar():\n        nonlocal contagem         # altera a variável de fora\n        contagem += 1\n        return contagem\n    return contar\n\nc1 = criar_contador()\nc1()\nc1()\nprint(c1())                       # 3"
+    },
+    {
+     "t": "p",
+     "html": "Em Python, <code>map</code> e <code>filter</code> são preguiçosas, como as <em>ranges</em> do C++20: elas só calculam quando alguém percorre o resultado. A palavra <code>nonlocal</code> tem o papel do <code>mutable</code> do C++: sem ela, <code>contagem += 1</code> criaria uma variável local nova em vez de alterar a capturada. E, diferente do C++, as closures do Python sempre enxergam a variável original, como uma captura por referência."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Devolver uma lambda que captura uma variável local por referência.</strong> A variável deixa de existir quando a função termina, e a lambda passa a ler lixo. Capture por valor.",
+    "<strong>Esperar que a captura por valor acompanhe a variável.</strong> A cópia é feita quando a lambda é criada; alterações posteriores na variável original não aparecem nela.",
+    "<strong>Esquecer o <code>mutable</code>.</strong> Sem ele, alterar uma variável capturada por valor é erro de compilação.",
+    "<strong>Esquecer de capturar.</strong> Uma lambda com <code>[]</code> não enxerga as variáveis locais de fora; usá-las dá erro de compilação.",
+    "<strong>Usar <code>transform</code> ou <code>copy_if</code> com um destino vazio.</strong> Sem o <code>back_inserter</code>, elas escrevem por cima de posições que não existem. Use <code>back_inserter</code> ou reserve o tamanho antes.",
+    "<strong>Passar <code>0</code> como valor inicial do <code>accumulate</code> para somar <code>double</code>.</strong> O resultado é calculado como <code>int</code> e perde as casas decimais. Use <code>0.0</code>.",
+    "<strong>Chamar de pura uma função que mostra coisas na tela ou altera globais.</strong> Esses efeitos colaterais quebram as vantagens da função pura, como poder testá-la e memorizá-la.",
+    "<strong>Encadear etapas demais em uma única expressão.</strong> Uma linha com cinco lambdas aninhadas é mais difícil de ler que um laço. Dê nomes às etapas e às condições."
+   ]
+  }
+ ]
+}
