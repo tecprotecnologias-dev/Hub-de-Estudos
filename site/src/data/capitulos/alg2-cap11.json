@@ -1,0 +1,440 @@
+{
+ "numero": 11,
+ "titulo": "Testes e depuração",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Todo programador escreve programas com erros. A diferença entre um iniciante e um profissional não está em errar menos, mas em <strong>encontrar os erros mais cedo</strong> e <strong>corrigi-los com método</strong>. Ao longo deste livro, cada capítulo terminou com uma lista de Erros Comuns, e todos os programas foram compilados e executados para conferir as saídas mostradas no texto. Neste último capítulo, você vai aprender a fazer isso de forma sistemática: declarar o que o código espera com <code>assert</code>, escolher bons casos de teste, gerar milhares de testes automaticamente e, quando algo der errado, seguir um roteiro de depuração em vez de mudar o código no escuro."
+  },
+  {
+   "t": "h2",
+   "id": "11-1-tipos-de-erro",
+   "texto": "11.1 Tipos de erro"
+  },
+  {
+   "t": "p",
+   "html": "Os erros de um programa aparecem em três momentos diferentes, e cada um pede uma estratégia:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo",
+    "Quando aparece",
+    "Exemplo"
+   ],
+   "linhas": [
+    [
+     "de compilação",
+     "o compilador recusa o programa",
+     "ponto e vírgula esquecido, tipo errado, variável não declarada"
+    ],
+    [
+     "de execução",
+     "o programa para no meio",
+     "acesso a <code>nullptr</code>, divisão por zero, recursão infinita"
+    ],
+    [
+     "de lógica",
+     "o programa termina, mas a resposta está errada",
+     "<code>&lt;</code> no lugar de <code>&lt;=</code>, laço que pula o último elemento"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Os erros de compilação são os mais fáceis: o compilador diz onde estão. Por isso, vale a pena transformar o máximo de erros possível em erros de compilação, com <code>const</code>, tipos bem escolhidos e os avisos do compilador ligados (<code>-Wall -Wextra</code>). Os erros de lógica são os mais perigosos, porque o programa parece funcionar. São eles que os testes procuram."
+  },
+  {
+   "t": "h2",
+   "id": "11-2-assercoes",
+   "texto": "11.2 Asserções"
+  },
+  {
+   "t": "p",
+   "html": "Uma <strong>asserção</strong> é uma condição que o programador garante ser verdadeira em um ponto do código. A <code>assert</code>, da biblioteca <code>&lt;cassert&gt;</code>, verifica a condição durante a execução; se ela for falsa, o programa para na hora, mostrando a condição, o arquivo e a linha. É muito melhor do que continuar com dados errados e falhar muito depois, longe da causa."
+  },
+  {
+   "t": "p",
+   "html": "As asserções costumam expressar três tipos de garantia:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Pré-condição</strong>: o que precisa ser verdade na entrada da função. A busca binária só funciona com o vetor ordenado; a média só faz sentido com pelo menos uma nota.",
+    "<strong>Pós-condição</strong>: o que a função garante na saída. Depois da ordenação, o vetor está ordenado.",
+    "<strong>Invariante</strong>: o que continua verdade durante toda a execução, como “o tamanho da pilha nunca é negativo” ou “a raiz do heap é o maior elemento”."
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <cassert>\n#include <algorithm>   // is_sorted\n\nint buscaBinaria(const vector<int> &v, int procurado) {\n    assert(is_sorted(v.begin(), v.end()));   // pré-condição\n    int inicio = 0;\n    int fim = static_cast<int>(v.size()) - 1;\n    while (inicio <= fim) {\n        int meio = inicio + (fim - inicio) / 2;\n        if (v[meio] == procurado) return meio;\n        if (v[meio] < procurado) {\n            inicio = meio + 1;\n        } else {\n            fim = meio - 1;\n        }\n    }\n    return -1;\n}\n\ndouble media(const vector<double> &notas) {\n    assert(!notas.empty());                  // pré-condição\n    double soma = 0;\n    for (double nota : notas) soma += nota;\n    return soma / notas.size();\n}\n\nint main() {\n    cout << buscaBinaria({3, 8, 12, 17}, 12) << endl;   // 2\n    cout << media({7.0, 8.0, 9.0}) << endl;             // 8\n    // buscaBinaria({8, 3, 12}, 3) pararia o programa com:\n    // Assertion failed: is_sorted(v.begin(), v.end()),\n    // file busca.cpp, line 6\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare que a asserção da busca binária custa O(n), mais que a própria busca. Asserções servem para encontrar erros durante o desenvolvimento; na versão final, elas podem ser desligadas compilando com a opção <code>-DNDEBUG</code>, e todas as <code>assert</code> desaparecem do programa. Por isso, nunca coloque dentro de uma <code>assert</code> algo que precisa acontecer, como <code>assert(pilha.desempilhar() &gt; 0)</code>: com <code>NDEBUG</code>, a chamada inteira some."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Asserção ou tratamento de erro?",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A <code>assert</code> é para erros do <strong>programador</strong>: situações que nunca deveriam acontecer se o código estivesse certo. Erros que vêm de <strong>fora</strong>, como um usuário digitando uma letra onde se esperava um número ou um arquivo que não existe, vão acontecer de verdade e precisam ser tratados pelo programa, com mensagens claras, valores de retorno ou exceções. Um programa não deve parar só porque o usuário errou a digitação."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "11-3-testes-unitarios",
+   "texto": "11.3 Testes unitários"
+  },
+  {
+   "t": "p",
+   "html": "Um <strong>teste unitário</strong> verifica uma pequena parte do programa, normalmente uma função, isoladamente: chama a função com uma entrada conhecida e compara o resultado com o <strong>valor esperado</strong>, calculado à mão ou por outro meio confiável. É aqui que as funções puras do Capítulo 10 mostram seu valor: como o resultado depende só dos parâmetros, testá-las é só chamar e comparar."
+  },
+  {
+   "t": "p",
+   "html": "Existem bibliotecas prontas para escrever testes em C++, como a GoogleTest e a Catch2, mas a ideia cabe em poucas linhas. O exemplo testa uma função que classifica a situação de um aluno pela nota:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <string>\n\nstring situacao(double nota) {\n    if (nota < 0 || nota > 10) return \"inválida\";\n    if (nota < 4) return \"reprovado\";\n    if (nota < 6) return \"prova final\";\n    return \"aprovado\";\n}\n\nint falhas = 0;\n\nvoid verificar(const string &obtido, const string &esperado,\n               const string &caso) {\n    if (obtido != esperado) {\n        falhas++;\n        cout << \"FALHOU (\" << caso << \"): esperado \" << esperado\n             << \", obtido \" << obtido << endl;\n    }\n}\n\nint main() {\n    // um valor típico de cada faixa\n    verificar(situacao(2), \"reprovado\", \"nota 2\");\n    verificar(situacao(5), \"prova final\", \"nota 5\");\n    verificar(situacao(8), \"aprovado\", \"nota 8\");\n    // as fronteiras, onde os erros costumam estar\n    verificar(situacao(0), \"reprovado\", \"nota 0\");\n    verificar(situacao(3.9), \"reprovado\", \"nota 3,9\");\n    verificar(situacao(4), \"prova final\", \"nota 4\");\n    verificar(situacao(5.9), \"prova final\", \"nota 5,9\");\n    verificar(situacao(6), \"aprovado\", \"nota 6\");\n    verificar(situacao(10), \"aprovado\", \"nota 10\");\n    // fora do domínio\n    verificar(situacao(-0.1), \"inválida\", \"nota -0,1\");\n    verificar(situacao(10.1), \"inválida\", \"nota 10,1\");\n\n    if (falhas == 0) cout << \"11 testes passaram\" << endl;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Se alguém trocar <code>nota &lt; 4</code> por <code>nota &lt;= 4</code>, o programa continua compilando e parece funcionar com notas como 2 e 8. Mas o teste da nota 4 avisa na hora: <code>FALHOU (nota 4): esperado prova final, obtido reprovado</code>."
+  },
+  {
+   "t": "h3",
+   "texto": "Como escolher os casos"
+  },
+  {
+   "t": "p",
+   "html": "Testar todas as entradas possíveis é impossível, então os casos precisam ser escolhidos com cuidado. Duas ideias ajudam muito:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Faixas de valores</strong> (partições de equivalência): divida as entradas em grupos que o programa deve tratar do mesmo jeito e teste um valor típico de cada grupo. Se a nota 2 funciona, a nota 2,5 quase certamente também funciona.",
+    "<strong>Valores de fronteira</strong>: os erros se concentram nas bordas entre as faixas, onde um <code>&lt;</code> pode estar no lugar de um <code>&lt;=</code>. Teste os valores exatamente nas fronteiras e logo ao lado delas."
+   ]
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-11_fronteiras.png",
+   "alt": "capitulo 11 fronteiras"
+  },
+  {
+   "t": "p",
+   "html": "Para as estruturas de dados deste livro, os casos de fronteira têm uma cara conhecida. Vale a pena testar sempre:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Situação",
+    "Exemplos"
+   ],
+   "linhas": [
+    [
+     "estrutura vazia",
+     "vetor sem elementos, lista com <code>inicio == nullptr</code>, pilha vazia"
+    ],
+    [
+     "um único elemento",
+     "o primeiro é também o último; a raiz não tem filhos"
+    ],
+    [
+     "primeiro e último",
+     "inserir ou remover no início e no fim da lista"
+    ],
+    [
+     "valor ausente",
+     "procurar algo menor que todos, maior que todos, ou entre dois"
+    ],
+    [
+     "valores repetidos",
+     "a busca e a ordenação continuam corretas? A ordenação é estável?"
+    ],
+    [
+     "entradas já organizadas",
+     "vetor já ordenado ou em ordem inversa (o pior caso do <em>quicksort</em>)"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Quando muitos casos seguem o mesmo formato, é prático escrevê-los como uma <strong>tabela de casos</strong>, um vetor em que cada linha tem a entrada e o que se espera, e testá-los todos com um único laço. O programa abaixo testa a busca binária assim. Em vez de comparar com uma posição exata, ele verifica uma <strong>propriedade</strong>: se o valor está no vetor, a posição devolvida precisa conter o valor; se não está, o resultado precisa ser -1. Isso funciona até com valores repetidos, em que mais de uma posição seria correta."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <string>\n\nint buscaBinaria(const vector<int> &v, int procurado) {\n    int inicio = 0;\n    int fim = static_cast<int>(v.size()) - 1;\n    while (inicio <= fim) {\n        int meio = inicio + (fim - inicio) / 2;\n        if (v[meio] == procurado) return meio;\n        if (v[meio] < procurado) {\n            inicio = meio + 1;\n        } else {\n            fim = meio - 1;\n        }\n    }\n    return -1;\n}\n\nstruct Caso {\n    string descricao;\n    vector<int> v;\n    int procurado;\n    bool presente;\n};\n\nint main() {\n    const vector<Caso> casos = {\n        {\"vetor vazio\", {}, 5, false},\n        {\"um elemento, presente\", {5}, 5, true},\n        {\"um elemento, ausente\", {5}, 3, false},\n        {\"primeiro\", {2, 4, 6, 8}, 2, true},\n        {\"último\", {2, 4, 6, 8}, 8, true},\n        {\"menor que todos\", {2, 4, 6, 8}, 1, false},\n        {\"maior que todos\", {2, 4, 6, 8}, 9, false},\n        {\"entre dois\", {2, 4, 6, 8}, 5, false},\n        {\"repetidos\", {3, 3, 3, 3, 3}, 3, true},\n    };\n    int falhas = 0;\n    for (const Caso &c : casos) {\n        int r = buscaBinaria(c.v, c.procurado);\n        bool certo = c.presente\n            ? (r >= 0 && c.v[r] == c.procurado)\n            : (r == -1);\n        if (!certo) {\n            falhas++;\n            cout << \"FALHOU: \" << c.descricao << endl;\n        }\n    }\n    cout << casos.size() - falhas << \" de \" << casos.size()\n         << \" casos passaram\" << endl;   // 9 de 9 casos passaram\n}"
+  },
+  {
+   "t": "p",
+   "html": "Acrescentar um caso novo é acrescentar uma linha na tabela. E, sempre que um erro for encontrado, o caso que o revelou deve virar uma linha nova: assim, se o erro voltar algum dia, o teste avisa. Esse é o <strong>teste de regressão</strong>."
+  },
+  {
+   "t": "h2",
+   "id": "11-4-testes-com-dados-gerados",
+   "texto": "11.4 Testes com dados gerados"
+  },
+  {
+   "t": "p",
+   "html": "Por melhor que seja a escolha dos casos, é fácil esquecer uma combinação. Uma técnica poderosa é <strong>gerar</strong> milhares de entradas automaticamente e comparar o resultado da sua função com o de um <strong>oráculo</strong>: outra forma de calcular a mesma resposta que você confia que está certa, mesmo que seja lenta. Para uma função de ordenação, o oráculo natural é a <code>sort</code> da biblioteca padrão."
+  },
+  {
+   "t": "p",
+   "html": "O programa abaixo testa uma ordenação por inserção (Capítulo 8) que tem um erro escondido: o laço interno usa <code>j &gt; 0</code> em vez de <code>j &gt;= 0</code>. Os vetores são gerados com o <code>mt19937</code>, um gerador de números pseudoaleatórios da biblioteca <code>&lt;random&gt;</code>. Ele recebe uma <strong>semente</strong> fixa, para que a sequência gerada seja sempre a mesma e uma falha encontrada possa ser repetida."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <random>      // mt19937\n#include <algorithm>   // sort\n\nvoid insercaoComErro(vector<int> &v) {\n    for (int i = 1; i < static_cast<int>(v.size()); i++) {\n        int chave = v[i];\n        int j = i - 1;\n        while (j > 0 && v[j] > chave) {   // erro: certo é j >= 0\n            v[j + 1] = v[j];\n            j--;\n        }\n        v[j + 1] = chave;\n    }\n}\n\nvoid mostrar(const vector<int> &v) {\n    for (int x : v) cout << x << \" \";\n    cout << endl;\n}\n\nint main() {\n    mt19937 gerador(2026);              // semente fixa: repetível\n    for (int teste = 1; teste <= 1000; teste++) {\n        int n = gerador() % 6;          // vetores pequenos: 0 a 5\n        vector<int> v(n);\n        for (int &x : v) x = gerador() % 10;\n\n        vector<int> esperado = v, obtido = v;\n        sort(esperado.begin(), esperado.end());   // o oráculo\n        insercaoComErro(obtido);\n        if (obtido != esperado) {\n            cout << \"teste \" << teste << \" falhou com: \";\n            mostrar(v);\n            cout << \"obtido: \";\n            mostrar(obtido);\n            return 0;\n        }\n    }\n    cout << \"1000 testes passaram\" << endl;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Com a semente 2026, o erro aparece logo no segundo vetor gerado. A saída é:"
+  },
+  {
+   "t": "p",
+   "html": "<code>teste 2 falhou com: 7 7 0</code> <br> <code>obtido: 7 0 7</code>"
+  },
+  {
+   "t": "p",
+   "html": "O 0 deveria ter ido para o início do vetor, mas parou na posição 1. Com 1.000 vetores testados em uma fração de segundo, um erro que escaparia de muitos testes escritos à mão é encontrado quase de imediato."
+  },
+  {
+   "t": "p",
+   "html": "Três decisões tornam esse tipo de teste eficiente. Os vetores são <strong>pequenos</strong> (até 5 elementos), porque quase todo erro já aparece com poucos dados, e um caso pequeno é muito mais fácil de entender. Os valores vêm de uma <strong>faixa estreita</strong> (0 a 9), para que repetições apareçam com frequência. E a <strong>semente é fixa</strong>, para que a mesma falha apareça de novo depois de cada tentativa de correção."
+  },
+  {
+   "t": "p",
+   "html": "Quando um teste gerado falha, o próximo passo é <strong>reduzir o caso</strong>: apagar elementos um a um enquanto a falha continuar acontecendo. Aqui, apagando um dos 7, chega-se a <code>{7, 0}</code>, um vetor de só dois elementos que já mostra o problema: com <code>j &gt; 0</code>, o laço nunca compara com a posição 0, então nenhum elemento consegue chegar ao início do vetor. Corrigido o erro, o caso <code>{7, 0}</code> vira mais uma linha da tabela de testes."
+  },
+  {
+   "t": "h2",
+   "id": "11-5-depuracao",
+   "texto": "11.5 Depuração"
+  },
+  {
+   "t": "p",
+   "html": "Quando um teste falha, começa a <strong>depuração</strong>: encontrar a causa do erro e corrigi-la. A tentação é sair mudando o código até o resultado parecer certo, mas isso costuma esconder o erro em vez de corrigi-lo. O caminho mais rápido é tratar a depuração como uma investigação, com um passo de cada vez:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-11_ciclo.png",
+   "alt": "capitulo 11 ciclo"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. <strong>Reproduzir</strong>: encontre uma entrada que sempre faça o erro aparecer. Um erro que não se repete não pode ser investigado nem ter a correção confirmada.",
+    "2. <strong>Isolar</strong>: reduza a entrada e o código até o menor trecho que ainda mostra o erro. Se a função funciona com a entrada reduzida, o erro está em outro lugar.",
+    "3. <strong>Formular uma hipótese</strong>: “acho que o <code>meio</code> está saindo do vetor quando ele tem um só elemento”. Uma hipótese boa é específica e pode ser testada.",
+    "4. <strong>Testar a hipótese</strong>: mostre os valores das variáveis ou use o depurador para confirmá-la ou descartá-la. Se for descartada, formule outra.",
+    "5. <strong>Corrigir</strong> a causa, e não o sintoma. Somar 1 ao resultado para “acertar” a saída não é uma correção.",
+    "6. <strong>Criar um teste</strong> com o caso que revelou o erro, para ele não voltar."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Mostrando o estado do programa"
+  },
+  {
+   "t": "p",
+   "html": "A técnica mais simples para testar uma hipótese é imprimir os valores das variáveis nos pontos importantes. Use o <code>cerr</code>, a saída de erros, e não o <code>cout</code>: as mensagens de depuração não se misturam com a saída normal do programa e aparecem na hora, mesmo que o programa trave logo depois. Uma constante permite ligar e desligar todas as mensagens de uma vez."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n\nconst bool DEPURAR = true;    // false para desligar as mensagens\n\nint buscaBinaria(const vector<int> &v, int procurado) {\n    int inicio = 0;\n    int fim = static_cast<int>(v.size()) - 1;\n    while (inicio <= fim) {\n        int meio = inicio + (fim - inicio) / 2;\n        if (DEPURAR) {\n            cerr << \"inicio=\" << inicio << \" fim=\" << fim\n                 << \" meio=\" << meio << \" v[meio]=\" << v[meio]\n                 << endl;\n        }\n        if (v[meio] == procurado) return meio;\n        if (v[meio] < procurado) {\n            inicio = meio + 1;\n        } else {\n            fim = meio - 1;\n        }\n    }\n    return -1;\n}\n\nint main() {\n    vector<int> v = {3, 8, 12, 17, 21, 25, 30, 34, 39, 42,\n                     47, 51, 56, 60, 64};\n    cout << buscaBinaria(v, 20) << endl;\n    // na saída de erros:\n    // inicio=0 fim=14 meio=7 v[meio]=34\n    // inicio=0 fim=6 meio=3 v[meio]=17\n    // inicio=4 fim=6 meio=5 v[meio]=25\n    // inicio=4 fim=4 meio=4 v[meio]=21\n    // e na saída normal: -1\n}"
+  },
+  {
+   "t": "p",
+   "html": "As mensagens reproduzem exatamente a tabela da busca pelo 20 no Capítulo 7. Se uma das linhas mostrasse <code>inicio</code> e <code>fim</code> repetindo os mesmos valores, a hipótese de um laço infinito estaria confirmada."
+  },
+  {
+   "t": "h3",
+   "texto": "O depurador"
+  },
+  {
+   "t": "p",
+   "html": "Um <strong>depurador</strong> permite pausar o programa em qualquer linha e examinar tudo, sem acrescentar <code>cerr</code> nenhum. O depurador do GCC é o <code>gdb</code>, e as IDEs, como o VS Code, oferecem os mesmos recursos com botões e atalhos. Para usá-lo, compile com a opção <code>-g</code>, que guarda no executável as informações sobre as linhas e os nomes das variáveis."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Recurso",
+    "No gdb",
+    "O que faz"
+   ],
+   "linhas": [
+    [
+     "ponto de parada",
+     "<code>break 12</code>",
+     "pausa o programa ao chegar na linha 12 (F9 no VS Code)"
+    ],
+    [
+     "executar",
+     "<code>run</code>",
+     "inicia o programa, que roda até um ponto de parada"
+    ],
+    [
+     "próxima linha",
+     "<code>next</code>",
+     "executa a linha atual sem entrar nas funções chamadas (F10)"
+    ],
+    [
+     "entrar na função",
+     "<code>step</code>",
+     "entra na função chamada na linha atual (F11)"
+    ],
+    [
+     "mostrar valor",
+     "<code>print meio</code>",
+     "mostra o valor de uma variável ou expressão"
+    ],
+    [
+     "pilha de chamadas",
+     "<code>backtrace</code>",
+     "mostra quais funções chamaram quais até aqui"
+    ],
+    [
+     "vigiar variável",
+     "<code>watch fim</code>",
+     "pausa sempre que <code>fim</code> mudar de valor"
+    ],
+    [
+     "continuar",
+     "<code>continue</code>",
+     "segue até o próximo ponto de parada (F5)"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A pilha de chamadas é especialmente útil quando o programa para com um erro de execução: ela mostra a linha exata do problema e todo o caminho de chamadas até ele. Em uma recursão infinita, por exemplo, aparece a mesma função repetida milhares de vezes."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Outras ferramentas que encontram erros sozinhas",
+   "blocos": [
+    {
+     "t": "lista",
+     "numerada": false,
+     "itens": [
+      "<strong>Avisos do compilador</strong>: <code>-Wall -Wextra</code> apontam variáveis não usadas, comparações suspeitas e funções que podem terminar sem <code>return</code>. Trate cada aviso como um erro.",
+      "<strong>Sanitizadores</strong>: são verificações extras que o compilador acrescenta ao programa. Elas fazem o programa parar e explicar o problema ao ler fora de um vetor, usar memória depois do <code>delete</code> ou estourar um <code>int</code>, erros que normalmente passariam em silêncio. No Linux e no macOS, são ligadas com as opções <code>-fsanitize=address</code> e <code>-fsanitize=undefined</code>.",
+      "<strong>Busca binária no histórico</strong>: se o programa funcionava em uma versão antiga e não funciona mais, o comando <code>git bisect</code> faz uma busca binária (Capítulo 7) nas versões salvas e encontra a mudança que introduziu o erro testando só log<sub>2</sub> n delas.",
+      "<strong>Explicar em voz alta</strong>: descrever o código linha por linha para outra pessoa, ou até para um patinho de borracha na mesa, obriga a olhar para o que o código faz, e não para o que se acha que ele faz. É surpreendente quantos erros aparecem no meio da explicação."
+     ]
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "11-6-sintomas-e-causas-provaveis",
+   "texto": "11.6 Sintomas e causas prováveis"
+  },
+  {
+   "t": "p",
+   "html": "Com o tempo, cada sintoma passa a sugerir algumas causas. Esta tabela reúne as mais comuns nas estruturas deste livro:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Sintoma",
+    "Causas prováveis"
+   ],
+   "linhas": [
+    [
+     "o programa trava e não termina",
+     "laço cuja condição nunca muda, como a busca binária com <code>inicio = meio</code> (Capítulo 7)"
+    ],
+    [
+     "o programa fecha sem mensagem",
+     "ponteiro <code>nullptr</code> desreferenciado (Capítulos 3 a 5); índice fora do vetor"
+    ],
+    [
+     "erro de pilha (<em>stack overflow</em>)",
+     "recursão sem caso base, ou funda demais, como o <em>quicksort</em> com vetor ordenado (Capítulo 8)"
+    ],
+    [
+     "resposta errada só em alguns casos",
+     "erro de fronteira: <code>&lt;</code> no lugar de <code>&lt;=</code>, laço que começa ou termina uma posição antes"
+    ],
+    [
+     "número negativo ou absurdo",
+     "estouro de <code>int</code>, como em <code>inicio + fim</code> ou no Fibonacci (Capítulos 7 e 9)"
+    ],
+    [
+     "resultado muda a cada execução",
+     "variável não inicializada; leitura fora do vetor; memória usada depois do <code>delete</code>"
+    ],
+    [
+     "memória cresce sem parar",
+     "<code>new</code> sem o <code>delete</code> correspondente (Capítulo 1)"
+    ],
+    [
+     "casas decimais somem",
+     "divisão entre inteiros; <code>accumulate</code> começando em <code>0</code> em vez de <code>0.0</code> (Capítulo 10)"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Comparando com Python",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em Python, <code>assert</code> é um comando da linguagem, e o módulo <code>unittest</code>, que já vem instalado, organiza os testes em classes: cada método que começa com <code>test</code> é um teste, e os métodos <code>assertEqual</code>, <code>assertTrue</code> e semelhantes comparam o obtido com o esperado. Muitos projetos usam a biblioteca externa <code>pytest</code>, ainda mais simples, e a <code>hypothesis</code>, que gera dados de teste e reduz os casos que falham automaticamente."
+    },
+    {
+     "t": "codigo",
+     "texto": "import random\nimport unittest\n\ndef situacao(nota):\n    if nota < 0 or nota > 10:\n        return 'inválida'\n    if nota < 4:\n        return 'reprovado'\n    if nota < 6:\n        return 'prova final'\n    return 'aprovado'\n\nclass TestaSituacao(unittest.TestCase):\n    def test_fronteiras(self):\n        self.assertEqual(situacao(4), 'prova final')\n        self.assertEqual(situacao(6), 'aprovado')\n        self.assertEqual(situacao(10), 'aprovado')\n\n    def test_invalidas(self):\n        self.assertEqual(situacao(-0.1), 'inválida')\n        self.assertEqual(situacao(10.1), 'inválida')\n\n    def test_dados_gerados(self):\n        random.seed(2026)                   # semente fixa\n        for _ in range(1000):\n            nota = random.uniform(0, 10)\n            self.assertNotEqual(situacao(nota), 'inválida')\n\nunittest.main(argv=['testes'], exit=False)   # Ran 3 tests ... OK"
+    },
+    {
+     "t": "p",
+     "html": "Para depurar, o Python tem o <code>pdb</code>: basta escrever <code>breakpoint()</code> em qualquer linha, e o programa pausa ali, aceitando comandos parecidos com os do <code>gdb</code>, como <code>n</code> (próxima linha), <code>s</code> (entrar na função) e <code>p</code> (mostrar um valor)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Testar só o caso feliz.</strong> Um teste com a nota 8 não pega o erro da nota 4. Teste as fronteiras e as entradas vazias.",
+    "<strong>Calcular o valor esperado com o próprio código testado.</strong> Se a função tem um erro, o “esperado” terá o mesmo erro. Use contas feitas à mão ou um oráculo independente.",
+    "<strong>Usar uma semente diferente a cada execução nos testes gerados.</strong> Uma falha que não se repete não pode ser investigada. Fixe a semente, ou pelo menos mostre qual foi usada.",
+    "<strong>Colocar efeitos dentro de <code>assert</code>.</strong> Com <code>-DNDEBUG</code>, a expressão inteira desaparece, junto com o que ela fazia.",
+    "<strong>Usar <code>assert</code> para erros do usuário.</strong> Entradas inválidas precisam de tratamento, não de um programa que para.",
+    "<strong>Mudar o código ao acaso até o teste passar.</strong> Sem entender a causa, a “correção” costuma esconder o erro ou criar outro.",
+    "<strong>Ignorar os avisos do compilador.</strong> Muitos erros de lógica aparecem primeiro como um aviso que ninguém leu.",
+    "<strong>Esquecer o teste de regressão.</strong> Todo erro corrigido deve deixar um teste para trás."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "para-continuar",
+   "texto": "Para continuar"
+  },
+  {
+   "t": "p",
+   "html": "Este capítulo fecha o livro. Você começou com ponteiros e memória dinâmica, construiu listas, pilhas, filas, árvores, grafos e heaps, aprendeu a medir o custo de cada algoritmo, a buscar, a ordenar, a otimizar com algoritmos gulosos e programação dinâmica, a escrever no estilo funcional e, por fim, a testar e depurar. As mesmas ideias aparecem em qualquer linguagem e em qualquer sistema grande, de um banco de dados ao mapa do celular. O próximo passo é praticar: implemente as estruturas sem olhar o livro, resolva problemas em sites de programação competitiva e leia o código de bibliotecas que você usa. Bons estudos."
+  }
+ ]
+}

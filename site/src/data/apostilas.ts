@@ -487,6 +487,14 @@ export const apostilas: Apostila[] = [
     descricao:
       'Estilo imperativo e funcional; funções puras, efeitos colaterais e imutabilidade; lambdas e function; capturas por valor e por referência e closures; mapear, filtrar e reduzir com a biblioteca padrão; composição de funções.',
   },
+  {
+    id: 'alg2-cap11',
+    capitulo: 11,
+    titulo: 'Testes e depuração',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-ii',
+    descricao:
+      'Tipos de erro; asserções com pré-condições e pós-condições; testes unitários, faixas de valores e fronteiras; tabela de casos e testes de regressão; testes com dados gerados e oráculo; roteiro de depuração, cerr, gdb e sintomas comuns.',
+  },
 
   // Programação e Design para Web II (apostila em módulos)
   // Fonte: 02- APOSTILAS/Módulo 5/LATEX/modulos/modulo-0N.tex (24/08), convertida com

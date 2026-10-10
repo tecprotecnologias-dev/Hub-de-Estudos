@@ -1,0 +1,30 @@
+% Capítulo 11: o ciclo de depuração.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-vetores}
+\tikzset{
+  passo/.style={draw=navy, line width=0.9pt, rounded corners=3pt, fill=laranja!12,
+                minimum width=30mm, minimum height=10mm, font=\sffamily\small, align=center},
+  inicio/.style={passo, fill=laranja!45, draw=laranja},
+  fim/.style={passo, fill=azul},
+}
+\begin{document}
+\begin{tikzpicture}
+  \node[inicio] (rep) at (0, 0) {1. Reproduzir\\o erro};
+  \node[passo] (iso) at (4.8, 0) {2. Isolar\\o trecho};
+  \node[passo] (hip) at (9.6, 0) {3. Formular\\uma hipótese};
+  \node[passo] (tes) at (9.6, -2.2) {4. Testar\\a hipótese};
+  \node[passo] (cor) at (4.8, -2.2) {5. Corrigir};
+  \node[fim] (reg) at (0, -2.2) {6. Criar um teste\\que pegue o erro};
+  \draw[seta] (rep) -- (iso);
+  \draw[seta] (iso) -- (hip);
+  \draw[seta] (hip) -- (tes);
+  \draw[seta] (tes) -- node[legenda, above] {confirmada} (cor);
+  \draw[seta] (cor) -- (reg);
+  \draw[seta, laranja] (tes.east) to[out=0, in=0, looseness=1.6]
+    node[legenda, text=laranja, right, align=left] {errada:\\nova hipótese} (hip.east);
+  \node[legenda, align=center] at (4.8, -3.4)
+    {o passo 6 impede que o mesmo erro volte sem ninguém perceber (teste de regressão)};
+\end{tikzpicture}
+\end{document}
