@@ -463,6 +463,14 @@ export const apostilas: Apostila[] = [
     descricao:
       'Busca sequencial com sentinela, busca binária iterativa e recursiva, primeira ocorrência e ponto de inserção, busca binária na resposta, funções de busca da biblioteca padrão e quando vale a pena ordenar.',
   },
+  {
+    id: 'alg2-cap8',
+    capitulo: 8,
+    titulo: 'Ordenação',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-ii',
+    descricao:
+      'Estabilidade e ordenação no lugar; bubble sort, selection sort e insertion sort; merge sort e quicksort com dividir para conquistar; heap, heapsort e fila de prioridade; o limite de n log n e a ordenação da biblioteca padrão.',
+  },
 
   // Programação e Design para Web II (apostila em módulos)
   // Fonte: 02- APOSTILAS/Módulo 5/LATEX/modulos/modulo-0N.tex (24/08), convertida com

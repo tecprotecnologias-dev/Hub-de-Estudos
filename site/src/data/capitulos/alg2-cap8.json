@@ -1,0 +1,433 @@
+{
+ "numero": 8,
+ "titulo": "Ordenação",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "No Capítulo 7 você viu que a busca binária encontra um valor entre um bilhão em 30 comparações, desde que o vetor esteja <strong>ordenado</strong>. Ordenar dados é uma das tarefas mais comuns da computação: listas de alunos em ordem alfabética, produtos do mais barato ao mais caro, mensagens da mais recente à mais antiga. Também é um dos melhores lugares para aprender a projetar algoritmos, porque o mesmo problema tem soluções muito diferentes. Neste capítulo você vai estudar seis delas: três simples, de custo O(n<sup>2</sup>), e três eficientes, de custo O(n log n). No caminho, vai construir o <em>heap</em>, a estrutura que o Capítulo 6 usou dentro da fila de prioridade."
+  },
+  {
+   "t": "h2",
+   "id": "8-1-o-problema-da-ordenacao",
+   "texto": "8.1 O problema da ordenação"
+  },
+  {
+   "t": "p",
+   "html": "Ordenar é rearranjar os elementos de um vetor para que fiquem em ordem crescente (ou decrescente) segundo algum critério. Todos os algoritmos deste capítulo são <strong>baseados em comparações</strong>: a única coisa que fazem com os elementos é perguntar “este é menor que aquele?” e trocá-los de lugar. Por isso, servem para qualquer tipo que saiba se comparar, de números a nomes e datas."
+  },
+  {
+   "t": "p",
+   "html": "Além do tempo, três características ajudam a escolher um algoritmo:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>No lugar</strong> (<em>in-place</em>): o algoritmo usa apenas uma quantidade constante de memória extra, além do próprio vetor.",
+    "<strong>Estável</strong>: elementos com a mesma chave continuam na ordem em que estavam. Se uma turma já está em ordem alfabética e você a ordena por nota com um algoritmo estável, os alunos com a mesma nota continuam em ordem alfabética.",
+    "<strong>Adaptativo</strong>: o algoritmo trabalha menos quando o vetor já está quase ordenado."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Todos os exemplos usam o mesmo vetor de oito números, <code>{29, 10, 14, 37, 13, 5, 41, 22}</code>, e a função <code>swap</code> do C++, que troca o conteúdo de duas variáveis."
+  },
+  {
+   "t": "h2",
+   "id": "8-2-ordenacao-por-bolha-bubble-sort",
+   "texto": "8.2 Ordenação por bolha (bubble sort)"
+  },
+  {
+   "t": "p",
+   "html": "A ordenação por bolha percorre o vetor comparando cada par de vizinhos e trocando os dois sempre que estiverem fora de ordem. Ao fim da primeira passada, o maior elemento foi empurrado, troca a troca, até a última posição, como uma bolha que sobe até a superfície. A segunda passada leva o segundo maior para a penúltima posição, e assim por diante."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-08_bolha.png",
+   "alt": "capitulo 08 bolha"
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nvoid bolha(vector<int> &v) {\n    int n = static_cast<int>(v.size());\n    for (int passada = 0; passada < n - 1; passada++) {\n        bool trocou = false;\n        // os últimos \"passada\" elementos já estão no lugar\n        for (int i = 0; i < n - 1 - passada; i++) {\n            if (v[i] > v[i + 1]) {\n                swap(v[i], v[i + 1]);\n                trocou = true;\n            }\n        }\n        if (!trocou) return;   // nenhuma troca: já está ordenado\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "A variável <code>trocou</code> é o que torna a bolha adaptativa: se uma passada inteira não fizer nenhuma troca, o vetor já está ordenado e o algoritmo para. Em um vetor já ordenado, basta uma passada, O(n). No pior caso, o vetor em ordem inversa, são n - 1 passadas com cerca de n<sup>2</sup>/2 comparações e trocas: O(n<sup>2</sup>). A bolha é estável, porque só troca vizinhos estritamente fora de ordem, e funciona no lugar."
+  },
+  {
+   "t": "h2",
+   "id": "8-3-ordenacao-por-selecao-selection-sort",
+   "texto": "8.3 Ordenação por seleção (selection sort)"
+  },
+  {
+   "t": "p",
+   "html": "A ordenação por seleção faz o que muita gente faria à mão: procura o menor elemento e o coloca na primeira posição; depois procura o menor entre os que sobraram e o coloca na segunda, e assim por diante."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nvoid selecao(vector<int> &v) {\n    int n = static_cast<int>(v.size());\n    for (int i = 0; i < n - 1; i++) {\n        int menor = i;\n        for (int j = i + 1; j < n; j++) {  // o menor do resto\n            if (v[j] < v[menor]) menor = j;\n        }\n        swap(v[i], v[menor]);              // uma troca só\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "A seleção sempre faz cerca de n<sup>2</sup>/2 comparações, mesmo que o vetor já esteja ordenado: ela não é adaptativa, e é O(n<sup>2</sup>) em todos os casos. Sua vantagem é fazer no máximo n - 1 trocas, o que importa quando mover um elemento custa muito mais que compará-lo. Ela não é estável: a troca pode levar um elemento para depois de outro igual a ele."
+  },
+  {
+   "t": "h2",
+   "id": "8-4-ordenacao-por-insercao-insertion-sort",
+   "texto": "8.4 Ordenação por inserção (insertion sort)"
+  },
+  {
+   "t": "p",
+   "html": "A ordenação por inserção é o jeito como se arruma uma mão de cartas: as cartas da esquerda já estão em ordem, e cada nova carta é encaixada no lugar certo entre elas. No vetor, a parte ordenada começa com um único elemento e cresce uma posição a cada passo. Para abrir espaço para o novo elemento, os maiores que ele são deslocados uma posição para a direita."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-08_insercao.png",
+   "alt": "capitulo 08 insercao"
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nvoid insercao(vector<int> &v) {\n    int n = static_cast<int>(v.size());\n    for (int i = 1; i < n; i++) {\n        int chave = v[i];        // o próximo a ser inserido\n        int j = i - 1;\n        while (j >= 0 && v[j] > chave) {\n            v[j + 1] = v[j];     // desloca o maior à direita\n            j--;\n        }\n        v[j + 1] = chave;        // encaixa no espaço aberto\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "O laço <code>while</code> para assim que encontra um elemento menor ou igual à chave. Em um vetor já ordenado, ele para logo na primeira comparação, e a inserção inteira custa O(n); em um vetor quase ordenado, faz poucos deslocamentos. No pior caso, em ordem inversa, cada elemento percorre toda a parte ordenada: O(n<sup>2</sup>). A inserção é estável, porque o <code>&gt;</code> nunca passa uma chave para antes de outra igual, e funciona no lugar."
+  },
+  {
+   "t": "p",
+   "html": "O programa completo ordena o vetor de exemplo com os três algoritmos:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <utility>   // swap\n\nvoid bolha(vector<int> &v) {\n    int n = static_cast<int>(v.size());\n    for (int passada = 0; passada < n - 1; passada++) {\n        bool trocou = false;\n        for (int i = 0; i < n - 1 - passada; i++) {\n            if (v[i] > v[i + 1]) {\n                swap(v[i], v[i + 1]);\n                trocou = true;\n            }\n        }\n        if (!trocou) return;\n    }\n}\n\nvoid selecao(vector<int> &v) {\n    int n = static_cast<int>(v.size());\n    for (int i = 0; i < n - 1; i++) {\n        int menor = i;\n        for (int j = i + 1; j < n; j++) {\n            if (v[j] < v[menor]) menor = j;\n        }\n        swap(v[i], v[menor]);\n    }\n}\n\nvoid insercao(vector<int> &v) {\n    int n = static_cast<int>(v.size());\n    for (int i = 1; i < n; i++) {\n        int chave = v[i];\n        int j = i - 1;\n        while (j >= 0 && v[j] > chave) {\n            v[j + 1] = v[j];\n            j--;\n        }\n        v[j + 1] = chave;\n    }\n}\n\nvoid mostrar(const vector<int> &v) {\n    for (int x : v) cout << x << \" \";\n    cout << endl;\n}\n\nint main() {\n    const vector<int> exemplo = {29, 10, 14, 37, 13, 5, 41, 22};\n    vector<int> a = exemplo, b = exemplo, c = exemplo;\n    bolha(a);\n    selecao(b);\n    insercao(c);\n    mostrar(a);   // 5 10 13 14 22 29 37 41\n    mostrar(b);   // 5 10 13 14 22 29 37 41\n    mostrar(c);   // 5 10 13 14 22 29 37 41\n}"
+  },
+  {
+   "t": "p",
+   "html": "Os três são O(n<sup>2</sup>) no pior caso, mas se comportam de forma bem diferente conforme a entrada. Esta tabela mostra quantas comparações e quantas trocas (ou deslocamentos, na inserção) cada um faz em um vetor de 1.000 elementos, no formato “comparações / trocas”:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Algoritmo",
+    "Já ordenado",
+    "Em ordem inversa"
+   ],
+   "linhas": [
+    [
+     "bolha",
+     "999 / 0",
+     "499.500 / 499.500"
+    ],
+    [
+     "seleção",
+     "499.500 / 999",
+     "499.500 / 999"
+    ],
+    [
+     "inserção",
+     "999 / 0",
+     "499.500 / 499.500"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Na prática, a inserção é a melhor dos três: é simples, estável, adaptativa e muito rápida em vetores pequenos ou quase ordenados. Por isso, ela aparece dentro dos algoritmos de ordenação das bibliotecas, como você verá na Seção 8.8."
+  },
+  {
+   "t": "h2",
+   "id": "8-5-ordenacao-por-intercalacao-merge-sort",
+   "texto": "8.5 Ordenação por intercalação (merge sort)"
+  },
+  {
+   "t": "p",
+   "html": "Para fugir do O(n<sup>2</sup>), é preciso parar de comparar quase todos os pares. A ordenação por intercalação usa a estratégia <strong>dividir para conquistar</strong>, a mesma ideia de reduzir um problema a problemas menores que você viu na recursão:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. <strong>Dividir</strong>: separe o vetor em duas metades.",
+    "2. <strong>Conquistar</strong>: ordene cada metade, recursivamente. Um vetor com zero ou um elemento já está ordenado.",
+    "3. <strong>Combinar</strong>: <strong>intercale</strong> as duas metades ordenadas em um único vetor ordenado."
+   ]
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-08_intercalacao.png",
+   "alt": "capitulo 08 intercalacao"
+  },
+  {
+   "t": "p",
+   "html": "Todo o trabalho está na intercalação. Como as duas metades já estão ordenadas, o menor de todos só pode ser o primeiro de uma delas. Basta comparar os primeiros de cada metade, copiar o menor para um vetor auxiliar e avançar naquela metade, até uma delas acabar; o que sobrar da outra já está em ordem e é copiado no fim."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\n// junta v[ini..meio] e v[meio+1..fim], já ordenados, em um só\nvoid intercalar(vector<int> &v, int ini, int meio, int fim) {\n    vector<int> aux;\n    aux.reserve(fim - ini + 1);\n    int i = ini, j = meio + 1;\n    while (i <= meio && j <= fim) {\n        if (v[i] <= v[j]) {      // empate: a esquerda primeiro\n            aux.push_back(v[i++]);\n        } else {\n            aux.push_back(v[j++]);\n        }\n    }\n    while (i <= meio) aux.push_back(v[i++]);  // sobras: esquerda\n    while (j <= fim) aux.push_back(v[j++]);   // sobras: direita\n    for (int k = 0; k < static_cast<int>(aux.size()); k++) {\n        v[ini + k] = aux[k];                  // copia de volta\n    }\n}\n\nvoid mergeSort(vector<int> &v, int ini, int fim) {\n    if (ini >= fim) return;      // 0 ou 1 elemento: já ordenado\n    int meio = ini + (fim - ini) / 2;\n    mergeSort(v, ini, meio);\n    mergeSort(v, meio + 1, fim);\n    intercalar(v, ini, meio, fim);\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>v[i++]</code> usa o valor de <code>v[i]</code> e só depois avança o <code>i</code>. O <code>&lt;=</code> na comparação faz o <em>merge sort</em> ser estável: em caso de empate, o elemento da metade esquerda, que vinha antes, é copiado primeiro."
+  },
+  {
+   "t": "p",
+   "html": "Para calcular o custo, olhe a figura por níveis. Intercalar todos os pedaços de um mesmo nível custa O(n), porque cada elemento é copiado uma vez. E, como o vetor é dividido ao meio a cada nível, existem log<sub>2</sub> n níveis (3, para 8 elementos). O total é O(n log n), <strong>em qualquer caso</strong>: o <em>merge sort</em> não depende da ordem da entrada. O preço é a memória: o vetor auxiliar ocupa O(n), então ele não funciona no lugar."
+  },
+  {
+   "t": "h2",
+   "id": "8-6-ordenacao-rapida-quicksort",
+   "texto": "8.6 Ordenação rápida (quicksort)"
+  },
+  {
+   "t": "p",
+   "html": "O <em>quicksort</em> também divide para conquistar, mas faz o trabalho pesado <strong>antes</strong> da recursão, e não depois. Ele escolhe um elemento, o <strong>pivô</strong>, e <strong>particiona</strong> o vetor: os menores que o pivô vão para a esquerda, os maiores para a direita, e o pivô fica entre os dois grupos, que é exatamente a sua posição final. Depois, basta ordenar cada grupo recursivamente. Não há nada para combinar."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-08_particao.png",
+   "alt": "capitulo 08 particao"
+  },
+  {
+   "t": "p",
+   "html": "A partição abaixo usa o último elemento como pivô. A variável <code>i</code> marca o fim da região dos menores; cada elemento menor que o pivô encontrado por <code>j</code> é trocado para dentro dessa região, que cresce uma posição. No final, o pivô é trocado para logo depois dela."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\n// põe o pivô (o último) na posição final e devolve essa posição\nint particionar(vector<int> &v, int ini, int fim) {\n    int pivo = v[fim];\n    int i = ini - 1;          // fim da região dos menores\n    for (int j = ini; j < fim; j++) {\n        if (v[j] < pivo) {\n            i++;\n            swap(v[i], v[j]); // entra na região dos menores\n        }\n    }\n    swap(v[i + 1], v[fim]);   // pivô logo após os menores\n    return i + 1;\n}\n\nvoid quickSort(vector<int> &v, int ini, int fim) {\n    if (ini >= fim) return;\n    int p = particionar(v, ini, fim);\n    quickSort(v, ini, p - 1); // o pivô já está no lugar\n    quickSort(v, p + 1, fim);\n}"
+  },
+  {
+   "t": "p",
+   "html": "O custo depende de quão bem o pivô divide o vetor. Quando os dois grupos têm tamanhos parecidos, a recursão tem cerca de log<sub>2</sub> n níveis, cada um com O(n) comparações, e o <em>quicksort</em> é O(n log n). Na prática, ele costuma ser o mais rápido de todos, porque faz poucas trocas, não copia o vetor e percorre a memória em sequência."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "O pior caso do quicksort",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Se o pivô for sempre o maior ou o menor elemento, um dos grupos fica vazio e o outro tem n - 1 elementos. A recursão passa a ter n níveis, e o custo vira O(n<sup>2</sup>). Com o último elemento como pivô, isso acontece justamente com um vetor <strong>já ordenado</strong>, uma entrada muito comum. Além de lento, o algoritmo pode estourar a pilha de execução com milhares de chamadas recursivas aninhadas. A solução é escolher melhor o pivô: o elemento do meio, um elemento sorteado ou a mediana entre o primeiro, o do meio e o último. Na partição acima, basta trocar o escolhido com o último antes de começar:"
+    },
+    {
+     "t": "codigo",
+     "texto": "// trecho\nint meio = ini + (fim - ini) / 2;\nswap(v[meio], v[fim]);   // o do meio passa a ser o pivô"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O <em>quicksort</em> funciona no lugar, usando só a pilha da recursão, O(log n) em média. Ele não é estável, porque as trocas da partição podem levar um elemento para longe, passando por cima de outros iguais a ele."
+  },
+  {
+   "t": "p",
+   "html": "O programa completo testa os dois algoritmos no vetor de exemplo e em um vetor de 100 mil números pseudoaleatórios:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <utility>     // swap\n#include <algorithm>   // is_sorted\n\nvoid intercalar(vector<int> &v, int ini, int meio, int fim) {\n    vector<int> aux;\n    aux.reserve(fim - ini + 1);\n    int i = ini, j = meio + 1;\n    while (i <= meio && j <= fim) {\n        if (v[i] <= v[j]) {\n            aux.push_back(v[i++]);\n        } else {\n            aux.push_back(v[j++]);\n        }\n    }\n    while (i <= meio) aux.push_back(v[i++]);\n    while (j <= fim) aux.push_back(v[j++]);\n    for (int k = 0; k < static_cast<int>(aux.size()); k++) {\n        v[ini + k] = aux[k];\n    }\n}\n\nvoid mergeSort(vector<int> &v, int ini, int fim) {\n    if (ini >= fim) return;\n    int meio = ini + (fim - ini) / 2;\n    mergeSort(v, ini, meio);\n    mergeSort(v, meio + 1, fim);\n    intercalar(v, ini, meio, fim);\n}\n\nint particionar(vector<int> &v, int ini, int fim) {\n    int meio = ini + (fim - ini) / 2;\n    swap(v[meio], v[fim]);    // o do meio passa a ser o pivô\n    int pivo = v[fim];\n    int i = ini - 1;\n    for (int j = ini; j < fim; j++) {\n        if (v[j] < pivo) {\n            i++;\n            swap(v[i], v[j]);\n        }\n    }\n    swap(v[i + 1], v[fim]);\n    return i + 1;\n}\n\nvoid quickSort(vector<int> &v, int ini, int fim) {\n    if (ini >= fim) return;\n    int p = particionar(v, ini, fim);\n    quickSort(v, ini, p - 1);\n    quickSort(v, p + 1, fim);\n}\n\nint main() {\n    vector<int> a = {29, 10, 14, 37, 13, 5, 41, 22};\n    vector<int> b = a;\n    mergeSort(a, 0, static_cast<int>(a.size()) - 1);\n    quickSort(b, 0, static_cast<int>(b.size()) - 1);\n    for (int x : a) cout << x << \" \";\n    cout << endl;             // 5 10 13 14 22 29 37 41\n\n    vector<int> grande(100000);\n    unsigned int semente = 42;\n    for (int &x : grande) {   // gerador congruencial simples\n        semente = semente * 1103515245u + 12345u;\n        x = static_cast<int>(semente % 1000000);\n    }\n    vector<int> c = grande;\n    int ultimo = static_cast<int>(grande.size()) - 1;\n    mergeSort(grande, 0, ultimo);\n    quickSort(c, 0, ultimo);\n    cout << boolalpha << is_sorted(grande.begin(), grande.end())\n         << \" \" << (grande == c) << endl;   // true true\n}"
+  },
+  {
+   "t": "p",
+   "html": "A função <code>is_sorted</code>, da biblioteca <code>&lt;algorithm&gt;</code>, confere se um vetor está em ordem, e <code>grande == c</code> compara os dois vetores posição por posição. Testar um algoritmo de ordenação com muitos dados gerados automaticamente encontra erros que um exemplo de oito números não mostraria; o Capítulo 11 volta a esse assunto."
+  },
+  {
+   "t": "h2",
+   "id": "8-7-heap-e-heapsort",
+   "texto": "8.7 Heap e heapsort"
+  },
+  {
+   "t": "p",
+   "html": "Um <strong>heap</strong> (máximo) é uma árvore binária com duas propriedades:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "é <strong>completa</strong>: todos os níveis estão cheios, menos talvez o último, que é preenchido da esquerda para a direita;",
+    "cada nó é <strong>maior ou igual a seus filhos</strong>. Por isso, o maior de todos está sempre na raiz."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Diferente da árvore binária de busca do Capítulo 5, o heap não diz nada sobre a ordem entre irmãos; ele só garante que cada pai vence os filhos. E, por ser completo, ele cabe em um vetor sem nenhum ponteiro: basta guardar os nós nível por nível, da esquerda para a direita."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-08_heap.png",
+   "alt": "capitulo 08 heap"
+  },
+  {
+   "t": "p",
+   "html": "A operação central do heap é <strong>descer</strong>: quando um nó é menor que algum filho, ele troca de lugar com o maior dos filhos e continua descendo até ficar maior que os dois, ou chegar a uma folha. Como a altura de uma árvore completa é log<sub>2</sub> n, descer custa O(log n)."
+  },
+  {
+   "t": "p",
+   "html": "O <strong>heapsort</strong> usa o heap em duas etapas:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. <strong>Montar o heap</strong>: faça descer cada nó que tem filhos, do último até a raiz. Ao final, o vetor de exemplo vira o heap da figura.",
+    "2. <strong>Ordenar</strong>: o maior está na posição 0. Troque-o com o último elemento do heap, que passa a ter uma posição a menos, e faça a nova raiz descer para consertar o heap. Repita até sobrar um elemento. Os maiores vão sendo guardados no fim do vetor, do maior para o menor."
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\n// faz v[i] descer até o lugar certo em um heap de n elementos\nvoid descer(vector<int> &v, int i, int n) {\n    while (true) {\n        int maior = i;\n        int esq = 2 * i + 1, dir = 2 * i + 2;\n        if (esq < n && v[esq] > v[maior]) maior = esq;\n        if (dir < n && v[dir] > v[maior]) maior = dir;\n        if (maior == i) return;   // já é maior que os filhos\n        swap(v[i], v[maior]);\n        i = maior;\n    }\n}\n\nvoid heapSort(vector<int> &v) {\n    int n = static_cast<int>(v.size());\n    for (int i = n / 2 - 1; i >= 0; i--) {  // 1. monta o heap\n        descer(v, i, n);\n    }\n    for (int fim = n - 1; fim > 0; fim--) { // 2. ordena\n        swap(v[0], v[fim]);         // o maior vai para o fim\n        descer(v, 0, fim);          // conserta o que sobrou\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "Os nós com filhos são os de índice 0 a n/2 - 1; os outros são folhas, que já são heaps de um elemento. Montar o heap custa O(n) (a conta é mais sutil do que parece, porque a maioria dos nós está perto das folhas e desce pouco), e cada uma das n - 1 retiradas custa O(log n). O <em>heapsort</em> é O(n log n) em <strong>qualquer caso</strong>, como o <em>merge sort</em>, e funciona no lugar, como o <em>quicksort</em>. Ele não é estável."
+  },
+  {
+   "t": "h3",
+   "texto": "A fila de prioridade"
+  },
+  {
+   "t": "p",
+   "html": "O heap também é a estrutura por trás da <code>priority_queue</code> usada pelo Dijkstra e pelo Prim no Capítulo 6. Retirar o maior é o mesmo movimento do <em>heapsort</em>: o último elemento vai para a raiz e desce. Inserir é o movimento contrário: o novo elemento entra no fim do vetor e <strong>sobe</strong>, trocando de lugar com o pai enquanto for maior que ele. As duas operações custam O(log n)."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <utility>   // swap\n\nvoid descer(vector<int> &v, int i, int n) {\n    while (true) {\n        int maior = i;\n        int esq = 2 * i + 1, dir = 2 * i + 2;\n        if (esq < n && v[esq] > v[maior]) maior = esq;\n        if (dir < n && v[dir] > v[maior]) maior = dir;\n        if (maior == i) return;\n        swap(v[i], v[maior]);\n        i = maior;\n    }\n}\n\nvoid heapSort(vector<int> &v) {\n    int n = static_cast<int>(v.size());\n    for (int i = n / 2 - 1; i >= 0; i--) {\n        descer(v, i, n);\n    }\n    for (int fim = n - 1; fim > 0; fim--) {\n        swap(v[0], v[fim]);\n        descer(v, 0, fim);\n    }\n}\n\nclass FilaPrioridade {\nprivate:\n    vector<int> dados;   // um heap máximo\n\npublic:\n    bool vazia() const { return dados.empty(); }\n\n    void inserir(int valor) {\n        dados.push_back(valor);          // entra no fim...\n        int i = static_cast<int>(dados.size()) - 1;\n        while (i > 0 && dados[(i - 1) / 2] < dados[i]) {\n            swap(dados[i], dados[(i - 1) / 2]);  // ...e sobe\n            i = (i - 1) / 2;\n        }\n    }\n\n    int remover() {                      // tira o maior\n        int maior = dados[0];\n        dados[0] = dados.back();         // o último vai à raiz...\n        dados.pop_back();\n        int n = static_cast<int>(dados.size());\n        descer(dados, 0, n);             // ...e desce\n        return maior;\n    }\n};\n\nint main() {\n    vector<int> v = {29, 10, 14, 37, 13, 5, 41, 22};\n    heapSort(v);\n    for (int x : v) cout << x << \" \";\n    cout << endl;                // 5 10 13 14 22 29 37 41\n\n    FilaPrioridade fila;\n    for (int x : {29, 10, 14, 37, 13}) fila.inserir(x);\n    while (!fila.vazia()) cout << fila.remover() << \" \";\n    cout << endl;                // 37 29 14 13 10\n}"
+  },
+  {
+   "t": "h2",
+   "id": "8-8-comparando-os-algoritmos",
+   "texto": "8.8 Comparando os algoritmos"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Algoritmo",
+    "Médio",
+    "Pior",
+    "Memória",
+    "Estável"
+   ],
+   "linhas": [
+    [
+     "bolha",
+     "O(n<sup>2</sup>)",
+     "O(n<sup>2</sup>)",
+     "O(1)",
+     "sim"
+    ],
+    [
+     "seleção",
+     "O(n<sup>2</sup>)",
+     "O(n<sup>2</sup>)",
+     "O(1)",
+     "não"
+    ],
+    [
+     "inserção",
+     "O(n<sup>2</sup>)",
+     "O(n<sup>2</sup>)",
+     "O(1)",
+     "sim"
+    ],
+    [
+     "<em>merge sort</em>",
+     "O(n log n)",
+     "O(n log n)",
+     "O(n)",
+     "sim"
+    ],
+    [
+     "<em>quicksort</em>",
+     "O(n log n)",
+     "O(n<sup>2</sup>)",
+     "O(log n)",
+     "não"
+    ],
+    [
+     "<em>heapsort</em>",
+     "O(n log n)",
+     "O(n log n)",
+     "O(1)",
+     "não"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Nenhum é o melhor em tudo. O <em>merge sort</em> é previsível e estável, mas gasta memória; o <em>quicksort</em> é o mais rápido na média, mas tem um pior caso ruim; o <em>heapsort</em> garante O(n log n) no lugar, mas costuma ser mais lento que os outros dois na prática. E, em vetores pequenos, de algumas dezenas de elementos, a simples inserção vence todos eles, porque faz pouquíssimo trabalho por passo."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Dá para ordenar mais rápido que O(n log n)?",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Não, se o algoritmo só puder comparar elementos. Um vetor de n elementos pode estar em n! ordens diferentes, e cada comparação, com resposta “sim” ou “não”, no máximo corta pela metade as ordens ainda possíveis. Para separar todas elas são necessárias pelo menos log<sub>2</sub> (n!) comparações, que é da ordem de n log n: para 1.000 elementos, cerca de 8.500. Algoritmos que não comparam, como a ordenação por contagem (<em>counting sort</em>), escapam desse limite, mas só funcionam para chaves especiais, como inteiros em uma faixa pequena."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Ordenação na biblioteca padrão"
+  },
+  {
+   "t": "p",
+   "html": "No dia a dia, use a <code>sort</code> da biblioteca <code>&lt;algorithm&gt;</code>. Ela é um <strong>introsort</strong>: começa como um <em>quicksort</em>, passa para o <em>heapsort</em> se a recursão ficar funda demais (fugindo do pior caso) e termina os pedaços pequenos com a inserção. Quando precisar de estabilidade, use a <code>stable_sort</code>, que é um <em>merge sort</em>."
+  },
+  {
+   "t": "p",
+   "html": "As duas aceitam um terceiro parâmetro, o <strong>critério de comparação</strong>: uma função que recebe dois elementos e responde se o primeiro deve vir antes do segundo. Ele pode ser um objeto pronto, como <code>greater&lt;&gt;()</code> para a ordem decrescente, ou uma função anônima (<em>lambda</em>), escrita ali mesmo, que você vai estudar no Capítulo 10."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <algorithm>    // sort, stable_sort\n#include <functional>   // greater\n\nstruct Aluno {\n    string nome;\n    double nota;\n};\n\nint main() {\n    vector<int> v = {29, 10, 14, 37, 13, 5, 41, 22};\n    sort(v.begin(), v.end());                // crescente\n    sort(v.begin(), v.end(), greater<>());   // decrescente\n    for (int x : v) cout << x << \" \";\n    cout << endl;                // 41 37 29 22 14 13 10 5\n\n    vector<Aluno> turma = {{\"Davi\", 7.5}, {\"Ana\", 9.0},\n                           {\"Caio\", 7.5}, {\"Bia\", 9.0}};\n    // maior nota primeiro; no empate, mantém a ordem original\n    stable_sort(turma.begin(), turma.end(),\n                [](const Aluno &a, const Aluno &b) {\n                    return a.nota > b.nota;\n                });\n    for (const Aluno &a : turma) cout << a.nome << \" \";\n    cout << endl;                // Ana Bia Davi Caio\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare no resultado: Ana e Bia têm 9,0 e aparecem na ordem em que estavam (Ana antes de Bia), e o mesmo acontece com Davi e Caio. Com a <code>sort</code>, que não é estável, a ordem dentro de cada empate poderia ser qualquer uma."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Comparando com Python",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em Python, <code>sorted(lista)</code> devolve uma nova lista ordenada e <code>lista.sort()</code> ordena a própria lista. Os dois usam o <strong>Timsort</strong>, uma combinação de <em>merge sort</em> e inserção que aproveita os trechos já ordenados da entrada. Ele é estável e O(n log n). Em vez de um critério de comparação, o Python usa uma <strong>chave</strong>: o parâmetro <code>key</code> recebe uma função que diz por qual valor cada elemento deve ser ordenado."
+    },
+    {
+     "t": "codigo",
+     "texto": "numeros = [29, 10, 14, 37, 13, 5, 41, 22]\nprint(sorted(numeros))          # nova lista, em ordem crescente\nnumeros.sort(reverse=True)      # ordena a própria lista\nprint(numeros)                  # [41, 37, 29, 22, 14, 13, 10, 5]\n\nturma = [('Davi', 7.5), ('Ana', 9.0), ('Caio', 7.5), ('Bia', 9.0)]\npor_nota = sorted(turma, key=lambda aluno: aluno[1], reverse=True)\nprint([nome for nome, _ in por_nota])\n# ['Ana', 'Bia', 'Davi', 'Caio']\n\ndef merge_sort(v):\n    if len(v) <= 1:\n        return v\n    meio = len(v) // 2\n    esquerda, direita = merge_sort(v[:meio]), merge_sort(v[meio:])\n    resultado = []\n    i = j = 0\n    while i < len(esquerda) and j < len(direita):\n        if esquerda[i] <= direita[j]:\n            resultado.append(esquerda[i])\n            i += 1\n        else:\n            resultado.append(direita[j])\n            j += 1\n    return resultado + esquerda[i:] + direita[j:]\n\nprint(merge_sort([29, 10, 14, 37, 13, 5, 41, 22]))"
+    },
+    {
+     "t": "p",
+     "html": "O fatiamento (<code>v[:meio]</code>, <code>esquerda[i:]</code>) deixa o <em>merge sort</em> em Python bem curto, mas cada fatia cria uma lista nova. O módulo <code>heapq</code>, visto no Capítulo 6, oferece as operações do heap prontas sobre uma lista comum."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Passar do fim do vetor na bolha.</strong> O laço interno compara <code>v[i]</code> com <code>v[i + 1]</code>, então <code>i</code> precisa parar em <code>n - 2</code>. Com <code>i &lt; n</code>, a última comparação lê uma posição que não existe.",
+    "<strong>Inverter as condições do <code>while</code> da inserção.</strong> Em <code>while (v[j] &gt; chave &amp;&amp; j &gt;= 0)</code>, o <code>v[-1]</code> é lido antes de o <code>j &gt;= 0</code> ser testado. A ordem certa é <code>j &gt;= 0 &amp;&amp; v[j] &gt; chave</code>: o <code>&amp;&amp;</code> para na primeira condição falsa.",
+    "<strong>Esquecer as sobras na intercalação.</strong> Quando uma metade acaba, os elementos restantes da outra precisam ser copiados; sem os dois <code>while</code> finais, eles se perdem.",
+    "<strong>Usar <code>&lt;</code> em vez de <code>&lt;=</code> na intercalação.</strong> O vetor continua ordenado, mas o <em>merge sort</em> deixa de ser estável.",
+    "<strong>Usar sempre o último elemento como pivô.</strong> Com dados já ordenados, o <em>quicksort</em> vira O(n<sup>2</sup>) e pode estourar a pilha.",
+    "<strong>Achar que O(n<sup>2</sup>) é sempre pior.</strong> Para vetores pequenos ou quase ordenados, a inserção costuma ser mais rápida que os algoritmos O(n log n).",
+    "<strong>Usar <code>&lt;=</code> no critério de comparação da <code>sort</code>.</strong> O critério precisa responder <code>false</code> quando os dois elementos são iguais. Com <code>&lt;=</code>, o comportamento é indefinido, e o programa pode até travar.",
+    "<strong>Ordenar uma cópia sem perceber.</strong> Se a função de ordenação recebe o vetor por valor, como em <code>vector&lt;int&gt; v</code>, ela ordena uma cópia, e o original continua igual. Use referência: <code>vector&lt;int&gt; &amp;v</code>."
+   ]
+  }
+ ]
+}

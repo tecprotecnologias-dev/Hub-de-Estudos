@@ -1,0 +1,19 @@
+% Capítulo 8: partição do quicksort com o último elemento (22) como pivô.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-vetores}
+\begin{document}
+\begin{tikzpicture}
+  \node[explica] at (-0.6, 0) {antes};
+  \vetor{a}{0}{0}{29/casa, 10/casa, 14/casa, 37/casa, 13/casa, 5/casa, 41/casa, 22/marcada}
+  \foreach \i in {0,...,7} { \node[indice, above=0.5mm of a\i] {\i}; }
+  \node[rotulo, right=3mm of a7] {pivô};
+  \node[explica] at (-0.6, -1.6) {depois};
+  \vetor{b}{0}{-1.6}{10/parte, 14/parte, 13/parte, 5/parte, 22/marcada, 37/pronta, 41/pronta, 29/pronta}
+  \draw[seta] (a7.south) to[out=-110, in=60] (b4.north east);
+  \draw[chave] ([yshift=-1mm]b0.south west) -- node[legenda, below=2mm] {menores que 22} ([yshift=-1mm]b3.south east);
+  \draw[chave] ([yshift=-1mm]b5.south west) -- node[legenda, below=2mm] {maiores que 22} ([yshift=-1mm]b7.south east);
+  \node[legenda, below=9mm of b4, text=laranja] {o 22 já está na posição final};
+\end{tikzpicture}
+\end{document}

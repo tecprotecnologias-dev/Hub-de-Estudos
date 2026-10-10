@@ -1,0 +1,25 @@
+% Capítulo 8: bubble sort, estado do vetor ao fim de cada passada.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-vetores}
+\begin{document}
+\begin{tikzpicture}
+  \node[explica] at (-0.6, 0) {início};
+  \vetor{a}{0}{0}{29/casa, 10/casa, 14/casa, 37/casa, 13/casa, 5/casa, 41/casa, 22/casa}
+  \foreach \i in {0,...,7} { \node[indice, above=0.5mm of a\i] {\i}; }
+  \node[explica] at (-0.6, -0.9) {passada 1 (5 trocas)};
+  \vetor{b}{0}{-0.9}{10/casa, 14/casa, 29/casa, 13/casa, 5/casa, 37/casa, 22/casa, 41/pronta}
+  \node[explica] at (-0.6, -1.8) {passada 2 (3 trocas)};
+  \vetor{c}{0}{-1.8}{10/casa, 14/casa, 13/casa, 5/casa, 29/casa, 22/casa, 37/pronta, 41/pronta}
+  \node[explica] at (-0.6, -2.7) {passada 3 (3 trocas)};
+  \vetor{d}{0}{-2.7}{10/casa, 13/casa, 5/casa, 14/casa, 22/casa, 29/pronta, 37/pronta, 41/pronta}
+  \node[explica] at (-0.6, -3.6) {passada 4 (1 troca)};
+  \vetor{e}{0}{-3.6}{10/casa, 5/casa, 13/casa, 14/casa, 22/pronta, 29/pronta, 37/pronta, 41/pronta}
+  \node[explica] at (-0.6, -4.5) {passada 5 (1 troca)};
+  \vetor{f}{0}{-4.5}{5/casa, 10/casa, 13/casa, 14/pronta, 22/pronta, 29/pronta, 37/pronta, 41/pronta}
+  \node[legenda, align=center] at (2.8, -5.45)
+    {em azul: posições definitivas (a cada passada, o maior que sobrou ``borbulha'' até o fim)\\
+     a passada 6 não faz nenhuma troca, e o algoritmo para};
+\end{tikzpicture}
+\end{document}

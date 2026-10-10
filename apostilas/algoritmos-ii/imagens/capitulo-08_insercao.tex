@@ -1,0 +1,29 @@
+% Capítulo 8: insertion sort, estado do vetor depois de inserir cada elemento.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-vetores}
+\begin{document}
+\begin{tikzpicture}
+  \node[explica] at (-0.6, 0) {início};
+  \vetor{a}{0}{0}{29/parte, 10/casa, 14/casa, 37/casa, 13/casa, 5/casa, 41/casa, 22/casa}
+  \foreach \i in {0,...,7} { \node[indice, above=0.5mm of a\i] {\i}; }
+  \node[explica] at (-0.6, -0.9) {insere 10 (desloca 1)};
+  \vetor{b}{0}{-0.9}{10/marcada, 29/parte, 14/casa, 37/casa, 13/casa, 5/casa, 41/casa, 22/casa}
+  \node[explica] at (-0.6, -1.8) {insere 14 (desloca 1)};
+  \vetor{c}{0}{-1.8}{10/parte, 14/marcada, 29/parte, 37/casa, 13/casa, 5/casa, 41/casa, 22/casa}
+  \node[explica] at (-0.6, -2.7) {insere 37 (desloca 0)};
+  \vetor{d}{0}{-2.7}{10/parte, 14/parte, 29/parte, 37/marcada, 13/casa, 5/casa, 41/casa, 22/casa}
+  \node[explica] at (-0.6, -3.6) {insere 13 (desloca 3)};
+  \vetor{e}{0}{-3.6}{10/parte, 13/marcada, 14/parte, 29/parte, 37/parte, 5/casa, 41/casa, 22/casa}
+  \node[explica] at (-0.6, -4.5) {insere 5 (desloca 5)};
+  \vetor{f}{0}{-4.5}{5/marcada, 10/parte, 13/parte, 14/parte, 29/parte, 37/parte, 41/casa, 22/casa}
+  \node[explica] at (-0.6, -5.4) {insere 41 (desloca 0)};
+  \vetor{g}{0}{-5.4}{5/parte, 10/parte, 13/parte, 14/parte, 29/parte, 37/parte, 41/marcada, 22/casa}
+  \node[explica] at (-0.6, -6.3) {insere 22 (desloca 3)};
+  \vetor{h}{0}{-6.3}{5/parte, 10/parte, 13/parte, 14/parte, 22/marcada, 29/parte, 37/parte, 41/parte}
+  \node[legenda, align=center] at (2.8, -7.2)
+    {em laranja claro: a parte já ordenada, que cresce uma posição por vez.\\
+     em laranja forte: o elemento que acabou de ser inserido no lugar certo};
+\end{tikzpicture}
+\end{document}
