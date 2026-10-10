@@ -401,6 +401,20 @@ export const apostilas: Apostila[] = [
       'Ciclo de vida das tecnologias, WebRTC, PWAs, WebAssembly, Web Components, Jamstack, serverless, edge computing e IA no frontend.',
   },
 
+  // Algoritmos e Linguagem de Programação I — "Algoritmos e Programação: Lógica, Portugol e C++" (TecPro)
+  // Texto próprio, escrito a partir da ementa (Portugol + C++; Java só na orientação a objetos).
+  // Fonte: apostilas/algoritmos-i/capitulos/capitulo-NN.tex (raiz do repositório), convertida com
+  // ferramentas/converter_latex.py; o código é testado com apostilas/algoritmos-i/testar_codigo.py
+  {
+    id: 'alg1-cap1',
+    capitulo: 1,
+    titulo: 'Lógica, algoritmos e o computador',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-i',
+    unidades: ['Algoritmos e Estruturas de Dados'],
+    descricao:
+      'Proposições e tabela-verdade, o que é um algoritmo, a arquitetura de Von Neumann, do problema ao algoritmo, fluxogramas, Portugol, teste de mesa e o primeiro programa em C++.',
+  },
+
   // Algoritmos e Linguagem de Programação II — "Algoritmos e Estruturas de Dados" (TecPro)
   // Texto próprio, escrito a partir da ementa (temas dos slides de EDA usados só como roteiro).
   // Fonte: apostilas/algoritmos-ii/capitulos/capitulo-NN.tex (raiz do repositório), convertida com

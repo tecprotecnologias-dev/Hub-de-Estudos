@@ -1,0 +1,26 @@
+% Capítulo 1: fluxograma da média de duas notas com aprovação.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-fluxo}
+\begin{document}
+\begin{tikzpicture}[node distance=6mm]
+  \node[terminal] (ini) {Início};
+  \node[es, below=of ini] (ler) {Leia nota1, nota2};
+  \node[processo, below=of ler] (calc) {media $\leftarrow$ (nota1 + nota2) / 2};
+  \node[decisao, below=of calc] (dec) {media $\geq$ 6?};
+  \node[es, below left=7mm and 4mm of dec] (apr) {Escreva\\``Aprovado''};
+  \node[es, below right=7mm and 4mm of dec] (rep) {Escreva\\``Reprovado''};
+  \coordinate (junta) at ($(dec.south) + (0, -2.3)$);
+  \node[terminal, below=6mm of junta] (fim) {Fim};
+
+  \draw[fluxo] (ini) -- (ler);
+  \draw[fluxo] (ler) -- (calc);
+  \draw[fluxo] (calc) -- (dec);
+  \draw[fluxo] (dec.west) -| node[resposta, pos=0.25, above] {sim} (apr.north);
+  \draw[fluxo] (dec.east) -| node[resposta, pos=0.25, above] {não} (rep.north);
+  \draw[navy, line width=0.9pt] (apr.south) |- (junta);
+  \draw[navy, line width=0.9pt] (rep.south) |- (junta);
+  \draw[fluxo] (junta) -- (fim);
+\end{tikzpicture}
+\end{document}

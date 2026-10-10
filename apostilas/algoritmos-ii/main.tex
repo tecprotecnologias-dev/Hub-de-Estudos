@@ -28,6 +28,9 @@
 \usepackage{fvextra}
 \usepackage{array}
 \usepackage{amsmath}
+% sem isto, << e >> no texto viram aspas francesas na fonte de código
+\usepackage[protrusion=false,expansion=false]{microtype}
+\DisableLigatures[<,>]{encoding = T1, family = tt*}
 
 \setlength{\emergencystretch}{2.5em}
 \AtBeginDocument{\renewcommand{\contentsname}{Sumário}}

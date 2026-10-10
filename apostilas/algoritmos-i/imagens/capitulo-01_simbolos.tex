@@ -1,0 +1,23 @@
+% Capítulo 1: símbolos básicos do fluxograma.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-fluxo}
+\begin{document}
+\begin{tikzpicture}
+  \node[terminal] (t) at (0, 0) {Início};
+  \node[legenda, below=1.5mm of t, align=center] {terminal:\\início e fim};
+
+  \node[es] (e) at (3.5, 0) {Leia nota};
+  \node[legenda, below=1.5mm of e, align=center] {entrada e saída:\\ler ou mostrar dados};
+
+  \node[processo] (p) at (7.2, 0) {soma $\leftarrow$ a + b};
+  \node[legenda, below=1.5mm of p, align=center] {processo:\\cálculo ou atribuição};
+
+  \node[decisao] (d) at (10.9, 0) {nota $\geq$ 6?};
+  \node[legenda, below=0.5mm of d, align=center] {decisão:\\pergunta de sim ou não};
+
+  \draw[fluxo] (13.0, 0.25) -- (14.2, 0.25);
+  \node[legenda, align=center] at (13.6, -0.55) {fluxo:\\o próximo passo};
+\end{tikzpicture}
+\end{document}

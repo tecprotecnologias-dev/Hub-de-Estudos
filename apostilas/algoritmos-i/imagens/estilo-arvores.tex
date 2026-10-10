@@ -1,0 +1,16 @@
+% Estilo comum das figuras de árvores (capítulo 5).
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc}
+\definecolor{navy}{RGB}{23,45,80}
+\definecolor{laranja}{RGB}{250,110,29}
+\definecolor{cinzalogo}{RGB}{107,114,126}
+\tikzset{
+  vertice/.style={circle, draw=navy, line width=0.9pt, fill=laranja!12, minimum size=8mm,
+                  inner sep=0pt, font=\sffamily\small},
+  destaque/.style={vertice, fill=laranja!45, draw=laranja},
+  apagado/.style={vertice, dashed, draw=cinzalogo, fill=white, text=cinzalogo},
+  arvore/.style={level distance=12mm, edge from parent/.style={draw=navy, line width=0.9pt}},
+  rotulo/.style={font=\sffamily\small\bfseries, text=navy},
+  legenda/.style={font=\sffamily\scriptsize, text=cinzalogo},
+  setanova/.style={-{Stealth[length=2.2mm]}, laranja, line width=1.3pt},
+}

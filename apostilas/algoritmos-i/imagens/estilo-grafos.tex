@@ -1,0 +1,27 @@
+% Estilo comum das figuras de grafos (capítulo 6).
+\input{estilo-arvores}
+\tikzset{
+  aresta/.style={draw=navy, line width=0.9pt},
+  arestaforte/.style={draw=laranja, line width=2.6pt},
+  peso/.style={font=\sffamily\scriptsize, fill=white, inner sep=1.2pt, text=navy},
+  arco/.style={-{Stealth[length=2.4mm]}, draw=navy, line width=0.9pt, shorten >=0.5pt},
+  dist/.style={font=\sffamily\scriptsize\bfseries, text=laranja},
+}
+% Posições do grafo de exemplo (cidades A a F).
+\newcommand{\posicoes}{%
+  \coordinate (pA) at (0,0);
+  \coordinate (pB) at (2.4,1.4);
+  \coordinate (pC) at (2.4,-1.4);
+  \coordinate (pD) at (5.2,1.4);
+  \coordinate (pE) at (5.2,-1.4);
+  \coordinate (pF) at (7.6,0);
+}
+\newcommand{\arestasexemplo}{A/B/4, A/C/2, B/C/1, B/D/5, C/D/8, C/E/7, D/E/2, D/F/6, E/F/3}
+% \grafoexemplo{arestas destacadas, ex.: A/C, C/B}{estilo dos vértices}
+\newcommand{\grafoexemplo}[2]{%
+  \posicoes
+  \foreach \a/\b/\p in \arestasexemplo { \draw[aresta] (p\a) -- (p\b); }
+  \foreach \a/\b in {#1} { \draw[arestaforte] (p\a) -- (p\b); }
+  \foreach \a/\b/\p in \arestasexemplo { \path (p\a) -- node[peso] {\p} (p\b); }
+  \foreach \v in {A,B,C,D,E,F} { \node[#2] (\v) at (p\v) {\v}; }
+}

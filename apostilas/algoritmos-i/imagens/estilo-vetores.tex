@@ -1,0 +1,27 @@
+% Estilo comum das figuras de vetores (capítulo 8).
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc, decorations.pathreplacing}
+\definecolor{navy}{RGB}{23,45,80}
+\definecolor{laranja}{RGB}{250,110,29}
+\definecolor{cinzalogo}{RGB}{107,114,126}
+\definecolor{azul}{RGB}{205,222,247}
+\tikzset{
+  casa/.style={draw=navy, line width=0.9pt, minimum width=8mm, minimum height=7mm,
+               inner sep=0pt, font=\sffamily\small},
+  pronta/.style={casa, fill=azul},
+  parte/.style={casa, fill=laranja!12},
+  marcada/.style={casa, fill=laranja!45, draw=laranja},
+  fora/.style={casa, draw=cinzalogo!60, dashed, fill=white, text=cinzalogo!60},
+  indice/.style={font=\sffamily\scriptsize, text=cinzalogo},
+  explica/.style={font=\sffamily\small, text=navy, anchor=east},
+  legenda/.style={font=\sffamily\scriptsize, text=cinzalogo},
+  rotulo/.style={font=\sffamily\small\bfseries, text=navy},
+  seta/.style={-{Stealth[length=2.2mm]}, navy, line width=0.9pt},
+  chave/.style={decorate, decoration={brace, amplitude=4pt, mirror}, navy, line width=0.8pt},
+}
+% \vetor{nome}{x}{y}{valor/estilo, valor/estilo, ...}: casas lado a lado, chamadas nome0, nome1...
+\newcommand{\vetor}[4]{%
+  \foreach \valor/\estilo [count=\i from 0] in {#4} {
+    \node[\estilo] (#1\i) at ($(#2, #3) + (\i*0.8, 0)$) {\valor};
+  }
+}
