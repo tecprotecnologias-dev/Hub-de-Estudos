@@ -247,7 +247,7 @@ int main() {
 
 \begin{itemize}
   \item Cada \texttt{case} indica um valor possível. Ele precisa ser uma constante, de um tipo inteiro ou \texttt{char}: o \texttt{switch} não funciona com \texttt{double}, \texttt{string} nem com faixas como ``de 4 a 6''.
-  \item O \texttt{break} encerra o \texttt{switch}. Sem ele, a execução \textbf{continua no caso seguinte}, mesmo que o valor seja outro. Às vezes isso é útil, como em \texttt{'*'} e \texttt{'x'}, que compartilham o mesmo código; na maioria das vezes, esquecer o \texttt{break} é um erro.
+  \item O \texttt{break} encerra o \texttt{switch}. Sem ele, a execução \textbf{continua no caso seguinte}, mesmo que o valor seja outro. Às vezes isso é útil, como em \texttt{\textquotesingle{}*\textquotesingle{}} e \texttt{\textquotesingle{}x\textquotesingle{}}, que compartilham o mesmo código; na maioria das vezes, esquecer o \texttt{break} é um erro.
   \item O \texttt{default} é executado quando nenhum caso corresponde, e funciona como o \texttt{else} final.
 \end{itemize}
 
@@ -345,7 +345,7 @@ int main() {
   \item Em \texttt{if (saldo > 100);}, o ponto e vírgula encerra o \texttt{if} com um comando vazio. O bloco entre chaves logo abaixo deixa de pertencer a ele e é executado sempre. Resultado: ``Saldo alto'' com saldo 0.
 \end{itemize}
 
-Os dois erros são avisados pelo g++ quando se compila com \texttt{-Wall -Wextra}: ``\texttt{suggest parentheses around assignment used as truth value}'' para o primeiro e ``\texttt{suggest braces around empty body in an 'if' statement}'' para o segundo. É mais um motivo para nunca ignorar os avisos.
+Os dois erros são avisados pelo g++ quando se compila com \texttt{-Wall -Wextra}: ``\texttt{suggest parentheses around assignment used as truth value}'' para o primeiro e ``\texttt{suggest braces around empty body in an \textquotesingle{}if\textquotesingle{} statement}'' para o segundo. É mais um motivo para nunca ignorar os avisos.
 
 Um terceiro cuidado é o \texttt{else} sem chaves. Sem elas, cada \texttt{if} controla apenas o comando seguinte, e um \texttt{else} sempre pertence ao \texttt{if} mais próximo que ainda não tem \texttt{else}, não importa o recuo. Com chaves em todos os blocos, essa dúvida simplesmente não existe.
 

@@ -155,7 +155,7 @@ int main() {
 \end{Verbatim}
 \end{codigo}
 
-Com a entrada \texttt{5 4 5 3 5 4 1 0}, a saída é um pequeno gráfico de barras, desenhado com \texttt{string(n, '*')}, que cria um texto com \texttt{n} asteriscos:
+Com a entrada \texttt{5 4 5 3 5 4 1 0}, a saída é um pequeno gráfico de barras, desenhado com \texttt{string(n, \textquotesingle{}*\textquotesingle{})}, que cria um texto com \texttt{n} asteriscos:
 
 \begin{codigo}
 \begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
@@ -370,7 +370,7 @@ int main() {
 \end{Verbatim}
 \end{codigo}
 
-O laço de \texttt{vencedor} aproveita a mesma variável \texttt{i} para as linhas (\texttt{t[i][...]}) e para as colunas (\texttt{t[...][i]}). A função \texttt{iguais} evita repetir a mesma comparação oito vezes e, ao exigir \texttt{a != ' '}, impede que uma linha vazia seja contada como vitória. Para testar, monte tabuleiros que vençam por linha, por coluna, por cada diagonal, e um sem vencedor.
+O laço de \texttt{vencedor} aproveita a mesma variável \texttt{i} para as linhas (\texttt{t[i][...]}) e para as colunas (\texttt{t[...][i]}). A função \texttt{iguais} evita repetir a mesma comparação oito vezes e, ao exigir \texttt{a != \textquotesingle{} \textquotesingle{}}, impede que uma linha vazia seja contada como vitória. Para testar, monte tabuleiros que vençam por linha, por coluna, por cada diagonal, e um sem vencedor.
 
 \subsection{7.8 Vetores com tamanho variável: vector}
 

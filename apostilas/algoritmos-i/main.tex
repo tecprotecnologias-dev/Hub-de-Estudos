@@ -26,6 +26,8 @@
 \hypersetup{hidelinks}
 \usepackage{parskip}
 \usepackage{fvextra}
+\usepackage{upquote}  % aspas retas no código: 'A', e não ’A’
+\AtBeginDocument{\shorthandoff{"}}  % "a" < "b" no texto sem virar «
 \usepackage{array}
 \usepackage{amsmath}
 % sem isto, << e >> no texto viram aspas francesas na fonte de código
@@ -199,5 +201,7 @@
 \input{capitulos/capitulo-06}
 \newpage
 \input{capitulos/capitulo-07}
+\newpage
+\input{capitulos/capitulo-08}
 
 \end{document}

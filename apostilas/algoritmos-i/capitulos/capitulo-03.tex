@@ -17,7 +17,7 @@ Uma \textbf{variável} é um espaço da memória, identificado por um nome, que 
 \includegraphics[width=0.9\linewidth,keepaspectratio]{imagens/capitulo-03_memoria.pdf}
 \end{center}
 
-Em C++, toda variável precisa ser \textbf{declarada} antes de ser usada, indicando o tipo e o nome. O ideal é já dar um valor inicial na declaração, o que se chama \textbf{inicializar}. Uma variável declarada sem valor contém o que estiver naquele pedaço da memória, um valor imprevisível conhecido como ``lixo''. O g++ avisa quando isso acontece: \texttt{'x' is used uninitialized}.
+Em C++, toda variável precisa ser \textbf{declarada} antes de ser usada, indicando o tipo e o nome. O ideal é já dar um valor inicial na declaração, o que se chama \textbf{inicializar}. Uma variável declarada sem valor contém o que estiver naquele pedaço da memória, um valor imprevisível conhecido como ``lixo''. O g++ avisa quando isso acontece: \texttt{\textquotesingle{}x\textquotesingle{} is used uninitialized}.
 
 Quando um valor não deve mudar nunca, como o número $\pi$ ou a média mínima para aprovação, ele é declarado como \textbf{constante}, com a palavra \texttt{const}. Qualquer tentativa de alterá-lo vira um erro de compilação. Por convenção, nomes de constantes são escritos em maiúsculas.
 
@@ -60,14 +60,14 @@ O \textbf{tipo} de uma variável define três coisas: quais valores ela pode gua
 \midrule
 \texttt{int} & \texttt{inteiro} & números inteiros & \texttt{19}, \texttt{-3} \\
 \rowcolor{rowgray} \texttt{double} & \texttt{real} & números com casas decimais & \texttt{1.72}, \texttt{-0.5} \\
-\texttt{char} & \texttt{caractere} & um único caractere & \texttt{'B'}, \texttt{'7'} \\
+\texttt{char} & \texttt{caractere} & um único caractere & \texttt{\textquotesingle{}B\textquotesingle{}}, \texttt{\textquotesingle{}7\textquotesingle{}} \\
 \rowcolor{rowgray} \texttt{bool} & \texttt{logico} & verdadeiro ou falso & \texttt{true}, \texttt{false} \\
 \texttt{string} & \texttt{caractere} & um texto & \texttt{"Ana"} \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-Repare que o Portugol usa \texttt{caractere} tanto para uma letra quanto para um texto inteiro, enquanto o C++ separa os dois: \texttt{char} guarda exatamente um caractere, entre aspas simples, e \texttt{string} guarda um texto, entre aspas duplas. \texttt{'A'} e \texttt{"A"} são coisas diferentes em C++.
+Repare que o Portugol usa \texttt{caractere} tanto para uma letra quanto para um texto inteiro, enquanto o C++ separa os dois: \texttt{char} guarda exatamente um caractere, entre aspas simples, e \texttt{string} guarda um texto, entre aspas duplas. \texttt{\textquotesingle{}A\textquotesingle{}} e \texttt{"A"} são coisas diferentes em C++.
 
 Cada tipo tem um tamanho, e o tamanho limita os valores possíveis. O tamanho exato depende do compilador e do sistema, mas nos computadores atuais costuma ser o que o programa abaixo mostra. A função \texttt{sizeof} informa quantos bytes um tipo ocupa, e a biblioteca \texttt{<climits>} traz os limites de cada tipo inteiro.
 
@@ -177,7 +177,7 @@ int main() {
 \end{Verbatim}
 \end{codigo}
 
-Converter um \texttt{double} para \texttt{int} \textbf{corta} a parte decimal, sem arredondar: 9,99 vira 9. Para arredondar, use \texttt{round}, da biblioteca \texttt{<cmath>}. A conversão entre \texttt{char} e \texttt{int} mostra que, para o computador, cada caractere é um número: o código do \texttt{'A'} na tabela ASCII é 65, o do \texttt{'B'} é 66, e assim por diante. Por isso \texttt{'A' + 2} dá 67, o código do \texttt{'C'}.
+Converter um \texttt{double} para \texttt{int} \textbf{corta} a parte decimal, sem arredondar: 9,99 vira 9. Para arredondar, use \texttt{round}, da biblioteca \texttt{<cmath>}. A conversão entre \texttt{char} e \texttt{int} mostra que, para o computador, cada caractere é um número: o código do \texttt{\textquotesingle{}A\textquotesingle{}} na tabela ASCII é 65, o do \texttt{\textquotesingle{}B\textquotesingle{}} é 66, e assim por diante. Por isso \texttt{\textquotesingle{}A\textquotesingle{} + 2} dá 67, o código do \texttt{\textquotesingle{}C\textquotesingle{}}.
 
 \subsection{3.5 Operadores relacionais}
 
@@ -245,7 +245,7 @@ int main() {
 \end{Verbatim}
 \end{codigo}
 
-Repare em \texttt{notaValida}: para dizer ``a nota está entre 0 e 10'', é preciso escrever as duas comparações ligadas por \texttt{\&\&}. A forma matemática \texttt{0 <= nota <= 10} compila, mas não faz o que parece: o C++ calcula \texttt{0 <= nota}, que dá \texttt{true} ou \texttt{false} (1 ou 0), e depois compara esse 1 ou 0 com 10, o que é sempre verdadeiro. O g++ avisa: \texttt{comparisons like 'X<=Y<=Z' do not have their mathematical meaning}.
+Repare em \texttt{notaValida}: para dizer ``a nota está entre 0 e 10'', é preciso escrever as duas comparações ligadas por \texttt{\&\&}. A forma matemática \texttt{0 <= nota <= 10} compila, mas não faz o que parece: o C++ calcula \texttt{0 <= nota}, que dá \texttt{true} ou \texttt{false} (1 ou 0), e depois compara esse 1 ou 0 com 10, o que é sempre verdadeiro. O g++ avisa: \texttt{comparisons like \textquotesingle{}X<=Y<=Z\textquotesingle{} do not have their mathematical meaning}.
 
 Os operadores \texttt{\&\&} e \texttt{||} também fazem \textbf{avaliação em curto-circuito}: se a resposta já está decidida pelo lado esquerdo, o lado direito nem é calculado. Em \texttt{pessoas > 0 \&\& total / pessoas > 50}, se \texttt{pessoas} for 0, a divisão por zero nunca acontece, porque \texttt{pessoas > 0} já é falso e o \texttt{\&\&} só pode dar falso.
 
@@ -354,7 +354,7 @@ Um teste de mesa confirma: $3725 / 3600 = 1$ hora; $3725 \bmod 3600 = 125$, e $1
   \item \textbf{Confundir \texttt{=} com \texttt{==}.} \texttt{=} atribui; \texttt{==} compara.
   \item \textbf{Escrever \texttt{0 <= x <= 10}.} Compila, mas é sempre verdadeiro. Use \texttt{x >= 0 \&\& x <= 10}.
   \item \textbf{Comparar \texttt{double} com \texttt{==}.} \texttt{0.1 + 0.2 == 0.3} é falso. Compare a diferença com uma tolerância pequena.
-  \item \textbf{Confundir \texttt{'A'} com \texttt{"A"}.} Aspas simples são um \texttt{char}; aspas duplas, um texto.
+  \item \textbf{Confundir \texttt{\textquotesingle{}A\textquotesingle{}} com \texttt{"A"}.} Aspas simples são um \texttt{char}; aspas duplas, um texto.
   \item \textbf{Esperar que a conversão para \texttt{int} arredonde.} Ela corta: 9,99 vira 9. Use \texttt{round}.
   \item \textbf{Estourar o \texttt{int}.} Contas que passam de 2,1 bilhões dão resultados errados. Use \texttt{long long} para números grandes.
   \item \textbf{Usar \texttt{\%} com números reais.} O resto só existe para inteiros; com \texttt{double}, é erro de compilação.

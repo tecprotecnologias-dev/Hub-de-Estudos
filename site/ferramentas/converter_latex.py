@@ -33,7 +33,7 @@ import sys
 from converter_capitulo import remover_secoes, slug, verificar_termos
 
 SIMBOLOS = {
-    'textasciicircum': '^', 'square': '\u2610', 'approx': '\u2248', 'geq': '\u2265', 'leq': '\u2264', 'to': '\u2192',
+    'textasciicircum': '^', 'textquotesingle': "'", 'square': '\u2610', 'approx': '\u2248', 'geq': '\u2265', 'leq': '\u2264', 'to': '\u2192',
     'rightarrow': '\u2192', 'times': '\u00d7', 'checkmark': '\u2713', 'ldots': '\u2026', 'dots': '\u2026',
     'quad': ' ', 'qquad': ' ', 'textbackslash': '\\', 'S': '\u00a7',
 }

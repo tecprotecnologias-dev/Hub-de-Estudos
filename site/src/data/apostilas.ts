@@ -468,6 +468,15 @@ export const apostilas: Apostila[] = [
     descricao:
       'Vetores e matrizes em Portugol e C++, índices e limites, contagem por categoria, maior elemento, inversão, vetores em funções, jogo da velha e o vector da biblioteca padrão.',
   },
+  {
+    id: 'alg1-cap8',
+    capitulo: 8,
+    titulo: 'Caracteres e strings',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-i',
+    unidades: ['Algoritmos e Estruturas de Dados'],
+    descricao:
+      'Tabela ASCII, o tipo string em C++ e caractere em Portugol, leitura com getline, find, substr e conversões, palíndromos, acentos em UTF-8, strings no estilo C e a cifra de César.',
+  },
 
   // Algoritmos e Linguagem de Programação II — "Algoritmos e Estruturas de Dados" (TecPro)
   // Texto próprio, escrito a partir da ementa (temas dos slides de EDA usados só como roteiro).

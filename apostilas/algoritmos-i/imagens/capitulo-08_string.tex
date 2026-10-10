@@ -1,0 +1,23 @@
+% Capítulo 8: a string "Maria Silva", seus índices, find e substr.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-vetores}
+\tikzset{
+  casa/.append style={minimum width=7mm, minimum height=7mm, font=\ttfamily\small},
+  codigo/.style={font=\ttfamily\scriptsize, text=navy},
+}
+\begin{document}
+\begin{tikzpicture}[x=7mm]
+  \foreach \c/\e [count=\i from 0] in {M/parte, a/parte, r/parte, i/parte, a/parte, {\textvisiblespace}/marcada, S/pronta, i/pronta, l/pronta, v/pronta, a/pronta} {
+    \node[\e] (c\i) at (\i, 0) {\c};
+    \node[indice] at (\i, -0.62) {\i};
+  }
+  \node[rotulo, anchor=east] at (-0.8, 0) {nome};
+  \node[codigo, anchor=south] at (5, 0.75) {nome.find(\textquotesingle{} \textquotesingle) $\rightarrow$ 5};
+  \draw[seta, laranja] (5, 0.75) -- (c5.north);
+  \draw[chave] ($(c0.south west)+(0, -0.5)$) -- node[below=4pt, codigo] {nome.substr(0, 5) $\rightarrow$ "Maria"} ($(c4.south east)+(0, -0.5)$);
+  \draw[chave] ($(c6.south west)+(0, -0.5)$) -- node[below=4pt, codigo] {nome.substr(6) $\rightarrow$ "Silva"} ($(c10.south east)+(0, -0.5)$);
+  \node[legenda] at (5, -1.9) {\texttt{nome.size()} vale 11: os índices vão de 0 a 10};
+\end{tikzpicture}
+\end{document}

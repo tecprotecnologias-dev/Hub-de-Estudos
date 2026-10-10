@@ -301,12 +301,12 @@ erro.cpp:6:26: error: expected ';' before 'return'
 \end{Verbatim}
 \end{codigo}
 
-A mensagem diz o arquivo (\texttt{erro.cpp}), a linha (6) e a coluna (26) do problema, o que ele esperava (``expected \texttt{';'}'', um ponto e vírgula) e ainda desenha onde ele deveria estar. Três dicas valem para qualquer mensagem:
+A mensagem diz o arquivo (\texttt{erro.cpp}), a linha (6) e a coluna (26) do problema, o que ele esperava (``expected \texttt{\textquotesingle{};\textquotesingle{}}'', um ponto e vírgula) e ainda desenha onde ele deveria estar. Três dicas valem para qualquer mensagem:
 
 \begin{itemize}
   \item \textbf{Comece pelo primeiro erro.} Um único erro pode causar uma cascata de mensagens seguintes; corrigido o primeiro, muitas delas desaparecem.
   \item \textbf{Olhe também a linha anterior.} O compilador percebe a falta do ponto e vírgula só quando encontra o \texttt{return}, na linha seguinte.
-  \item \textbf{Leia a sugestão.} Ao usar uma variável \texttt{idad} que não existe, o g++ responde \texttt{'idad' was not declared in this scope; did you mean 'idade'?}: ``\texttt{idad} não foi declarada; você quis dizer \texttt{idade}?''.
+  \item \textbf{Leia a sugestão.} Ao usar uma variável \texttt{idad} que não existe, o g++ responde \texttt{\textquotesingle{}idad\textquotesingle{} was not declared in this scope; did you mean \textquotesingle{}idade\textquotesingle{}?}: ``\texttt{idad} não foi declarada; você quis dizer \texttt{idade}?''.
 \end{itemize}
 
 Além dos \textbf{erros}, que impedem a compilação, o compilador mostra \textbf{avisos} (\textit{warnings}), que não impedem, mas indicam algo suspeito, como uma variável declarada e nunca usada. Trate todo aviso como um erro a corrigir.
