@@ -450,6 +450,15 @@ export const apostilas: Apostila[] = [
     descricao:
       'Laços while, do-while e for, sentinela, contadores e acumuladores, maior e menor valor, break e continue, laços aninhados, laço infinito e números primos.',
   },
+  {
+    id: 'alg1-cap6',
+    capitulo: 6,
+    titulo: 'Funções e procedimentos',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-i',
+    unidades: ['Linguagens de Programação'],
+    descricao:
+      'Modularização, funções e procedimentos em Portugol e C++, parâmetros e retorno, pilha de chamadas, escopo, passagem por valor e por referência, protótipos, valores padrão e sobrecarga.',
+  },
 
   // Algoritmos e Linguagem de Programação II — "Algoritmos e Estruturas de Dados" (TecPro)
   // Texto próprio, escrito a partir da ementa (temas dos slides de EDA usados só como roteiro).

@@ -1,0 +1,342 @@
+{
+ "numero": 6,
+ "titulo": "Funções e procedimentos",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Os programas dos capítulos anteriores cabiam inteiros no <code>main</code>. Programas reais têm milhares ou milhões de linhas, e ninguém consegue entender, testar ou corrigir um bloco desse tamanho de uma vez. A saída é a mesma que usamos para qualquer problema grande: dividir em partes menores, cada uma com uma tarefa clara. Em programação, essas partes são os <strong>subprogramas</strong>: as <strong>funções</strong>, que calculam e devolvem um valor, e os <strong>procedimentos</strong>, que executam uma tarefa sem devolver nada. Neste capítulo você vai aprender a criar os seus, a passar dados para eles e a entender o que acontece na memória a cada chamada."
+  },
+  {
+   "t": "h2",
+   "id": "6-1-dividir-para-conquistar",
+   "texto": "6.1 Dividir para conquistar"
+  },
+  {
+   "t": "p",
+   "html": "Você já usa funções desde o Capítulo 3, mesmo sem ter escrito nenhuma. A <code>sqrt</code>, que calcula a raiz quadrada, e a <code>pow</code>, que calcula potências, são funções prontas da biblioteca <code>&lt;cmath&gt;</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <cmath>       // sqrt, pow\nusing namespace std;\n\nint main() {\n    double r = sqrt(49.0);       // 7\n    double p = pow(2.0, 10);     // 1024\n    cout << r << \" \" << p << endl;\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Para usar a <code>sqrt</code>, você não precisa saber como ela calcula a raiz: basta saber o que ela recebe (um número) e o que devolve (a raiz). Essa ideia, usar algo pelo que ele faz sem se preocupar com como faz, chama-se <strong>abstração</strong>, e é o principal ganho de dividir um programa em subprogramas. Há outros:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Reaproveitamento</strong>: o código escrito uma vez é chamado quantas vezes for preciso, em vez de ser copiado e colado.",
+    "<strong>Manutenção</strong>: um erro corrigido na função fica corrigido em todos os lugares que a usam.",
+    "<strong>Teste</strong>: cada função pode ser testada sozinha, com poucos casos, antes de ser combinada com as outras.",
+    "<strong>Legibilidade</strong>: um <code>main</code> que só chama <code>lerNotas</code>, depois <code>calcularMedia</code> e por fim <code>mostrarResultado</code> se lê quase como um texto."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Dividir um programa em partes independentes chama-se <strong>modularização</strong>. A regra prática é simples: cada subprograma deve fazer <strong>uma única tarefa</strong>, e seu nome deve dizer qual é."
+  },
+  {
+   "t": "h2",
+   "id": "6-2-funcoes-recebem-dados-e-devolvem-um-resultado",
+   "texto": "6.2 Funções: recebem dados e devolvem um resultado"
+  },
+  {
+   "t": "p",
+   "html": "Uma função tem um <strong>cabeçalho</strong>, que diz o tipo do resultado, o nome e os dados que ela recebe, e um <strong>corpo</strong>, entre chaves, com os comandos que calculam o resultado."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-06_anatomia.png",
+   "alt": "capitulo 06 anatomia"
+  },
+  {
+   "t": "p",
+   "html": "Os <strong>parâmetros</strong> são variáveis declaradas no cabeçalho, que recebem os valores passados na chamada. Esses valores são os <strong>argumentos</strong>. Na chamada <code>media(n1, n2)</code>, o parâmetro <code>a</code> recebe o valor de <code>n1</code> e o <code>b</code>, o de <code>n2</code>: a correspondência é pela <strong>posição</strong>, não pelo nome. O comando <code>return</code> encerra a função e entrega o resultado a quem a chamou."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\ndouble media(double a, double b) {\n    double m = (a + b) / 2;\n    return m;\n}\n\nint main() {\n    double n1, n2;\n    cout << \"Duas notas: \";\n    cin >> n1 >> n2;\n    double resultado = media(n1, n2);\n    cout << \"Média: \" << resultado << endl;\n    cout << \"Média de 8 e 5: \" << media(8, 5) << endl;   // 6.5\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A chamada <code>media(n1, n2)</code> é uma expressão, como <code>n1 + n2</code>: o resultado pode ser guardado em uma variável, mostrado direto no <code>cout</code> ou usado dentro de outra conta, como em <code>media(n1, n2) &gt;= 6</code>. Os argumentos também podem ser expressões ou valores literais, como em <code>media(8, 5)</code>."
+  },
+  {
+   "t": "p",
+   "html": "Em Portugol, a função é declarada entre a seção <code>var</code> do algoritmo e o <code>inicio</code>, com <code>funcao ... fimfuncao</code>. O tipo do resultado vem depois dos parâmetros, e o resultado é devolvido com <code>retorne</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"MediaComFuncao\"\nvar\n   n1, n2, resultado: real\n\nfuncao media(a, b: real): real\nvar\n   m: real\ninicio\n   m <- (a + b) / 2\n   retorne m\nfimfuncao\n\ninicio\n   escreva(\"Duas notas: \")\n   leia(n1, n2)\n   resultado <- media(n1, n2)\n   escreval(\"Média: \", resultado)\nfimalgoritmo"
+  },
+  {
+   "t": "h3",
+   "texto": "Mais de um return"
+  },
+  {
+   "t": "p",
+   "html": "O <code>return</code> encerra a função <strong>imediatamente</strong>, mesmo no meio de um laço. Por isso, uma função pode ter vários, um para cada caso. O teste de número primo do Capítulo 5 fica mais curto como função: assim que um divisor aparece, a resposta já é conhecida."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nbool ehPrimo(int n) {\n    if (n < 2) return false;           // 0 e 1 não são primos\n    for (int d = 2; d * d <= n; d++) {\n        if (n % d == 0) return false;  // achou divisor: sai já\n    }\n    return true;                       // nenhum divisor\n}\n\nint main() {\n    cout << \"Primos até 50:\";\n    for (int n = 1; n <= 50; n++) {\n        if (ehPrimo(n)) cout << \" \" << n;\n    }\n    cout << endl;   // 2 3 5 7 11 13 17 19 23 29 31 37 41 43 47\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Compare com o Capítulo 5: lá, o teste usava uma variável <code>primo</code> e um <code>break</code>. Aqui, o <code>main</code> só pergunta “<code>n</code> é primo?” e não precisa saber como a resposta é obtida. Funções que respondem sim ou não costumam ter nomes como <code>ehPrimo</code>, <code>ehPar</code> ou <code>estaAprovado</code>, e devolvem <code>bool</code>."
+  },
+  {
+   "t": "p",
+   "html": "Toda função que não é <code>void</code> precisa devolver um valor em <strong>todos</strong> os caminhos. Se algum caminho chegar ao fim do corpo sem um <code>return</code>, o resultado é indefinido, e o g++ avisa com <code>-Wall</code>."
+  },
+  {
+   "t": "h2",
+   "id": "6-3-procedimentos-executam-uma-tarefa",
+   "texto": "6.3 Procedimentos: executam uma tarefa"
+  },
+  {
+   "t": "p",
+   "html": "Nem todo subprograma calcula um valor. Mostrar um cabeçalho, desenhar uma linha ou imprimir um relatório são tarefas que não têm resultado a devolver. Esses subprogramas são os <strong>procedimentos</strong>. Em C++, um procedimento é uma função com tipo de retorno <code>void</code> (“vazio”):"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid linha(int tamanho, char simbolo) {\n    for (int i = 0; i < tamanho; i++) {\n        cout << simbolo;\n    }\n    cout << endl;\n}\n\nvoid cabecalho(string titulo) {\n    linha(30, '=');\n    cout << titulo << endl;\n    linha(30, '=');\n}\n\nint main() {\n    cabecalho(\"Relatório de notas\");\n    cout << \"Ana     8.5\" << endl;\n    cout << \"Bruno   6.0\" << endl;\n    linha(30, '-');\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare que <code>cabecalho</code> chama <code>linha</code>: subprogramas podem (e devem) usar outros subprogramas. Um procedimento não tem <code>return</code> com valor, mas pode usar <code>return;</code> sozinho para terminar mais cedo, por exemplo quando recebe um dado inválido."
+  },
+  {
+   "t": "p",
+   "html": "Em Portugol, o procedimento é escrito com <code>procedimento ... fimprocedimento</code>, sem tipo de retorno:"
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"Relatorio\"\n\nprocedimento linha(tamanho: inteiro)\nvar\n   i: inteiro\ninicio\n   para i de 1 ate tamanho faca\n      escreva(\"-\")\n   fimpara\n   escreval(\"\")\nfimprocedimento\n\ninicio\n   linha(30)\n   escreval(\"Relatório de notas\")\n   linha(30)\nfimalgoritmo"
+  },
+  {
+   "t": "p",
+   "html": "A diferença entre os dois tipos de subprograma aparece também na chamada. Uma função é usada <strong>como um valor</strong>, dentro de uma expressão: <code>x &lt;- media(a, b)</code>. Um procedimento é usado <strong>como um comando</strong>, sozinho na linha: <code>linha(30)</code>."
+  },
+  {
+   "t": "h2",
+   "id": "6-4-o-que-acontece-em-uma-chamada",
+   "texto": "6.4 O que acontece em uma chamada"
+  },
+  {
+   "t": "p",
+   "html": "Quando o programa chama uma função, quatro coisas acontecem, nesta ordem:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. os argumentos são avaliados e seus valores são <strong>copiados</strong> para os parâmetros;",
+    "2. o programa salta para o início do corpo da função, e anota para onde deve voltar;",
+    "3. o corpo é executado, com seus próprios parâmetros e variáveis;",
+    "4. no <code>return</code> (ou no fim do corpo), o resultado é entregue, as variáveis da função deixam de existir e o programa continua do ponto onde parou."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Para organizar isso, o computador usa uma região da memória chamada <strong>pilha de chamadas</strong>. Cada chamada ganha um <strong>registro de ativação</strong>, um espaço com seus parâmetros e variáveis locais, empilhado sobre o de quem a chamou. Quando a função termina, seu registro é desempilhado. A figura mostra a pilha durante a chamada <code>media(n1, n2)</code>, com as notas 7 e 5:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-06_pilha.png",
+   "alt": "capitulo 06 pilha"
+  },
+  {
+   "t": "p",
+   "html": "Duas consequências importantes vêm daí. Primeiro, <code>a</code> e <code>b</code> são variáveis novas, que só recebem cópias de <code>n1</code> e <code>n2</code>: mudar <code>a</code> dentro da função não muda <code>n1</code>. Segundo, cada chamada tem seu próprio registro: chamar <code>media</code> dez vezes cria e destrói dez registros, e nenhuma chamada “lembra” os valores da anterior. A pilha também explica a recursão, assunto do Capítulo 9, em que uma função chama a si mesma."
+  },
+  {
+   "t": "h2",
+   "id": "6-5-escopo-onde-cada-variavel-existe",
+   "texto": "6.5 Escopo: onde cada variável existe"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>escopo</strong> de uma variável é a parte do programa em que ela pode ser usada. Em C++, a regra é: uma variável existe do ponto em que é declarada até o fim do bloco (<code>{ ... }</code>) que a contém."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Variáveis locais</strong> são declaradas dentro de uma função (ou de um bloco, como o corpo de um <code>for</code>). Só existem ali, e somem quando o bloco termina. Os parâmetros também são locais.",
+    "<strong>Variáveis globais</strong> são declaradas fora de qualquer função, e podem ser usadas por todas as funções do arquivo."
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint chamadas = 0;               // global: visível em todo lugar\n\nint dobro(int x) {\n    chamadas++;\n    int resultado = 2 * x;      // local: só existe em dobro\n    return resultado;\n}\n\nint main() {\n    int x = 5;                  // outro x, local de main\n    cout << dobro(x) << endl;   // 10\n    cout << dobro(7) << endl;   // 14\n    cout << \"Chamadas: \" << chamadas << endl;   // 2\n    // cout << resultado;   erro: resultado não existe aqui\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>x</code> do <code>main</code> e o parâmetro <code>x</code> de <code>dobro</code> são variáveis <strong>diferentes</strong>, que só têm o mesmo nome. Isso é normal e até desejável: quem escreve <code>dobro</code> não precisa saber quais nomes o <code>main</code> usa."
+  },
+  {
+   "t": "p",
+   "html": "Variáveis globais parecem práticas, porque evitam passar parâmetros, mas cobram um preço alto: qualquer função pode alterá-las, e quando o valor está errado é preciso investigar o programa inteiro para descobrir quem o mudou. Prefira passar os dados por parâmetro e devolvê-los com <code>return</code>. A exceção aceitável são as <strong>constantes</strong> globais, como <code>const double PI = 3.14159;</code>, que ninguém pode alterar."
+  },
+  {
+   "t": "p",
+   "html": "No Portugol, as variáveis declaradas na seção <code>var</code> do algoritmo são globais, e as declaradas na seção <code>var</code> de uma função ou procedimento são locais."
+  },
+  {
+   "t": "h2",
+   "id": "6-6-passagem-por-valor-e-por-referencia",
+   "texto": "6.6 Passagem por valor e por referência"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, todos os parâmetros receberam <strong>cópias</strong> dos argumentos. Essa é a <strong>passagem por valor</strong>, a forma padrão, e ela protege as variáveis de quem chama: a função pode fazer o que quiser com suas cópias. Mas às vezes queremos justamente que a função altere a variável original. O exemplo clássico é trocar o conteúdo de duas variáveis:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nvoid trocaErrada(int a, int b) {     // por valor: cópias\n    int aux = a;\n    a = b;\n    b = aux;\n}\n\nvoid troca(int &a, int &b) {         // por referência\n    int aux = a;\n    a = b;\n    b = aux;\n}\n\nint main() {\n    int x = 1, y = 2;\n    trocaErrada(x, y);\n    cout << x << \" \" << y << endl;   // 1 2: nada mudou\n    troca(x, y);\n    cout << x << \" \" << y << endl;   // 2 1\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A única diferença entre as duas versões é o <code>&amp;</code> antes do nome dos parâmetros. Com ele, o parâmetro deixa de ser uma cópia e passa a ser uma <strong>referência</strong>: outro nome para a mesma variável da chamada. Tudo o que a função faz com <code>a</code>, na verdade, faz com <code>x</code>."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-06_passagem.png",
+   "alt": "capitulo 06 passagem"
+  },
+  {
+   "t": "p",
+   "html": "No Portugol, a passagem por referência é indicada pela palavra <code>var</code> antes dos parâmetros:"
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"Troca\"\nvar\n   x, y: inteiro\n\nprocedimento troca(var a, b: inteiro)\nvar\n   aux: inteiro\ninicio\n   aux <- a\n   a <- b\n   b <- aux\nfimprocedimento\n\ninicio\n   x <- 1\n   y <- 2\n   troca(x, y)\n   escreval(x, \" \", y)        // 2 1\nfimalgoritmo"
+  },
+  {
+   "t": "h3",
+   "texto": "Devolvendo mais de um resultado"
+  },
+  {
+   "t": "p",
+   "html": "O <code>return</code> devolve um único valor. Quando uma tarefa produz dois ou mais resultados, a passagem por referência resolve: a função recebe variáveis de quem chama e as preenche."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nvoid dividir(int a, int b, int &quociente, int &resto) {\n    quociente = a / b;\n    resto = a % b;\n}\n\nint main() {\n    int q, r;\n    dividir(17, 5, q, r);\n    cout << \"17 = 5 x \" << q << \" + \" << r << endl;\n    return 0;                // 17 = 5 x 3 + 2\n}"
+  },
+  {
+   "t": "p",
+   "html": "Como um parâmetro por referência precisa de uma variável à qual se ligar, a chamada <code>troca(1, 2)</code> não compila: não dá para trocar o conteúdo do número 1."
+  },
+  {
+   "t": "h3",
+   "texto": "Referência constante"
+  },
+  {
+   "t": "p",
+   "html": "Copiar um <code>int</code> é barato, mas copiar um texto longo ou, mais adiante, um vetor com milhares de elementos, não é. Para evitar a cópia sem permitir alterações, usa-se a <strong>referência constante</strong>: <code>void saudar(const string &amp;nome)</code>. A função lê o original, sem copiá-lo, e o compilador recusa qualquer tentativa de alterá-lo."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Passagem",
+    "Como se escreve",
+    "Use quando"
+   ],
+   "linhas": [
+    [
+     "por valor",
+     "<code>int a</code>",
+     "a função só precisa do valor (o caso mais comum)"
+    ],
+    [
+     "por referência",
+     "<code>int &amp;a</code> newline Portugol: <code>var a</code>",
+     "a função precisa alterar a variável de quem chama"
+    ],
+    [
+     "referência constante",
+     "<code>const string &amp;a</code>",
+     "o dado é grande e a função só vai lê-lo"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-7-prototipos-valores-padrao-e-sobrecarga",
+   "texto": "6.7 Protótipos, valores padrão e sobrecarga"
+  },
+  {
+   "t": "h3",
+   "texto": "Protótipos"
+  },
+  {
+   "t": "p",
+   "html": "O compilador lê o arquivo de cima para baixo, e uma função só pode ser chamada depois de ser declarada. Por isso, até aqui, as funções vieram antes do <code>main</code>. Quando se prefere o <code>main</code> no topo, para quem lê o programa ver primeiro o panorama, declara-se antes só o cabeçalho da função, terminado em ponto e vírgula. Esse cabeçalho é o <strong>protótipo</strong>, e a definição completa pode vir depois:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\ndouble areaCirculo(double raio);       // protótipo\n\nint main() {\n    cout << areaCirculo(2) << endl;    // 12.5664\n    return 0;\n}\n\ndouble areaCirculo(double raio) {      // definição\n    const double PI = 3.14159265358979;\n    return PI * raio * raio;\n}"
+  },
+  {
+   "t": "h3",
+   "texto": "Valores padrão e sobrecarga"
+  },
+  {
+   "t": "p",
+   "html": "O C++ tem dois recursos que o Portugol não tem. Um parâmetro pode ter um <strong>valor padrão</strong>, usado quando o argumento é omitido na chamada. E duas funções podem ter o <strong>mesmo nome</strong>, desde que os parâmetros sejam diferentes em quantidade ou tipo: é a <strong>sobrecarga</strong>. O compilador escolhe qual chamar pelos argumentos."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nvoid linha(int tamanho = 20, char simbolo = '-') {\n    for (int i = 0; i < tamanho; i++) cout << simbolo;\n    cout << endl;\n}\n\nint maior(int a, int b) { return a > b ? a : b; }\ndouble maior(double a, double b) { return a > b ? a : b; }\n\nint main() {\n    linha();             // 20 traços\n    linha(5);            // -----\n    linha(5, '*');       // *****\n    cout << maior(3, 8) << \" \" << maior(2.5, 1.5) << endl;\n    return 0;            // 8 2.5\n}"
+  },
+  {
+   "t": "p",
+   "html": "Os parâmetros com valor padrão precisam ser os últimos da lista: não dá para omitir o primeiro argumento e informar o segundo."
+  },
+  {
+   "t": "h2",
+   "id": "6-8-um-programa-completo-notas-da-turma",
+   "texto": "6.8 Um programa completo: notas da turma"
+  },
+  {
+   "t": "p",
+   "html": "O programa abaixo refaz a análise de notas do Capítulo 5, agora dividida em subprogramas. Cada um tem uma única tarefa: <code>lerNota</code> pede uma nota até ela ser válida, <code>situacao</code> classifica uma nota e <code>mostrarResumo</code> imprime o resultado final."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\ndouble lerNota(int aluno) {\n    double nota = 0;\n    do {\n        cout << \"Nota do aluno \" << aluno << \" (0 a 10): \";\n        cin >> nota;\n    } while (nota < 0 || nota > 10);\n    return nota;\n}\n\nstring situacao(double nota) {\n    if (nota >= 6) return \"aprovado\";\n    if (nota >= 4) return \"recuperação\";\n    return \"reprovado\";\n}\n\nvoid mostrarResumo(double soma, int alunos, int aprovados) {\n    cout << \"Média da turma: \" << soma / alunos << endl;\n    cout << \"Aprovados: \" << aprovados << \" de \" << alunos\n         << endl;\n}\n\nint main() {\n    int alunos;\n    cout << \"Quantos alunos? \";\n    cin >> alunos;\n    double soma = 0;\n    int aprovados = 0;\n    for (int i = 1; i <= alunos; i++) {\n        double nota = lerNota(i);\n        string s = situacao(nota);\n        cout << \"  \" << s << endl;\n        soma += nota;\n        if (s == \"aprovado\") aprovados++;\n    }\n    if (alunos > 0) mostrarResumo(soma, alunos, aprovados);\n    return 0;\n}\n// 3 alunos com 7, 4.5 e 3 -> aprovado, recuperação,\n// reprovado; Média da turma: 4.83333; Aprovados: 1 de 3"
+  },
+  {
+   "t": "p",
+   "html": "Repare em uma escolha de projeto: <code>situacao</code> não mostra nada na tela, só devolve o texto. Quem decide o que fazer com ele é o <code>main</code>, que o imprime e também o usa para contar os aprovados. Separar o <strong>cálculo</strong> da <strong>entrada e saída</strong> deixa as funções mais fáceis de reaproveitar e de testar: para conferir <code>situacao</code>, basta chamá-la com 6, 5.9, 4 e 3.9, os valores nas fronteiras de cada faixa."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Esquecer o <code>return</code> em algum caminho.</strong> Uma função que não é <code>void</code> precisa devolver um valor em todos os casos. Compile com <code>-Wall</code> para ser avisado.",
+    "<strong>Chamar uma função e ignorar o resultado.</strong> <code>media(n1, n2);</code> sozinho na linha calcula a média e a joga fora. Guarde o resultado ou use-o em uma expressão.",
+    "<strong>Esperar que a passagem por valor altere a variável.</strong> O parâmetro é uma cópia. Para alterar o original, use <code>&amp;</code> em C++ ou <code>var</code> em Portugol.",
+    "<strong>Trocar a ordem dos argumentos.</strong> A correspondência é pela posição: <code>dividir(5, 17, q, r)</code> divide 5 por 17, não 17 por 5.",
+    "<strong>Usar uma variável local fora da sua função.</strong> Ela só existe dentro do bloco em que foi declarada.",
+    "<strong>Abusar de variáveis globais.</strong> Qualquer função pode alterá-las, e os erros ficam difíceis de rastrear. Use parâmetros e <code>return</code>.",
+    "<strong>Chamar a função antes de declará-la.</strong> Coloque a definição antes do <code>main</code> ou declare o protótipo no início do arquivo.",
+    "<strong>Fazer funções que fazem tudo.</strong> Se o nome precisa de um “e” (<code>lerECalcularEMostrar</code>), provavelmente são três funções."
+   ]
+  }
+ ]
+}
