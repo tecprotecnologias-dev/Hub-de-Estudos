@@ -1,0 +1,21 @@
+% Capítulo 10: passos da ordenação por inserção.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-vetores}
+\tikzset{passo/.style={font=\sffamily\scriptsize, text=navy, anchor=west, align=left}}
+\begin{document}
+\begin{tikzpicture}
+  \vetor{l0}{0}{0.0}{29/pronta, 10/marcada, 14/parte, 37/parte, 13/parte}
+  \node[passo] at (4.2, 0.0) {início: insere o 10 antes do 29};
+  \vetor{l1}{0}{-1.0}{10/pronta, 29/pronta, 14/marcada, 37/parte, 13/parte}
+  \node[passo] at (4.2, -1.0) {insere o 14: o 29 anda uma casa};
+  \vetor{l2}{0}{-2.0}{10/pronta, 14/pronta, 29/pronta, 37/marcada, 13/parte}
+  \node[passo] at (4.2, -2.0) {insere o 37: já está no lugar};
+  \vetor{l3}{0}{-3.0}{10/pronta, 14/pronta, 29/pronta, 37/pronta, 13/marcada}
+  \node[passo] at (4.2, -3.0) {insere o 13: 37, 29 e 14 andam uma casa};
+  \vetor{l4}{0}{-4.0}{10/pronta, 13/pronta, 14/pronta, 29/pronta, 37/pronta}
+  \node[passo] at (4.2, -4.0) {ordenado};
+  \node[legenda] at (3.6, -4.8) {azul: a parte já ordenada (a ``mão''); laranja: o elemento a inserir};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,280 @@
+{
+ "numero": 10,
+ "titulo": "Busca e ordenação",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Procurar e ordenar estão entre as tarefas que os computadores mais executam. Toda vez que você procura um contato no celular, filtra produtos pelo menor preço ou vê a classificação de um campeonato, há um algoritmo de busca ou de ordenação trabalhando. Elas também são o lugar ideal para uma pergunta nova: não basta o algoritmo estar certo, ele precisa ser <strong>rápido o suficiente</strong>. Neste capítulo você vai conhecer as duas buscas fundamentais, a sequencial e a binária, três algoritmos clássicos de ordenação (seleção, bolha e inserção) e uma forma simples de comparar a eficiência de algoritmos contando quantas operações eles fazem."
+  },
+  {
+   "t": "h2",
+   "id": "10-1-busca-sequencial",
+   "texto": "10.1 Busca sequencial"
+  },
+  {
+   "t": "p",
+   "html": "A forma mais direta de procurar um valor em um vetor é olhar os elementos um por um, do primeiro ao último, até encontrá-lo ou até o vetor acabar. Essa é a <strong>busca sequencial</strong> (ou linear). A função devolve a <strong>posição</strong> em que o valor foi encontrado ou, se ele não estiver no vetor, um valor que não pode ser uma posição válida, como -1."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint buscaSequencial(const int v[], int n, int x) {\n    for (int i = 0; i < n; i++) {\n        if (v[i] == x) return i;    // achou: devolve a posição\n    }\n    return -1;                      // olhou tudo e não achou\n}\n\nint main() {\n    int v[] = {42, 7, 19, 73, 4, 56, 23};\n    int x;\n    cout << \"Procurar: \";\n    cin >> x;\n    int pos = buscaSequencial(v, 7, x);\n    if (pos >= 0) cout << \"Achou na posição \" << pos << endl;\n    else cout << \"Não encontrado\" << endl;\n    return 0;\n}\n// 73 -> Achou na posição 3       10 -> Não encontrado"
+  },
+  {
+   "t": "p",
+   "html": "Em Portugol, sem um <code>return</code> no meio do laço, a busca usa uma variável que guarda a posição encontrada e faz parte da condição do <code>enquanto</code>: o laço para quando acha o valor ou quando os elementos acabam."
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"BuscaSequencial\"\nvar\n   v: vetor[1..7] de inteiro\n   i, x, pos: inteiro\ninicio\n   para i de 1 ate 7 faca\n      escreva(\"Elemento \", i, \": \")\n      leia(v[i])\n   fimpara\n   escreva(\"Procurar: \")\n   leia(x)\n   pos <- 0                   // 0: ainda não encontrado\n   i <- 1\n   enquanto (i <= 7) e (pos = 0) faca\n      se v[i] = x entao\n         pos <- i\n      fimse\n      i <- i + 1\n   fimenquanto\n   se pos > 0 entao\n      escreval(\"Achou na posição \", pos)\n   senao\n      escreval(\"Não encontrado\")\n   fimse\nfimalgoritmo"
+  },
+  {
+   "t": "p",
+   "html": "A busca sequencial funciona com qualquer vetor, ordenado ou não. O preço é que, no pior caso (o valor está no fim ou não está no vetor), ela olha <strong>todos</strong> os n elementos. Em um vetor com um milhão de elementos, isso são um milhão de comparações."
+  },
+  {
+   "t": "h2",
+   "id": "10-2-busca-binaria",
+   "texto": "10.2 Busca binária"
+  },
+  {
+   "t": "p",
+   "html": "Ninguém procura uma palavra no dicionário lendo da primeira página em diante. Abre-se o dicionário mais ou menos no meio e, conforme a palavra vem antes ou depois da página aberta, descarta-se a metade em que ela não pode estar. A <strong>busca binária</strong> faz exatamente isso, e por isso só funciona em vetores <strong>ordenados</strong>."
+  },
+  {
+   "t": "p",
+   "html": "O algoritmo mantém dois índices, <code>ini</code> e <code>fim</code>, que delimitam a parte do vetor onde o valor ainda pode estar. A cada passo, compara o valor procurado com o elemento do meio dessa parte: se for igual, achou; se o procurado for maior, ele só pode estar à direita do meio; se for menor, só à esquerda. Quando <code>ini</code> passa de <code>fim</code>, a parte ficou vazia, e o valor não está no vetor."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-10_binaria.png",
+   "alt": "capitulo 10 binaria"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint buscaBinaria(const int v[], int n, int x) {\n    int ini = 0, fim = n - 1;\n    while (ini <= fim) {\n        int meio = ini + (fim - ini) / 2;\n        if (v[meio] == x) return meio;\n        if (v[meio] < x) ini = meio + 1;   // está à direita\n        else fim = meio - 1;               // está à esquerda\n    }\n    return -1;                             // a faixa ficou vazia\n}\n\nint main() {\n    int v[] = {3, 8, 11, 15, 19, 23, 27, 32, 36, 41, 47, 52, 58,\n               63, 70};\n    cout << buscaBinaria(v, 15, 41) << endl;   // 9\n    cout << buscaBinaria(v, 15, 3) << endl;    // 0\n    cout << buscaBinaria(v, 15, 40) << endl;   // -1\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O meio é calculado como <code>ini + (fim - ini) / 2</code>, e não como <code>(ini + fim) / 2</code>. As duas contas dão o mesmo resultado, mas a segunda pode estourar o limite do <code>int</code> quando os índices são muito grandes, um erro que passou anos despercebido em bibliotecas usadas no mundo inteiro."
+  },
+  {
+   "t": "p",
+   "html": "A cada passo, a busca binária descarta metade do que resta. Um vetor de 15 elementos precisa de no máximo 4 comparações; um de mil, de 10; um de um milhão, de apenas 20, porque 20 divisões ao meio reduzem um milhão a um único elemento. Em termos matemáticos, o número de passos é cerca de log<sub>2</sub> n."
+  },
+  {
+   "t": "p",
+   "html": "A busca binária também tem uma versão recursiva natural (Capítulo 9): procurar em uma faixa é olhar o meio e procurar em uma das metades."
+  },
+  {
+   "t": "codigo",
+   "texto": "int buscaRec(const int v[], int ini, int fim, int x) {\n    if (ini > fim) return -1;              // caso base: vazia\n    int meio = ini + (fim - ini) / 2;\n    if (v[meio] == x) return meio;\n    if (v[meio] < x) return buscaRec(v, meio + 1, fim, x);\n    return buscaRec(v, ini, meio - 1, x);\n}"
+  },
+  {
+   "t": "h2",
+   "id": "10-3-quanto-custa-um-algoritmo",
+   "texto": "10.3 Quanto custa um algoritmo"
+  },
+  {
+   "t": "p",
+   "html": "Medir o tempo de um programa com um cronômetro diz pouco, porque o resultado depende do computador, da linguagem e até do que mais estava rodando. Uma medida mais útil é <strong>contar as operações</strong> básicas que o algoritmo faz, como comparações, em função do tamanho n da entrada, e observar como esse número cresce quando n cresce. Essa é a ideia de <strong>complexidade</strong> de um algoritmo:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "n",
+    "sequencial",
+    "binária",
+    "ordenação",
+    "<code>sort</code>"
+   ],
+   "linhas": [
+    [
+     "",
+     "(n)",
+     "(log<sub>2</sub> n)",
+     "simples (n<sup>2</sup>)",
+     "(n log<sub>2</sub> n)"
+    ],
+    [
+     "10",
+     "10",
+     "4",
+     "100",
+     "33"
+    ],
+    [
+     "1.000",
+     "1.000",
+     "10",
+     "1 milhão",
+     "10 mil"
+    ],
+    [
+     "1 milhão",
+     "1 milhão",
+     "20",
+     "1 trilhão",
+     "20 milhões"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A tabela mostra o número aproximado de operações. Os valores exatos importam menos que a forma do crescimento. Quando n fica mil vezes maior, a busca sequencial fica mil vezes mais lenta, enquanto a binária precisa de só 10 passos a mais. Já os algoritmos de ordenação simples deste capítulo, que crescem com n<sup>2</sup>, ficam um <strong>milhão</strong> de vezes mais lentos. A um bilhão de operações por segundo, ordenar um milhão de números leva 20 milissegundos com um algoritmo n log n, e mais de 15 minutos com um algoritmo n<sup>2</sup>. Os cientistas da computação escrevem essas formas de crescimento com a notação O (“ó grande”): O(n), O(log n), O(n<sup>2</sup>), O(n log n)."
+  },
+  {
+   "t": "h2",
+   "id": "10-4-ordenacao-por-selecao",
+   "texto": "10.4 Ordenação por seleção"
+  },
+  {
+   "t": "p",
+   "html": "A <strong>ordenação por seleção</strong> é a forma como muita gente ordena cartas na mão: encontra a menor e a põe em primeiro lugar; entre as que sobraram, encontra a menor e a põe em segundo; e assim por diante. Cada passada pelo vetor coloca um elemento na sua posição definitiva."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-10_selecao.png",
+   "alt": "capitulo 10 selecao"
+  },
+  {
+   "t": "codigo",
+   "texto": "void selecao(int v[], int n) {\n    for (int i = 0; i < n - 1; i++) {\n        int iMenor = i;                       // procura o menor\n        for (int j = i + 1; j < n; j++) {     // no resto\n            if (v[j] < v[iMenor]) iMenor = j;\n        }\n        swap(v[i], v[iMenor]);                // e o põe em i\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "O padrão do menor elemento é o do Capítulo 7, aplicado à parte do vetor que ainda não está ordenada. Em Portugol, com o vetor de 1 a <code>n</code> e a troca feita por uma variável auxiliar:"
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"OrdenacaoPorSelecao\"\nvar\n   v: vetor[1..5] de inteiro\n   i, j, iMenor, aux: inteiro\ninicio\n   para i de 1 ate 5 faca\n      leia(v[i])\n   fimpara\n   para i de 1 ate 4 faca\n      iMenor <- i\n      para j de i + 1 ate 5 faca\n         se v[j] < v[iMenor] entao\n            iMenor <- j\n         fimse\n      fimpara\n      aux <- v[i]\n      v[i] <- v[iMenor]\n      v[iMenor] <- aux\n   fimpara\n   para i de 1 ate 5 faca\n      escreva(v[i], \" \")\n   fimpara\nfimalgoritmo"
+  },
+  {
+   "t": "p",
+   "html": "A primeira passada faz n - 1 comparações, a segunda n - 2, e assim por diante, num total de n(n-1)/2: para mil elementos, quase meio milhão. Esse número é sempre o mesmo, esteja o vetor bagunçado ou já ordenado. Em compensação, a seleção faz no máximo n - 1 trocas, o que é uma vantagem quando trocar elementos é caro."
+  },
+  {
+   "t": "h2",
+   "id": "10-5-ordenacao-por-bolha",
+   "texto": "10.5 Ordenação por bolha"
+  },
+  {
+   "t": "p",
+   "html": "A <strong>ordenação por bolha</strong> (<em>bubble sort</em>) compara cada par de elementos vizinhos e os troca quando estão fora de ordem. Ao fim da primeira passada, o maior elemento “borbulhou” até a última posição; na segunda, o segundo maior chega à penúltima, e assim por diante. Se uma passada inteira termina sem nenhuma troca, o vetor já está ordenado e o algoritmo pode parar."
+  },
+  {
+   "t": "codigo",
+   "texto": "void bolha(int v[], int n) {\n    for (int fim = n - 1; fim > 0; fim--) {\n        bool trocou = false;\n        for (int j = 0; j < fim; j++) {     // até o fim atual\n            if (v[j] > v[j + 1]) {          // fora de ordem\n                swap(v[j], v[j + 1]);\n                trocou = true;\n            }\n        }\n        if (!trocou) break;                 // já está ordenado\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "Graças ao <code>trocou</code>, um vetor que já está ordenado é verificado com uma única passada, de n - 1 comparações. Em um vetor bagunçado, porém, a bolha faz tantas comparações quanto a seleção e muito mais trocas, e costuma ser o mais lento dos três algoritmos deste capítulo. Ela é estudada por ser simples, não por ser boa."
+  },
+  {
+   "t": "h2",
+   "id": "10-6-ordenacao-por-insercao",
+   "texto": "10.6 Ordenação por inserção"
+  },
+  {
+   "t": "p",
+   "html": "A <strong>ordenação por inserção</strong> imita outra forma de ordenar cartas: recebe-se uma carta de cada vez e insere-se cada uma no lugar certo entre as que já estão na mão, que permanecem ordenadas. No vetor, a parte da esquerda é a “mão” ordenada. A cada passo, o próximo elemento é guardado em <code>atual</code>, os maiores que ele são deslocados uma posição para a direita, abrindo espaço, e <code>atual</code> entra no buraco aberto."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-10_insercao.png",
+   "alt": "capitulo 10 insercao"
+  },
+  {
+   "t": "codigo",
+   "texto": "void insercao(int v[], int n) {\n    for (int i = 1; i < n; i++) {\n        int atual = v[i];                   // a carta da vez\n        int j = i - 1;\n        while (j >= 0 && v[j] > atual) {    // os maiores andam\n            v[j + 1] = v[j];                // uma casa à direita\n            j--;\n        }\n        v[j + 1] = atual;                   // entra no buraco\n    }\n}"
+  },
+  {
+   "t": "p",
+   "html": "A ordem das condições no <code>while</code> importa: <code>j &gt;= 0</code> vem primeiro para que, quando <code>j</code> chegar a -1, o <code>&amp;&amp;</code> pare antes de acessar <code>v[-1]</code> (avaliação em curto-circuito, Seção 3.6)."
+  },
+  {
+   "t": "p",
+   "html": "A inserção tem uma qualidade especial: o laço de dentro para assim que encontra um elemento menor que <code>atual</code>. Em um vetor quase ordenado, cada elemento anda pouco, e o algoritmo fica muito rápido, perto de n comparações. Em um vetor bagunçado, faz em média metade das comparações da seleção. Por isso, entre os algoritmos simples, ela costuma ser a melhor escolha, e é usada até dentro de algoritmos sofisticados para ordenar trechos pequenos."
+  },
+  {
+   "t": "h2",
+   "id": "10-7-comparando-os-algoritmos-e-usando-a-biblioteca",
+   "texto": "10.7 Comparando os algoritmos e usando a biblioteca"
+  },
+  {
+   "t": "p",
+   "html": "O programa abaixo põe as três ordenações para trabalhar sobre os mesmos dados e conta as comparações de cada uma. Os vetores são sorteados com o gerador de números aleatórios da biblioteca <code>&lt;random&gt;</code>, e cada função recebe um <code>vector</code> <strong>por valor</strong>, ou seja, uma cópia, para que todas ordenem os mesmos números."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <vector>\n#include <random>\n#include <algorithm>     // sort\n#include <iomanip>       // setw\n#include <string>\nusing namespace std;\n\nlong long selecao(vector<int> v) {\n    long long comp = 0;\n    int n = v.size();\n    for (int i = 0; i < n - 1; i++) {\n        int iMenor = i;\n        for (int j = i + 1; j < n; j++) {\n            comp++;\n            if (v[j] < v[iMenor]) iMenor = j;\n        }\n        swap(v[i], v[iMenor]);\n    }\n    return comp;\n}\n\nlong long bolha(vector<int> v) {\n    long long comp = 0;\n    int n = v.size();\n    for (int fim = n - 1; fim > 0; fim--) {\n        bool trocou = false;\n        for (int j = 0; j < fim; j++) {\n            comp++;\n            if (v[j] > v[j + 1]) {\n                swap(v[j], v[j + 1]);\n                trocou = true;\n            }\n        }\n        if (!trocou) break;\n    }\n    return comp;\n}\n\nlong long insercao(vector<int> v) {\n    long long comp = 0;\n    int n = v.size();\n    for (int i = 1; i < n; i++) {\n        int atual = v[i];\n        int j = i - 1;\n        while (j >= 0) {\n            comp++;\n            if (v[j] <= atual) break;\n            v[j + 1] = v[j];\n            j--;\n        }\n        v[j + 1] = atual;\n    }\n    return comp;\n}\n\nint main() {\n    mt19937 gerador(2026);                    // semente fixa\n    uniform_int_distribution<int> sorteio(1, 1000000);\n    cout << \"    n  dados        seleção    bolha  inserção\"\n         << endl;\n    for (int n = 1000; n <= 4000; n *= 2) {\n        vector<int> v(n);\n        for (int &x : v) x = sorteio(gerador);\n        for (int vez = 1; vez <= 2; vez++) {\n            string dados = vez == 1 ? \"aleatório\" : \"ordenado \";\n            cout << setw(5) << n << \"  \" << dados << \"  \"\n                 << setw(9) << selecao(v) << setw(9) << bolha(v)\n                 << setw(10) << insercao(v) << endl;\n            sort(v.begin(), v.end());    // 2a vez: v ordenado\n        }\n    }\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Compilado com o g++, o programa mostra a saída abaixo. Como a semente do gerador é fixa (2026), os números sorteados são sempre os mesmos; outro compilador pode sortear outros, e as contagens da bolha e da inserção mudam um pouco, mas o padrão é o mesmo."
+  },
+  {
+   "t": "codigo",
+   "texto": "// saída\n    n  dados        seleção    bolha  inserção\n 1000  aleatório     499500   496872    253165\n 1000  ordenado      499500      999       999\n 2000  aleatório    1999000  1996515   1030270\n 2000  ordenado     1999000     1999      1999\n 4000  aleatório    7998000  7990860   3918434\n 4000  ordenado     7998000     3999      3999"
+  },
+  {
+   "t": "p",
+   "html": "Repare em três coisas. Quando n dobra, as comparações nos vetores aleatórios quadruplicam: é o crescimento n<sup>2</sup> da Seção 10.3. A inserção faz cerca de metade das comparações da seleção. E, no vetor já ordenado, a bolha e a inserção fazem só n - 1 comparações, enquanto a seleção continua fazendo todas."
+  },
+  {
+   "t": "h3",
+   "texto": "O sort da biblioteca"
+  },
+  {
+   "t": "p",
+   "html": "Na prática, ninguém escreve a própria ordenação para usar em um programa: a biblioteca <code>&lt;algorithm&gt;</code> oferece a função <code>sort</code>, que usa um algoritmo O(n log n), muito mais rápido que os deste capítulo para vetores grandes, e a <code>binary_search</code>, que faz a busca binária:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <vector>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    vector<int> v = {42, 7, 19, 73, 4, 56, 23};\n    sort(v.begin(), v.end());                     // crescente\n    for (int x : v) cout << x << \" \";\n    cout << endl;                         // 4 7 19 23 42 56 73\n    cout << binary_search(v.begin(), v.end(), 56) << endl;   // 1\n    int w[] = {5, 2, 9, 1};\n    sort(w, w + 4);                               // vetor comum\n    cout << w[0] << \" \" << w[3] << endl;          // 1 9\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Os algoritmos que fazem O(n log n) comparações, como a ordenação por intercalação (<em>merge sort</em>) e o <em>quicksort</em>, usam a ideia de dividir o vetor em partes, ordenar cada parte recursivamente e combinar os resultados. Eles ficam para um estudo mais avançado de estruturas de dados. Estudar os algoritmos simples continua valendo a pena: eles ensinam a raciocinar sobre laços, trocas e custo, e são a base para entender os mais sofisticados."
+  },
+  {
+   "t": "h2",
+   "id": "10-8-um-programa-completo-classificacao-da-turma",
+   "texto": "10.8 Um programa completo: classificação da turma"
+  },
+  {
+   "t": "p",
+   "html": "Em um programa real, os dados ordenados raramente são só números: cada nota pertence a um aluno. Quando nomes e notas estão em dois vetores <strong>paralelos</strong>, em que <code>nomes[i]</code> e <code>notas[i]</code> são do mesmo aluno, a ordenação precisa trocar os dois vetores juntos, senão os nomes se separam das notas. O programa abaixo monta a classificação da turma, da maior nota para a menor, e depois procura a posição de um aluno."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\nconst int N = 6;\n\n// seleção pela maior nota, levando o nome junto\nvoid ordenarPorNota(string nomes[], double notas[], int n) {\n    for (int i = 0; i < n - 1; i++) {\n        int iMaior = i;\n        for (int j = i + 1; j < n; j++) {\n            if (notas[j] > notas[iMaior]) iMaior = j;\n        }\n        swap(notas[i], notas[iMaior]);\n        swap(nomes[i], nomes[iMaior]);    // o nome vai junto\n    }\n}\n\nint buscarNome(const string nomes[], int n, const string &nome) {\n    for (int i = 0; i < n; i++) {\n        if (nomes[i] == nome) return i;\n    }\n    return -1;\n}\n\nint main() {\n    string nomes[N] = {\"Ana\", \"Bruno\", \"Carla\",\n                       \"Diego\", \"Elisa\", \"Fabio\"};\n    double notas[N] = {7.5, 9.0, 6.0, 9.5, 8.0, 5.5};\n    ordenarPorNota(nomes, notas, N);\n    for (int i = 0; i < N; i++) {\n        cout << i + 1 << \"o lugar: \" << nomes[i] << \" (\"\n             << notas[i] << \")\" << endl;\n    }\n    string nome;\n    cout << \"Posição de quem? \";\n    cin >> nome;\n    int pos = buscarNome(nomes, N, nome);\n    if (pos >= 0) {\n        cout << nome << \" ficou em \" << pos + 1 << \"o lugar\"\n             << endl;\n    } else {\n        cout << nome << \" não está na turma\" << endl;\n    }\n    return 0;\n}\n// 1o lugar: Diego (9.5)    4o lugar: Ana (7.5)\n// 2o lugar: Bruno (9)      5o lugar: Carla (6)\n// 3o lugar: Elisa (8)      6o lugar: Fabio (5.5)\n// Posição de quem? Elisa  ->  Elisa ficou em 3o lugar"
+  },
+  {
+   "t": "p",
+   "html": "A busca pelo nome é sequencial porque, depois de ordenado por nota, o vetor de nomes não está em ordem alfabética, e a busca binária exigiria isso. Os vetores paralelos funcionam, mas é fácil esquecer de trocar um deles. No Capítulo 11, os dados de cada aluno vão ser reunidos em um único registro, e a ordenação passa a mover o registro inteiro de uma vez."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Usar a busca binária em um vetor desordenado.</strong> Ela não dá erro: simplesmente responde errado.",
+    "<strong>Errar a atualização dos limites na busca binária.</strong> <code>ini = meio</code> em vez de <code>meio + 1</code> pode deixar o laço preso para sempre.",
+    "<strong>Confundir a posição com o valor.</strong> A busca devolve <strong>onde</strong> o valor está, e -1 (ou 0, no Portugol com índices a partir de 1) quando não acha. Teste esse caso antes de usar a posição.",
+    "<strong>Errar os limites dos laços de ordenação.</strong> Na bolha, <code>v[j + 1]</code> exige <code>j &lt; fim</code>; com <code>j &lt;= fim</code>, o último acesso sai do vetor.",
+    "<strong>Inverter a ordem das condições na inserção.</strong> <code>v[j] &gt; atual &amp;&amp; j &gt;= 0</code> acessa <code>v[-1]</code> antes de testar o índice.",
+    "<strong>Ordenar um vetor paralelo e esquecer o outro.</strong> Os nomes deixam de corresponder às notas.",
+    "<strong>Escrever a própria ordenação sem necessidade.</strong> Em programas reais, use <code>sort</code>; os algoritmos simples servem para aprender e para vetores pequenos."
+   ]
+  }
+ ]
+}

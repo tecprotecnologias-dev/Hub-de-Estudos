@@ -486,6 +486,15 @@ export const apostilas: Apostila[] = [
     descricao:
       'Caso base e caso recursivo, a pilha de chamadas, fatorial, MDC de Euclides, Fibonacci e memoização, recursão ou laço, Torres de Hanói, permutações e o problema das oito rainhas.',
   },
+  {
+    id: 'alg1-cap10',
+    capitulo: 10,
+    titulo: 'Busca e ordenação',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-i',
+    unidades: ['Algoritmos e Estruturas de Dados'],
+    descricao:
+      'Busca sequencial e binária, noção de complexidade, ordenação por seleção, bolha e inserção, comparação experimental, sort e binary_search da biblioteca e a classificação de uma turma com vetores paralelos.',
+  },
 
   // Algoritmos e Linguagem de Programação II — "Algoritmos e Estruturas de Dados" (TecPro)
   // Texto próprio, escrito a partir da ementa (temas dos slides de EDA usados só como roteiro).
