@@ -1,0 +1,37 @@
+% Capítulo 7: busca binária do 47 em um vetor ordenado de 15 posições (4 comparações).
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-nos}
+\tikzset{
+  casa/.style={draw=navy, line width=0.9pt, minimum width=8mm, minimum height=7mm, font=\sffamily\small},
+  fora/.style={casa, draw=cinzalogo!60, dashed, fill=white, text=cinzalogo!60},
+  meio/.style={casa, fill=laranja!45, draw=laranja},
+  indice/.style={font=\sffamily\scriptsize, text=cinzalogo},
+  explica/.style={font=\sffamily\small, text=navy, anchor=south west},
+}
+% \linha{y}{início}{fim}{meio}{texto}
+\newcommand{\linha}[5]{%
+  \foreach \x [count=\i from 0] in {3, 8, 12, 17, 21, 25, 30, 34, 39, 42, 47, 51, 56, 60, 64} {
+    \ifnum\i<#2
+      \node[fora] (c\i) at (\i*0.8, #1) {\x};
+    \else\ifnum\i>#3
+      \node[fora] (c\i) at (\i*0.8, #1) {\x};
+    \else\ifnum\i=#4
+      \node[meio] (c\i) at (\i*0.8, #1) {\x};
+    \else
+      \node[casa, fill=laranja!10] (c\i) at (\i*0.8, #1) {\x};
+    \fi\fi\fi
+  }
+  \node[explica] at (-0.4, #1+0.4) {#5};
+}
+\begin{document}
+\begin{tikzpicture}
+  \linha{0}{0}{14}{7}{1) início = 0, fim = 14, meio = 7: \textbf{34 < 47}, descarta o 34 e tudo à esquerda}
+  \foreach \i in {0,...,14} { \node[indice, below=0.5mm of c\i] {\i}; }
+  \linha{-1.75}{8}{14}{11}{2) início = 8, fim = 14, meio = 11: \textbf{51 > 47}, descarta o 51 e tudo à direita}
+  \linha{-3.15}{8}{10}{9}{3) início = 8, fim = 10, meio = 9: \textbf{42 < 47}, descarta o 42 e tudo à esquerda}
+  \linha{-4.55}{10}{10}{10}{4) início = 10, fim = 10, meio = 10: \textbf{47 = 47}, achou na posição 10}
+  \node[legenda] at (5.6, -5.45) {em laranja: o meio, comparado com o procurado; tracejado: a parte já descartada};
+\end{tikzpicture}
+\end{document}

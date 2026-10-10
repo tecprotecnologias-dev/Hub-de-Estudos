@@ -1,0 +1,439 @@
+{
+ "numero": 7,
+ "titulo": "Busca",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Procurar é uma das tarefas que um programa mais repete: achar um cliente pelo CPF, um produto pelo código, uma palavra no dicionário, um contato na agenda. No Capítulo 2 você conheceu a busca sequencial e viu que ela é O(n); no Capítulo 5, a árvore binária de busca, que encontra um valor descendo por um único caminho. Neste capítulo o foco é o vetor: você vai rever a busca sequencial, aprender a <strong>busca binária</strong>, que encontra um valor entre um milhão em apenas 20 comparações, e conhecer as variações e as funções prontas do C++ que todo programador usa no dia a dia."
+  },
+  {
+   "t": "h2",
+   "id": "7-1-busca-sequencial",
+   "texto": "7.1 Busca sequencial"
+  },
+  {
+   "t": "p",
+   "html": "A <strong>busca sequencial</strong> (ou linear) compara o valor procurado com cada elemento, do primeiro ao último, até encontrá-lo ou até o vetor acabar. É o que você faz ao procurar uma chave em uma gaveta bagunçada: olha uma por uma."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-07_sequencial.png",
+   "alt": "capitulo 07 sequencial"
+  },
+  {
+   "t": "p",
+   "html": "Sua grande vantagem é não exigir nada dos dados: o vetor pode estar em qualquer ordem, e o tipo dos elementos só precisa saber se comparar com <code>==</code>. Com um <em>template</em> (Capítulo 1), a mesma função serve para números, textos e qualquer outro tipo. E, quando os elementos são registros, a busca costuma ser feita por uma <strong>chave</strong>, um campo que identifica o registro, como a matrícula de um aluno:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n\ntemplate <typename T>\nint buscaSequencial(const vector<T> &v, const T &procurado) {\n    for (int i = 0; i < static_cast<int>(v.size()); i++) {\n        if (v[i] == procurado) return i;   // achou: para\n    }\n    return -1;                     // olhou todos e não achou\n}\n\nstruct Aluno {\n    int matricula;\n    string nome;\n};\n\n// procura pela chave (a matrícula) e devolve o aluno inteiro\nconst Aluno *buscarAluno(const vector<Aluno> &turma,\n                         int matricula) {\n    for (const Aluno &a : turma) {\n        if (a.matricula == matricula) return &a;\n    }\n    return nullptr;                // nenhum aluno com ela\n}\n\nint main() {\n    vector<int> numeros = {25, 8, 64, 17, 42, 3, 51, 30};\n    cout << buscaSequencial(numeros, 42) << endl;   // 4\n    cout << buscaSequencial(numeros, 99) << endl;   // -1\n\n    vector<string> cores = {\"azul\", \"verde\", \"roxo\"};\n    cout << buscaSequencial(cores, string(\"roxo\")) << endl; // 2\n\n    vector<Aluno> turma = {{2031, \"Ana\"}, {1987, \"Bruno\"},\n                           {2210, \"Carla\"}};\n    const Aluno *achado = buscarAluno(turma, 1987);\n    if (achado != nullptr) cout << achado->nome << endl; // Bruno\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>string(\"roxo\")</code> é necessário porque <code>\"roxo\"</code> sozinho é um texto do C, e o <em>template</em> precisa que os dois parâmetros sejam do mesmo tipo <code>T</code>. A função <code>buscarAluno</code> devolve um ponteiro para o aluno encontrado, ou <code>nullptr</code> quando não acha, o mesmo papel do -1 na versão com índices."
+  },
+  {
+   "t": "p",
+   "html": "Como você viu no Capítulo 2, o melhor caso é uma comparação, o pior caso são n comparações (o valor está no fim ou não existe) e o caso médio é cerca de n/2. A busca sequencial é O(n)."
+  },
+  {
+   "t": "h3",
+   "texto": "Duas melhorias simples"
+  },
+  {
+   "t": "p",
+   "html": "Se o vetor estiver <strong>ordenado</strong>, a busca pode desistir mais cedo: ao encontrar um valor maior que o procurado, já se sabe que ele não está no resto do vetor. Isso não muda o pior caso, que continua O(n), mas acelera as buscas sem sucesso."
+  },
+  {
+   "t": "p",
+   "html": "A outra melhoria é a <strong>sentinela</strong>. O laço da busca sequencial faz duas perguntas a cada passo: “o vetor acabou?” e “achei?”. Se o próprio valor procurado for colocado no fim do vetor, o laço com certeza vai parar nele, e a primeira pergunta deixa de ser necessária. No final, basta ver se o valor encontrado foi o verdadeiro ou a sentinela."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n\n// vetor em ordem crescente: dá para desistir mais cedo\nint buscaOrdenada(const vector<int> &v, int procurado) {\n    for (int i = 0; i < static_cast<int>(v.size()); i++) {\n        if (v[i] == procurado) return i;\n        if (v[i] > procurado) return -1;   // o resto é maior\n    }\n    return -1;\n}\n\n// sentinela: uma comparação por passo em vez de duas\nint buscaComSentinela(vector<int> &v, int procurado) {\n    int n = static_cast<int>(v.size());\n    v.push_back(procurado);       // garante que o laço para\n    int i = 0;\n    while (v[i] != procurado) i++;\n    v.pop_back();                 // devolve o vetor como estava\n    return i < n ? i : -1;        // parou na sentinela: não está\n}"
+  },
+  {
+   "t": "p",
+   "html": "A sentinela economiza uma comparação por passo, o que pode fazer diferença em laços executados milhões de vezes, mas continua O(n). Ela é um exemplo de otimização que melhora a constante, e não a ordem de crescimento."
+  },
+  {
+   "t": "h2",
+   "id": "7-2-busca-binaria",
+   "texto": "7.2 Busca binária"
+  },
+  {
+   "t": "p",
+   "html": "Pense no jogo de adivinhar um número de 1 a 100, em que a cada palpite você ouve “é maior” ou “é menor”. Ninguém joga chutando 1, 2, 3… A estratégia natural é chutar 50: seja qual for a resposta, metade das possibilidades desaparece. Depois 25 ou 75, e assim por diante. Em no máximo 7 palpites você acerta."
+  },
+  {
+   "t": "p",
+   "html": "A <strong>busca binária</strong> usa exatamente essa ideia em um vetor <strong>ordenado</strong>. Ela mantém uma faixa de posições onde o valor ainda pode estar, delimitada por <code>inicio</code> e <code>fim</code>, e a cada passo compara o procurado com o elemento do <strong>meio</strong> da faixa:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "se for igual, achou;",
+    "se o elemento do meio for <strong>menor</strong> que o procurado, o valor só pode estar à direita, e a faixa passa a começar em <code>meio + 1</code>;",
+    "se for <strong>maior</strong>, o valor só pode estar à esquerda, e a faixa passa a terminar em <code>meio - 1</code>;",
+    "se a faixa ficar vazia (<code>inicio &gt; fim</code>), o valor não está no vetor."
+   ]
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/capitulo-07_binaria.png",
+   "alt": "capitulo 07 binaria"
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nint buscaBinaria(const vector<int> &v, int procurado) {\n    int inicio = 0;\n    int fim = static_cast<int>(v.size()) - 1;\n    while (inicio <= fim) {           // ainda há onde procurar\n        int meio = inicio + (fim - inicio) / 2;\n        if (v[meio] == procurado) return meio;\n        if (v[meio] < procurado) {\n            inicio = meio + 1;        // descarta a esquerda\n        } else {\n            fim = meio - 1;           // descarta a direita\n        }\n    }\n    return -1;                        // a faixa ficou vazia\n}"
+  },
+  {
+   "t": "p",
+   "html": "Acompanhar a busca em uma tabela, com os valores de cada variável a cada volta do laço, é a melhor forma de entendê-la. Veja o que acontece ao procurar o 20, que não está no vetor da figura:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Passo",
+    "início",
+    "fim",
+    "meio",
+    "v[meio]",
+    "Decisão"
+   ],
+   "linhas": [
+    [
+     "1",
+     "0",
+     "14",
+     "7",
+     "34",
+     "20 &lt; 34: fim = 6"
+    ],
+    [
+     "2",
+     "0",
+     "6",
+     "3",
+     "17",
+     "20 &gt; 17: início = 4"
+    ],
+    [
+     "3",
+     "4",
+     "6",
+     "5",
+     "25",
+     "20 &lt; 25: fim = 4"
+    ],
+    [
+     "4",
+     "4",
+     "4",
+     "4",
+     "21",
+     "20 &lt; 21: fim = 3"
+    ],
+    [
+     "–",
+     "4",
+     "3",
+     "",
+     "",
+     "início &gt; fim: não está"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Repare no valor final de <code>inicio</code>: 4, exatamente a posição em que o 20 deveria ser inserido para o vetor continuar ordenado, entre o 17 e o 21. Essa observação será útil na Seção 7.3."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Por que não (inicio + fim) / 2?",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "As duas fórmulas dão o mesmo meio, mas <code>inicio + fim</code> pode passar do maior valor que um <code>int</code> guarda (cerca de 2,1 bilhões) em vetores muito grandes, e o resultado vira um número negativo. Já <code>inicio + (fim - inicio) / 2</code> nunca passa de <code>fim</code>. Esse erro ficou escondido por anos na busca binária da biblioteca do Java, até ser descoberto em 2006, quando os vetores ficaram grandes o bastante para ele aparecer."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Versão recursiva"
+  },
+  {
+   "t": "p",
+   "html": "A busca binária também tem uma definição recursiva natural, como os percursos de árvore do Capítulo 5: o caso base é a faixa vazia, e cada chamada procura em uma das metades."
+  },
+  {
+   "t": "codigo",
+   "texto": "// trecho\nint buscaBinariaRecursiva(const vector<int> &v, int procurado,\n                          int inicio, int fim) {\n    if (inicio > fim) return -1;      // caso base: faixa vazia\n    int meio = inicio + (fim - inicio) / 2;\n    if (v[meio] == procurado) return meio;\n    if (v[meio] < procurado) {\n        return buscaBinariaRecursiva(v, procurado, meio + 1, fim);\n    }\n    return buscaBinariaRecursiva(v, procurado, inicio, meio - 1);\n}"
+  },
+  {
+   "t": "p",
+   "html": "As duas versões fazem as mesmas comparações. A iterativa é a mais usada na prática, porque não gasta a pilha de execução; a recursiva é mais próxima da definição e aparece muito em provas. Este é o programa completo com as duas:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n\nint buscaBinaria(const vector<int> &v, int procurado) {\n    int inicio = 0;\n    int fim = static_cast<int>(v.size()) - 1;\n    while (inicio <= fim) {           // ainda há onde procurar\n        int meio = inicio + (fim - inicio) / 2;\n        if (v[meio] == procurado) return meio;\n        if (v[meio] < procurado) {\n            inicio = meio + 1;        // descarta a esquerda\n        } else {\n            fim = meio - 1;           // descarta a direita\n        }\n    }\n    return -1;                        // a faixa ficou vazia\n}\n\nint buscaBinariaRecursiva(const vector<int> &v, int procurado,\n                          int inicio, int fim) {\n    if (inicio > fim) return -1;      // caso base: faixa vazia\n    int meio = inicio + (fim - inicio) / 2;\n    if (v[meio] == procurado) return meio;\n    if (v[meio] < procurado) {\n        return buscaBinariaRecursiva(v, procurado, meio + 1, fim);\n    }\n    return buscaBinariaRecursiva(v, procurado, inicio, meio - 1);\n}\n\nint main() {\n    vector<int> v = {3, 8, 12, 17, 21, 25, 30, 34, 39, 42,\n                     47, 51, 56, 60, 64};\n    cout << buscaBinaria(v, 47) << endl;            // 10\n    cout << buscaBinaria(v, 20) << endl;            // -1\n    cout << buscaBinaria(v, 3) << \" \"\n         << buscaBinaria(v, 64) << endl;            // 0 14\n    int ultimo = static_cast<int>(v.size()) - 1;\n    cout << buscaBinariaRecursiva(v, 47, 0, ultimo) << endl; // 10\n}"
+  },
+  {
+   "t": "h3",
+   "texto": "Quanto custa"
+  },
+  {
+   "t": "p",
+   "html": "Cada comparação descarta metade da faixa: de n posições sobram n/2, depois n/4, n/8… até sobrar uma. O número de passos é quantas vezes n pode ser dividido por 2, ou seja, log<sub>2</sub> n. A busca binária é O(log n), e é isso que a torna tão poderosa:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tamanho do vetor",
+    "Sequencial (pior caso)",
+    "Binária (pior caso)"
+   ],
+   "linhas": [
+    [
+     "15",
+     "15 comparações",
+     "4 comparações"
+    ],
+    [
+     "1.000",
+     "1.000",
+     "10"
+    ],
+    [
+     "1.000.000",
+     "1.000.000",
+     "20"
+    ],
+    [
+     "1.000.000.000",
+     "1.000.000.000",
+     "30"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Multiplicar o vetor por mil acrescenta só 10 comparações. Mas a busca binária cobra um preço: o vetor precisa estar <strong>ordenado</strong>, e precisa permitir acesso direto a qualquer posição. Em uma lista encadeada (Capítulo 3), chegar ao meio já custa O(n), e a vantagem desaparece."
+  },
+  {
+   "t": "h2",
+   "id": "7-3-variacoes-da-busca-binaria",
+   "texto": "7.3 Variações da busca binária"
+  },
+  {
+   "t": "p",
+   "html": "A busca binária básica responde “está ou não está?”. Com pequenas mudanças, ela responde perguntas mais úteis."
+  },
+  {
+   "t": "h3",
+   "texto": "Primeira ocorrência e ponto de inserção"
+  },
+  {
+   "t": "p",
+   "html": "Quando o vetor tem valores repetidos, a busca básica devolve a posição de <strong>algum</strong> deles, não necessariamente a do primeiro. A variação abaixo encontra a <strong>primeira posição com valor maior ou igual</strong> ao procurado. Se o valor existe, é a sua primeira ocorrência; se não existe, é a posição onde ele deveria ser inserido."
+  },
+  {
+   "t": "p",
+   "html": "A diferença está no tratamento do meio: quando <code>v[meio]</code> é maior ou igual ao procurado, o meio ainda pode ser a resposta, então a faixa passa a terminar <strong>nele</strong> (<code>fim = meio</code>), em vez de descartá-lo. Para isso funcionar, <code>fim</code> começa fora do vetor, em <code>v.size()</code>, e o laço para quando <code>inicio</code> e <code>fim</code> se encontram."
+  },
+  {
+   "t": "p",
+   "html": "Com ela, contar quantas vezes um valor aparece também fica O(log n): é a distância entre a primeira posição do valor e a primeira posição do valor seguinte."
+  },
+  {
+   "t": "h3",
+   "texto": "Busca binária na resposta"
+  },
+  {
+   "t": "p",
+   "html": "A busca binária não precisa de um vetor. Ela funciona em qualquer faixa de números em que uma pergunta tenha resposta “sim” até certo ponto e “não” daí em diante. Um exemplo é a raiz quadrada inteira de n: o maior x tal que x<sup>2</sup> ≤ n. Para x = 0, 1, 2, …, a resposta a “x<sup>2</sup> ≤ n?” é sim, sim, sim… e depois sempre não. A busca binária encontra o último “sim” sem testar um por um."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n\n// primeira posição com valor >= procurado\n// (v.size() se todos forem menores)\nint primeiraPosicao(const vector<int> &v, int procurado) {\n    int inicio = 0;\n    int fim = static_cast<int>(v.size());  // fora do vetor\n    while (inicio < fim) {\n        int meio = inicio + (fim - inicio) / 2;\n        if (v[meio] < procurado) {\n            inicio = meio + 1;     // a resposta está à direita\n        } else {\n            fim = meio;            // o meio ainda pode ser ela\n        }\n    }\n    return inicio;\n}\n\nint contar(const vector<int> &v, int valor) {\n    return primeiraPosicao(v, valor + 1)\n           - primeiraPosicao(v, valor);\n}\n\n// maior x tal que x * x <= n\nlong long raizInteira(long long n) {\n    long long inicio = 1, fim = n, resposta = 0;\n    while (inicio <= fim) {\n        long long meio = inicio + (fim - inicio) / 2;\n        if (meio <= n / meio) {    // meio * meio <= n sem estouro\n            resposta = meio;       // serve; tenta um maior\n            inicio = meio + 1;\n        } else {\n            fim = meio - 1;        // grande demais\n        }\n    }\n    return resposta;\n}\n\nint main() {\n    vector<int> notas = {4, 5, 5, 7, 7, 7, 8, 9, 10};\n    cout << primeiraPosicao(notas, 7) << endl;  // 3: 1º 7\n    cout << primeiraPosicao(notas, 6) << endl;  // 3: entraria\n    cout << primeiraPosicao(notas, 11) << endl; // 9: no fim\n    cout << contar(notas, 7) << \" \"\n         << contar(notas, 6) << endl;            // 3 0\n\n    cout << raizInteira(50) << \" \"\n         << raizInteira(1000000) << endl;        // 7 1000\n    cout << raizInteira(1000000000000) << endl;  // 1000000\n}"
+  },
+  {
+   "t": "p",
+   "html": "Na <code>raizInteira</code>, a comparação <code>meio &lt;= n / meio</code> evita calcular <code>meio * meio</code>, que estouraria até um <code>long long</code> com n na casa do trilhão. A mesma técnica resolve problemas como “qual o menor tamanho de página que faz o texto caber em 10 páginas?” ou “qual a menor velocidade que permite terminar a entrega a tempo?”: sempre que a resposta pode ser testada e o teste muda de “não” para “sim” uma única vez."
+  },
+  {
+   "t": "h2",
+   "id": "7-4-busca-na-biblioteca-padrao",
+   "texto": "7.4 Busca na biblioteca padrão"
+  },
+  {
+   "t": "p",
+   "html": "Na prática, você raramente vai escrever essas buscas do zero: o C++ traz todas elas prontas na biblioteca <code>&lt;algorithm&gt;</code>. Elas trabalham com <strong>iteradores</strong>, que indicam posições: <code>v.begin()</code> é o início do vetor e <code>v.end()</code> é a posição logo depois do último. Subtrair <code>v.begin()</code> de um iterador dá o índice."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <vector>\n#include <algorithm>   // find, sort, lower_bound...\n\nint main() {\n    vector<int> v = {25, 8, 64, 17, 42, 3, 51, 30};\n    auto it = find(v.begin(), v.end(), 42);    // sequencial: O(n)\n    if (it != v.end()) {\n        cout << \"posição \" << it - v.begin() << endl; // 4\n    }\n\n    sort(v.begin(), v.end());           // 3 8 17 25 30 42 51 64\n    cout << boolalpha\n         << binary_search(v.begin(), v.end(), 42) << endl; // true\n\n    auto p = lower_bound(v.begin(), v.end(), 20);  // 1º >= 20\n    cout << *p << \" na posição \" << p - v.begin() << endl;\n    // 25 na posição 3\n\n    vector<int> notas = {4, 5, 5, 7, 7, 7, 8, 9, 10};\n    auto [primeiro, depois] =\n        equal_range(notas.begin(), notas.end(), 7);\n    cout << depois - primeiro << \" notas 7\" << endl;  // 3 notas 7\n}"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Função",
+    "Custo",
+    "Devolve"
+   ],
+   "linhas": [
+    [
+     "<code>find</code>",
+     "O(n)",
+     "iterador para o elemento, ou <code>end()</code> se não achar"
+    ],
+    [
+     "<code>binary_search</code>",
+     "O(log n)",
+     "<code>true</code> ou <code>false</code>"
+    ],
+    [
+     "<code>lower_bound</code>",
+     "O(log n)",
+     "primeira posição com valor ≥ procurado"
+    ],
+    [
+     "<code>upper_bound</code>",
+     "O(log n)",
+     "primeira posição com valor &gt; procurado"
+    ],
+    [
+     "<code>equal_range</code>",
+     "O(log n)",
+     "o par (<code>lower_bound</code>, <code>upper_bound</code>)"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A <code>lower_bound</code> é a <code>primeiraPosicao</code> da Seção 7.3. Todas as funções de busca binária supõem que o vetor já está ordenado; se não estiver, elas não acusam erro nenhum, apenas devolvem respostas erradas. A <code>sort</code> usada no exemplo ordena o vetor em O(n log n); o Capítulo 8 mostra como algoritmos assim funcionam por dentro."
+  },
+  {
+   "t": "h2",
+   "id": "7-5-qual-busca-usar",
+   "texto": "7.5 Qual busca usar"
+  },
+  {
+   "t": "p",
+   "html": "Se a busca binária é tão mais rápida, por que não usá-la sempre? Porque ordenar também custa. Ordenar um vetor de um milhão de elementos custa algo como n log<sub>2</sub> n ≈ 20 milhões de operações, muito mais que uma única busca sequencial (um milhão). A conta muda quando o mesmo vetor é consultado muitas vezes:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Buscas",
+    "Só sequencial",
+    "Ordenar uma vez + binária"
+   ],
+   "linhas": [
+    [
+     "1",
+     "1 milhão",
+     "20 milhões + 20"
+    ],
+    [
+     "100",
+     "100 milhões",
+     "20 milhões + 2 mil"
+    ],
+    [
+     "1 milhão",
+     "1 trilhão",
+     "20 milhões + 20 milhões"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Para uma busca isolada, a sequencial ganha; a partir de umas poucas dezenas de buscas no mesmo vetor, ordenar compensa com folga. A escolha também depende de quanto os dados mudam. Manter um vetor ordenado custa caro: cada inserção precisa deslocar os elementos maiores para abrir espaço. Por isso existem estruturas feitas para buscar e inserir rápido ao mesmo tempo:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Estrutura",
+    "Buscar",
+    "Inserir"
+   ],
+   "linhas": [
+    [
+     "vetor fora de ordem",
+     "O(n)",
+     "O(1) no fim"
+    ],
+    [
+     "vetor ordenado",
+     "O(log n)",
+     "O(n)"
+    ],
+    [
+     "lista encadeada (Capítulo 3)",
+     "O(n)",
+     "O(1) no início"
+    ],
+    [
+     "árvore AVL (Capítulo 5)",
+     "O(log n)",
+     "O(log n)"
+    ],
+    [
+     "tabela hash (<code>unordered_map</code>)",
+     "O(1) em média",
+     "O(1) em média"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Resumindo: poucos dados ou uma busca só, use a sequencial; dados que mudam pouco e são muito consultados, ordene e use a binária; dados que mudam e são consultados o tempo todo, use uma árvore balanceada (o <code>set</code> e o <code>map</code> do C++) ou uma tabela hash (o <code>unordered_set</code> e o <code>unordered_map</code>), que encontra uma chave em tempo médio constante calculando, a partir da própria chave, a posição onde ela está guardada."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Comparando com Python",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em Python, o operador <code>in</code> e o método <code>index</code> das listas fazem busca sequencial, O(n). A busca binária está no módulo <code>bisect</code>: <code>bisect_left</code> é a <code>lower_bound</code> do C++ e <code>bisect_right</code> é a <code>upper_bound</code>."
+    },
+    {
+     "t": "codigo",
+     "texto": "from bisect import bisect_left, bisect_right\n\nnumeros = [3, 8, 12, 17, 21, 25, 30, 34, 39, 42,\n           47, 51, 56, 60, 64]\nprint(42 in numeros)        # True: busca sequencial\nprint(numeros.index(42))    # 9\n\ndef busca_binaria(v, procurado):\n    inicio, fim = 0, len(v) - 1\n    while inicio <= fim:\n        meio = (inicio + fim) // 2\n        if v[meio] == procurado:\n            return meio\n        if v[meio] < procurado:\n            inicio = meio + 1\n        else:\n            fim = meio - 1\n    return -1\n\nprint(busca_binaria(numeros, 47))   # 10\n\nnotas = [4, 5, 5, 7, 7, 7, 8, 9, 10]\nprint(bisect_left(notas, 7))                            # 3\nprint(bisect_right(notas, 7) - bisect_left(notas, 7))   # 3"
+    },
+    {
+     "t": "p",
+     "html": "Como os inteiros do Python não têm limite, <code>(inicio + fim) // 2</code> não estoura. Repare no <code>//</code>, a divisão inteira: com <code>/</code>, o resultado seria um <code>float</code> e não serviria de índice. Para buscar muitas vezes por chave, o Python usa o <code>set</code> e o <code>dict</code>, que são tabelas hash: <code>42 in conjunto</code> é O(1) em média, enquanto <code>42 in lista</code> é O(n)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Usar a busca binária em um vetor fora de ordem.</strong> Ela não acusa erro: simplesmente descarta a metade errada e responde que o valor não está lá, mesmo quando está.",
+    "<strong>Errar a condição do laço.</strong> Com <code>inicio</code> e <code>fim</code> apontando para posições válidas, o laço é <code>while (inicio &lt;= fim)</code>. Com <code>&lt;</code>, a busca deixa de olhar a última posição que sobrou.",
+    "<strong>Não descartar o meio.</strong> Escrever <code>inicio = meio</code> em vez de <code>inicio = meio + 1</code> pode fazer a faixa parar de diminuir, e o laço nunca termina.",
+    "<strong>Calcular o meio com <code>(inicio + fim) / 2</code></strong> em vetores enormes. A soma pode estourar o <code>int</code>; use <code>inicio + (fim - inicio) / 2</code>.",
+    "<strong>Esperar a primeira ocorrência da busca básica.</strong> Com valores repetidos, ela devolve um deles, não necessariamente o primeiro. Para o primeiro, use a <code>lower_bound</code>.",
+    "<strong>Usar a busca binária em uma lista encadeada.</strong> Sem acesso direto às posições, chegar ao meio já custa O(n).",
+    "<strong>Ordenar o vetor para fazer uma única busca.</strong> A ordenação custa mais que a própria busca sequencial; só compensa quando o vetor é consultado muitas vezes.",
+    "<strong>Esquecer de conferir o resultado de <code>find</code> e <code>lower_bound</code>.</strong> Se o valor não existir, elas devolvem <code>end()</code>, e usar <code>*it</code> nesse caso acessa uma posição fora do vetor."
+   ]
+  }
+ ]
+}

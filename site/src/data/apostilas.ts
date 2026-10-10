@@ -455,6 +455,14 @@ export const apostilas: Apostila[] = [
     descricao:
       'Vértices e arestas, matriz e lista de adjacência, busca em largura e em profundidade, componentes conexos, ordenação topológica, caminho mínimo com Dijkstra e árvore geradora mínima com Prim.',
   },
+  {
+    id: 'alg2-cap7',
+    capitulo: 7,
+    titulo: 'Busca',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-ii',
+    descricao:
+      'Busca sequencial com sentinela, busca binária iterativa e recursiva, primeira ocorrência e ponto de inserção, busca binária na resposta, funções de busca da biblioteca padrão e quando vale a pena ordenar.',
+  },
 
   // Programação e Design para Web II (apostila em módulos)
   // Fonte: 02- APOSTILAS/Módulo 5/LATEX/modulos/modulo-0N.tex (24/08), convertida com
