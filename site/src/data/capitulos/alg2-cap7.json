@@ -395,7 +395,7 @@
   },
   {
    "t": "p",
-   "html": "Resumindo: poucos dados ou uma busca só, use a sequencial; dados que mudam pouco e são muito consultados, ordene e use a binária; dados que mudam e são consultados o tempo todo, use uma árvore balanceada (o <code>set</code> e o <code>map</code> do C++) ou uma tabela hash (o <code>unordered_set</code> e o <code>unordered_map</code>), que encontra uma chave em tempo médio constante calculando, a partir da própria chave, a posição onde ela está guardada."
+   "html": "Resumindo: poucos dados ou uma busca só, use a sequencial; dados que mudam pouco e são muito consultados, ordene e use a binária; dados que mudam e são consultados o tempo todo, use uma árvore balanceada (o <code>set</code> e o <code>map</code> do C++) ou uma tabela hash (o <code>unordered_set</code> e o <code>unordered_map</code>), que encontra uma chave em tempo médio constante calculando, a partir da própria chave, a posição onde ela está guardada. O Apêndice A mostra como as tabelas hash funcionam por dentro."
   },
   {
    "t": "quadro",

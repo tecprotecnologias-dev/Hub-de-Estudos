@@ -495,6 +495,24 @@ export const apostilas: Apostila[] = [
     descricao:
       'Tipos de erro; asserções com pré-condições e pós-condições; testes unitários, faixas de valores e fronteiras; tabela de casos e testes de regressão; testes com dados gerados e oráculo; roteiro de depuração, cerr, gdb e sintomas comuns.',
   },
+  {
+    id: 'alg2-apa',
+    rotulo: 'Apêndice A',
+    grupo: 'Material complementar',
+    titulo: 'Tabelas hash',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-ii',
+    descricao:
+      'Funções hash para números e textos, colisões, encadeamento separado com redimensionamento, endereçamento aberto com sondagem linear, unordered_map e unordered_set.',
+  },
+  {
+    id: 'alg2-apb',
+    rotulo: 'Apêndice B',
+    grupo: 'Material complementar',
+    titulo: 'Arquivos',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-ii',
+    descricao:
+      'Fluxos de arquivo, leitura e gravação de texto, arquivos CSV, arquivos binários com registros de tamanho fixo, acesso direto com seekg e índices.',
+  },
 
   // Programação e Design para Web II (apostila em módulos)
   // Fonte: 02- APOSTILAS/Módulo 5/LATEX/modulos/modulo-0N.tex (24/08), convertida com

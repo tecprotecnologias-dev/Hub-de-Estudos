@@ -1,0 +1,215 @@
+{
+ "numero": null,
+ "titulo": "Arquivos",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Todas as estruturas deste livro vivem na memória principal: quando o programa termina, listas, árvores e tabelas desaparecem. Para que os dados sobrevivam, eles precisam ir para um <strong>arquivo</strong>, guardado no disco. Este apêndice mostra como ler e gravar arquivos em C++, primeiro como texto, que qualquer pessoa consegue abrir e editar, e depois em formato binário, com registros de tamanho fixo que podem ser acessados diretamente, a ideia na base dos bancos de dados."
+  },
+  {
+   "t": "h2",
+   "id": "b-1-fluxos-de-arquivo",
+   "texto": "B.1 Fluxos de arquivo"
+  },
+  {
+   "t": "p",
+   "html": "Em C++, um arquivo é tratado como um <strong>fluxo</strong> (<em>stream</em>), exatamente como o teclado e a tela. A biblioteca <code>&lt;fstream&gt;</code> traz três tipos:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo",
+    "Uso"
+   ],
+   "linhas": [
+    [
+     "<code>ofstream</code>",
+     "grava (<em>output</em>); funciona como o <code>cout</code>"
+    ],
+    [
+     "<code>ifstream</code>",
+     "lê (<em>input</em>); funciona como o <code>cin</code>"
+    ],
+    [
+     "<code>fstream</code>",
+     "lê e grava no mesmo arquivo"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Tudo o que você já sabe sobre <code>cin</code> e <code>cout</code> continua valendo: <code>&lt;&lt;</code> grava, <code>&gt;&gt;</code> lê um valor separado por espaços e <code>getline</code> lê uma linha inteira. O arquivo é aberto quando a variável é criada, com o nome do arquivo, e fechado automaticamente quando a variável deixa de existir. Também é possível fechá-lo antes, com <code>close</code>."
+  },
+  {
+   "t": "h2",
+   "id": "b-2-arquivos-de-texto",
+   "texto": "B.2 Arquivos de texto"
+  },
+  {
+   "t": "p",
+   "html": "O programa abaixo grava as notas de uma turma, uma por linha, e depois lê o arquivo de volta para calcular a média. Antes de usar um arquivo, sempre verifique se ele foi aberto: o nome pode estar errado, a pasta pode não existir ou o programa pode não ter permissão. O fluxo vira <code>false</code> quando algo dá errado, então basta testar <code>if (!saida)</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <fstream>\n#include <string>\n\nint main() {\n    ofstream saida(\"notas.txt\");   // cria (ou apaga o antigo)\n    if (!saida) {\n        cerr << \"não foi possível criar notas.txt\" << endl;\n        return 1;\n    }\n    saida << \"Ana 8.5\" << endl;\n    saida << \"Bruno 5.0\" << endl;\n    saida << \"Carla 9.0\" << endl;\n    saida.close();                 // grava tudo no disco\n\n    ifstream entrada(\"notas.txt\");\n    string nome;\n    double nota, soma = 0;\n    int quantos = 0;\n    while (entrada >> nome >> nota) {   // falso no fim\n        soma += nota;\n        quantos++;\n    }\n    cout << quantos << \" notas, média \" << soma / quantos << endl;\n    // 3 notas, média 7.5\n}"
+  },
+  {
+   "t": "p",
+   "html": "O laço <code>while (entrada &gt;&gt; nome &gt;&gt; nota)</code> é a forma correta de ler até o fim: a leitura em si é a condição, e ela falha quando não há mais dados. Uma armadilha comum é escrever <code>while (!entrada.eof())</code>: o fim do arquivo só é detectado <strong>depois</strong> de uma leitura que falhou, e a última linha acaba sendo processada duas vezes."
+  },
+  {
+   "t": "p",
+   "html": "Abrir um <code>ofstream</code> apaga o conteúdo anterior do arquivo. Para <strong>acrescentar</strong> no fim, como em um diário ou um registro de eventos, abra com o modo <code>ios::app</code>. E, quando cada linha pode ter espaços, use <code>getline</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <fstream>\n#include <string>\n\nint main() {\n    ofstream diario(\"diario.txt\");          // começa vazio\n    diario << \"Segunda: estudei listas\" << endl;\n    diario.close();\n\n    ofstream mais(\"diario.txt\", ios::app);  // acrescenta\n    mais << \"Terça: estudei pilhas e filas\" << endl;\n    mais.close();\n\n    ifstream leitura(\"diario.txt\");\n    string linha;\n    int numero = 1;\n    while (getline(leitura, linha)) {       // a linha inteira\n        cout << numero++ << \": \" << linha << endl;\n    }\n    // 1: Segunda: estudei listas\n    // 2: Terça: estudei pilhas e filas\n\n    ifstream inexistente(\"nao-existe.txt\");\n    if (!inexistente.is_open()) {\n        cout << \"arquivo não encontrado\" << endl;\n    }\n}"
+  },
+  {
+   "t": "h2",
+   "id": "b-3-arquivos-csv",
+   "texto": "B.3 Arquivos CSV"
+  },
+  {
+   "t": "p",
+   "html": "O formato <strong>CSV</strong> (<em>comma-separated values</em>) guarda uma tabela em texto: cada linha é um registro, e os campos são separados por um caractere fixo. No Brasil, como a vírgula é usada nos números decimais, o separador costuma ser o ponto e vírgula, e é assim que as planilhas em português gravam. A primeira linha normalmente é um <strong>cabeçalho</strong> com os nomes das colunas."
+  },
+  {
+   "t": "p",
+   "html": "Para ler cada campo, a linha inteira é lida com <code>getline</code> e depois quebrada com um <code>istringstream</code>, que trata o texto da linha como um fluxo. O <code>getline</code> aceita um terceiro parâmetro: o caractere em que deve parar."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <fstream>\n#include <sstream>    // istringstream\n#include <string>\n#include <vector>\n\nstruct Aluno {\n    int matricula;\n    string nome;\n    double nota;\n};\n\nvoid salvarCsv(const string &arquivo,\n               const vector<Aluno> &turma) {\n    ofstream saida(arquivo);\n    saida << \"matricula;nome;nota\" << endl;   // cabeçalho\n    for (const Aluno &a : turma) {\n        saida << a.matricula << \";\" << a.nome << \";\" << a.nota\n              << endl;\n    }\n}\n\nvector<Aluno> carregarCsv(const string &arquivo) {\n    vector<Aluno> turma;\n    ifstream entrada(arquivo);\n    string linha;\n    getline(entrada, linha);              // pula o cabeçalho\n    while (getline(entrada, linha)) {\n        istringstream campos(linha);\n        string matricula, nome, nota;\n        getline(campos, matricula, ';');  // lê até o ;\n        getline(campos, nome, ';');\n        getline(campos, nota);\n        turma.push_back({stoi(matricula), nome, stod(nota)});\n    }\n    return turma;\n}\n\nint main() {\n    salvarCsv(\"turma.csv\", {{2031, \"Ana Lima\", 8.5},\n                            {1987, \"Bruno Reis\", 5.0},\n                            {2210, \"Carla Dias\", 9.0}});\n    for (const Aluno &a : carregarCsv(\"turma.csv\")) {\n        cout << a.nome << \" (\" << a.matricula << \"): \" << a.nota\n             << endl;\n    }\n    // Ana Lima (2031): 8.5\n    // Bruno Reis (1987): 5\n    // Carla Dias (2210): 9\n}"
+  },
+  {
+   "t": "p",
+   "html": "As funções <code>stoi</code> e <code>stod</code> convertem texto em <code>int</code> e em <code>double</code>. Como os campos são separados pelo ponto e vírgula, e não por espaços, os nomes podem ter espaços sem problema. Um arquivo assim abre direto em uma planilha, o que faz do CSV um formato prático para trocar dados entre programas."
+  },
+  {
+   "t": "h2",
+   "id": "b-4-arquivos-binarios-e-acesso-direto",
+   "texto": "B.4 Arquivos binários e acesso direto"
+  },
+  {
+   "t": "p",
+   "html": "Um arquivo de texto só pode ser lido em sequência: para chegar ao milésimo aluno, é preciso ler os 999 anteriores, porque cada linha tem um tamanho diferente e não há como saber onde a milésima começa. A solução é gravar os dados em <strong>formato binário</strong>, com <strong>registros de tamanho fixo</strong>: se cada registro ocupa exatamente t bytes, o registro i começa no byte i × t, e é possível pular direto para ele. É o mesmo princípio do vetor, em que <code>v[i]</code> é calculado a partir do endereço inicial."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg2/apendice-b_registros.png",
+   "alt": "apendice b registros"
+  },
+  {
+   "t": "p",
+   "html": "Para que o registro tenha tamanho fixo, ele não pode conter <code>string</code> nem ponteiros, que guardam só um endereço da memória e não o conteúdo. O nome vai em um vetor de <code>char</code> com tamanho máximo definido. O registro é gravado com <code>write</code>, que copia os bytes da memória para o arquivo, e lido com <code>read</code>. As funções <code>seekg</code> e <code>seekp</code> posicionam a leitura e a gravação em um byte qualquer."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <fstream>\n#include <cstring>    // strncpy\n\nstruct Registro {      // tamanho fixo: vai direto para o disco\n    int matricula;\n    char nome[24];\n    double nota;\n};\n\nRegistro criar(int matricula, const char *nome, double nota) {\n    Registro r{};                                // tudo zerado\n    r.matricula = matricula;\n    strncpy(r.nome, nome, sizeof(r.nome) - 1);   // sobra o '\\0'\n    r.nota = nota;\n    return r;\n}\n\nint main() {\n    const long T = sizeof(Registro);\n    ofstream saida(\"alunos.dat\", ios::binary);\n    for (const Registro &r : {criar(2031, \"Ana Lima\", 8.5),\n                              criar(1987, \"Bruno Reis\", 5.0),\n                              criar(2210, \"Carla Dias\", 9.0)}) {\n        saida.write(reinterpret_cast<const char *>(&r), T);\n    }\n    saida.close();\n\n    fstream arquivo(\"alunos.dat\",\n                    ios::in | ios::out | ios::binary);\n    Registro r;\n    arquivo.seekg(2 * T);                     // direto ao 3º\n    arquivo.read(reinterpret_cast<char *>(&r), T);\n    cout << r.nome << \": \" << r.nota << endl;  // Carla Dias: 9\n\n    r.nota = 9.5;                             // corrige só ele\n    arquivo.seekp(2 * T);\n    arquivo.write(reinterpret_cast<const char *>(&r), T);\n\n    arquivo.seekg(0, ios::end);               // vai para o fim\n    cout << arquivo.tellg() / T << \" registros de \" << T\n         << \" bytes\" << endl;   // 3 registros de 40 bytes\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>reinterpret_cast&lt;char *&gt;</code> pede ao compilador para tratar o endereço do registro como uma sequência de bytes, que é o que <code>write</code> e <code>read</code> esperam. O registro tem 40 bytes, e não 4 + 24 + 8 = 36: o compilador acrescenta 4 bytes de <strong>preenchimento</strong> antes da nota, para que o <code>double</code> fique em um endereço múltiplo de 8, que o processador acessa mais rápido. Por isso, sempre use <code>sizeof</code> em vez de somar os campos à mão. O <code>tellg</code> informa a posição atual em bytes; no fim do arquivo, é o tamanho dele."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    "Texto",
+    "Binário"
+   ],
+   "linhas": [
+    [
+     "legível por pessoas",
+     "sim, em qualquer editor",
+     "não"
+    ],
+    [
+     "acesso",
+     "sequencial",
+     "direto, com registros fixos"
+    ],
+    [
+     "alterar um registro",
+     "reescrever o arquivo",
+     "gravar só aquele registro"
+    ],
+    [
+     "portabilidade",
+     "alta",
+     "depende do tamanho dos tipos e da ordem dos bytes"
+    ],
+    [
+     "tamanho",
+     "variável; números ocupam mais",
+     "fixo e compacto"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "b-5-indices",
+   "texto": "B.5 Índices"
+  },
+  {
+   "t": "p",
+   "html": "Com acesso direto, chegar ao registro número i custa O(1). Mas, na prática, ninguém procura “o terceiro aluno do arquivo”, e sim “o aluno de matrícula 1987”. Percorrer o arquivo inteiro comparando matrículas seria uma busca sequencial no disco, o que é muito lento. A solução é um <strong>índice</strong>: uma estrutura em memória que leva cada chave à posição do registro no arquivo. Ele pode ser uma árvore balanceada, como o <code>map</code>, ou uma tabela hash (Apêndice A). Uma consulta passa a ser uma busca no índice mais um único acesso ao disco."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <fstream>\n#include <map>\n#include <cstring>    // strncpy\n\nstruct Registro {\n    int matricula;\n    char nome[24];\n    double nota;\n};\n\nRegistro criar(int matricula, const char *nome, double nota) {\n    Registro r{};\n    r.matricula = matricula;\n    strncpy(r.nome, nome, sizeof(r.nome) - 1);\n    r.nota = nota;\n    return r;\n}\n\nint main() {\n    const long T = sizeof(Registro);\n    {\n        ofstream saida(\"alunos.dat\", ios::binary);\n        Registro turma[] = {criar(2031, \"Ana Lima\", 8.5),\n                            criar(1987, \"Bruno Reis\", 5.0),\n                            criar(2210, \"Carla Dias\", 9.0)};\n        for (const Registro &r : turma) {\n            saida.write(reinterpret_cast<const char *>(&r), T);\n        }\n    }                                    // aqui a saída é fechada\n\n    // monta o índice lendo o arquivo uma única vez\n    ifstream arquivo(\"alunos.dat\", ios::binary);\n    map<int, long> indice;               // matrícula -> registro\n    Registro r;\n    long posicao = 0;\n    while (arquivo.read(reinterpret_cast<char *>(&r), T)) {\n        indice[r.matricula] = posicao++;\n    }\n    arquivo.clear();                     // tira o estado de fim\n\n    // consulta: busca no índice e um único acesso ao arquivo\n    auto it = indice.find(1987);\n    if (it != indice.end()) {\n        arquivo.seekg(it->second * T);\n        arquivo.read(reinterpret_cast<char *>(&r), T);\n        cout << r.nome << \": \" << r.nota << endl;\n        // Bruno Reis: 5\n    }\n    for (const auto &[matricula, reg] : indice) {\n        cout << matricula << \" -> \" << reg << endl;\n    }\n    // 1987 -> 1, 2031 -> 0, 2210 -> 2 (o map mantém a ordem)\n}"
+  },
+  {
+   "t": "p",
+   "html": "O par de chaves em volta da gravação cria um bloco: quando ele termina, a variável <code>saida</code> deixa de existir e o arquivo é fechado, antes de ser aberto para leitura. Depois que a leitura chega ao fim, o fluxo fica em estado de falha, e o <code>clear</code> é necessário para que o <code>seekg</code> volte a funcionar."
+  },
+  {
+   "t": "p",
+   "html": "Os bancos de dados levam essa ideia muito mais longe. Eles guardam os registros em <strong>páginas</strong> de tamanho fixo no disco e usam como índice a <strong>árvore B</strong>, uma árvore balanceada como a AVL do Capítulo 5, mas com centenas de filhos por nó. Com tantos filhos, a árvore fica tão baixa que três ou quatro leituras de disco bastam para achar um registro entre milhões."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Comparando com Python",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em Python, a função <code>open</code> abre o arquivo, e o comando <code>with</code> garante que ele seja fechado ao final do bloco, mesmo que aconteça um erro no meio, o mesmo papel do bloco entre chaves do C++. Para CSV, o módulo <code>csv</code> cuida dos separadores e das aspas; para arquivos binários com registros fixos, o módulo <code>struct</code> converte valores em bytes."
+    },
+    {
+     "t": "codigo",
+     "texto": "import csv\n\nturma = [(2031, 'Ana Lima', 8.5), (1987, 'Bruno Reis', 5.0)]\n\nwith open('turma.csv', 'w', newline='', encoding='utf-8') as arq:\n    escritor = csv.writer(arq, delimiter=';')\n    escritor.writerow(['matricula', 'nome', 'nota'])\n    escritor.writerows(turma)\n\nwith open('turma.csv', encoding='utf-8') as arq:\n    for linha in csv.DictReader(arq, delimiter=';'):\n        print(linha['nome'], float(linha['nota']))\n# Ana Lima 8.5\n# Bruno Reis 5.0"
+    },
+    {
+     "t": "p",
+     "html": "O <code>DictReader</code> usa o cabeçalho para dar nome aos campos de cada linha. Indique sempre o <code>encoding='utf-8'</code>: sem ele, o Python usa a codificação padrão do sistema, e nomes com acentos podem sair trocados ao abrir o arquivo em outro computador."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Não verificar se o arquivo abriu.</strong> Com um nome errado, todas as leituras falham em silêncio e o programa segue com variáveis vazias.",
+    "<strong>Usar <code>while (!arquivo.eof())</code>.</strong> O fim só é detectado depois de uma leitura que falhou, e o último registro é processado duas vezes. Use a própria leitura como condição.",
+    "<strong>Apagar um arquivo sem querer.</strong> Abrir um <code>ofstream</code> apaga o conteúdo anterior. Para acrescentar, use <code>ios::app</code>.",
+    "<strong>Misturar <code>&gt;&gt;</code> e <code>getline</code>.</strong> O <code>&gt;&gt;</code> deixa a quebra de linha no fluxo, e o <code>getline</code> seguinte lê uma linha vazia. Leia tudo com <code>getline</code>, ou descarte o resto da linha antes.",
+    "<strong>Esquecer o <code>ios::binary</code>.</strong> No Windows, o modo texto troca as quebras de linha ao gravar e ao ler, o que corrompe os bytes de um registro binário.",
+    "<strong>Gravar <code>string</code> ou ponteiros em binário.</strong> O <code>write</code> grava o endereço que está dentro deles, e não o texto. Ao ler de volta, em outra execução, esse endereço não significa nada.",
+    "<strong>Calcular o tamanho do registro somando os campos.</strong> O preenchimento muda o total. Use <code>sizeof</code>.",
+    "<strong>Esquecer o <code>clear</code> depois de chegar ao fim.</strong> O fluxo fica em estado de falha e ignora os <code>seekg</code> e <code>read</code> seguintes."
+   ]
+  }
+ ]
+}
