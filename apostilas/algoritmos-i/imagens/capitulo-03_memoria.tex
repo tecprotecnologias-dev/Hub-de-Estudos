@@ -1,0 +1,32 @@
+% Capítulo 3: variáveis como espaços da memória, com nome, tipo, tamanho e valor.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-fluxo}
+\tikzset{
+  byte/.style={draw=navy, line width=0.7pt, minimum width=6mm, minimum height=7mm, inner sep=0pt},
+  endereco/.style={font=\ttfamily\scriptsize, text=cinzalogo, anchor=south west, inner sep=0pt},
+  nomevar/.style={font=\ttfamily\small\bfseries, text=navy},
+  valor/.style={font=\sffamily\small\bfseries, text=navy, inner sep=1.5pt},
+}
+% \variavel{x inicial}{nº de bytes}{cor}{nome}{tipo}{valor}{endereço}
+\newcommand{\variavel}[7]{%
+  \foreach \i in {1,...,#2} {
+    \node[byte, fill=#3] at (#1 + \i*0.6 - 0.6, 0) {};
+  }
+  \node[valor, fill=#3] at (#1 + #2*0.3 - 0.3, 0) {#6};
+  \node[nomevar] at (#1 + #2*0.3 - 0.3, 0.75) {#4};
+  \node[legenda, align=center] at (#1 + #2*0.3 - 0.3, -0.8) {#5\\#2 byte\ifnum#2>1 s\fi};
+  \node[endereco] at (#1 - 0.3, 1.1) {#7};
+}
+\begin{document}
+\begin{tikzpicture}
+  \variavel{0}{4}{laranja!20}{idade}{int}{19}{1000}
+  \variavel{2.9}{8}{azul}{altura}{double}{1.72}{1008}
+  \variavel{8.4}{1}{laranja!45}{turma}{char}{'B'}{1016}
+  \variavel{9.8}{1}{cinzalogo!20}{ok}{bool}{1}{1017}
+  \node[legenda, align=center] at (4.8, -1.7)
+    {cada quadrado é um byte; o número acima de cada variável é o endereço do seu primeiro byte\\
+     (os endereços são ilustrativos: quem os escolhe é o compilador)};
+\end{tikzpicture}
+\end{document}

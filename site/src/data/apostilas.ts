@@ -423,6 +423,15 @@ export const apostilas: Apostila[] = [
     descricao:
       'Níveis de linguagem, sintaxe e semântica, compilação e interpretação, ambiente de programação, a estrutura de um programa em C++, saída com cout, entrada com cin e como ler as mensagens de erro.',
   },
+  {
+    id: 'alg1-cap3',
+    capitulo: 3,
+    titulo: 'Variáveis, tipos e operadores',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-i',
+    unidades: ['Linguagens de Programação'],
+    descricao:
+      'Variáveis e constantes, tipos de dados e seus limites, operadores aritméticos, divisão inteira e resto, conversões de tipo, operadores relacionais e lógicos, precedência e funções matemáticas.',
+  },
 
   // Algoritmos e Linguagem de Programação II — "Algoritmos e Estruturas de Dados" (TecPro)
   // Texto próprio, escrito a partir da ementa (temas dos slides de EDA usados só como roteiro).

@@ -1,0 +1,503 @@
+{
+ "numero": 3,
+ "titulo": "Variáveis, tipos e operadores",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Todo programa trabalha com dados: notas, preços, nomes, datas, respostas de sim ou não. Neste capítulo você vai aprender como esses dados ficam guardados na memória, em <strong>variáveis</strong>; por que cada variável tem um <strong>tipo</strong>, que define o que ela pode guardar e quanto espaço ocupa; e como combiná-los em cálculos e comparações com os <strong>operadores</strong>. Esses três conceitos são a matéria-prima de todos os capítulos seguintes, e boa parte dos erros de quem começa a programar vem de detalhes que aparecem aqui, como a divisão entre inteiros e a diferença entre <code>=</code> e <code>==</code>."
+  },
+  {
+   "t": "h2",
+   "id": "3-1-variaveis",
+   "texto": "3.1 Variáveis"
+  },
+  {
+   "t": "p",
+   "html": "Uma <strong>variável</strong> é um espaço da memória, identificado por um nome, que guarda um valor. Ela tem quatro características:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "um <strong>nome</strong>, escolhido pelo programador, usado para se referir a ela no código;",
+    "um <strong>tipo</strong>, que diz que espécie de valor ela guarda e quantos bytes ocupa;",
+    "um <strong>valor</strong>, que pode mudar durante a execução (daí o nome “variável”);",
+    "um <strong>endereço</strong>, a posição da memória onde ela está, escolhida pelo compilador."
+   ]
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-03_memoria.png",
+   "alt": "capitulo 03 memoria"
+  },
+  {
+   "t": "p",
+   "html": "Em C++, toda variável precisa ser <strong>declarada</strong> antes de ser usada, indicando o tipo e o nome. O ideal é já dar um valor inicial na declaração, o que se chama <strong>inicializar</strong>. Uma variável declarada sem valor contém o que estiver naquele pedaço da memória, um valor imprevisível conhecido como “lixo”. O g++ avisa quando isso acontece: <code>'x' is used uninitialized</code>."
+  },
+  {
+   "t": "p",
+   "html": "Quando um valor não deve mudar nunca, como o número pi ou a média mínima para aprovação, ele é declarado como <strong>constante</strong>, com a palavra <code>const</code>. Qualquer tentativa de alterá-lo vira um erro de compilação. Por convenção, nomes de constantes são escritos em maiúsculas."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    int idade = 19;               // número inteiro\n    double altura = 1.72;         // número real\n    char turma = 'B';             // um caractere: aspas simples\n    bool matriculado = true;      // verdadeiro ou falso\n    string nome = \"Ana Lima\";     // texto: aspas duplas\n    const double MEDIA_MINIMA = 6.0;   // constante\n\n    idade = idade + 1;            // usa o antigo e o substitui\n    cout << nome << \", \" << idade << \" anos, turma \" << turma\n         << endl;                  // Ana Lima, 20 anos, turma B\n    cout << matriculado << endl;                // 1\n    cout << boolalpha << matriculado << endl;   // true\n    cout << \"Média mínima: \" << MEDIA_MINIMA << endl;   // 6\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A linha <code>idade = idade + 1;</code> mostra como a atribuição funciona: primeiro o lado direito é calculado, usando o valor atual (19); depois o resultado (20) é guardado na variável da esquerda, substituindo o anterior. Para o <code>cout</code>, um <code>bool</code> verdadeiro aparece como 1; o <code>boolalpha</code> faz aparecer <code>true</code> e <code>false</code>."
+  },
+  {
+   "t": "h2",
+   "id": "3-2-tipos-de-dados",
+   "texto": "3.2 Tipos de dados"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>tipo</strong> de uma variável define três coisas: quais valores ela pode guardar, quanto espaço ocupa na memória e quais operações fazem sentido com ela. Os tipos básicos do C++ e seus equivalentes em Portugol são:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "C++",
+    "Portugol",
+    "Guarda",
+    "Exemplos"
+   ],
+   "linhas": [
+    [
+     "<code>int</code>",
+     "<code>inteiro</code>",
+     "números inteiros",
+     "<code>19</code>, <code>-3</code>"
+    ],
+    [
+     "<code>double</code>",
+     "<code>real</code>",
+     "números com casas decimais",
+     "<code>1.72</code>, <code>-0.5</code>"
+    ],
+    [
+     "<code>char</code>",
+     "<code>caractere</code>",
+     "um único caractere",
+     "<code>'B'</code>, <code>'7'</code>"
+    ],
+    [
+     "<code>bool</code>",
+     "<code>logico</code>",
+     "verdadeiro ou falso",
+     "<code>true</code>, <code>false</code>"
+    ],
+    [
+     "<code>string</code>",
+     "<code>caractere</code>",
+     "um texto",
+     "<code>\"Ana\"</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Repare que o Portugol usa <code>caractere</code> tanto para uma letra quanto para um texto inteiro, enquanto o C++ separa os dois: <code>char</code> guarda exatamente um caractere, entre aspas simples, e <code>string</code> guarda um texto, entre aspas duplas. <code>'A'</code> e <code>\"A\"</code> são coisas diferentes em C++."
+  },
+  {
+   "t": "p",
+   "html": "Cada tipo tem um tamanho, e o tamanho limita os valores possíveis. O tamanho exato depende do compilador e do sistema, mas nos computadores atuais costuma ser o que o programa abaixo mostra. A função <code>sizeof</code> informa quantos bytes um tipo ocupa, e a biblioteca <code>&lt;climits&gt;</code> traz os limites de cada tipo inteiro."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <climits>     // INT_MAX, LLONG_MAX\nusing namespace std;\n\nint main() {\n    cout << \"int: \" << sizeof(int) << \" bytes, até \"\n         << INT_MAX << endl;       // 4 bytes, até 2147483647\n    cout << \"long long: \" << sizeof(long long) << \" bytes, até \"\n         << LLONG_MAX << endl;\n    // 8 bytes, até 9223372036854775807\n    cout << \"double: \" << sizeof(double) << endl;   // 8\n    cout << \"char: \" << sizeof(char) << endl;       // 1\n    cout << \"bool: \" << sizeof(bool) << endl;       // 1\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Um <code>int</code> vai de cerca de -2,1 a 2,1 bilhões. É suficiente para idades, quantidades e anos, mas não para a população mundial ou para valores em centavos de uma grande empresa: para esses, use <code>long long</code>. Quando uma conta passa do limite, acontece um <strong>estouro</strong> (<em>overflow</em>), e o resultado fica errado sem nenhum aviso durante a execução."
+  },
+  {
+   "t": "p",
+   "html": "O <code>double</code> guarda cerca de 15 dígitos significativos, o que é ótimo para medidas e cálculos científicos. Mas ele guarda os números em binário, e muitas frações que são exatas em decimal, como 0,1, não têm representação exata em binário. Por isso, <code>0.1 + 0.2</code> dá <code>0.30000000000000004</code>, e não exatamente <code>0.3</code>. Para a maioria das contas, essa diferença é irrelevante; ela só importa quando se compara valores reais com <code>==</code>, como você verá na Seção 3.5."
+  },
+  {
+   "t": "h2",
+   "id": "3-3-operadores-aritmeticos",
+   "texto": "3.3 Operadores aritméticos"
+  },
+  {
+   "t": "p",
+   "html": "Os operadores aritméticos fazem as contas. Quase todos funcionam como na matemática, com duas atenções especiais: a divisão e o resto."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Operação",
+    "C++",
+    "Portugol",
+    "Exemplo em C++"
+   ],
+   "linhas": [
+    [
+     "soma",
+     "<code>+</code>",
+     "<code>+</code>",
+     "<code>17 + 5</code> vale 22"
+    ],
+    [
+     "subtração",
+     "<code>-</code>",
+     "<code>-</code>",
+     "<code>17 - 5</code> vale 12"
+    ],
+    [
+     "multiplicação",
+     "<code>*</code>",
+     "<code>*</code>",
+     "<code>17 * 5</code> vale 85"
+    ],
+    [
+     "divisão",
+     "<code>/</code>",
+     "<code>/</code> ou <code>div</code>",
+     "<code>17 / 5</code> vale 3"
+    ],
+    [
+     "resto",
+     "<code>%</code>",
+     "<code>mod</code> ou <code>%</code>",
+     "<code>17 % 5</code> vale 2"
+    ],
+    [
+     "potência",
+     "<code>pow(a, b)</code>",
+     "<code>^</code>",
+     "<code>pow(2, 10)</code> vale 1024"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Em C++, o operador <code>/</code> faz <strong>divisão inteira</strong> quando os dois lados são inteiros: <code>17 / 5</code> vale 3, e a parte decimal é descartada (não há arredondamento: <code>19 / 5</code> também vale 3). Se pelo menos um dos lados for real, a divisão é real: <code>17.0 / 5</code> vale 3.4. No Portugol do VisuAlg, <code>/</code> é sempre a divisão real, e a inteira se escreve <code>div</code>."
+  },
+  {
+   "t": "p",
+   "html": "O operador <code>%</code> dá o <strong>resto</strong> da divisão inteira, e é muito mais útil do que parece: <code>n % 2</code> é 0 quando <code>n</code> é par; <code>n % 10</code> é o último dígito de <code>n</code>; <code>n % 7</code> diz em que dia da semana cai o dia <code>n</code> de uma contagem. Ele só funciona com inteiros."
+  },
+  {
+   "t": "p",
+   "html": "Quando uma expressão tem vários operadores, a <strong>precedência</strong> decide a ordem: multiplicação, divisão e resto vêm antes de soma e subtração, e operadores do mesmo nível são calculados da esquerda para a direita. Parênteses mudam a ordem, e vale a pena usá-los sempre que deixarem a intenção mais clara."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a = 17, b = 5;\n    cout << a + b << \" \" << a - b << \" \" << a * b << endl;\n    // 22 12 85\n    cout << a / b << endl;              // 3: divisão inteira\n    cout << a % b << endl;              // 2: resto\n    cout << 17.0 / 5 << endl;           // 3.4\n    cout << static_cast<double>(a) / b << endl;   // 3.4\n    cout << 2 + 3 * 4 << \" \" << (2 + 3) * 4 << endl;  // 14 20\n    cout << 1234 % 10 << \" \" << 1234 / 10 << endl;    // 4 123\n\n    int pontos = 10;\n    pontos += 5;       // o mesmo que pontos = pontos + 5: 15\n    pontos++;          // soma 1: 16\n    pontos *= 2;       // o mesmo que pontos = pontos * 2: 32\n    pontos--;          // subtrai 1: 31\n    cout << pontos << endl;             // 31\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>static_cast&lt;double&gt;(a)</code> converte o valor de <code>a</code> para <code>double</code> só naquela conta, sem mudar a variável; com isso, a divisão passa a ser real. Os operadores <code>+=</code>, <code>-=</code>, <code>*=</code> e <code>/=</code> são atalhos para alterar uma variável usando o próprio valor dela, e <code>++</code> e <code>--</code> somam e subtraem 1. Eles aparecem o tempo todo nas repetições do Capítulo 5."
+  },
+  {
+   "t": "h2",
+   "id": "3-4-conversoes-de-tipo",
+   "texto": "3.4 Conversões de tipo"
+  },
+  {
+   "t": "p",
+   "html": "Quando valores de tipos diferentes se encontram em uma conta ou atribuição, o C++ converte um deles. As conversões que não perdem informação, como de <code>int</code> para <code>double</code>, são feitas sem problema. As que perdem informação exigem cuidado:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <cmath>       // round\nusing namespace std;\n\nint main() {\n    double preco = 9.99;\n    int reais = static_cast<int>(preco);   // 9: corta os decimais\n    cout << reais << \" \" << round(preco) << endl;   // 9 10\n\n    int quantidade = 7;\n    double metade = quantidade / 2.0;      // 3.5\n    cout << metade << endl;\n\n    char letra = 'A';\n    cout << static_cast<int>(letra) << endl;        // 65\n    cout << static_cast<char>(letra + 2) << endl;   // C\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Converter um <code>double</code> para <code>int</code> <strong>corta</strong> a parte decimal, sem arredondar: 9,99 vira 9. Para arredondar, use <code>round</code>, da biblioteca <code>&lt;cmath&gt;</code>. A conversão entre <code>char</code> e <code>int</code> mostra que, para o computador, cada caractere é um número: o código do <code>'A'</code> na tabela ASCII é 65, o do <code>'B'</code> é 66, e assim por diante. Por isso <code>'A' + 2</code> dá 67, o código do <code>'C'</code>."
+  },
+  {
+   "t": "h2",
+   "id": "3-5-operadores-relacionais",
+   "texto": "3.5 Operadores relacionais"
+  },
+  {
+   "t": "p",
+   "html": "Os operadores relacionais comparam dois valores e dão como resultado um <code>bool</code>: <code>true</code> ou <code>false</code>. São eles que formam as condições das decisões e repetições dos próximos capítulos."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Pergunta",
+    "C++",
+    "Portugol",
+    "Com x = 7"
+   ],
+   "linhas": [
+    [
+     "igual a",
+     "<code>==</code>",
+     "<code>=</code>",
+     "<code>x == 7</code> é <code>true</code>"
+    ],
+    [
+     "diferente de",
+     "<code>!=</code>",
+     "<code>&lt;&gt;</code>",
+     "<code>x != 7</code> é <code>false</code>"
+    ],
+    [
+     "maior que",
+     "<code>&gt;</code>",
+     "<code>&gt;</code>",
+     "<code>x &gt; 7</code> é <code>false</code>"
+    ],
+    [
+     "menor que",
+     "<code>&lt;</code>",
+     "<code>&lt;</code>",
+     "<code>x &lt; 10</code> é <code>true</code>"
+    ],
+    [
+     "maior ou igual a",
+     "<code>&gt;=</code>",
+     "<code>&gt;=</code>",
+     "<code>x &gt;= 7</code> é <code>true</code>"
+    ],
+    [
+     "menor ou igual a",
+     "<code>&lt;=</code>",
+     "<code>&lt;=</code>",
+     "<code>x &lt;= 6</code> é <code>false</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Atenção à igualdade: em C++, <code>=</code> é <strong>atribuição</strong> e <code>==</code> é <strong>comparação</strong>. No Portugol é o contrário, porque a atribuição é a seta <code>&lt;-</code>, e <code>=</code> compara. Escrever <code>x = 7</code> onde se queria <code>x == 7</code> é um dos erros mais comuns em C++, e o Capítulo 4 mostra por que ele é tão traiçoeiro."
+  },
+  {
+   "t": "p",
+   "html": "Também por causa da representação em binário, não compare valores <code>double</code> com <code>==</code>: <code>0.1 + 0.2 == 0.3</code> dá <code>false</code>. Em vez disso, verifique se a diferença entre eles é muito pequena, por exemplo menor que <code>0.000001</code>."
+  },
+  {
+   "t": "h2",
+   "id": "3-6-operadores-logicos",
+   "texto": "3.6 Operadores lógicos"
+  },
+  {
+   "t": "p",
+   "html": "Os operadores lógicos combinam condições, exatamente como os conectivos E, OU e NÃO do Capítulo 1, com a mesma tabela-verdade:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Conectivo",
+    "C++",
+    "Portugol",
+    "Verdadeiro quando"
+   ],
+   "linhas": [
+    [
+     "E",
+     "<code>&amp;&amp;</code>",
+     "<code>e</code>",
+     "as duas condições são verdadeiras"
+    ],
+    [
+     "OU",
+     "<code>||</code>",
+     "<code>ou</code>",
+     "pelo menos uma é verdadeira"
+    ],
+    [
+     "NÃO",
+     "<code>!</code>",
+     "<code>nao</code>",
+     "a condição é falsa"
+    ]
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double nota = 7.5;\n    int frequencia = 80;              // em %\n    int idade = 17;\n    bool estudante = true;\n\n    bool aprovado = nota >= 6 && frequencia >= 75;\n    bool meiaEntrada = estudante || idade >= 60;\n    bool menor = !(idade >= 18);\n    bool notaValida = nota >= 0 && nota <= 10;\n\n    cout << boolalpha;\n    cout << aprovado << \" \" << meiaEntrada << endl;   // true true\n    cout << menor << \" \" << notaValida << endl;       // true true\n    cout << (0.1 + 0.2 == 0.3) << endl;               // false\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare em <code>notaValida</code>: para dizer “a nota está entre 0 e 10”, é preciso escrever as duas comparações ligadas por <code>&amp;&amp;</code>. A forma matemática <code>0 &lt;= nota &lt;= 10</code> compila, mas não faz o que parece: o C++ calcula <code>0 &lt;= nota</code>, que dá <code>true</code> ou <code>false</code> (1 ou 0), e depois compara esse 1 ou 0 com 10, o que é sempre verdadeiro. O g++ avisa: <code>comparisons like 'X&lt;=Y&lt;=Z' do not have their mathematical meaning</code>."
+  },
+  {
+   "t": "p",
+   "html": "Os operadores <code>&amp;&amp;</code> e <code>||</code> também fazem <strong>avaliação em curto-circuito</strong>: se a resposta já está decidida pelo lado esquerdo, o lado direito nem é calculado. Em <code>pessoas &gt; 0 &amp;&amp; total / pessoas &gt; 50</code>, se <code>pessoas</code> for 0, a divisão por zero nunca acontece, porque <code>pessoas &gt; 0</code> já é falso e o <code>&amp;&amp;</code> só pode dar falso."
+  },
+  {
+   "t": "h2",
+   "id": "3-7-precedencia-geral",
+   "texto": "3.7 Precedência geral"
+  },
+  {
+   "t": "p",
+   "html": "Com operadores de tipos diferentes na mesma expressão, a ordem de cálculo segue esta tabela, do primeiro para o último:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Ordem",
+    "Operadores",
+    "Tipo"
+   ],
+   "linhas": [
+    [
+     "1",
+     "<code>( )</code>",
+     "parênteses"
+    ],
+    [
+     "2",
+     "<code>!</code>, <code>-</code> (negativo), <code>++</code>, <code>--</code>",
+     "unários"
+    ],
+    [
+     "3",
+     "<code>*</code>, <code>/</code>, <code>%</code>",
+     "multiplicação, divisão e resto"
+    ],
+    [
+     "4",
+     "<code>+</code>, <code>-</code>",
+     "soma e subtração"
+    ],
+    [
+     "5",
+     "<code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>",
+     "relacionais"
+    ],
+    [
+     "6",
+     "<code>==</code>, <code>!=</code>",
+     "igualdade"
+    ],
+    [
+     "7",
+     "<code>&amp;&amp;</code>",
+     "e lógico"
+    ],
+    [
+     "8",
+     "<code>||</code>",
+     "ou lógico"
+    ],
+    [
+     "9",
+     "<code>=</code>, <code>+=</code>, <code>-=</code>, ...",
+     "atribuição"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A figura mostra a avaliação de uma expressão que mistura quase todos eles:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-03_avaliacao.png",
+   "alt": "capitulo 03 avaliacao"
+  },
+  {
+   "t": "p",
+   "html": "Note que <code>&amp;&amp;</code> vem antes de <code>||</code>: <code>a || b &amp;&amp; c</code> significa <code>a || (b &amp;&amp; c)</code>. Ninguém precisa decorar a tabela inteira: na dúvida, use parênteses. Eles nunca atrapalham e deixam claro para quem lê o que se pretendia."
+  },
+  {
+   "t": "h2",
+   "id": "3-8-funcoes-matematicas",
+   "texto": "3.8 Funções matemáticas"
+  },
+  {
+   "t": "p",
+   "html": "A biblioteca <code>&lt;cmath&gt;</code> traz as funções matemáticas mais usadas:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Função",
+    "Calcula",
+    "Exemplo"
+   ],
+   "linhas": [
+    [
+     "<code>sqrt(x)</code>",
+     "raiz quadrada",
+     "<code>sqrt(16)</code> é 4"
+    ],
+    [
+     "<code>pow(x, y)</code>",
+     "x elevado a y",
+     "<code>pow(2, 10)</code> é 1024"
+    ],
+    [
+     "<code>abs(x)</code>",
+     "valor absoluto",
+     "<code>abs(-7)</code> é 7"
+    ],
+    [
+     "<code>round(x)</code>",
+     "arredonda para o inteiro mais próximo",
+     "<code>round(2.5)</code> é 3"
+    ],
+    [
+     "<code>floor(x)</code>",
+     "arredonda para baixo",
+     "<code>floor(2.7)</code> é 2"
+    ],
+    [
+     "<code>ceil(x)</code>",
+     "arredonda para cima",
+     "<code>ceil(2.1)</code> é 3"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O <code>ceil</code> resolve com facilidade problemas do tipo “quantos ônibus de 40 lugares são necessários para 130 alunos?”: <code>ceil(130 / 40.0)</code> dá 4. Com a divisão inteira <code>130 / 40</code>, o resultado seria 3, e 10 alunos ficariam para trás."
+  },
+  {
+   "t": "h2",
+   "id": "3-9-um-programa-completo",
+   "texto": "3.9 Um programa completo"
+  },
+  {
+   "t": "p",
+   "html": "Um sistema de vídeos registra a duração em segundos, mas precisa mostrá-la em horas, minutos e segundos. A divisão inteira e o resto resolvem o problema: cada hora tem 3600 segundos, então <code>total / 3600</code> dá as horas completas; o que sobra, <code>total % 3600</code>, dividido por 60, dá os minutos; e <code>total % 60</code> dá os segundos restantes."
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"ConverterSegundos\"\nvar\n   total, horas, minutos, segundos: inteiro\ninicio\n   escreva(\"Duração em segundos: \")\n   leia(total)\n   horas <- total div 3600\n   minutos <- (total mod 3600) div 60\n   segundos <- total mod 60\n   escreval(horas, \"h \", minutos, \"min \", segundos, \"s\")\nfimalgoritmo"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int total;\n    cout << \"Duração em segundos: \";\n    cin >> total;\n    int horas = total / 3600;\n    int minutos = (total % 3600) / 60;\n    int segundos = total % 60;\n    cout << horas << \"h \" << minutos << \"min \" << segundos << \"s\"\n         << endl;\n    return 0;\n}\n// Exemplo de execução:\n// Duração em segundos: 3725\n// 1h 2min 5s"
+  },
+  {
+   "t": "p",
+   "html": "Um teste de mesa confirma: 3725 / 3600 = 1 hora; 3725 bmod 3600 = 125, e 125 / 60 = 2 minutos; 3725 bmod 60 = 5 segundos. Conferindo: 3600 + 2 × 60 + 5 = 3725."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Usar uma variável sem inicializá-la.</strong> Ela contém lixo, e o resultado muda a cada execução. Dê sempre um valor inicial.",
+    "<strong>Dividir inteiros esperando casas decimais.</strong> <code>7 / 2</code> vale 3. Use <code>7.0 / 2</code> ou <code>static_cast&lt;double&gt;</code>.",
+    "<strong>Confundir <code>=</code> com <code>==</code>.</strong> <code>=</code> atribui; <code>==</code> compara.",
+    "<strong>Escrever <code>0 &lt;= x &lt;= 10</code>.</strong> Compila, mas é sempre verdadeiro. Use <code>x &gt;= 0 &amp;&amp; x &lt;= 10</code>.",
+    "<strong>Comparar <code>double</code> com <code>==</code>.</strong> <code>0.1 + 0.2 == 0.3</code> é falso. Compare a diferença com uma tolerância pequena.",
+    "<strong>Confundir <code>'A'</code> com <code>\"A\"</code>.</strong> Aspas simples são um <code>char</code>; aspas duplas, um texto.",
+    "<strong>Esperar que a conversão para <code>int</code> arredonde.</strong> Ela corta: 9,99 vira 9. Use <code>round</code>.",
+    "<strong>Estourar o <code>int</code>.</strong> Contas que passam de 2,1 bilhões dão resultados errados. Use <code>long long</code> para números grandes.",
+    "<strong>Usar <code>%</code> com números reais.</strong> O resto só existe para inteiros; com <code>double</code>, é erro de compilação."
+   ]
+  }
+ ]
+}
