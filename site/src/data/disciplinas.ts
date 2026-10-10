@@ -45,20 +45,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "FEOFILOFF, P. Algoritmos em linguagem C. Rio de Janeiro: Campus, 2008.",
-        "FORBELLONE, A. L. V.; EBERSPACHER, H. F. Lógica de programação: a construção de algoritmos e estruturas de dados. São Paulo: Makron Books, 1993.",
-        "MANZANO, J. A. N. G.; OLIVEIRA, J. F. D. Algoritmos: lógica para desenvolvimento de programação. 9. ed. São Paulo: Érica, 1996."
-      ],
-      "complementar": [
-        "ASCENCIO, A. F. G.; CAMPOS, E. A. V. Fundamentos de programação de computadores. São Paulo: Pearson Education, 2008.",
-        "DASGUPTA, S.; PAPADIMITRIOU, C.; VAZIRANI, U. Algoritmos. São Paulo: McGraw Hill, 2009.",
-        "PUGA, S.; RISSETTI, G. Lógica de programação e estrutura de dados. São Paulo: Pearson Education, 2003.",
-        "Harvey M. Deitel, Paul Deitel J. Java: Como programar. São Paulo: Pearson Education, 2003."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "fundamentos-de-sistemas-operacionais",
@@ -140,19 +127,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "MACHADO, Francis Berenger; MAIA, Luiz Paulo. Arquitetura de sistemas operacionais. 5.ed. Rio de Janeiro: LTC, 2014.",
-        "SILBERSCHATZ, Abraham; GALVIN, Peter Baer; GAGNE, Greg. Fundamentos de sistemas operacionais. 8.ed. Rio de Janeiro: LTC, 2014.",
-        "TANENBAUM, Andrew S. Sistemas operacionais modernos. 3.ed. São Paulo: Pearson Prentice-Hall, 2009."
-      ],
-      "complementar": [
-        "COULOURIS, George et al. Sistemas distribuídos: conceitos e projeto. 5.ed. Porto Alegre: Bookman, 2013.",
-        "DEITEL, Harvey M.; DEITEL Paul J.; CHOFFNES D.R. Sistemas operacionais. 3.ed. São Paulo: Pearson Prentice-Hall, 2005.",
-        "ROCHA, Tarcízio da. Windows: sem limites. Rio de Janeiro: Ciência Moderna, 2011."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "gestao-ambiental-e-responsabilidade-social",
@@ -229,23 +204,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "BARBIERI, José Carlos. Gestão Ambiental Empresarial. Conceitos, Modelos e Instrumentos. Saraiva, 4ª edição, 2016.",
-        "DIAS, Reinaldo. Gestão Ambiental.Responsabilidade Social e Sustentabilidade. SP: Atlas, 3a edição, 2017.",
-        "MILLER JR.,G. Tyler. Ciência Ambiental. São Paulo: Cengage Learning. 11ª edição, 2013."
-      ],
-      "complementar": [
-        "ALBUQUERQUE, José de Lima et al. Gestão ambiental e responsabilidade social: conceitos, ferramentas e aplicações. São Paulo: Atlas, 2009. 658.408 Responsabilidade social da empresa / Proteção ambiental.",
-        "BARSANO, Paulo Roberto. Ética e cidadania organizacional. São Paulo: Érica, 2012. 5 ex. 323.6 Cidadnia - Manuais, guias, etc. / Ética empresarial - Manuais, guias, etc. / Ética profissional - Manuais, guias, etc.",
-        "DONAIRE, Denis. Gestão Ambiental na Empresa. 2.ed. São Paulo: Atlas, 2014. 5 ex. 658.408 Responsabilidade social da empresa / Proteção ambiental.",
-        "MOREIRA, Maria Suely. Estratégia e implantação do sistema de gestão ambiental (modelo ISO 14000). Nova Lima: Falconi, 2013. 5 ex. 658.408 Responsabilidade social da empresa / Proteção ambiental.",
-        "ResponsabilidadeSocial Empresarial: teoria e prática. 9.reimp. Rio de Janeiro: 2.ed.rev.ampl. São Paulo: Editora FGV, 2013. 5 ex658.408 Responsabilidade social na empresa.",
-        "BRASIL. Lei 12.305 de 2010: Institui a Política Nacional de Resíduos Sólidos; altera a Lei no 9.605, de 12 de fevereiro de 1998; e dá outras providências.",
-        "TACHIZAWA, Takeshy. Gestão Ambiental e Responsabilidade Social Corporativa. Estratégias de Negócios Focadas na Realidade Brasileira. 8ª Edição. SP: Atlas, 2014."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "ingles-instrumental",
@@ -283,19 +242,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "DUCKWORTH, Michael. Essential Business Grammar & Practice: Elementary to Pre-Intermediate. Oxford University Press – Elt, 2006.",
-        "MURPHY, Raymond. Essential grammar in use. 3.ed. Cambridge, 2014.",
-        "THOMPSON, M.A. Inglês Instrumental: Estratégias de leitura para informática e internet. São Paulo: Érica, 2016."
-      ],
-      "complementar": [
-        "CRUZ, Décio Torres. Inglês instrumental para informática: English online. São Paulo: Disal, 2013.",
-        "LONGMAN Dicionário escolar para estudantes brasileiros. São Paulo: Pearson, 2009.",
-        "PAGE,A; LEVINE, D.; HELD, K. Oxford International Primary Computing. Oxford University Press – Elt, 2015."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "introducao-a-logica",
@@ -349,19 +296,7 @@ export const disciplinas: Disciplina[] = [
     ],
     "tecnologias": [
       "N/A"
-    ],
-    "bibliografia": {
-      "basica": [
-        "ALENCAR FILHO, Edgard. Iniciação à lógica matemática. São Paulo: Nobel, 2002.",
-        "BOENTE, Alfredo. Construção de algoritmos: lógica computacional. 2.ed.rev.ampl. Rio de Janeiro: Editora Rio, 2006. (Coleção Resumido).",
-        "SILVA, Flávio Soares Corrêa da; FINGER, Marcelo; MELO, Ana Cristina Vieira de. Lógica para computação. São Paulo: Cengage Learning, 2013."
-      ],
-      "complementar": [
-        "HUTH, Michael; RYAN, Mark. Lógica em ciência da computação: modelagem e argumentação sobre sistemas. 2.ed. Rio de Janeiro: LTC, 2008.",
-        "MORTARI, C. A. Introdução à Lógica. São Paulo: Editora Unesp, 2001.",
-        "NOLT, J.; ROHATYN, D. Lógica. São Paulo: McGraw Hill Ltda., 1991."
-      ]
-    }
+    ]
   },
   {
     "id": "matematica-aplicada",
@@ -446,19 +381,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "SCHEINERMAN, Edward R. Matemática discreta: uma introdução. São Paulo: Cengage Learning, 2016.",
-        "MENEZES, Paulo Blauth. Matemática discreta para computação e informática. 4.ed. Porto Alegre: Bookman, 2013. V.16.",
-        "FISHER, Ken; CHOU, Jennifer; HOFFMANS, Lara. Fundamentos da matemática discreta. Rio de Janeiro: LTC, 2011."
-      ],
-      "complementar": [
-        "GERSTING, Judith L. Fundamentos matemáticos para a ciência da computação. Rio de Janeiro: LTC, 2017",
-        "IEZZI, Gelson; MURAKAMI, Carlos. Fundamentos de matemática elementar: conjuntos funções. 9.ed. São Paulo: Atual, 2013.",
-        "HUNTER, David J. Fundamentos da matemática discreta. Rio de Janeiro: LTC, 2011."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "organizacao-de-computadores",
@@ -548,19 +471,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "MONTEIRO, Mario A. Introdução à organização de computadores. 5.ed. Rio de Janeiro: LTC, 2014.",
-        "STALLINGS, William. Arquitetura e organização de computadores. 8.ed. São Paulo: Pearson Prentice Hall, 2010.",
-        "TANENBAUM, Andrew S.; AUSTIN, Todd. Organização estruturada de computadores. 6.ed. São Paulo: Pearson Prentice Hall, 2013."
-      ],
-      "complementar": [
-        "BALTZAN, Paige; PHILLIPS, Amy. Sistemas de informação. Porto Alegre: AMGH, 2012.",
-        "MARIN, Paulo Sérgio. Data centers: desvendando cada passo: conceitos, projeto, infraestrutura física e eficiência energética. São Paulo: Érica, 2011.",
-        "VAHID, Frank. Sistemas digitais: projeto, otimização e HDLS. São Paulo: Bookman, 2008."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "algoritmos-e-linguagem-de-programacao-ii",
@@ -618,19 +529,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "DEITEL, P.; DEITEL, H. Java - Como Programar. 10. ed. Sao Paulo: Pearson Education do Brasil Ltda, 2016.",
-        "HORSTMANN, C.; CORNELL, G. Core Java: Fundamentos. 8. ed. São Paulo: Pearson Education do Brasil Ltda, 2010. V. 1.",
-        "LARMAN, C. Utilizando UML e Padrões: Uma Introdução à Análise e ao Projeto Orientados a Objetos e ao Desenvolvimento Iterativo. 3. ed. São Paulo: Bookman Companhia Editora, 2007."
-      ],
-      "complementar": [
-        "ANTONIO MENDES. Arquitetura de Software: Desenvolvimento orientado para arquitetura. Rio de Janeiro: Campus, 2002.",
-        "CAMARÃO, C.; FIGUEIREDO, L. Programação de Computadores em Java. Rio de Janeiro: Livros Tecnicos e Científicos Editora Ltda, 2003.",
-        "RAFAEL SANTOS. Introdução a Programação Orientada a Objetos Usando Java. Rio de Janeiro: Campus, 2003."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "engenharia-de-software-e-da-usabilidade",
@@ -741,21 +640,7 @@ export const disciplinas: Disciplina[] = [
     ],
     "tecnologias": [
       "N/A"
-    ],
-    "bibliografia": {
-      "basica": [
-        "PRESSMAN, R. S. Engenharia de Software - Uma Abordagem Profissional. 7. ed. Porto Alegre: McGraw-Hill Education, 2011.",
-        "SOMMERVILLE, I. Engenharia de software. 9. ed. São Paulo: Pearson Prentice Hall, 2011.",
-        "BARBOSA, S.; SILVA, B. Interação Humano-Computador. Rio de Janeiro: Elsevier Editora Ltda, 2010."
-      ],
-      "complementar": [
-        "FERREIRA, S. B. L.; NUNES, R. R. e-Usabilidade. Rio de Janeiro: Livros Tecnicos e Científicos Editora Ltda, 2008.",
-        "NIELSEN, J.; LORANGER, H. Usabilidade na WEB - Projetando Websites com Qualidade. São Paulo: Elsevier Editora Ltda, 2007.",
-        "PELEEGER, S. L. Engenharia de Software Teoria e Prática. 2. ed. São Paulo: Pearson Education do Brasil Ltda, 2004.",
-        "PRESSMAN, R.; LOWE, D. Engenharia Web. Rio de Janeiro: LTC - Livros Técnicos e Científicos Editora Ltda, 2009.",
-        "RIBEIRO, M. I. C.; COSTA, J. B. Da; BRAVIM, J. M. Projeto de Sistemas Web. Cuiabá: Rede e-Tec Brasil, 2015."
-      ]
-    }
+    ]
   },
   {
     "id": "estatistica-aplicada",
@@ -837,19 +722,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "BRUNI, Adriano Leal. Estatística aplicada à gestão empresarial. São Paulo: Atlas, 2013.",
-        "CRESPO, Antônio Arnot. Estatística fácil. 19.ed.atual. São Paulo: Saraiva, 2009.",
-        "MARTINS, Gilberto de Andrade; DONAIRE, Denis. Princípios de estatística. 4.ed. São Paulo: Atlas, 2010"
-      ],
-      "complementar": [
-        "BONAFINI, Fernanda Cesar. Estatística. São Paulo: Pearson Education do Brasil, 2012.",
-        "KOKOSKA, Stephen. Introdução à estatística: uma abordagem por resolução de problemas. Rio de Janeiro: LTC, 2013.",
-        "MANN, Prem S. Introdução à estatística. 5.ed. São Paulo: LTC, 2012."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "fundamentos-de-estruturas-de-dados",
@@ -918,19 +791,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "GOODRICH, Michael T. TAMASSIA, Roberto. Estruturas de dados e algoritmos em Java. 5.ed. Porto Alegre: Bookman, 2013.",
-        "GUIMARÃES, Ângelo de Moura., LAGES, Newton Alberto de Castilho. Algoritmos e estrutura de dados. Rio de Janeiro: LTC, 2015",
-        "LORENZI, Fabiana; MATTOS, Patrícia Noll; CARVALHO, Tanisi Pereira de Estruturas de dados. São Paulo: Thompson Learning, 2007."
-      ],
-      "complementar": [
-        "ASCENCIO, Ana Fernandes Gomes. Estrutura de dados: algoritmos, análise da complexidade e implementações em JAVA e C/CC++. São Paulo: Pearson Prentice Hall, 2010.",
-        "LAFORE, Robert. Estruturas de dados e algoritmos em Java. 2.ed. Rio de Janeiro: Ciência Moderna, 2004.",
-        "SZWARCFITER, Jayme Luis; MARKENZON, Lilian. Estruturas de dados e seus algoritmos. 3.ed. Rio de Janeiro: LTC, 2014."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "fundamentos-de-redes-de-computadores",
@@ -1019,19 +880,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "TANENBAUM, Andrews; WETHERAL, David. Redes de computadores. 5.ed. São Paulo: Pearson Prentice Hall, 2011.",
-        "KUROSE, James; ROSS, Keith W. Redes de computadores e a internet: uma abordagem top-down. 6.ed. São Paulo: Pearson Education do Brasil, 2013.",
-        "TORRES, Gabriel. Redes de computadores. 2.ed.rev.atual. São Paulo: Novaterra, 2014."
-      ],
-      "complementar": [
-        "ANDERSON, Ali; BENEDETTI, Ryan. Use a cabeça!: redes de computadores. Porto Alegre: Alta Books, 2011.",
-        "BARRETT, Diane; TODD, King. Redes de computadores. Rio de Janeiro: LTC, 2010.",
-        "MORAES, Alexandre Fernandes de. Redes de computadores: fundamentos. 7.ed. São Paulo: Erica, 2010."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "metodologia-da-pesquisa-cientifico-tecnologica",
@@ -1121,19 +970,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "AQUINO, Italo de Souza. Como escrever artigos científicos: sem arrodeio e sem medo da ABNT. 8.ed. São Paulo: Saraiva, 2010.",
-        "MATTAR, João. Metodologia científica na era da informática. 3.ed.rev.atual. São Paulo: Saraiva, 2008.",
-        "VIANNA, Ilca Oliveira de A. Metodologia do trabalho científico: um enfoque didático da produção científica. São Paulo: EPU, 2001."
-      ],
-      "complementar": [
-        "AQUINO, Italo de Souza. Como ler artigos científicos: da graduação ao doutorado. 3.ed. São Paulo: Saraiva: 2012.",
-        "SILVA, J. M.; SILVEIRA, E S. Apresentação de trabalhos acadêmicos: normas e técnicas. 8.ed. Rio de Janeiro: Vozes, 2014.",
-        "VERGARA. Sylvia C. Projetos e relatórios de pesquisa em administração. 15.ed. São Paulo: Atlas, 2014."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "modelagem-conceitual-de-dados",
@@ -1211,19 +1048,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "GUIMARÃES, Celio Cardoso. Fundamentos de banco de dados: modelagem, projeto e linguagem SQL. 3.reimp. São Paulo: Editora Unicamp, 2012.",
-        "HEUSER, Carlos Alberto. Projeto de banco de dados. 6.ed. Porto Alegre: Bookman, 2009.",
-        "MACHADO, Felipe Nery Rodrigues; ABREU, Maurício Pereira de. Projeto de banco de dados: uma visão prática. 17.ed.rev.atual. São Paulo: Erica, 2012"
-      ],
-      "complementar": [
-        "DATE, C. J. Introdução aos sistemas de banco de dados. 8.ed. Rio de Janeiro: Campus, 2003.",
-        "ELMASRI, Ramez; NAVATHE, Shankant B. Sistemas de banco de dados. 6.ed. São Paulo: Pearson Addison Wesley, 2011.",
-        "RAMAKRISHNAN, Raghu; GEHRKE, Johannes. Sistemas de gerenciamento de banco de dados. 3.ed. São Paulo: McGraw-Hill, 2008."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "programacao-e-design-para-web-i",
@@ -1271,22 +1096,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "LEMAY, Laura. Aprenda a criar páginas Web com HTML e XHTML. 1ª ed. São Paulo. Makron Books. 2002.",
-        "NIEDERAUER, Juliano. Desenvolvendo Websites com PHP: Aprenda a criar Websites dinâmicos e interativos. 2ª ed. São Paulo: Novatec, 2004.",
-        "SOARES, Walace. PHP 5: Conceitos, Programação e Integração com Banco de Dados. São Paulo: Erica, 2009."
-      ],
-      "complementar": [
-        "RAMALHO. José Antonio. Curso Completo para desenvolvedores WEB. 1ª ed. Rio de Janeiro. Campus. 2005.",
-        "RAMALHO. José Antonio. HTML Dinâmico. 1ª ed. São Paulo. Berkeley. 1999.",
-        "MELO, Alexandre Altair De; NASCIMENTO, Mauricio G.F. PHP Professional: Aprenda a desenvolver sistemas profissionais orientados a objetos com padrões de projeto. São Paulo: Novatec, 2007.",
-        "NIEDERAUER, Juliano. PHP para quem conhece PHP : recursos avançados para a criação de websites. São Paulo:Novatec, 2004.",
-        "ANSELMO, Fernando. PHP4 e MySQL: Maior, melhor e totalmente sem cortes. Florianópolis: Visual Books, 2002.",
-        "DAMASCENO, Anielle. Webdesign: teoria e prática. Florianópolis: Visual Books, 2003."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "analise-e-projeto-de-sistemas",
@@ -1361,19 +1171,7 @@ export const disciplinas: Disciplina[] = [
     ],
     "tecnologias": [
       "N/A"
-    ],
-    "bibliografia": {
-      "basica": [
-        "BOOCH, G.; RUMBAUGH, J.; JACOBSON, I. UML Guia do Usuário. 2. ed. Rio de Janeiro: Elsevier Editora Ltda, 2012.",
-        "DENNIS, A.; WIXOM, B. H.; ROTH, R. Análise e Projeto de Sistemas. 5. ed. Rio de Janeiro: Livros Tecnicos e Científicos Editora Ltda, 2014.",
-        "SOMMERVILLE, I. Engenharia de software. 9. ed. São Paulo: Pearson Prentice Hall, 2011."
-      ],
-      "complementar": [
-        "PELEEGER, S. L. Engenharia de Software Teoria e Prática. 2. ed. São Paulo: Pearson Education do Brasil Ltda, 2004.",
-        "PRESSMAN, R. S. Engenharia de Software - Uma Abordagem Profissional. 7. ed. Porto Alegre: McGraw-Hill Education, 2011.",
-        "TONSIG, S. L. Engenharia de Software - Análise e Projeto de Sistemas. 2. ed. Rio de Janeiro: Editora Ciência Moderna, 2013."
-      ]
-    }
+    ]
   },
   {
     "id": "gestao-de-processos",
@@ -1469,18 +1267,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "PAIM et al.GESTÃO DE PROCESSOS: pensar, agir e aprender. Porto Alegre: Bookman, 2009.",
-        "DE SORDI, José Osvaldo. Gestão por processos: uma abordagem da moderna administração. 4.ed. São Paulo: Saraiva, 2014.",
-        "CRUZ, Tadeu. Sistemas, organização & métodos: estudo integrado orientado a processos de negócio sobre organizações e tecnologia da informação: e introdução à gerência do conteúdo e do conhecimento. 4.ed. São Paulo: Atlas, 2013."
-      ],
-      "complementar": [
-        "TACHIZAWA, Takeshy, SCAICO, Oswaldo. Organização flexível : qualidade na BALLESTERO-ALVAREZ, María Esmeralda. Manual de organização, sistemas e métodos: abordagem teórica e prática da engenharia da informação. 6.ed. São Paulo: Atlas, 2015.",
-        "CURY, Antonio. Organização e métodos: uma visão holística. 8.ed.rev.ampl. São Paulo: Atlas, 2015."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "gestao-de-projeto-de-banco-de-dados",
@@ -1576,19 +1363,7 @@ export const disciplinas: Disciplina[] = [
     "tecnologias": [
       "Banco de Dados: SqLite;",
       "Interface Gráfica com Banco de Dados: DB Browser for SQLite."
-    ],
-    "bibliografia": {
-      "basica": [
-        "ELMASRI, R.; NAVATHE, S. Sistemas de Banco de Dados. 6. ed. São Paulo: Pearson Education, 2011.",
-        "RAMAKRISHNAN, R.; GEHRKE, J. Sistemas de Gerenciamento de Banco de Dados. 3. ed. São Paulo: McGraw-Hill Education, 2008.",
-        "DAMAS, L. SQL - Structured Query Language. 6. ed. Rio de Janeiro: LTC - Livros Técnicos e Científicos Editora Ltda, 2012."
-      ],
-      "complementar": [
-        "DATE, C. J. Introdução a Sistemas de Banco de Dados. 8. ed. São Paulo: Elsevier Editora Ltda, 2004.",
-        "MACHADO, Felipe Nery Rodrigues; ABREU, Maurício Pereira de. Projeto de banco de dados: uma visão prática. 17.ed.rev.atual. São Paulo: Erica, 2012.",
-        "ROB, P.; CORONEL, C. Sistemas de Banco de Dados. 8. ed. São Paulo: Cengage Learning, 2011."
-      ]
-    }
+    ]
   },
   {
     "id": "gestao-de-projetos-inovadores",
@@ -1676,23 +1451,7 @@ export const disciplinas: Disciplina[] = [
     ],
     "tecnologias": [
       "n/a"
-    ],
-    "bibliografia": {
-      "basica": [
-        "CARVALHO, M. M. De; RABECHINI, R. Fundamentos em Gestão de Projetos. 3. ed. São Paulo: Editora Atlas S. A., 2011.",
-        "COHN, M. Desenvolvimento de Software com Scrum. São Paulo: Bookman Companhia Editora, 2011.",
-        "CRUZ, F. Scrum e PMBOK Unidos no Gerenciamento de Projetos. Rio de Janeiro: Brasport Livros e Multimidia Ltda, 2013",
-        "MAXIMIANO, A. C. A. Administração de Projetos. 5. ed. São Paulo: Editora Atlas S. A., 2014"
-      ],
-      "complementar": [
-        "AMARAL, D. C. et al.Gerenciamento Ágil de Projetos. São Paulo: Editora Saraiva, 2011.",
-        "MENEZES, L. C. De M. Gestão de Projetos. 3. ed. São Paulo: Editora Atlas S. A., 2009.",
-        "PHAM, A.; PHAM, P.-V. Scrum em Ação. São Paulo: Novatec Editora Ltda, 2012.",
-        "PRESSMAN, R. S. Engenharia de Software - Uma Abordagem Profissional. 7. ed. Porto Alegre: McGraw-Hill Education, 2011.",
-        "SABBAG, P. Y. Gerenciamento de Projetos e Empreendedorismo. 2. ed. São Paulo: Editora Saraiva, 2013.",
-        "SOMMERVILLE, I. Engenharia de software. 9. ed. São Paulo: Pearson Prentice Hall, 2011."
-      ]
-    }
+    ]
   },
   {
     "id": "midias-digitais",
@@ -1785,19 +1544,7 @@ export const disciplinas: Disciplina[] = [
     ],
     "tecnologias": [
       "Plataformas sociais de conteúdo; Software de automação de Marketing RD; Ferramentas Google. Aplicativos mobiles e plataformas de mídias."
-    ],
-    "bibliografia": {
-      "basica": [
-        "MARTINO, Luís Mauro Sá. Teoria das mídias digitais: linguagens, ambientes e redes. Rio de Janeiro: Vozes, 2014.",
-        "TAMANAHA, Paulo. Planejamento de mídia: teoria e experiência. 2.ed. São Paulo: Pearson Prentice Hall, 2011.",
-        "KOTLER, Philip; KARTAJAYA, Hermawan; SETIAWAN, Iwan; KORYTOWSKI, Ivo: Marketing 4.0: do tradicional ao digital. 1.ed. Rio de Janeiro: Sextante, 2017."
-      ],
-      "complementar": [
-        "PFROMM NETTO, Samuel. Telas que ensinam: mídia e aprendizagem: do cinema às tecnologias digitais. 3.ed.atual.ampl. São Paulo; Alínea, 2011.",
-        "COSTA, Daniel Gouveia. Comunicações multimídia na internet: da teoria à prática. Rio de Janeiro: Ciência Moderna, 2007.",
-        "FAUSTINO, Paulo. Marketing digital na prática: Como criar do zero uma estratégia digital para promover negócios ou produtos: Dvs Editora,2019."
-      ]
-    }
+    ]
   },
   {
     "id": "programacao-e-design-para-web-ii",
@@ -1844,11 +1591,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [],
-      "complementar": []
-    }
+    "tecnologias": []
   },
   {
     "id": "projeto-de-extensao-i",
@@ -1898,17 +1641,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "SANMYA, T.; JOANA, R. Inovação na prática. Editora Alta Books, 2020. 9786555201574. Disponível em: https://integrada.minhabiblioteca.com.br/#/books/9786555201574/.",
-        "HASHIMOTO, M.; BORGES, C. Empreendedorismo - plano de negócios em 40 lições - 2ED. Editora Saraiva, 2019. 9788571440494. Disponível em: https://integrada.minhabiblioteca.com.br/#/books/9788571440494/.",
-        "JOSÉ, D.; ADRIANA, B.; GUSTAVO, F.; RAFAELA, U. Plano de Negócios com o Modelo Canvas - Guia Prático de Avaliação de Ideias de Negócio a Partir de Exemplos. Grupo GEN, 2015. 978-85-216-2965-8. Disponível em: https://integrada.minhabiblioteca.com.br/#/books/978-85-216-2965-8/."
-      ],
-      "complementar": [
-        "MARIA, L. E. Metodologia do Trabalho Científico. Grupo GEN, 2021. 9788597026559. Disponível em: https://integrada.minhabiblioteca.com.br/#/books/9788597026559/."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "etica-e-cidadania",
@@ -1980,22 +1713,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "MARTINO, Luís Mauro Sá e MARQUES, Ângela Cristina Salgueiro. Ética, Mídia e Comunicação. São Paulo.Summus. 2018.",
-        "NETO, Ângelo Volpi. Comércio Eletrônico: Direito e Segurança. Curitiba: Juruá, 2011.",
-        "BARSANO, Paulo Roberto. Ética e cidadania organizacional. São Paulo: Érica, 2012."
-      ],
-      "complementar": [
-        "GALLO, Sílvio (Coord.). Ética e Cidadania – Caminhos da Filosofia. Campinas: Papirus. 2001.",
-        "SOUZA, Herbert de. Ética e cidadania. 2.ed.reform. São Paulo: Moderna, 2005.",
-        "PAULA, Marcio Gimenes de. Lições de ética e cidadania. São Paulo: Liber Ars, 2017.",
-        "BITTAR, Eduardo Carlos Bianca. Ética, educação, cidadania e direitos humanos. São Paulo: Manole, 1994.",
-        "PEGORARO, OLINTO. Ética dos maiores mestres através da história. Rio de Janeiro, Vozes, 2013.",
-        "MARCONDES, Danilo. Textos básicos de ética de Platão a Foucault. Rio de Janeiro: Zahar, 2007."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "empreendedorismo-digital",
@@ -2088,19 +1806,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "DORNELAS, José Carlos A. Empreendedorismo: transformando ideais em negócios. 5. ed. Rio de Janeiro: LTC, 2015.",
-        "CHIAVENATO, I. Empreendedorismo: dando asas ao espírito empreendedor. 4ª ed. Barueri: Manole, 2012.",
-        "DEGEN, Ronald Jean. O Empreendedor: empreender como opção de carreira. São Paulo: Pearson Prentice Hall, 2009."
-      ],
-      "complementar": [
-        "DOLABELA, Fernando. O Segredo de Luísa. 2. ed. Rio de Janeiro: Sextante, 2008.",
-        "DORNELAS, José, BIM, Adriana,FREITAS, Gustavo,USHIKUBO, Rafaela. Plano de negócios com o modelo Canvas: guia prático de avaliação de ideias de negócio a partir de exemplos. Rio de Janeiro: LTC, 2015.",
-        "COSTA, Daniel Gouveia. Comunicações multimídia na internet: da teoria à prática. Rio de Janeiro: Ciência Moderna, 2007."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "gestao-de-sistemas-digitais-na-web",
@@ -2183,19 +1889,7 @@ export const disciplinas: Disciplina[] = [
     ],
     "tecnologias": [
       "N/A"
-    ],
-    "bibliografia": {
-      "basica": [
-        "COMITÊ GESTOR DA INTERNET NO BRASIL. Cartilha de Segurança para Internet. 4. ed. São Paulo (SP): Comitê Gestor da Internet no Brasil, 2012.",
-        "PRESSMAN, R.; LOWE, D. Engenharia Web. Rio de Janeiro: LTC - Livros Técnicos e Científicos Editora Ltda, 2009.",
-        "VELTE, A.; VELTE, T.; ELSENPETER, R. Computação em Nuvem - Uma Abordagem Prática. Rio de Janeiro: Alta Books Editora, 2010."
-      ],
-      "complementar": [
-        "FERREIRA, S. B. L.; NUNES, R. R. e-Usabilidade. Rio de Janeiro: Livros Tecnicos e Científicos Editora Ltda, 2008.",
-        "PRESSMAN, R. S. Engenharia de Software - Uma Abordagem Profissional. 7. ed. Porto Alegre: McGraw-Hill Education, 2011.",
-        "RIBEIRO, M. I. C.; COSTA, J. B. Da; BRAVIM, J. M. Projeto de Sistemas Web. Cuiabá: Rede e-Tec Brasil, 2015."
-      ]
-    }
+    ]
   },
   {
     "id": "programacao-cliente-servidor",
@@ -2270,18 +1964,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "BOCHENSKI, Bárbara. Implementando sistemas cliente-servidor de qualidade. São Paulo: Makron Books, 1995.",
-        "GLAGIARDI, Gary. Cliente-Servidor. São Paulo: Makron Books, 1996.",
-        "MACHADO, Felipe Nery Rodrigues. Projeto de Datawarehouse: uma visão multidimensional. São Paulo: Érica, 2000."
-      ],
-      "complementar": [
-        "KURNIAWAN, Budi. Java para a web com servlets, jsp e ejb: um guia do programador para soluções escalonáveis em J2EE. Rio de Janeiro: Ciência Moderna, 2002. CDROM. ISBN 85-7393-210-4. Suplemento de livro homônimo.",
-        "FISHER, Marina et al. Java EE and .net interoperability: integration strategies, patterns, and best practices. New Jersey: Sun Microsystems PressPrentice Hall, 2006. 608 p. ISBN 0131472232."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "programacao-para-dispositivos-moveis",
@@ -2363,18 +2046,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "BODUCHI, A. React and React Native: complete guide to web and native mobile development with React.USA: PacktPublishing, 2018.",
-        "PONTES, G. Progressive Web Apps: Construa aplicações progressivas com React. São Paulo: Editora Casa do Código, 2018.",
-        "THOMAS, M. T. React in action. USA: Manning Publications, 2018."
-      ],
-      "complementar": [
-        "BANKS, A; PORCELLO, E. Learning react.USA: O’Really Media, 2017.",
-        "STEFANOV, S; KINOSHITA, L. A. Primeiros Passos com React. São Paulo: Editora Novatec, 2016."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "projeto-integrador-i",
@@ -2412,19 +2084,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "BARBOSA, S.; SILVA, B. Interação Humano-Computador. Rio de Janeiro: Elsevier Editora Ltda, 2010",
-        "BOOCH, G.; RUMBAUGH, J.; JACOBSON, I. UML Guia do Usuário. 2. ed. Rio de Janeiro: Elsevier Editora Ltda, 2012.",
-        "MELO, A.; ABELHEIRA, R. Design Thinking e Thinking Design: Metodologia, Ferramentas e uma Reflexão Sobre o Tema Capa comum. São Paulo: Novatec Editora, 2015."
-      ],
-      "complementar": [
-        "DENNIS, A.; WIXOM, B. H.; ROTH, R. Análise e Projeto de Sistemas. 5. ed. Rio de Janeiro: Livros Tecnicos e Científicos Editora Ltda, 2014.",
-        "LIEDTKA, J.; OGILVIE, T. A Magia do Design Thinking. Rio de Janeiro: Alta Books Editora, 2020.",
-        "SOMMERVILLE, I. Engenharia de software. 9. ed. São Paulo: Pearson Prentice Hall, 2011."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "projeto-de-extensao-ii",
@@ -2477,17 +2137,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "SANMYA, T.; JOANA, R. Inovação na prática. Editora Alta Books, 2020. 9786555201574. Disponível em: https://integrada.minhabiblioteca.com.br/#/books/9786555201574/.",
-        "HASHIMOTO, M.; BORGES, C. Empreendedorismo - plano de negócios em 40 lições - 2ED. Editora Saraiva, 2019. 9788571440494. Disponível em: https://integrada.minhabiblioteca.com.br/#/books/9788571440494/.",
-        "JOSÉ, D.; ADRIANA, B.; GUSTAVO, F.; RAFAELA, U. Plano de Negócios com o Modelo Canvas - Guia Prático de Avaliação de Ideias de Negócio a Partir de Exemplos. Grupo GEN, 2015. 978-85-216-2965-8. Disponível em: https://integrada.minhabiblioteca.com.br/#/books/978-85-216-2965-8/."
-      ],
-      "complementar": [
-        "MARIA, L. E. Metodologia do Trabalho Científico. Grupo GEN, 2021. 9788597026559. Disponível em: https://integrada.minhabiblioteca.com.br/#/books/9788597026559/."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "governanca-de-ti",
@@ -2573,19 +2223,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "WEILL, Peter; ROSS, Jeane W. Governança de TI: tecnologia da informação. São Paulo: Makron Books, 2006.",
-        "GASPAR et al.TI: Mudar e Inovar. Brasília: SENAC, 2011.",
-        "ROSS et. al. Arquitetura de TI como Estratégia Empresarial. São Paulo: M.Books do Brasil Editora Ltda, 2007."
-      ],
-      "complementar": [
-        "ARAGON, Aguinaldo Fernandes / Vladimir Ferraz de Abreu. Implantando Governança de TI da Estratégia à Gestão dos Processos e Serviços. São Paulo: Brasport, 2014.",
-        "CARVALHO, Fábio Câmara Araújo de. Gestão do Conhecimento. São Paulo:Person,2012.",
-        "KOSCIANSKI, André. Qualidade de Software.São Paulo: Novatec Editora,2007."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "legislacao-em-negocios-digitais",
@@ -2655,20 +2293,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "PAESANI, Liliana Minardi. Direito de informática: comercialização e desenvolvimento internacional do software. 9 ed. São Paulo: Atlas, 2014.",
-        "ROSA, F. Crimes de informática. 3. ed. São Paulo: Bookseller, 2006.",
-        "PINHEIRO, Patricia Pack. Proteção de dados Pessoais: Comentários à lei n. 13.709/2018 (LGDP). 1 ed. São Paulo: Saraiva,"
-      ],
-      "complementar": [
-        "INSTITUTO BRASILEIRO DE DIREITO DE INFORMÁTICA. Artigos. Disponível em: Acesso em: 12 jul. 2010.",
-        "COTS, Márcio. Aspectos Legais do E-Commerce,SERVIÇO BRASILEIRO DE APOIO ÀS MICRO E PEQUENAS EMPRESAS. Brasília: Sebrae,2014.",
-        "NERY JUNIOR, Nelson; NERY, Rosa Maria Andrade. Código civil comentado. 6. ed. São Paulo: RT, 2008.",
-        "SILVEIRA, Carlos Alberto de Arruda. Contratos: de acordo com o novo Código Civil. 2. ed. São Paulo: Saraiva, 2002."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "programacao-e-design-para-web-iii",
@@ -2754,20 +2379,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "William Pereira Alves, DESENVOLVIMENTO DE APLICAÇOES WEB COM ANGULAR 6. 1ª Edição. Alta Books. 2018.",
-        "Fernando Boaglio, Spring Boot Acelere o desenvolvimento de microserviços. Casa do Código 2017.ISBN: 978-85-94120-00-7",
-        "Harvey M. Deitel, Paul J. Deitel. JAVA COMO PROGRAMAR. Rio de Janeiro. 6ª edição. PRENTICE HALL. 1988.",
-        "Alberto Souza, Spring MVC: Domine o principal framework web Java, Casa do Código. 2015 ASIN: B019OU7NB0"
-      ],
-      "complementar": [
-        "Rafael Santos, Introdução À Programação Orientada a Objetos Usando Java. Rio de Janeiro. Campus.",
-        "Luis Abreu, Typescript. O JavaScript Moderno para criação de aplicações. 1ª Edição, FCA2017",
-        "Shelley Powers, Aprendendo Node: Usando JavaScript no Servidor. 1ª Edição. Novatec 2017"
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "projeto-integrador-ii",
@@ -2817,19 +2429,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "LUIZ AGNER. Ergodesign e Arquitetura de Informação. 2. ed. Rio de Janeiro: Quartet Editora e Comunicação Ltda, 2009.",
-        "MELO, A.; ABELHEIRA, R. Design Thinking e Thinking Design: Metodologia, Ferramentas e uma Reflexão Sobre o Tema Capa comum. São Paulo: Novatec Editora, 2015.",
-        "TEIXEIRA, F. Introdução e Boas Práticas em UX Design. São Paulo: Casa do Código, 2014."
-      ],
-      "complementar": [
-        "BARBOSA, S.; SILVA, B. Interação Humano-Computador. Rio de Janeiro: Elsevier Editora Ltda, 2010",
-        "DENNIS, A.; WIXOM, B. H.; ROTH, R. Análise e Projeto de Sistemas. 5. ed. Rio de Janeiro: Livros Tecnicos e Científicos Editora Ltda, 2014.",
-        "LIEDTKA, J.; OGILVIE, T. A Magia do Design Thinking. Rio de Janeiro: Alta Books Editora, 2020."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "qualidade-e-testes-de-software",
@@ -2930,20 +2530,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "BARTIÉ, A. Garantia da Qualidade de Software. São Paulo: Elsevier Editora Ltda, 2002.",
-        "DELAMARO, M. E.; MALDONADO, J. C.; JINO, M. (Org.). Introdução ao Teste de Software. 2. ed. Rio de Janeiro: Elsevier Editora Ltda, 2016.",
-        "KOSCIANSKI, A.; SOARES, M. Dos S. Qualidade de Software. São Paulo: Novatec Editora Ltda, 2006."
-      ],
-      "complementar": [
-        "BASTOS, Aderson et al. Base de conhecimento em teste de software. 3 ed. São Paulo: Martins Fontes, 2012.",
-        "PRESSMAN, R. S. Engenharia de Software - Uma Abordagem Profissional. 7. ed. Porto Alegre: McGraw-Hill Education, 2011.",
-        "RIOS, E.; MOREIRA, T. Teste de Software. 3. ed. Rio de Janeiro: Alta Books Editora, 2013.",
-        "SOMMERVILLE, I. Engenharia de software. 9. ed. São Paulo: Pearson Prentice Hall, 2011."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "seguranca-em-sistemas-computacionais",
@@ -3027,19 +2614,7 @@ export const disciplinas: Disciplina[] = [
         ]
       }
     ],
-    "tecnologias": [],
-    "bibliografia": {
-      "basica": [
-        "KUROSE, James; ROSS, Keith W. Redes de computadores e a internet: uma abordagem top-down. 6.ed. São Paulo: Pearson Education do Brasil, 2013.",
-        "STALLINGS, Willian; BROWN, Lawrie.Segurança de computadores: princípios e práticas. 2.ed. São Paulo: Campus, 2014.",
-        "ISO/IEC 27002. Código de prática para gestão de segurança de informações. ISO. 2007."
-      ],
-      "complementar": [
-        "McCLURE, Stuart; et. al.. Hacker expostos. 4.ed. Rio de Janeiro: Elsevier, 2003.",
-        "TANENBAUM, Andrews; WETHERAL, David. Redes de computadores. 5.ed. São Paulo: Pearson Prentice Hall, 2011.",
-        "Burmett, Steve; Stephen Paine. Criptografia e Segurança: O Guia Oficial RSA; Rio de Janeiro: Elsevier, 2002."
-      ]
-    }
+    "tecnologias": []
   },
   {
     "id": "arquitetura-da-informacao-wireframe",
@@ -3133,21 +2708,7 @@ export const disciplinas: Disciplina[] = [
     ],
     "tecnologias": [
       "Ferramentas Wireframe para Design Mobile e Web: Moqups; Wireframe; Pencilevolus; Wirify; WireframeSketcher."
-    ],
-    "bibliografia": {
-      "basica": [
-        "BARBOSA, S.; SILVA, B. Interação Humano-Computador. Rio de Janeiro: Elsevier Editora Ltda, 2010.",
-        "CAMARGO, L. S. De A.; VIDOTTI, S. A. B. G. Arquitetura da Informação. Rio de Janeiro: Livros Tecnicos e Científicos Editora Ltda, 2011.",
-        "KALBACH, J. Design de Navegação Web. São Paulo: Bookman Companhia Editora, 2009."
-      ],
-      "complementar": [
-        "FERREIRA, S. B. L.; NUNES, R. R. e-Usabilidade. Rio de Janeiro: Livros Tecnicos e Científicos Editora Ltda, 2008.",
-        "LUIZ AGNER. Ergodesign e Arquitetura de Informação. 2. ed. Rio de Janeiro: Quartet Editora e Comunicação Ltda, 2009.",
-        "NIELSEN, J.; LORANGER, H. Usabilidade na WEB - Projetando Websites com Qualidade. São Paulo: Elsevier Editora Ltda, 2007.",
-        "PRESSMAN, R.; LOWE, D. Engenharia Web. Rio de Janeiro: LTC - Livros Técnicos e Científicos Editora Ltda, 2009.",
-        "TEIXEIRA, F. Introdução e Boas Práticas em UX Design. São Paulo: Casa do Código, 2014."
-      ]
-    }
+    ]
   },
   {
     "id": "computacao-grafica-para-multimidia",
@@ -3243,20 +2804,7 @@ export const disciplinas: Disciplina[] = [
     ],
     "tecnologias": [
       "N/A"
-    ],
-    "bibliografia": {
-      "basica": [
-        "LOPES, D. F. Jornal laboratório: do exercício escolar ao compromisso com o público leitor. São Paulo: Summus, 1989.",
-        "WILLIAMS, Robin. Design para quem não é designer: noções básicas de planejamento visual. 4.ed. São Paulo: Callis Editora, 1995.",
-        "3. MARTINS, Nelson. Imagem digital na editoração: manipulação, conversão e fechamento de arquivo. São Paulo: SENAC, 2009."
-      ],
-      "complementar": [
-        "1. BAER, L. Produção gráfica. 2.ed. São Paulo: Editora SENAC, 2002.",
-        "2. HOLLIS, Richard. Design gráfico: uma historia concisa. São Paulo: Martins Fontes, 2001.",
-        "3. NIEMEYER, L. Tipografia: uma apresentação. 2.ed. Rio de Janeiro: 2AB, 2001.",
-        "4. TAMBINI, Michael. O design do século. 2.ed 2.reimp. São Paulo: Ática, 2002."
-      ]
-    }
+    ]
   },
   {
     "id": "gestao-de-servicos",
@@ -3339,19 +2887,7 @@ export const disciplinas: Disciplina[] = [
     ],
     "tecnologias": [
       "N/A"
-    ],
-    "bibliografia": {
-      "basica": [
-        "CORRÊA, H.; CAON, M. Gestão de Serviços: Lucratividade por Meio de Operação e de Satisfação dos Clientes. São Paulo: Editora Atlas S. A., 2008.",
-        "CORRÊA, H. L.; GIANESI, I. G. N. Administração Estratégica de Serviços: Operações para Experiência e Satisfação do Cliente. 2. ed. São Paulo: Editora Atlas S. A., 2019.",
-        "SPILLER, E. S. et al. Gestão de Serviços e Marketing Interno. 4. ed. Rio de Janeiro: FGV Editora, 2011."
-      ],
-      "complementar": [
-        "FITZSIMMONS, J.; FITZSIMMONS, M. Administração de Serviços: Operações, Estratégia e Tecnologia da Informação. 7. ed. São Paulo: AMGH EDITORA LTDA., 2014.",
-        "LOVELOCK, C.; WIRTZ, J.; HEMZO, M. A. Marketing de Serviços: Pessoas, Tecnologia e Estratégia. 7. ed. São Paulo: Pearson Education do Brasil Ltda, 2011.",
-        "ZEITHAML et al.Marketing de Serviços: A Empresa com Foco no Cliente. 6. ed. Porto Alegre: AMGH EDITORA LTDA., 2014."
-      ]
-    }
+    ]
   },
   {
     "id": "inteligencia-artificial",
@@ -3432,20 +2968,6 @@ export const disciplinas: Disciplina[] = [
     ],
     "tecnologias": [
       "Ferramentas de IA online: Chat GPT, Bard, outros."
-    ],
-    "bibliografia": {
-      "basica": [
-        "BARBOSA, S.; SILVA, B. Interação Humano-Computador. Rio de Janeiro: Elsevier Editora Ltda, 2010.",
-        "CAMARGO, L. S. De A.; VIDOTTI, S. A. B. G. Arquitetura da Informação. Rio de Janeiro: Livros Tecnicos e Científicos Editora Ltda, 2011.",
-        "KALBACH, J. Design de Navegação Web. São Paulo: Bookman Companhia Editora, 2009."
-      ],
-      "complementar": [
-        "FERREIRA, S. B. L.; NUNES, R. R. e-Usabilidade. Rio de Janeiro: Livros Tecnicos e Científicos Editora Ltda, 2008.",
-        "LUIZ AGNER. Ergodesign e Arquitetura de Informação. 2. ed. Rio de Janeiro: Quartet Editora e Comunicação Ltda, 2009.",
-        "NIELSEN, J.; LORANGER, H. Usabilidade na WEB - Projetando Websites com Qualidade. São Paulo: Elsevier Editora Ltda, 2007.",
-        "PRESSMAN, R.; LOWE, D. Engenharia Web. Rio de Janeiro: LTC - Livros Técnicos e Científicos Editora Ltda, 2009.",
-        "TEIXEIRA, F. Introdução e Boas Práticas em UX Design. São Paulo: Casa do Código, 2014."
-      ]
-    }
+    ]
   }
 ]

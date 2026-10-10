@@ -82,24 +82,6 @@ export default function PaginaDisciplina() {
           <Lista itens={d.tecnologias} />
         </section>
       )}
-
-      {(d.bibliografia.basica.length > 0 || d.bibliografia.complementar.length > 0) && (
-        <section>
-          <h2>Bibliografia</h2>
-          {d.bibliografia.basica.length > 0 && (
-            <>
-              <h3>Básica</h3>
-              <Lista itens={d.bibliografia.basica} />
-            </>
-          )}
-          {d.bibliografia.complementar.length > 0 && (
-            <>
-              <h3>Complementar</h3>
-              <Lista itens={d.bibliografia.complementar} />
-            </>
-          )}
-        </section>
-      )}
     </article>
   )
 }

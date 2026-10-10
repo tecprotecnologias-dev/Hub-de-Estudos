@@ -14,7 +14,6 @@ export interface Disciplina {
   habilidades: string[]
   unidades: Unidade[]
   tecnologias: string[]
-  bibliografia: { basica: string[]; complementar: string[] }
 }
 
 export type ParteContexto =
