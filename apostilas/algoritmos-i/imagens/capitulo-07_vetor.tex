@@ -1,0 +1,21 @@
+% Capítulo 7: um vetor de 5 elementos, seus índices e a posição que não existe.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-vetores}
+\tikzset{casa/.append style={minimum width=11mm, minimum height=8mm}}
+\begin{document}
+\begin{tikzpicture}[x=11mm]
+  \foreach \v [count=\i from 0] in {7, 4.5, 9, 6, 8} {
+    \node[pronta] (c\i) at (\i, 0) {\v};
+    \node[indice, font=\ttfamily\scriptsize] at (\i, -0.62) {\i};
+  }
+  \node[fora] (c5) at (5.25, 0) {?};
+  \node[indice, font=\ttfamily\scriptsize] at (5.25, -0.62) {5};
+  \node[legenda, align=center] at (5.25, 0.85) {não existe:\\fora do vetor};
+  \node[rotulo, anchor=east] at (-0.7, 0) {notas};
+  \draw[chave] ($(c0.south west)+(0, -0.5)$) -- node[below=4pt, legenda] {índices: 5 elementos, de 0 a 4} ($(c4.south east)+(0, -0.5)$);
+  \draw[seta, laranja] (2, 1.15) -- (c2.north);
+  \node[legenda, text=navy, anchor=south] at (2, 1.15) {\texttt{notas[2]} vale 9};
+\end{tikzpicture}
+\end{document}

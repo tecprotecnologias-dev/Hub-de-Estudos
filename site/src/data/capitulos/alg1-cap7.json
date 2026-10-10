@@ -1,0 +1,260 @@
+{
+ "numero": 7,
+ "titulo": "Vetores e matrizes",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Calcular a média de uma turma é fácil com um acumulador, como no Capítulo 5: cada nota é lida, somada e esquecida. Mas e se, depois da média, for preciso listar quem ficou acima dela? Agora as notas não podem ser esquecidas, porque cada uma vai ser comparada com um valor que só se conhece no fim. Declarar <code>nota1</code>, <code>nota2</code>, …, <code>nota40</code> não resolve: o programa ficaria enorme e não serviria para uma turma de 41 alunos. A solução são as <strong>estruturas de dados homogêneas</strong>: o <strong>vetor</strong>, uma sequência de valores do mesmo tipo sob um único nome, e a <strong>matriz</strong>, uma tabela com linhas e colunas. Neste capítulo você vai aprender a declará-los, percorrê-los com laços, passá-los para funções e evitar o erro mais perigoso que eles trazem: acessar uma posição que não existe."
+  },
+  {
+   "t": "h2",
+   "id": "7-1-o-que-e-um-vetor",
+   "texto": "7.1 O que é um vetor"
+  },
+  {
+   "t": "p",
+   "html": "Um <strong>vetor</strong> (ou <em>array</em>) é um conjunto de variáveis do mesmo tipo, guardadas lado a lado na memória e identificadas por um único nome. Cada variável do conjunto é um <strong>elemento</strong>, e é acessada pelo seu <strong>índice</strong>, a posição que ocupa no vetor, escrito entre colchetes: <code>notas[2]</code> é o elemento de índice 2 do vetor <code>notas</code>."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-07_vetor.png",
+   "alt": "capitulo 07 vetor"
+  },
+  {
+   "t": "p",
+   "html": "Em C++, o primeiro índice é sempre <strong>0</strong>. Por isso, um vetor de 5 elementos tem os índices de 0 a 4, e o último elemento de um vetor de tamanho <code>n</code> é o de índice <code>n - 1</code>. Na declaração, o número entre colchetes é o <strong>tamanho</strong>, que precisa ser uma constante:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double notas[5];                  // 5 elementos, de 0 a 4\n    notas[0] = 7;\n    notas[1] = 4.5;\n    notas[4] = notas[0] + 1;          // 8\n\n    int primos[] = {2, 3, 5, 7, 11};  // tamanho deduzido: 5\n    int contagem[10] = {};            // todos começam em 0\n    int i = 3;\n    cout << primos[i] << \" \" << primos[i + 1] << endl;   // 7 11\n    cout << notas[4] << \" \" << contagem[9] << endl;      // 8 0\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Como uma variável comum, um vetor declarado sem valores iniciais contém lixo. A lista entre chaves preenche os elementos na ordem, e os que sobram ficam com 0: por isso <code>= {}</code> é a forma mais curta de zerar um vetor inteiro. O índice pode ser qualquer expressão inteira, como <code>i</code> ou <code>i + 1</code>, e é isso que torna o vetor poderoso: um laço pode visitar todos os elementos mudando apenas o índice."
+  },
+  {
+   "t": "h2",
+   "id": "7-2-percorrendo-um-vetor-com-lacos",
+   "texto": "7.2 Percorrendo um vetor com laços"
+  },
+  {
+   "t": "p",
+   "html": "O <code>for</code> e o vetor foram feitos um para o outro: o contador do laço serve de índice e passa por todas as posições, da primeira à última. O programa abaixo resolve o problema do início do capítulo. O primeiro laço lê as notas e as soma; o segundo, que só pode ser feito depois que a média é conhecida, mostra as que ficaram acima dela."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    const int MAX = 50;\n    double notas[MAX] = {};\n    int n;\n    cout << \"Quantos alunos (até 50)? \";\n    cin >> n;\n    if (n < 1 || n > MAX) {\n        cout << \"Quantidade inválida.\" << endl;\n        return 0;\n    }\n    double soma = 0;\n    for (int i = 0; i < n; i++) {\n        cout << \"Nota \" << i + 1 << \": \";\n        cin >> notas[i];\n        soma += notas[i];\n    }\n    double media = soma / n;\n    cout << \"Média: \" << media << endl;\n    cout << \"Acima da média:\";\n    for (int i = 0; i < n; i++) {\n        if (notas[i] > media) cout << \" \" << notas[i];\n    }\n    cout << endl;\n    return 0;\n}\n// 4 alunos com 7, 4.5, 9 e 6 -> Média: 6.625\n// Acima da média: 7 9"
+  },
+  {
+   "t": "p",
+   "html": "Repare em três detalhes. O vetor é declarado com uma capacidade máxima (<code>MAX</code>), porque seu tamanho precisa ser conhecido na compilação, e o programa usa só as <code>n</code> primeiras posições. O <code>if</code> logo depois da leitura garante que <code>n</code> cabe no vetor. E o laço vai de <code>0</code> enquanto <code>i &lt; n</code>, a forma padrão de percorrer <code>n</code> elementos em C++; para o usuário, que conta a partir de 1, o programa mostra <code>i + 1</code>."
+  },
+  {
+   "t": "p",
+   "html": "Em Portugol, o vetor é declarado com o tipo <code>vetor</code>, informando o primeiro e o último índice. Diferente do C++, quem escolhe os limites é o programador, e o mais comum é começar em 1:"
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"AcimaDaMedia\"\nvar\n   notas: vetor[1..50] de real\n   n, i: inteiro\n   soma, media: real\ninicio\n   escreva(\"Quantos alunos (até 50)? \")\n   leia(n)\n   soma <- 0\n   para i de 1 ate n faca\n      escreva(\"Nota \", i, \": \")\n      leia(notas[i])\n      soma <- soma + notas[i]\n   fimpara\n   media <- soma / n\n   escreval(\"Média: \", media)\n   escreval(\"Acima da média:\")\n   para i de 1 ate n faca\n      se notas[i] > media entao\n         escreval(notas[i])\n      fimse\n   fimpara\nfimalgoritmo"
+  },
+  {
+   "t": "h2",
+   "id": "7-3-cuidado-com-os-limites",
+   "texto": "7.3 Cuidado com os limites"
+  },
+  {
+   "t": "p",
+   "html": "O que acontece com <code>notas[5]</code> em um vetor de 5 elementos? Em C++, a resposta é: <strong>qualquer coisa</strong>. A linguagem não confere se o índice existe. Ela simplesmente calcula onde estaria o elemento 5, logo depois do último, e lê ou escreve naquela posição da memória, que pertence a outra variável ou nem pertence ao programa."
+  },
+  {
+   "t": "codigo",
+   "texto": "// erro: índices fora do vetor\nint v[5] = {1, 2, 3, 4, 5};\nfor (int i = 0; i <= 5; i++) {   // <= faz uma volta a mais\n    cout << v[i] << \" \";         // v[5] não existe\n}\nv[-1] = 0;                       // nem v[-1]"
+  },
+  {
+   "t": "p",
+   "html": "O resultado é chamado de <strong>comportamento indefinido</strong>: o programa pode mostrar um valor sem sentido, alterar silenciosamente outra variável, travar ou, o pior caso, funcionar normalmente nos testes e falhar mais tarde. O compilador às vezes avisa quando o índice é uma constante, mas nunca quando ele vem de um cálculo. Esse tipo de erro, conhecido como <strong>estouro de vetor</strong> (<em>buffer overflow</em>), já foi a porta de entrada de muitos ataques a sistemas, porque permite escrever onde o programa não deveria."
+  },
+  {
+   "t": "p",
+   "html": "A defesa é disciplina: percorra com <code>i &lt; n</code>, e não <code>i &lt;= n</code>; confira, antes de usar, todo índice que vem do usuário ou de um cálculo; e nunca deixe o número de elementos passar da capacidade declarada. O Portugol do VisuAlg, ao contrário do C++, interrompe a execução com uma mensagem de erro quando o índice sai dos limites."
+  },
+  {
+   "t": "h2",
+   "id": "7-4-algoritmos-classicos-com-vetores",
+   "texto": "7.4 Algoritmos clássicos com vetores"
+  },
+  {
+   "t": "h3",
+   "texto": "Contagem por categoria"
+  },
+  {
+   "t": "p",
+   "html": "Quando os valores possíveis são poucos números inteiros, o próprio valor pode servir de índice. O programa abaixo apura uma pesquisa de satisfação com notas de 1 a 5: em vez de cinco contadores separados, um vetor <code>votos</code>, em que <code>votos[k]</code> conta quantas vezes a nota <code>k</code> apareceu."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    int votos[6] = {};        // usa 1 a 5; a posição 0 sobra\n    int voto;\n    cout << \"Notas de 1 a 5 (0 para terminar): \";\n    while (cin >> voto && voto != 0) {\n        if (voto >= 1 && voto <= 5) {\n            votos[voto]++;    // o voto é o índice\n        }\n    }\n    for (int k = 1; k <= 5; k++) {\n        cout << k << \": \" << string(votos[k], '*')\n             << \" (\" << votos[k] << \")\" << endl;\n    }\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Com a entrada <code>5 4 5 3 5 4 1 0</code>, a saída é um pequeno gráfico de barras, desenhado com <code>string(n, '*')</code>, que cria um texto com <code>n</code> asteriscos:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// saída\n1: * (1)\n2:  (0)\n3: * (1)\n4: ** (2)\n5: *** (3)"
+  },
+  {
+   "t": "p",
+   "html": "O <code>if</code> que confere a faixa é essencial: sem ele, um voto 9 escreveria em <code>votos[9]</code>, fora do vetor."
+  },
+  {
+   "t": "h3",
+   "texto": "Maior elemento e sua posição"
+  },
+  {
+   "t": "p",
+   "html": "O padrão do maior valor, do Capítulo 5, ganha uma informação extra com vetores: <strong>onde</strong> o maior está. Basta guardar o índice em vez do valor, começando pelo primeiro elemento:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double temp[7] = {22.5, 25.1, 27.8, 24.0, 28.3, 26.6, 21.9};\n    int iMaior = 0;                  // começa pelo primeiro\n    for (int i = 1; i < 7; i++) {\n        if (temp[i] > temp[iMaior]) iMaior = i;\n    }\n    cout << \"Dia mais quente: \" << iMaior + 1\n         << \" (\" << temp[iMaior] << \" graus)\" << endl;\n    return 0;                        // dia 5 (28.3 graus)\n}"
+  },
+  {
+   "t": "h3",
+   "texto": "Invertendo um vetor"
+  },
+  {
+   "t": "p",
+   "html": "Para inverter um vetor no próprio lugar, troca-se o primeiro com o último, o segundo com o penúltimo, e assim por diante, com dois índices que caminham um em direção ao outro até se encontrarem no meio:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int v[6] = {1, 2, 3, 4, 5, 6};\n    for (int i = 0, j = 5; i < j; i++, j--) {\n        int aux = v[i];              // a troca do Capítulo 6\n        v[i] = v[j];\n        v[j] = aux;\n    }\n    for (int i = 0; i < 6; i++) cout << v[i] << \" \";\n    cout << endl;                    // 6 5 4 3 2 1\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A condição <code>i &lt; j</code> é o ponto delicado: com <code>i &lt; 6</code>, o laço inverteria o vetor e depois o desinverteria, voltando ao original. A biblioteca do C++ oferece a função <code>swap(v[i], v[j])</code>, que faz a mesma troca das três linhas. Outros algoritmos clássicos com vetores, a busca de um valor e a ordenação, têm um capítulo inteiro, o 10."
+  },
+  {
+   "t": "h2",
+   "id": "7-5-vetores-e-funcoes",
+   "texto": "7.5 Vetores e funções"
+  },
+  {
+   "t": "p",
+   "html": "Um vetor pode ser passado para uma função, com uma diferença importante em relação às variáveis comuns: ele <strong>não é copiado</strong>. A função recebe a localização do vetor original na memória, e por isso tudo o que ela altera nos elementos fica alterado para quem chamou, como na passagem por referência. Além disso, a função não tem como descobrir o tamanho do vetor: ele precisa ser passado em um parâmetro separado."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\ndouble media(const double v[], int n) {   // const: só lê\n    double soma = 0;\n    for (int i = 0; i < n; i++) soma += v[i];\n    return soma / n;\n}\n\nvoid aumentar(double v[], int n, double bonus) {\n    for (int i = 0; i < n; i++) {\n        v[i] += bonus;\n        if (v[i] > 10) v[i] = 10;        // nota máxima: 10\n    }\n}\n\nint main() {\n    double notas[4] = {7, 4.5, 9.8, 6};\n    cout << \"Antes: \" << media(notas, 4) << endl;   // 6.825\n    aumentar(notas, 4, 0.5);             // altera o original\n    cout << \"Depois: \" << media(notas, 4) << endl;  // 7.25\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O parâmetro é escrito com colchetes vazios, <code>double v[]</code>. Quando a função só lê o vetor, como <code>media</code>, o <code>const</code> documenta isso e faz o compilador recusar qualquer alteração por engano. Uma função também não pode devolver um vetor com <code>return</code>: para produzir um vetor, ela recebe um vetor de quem chama e o preenche."
+  },
+  {
+   "t": "p",
+   "html": "No VisuAlg, vetores não podem ser passados como parâmetro. Os subprogramas trabalham com o vetor declarado na seção <code>var</code> do algoritmo, que é global, e recebem por parâmetro apenas os valores simples, como a quantidade de elementos."
+  },
+  {
+   "t": "h2",
+   "id": "7-6-matrizes",
+   "texto": "7.6 Matrizes"
+  },
+  {
+   "t": "p",
+   "html": "Muitos dados têm duas dimensões: as notas de cada aluno em cada prova, as vendas de cada loja em cada mês, os pixels de uma imagem, o tabuleiro de um jogo. Para eles existe a <strong>matriz</strong>, um vetor de duas dimensões, em que cada elemento é identificado por dois índices: a <strong>linha</strong> e a <strong>coluna</strong>."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/alg1/capitulo-07_matriz.png",
+   "alt": "capitulo 07 matriz"
+  },
+  {
+   "t": "p",
+   "html": "Em C++, a matriz é declarada com dois tamanhos, <code>double notas[3][4]</code> (3 linhas e 4 colunas), e cada elemento é acessado com dois pares de colchetes: <code>notas[1][2]</code> é o elemento da linha 1, coluna 2. Na memória, as linhas ficam uma depois da outra, como mostra a parte de baixo da figura."
+  },
+  {
+   "t": "p",
+   "html": "Percorrer uma matriz pede dois laços aninhados (Capítulo 5): o de fora passa pelas linhas e, para cada linha, o de dentro passa pelas colunas. O programa abaixo calcula a média de cada aluno (somando uma linha) e a média de cada prova (somando uma coluna):"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nconst int ALUNOS = 3, PROVAS = 4;\n\nint main() {\n    double notas[ALUNOS][PROVAS] = {\n        {7.0, 8.5, 6.0, 9.0},       // aluno 0\n        {5.0, 4.5, 6.5, 5.0},       // aluno 1\n        {9.5, 10.0, 8.0, 9.5}       // aluno 2\n    };\n    for (int i = 0; i < ALUNOS; i++) {          // cada linha\n        double soma = 0;\n        for (int j = 0; j < PROVAS; j++) soma += notas[i][j];\n        cout << \"Aluno \" << i + 1 << \": \" << soma / PROVAS\n             << endl;\n    }\n    for (int j = 0; j < PROVAS; j++) {          // cada coluna\n        double soma = 0;\n        for (int i = 0; i < ALUNOS; i++) soma += notas[i][j];\n        cout << \"Prova \" << j + 1 << \": \" << soma / ALUNOS\n             << endl;\n    }\n    return 0;\n}\n// Aluno 1: 7.625   Aluno 2: 5.25   Aluno 3: 9.25\n// Prova 1: 7.16667   Prova 2: 7.66667 ..."
+  },
+  {
+   "t": "p",
+   "html": "Compare os dois pares de laços: para somar uma <strong>linha</strong>, a linha <code>i</code> fica fixa e a coluna <code>j</code> varia; para somar uma <strong>coluna</strong>, é o contrário. Trocar os papéis de <code>i</code> e <code>j</code> é um dos erros mais comuns com matrizes."
+  },
+  {
+   "t": "p",
+   "html": "Em Portugol, a matriz também é um <code>vetor</code>, declarado com os limites das duas dimensões separados por vírgula, e os dois índices também vão separados por vírgula:"
+  },
+  {
+   "t": "codigo",
+   "texto": "algoritmo \"NotasDaTurma\"\nvar\n   notas: vetor[1..3, 1..4] de real\n   i, j: inteiro\n   soma: real\ninicio\n   para i de 1 ate 3 faca\n      soma <- 0\n      para j de 1 ate 4 faca\n         escreva(\"Aluno \", i, \", prova \", j, \": \")\n         leia(notas[i, j])\n         soma <- soma + notas[i, j]\n      fimpara\n      escreval(\"Média do aluno \", i, \": \", soma / 4)\n   fimpara\nfimalgoritmo"
+  },
+  {
+   "t": "p",
+   "html": "Para passar uma matriz a uma função em C++, o número de <strong>colunas</strong> precisa aparecer no parâmetro, como em <code>void mostrar(const double m[][PROVAS], int linhas)</code>. Só o número de linhas pode ficar vazio, porque o compilador precisa saber o tamanho de cada linha para calcular onde começa a linha seguinte."
+  },
+  {
+   "t": "h2",
+   "id": "7-7-um-programa-completo-jogo-da-velha",
+   "texto": "7.7 Um programa completo: jogo da velha"
+  },
+  {
+   "t": "p",
+   "html": "O tabuleiro do jogo da velha é uma matriz 3 × 3 de caracteres. Para saber se alguém venceu, é preciso verificar as 3 linhas, as 3 colunas e as 2 diagonais. Na <strong>diagonal principal</strong>, a linha e a coluna são iguais (<code>t[0][0]</code>, <code>t[1][1]</code>, <code>t[2][2]</code>); na <strong>diagonal secundária</strong>, elas somam 2 (<code>t[0][2]</code>, <code>t[1][1]</code>, <code>t[2][0]</code>)."
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\nusing namespace std;\n\nbool iguais(char a, char b, char c) {\n    return a != ' ' && a == b && b == c;   // casa vazia não vale\n}\n\nchar vencedor(const char t[3][3]) {\n    for (int i = 0; i < 3; i++) {\n        if (iguais(t[i][0], t[i][1], t[i][2])) return t[i][0];\n        if (iguais(t[0][i], t[1][i], t[2][i])) return t[0][i];\n    }\n    if (iguais(t[0][0], t[1][1], t[2][2])) return t[1][1];\n    if (iguais(t[0][2], t[1][1], t[2][0])) return t[1][1];\n    return ' ';                            // ninguém venceu\n}\n\nvoid mostrar(const char t[3][3]) {\n    for (int i = 0; i < 3; i++) {\n        cout << \" \" << t[i][0] << \" | \" << t[i][1]\n             << \" | \" << t[i][2] << endl;\n        if (i < 2) cout << \"---+---+---\" << endl;\n    }\n}\n\nint main() {\n    char t[3][3] = {\n        {'X', 'O', 'X'},\n        {'O', 'X', 'O'},\n        {' ', 'O', 'X'}\n    };\n    mostrar(t);\n    char v = vencedor(t);\n    if (v == ' ') cout << \"Ninguém venceu ainda.\" << endl;\n    else cout << \"Venceu: \" << v << endl;   // Venceu: X\n    return 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O laço de <code>vencedor</code> aproveita a mesma variável <code>i</code> para as linhas (<code>t[i][...]</code>) e para as colunas (<code>t[...][i]</code>). A função <code>iguais</code> evita repetir a mesma comparação oito vezes e, ao exigir <code>a != ' '</code>, impede que uma linha vazia seja contada como vitória. Para testar, monte tabuleiros que vençam por linha, por coluna, por cada diagonal, e um sem vencedor."
+  },
+  {
+   "t": "h2",
+   "id": "7-8-vetores-com-tamanho-variavel-vector",
+   "texto": "7.8 Vetores com tamanho variável: vector"
+  },
+  {
+   "t": "p",
+   "html": "O vetor da linguagem C++, herdado da linguagem C, tem tamanho fixo e não confere índices. A biblioteca padrão oferece uma alternativa mais segura e flexível, o <code>vector</code>, que cresce conforme os elementos são acrescentados e sabe o próprio tamanho:"
+  },
+  {
+   "t": "codigo",
+   "texto": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    vector<double> notas;            // começa vazio\n    double nota;\n    cout << \"Notas (negativo para terminar): \";\n    while (cin >> nota && nota >= 0) {\n        notas.push_back(nota);       // acrescenta no fim\n    }\n    double soma = 0;\n    for (size_t i = 0; i < notas.size(); i++) soma += notas[i];\n    if (!notas.empty()) {\n        cout << notas.size() << \" notas, média \"\n             << soma / notas.size() << endl;\n    }\n    return 0;\n}\n// Entrada: 7 4.5 9 6 -1  ->  4 notas, média 6.625"
+  },
+  {
+   "t": "p",
+   "html": "Com <code>vector</code>, não é preciso definir uma capacidade máxima nem guardar a quantidade em outra variável: <code>push_back</code> acrescenta um elemento e <code>size()</code> informa quantos há. O tipo <code>size_t</code>, um inteiro sem sinal, é o tipo de <code>size()</code>, e usá-lo no contador evita um aviso do compilador. O acesso com <code>notas[i]</code> continua sem conferência, mas <code>notas.at(i)</code> confere o índice e interrompe o programa com uma mensagem de erro se ele não existir. Nos capítulos seguintes, sempre que o tamanho não for conhecido de antemão, o <code>vector</code> será a escolha natural."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Começar ou terminar no índice errado.</strong> Em C++, os índices vão de 0 a <code>n - 1</code>. Percorra com <code>for (int i = 0; i &lt; n; i++)</code>.",
+    "<strong>Acessar fora dos limites.</strong> <code>v[n]</code>, <code>v[-1]</code> ou um índice vindo do usuário sem conferência levam a comportamento indefinido.",
+    "<strong>Esquecer de inicializar.</strong> Um vetor de contadores precisa começar zerado: <code>int votos[6] = {};</code>.",
+    "<strong>Usar mais elementos do que a capacidade.</strong> Confira se a quantidade lida cabe no vetor antes do laço de leitura.",
+    "<strong>Achar que a função recebe uma cópia do vetor.</strong> Ela trabalha no original. Use <code>const</code> quando a função só deve ler.",
+    "<strong>Esquecer de passar o tamanho para a função.</strong> Dentro dela, não há como descobri-lo.",
+    "<strong>Trocar linha e coluna.</strong> Em <code>m[i][j]</code>, o primeiro índice é a linha. Para somar uma linha, fixe <code>i</code>; para somar uma coluna, fixe <code>j</code>.",
+    "<strong>Escrever <code>m[i, j]</code> em C++.</strong> Essa é a sintaxe do Portugol. Em C++, são dois pares de colchetes: <code>m[i][j]</code>."
+   ]
+  }
+ ]
+}

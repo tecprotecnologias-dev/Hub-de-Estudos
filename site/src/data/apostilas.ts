@@ -459,6 +459,15 @@ export const apostilas: Apostila[] = [
     descricao:
       'Modularização, funções e procedimentos em Portugol e C++, parâmetros e retorno, pilha de chamadas, escopo, passagem por valor e por referência, protótipos, valores padrão e sobrecarga.',
   },
+  {
+    id: 'alg1-cap7',
+    capitulo: 7,
+    titulo: 'Vetores e matrizes',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-i',
+    unidades: ['Algoritmos e Estruturas de Dados'],
+    descricao:
+      'Vetores e matrizes em Portugol e C++, índices e limites, contagem por categoria, maior elemento, inversão, vetores em funções, jogo da velha e o vector da biblioteca padrão.',
+  },
 
   // Algoritmos e Linguagem de Programação II — "Algoritmos e Estruturas de Dados" (TecPro)
   // Texto próprio, escrito a partir da ementa (temas dos slides de EDA usados só como roteiro).
