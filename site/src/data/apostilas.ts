@@ -414,6 +414,15 @@ export const apostilas: Apostila[] = [
     descricao:
       'Proposições e tabela-verdade, o que é um algoritmo, a arquitetura de Von Neumann, do problema ao algoritmo, fluxogramas, Portugol, teste de mesa e o primeiro programa em C++.',
   },
+  {
+    id: 'alg1-cap2',
+    capitulo: 2,
+    titulo: 'Linguagens de programação',
+    disciplinaId: 'algoritmos-e-linguagem-de-programacao-i',
+    unidades: ['Linguagens de Programação'],
+    descricao:
+      'Níveis de linguagem, sintaxe e semântica, compilação e interpretação, ambiente de programação, a estrutura de um programa em C++, saída com cout, entrada com cin e como ler as mensagens de erro.',
+  },
 
   // Algoritmos e Linguagem de Programação II — "Algoritmos e Estruturas de Dados" (TecPro)
   // Texto próprio, escrito a partir da ementa (temas dos slides de EDA usados só como roteiro).

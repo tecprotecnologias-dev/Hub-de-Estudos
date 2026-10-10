@@ -7,7 +7,8 @@ Trechos com "int main" são compilados como estão; definições soltas (funçõ
 classes, templates) ganham um main vazio; comandos soltos são colocados dentro de um main.
 Todos recebem #include <iostream>, <string> e "using namespace std;" no início.
 Trechos em Python (def, print, input, class com ":") são executados com o Python.
-Algoritmos em Portugol (começam com algoritmo "Nome") são pulados.
+Algoritmos em Portugol (começam com algoritmo "Nome") são pulados, assim como código com erro
+proposital (começa com // erro), comandos de terminal (começam com $) e mensagens do compilador.
 """
 import os
 import re
@@ -32,6 +33,11 @@ def main():
         for n, codigo in enumerate(trechos, 1):
             if re.match(r'\s*algoritmo\s+"', codigo, re.I):
                 print(f'{n:2d} Portugol (não é compilado)')
+                continue
+            primeira = codigo.lstrip().split(chr(10), 1)[0]
+            if primeira.startswith('// erro') or primeira.startswith('$ ') or re.match(r'[\w.-]+\.cpp:', primeira):
+                # código com erro proposital, comando de terminal ou mensagem do compilador
+                print(f'{n:2d} exemplo de erro ou terminal (não é compilado)')
                 continue
             if codigo.lstrip().startswith('// trecho'):
                 # pedaço de uma classe mostrada completa (e testada) mais adiante no capítulo
