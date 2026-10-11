@@ -1,15 +1,21 @@
 import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { criarConta, useAuth } from '../../lib/auth'
+import { criarConta, criarContaProfessor, useAuth } from '../../lib/auth'
 import { authConfigurado } from '../../lib/supabase'
 import { AvisoSemCadastro } from './AvisoSemCadastro'
 
 const PERIODOS_CURSO = [1, 2, 3, 4, 5]
 const MIN_SENHA = 8
 
+type Tipo = 'aluno' | 'professor'
+
+// Duas abas: o aluno informa matrícula e período (que define as disciplinas liberadas);
+// o professor informa só nome, e-mail e senha, e o cadastro fica em análise até a
+// administração aprovar. Ninguém se cadastra como administrador.
 export default function CriarConta() {
   const { sessao } = useAuth()
   const navegar = useNavigate()
+  const [tipo, setTipo] = useState<Tipo>('aluno')
   const [nome, setNome] = useState('')
   const [matricula, setMatricula] = useState('')
   const [periodo, setPeriodo] = useState('')
@@ -19,22 +25,32 @@ export default function CriarConta() {
   const [aceite, setAceite] = useState(false)
   const [erro, setErro] = useState<string | null>(null)
   const [enviando, setEnviando] = useState(false)
-  const [confirmarEmail, setConfirmarEmail] = useState(false)
+  const [concluido, setConcluido] = useState<{ precisaConfirmar: boolean } | null>(null)
 
   if (!authConfigurado) return <AvisoSemCadastro />
-  if (sessao && !confirmarEmail) return <Navigate to="/" replace />
+  if (sessao && !concluido) return <Navigate to="/" replace />
 
-  if (confirmarEmail) {
+  if (concluido) {
     return (
       <section className="cartao-acesso">
-        <h1>Confirme o seu e-mail</h1>
-        <p>
-          Enviamos uma mensagem para <strong>{email.trim()}</strong>. Abra o link que está nela para ativar a sua conta
-          e depois entre com o seu e-mail e a sua senha.
-        </p>
-        <p className="dica">Não chegou? Veja a caixa de spam ou de promoções.</p>
-        <Link to="/entrar" className="botao">
-          Ir para Entrar
+        <h1>{concluido.precisaConfirmar ? 'Confirme o seu e-mail' : 'Conta criada'}</h1>
+        {concluido.precisaConfirmar && (
+          <>
+            <p>
+              Enviamos uma mensagem para <strong>{email.trim()}</strong>. Abra o link que está nela para ativar a sua
+              conta e depois entre com o seu e-mail e a sua senha.
+            </p>
+            <p className="dica">Não chegou? Veja a caixa de spam ou de promoções.</p>
+          </>
+        )}
+        {tipo === 'professor' && (
+          <p>
+            O seu cadastro de professor será analisado pela administração do site. Depois da aprovação, você terá
+            acesso a todo o conteúdo e ao Gerar prova.
+          </p>
+        )}
+        <Link to={concluido.precisaConfirmar ? '/entrar' : '/'} className="botao">
+          {concluido.precisaConfirmar ? 'Ir para Entrar' : 'Ir para o início'}
         </Link>
       </section>
     )
@@ -44,47 +60,81 @@ export default function CriarConta() {
     e.preventDefault()
     setErro(null)
     if (nome.trim().split(/\s+/).length < 2) return setErro('Informe o seu nome completo (nome e sobrenome).')
-    if (!matricula.trim()) return setErro('Informe a sua matrícula.')
-    if (!periodo) return setErro('Escolha o período que você está cursando.')
+    if (tipo === 'aluno') {
+      if (!matricula.trim()) return setErro('Informe a sua matrícula.')
+      if (!periodo) return setErro('Escolha o período que você está cursando.')
+    }
     if (senha.length < MIN_SENHA) return setErro(`A senha precisa ter pelo menos ${MIN_SENHA} caracteres.`)
     if (senha !== confirmar) return setErro('As duas senhas não são iguais.')
     if (!aceite) return setErro('Para criar a conta, é preciso aceitar a Política de Privacidade.')
     setEnviando(true)
-    const r = await criarConta({ nome, matricula, periodo: Number(periodo), email, senha })
+    const r =
+      tipo === 'aluno'
+        ? await criarConta({ nome, matricula, periodo: Number(periodo), email, senha })
+        : await criarContaProfessor({ nome, email, senha })
     setEnviando(false)
     if (r.erro) setErro(r.erro)
-    else if (r.precisaConfirmar) setConfirmarEmail(true)
+    else if (r.precisaConfirmar || tipo === 'professor') setConcluido({ precisaConfirmar: r.precisaConfirmar })
     else navegar('/', { replace: true })
+  }
+
+  function trocarTipo(t: Tipo) {
+    setTipo(t)
+    setErro(null)
   }
 
   return (
     <section className="cartao-acesso">
       <h1>Criar conta</h1>
+      <div className="abas-acesso" role="tablist" aria-label="Tipo de cadastro">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tipo === 'aluno'}
+          className={tipo === 'aluno' ? 'ativa' : ''}
+          onClick={() => trocarTipo('aluno')}
+        >
+          Sou aluno
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tipo === 'professor'}
+          className={tipo === 'professor' ? 'ativa' : ''}
+          onClick={() => trocarTipo('professor')}
+        >
+          Sou professor
+        </button>
+      </div>
       <p className="dica">
-        O seu período define as disciplinas que você acessa: as do seu período, as dos anteriores e as optativas.
+        {tipo === 'aluno'
+          ? 'O seu período define as disciplinas que você acessa: as do seu período, as dos anteriores e as optativas.'
+          : 'O cadastro de professor é analisado pela administração do site antes de liberar o acesso.'}
       </p>
       <form onSubmit={enviar} className="formulario-acesso">
         <label>
           Nome completo
           <input autoComplete="name" required value={nome} onChange={(e) => setNome(e.target.value)} />
         </label>
-        <div className="linha-campos">
-          <label>
-            Matrícula
-            <input required value={matricula} onChange={(e) => setMatricula(e.target.value)} />
-          </label>
-          <label>
-            Período
-            <select required value={periodo} onChange={(e) => setPeriodo(e.target.value)}>
-              <option value="">Escolha…</option>
-              {PERIODOS_CURSO.map((p) => (
-                <option key={p} value={p}>
-                  {p}º período
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
+        {tipo === 'aluno' && (
+          <div className="linha-campos">
+            <label>
+              Matrícula
+              <input required value={matricula} onChange={(e) => setMatricula(e.target.value)} />
+            </label>
+            <label>
+              Período
+              <select required value={periodo} onChange={(e) => setPeriodo(e.target.value)}>
+                <option value="">Escolha…</option>
+                {PERIODOS_CURSO.map((p) => (
+                  <option key={p} value={p}>
+                    {p}º período
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        )}
         <label>
           E-mail
           <input type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -129,7 +179,7 @@ export default function CriarConta() {
           </p>
         )}
         <button type="submit" disabled={enviando}>
-          {enviando ? 'Criando a conta…' : 'Criar conta'}
+          {enviando ? 'Criando a conta…' : tipo === 'aluno' ? 'Criar conta de aluno' : 'Pedir cadastro de professor'}
         </button>
       </form>
       <p className="links-acesso">

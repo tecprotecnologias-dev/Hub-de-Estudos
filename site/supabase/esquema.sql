@@ -5,8 +5,10 @@
 -- clique em Run. Pode rodar de novo sem problema (os comandos substituem o que já
 -- existe).
 --
--- Depois de criar a SUA conta no site, torne-se administradora rodando:
---   update public.perfis set tipo = 'admin' where email = 'seu-email@exemplo.com';
+-- Depois de criar a SUA conta no site (pela aba "Sou professor"), torne-se
+-- administradora rodando:
+--   update public.perfis set tipo = 'admin', solicita_professor = false
+--   where email = 'seu-email@exemplo.com';
 -- ============================================================================
 
 -- Perfil de cada pessoa cadastrada (o login, a senha e o e-mail ficam em auth.users,
@@ -21,6 +23,9 @@ create table if not exists public.perfis (
   -- período do curso (1 a 5) informado no cadastro: o aluno vê as disciplinas do seu
   -- período e dos anteriores (as optativas, para todos). Só o administrador muda.
   periodo smallint check (periodo between 1 and 5),
+  -- cadastro feito pela aba "Sou professor": fica em análise (sem acesso ao conteúdo)
+  -- até o administrador aprovar, quando o tipo passa a professor
+  solicita_professor boolean not null default false,
   aceite_privacidade_em timestamptz,
   criado_em timestamptz not null default now()
 );
@@ -28,6 +33,7 @@ create table if not exists public.perfis (
 -- para quem já tinha criado a tabela antes da coluna de período existir
 alter table public.perfis add column if not exists periodo smallint check (periodo between 1 and 5);
 alter table public.perfis add column if not exists matricula text unique;
+alter table public.perfis add column if not exists solicita_professor boolean not null default false;
 
 alter table public.perfis enable row level security;
 
@@ -81,6 +87,9 @@ begin
     if new.matricula is distinct from old.matricula then
       raise exception 'Só um administrador pode mudar a matrícula.';
     end if;
+    if new.solicita_professor is distinct from old.solicita_professor then
+      raise exception 'Só um administrador pode aprovar o cadastro de professor.';
+    end if;
     new.email := old.email;
     new.criado_em := old.criado_em;
   end if;
@@ -93,8 +102,10 @@ create trigger proteger_perfil
   before update on public.perfis
   for each row execute function public.proteger_perfil();
 
--- Quando alguém se cadastra, o perfil é criado automaticamente, sempre como aluno,
--- com o nome, a matrícula e o período informados no formulário.
+-- Quando alguém se cadastra, o perfil é criado automaticamente, sempre como aluno.
+-- Pela aba "Sou aluno": com o nome, a matrícula e o período do formulário.
+-- Pela aba "Sou professor": só com o nome, e o pedido de professor fica em análise.
+-- Ninguém se cadastra como administrador: o administrador muda o perfil depois.
 create or replace function public.criar_perfil()
 returns trigger
 language plpgsql
@@ -102,14 +113,17 @@ security definer
 set search_path = public
 as $$
 begin
-  insert into public.perfis (id, nome, matricula, email, periodo, aceite_privacidade_em)
+  insert into public.perfis (id, nome, matricula, email, periodo, solicita_professor, aceite_privacidade_em)
   values (
     new.id,
     coalesce(nullif(new.raw_user_meta_data ->> 'nome', ''), split_part(new.email, '@', 1)),
-    nullif(trim(new.raw_user_meta_data ->> 'matricula'), ''),
+    case when (new.raw_user_meta_data ->> 'professor') = 'true' then null
+         else nullif(trim(new.raw_user_meta_data ->> 'matricula'), '') end,
     new.email,
-    case when (new.raw_user_meta_data ->> 'periodo') in ('1', '2', '3', '4', '5')
+    case when (new.raw_user_meta_data ->> 'professor') = 'true' then null
+         when (new.raw_user_meta_data ->> 'periodo') in ('1', '2', '3', '4', '5')
          then (new.raw_user_meta_data ->> 'periodo')::smallint end,
+    coalesce((new.raw_user_meta_data ->> 'professor') = 'true', false),
     case when (new.raw_user_meta_data ->> 'aceite_privacidade') = 'true' then now() end
   )
   on conflict (id) do nothing;

@@ -16,6 +16,8 @@ export interface Perfil {
   tipo: TipoPerfil
   /** período do curso (1 a 5), informado no cadastro; só o administrador muda */
   periodo: number | null
+  /** cadastro de professor aguardando a aprovação do administrador */
+  solicita_professor: boolean
   aceite_privacidade_em: string | null
   criado_em: string
 }
@@ -116,7 +118,7 @@ export function useAuth(): ContextoAuth {
 /** O perfil pode usar áreas restritas a esses tipos? Sem cadastro configurado, tudo é liberado. */
 export function podeAcessar(perfil: Perfil | null, tipos?: TipoPerfil[]): boolean {
   if (!authConfigurado) return true
-  if (!perfil) return false
+  if (!perfil || emAnalise(perfil)) return false
   return !tipos || tipos.includes(perfil.tipo)
 }
 
@@ -126,7 +128,7 @@ export function podeAcessar(perfil: Perfil | null, tipos?: TipoPerfil[]): boolea
  */
 export function podeVerPeriodo(perfil: Perfil | null, periodoDisciplina: number): boolean {
   if (!authConfigurado) return true
-  if (!perfil) return false
+  if (!perfil || emAnalise(perfil)) return false
   if (perfil.tipo !== 'aluno') return true
   if (periodoDisciplina === 0) return true
   return perfil.periodo != null && periodoDisciplina <= perfil.periodo
@@ -172,6 +174,25 @@ export async function criarConta({ nome, matricula, periodo, email, senha }: Dad
   if (error) return { erro: traduzirErro(error.message), precisaConfirmar: false }
   // sem sessão: o projeto exige confirmar o e-mail antes do primeiro acesso
   return { erro: null, precisaConfirmar: !data.session }
+}
+
+/** Cadastro pela aba "Sou professor": só nome, e-mail e senha; fica em análise até a aprovação. */
+export async function criarContaProfessor({ nome, email, senha }: Pick<DadosCadastro, 'nome' | 'email' | 'senha'>) {
+  const { data, error } = await supabase!.auth.signUp({
+    email: email.trim(),
+    password: senha,
+    options: {
+      emailRedirectTo: enderecoDoSite(),
+      data: { nome: nome.trim(), professor: 'true', aceite_privacidade: 'true' },
+    },
+  })
+  if (error) return { erro: traduzirErro(error.message), precisaConfirmar: false }
+  return { erro: null, precisaConfirmar: !data.session }
+}
+
+/** Cadastro de professor que ainda não foi aprovado: não acessa o conteúdo. */
+export function emAnalise(perfil: Perfil | null): boolean {
+  return !!perfil && perfil.tipo === 'aluno' && perfil.solicita_professor
 }
 
 export async function pedirNovaSenha(email: string) {

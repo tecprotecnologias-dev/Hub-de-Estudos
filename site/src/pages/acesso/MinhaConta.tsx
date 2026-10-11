@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { NOMES_TIPO, traduzirErro, useAuth } from '../../lib/auth'
+import { emAnalise, NOMES_TIPO, traduzirErro, useAuth } from '../../lib/auth'
 import { supabase } from '../../lib/supabase'
 
 export default function MinhaConta() {
@@ -52,27 +52,33 @@ export default function MinhaConta() {
     <section className="cartao-acesso cartao-conta">
       <h1>Minha conta</h1>
       <dl className="dados-conta">
-        <div>
-          <dt>Matrícula</dt>
-          <dd>{perfil.matricula ?? '—'}</dd>
-        </div>
-        <div>
-          <dt>Período</dt>
-          <dd>{perfil.periodo ? `${perfil.periodo}º período` : '—'}</dd>
-        </div>
+        {perfil.tipo === 'aluno' && !perfil.solicita_professor && (
+          <>
+            <div>
+              <dt>Matrícula</dt>
+              <dd>{perfil.matricula ?? '—'}</dd>
+            </div>
+            <div>
+              <dt>Período</dt>
+              <dd>{perfil.periodo ? `${perfil.periodo}º período` : '—'}</dd>
+            </div>
+          </>
+        )}
         <div>
           <dt>E-mail</dt>
           <dd>{perfil.email}</dd>
         </div>
         <div>
           <dt>Perfil</dt>
-          <dd>{NOMES_TIPO[perfil.tipo]}</dd>
+          <dd>{emAnalise(perfil) ? 'Professor (cadastro em análise)' : NOMES_TIPO[perfil.tipo]}</dd>
         </div>
       </dl>
-      <p className="dica pequena">
-        A matrícula e o período só podem ser alterados pela administração do site. Se o seu período mudou, peça a
-        atualização.
-      </p>
+      {perfil.tipo === 'aluno' && !perfil.solicita_professor && (
+        <p className="dica pequena">
+          A matrícula e o período só podem ser alterados pela administração do site. Se o seu período mudou, peça a
+          atualização.
+        </p>
+      )}
 
       <form onSubmit={salvarNome} className="formulario-acesso">
         <label>

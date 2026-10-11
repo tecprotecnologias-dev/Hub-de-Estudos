@@ -42,7 +42,7 @@ export default function Administracao() {
     )
   }, [pessoas, busca, filtroTipo, filtroPeriodo])
 
-  async function atualizar(id: string, campos: Partial<Pick<Perfil, 'tipo' | 'periodo'>>) {
+  async function atualizar(id: string, campos: Partial<Pick<Perfil, 'tipo' | 'periodo' | 'solicita_professor'>>) {
     if (!supabase) return
     const { error } = await supabase.from('perfis').update(campos).eq('id', id)
     if (error) {
@@ -90,6 +90,19 @@ export default function Administracao() {
   }
 
   const contagem = (tipo: TipoPerfil) => pessoas.filter((p) => p.tipo === tipo).length
+  const pendentes = pessoas.filter((p) => p.tipo === 'aluno' && p.solicita_professor)
+
+  async function aprovar(p: Perfil) {
+    await atualizar(p.id, { tipo: 'professor', solicita_professor: false })
+  }
+
+  async function recusar(p: Perfil) {
+    const ok = window.confirm(
+      `Recusar o cadastro de professor de ${p.nome}? A conta continua existindo, mas sem acesso de professor. ` +
+        'Para apagá-la, use o painel do Supabase (Authentication > Users).',
+    )
+    if (ok) await atualizar(p.id, { solicita_professor: false })
+  }
 
   return (
     <>
@@ -98,6 +111,30 @@ export default function Administracao() {
         {pessoas.length} cadastro(s): {contagem('aluno')} aluno(s), {contagem('professor')} professor(es) e{' '}
         {contagem('admin')} administrador(es).
       </p>
+
+      {pendentes.length > 0 && (
+        <section className="pendentes">
+          <h2>Professores aguardando aprovação ({pendentes.length})</h2>
+          <ul>
+            {pendentes.map((p) => (
+              <li key={p.id}>
+                <div>
+                  <strong>{p.nome}</strong>
+                  <span className="dica">
+                    {p.email} · pedido em {new Date(p.criado_em).toLocaleDateString('pt-BR')}
+                  </span>
+                </div>
+                <div className="botoes-pendente">
+                  <button onClick={() => aprovar(p)}>Aprovar como professor</button>
+                  <button className="perigo" onClick={() => recusar(p)}>
+                    Recusar
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <div className="filtros">
         <label>
@@ -170,7 +207,10 @@ export default function Administracao() {
                       onChange={() => marcar(p.id)}
                     />
                   </td>
-                  <td>{p.nome}</td>
+                  <td>
+                    {p.nome}
+                    {p.tipo === 'aluno' && p.solicita_professor && <span className="selo-pendente">em análise</span>}
+                  </td>
                   <td>{p.matricula ?? '—'}</td>
                   <td>{p.email}</td>
                   <td>

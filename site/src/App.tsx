@@ -131,7 +131,7 @@ export default function App() {
             {/* endereços antigos, de quando a aba se chamava Atualidades */}
             <Route path="/atualidades" element={<Protegida><Atualidades /></Protegida>} />
             <Route path="/atualidades/:id" element={<Protegida><Atualidades /></Protegida>} />
-            <Route path="/minha-conta" element={<Protegida><MinhaConta /></Protegida>} />
+            <Route path="/minha-conta" element={<Protegida liberarEmAnalise><MinhaConta /></Protegida>} />
 
             {/* só professores e administradores */}
             <Route path="/gerar-prova" element={<Protegida tipos={['professor', 'admin']}><GerarProva /></Protegida>} />

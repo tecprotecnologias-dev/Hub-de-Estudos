@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { Link, Navigate, useLocation } from 'react-router-dom'
 import { disciplinas } from '../data/disciplinas'
 import { authConfigurado } from './supabase'
-import { podeAcessar, podeVerPeriodo, useAuth, type TipoPerfil } from './auth'
+import { emAnalise, podeAcessar, podeVerPeriodo, useAuth, type TipoPerfil } from './auth'
 import { nomePeriodo } from './util'
 
 // Portões das áreas restritas. Sem o Supabase configurado (site/.env.local), tudo passa:
@@ -12,14 +12,40 @@ function Carregando() {
   return <p className="dica">Carregando…</p>
 }
 
-/** Só para quem está logado (e, se informado, de um destes tipos de perfil). */
-export function Protegida({ tipos, children }: { tipos?: TipoPerfil[]; children: ReactNode }) {
+/**
+ * Só para quem está logado (e, se informado, de um destes tipos de perfil).
+ * `liberarEmAnalise`: deixa passar o professor ainda não aprovado (usado em Minha conta).
+ */
+export function Protegida({
+  tipos,
+  liberarEmAnalise = false,
+  children,
+}: {
+  tipos?: TipoPerfil[]
+  liberarEmAnalise?: boolean
+  children: ReactNode
+}) {
   const { pronto, sessao, perfil } = useAuth()
   const local = useLocation()
   if (!authConfigurado) return <>{children}</>
   if (!pronto) return <Carregando />
   if (!sessao) return <Navigate to="/entrar" replace state={{ de: local.pathname }} />
   if (!perfil) return <Carregando />
+  if (liberarEmAnalise && !tipos) return <>{children}</>
+  if (emAnalise(perfil)) {
+    return (
+      <section className="aviso-acesso">
+        <h1>Cadastro em análise</h1>
+        <p>
+          Recebemos o seu cadastro de professor. Assim que a administração do site aprovar, você terá acesso a todo o
+          conteúdo e ao Gerar prova.
+        </p>
+        <Link to="/minha-conta" className="botao secundario">
+          Minha conta
+        </Link>
+      </section>
+    )
+  }
   if (!podeAcessar(perfil, tipos)) {
     return (
       <section className="aviso-acesso">
