@@ -1,0 +1,2448 @@
+[
+  {
+    "id": "alg1-cap1-e1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap1",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Área e perímetro do retângulo. Escreva um algoritmo que leia a base e a altura de um retângulo e mostre a sua área (base × altura) e o seu perímetro (a soma dos quatro lados).",
+    "exemplos": [
+      {
+        "entrada": "5\n3",
+        "saida": "Área: 15\nPerímetro: 16"
+      },
+      {
+        "entrada": "2.5\n4",
+        "saida": "Área: 10\nPerímetro: 13"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Entradas: base e altura. Saídas: área e perímetro. Como os lados opostos do retângulo são iguais, o perímetro é base + altura + base + altura, ou 2 × (base + altura). Use o tipo real, porque as medidas podem ter casas decimais."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Retangulo\"\nvar\n   base, altura, area, perimetro: real\ninicio\n   escreva(\"Base: \")\n   leia(base)\n   escreva(\"Altura: \")\n   leia(altura)\n   area <- base * altura\n   perimetro <- 2 * (base + altura)\n   escreval(\"Área: \", area)\n   escreval(\"Perímetro: \", perimetro)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double base, altura, area, perimetro;\n    cout << \"Base: \";\n    cin >> base;\n    cout << \"Altura: \";\n    cin >> altura;\n    area = base * altura;\n    perimetro = 2 * (base + altura);\n    cout << \"Área: \" << area << endl;\n    cout << \"Perímetro: \" << perimetro << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Os parênteses em 2 * (base + altura) são necessários: sem eles, a multiplicação seria feita antes da soma, e o resultado seria 2 × base + altura."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap1-e2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap1",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Conversor de temperatura. Escreva um algoritmo que leia uma temperatura em graus Celsius e mostre o valor equivalente em graus Fahrenheit, usando a fórmula F = C × 9 / 5 + 32.",
+    "exemplos": [
+      {
+        "entrada": "25",
+        "saida": "Fahrenheit: 77"
+      },
+      {
+        "entrada": "0",
+        "saida": "Fahrenheit: 32"
+      },
+      {
+        "entrada": "36.5",
+        "saida": "Fahrenheit: 97.7"
+      },
+      {
+        "entrada": "-40",
+        "saida": "Fahrenheit: -40"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Uma entrada (a temperatura em Celsius), uma saída (em Fahrenheit) e um cálculo. Os exemplos foram escolhidos para testar casos diferentes: o ponto de congelamento da água (0 °C = 32 °F), um valor com casa decimal e −40, a temperatura em que as duas escalas coincidem."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"CelsiusParaFahrenheit\"\nvar\n   celsius, fahrenheit: real\ninicio\n   escreva(\"Temperatura em Celsius: \")\n   leia(celsius)\n   fahrenheit <- celsius * 9 / 5 + 32\n   escreval(\"Fahrenheit: \", fahrenheit)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double celsius, fahrenheit;\n    cout << \"Temperatura em Celsius: \";\n    cin >> celsius;\n    fahrenheit = celsius * 9 / 5 + 32;\n    cout << \"Fahrenheit: \" << fahrenheit << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Aqui não são necessários parênteses: a multiplicação e a divisão são feitas antes da soma, que é exatamente o que a fórmula pede."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap1-e3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap1",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Custo de uma viagem de carro. Antes de escrever o algoritmo, aplique o roteiro da Seção 1.4: anote, como comentário no início do código, as entradas, as saídas e o processamento. O algoritmo deve ler a distância da viagem (em km), o consumo do carro (em km por litro) e o preço do litro de combustível, e mostrar quantos litros serão gastos e quanto custará a viagem.",
+    "exemplos": [
+      {
+        "entrada": "300\n12\n6",
+        "saida": "Litros: 25\nCusto: R$ 150"
+      },
+      {
+        "entrada": "450\n15\n5.89",
+        "saida": "Litros: 30\nCusto: R$ 176.7"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Entradas: distância, consumo e preço do litro. Saídas: litros gastos e custo. Processamento: litros ← distância / consumo; custo ← litros × preço. Resolvendo o primeiro exemplo à mão: 300 km / 12 km/l = 25 litros, e 25 × R$ 6 = R$ 150."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"CustoViagem\"\n// entradas: distancia (km), consumo (km/l), preco (R$ por litro)\n// saidas: litros gastos e custo da viagem\n// processamento: litros <- distancia / consumo\n//                custo <- litros * preco\nvar\n   distancia, consumo, preco, litros, custo: real\ninicio\n   escreva(\"Distância (km): \")\n   leia(distancia)\n   escreva(\"Consumo (km por litro): \")\n   leia(consumo)\n   escreva(\"Preço do litro: \")\n   leia(preco)\n   litros <- distancia / consumo\n   custo <- litros * preco\n   escreval(\"Litros: \", litros)\n   escreval(\"Custo: R$ \", custo)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // entradas: distancia, consumo e preco; saidas: litros e custo\n    double distancia, consumo, preco, litros, custo;\n    cout << \"Distância (km): \";\n    cin >> distancia;\n    cout << \"Consumo (km por litro): \";\n    cin >> consumo;\n    cout << \"Preço do litro: \";\n    cin >> preco;\n    litros = distancia / consumo;\n    custo = litros * preco;\n    cout << \"Litros: \" << litros << endl;\n    cout << \"Custo: R$ \" << custo << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "A ordem dos cálculos importa: o custo depende dos litros, então os litros precisam ser calculados primeiro. Também daria para calcular tudo de uma vez, com custo ← distância / consumo × preço, mas guardar os litros em uma variável deixa o algoritmo mais claro e ainda fornece a primeira saída."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap1-e4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap1",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Desconto na loja. Uma loja dá 10% de desconto nas compras de R$ 100 ou mais. Escreva um algoritmo que leia o valor da compra e mostre o valor a pagar. Faça um teste de mesa com os valores 150, 80 e 100 antes de passar para o computador: o último está exatamente na fronteira.",
+    "exemplos": [
+      {
+        "entrada": "150",
+        "saida": "Valor a pagar: R$ 135"
+      },
+      {
+        "entrada": "80",
+        "saida": "Valor a pagar: R$ 80"
+      },
+      {
+        "entrada": "100",
+        "saida": "Valor a pagar: R$ 90"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Há uma decisão: o desconto só vale a partir de R$ 100. Como o enunciado diz \"R$ 100 ou mais\", a condição é valor >= 100, e não valor > 100. O teste de mesa com 100 mostra a diferença: com >=, o cliente paga R$ 90; com >, pagaria R$ 100, o que estaria errado."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Desconto\"\nvar\n   valor, pagar: real\ninicio\n   escreva(\"Valor da compra: \")\n   leia(valor)\n   se valor >= 100 entao\n      pagar <- valor * 0.9        // 10% de desconto\n   senao\n      pagar <- valor\n   fimse\n   escreval(\"Valor a pagar: R$ \", pagar)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double valor, pagar;\n    cout << \"Valor da compra: \";\n    cin >> valor;\n    if (valor >= 100) {\n        pagar = valor * 0.9;        // 10% de desconto\n    } else {\n        pagar = valor;\n    }\n    cout << \"Valor a pagar: R$ \" << pagar << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Multiplicar por 0.9 é o mesmo que tirar 10%: valor − valor × 0.1 = valor × 0.9. A saída fica depois do fimse porque é igual nos dois caminhos; só o cálculo muda."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap1-e5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap1",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um colega escreveu o algoritmo abaixo para calcular a média de um aluno em que a prova tem peso 2 e o trabalho tem peso 1. É aprovado quem tem média 6 ou mais. O algoritmo tem dois erros."
+      },
+      {
+        "t": "codigo",
+        "texto": "algoritmo \"MediaPonderada\"\nvar\n   prova, trabalho, media: real\ninicio\n   escreva(\"Nota da prova: \")\n   leia(prova)\n   escreva(\"Nota do trabalho: \")\n   leia(trabalho)\n   media <- prova * 2 + trabalho / 3\n   se media > 6 entao\n      escreval(\"Aprovado. Média: \", media)\n   senao\n      escreval(\"Reprovado. Média: \", media)\n   fimse\nfimalgoritmo"
+      }
+    ],
+    "enunciado": "Encontre os erros com um teste de mesa (use prova 9 e trabalho 6, e depois prova 6 e trabalho 6) e escreva a versão corrigida. Lembre: na média ponderada, cada nota é multiplicada pelo seu peso, e a soma é dividida pela soma dos pesos.",
+    "exemplos": [
+      {
+        "entrada": "9\n6",
+        "saida": "Aprovado. Média: 8"
+      },
+      {
+        "entrada": "6\n6",
+        "saida": "Aprovado. Média: 6"
+      },
+      {
+        "entrada": "4\n7",
+        "saida": "Reprovado. Média: 5"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Primeiro erro: a precedência. Com prova 9 e trabalho 6, o teste de mesa dá media = 9 × 2 + 6 / 3 = 18 + 2 = 20, uma média impossível. Como a multiplicação e a divisão são feitas antes da soma, só o trabalho foi dividido por 3. A soma precisa de parênteses: (prova × 2 + trabalho) / 3, que dá (18 + 6) / 3 = 8."
+      },
+      {
+        "t": "p",
+        "texto": "Segundo erro: a fronteira. Com prova 6 e trabalho 6, a média correta é 6, e o aluno deveria ser aprovado (\"6 ou mais\"). Mas 6 > 6 é falso, e ele seria reprovado. A condição certa é media >= 6."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"MediaPonderada\"\nvar\n   prova, trabalho, media: real\ninicio\n   escreva(\"Nota da prova: \")\n   leia(prova)\n   escreva(\"Nota do trabalho: \")\n   leia(trabalho)\n   media <- (prova * 2 + trabalho) / 3     // pesos 2 e 1\n   se media >= 6 entao                       // 6 ou mais\n      escreval(\"Aprovado. Média: \", media)\n   senao\n      escreval(\"Reprovado. Média: \", media)\n   fimse\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double prova, trabalho, media;\n    cout << \"Nota da prova: \";\n    cin >> prova;\n    cout << \"Nota do trabalho: \";\n    cin >> trabalho;\n    media = (prova * 2 + trabalho) / 3;     // pesos 2 e 1\n    if (media >= 6) {                       // 6 ou mais\n        cout << \"Aprovado. Média: \" << media << endl;\n    } else {\n        cout << \"Reprovado. Média: \" << media << endl;\n    }\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Repare que nenhum dos dois erros impede o algoritmo de rodar: ele executa normalmente e mostra resultados errados. Erros de lógica só aparecem com testes, e por isso vale sempre testar um caso comum e um caso na fronteira."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap2-e1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap2",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Idade em dias. Escreva um programa que leia a idade de uma pessoa em anos e mostre quantos dias ela já viveu, aproximadamente, considerando anos de 365 dias.",
+    "exemplos": [
+      {
+        "entrada": "20",
+        "saida": "Você viveu cerca de 7300 dias"
+      },
+      {
+        "entrada": "1",
+        "saida": "Você viveu cerca de 365 dias"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Um programa com a estrutura básica do capítulo: lê um número com cin, faz uma conta e mostra o resultado com cout. Como idade e dias são números inteiros, o tipo é int."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"IdadeEmDias\"\nvar\n   anos, dias: inteiro\ninicio\n   escreva(\"Sua idade em anos: \")\n   leia(anos)\n   dias <- anos * 365\n   escreval(\"Você viveu cerca de \", dias, \" dias\")\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int anos, dias;\n    cout << \"Sua idade em anos: \";\n    cin >> anos;\n    dias = anos * 365;\n    cout << \"Você viveu cerca de \" << dias << \" dias\" << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Repare nos espaços dentro das aspas: \"cerca de \" termina com espaço e \" dias\" começa com espaço. Sem eles, o número sairia grudado no texto."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap2-e2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap2",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "O programa abaixo deveria ler dois números inteiros e mostrar a soma, mas não compila. Ele tem quatro erros de sintaxe."
+      },
+      {
+        "t": "codigo",
+        "texto": "#include <iostream>\nusing namespace std\n\nint main() {\n    int a, b\n    cout << \"Digite dois números: \";\n    cin >> a >> b;\n    cout << \"Soma: << a + b << endl;\n    retun 0;\n}"
+      }
+    ],
+    "enunciado": "Encontre e corrija os quatro erros. Compile o programa, leia as mensagens do compilador (Seção 2.9) e corrija um erro de cada vez, começando pelo primeiro.",
+    "exemplos": [
+      {
+        "entrada": "3\n4",
+        "saida": "Soma: 7"
+      },
+      {
+        "entrada": "10\n-2",
+        "saida": "Soma: 8"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Os erros: falta o ponto e vírgula depois de using namespace std; falta o ponto e vírgula depois de int a, b; falta fechar as aspas do texto \"Soma: \" (sem elas, o compilador acha que << a + b << endl faz parte do texto); e return está escrito errado (retun)."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cout << \"Digite dois números: \";\n    cin >> a >> b;\n    cout << \"Soma: \" << a + b << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Um único erro pode gerar várias mensagens, porque o compilador se confunde com o que vem depois. Por isso vale corrigir o primeiro erro apontado e compilar de novo, em vez de tentar entender todas as mensagens de uma vez."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Soma\"\nvar\n   a, b: inteiro\ninicio\n   escreva(\"Digite dois números: \")\n   leia(a, b)\n   escreval(\"Soma: \", a + b)\nfimalgoritmo"
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap2-e3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap2",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Troco. Escreva um programa que leia o preço de um produto e o valor pago pelo cliente, e mostre o troco. Os valores podem ter centavos.",
+    "exemplos": [
+      {
+        "entrada": "37.5\n50",
+        "saida": "Troco: R$ 12.5"
+      },
+      {
+        "entrada": "19.9\n20",
+        "saida": "Troco: R$ 0.1"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Como os valores têm centavos, as variáveis precisam ser double (real no Portugol), e não int. Com int, 37.5 viraria 37 e o troco sairia errado. Lembre que, ao digitar, o separador decimal é o ponto."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Troco\"\nvar\n   preco, pago, troco: real\ninicio\n   escreva(\"Preço: \")\n   leia(preco)\n   escreva(\"Valor pago: \")\n   leia(pago)\n   troco <- pago - preco\n   escreval(\"Troco: R$ \", troco)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double preco, pago, troco;\n    cout << \"Preço: \";\n    cin >> preco;\n    cout << \"Valor pago: \";\n    cin >> pago;\n    troco = pago - preco;\n    cout << \"Troco: R$ \" << troco << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "O cout mostra 12.5, e não 12.50. Mostrar sempre duas casas decimais é possível com fixed e setprecision, recursos que aparecem nos próximos capítulos."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap2-e4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap2",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Recibo de compra. Escreva um programa que leia a quantidade e o preço unitário de dois produtos e mostre o subtotal de cada um e o total da compra, um em cada linha.",
+    "exemplos": [
+      {
+        "entrada": "2\n10.5\n3\n4",
+        "saida": "Subtotal 1: 21\nSubtotal 2: 12\nTotal: 33"
+      },
+      {
+        "entrada": "1\n99.9\n5\n2",
+        "saida": "Subtotal 1: 99.9\nSubtotal 2: 10\nTotal: 109.9"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Entradas: quantidade e preço de cada produto (quatro valores). Saídas: dois subtotais e o total. A quantidade é inteira, mas o preço tem centavos, então os subtotais e o total são reais."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Recibo\"\nvar\n   qtd1, qtd2: inteiro\n   preco1, preco2, sub1, sub2: real\ninicio\n   escreva(\"Quantidade e preço do produto 1: \")\n   leia(qtd1, preco1)\n   escreva(\"Quantidade e preço do produto 2: \")\n   leia(qtd2, preco2)\n   sub1 <- qtd1 * preco1\n   sub2 <- qtd2 * preco2\n   escreval(\"Subtotal 1: \", sub1)\n   escreval(\"Subtotal 2: \", sub2)\n   escreval(\"Total: \", sub1 + sub2)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int qtd1, qtd2;\n    double preco1, preco2, sub1, sub2;\n    cout << \"Quantidade e preço do produto 1: \";\n    cin >> qtd1 >> preco1;\n    cout << \"Quantidade e preço do produto 2: \";\n    cin >> qtd2 >> preco2;\n    sub1 = qtd1 * preco1;\n    sub2 = qtd2 * preco2;\n    cout << \"Subtotal 1: \" << sub1 << endl;\n    cout << \"Subtotal 2: \" << sub2 << endl;\n    cout << \"Total: \" << sub1 + sub2 << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Um único cin pode ler vários valores: cin >> qtd1 >> preco1 lê os dois, separados por espaço ou por Enter. O total pode ser calculado direto no cout, sem uma variável a mais."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap2-e5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap2",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "dificil",
+    "enunciado": "Troca de valores. Escreva um programa que leia dois números inteiros para as variáveis a e b, troque o conteúdo delas (a passa a ter o valor de b, e b o valor de a) e mostre os valores depois da troca. Atenção: fazer só a = b e depois b = a não funciona. Descubra por quê com um teste de mesa.",
+    "exemplos": [
+      {
+        "entrada": "3\n5",
+        "saida": "Depois da troca: a = 5, b = 3"
+      },
+      {
+        "entrada": "-1\n8",
+        "saida": "Depois da troca: a = 8, b = -1"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "O teste de mesa com a = 3 e b = 5 mostra o problema: depois de a = b, a vale 5, e o 3 se perdeu. Então b = a coloca 5 em b, e as duas variáveis terminam com 5. A solução é guardar o valor de a em uma variável auxiliar antes de sobrescrevê-lo, como quem troca o conteúdo de dois copos usando um terceiro."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Troca\"\nvar\n   a, b, aux: inteiro\ninicio\n   escreva(\"a: \")\n   leia(a)\n   escreva(\"b: \")\n   leia(b)\n   aux <- a      // guarda o valor de a\n   a <- b\n   b <- aux\n   escreval(\"Depois da troca: a = \", a, \", b = \", b)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b, aux;\n    cout << \"a: \";\n    cin >> a;\n    cout << \"b: \";\n    cin >> b;\n    aux = a;      // guarda o valor de a\n    a = b;\n    b = aux;\n    cout << \"Depois da troca: a = \" << a << \", b = \" << b << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Teste de mesa da solução, com a = 3 e b = 5: aux recebe 3; a recebe 5; b recebe aux, que é 3. No fim, a = 5 e b = 3. Essa troca com auxiliar volta várias vezes nos próximos capítulos, na ordenação de vetores e nas funções com passagem por referência."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap3-e1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap3",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Duração de um filme. Escreva um programa que leia a duração de um filme em minutos (um número inteiro) e mostre essa duração em horas e minutos. Use a divisão inteira e o resto.",
+    "exemplos": [
+      {
+        "entrada": "135",
+        "saida": "2 h 15 min"
+      },
+      {
+        "entrada": "90",
+        "saida": "1 h 30 min"
+      },
+      {
+        "entrada": "45",
+        "saida": "0 h 45 min"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "As horas são quantas vezes 60 cabe na duração: a divisão inteira, 135 / 60 = 2. Os minutos que sobram são o resto dessa divisão: 135 % 60 = 15. Em C++, como os dois lados são inteiros, o / já faz a divisão inteira; no Portugol, ela se escreve div, e o resto, mod."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"DuracaoFilme\"\nvar\n   total, horas, minutos: inteiro\ninicio\n   escreva(\"Duração em minutos: \")\n   leia(total)\n   horas <- total div 60\n   minutos <- total mod 60\n   escreval(horas, \" h \", minutos, \" min\")\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int total;\n    cout << \"Duração em minutos: \";\n    cin >> total;\n    int horas = total / 60;       // divisão inteira\n    int minutos = total % 60;     // o que sobra\n    cout << horas << \" h \" << minutos << \" min\" << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Para conferir: horas × 60 + minutos precisa dar a duração original. Com 135: 2 × 60 + 15 = 135."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap3-e2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap3",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Índice de massa corporal. Escreva um programa que leia o peso (em kg) e a altura (em metros) de uma pessoa e mostre o IMC, calculado como peso dividido pela altura ao quadrado.",
+    "exemplos": [
+      {
+        "entrada": "70\n1.75",
+        "saida": "IMC: 22.8571"
+      },
+      {
+        "entrada": "50\n1.6",
+        "saida": "IMC: 19.5312"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Os dois valores e o resultado têm casas decimais, então o tipo é double (real). O cuidado está na precedência: peso / altura * altura divide pela altura e depois multiplica de novo, o que dá o próprio peso. São necessários parênteses no denominador."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"IMC\"\nvar\n   peso, altura, imc: real\ninicio\n   escreva(\"Peso (kg): \")\n   leia(peso)\n   escreva(\"Altura (m): \")\n   leia(altura)\n   imc <- peso / (altura * altura)\n   escreval(\"IMC: \", imc)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double peso, altura;\n    cout << \"Peso (kg): \";\n    cin >> peso;\n    cout << \"Altura (m): \";\n    cin >> altura;\n    double imc = peso / (altura * altura);\n    cout << \"IMC: \" << imc << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "O cout mostra até 6 algarismos significativos, por isso aparece 22.8571. O VisuAlg mostra o número de outro jeito, com mais ou menos casas, mas o valor é o mesmo."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap3-e3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap3",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Os dígitos de um número. Escreva um programa que leia um número inteiro de três dígitos (de 100 a 999) e mostre, em linhas separadas, o dígito das centenas, o das dezenas, o das unidades e o número com os dígitos invertidos. Use apenas operações aritméticas.",
+    "exemplos": [
+      {
+        "entrada": "472",
+        "saida": "Centenas: 4\nDezenas: 7\nUnidades: 2\nInvertido: 274"
+      },
+      {
+        "entrada": "305",
+        "saida": "Centenas: 3\nDezenas: 0\nUnidades: 5\nInvertido: 503"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "O resto da divisão por 10 é sempre o último dígito: 472 % 10 = 2. A divisão inteira por 10 tira o último dígito: 472 / 10 = 47. Combinando as duas: as centenas são 472 / 100 = 4; as dezenas são (472 / 10) % 10 = 7; e as unidades, 472 % 10 = 2. O número invertido é montado com as unidades valendo 100, as dezenas 10 e as centenas 1."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Digitos\"\nvar\n   n, c, d, u: inteiro\ninicio\n   escreva(\"Número de três dígitos: \")\n   leia(n)\n   c <- n div 100\n   d <- (n div 10) mod 10\n   u <- n mod 10\n   escreval(\"Centenas: \", c)\n   escreval(\"Dezenas: \", d)\n   escreval(\"Unidades: \", u)\n   escreval(\"Invertido: \", u * 100 + d * 10 + c)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cout << \"Número de três dígitos: \";\n    cin >> n;\n    int c = n / 100;\n    int d = (n / 10) % 10;\n    int u = n % 10;\n    cout << \"Centenas: \" << c << endl;\n    cout << \"Dezenas: \" << d << endl;\n    cout << \"Unidades: \" << u << endl;\n    cout << \"Invertido: \" << u * 100 + d * 10 + c << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Com 120, o invertido seria 0 × 100 + 2 × 10 + 1 = 21: o zero à esquerda some, como acontece com qualquer número inteiro."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap3-e4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap3",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Divisão inteira e divisão real. Escreva um programa que leia dois números inteiros, a e b (com b diferente de zero), e mostre: o quociente da divisão inteira, o resto e o resultado da divisão real. As três contas devem usar as mesmas variáveis inteiras a e b.",
+    "exemplos": [
+      {
+        "entrada": "7\n2",
+        "saida": "Quociente: 3\nResto: 1\nDivisão real: 3.5"
+      },
+      {
+        "entrada": "20\n8",
+        "saida": "Quociente: 2\nResto: 4\nDivisão real: 2.5"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Em C++, a / b com dois inteiros descarta a parte decimal. Para obter a divisão real sem mudar o tipo das variáveis, basta converter um dos lados para double antes de dividir: static_cast<double>(a) / b (Seção 3.3). Se a conversão viesse depois, como em static_cast<double>(a / b), a divisão inteira já teria acontecido, e o resultado seria 3."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Divisoes\"\nvar\n   a, b: inteiro\ninicio\n   escreva(\"a: \")\n   leia(a)\n   escreva(\"b: \")\n   leia(b)\n   escreval(\"Quociente: \", a div b)\n   escreval(\"Resto: \", a mod b)\n   escreval(\"Divisão real: \", a / b)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cout << \"a: \";\n    cin >> a;\n    cout << \"b: \";\n    cin >> b;\n    cout << \"Quociente: \" << a / b << endl;\n    cout << \"Resto: \" << a % b << endl;\n    cout << \"Divisão real: \" << static_cast<double>(a) / b\n         << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "No Portugol do VisuAlg a situação é a inversa do C++: / é sempre a divisão real, e a inteira tem um operador próprio, div."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap3-e5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap3",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "dificil",
+    "enunciado": "Caixa eletrônico. Um caixa tem notas de 100, 50, 20, 10, 5 e 2 reais e moedas de 1 real. Escreva um programa que leia um valor inteiro de saque e mostre quantas notas (e moedas) de cada valor devem ser entregues, usando sempre a maior nota possível.",
+    "exemplos": [
+      {
+        "entrada": "388",
+        "saida": "Notas de 100: 3\nNotas de 50: 1\nNotas de 20: 1\nNotas de 10: 1\nNotas de 5: 1\nNotas de 2: 1\nMoedas de 1: 1"
+      },
+      {
+        "entrada": "90",
+        "saida": "Notas de 100: 0\nNotas de 50: 1\nNotas de 20: 2\nNotas de 10: 0\nNotas de 5: 0\nNotas de 2: 0\nMoedas de 1: 0"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Para cada nota, da maior para a menor: a quantidade é a divisão inteira do valor que falta pagar pela nota, e o que continua faltando é o resto dessa divisão. Com 388: 388 / 100 = 3 notas, sobram 388 % 100 = 88; 88 / 50 = 1, sobram 38; 38 / 20 = 1, sobram 18; e assim por diante."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"CaixaEletronico\"\nvar\n   resto: inteiro\ninicio\n   escreva(\"Valor do saque: \")\n   leia(resto)\n   escreval(\"Notas de 100: \", resto div 100)\n   resto <- resto mod 100\n   escreval(\"Notas de 50: \", resto div 50)\n   resto <- resto mod 50\n   escreval(\"Notas de 20: \", resto div 20)\n   resto <- resto mod 20\n   escreval(\"Notas de 10: \", resto div 10)\n   resto <- resto mod 10\n   escreval(\"Notas de 5: \", resto div 5)\n   resto <- resto mod 5\n   escreval(\"Notas de 2: \", resto div 2)\n   resto <- resto mod 2\n   escreval(\"Moedas de 1: \", resto)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int resto;\n    cout << \"Valor do saque: \";\n    cin >> resto;\n    cout << \"Notas de 100: \" << resto / 100 << endl;\n    resto %= 100;\n    cout << \"Notas de 50: \" << resto / 50 << endl;\n    resto %= 50;\n    cout << \"Notas de 20: \" << resto / 20 << endl;\n    resto %= 20;\n    cout << \"Notas de 10: \" << resto / 10 << endl;\n    resto %= 10;\n    cout << \"Notas de 5: \" << resto / 5 << endl;\n    resto %= 5;\n    cout << \"Notas de 2: \" << resto / 2 << endl;\n    resto %= 2;\n    cout << \"Moedas de 1: \" << resto << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "O operador resto %= 100 é a forma curta de resto = resto % 100 (Seção 3.3). O código repete o mesmo par de linhas para cada nota; no Capítulo 7, com um vetor guardando os valores das notas, ele vira um laço de poucas linhas."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap4-e1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap4",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Par ou ímpar. Escreva um programa que leia um número inteiro e informe se ele é par ou ímpar. Teste também com zero e com um número negativo.",
+    "exemplos": [
+      {
+        "entrada": "7",
+        "saida": "7 é ímpar"
+      },
+      {
+        "entrada": "10",
+        "saida": "10 é par"
+      },
+      {
+        "entrada": "0",
+        "saida": "0 é par"
+      },
+      {
+        "entrada": "-3",
+        "saida": "-3 é ímpar"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Um número é par quando o resto da divisão por 2 é zero. Testar se o resto é 0 é mais seguro do que testar se ele é 1: em C++, o resto de um número negativo é negativo (-3 % 2 vale -1), e o teste n % 2 == 1 diria que -3 não é ímpar."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"ParOuImpar\"\nvar\n   n: inteiro\ninicio\n   escreva(\"Número: \")\n   leia(n)\n   se n mod 2 = 0 entao\n      escreval(n, \" é par\")\n   senao\n      escreval(n, \" é ímpar\")\n   fimse\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cout << \"Número: \";\n    cin >> n;\n    if (n % 2 == 0) {\n        cout << n << \" é par\" << endl;\n    } else {\n        cout << n << \" é ímpar\" << endl;\n    }\n    return 0;\n}"
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap4-e2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap4",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "O maior de três. Escreva um programa que leia três números e mostre o maior deles. Garanta que funciona também quando há números iguais.",
+    "exemplos": [
+      {
+        "entrada": "3\n9\n5",
+        "saida": "Maior: 9"
+      },
+      {
+        "entrada": "7\n7\n2",
+        "saida": "Maior: 7"
+      },
+      {
+        "entrada": "-4\n-1\n-8",
+        "saida": "Maior: -1"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Uma forma simples, que evita muitos ifs aninhados, é supor que o primeiro é o maior e depois comparar os outros com ele, trocando quando aparecer um maior. É o mesmo padrão do maior valor que o Capítulo 5 usa dentro dos laços."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"MaiorDeTres\"\nvar\n   a, b, c, maior: real\ninicio\n   escreva(\"Três números: \")\n   leia(a, b, c)\n   maior <- a\n   se b > maior entao\n      maior <- b\n   fimse\n   se c > maior entao\n      maior <- c\n   fimse\n   escreval(\"Maior: \", maior)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double a, b, c;\n    cout << \"Três números: \";\n    cin >> a >> b >> c;\n    double maior = a;\n    if (b > maior) maior = b;\n    if (c > maior) maior = c;\n    cout << \"Maior: \" << maior << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Os dois ifs são independentes, e não um else if: depois de comparar b, ainda é preciso comparar c com o maior encontrado até ali. Com números iguais, nenhuma troca acontece e o resultado continua certo."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap4-e3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap4",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Classificação do IMC. Leia o peso e a altura, calcule o IMC (peso / altura²) e mostre a classificação: abaixo de 18.5, \"Abaixo do peso\"; de 18.5 até menos de 25, \"Peso normal\"; de 25 até menos de 30, \"Sobrepeso\"; 30 ou mais, \"Obesidade\".",
+    "exemplos": [
+      {
+        "entrada": "50\n1.7",
+        "saida": "Abaixo do peso"
+      },
+      {
+        "entrada": "70\n1.75",
+        "saida": "Peso normal"
+      },
+      {
+        "entrada": "85\n1.75",
+        "saida": "Sobrepeso"
+      },
+      {
+        "entrada": "100\n1.7",
+        "saida": "Obesidade"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Faixas consecutivas pedem decisões encadeadas (else if). Como cada teste só é feito quando os anteriores falharam, não é preciso repetir o limite de baixo: no segundo teste, já se sabe que o IMC é pelo menos 18.5."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"ClassificaIMC\"\nvar\n   peso, altura, imc: real\ninicio\n   escreva(\"Peso e altura: \")\n   leia(peso, altura)\n   imc <- peso / (altura * altura)\n   se imc < 18.5 entao\n      escreval(\"Abaixo do peso\")\n   senao\n      se imc < 25 entao\n         escreval(\"Peso normal\")\n      senao\n         se imc < 30 entao\n            escreval(\"Sobrepeso\")\n         senao\n            escreval(\"Obesidade\")\n         fimse\n      fimse\n   fimse\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double peso, altura;\n    cout << \"Peso e altura: \";\n    cin >> peso >> altura;\n    double imc = peso / (altura * altura);\n    if (imc < 18.5) {\n        cout << \"Abaixo do peso\" << endl;\n    } else if (imc < 25) {\n        cout << \"Peso normal\" << endl;\n    } else if (imc < 30) {\n        cout << \"Sobrepeso\" << endl;\n    } else {\n        cout << \"Obesidade\" << endl;\n    }\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Para testar as fronteiras, use pesos que deem IMC exatamente 25 ou 30 (com altura 2, pesos 100 e 120): devem sair \"Sobrepeso\" e \"Obesidade\"."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap4-e4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap4",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Calculadora. Escreva um programa que leia uma conta no formato número operador número (por exemplo, 8 / 2) e mostre o resultado. Os operadores válidos são +, -, * e /. Use switch (escolha, no Portugol). Trate a divisão por zero e o operador inválido.",
+    "exemplos": [
+      {
+        "entrada": "8 / 2",
+        "saida": "Resultado: 4"
+      },
+      {
+        "entrada": "5 * 3",
+        "saida": "Resultado: 15"
+      },
+      {
+        "entrada": "7 / 0",
+        "saida": "Erro: divisão por zero"
+      },
+      {
+        "entrada": "2 ^ 3",
+        "saida": "Operador inválido"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "O operador é um único caractere, então pode ser lido em uma variável char e usado no switch. O cin >> a >> op >> b lê os três valores separados por espaços. A divisão precisa de um if dentro do seu caso, para não dividir por zero."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Calculadora\"\nvar\n   a, b: real\n   op: caractere\ninicio\n   escreva(\"Conta (número operador número): \")\n   leia(a, op, b)\n   escolha op\n   caso \"+\"\n      escreval(\"Resultado: \", a + b)\n   caso \"-\"\n      escreval(\"Resultado: \", a - b)\n   caso \"*\"\n      escreval(\"Resultado: \", a * b)\n   caso \"/\"\n      se b = 0 entao\n         escreval(\"Erro: divisão por zero\")\n      senao\n         escreval(\"Resultado: \", a / b)\n      fimse\n   outrocaso\n      escreval(\"Operador inválido\")\n   fimescolha\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double a, b;\n    char op;\n    cout << \"Conta (número operador número): \";\n    cin >> a >> op >> b;\n    switch (op) {\n        case '+':\n            cout << \"Resultado: \" << a + b << endl;\n            break;\n        case '-':\n            cout << \"Resultado: \" << a - b << endl;\n            break;\n        case '*':\n            cout << \"Resultado: \" << a * b << endl;\n            break;\n        case '/':\n            if (b == 0) {\n                cout << \"Erro: divisão por zero\" << endl;\n            } else {\n                cout << \"Resultado: \" << a / b << endl;\n            }\n            break;\n        default:\n            cout << \"Operador inválido\" << endl;\n    }\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Não esqueça o break no fim de cada caso: sem ele, a execução continua no caso de baixo. No VisuAlg, o leia de três valores espera que eles sejam digitados um por linha."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap4-e5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap4",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "dificil",
+    "enunciado": "Ano bissexto. Um ano é bissexto quando é divisível por 4, mas não por 100, a não ser que também seja divisível por 400. Por isso 2024 é bissexto, 1900 não é e 2000 é. Escreva um programa que leia um ano e diga se ele é bissexto, usando uma única condição com os operadores lógicos.",
+    "exemplos": [
+      {
+        "entrada": "2024",
+        "saida": "2024 é bissexto"
+      },
+      {
+        "entrada": "1900",
+        "saida": "1900 não é bissexto"
+      },
+      {
+        "entrada": "2000",
+        "saida": "2000 é bissexto"
+      },
+      {
+        "entrada": "2023",
+        "saida": "2023 não é bissexto"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "A regra tem duas formas de um ano ser bissexto: (divisível por 4 E não divisível por 100) OU divisível por 400. Os parênteses deixam a intenção clara, mesmo que o && já tenha precedência sobre o ||. Os quatro exemplos cobrem cada caminho da regra: o caso comum (2024), a exceção dos séculos (1900), a exceção da exceção (2000) e um ano qualquer (2023)."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Bissexto\"\nvar\n   ano: inteiro\ninicio\n   escreva(\"Ano: \")\n   leia(ano)\n   se ((ano mod 4 = 0) e (ano mod 100 <> 0)) ou (ano mod 400 = 0) entao\n      escreval(ano, \" é bissexto\")\n   senao\n      escreval(ano, \" não é bissexto\")\n   fimse\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int ano;\n    cout << \"Ano: \";\n    cin >> ano;\n    bool bissexto = (ano % 4 == 0 && ano % 100 != 0) || ano % 400 == 0;\n    if (bissexto) {\n        cout << ano << \" é bissexto\" << endl;\n    } else {\n        cout << ano << \" não é bissexto\" << endl;\n    }\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Guardar a condição em uma variável bool com um nome que diz o que ela significa deixa o if muito mais fácil de ler. Uma versão com ifs aninhados também funciona, mas costuma ter mais pontos onde errar."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap5-e1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap5",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Soma de 1 até N. Escreva um programa que leia um número inteiro positivo N e mostre a soma de todos os inteiros de 1 até N, usando um laço.",
+    "exemplos": [
+      {
+        "entrada": "10",
+        "saida": "Soma: 55"
+      },
+      {
+        "entrada": "100",
+        "saida": "Soma: 5050"
+      },
+      {
+        "entrada": "1",
+        "saida": "Soma: 1"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "É o padrão do acumulador (Seção 5.4): uma variável começa em 0 e, a cada volta, recebe o valor do contador. Como o número de voltas é conhecido (N), o laço mais claro é o for (para, no Portugol)."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"SomaAteN\"\nvar\n   n, i, soma: inteiro\ninicio\n   escreva(\"N: \")\n   leia(n)\n   soma <- 0\n   para i de 1 ate n faca\n      soma <- soma + i\n   fimpara\n   escreval(\"Soma: \", soma)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cout << \"N: \";\n    cin >> n;\n    int soma = 0;\n    for (int i = 1; i <= n; i++) {\n        soma += i;\n    }\n    cout << \"Soma: \" << soma << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Para conferir, existe uma fórmula: a soma de 1 até N é N × (N + 1) / 2. Com N = 100, 100 × 101 / 2 = 5050. O laço é o objetivo do exercício, mas a fórmula é um ótimo teste."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap5-e2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap5",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Tabuada. Escreva um programa que leia um número e mostre a sua tabuada de 1 a 10, uma linha por multiplicação, no formato \"7 x 3 = 21\".",
+    "exemplos": [
+      {
+        "entrada": "7",
+        "saida": "7 x 1 = 7\n7 x 2 = 14\n7 x 10 = 70"
+      },
+      {
+        "entrada": "9",
+        "saida": "9 x 1 = 9\n9 x 9 = 81\n9 x 10 = 90"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Um laço com contador de 1 a 10, em que cada volta mostra uma linha. Os exemplos mostram só algumas das dez linhas: confira as outras no seu programa."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Tabuada\"\nvar\n   n, i: inteiro\ninicio\n   escreva(\"Tabuada do: \")\n   leia(n)\n   para i de 1 ate 10 faca\n      escreval(n, \" x \", i, \" = \", n * i)\n   fimpara\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cout << \"Tabuada do: \";\n    cin >> n;\n    for (int i = 1; i <= 10; i++) {\n        cout << n << \" x \" << i << \" = \" << n * i << endl;\n    }\n    return 0;\n}"
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap5-e3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap5",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Notas até a sentinela. Escreva um programa que leia notas até o usuário digitar -1. No fim, mostre a média das notas e quantas foram de aprovação (6 ou mais). Se nenhuma nota for digitada, mostre \"Nenhuma nota\".",
+    "exemplos": [
+      {
+        "entrada": "7\n4\n9\n6\n-1",
+        "saida": "Média: 6.5\nAprovados: 3"
+      },
+      {
+        "entrada": "5.5\n8\n-1",
+        "saida": "Média: 6.75\nAprovados: 1"
+      },
+      {
+        "entrada": "-1",
+        "saida": "Nenhuma nota"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Como não se sabe quantas notas virão, o laço é um while com sentinela (Seção 5.1). A leitura fica antes do laço e no fim do bloco, para que o -1 nunca entre nas contas. Um acumulador soma as notas, um contador conta todas e outro conta só as aprovadas."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"NotasSentinela\"\nvar\n   nota, soma: real\n   quantas, aprovados: inteiro\ninicio\n   soma <- 0\n   quantas <- 0\n   aprovados <- 0\n   escreva(\"Notas (-1 para terminar): \")\n   leia(nota)\n   enquanto nota <> -1 faca\n      soma <- soma + nota\n      quantas <- quantas + 1\n      se nota >= 6 entao\n         aprovados <- aprovados + 1\n      fimse\n      leia(nota)\n   fimenquanto\n   se quantas > 0 entao\n      escreval(\"Média: \", soma / quantas)\n      escreval(\"Aprovados: \", aprovados)\n   senao\n      escreval(\"Nenhuma nota\")\n   fimse\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double nota, soma = 0;\n    int quantas = 0, aprovados = 0;\n    cout << \"Notas (-1 para terminar): \";\n    while (cin >> nota && nota != -1) {\n        soma += nota;\n        quantas++;\n        if (nota >= 6) aprovados++;\n    }\n    if (quantas > 0) {\n        cout << \"Média: \" << soma / quantas << endl;\n        cout << \"Aprovados: \" << aprovados << endl;\n    } else {\n        cout << \"Nenhuma nota\" << endl;\n    }\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "O if (quantas > 0) evita dividir por zero quando o primeiro valor já é a sentinela. Em C++, ler dentro da condição do while também faz o laço parar se a entrada acabar sem o -1."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap5-e4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap5",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Senha com tentativas. A senha de um cofre é 1234. Escreva um programa que peça a senha até o usuário acertar, com no máximo 3 tentativas. Se acertar, mostre \"Acesso liberado\"; se errar as três, mostre \"Cofre bloqueado\".",
+    "exemplos": [
+      {
+        "entrada": "1234",
+        "saida": "Acesso liberado"
+      },
+      {
+        "entrada": "1111\n1234",
+        "saida": "Senha incorreta\nAcesso liberado"
+      },
+      {
+        "entrada": "1\n2\n3",
+        "saida": "Cofre bloqueado"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "A senha precisa ser pedida pelo menos uma vez, então o do-while (repita, no Portugol) é natural. O laço tem duas condições de parada: acertar ou esgotar as tentativas. Depois do laço, é preciso descobrir qual das duas aconteceu, comparando de novo a última senha."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Cofre\"\nvar\n   senha, tentativas: inteiro\ninicio\n   tentativas <- 0\n   repita\n      escreva(\"Senha: \")\n      leia(senha)\n      tentativas <- tentativas + 1\n      se senha <> 1234 entao\n         escreval(\"Senha incorreta\")\n      fimse\n   ate (senha = 1234) ou (tentativas = 3)\n   se senha = 1234 entao\n      escreval(\"Acesso liberado\")\n   senao\n      escreval(\"Cofre bloqueado\")\n   fimse\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    const int SENHA = 1234;\n    int senha = 0, tentativas = 0;\n    do {\n        cout << \"Senha: \";\n        cin >> senha;\n        tentativas++;\n        if (senha != SENHA) cout << \"Senha incorreta\" << endl;\n    } while (senha != SENHA && tentativas < 3);\n    if (senha == SENHA) {\n        cout << \"Acesso liberado\" << endl;\n    } else {\n        cout << \"Cofre bloqueado\" << endl;\n    }\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Compare as condições: o do-while continua enquanto a senha está errada E ainda há tentativas; o repita do Portugol para quando a senha está certa OU as tentativas acabaram. Uma é a negação da outra (Seção 5.2)."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap5-e5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap5",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "dificil",
+    "enunciado": "Fatoração em primos. Todo inteiro maior que 1 pode ser escrito como um produto de números primos: 360 = 2 x 2 x 2 x 3 x 3 x 5. Escreva um programa que leia um inteiro maior que 1 e mostre a sua fatoração nesse formato.",
+    "exemplos": [
+      {
+        "entrada": "360",
+        "saida": "360 = 2 x 2 x 2 x 3 x 3 x 5"
+      },
+      {
+        "entrada": "97",
+        "saida": "97 = 97"
+      },
+      {
+        "entrada": "1024",
+        "saida": "1024 = 2 x 2 x 2 x 2 x 2 x 2 x 2 x 2 x 2 x 2"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "A ideia é tentar dividir o número pelos candidatos d = 2, 3, 4...: enquanto d dividir o número, d é um fator, e o número é dividido por ele. Quando d não divide mais, passa-se ao próximo. Não é preciso testar se d é primo: quando chegar a vez do 4, todos os fatores 2 já foram retirados, e o 4 não divide mais nada. São dois laços aninhados: o de fora avança o candidato, o de dentro retira o mesmo fator várias vezes."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Fatoracao\"\nvar\n   n, resto, d: inteiro\n   primeiro: logico\ninicio\n   escreva(\"Número: \")\n   leia(n)\n   escreva(n, \" = \")\n   resto <- n\n   d <- 2\n   primeiro <- verdadeiro\n   enquanto resto > 1 faca\n      enquanto resto mod d = 0 faca\n         se nao primeiro entao\n            escreva(\" x \")\n         fimse\n         escreva(d)\n         primeiro <- falso\n         resto <- resto div d\n      fimenquanto\n      d <- d + 1\n   fimenquanto\n   escreval(\"\")\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cout << \"Número: \";\n    cin >> n;\n    cout << n << \" = \";\n    int resto = n;\n    bool primeiro = true;\n    for (int d = 2; resto > 1; d++) {\n        while (resto % d == 0) {\n            if (!primeiro) cout << \" x \";\n            cout << d;\n            primeiro = false;\n            resto /= d;\n        }\n    }\n    cout << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "A variável primeiro controla o separador: o \" x \" vai antes de cada fator, menos do primeiro. É um truque muito comum para mostrar listas sem um separador sobrando no fim. Com um número primo, como 97, o laço de fora vai até o próprio 97, que divide uma vez."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap6-e1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap6",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Hipotenusa. Escreva uma função hipotenusa que receba os dois catetos de um triângulo retângulo e devolva a hipotenusa (a raiz quadrada da soma dos quadrados dos catetos). O programa principal lê os catetos, chama a função e mostra o resultado.",
+    "exemplos": [
+      {
+        "entrada": "3\n4",
+        "saida": "Hipotenusa: 5"
+      },
+      {
+        "entrada": "5\n12",
+        "saida": "Hipotenusa: 13"
+      },
+      {
+        "entrada": "1\n1",
+        "saida": "Hipotenusa: 1.41421"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "A função recebe dois valores e devolve um: o tipo de retorno é double, e o cálculo termina com return. A raiz quadrada vem da função sqrt, da biblioteca <cmath> (raizq, no Portugol). O main só cuida da entrada e da saída."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Hipotenusa\"\nvar\n   a, b: real\n\nfuncao hipotenusa(c1, c2: real): real\ninicio\n   retorne raizq(c1 * c1 + c2 * c2)\nfimfuncao\n\ninicio\n   escreva(\"Catetos: \")\n   leia(a, b)\n   escreval(\"Hipotenusa: \", hipotenusa(a, b))\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\ndouble hipotenusa(double c1, double c2) {\n    return sqrt(c1 * c1 + c2 * c2);\n}\n\nint main() {\n    double a, b;\n    cout << \"Catetos: \";\n    cin >> a >> b;\n    cout << \"Hipotenusa: \" << hipotenusa(a, b) << endl;\n    return 0;\n}"
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap6-e2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap6",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Moldura. Escreva um procedimento linha(n) que mostre uma linha com n asteriscos, e use-o para desenhar uma moldura em volta de um título: uma linha de asteriscos, o título entre asteriscos e outra linha. O programa lê o título (uma palavra) e calcula o tamanho da moldura.",
+    "exemplos": [
+      {
+        "entrada": "Algoritmos",
+        "saida": "**************\n* Algoritmos *\n**************"
+      },
+      {
+        "entrada": "C++",
+        "saida": "*******\n* C++ *\n*******"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "O procedimento não devolve nada, então é void. O tamanho da linha é o tamanho do título mais 4: um asterisco e um espaço de cada lado. Em C++, o tamanho de uma string é dado por size() (Capítulo 8 traz mais detalhes); no Portugol, por compr."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Moldura\"\nvar\n   titulo: caractere\n\nprocedimento linha(n: inteiro)\nvar\n   i: inteiro\ninicio\n   para i de 1 ate n faca\n      escreva(\"*\")\n   fimpara\n   escreval(\"\")\nfimprocedimento\n\ninicio\n   escreva(\"Título: \")\n   leia(titulo)\n   linha(compr(titulo) + 4)\n   escreval(\"* \", titulo, \" *\")\n   linha(compr(titulo) + 4)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid linha(int n) {\n    for (int i = 0; i < n; i++) cout << \"*\";\n    cout << endl;\n}\n\nint main() {\n    string titulo;\n    cout << \"Título: \";\n    cin >> titulo;\n    int tamanho = titulo.size() + 4;\n    linha(tamanho);\n    cout << \"* \" << titulo << \" *\" << endl;\n    linha(tamanho);\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Escrever linha uma vez e chamá-la duas vezes é a principal vantagem dos subprogramas: se a moldura mudar de asterisco para outro símbolo, a alteração é feita em um só lugar."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap6-e3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap6",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Primos em um intervalo. Escreva uma função ehPrimo(n) que devolva verdadeiro se n é primo, e use-a para mostrar todos os primos entre dois números a e b lidos do teclado, na mesma linha, separados por espaço.",
+    "exemplos": [
+      {
+        "entrada": "10\n30",
+        "saida": "11 13 17 19 23 29"
+      },
+      {
+        "entrada": "1\n10",
+        "saida": "2 3 5 7"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "A função recebe um inteiro e devolve um lógico (bool). Ela pode ter vários return: assim que um divisor aparece, a resposta já é falso. O main só percorre o intervalo e pergunta à função, sem saber como ela decide."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"PrimosNoIntervalo\"\nvar\n   a, b, n: inteiro\n\nfuncao ehPrimo(k: inteiro): logico\nvar\n   d: inteiro\ninicio\n   se k < 2 entao\n      retorne falso\n   fimse\n   d <- 2\n   enquanto d * d <= k faca\n      se k mod d = 0 entao\n         retorne falso\n      fimse\n      d <- d + 1\n   fimenquanto\n   retorne verdadeiro\nfimfuncao\n\ninicio\n   escreva(\"Intervalo: \")\n   leia(a, b)\n   para n de a ate b faca\n      se ehPrimo(n) entao\n         escreva(n, \" \")\n      fimse\n   fimpara\n   escreval(\"\")\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nbool ehPrimo(int n) {\n    if (n < 2) return false;\n    for (int d = 2; d * d <= n; d++) {\n        if (n % d == 0) return false;   // achou um divisor\n    }\n    return true;\n}\n\nint main() {\n    int a, b;\n    cout << \"Intervalo: \";\n    cin >> a >> b;\n    for (int n = a; n <= b; n++) {\n        if (ehPrimo(n)) cout << n << \" \";\n    }\n    cout << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "O teste d * d <= n é o da Seção 5.8: se n tiver um divisor, terá um menor ou igual à sua raiz quadrada."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap6-e4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap6",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Ordenar três números. Escreva um procedimento ordenar3 que receba três variáveis inteiras por referência e as deixe em ordem crescente. O programa principal lê os três números, chama o procedimento e mostra as variáveis.",
+    "exemplos": [
+      {
+        "entrada": "9\n2\n5",
+        "saida": "2 5 9"
+      },
+      {
+        "entrada": "1\n2\n3",
+        "saida": "1 2 3"
+      },
+      {
+        "entrada": "7\n7\n1",
+        "saida": "1 7 7"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "O procedimento precisa alterar as variáveis de quem chama, então os parâmetros são por referência (& em C++, var no Portugol). Com uma função auxiliar troca, também por referência, bastam três comparações: depois das duas primeiras, o menor está em a; a terceira coloca b e c em ordem."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Ordenar3\"\nvar\n   x, y, z: inteiro\n\nprocedimento troca(var a, b: inteiro)\nvar\n   aux: inteiro\ninicio\n   aux <- a\n   a <- b\n   b <- aux\nfimprocedimento\n\nprocedimento ordenar3(var a, b, c: inteiro)\ninicio\n   se a > b entao\n      troca(a, b)\n   fimse\n   se a > c entao\n      troca(a, c)\n   fimse\n   se b > c entao\n      troca(b, c)\n   fimse\nfimprocedimento\n\ninicio\n   escreva(\"Três números: \")\n   leia(x, y, z)\n   ordenar3(x, y, z)\n   escreval(x, \" \", y, \" \", z)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nvoid troca(int &a, int &b) {\n    int aux = a;\n    a = b;\n    b = aux;\n}\n\nvoid ordenar3(int &a, int &b, int &c) {\n    if (a > b) troca(a, b);\n    if (a > c) troca(a, c);   // agora a é o menor\n    if (b > c) troca(b, c);\n}\n\nint main() {\n    int x, y, z;\n    cout << \"Três números: \";\n    cin >> x >> y >> z;\n    ordenar3(x, y, z);\n    cout << x << \" \" << y << \" \" << z << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Faça o teste sem o &: o programa compila, mas mostra os números na ordem original, porque o procedimento passa a ordenar apenas cópias (Seção 6.6)."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap6-e5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap6",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "dificil",
+    "enunciado": "Simplificar frações. Escreva uma função mdc(a, b) que devolva o máximo divisor comum de dois inteiros positivos e um procedimento simplificar que receba numerador e denominador por referência e os divida pelo MDC. O programa lê uma fração e mostra a forma simplificada no formato numerador/denominador.",
+    "exemplos": [
+      {
+        "entrada": "18\n24",
+        "saida": "18/24 = 3/4"
+      },
+      {
+        "entrada": "7\n13",
+        "saida": "7/13 = 7/13"
+      },
+      {
+        "entrada": "10\n5",
+        "saida": "10/5 = 2/1"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "O MDC pode ser calculado pelo algoritmo de Euclides: enquanto b não for zero, o par (a, b) é trocado por (b, resto de a por b); quando b chega a zero, a é o MDC. Com 18 e 24: (18, 24) → (24, 18) → (18, 6) → (6, 0), e o MDC é 6. Dividindo os dois termos por 6, a fração 18/24 vira 3/4."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Simplificar\"\nvar\n   num, den, n0, d0: inteiro\n\nfuncao mdc(a, b: inteiro): inteiro\nvar\n   r: inteiro\ninicio\n   enquanto b <> 0 faca\n      r <- a mod b\n      a <- b\n      b <- r\n   fimenquanto\n   retorne a\nfimfuncao\n\nprocedimento simplificar(var n, d: inteiro)\nvar\n   m: inteiro\ninicio\n   m <- mdc(n, d)\n   n <- n div m\n   d <- d div m\nfimprocedimento\n\ninicio\n   escreva(\"Numerador e denominador: \")\n   leia(num, den)\n   n0 <- num\n   d0 <- den\n   simplificar(num, den)\n   escreval(n0, \"/\", d0, \" = \", num, \"/\", den)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint mdc(int a, int b) {\n    while (b != 0) {\n        int r = a % b;\n        a = b;\n        b = r;\n    }\n    return a;\n}\n\nvoid simplificar(int &num, int &den) {\n    int m = mdc(num, den);\n    num /= m;\n    den /= m;\n}\n\nint main() {\n    int num, den;\n    cout << \"Numerador e denominador: \";\n    cin >> num >> den;\n    int n0 = num, d0 = den;    // guarda a fração original\n    simplificar(num, den);\n    cout << n0 << \"/\" << d0 << \" = \" << num << \"/\" << den << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Dentro de mdc, a e b são cópias (passagem por valor), e por isso podem ser alterados à vontade sem afetar quem chamou. Já simplificar precisa mudar as variáveis do main, e por isso usa referência. Como num e den são alterados, o main guarda a fração original antes de chamar o procedimento. No Capítulo 9, o mesmo mdc aparece em versão recursiva."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap7-e1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap7",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Ordem inversa. Escreva um programa que leia 5 números inteiros, guarde-os em um vetor e mostre-os na ordem inversa da leitura, na mesma linha.",
+    "exemplos": [
+      {
+        "entrada": "1\n2\n3\n4\n5",
+        "saida": "5 4 3 2 1"
+      },
+      {
+        "entrada": "10\n-3\n7\n0\n8",
+        "saida": "8 0 7 -3 10"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Sem um vetor, seria preciso guardar cada número em uma variável separada. Com ele, um laço lê do índice 0 ao 4 e outro mostra do 4 ao 0. No Portugol, com o vetor de 1 a 5, os laços vão de 1 a 5 e de 5 a 1 (passo -1)."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"OrdemInversa\"\nvar\n   v: vetor[1..5] de inteiro\n   i: inteiro\ninicio\n   para i de 1 ate 5 faca\n      escreva(\"Número \", i, \": \")\n      leia(v[i])\n   fimpara\n   para i de 5 ate 1 passo -1 faca\n      escreva(v[i], \" \")\n   fimpara\n   escreval(\"\")\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int v[5];\n    for (int i = 0; i < 5; i++) {\n        cout << \"Número \" << i + 1 << \": \";\n        cin >> v[i];\n    }\n    for (int i = 4; i >= 0; i--) {\n        cout << v[i] << \" \";\n    }\n    cout << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "O segundo laço começa em 4, e não em 5: em um vetor de 5 elementos, o último índice é tamanho - 1 (Seção 7.1)."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap7-e2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap7",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Maior e menor. Escreva um programa que leia a quantidade N de valores (até 50) e depois os N valores, e mostre o maior e o menor, cada um com a sua posição na leitura (contando a partir de 1).",
+    "exemplos": [
+      {
+        "entrada": "5\n7\n3\n9\n2\n8",
+        "saida": "Maior: 9 (posição 3)\nMenor: 2 (posição 4)"
+      },
+      {
+        "entrada": "3\n-1\n-5\n-2",
+        "saida": "Maior: -1 (posição 1)\nMenor: -5 (posição 2)"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Em vez de guardar o maior valor, guarde o índice dele (Seção 7.4): com o índice, o valor é v[iMaior], e a posição para o usuário é iMaior + 1. Começar pelo primeiro elemento funciona com qualquer valor, inclusive negativos."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"MaiorMenor\"\nvar\n   v: vetor[1..50] de real\n   n, i, iMaior, iMenor: inteiro\ninicio\n   escreva(\"Quantos valores (até 50)? \")\n   leia(n)\n   para i de 1 ate n faca\n      leia(v[i])\n   fimpara\n   iMaior <- 1\n   iMenor <- 1\n   para i de 2 ate n faca\n      se v[i] > v[iMaior] entao\n         iMaior <- i\n      fimse\n      se v[i] < v[iMenor] entao\n         iMenor <- i\n      fimse\n   fimpara\n   escreval(\"Maior: \", v[iMaior], \" (posição \", iMaior, \")\")\n   escreval(\"Menor: \", v[iMenor], \" (posição \", iMenor, \")\")\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    const int MAX = 50;\n    double v[MAX] = {};\n    int n;\n    cout << \"Quantos valores (até 50)? \";\n    cin >> n;\n    if (n < 1 || n > MAX) {\n        cout << \"Quantidade inválida\" << endl;\n        return 0;\n    }\n    for (int i = 0; i < n; i++) cin >> v[i];\n    int iMaior = 0, iMenor = 0;\n    for (int i = 1; i < n; i++) {\n        if (v[i] > v[iMaior]) iMaior = i;\n        if (v[i] < v[iMenor]) iMenor = i;\n    }\n    cout << \"Maior: \" << v[iMaior] << \" (posição \" << iMaior + 1\n         << \")\" << endl;\n    cout << \"Menor: \" << v[iMenor] << \" (posição \" << iMenor + 1\n         << \")\" << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "O if que confere n protege o vetor: com n maior que 50, a leitura escreveria fora dele (Seção 7.3)."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap7-e3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap7",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Acima da média. Leia N (até 50) e depois N números. Mostre a média e quantos números ficaram acima dela. Por que este exercício precisa de um vetor, e o de somar notas do Capítulo 5 não precisava?",
+    "exemplos": [
+      {
+        "entrada": "6\n4\n8\n6\n10\n2\n6",
+        "saida": "Média: 6\nAcima da média: 2"
+      },
+      {
+        "entrada": "4\n5\n5\n5\n5",
+        "saida": "Média: 5\nAcima da média: 0"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "A média só é conhecida depois de ler todos os números, e só então é possível comparar cada um com ela. Por isso os números precisam ficar guardados: são dois laços, um para ler e somar, outro para contar. No Capítulo 5, cada nota podia ser somada e esquecida."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"AcimaDaMedia\"\nvar\n   v: vetor[1..50] de real\n   n, i, acima: inteiro\n   soma, media: real\ninicio\n   leia(n)\n   soma <- 0\n   para i de 1 ate n faca\n      leia(v[i])\n      soma <- soma + v[i]\n   fimpara\n   media <- soma / n\n   acima <- 0\n   para i de 1 ate n faca\n      se v[i] > media entao\n         acima <- acima + 1\n      fimse\n   fimpara\n   escreval(\"Média: \", media)\n   escreval(\"Acima da média: \", acima)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    const int MAX = 50;\n    double v[MAX] = {};\n    int n;\n    cin >> n;\n    if (n < 1 || n > MAX) return 0;\n    double soma = 0;\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n        soma += v[i];\n    }\n    double media = soma / n;\n    int acima = 0;\n    for (int i = 0; i < n; i++) {\n        if (v[i] > media) acima++;\n    }\n    cout << \"Média: \" << media << endl;\n    cout << \"Acima da média: \" << acima << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "O segundo exemplo testa o caso em que todos os valores são iguais à média: como a condição é estritamente maior (>), nenhum conta."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap7-e4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap7",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Somas de uma matriz. Leia uma matriz 3 × 3 de inteiros, linha por linha, e mostre a soma de cada linha, a soma de cada coluna e a soma da diagonal principal.",
+    "exemplos": [
+      {
+        "entrada": "1 2 3\n4 5 6\n7 8 9",
+        "saida": "Linha 1: 6\nLinha 2: 15\nLinha 3: 24\nColuna 1: 12\nColuna 2: 15\nColuna 3: 18\nDiagonal: 15"
+      },
+      {
+        "entrada": "2 0 0\n0 2 0\n0 0 2",
+        "saida": "Linha 1: 2\nColuna 3: 2\nDiagonal: 6"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "A soma de uma linha fixa a linha i e varia a coluna j; a de uma coluna faz o contrário (Seção 7.6). A diagonal principal é formada pelos elementos em que a linha e a coluna são iguais, m[0][0], m[1][1], m[2][2], e precisa de um laço só."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"SomasMatriz\"\nvar\n   m: vetor[1..3, 1..3] de inteiro\n   i, j, soma: inteiro\ninicio\n   para i de 1 ate 3 faca\n      para j de 1 ate 3 faca\n         leia(m[i, j])\n      fimpara\n   fimpara\n   para i de 1 ate 3 faca\n      soma <- 0\n      para j de 1 ate 3 faca\n         soma <- soma + m[i, j]\n      fimpara\n      escreval(\"Linha \", i, \": \", soma)\n   fimpara\n   para j de 1 ate 3 faca\n      soma <- 0\n      para i de 1 ate 3 faca\n         soma <- soma + m[i, j]\n      fimpara\n      escreval(\"Coluna \", j, \": \", soma)\n   fimpara\n   soma <- 0\n   para i de 1 ate 3 faca\n      soma <- soma + m[i, i]\n   fimpara\n   escreval(\"Diagonal: \", soma)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int m[3][3];\n    for (int i = 0; i < 3; i++)\n        for (int j = 0; j < 3; j++)\n            cin >> m[i][j];\n    for (int i = 0; i < 3; i++) {\n        int soma = 0;\n        for (int j = 0; j < 3; j++) soma += m[i][j];\n        cout << \"Linha \" << i + 1 << \": \" << soma << endl;\n    }\n    for (int j = 0; j < 3; j++) {\n        int soma = 0;\n        for (int i = 0; i < 3; i++) soma += m[i][j];\n        cout << \"Coluna \" << j + 1 << \": \" << soma << endl;\n    }\n    int diagonal = 0;\n    for (int i = 0; i < 3; i++) diagonal += m[i][i];\n    cout << \"Diagonal: \" << diagonal << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Para a diagonal secundária (de cima à direita até embaixo à esquerda), o elemento da linha i é m[i][2 - i]: a linha e a coluna somam 2."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap7-e5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap7",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "dificil",
+    "enunciado": "Sem repetidos. Leia N (até 50) e N números inteiros, e mostre os números sem repetições, na ordem em que apareceram pela primeira vez. Use um segundo vetor para guardar os números já vistos.",
+    "exemplos": [
+      {
+        "entrada": "8\n3 1 3 2 1 5 2 3",
+        "saida": "3 1 2 5"
+      },
+      {
+        "entrada": "4\n7 7 7 7",
+        "saida": "7"
+      },
+      {
+        "entrada": "3\n1 2 3",
+        "saida": "1 2 3"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Para cada número lido, procure-o no vetor dos já vistos (uma busca sequencial, que o Capítulo 10 aprofunda). Se não estiver lá, ele é novo: acrescente-o no fim desse vetor. O vetor dos vistos tem o seu próprio contador, porque fica menor que o original sempre que há repetições."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"SemRepetidos\"\nvar\n   unicos: vetor[1..50] de inteiro\n   n, i, j, x, total: inteiro\n   achou: logico\ninicio\n   leia(n)\n   total <- 0\n   para i de 1 ate n faca\n      leia(x)\n      achou <- falso\n      para j de 1 ate total faca\n         se unicos[j] = x entao\n            achou <- verdadeiro\n         fimse\n      fimpara\n      se nao achou entao\n         total <- total + 1\n         unicos[total] <- x\n      fimse\n   fimpara\n   para i de 1 ate total faca\n      escreva(unicos[i], \" \")\n   fimpara\n   escreval(\"\")\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    const int MAX = 50;\n    int unicos[MAX];\n    int n, total = 0;\n    cin >> n;\n    if (n < 1 || n > MAX) return 0;\n    for (int i = 0; i < n; i++) {\n        int x;\n        cin >> x;\n        bool achou = false;\n        for (int j = 0; j < total; j++) {\n            if (unicos[j] == x) {\n                achou = true;\n                break;\n            }\n        }\n        if (!achou) {\n            unicos[total] = x;     // novo: vai para o fim\n            total++;\n        }\n    }\n    for (int i = 0; i < total; i++) cout << unicos[i] << \" \";\n    cout << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Repare que o número lido nem precisa ser guardado em um vetor de entrada: basta o vetor dos únicos. Com N números todos diferentes, o laço de dentro faz cerca de N²/2 comparações; o Capítulo 10 explica por que isso importa quando N é grande."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap8-e1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap8",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Contar vogais. Escreva um programa que leia uma frase (com espaços) e mostre quantas vogais ela tem, contando maiúsculas e minúsculas. Considere frases sem acentos.",
+    "exemplos": [
+      {
+        "entrada": "Programar e divertido",
+        "saida": "Vogais: 8"
+      },
+      {
+        "entrada": "AEIOU aeiou",
+        "saida": "Vogais: 10"
+      },
+      {
+        "entrada": "xyz",
+        "saida": "Vogais: 0"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "A frase tem espaços, então a leitura é com getline (Seção 8.3). Cada caractere é convertido para minúscula com tolower antes da comparação, para que \"A\" e \"a\" contem igual. No Portugol, copia(frase, i, 1) pega o caractere da posição i, e minusc o converte."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"ContarVogais\"\nvar\n   frase, c: caractere\n   i, vogais: inteiro\ninicio\n   escreva(\"Frase: \")\n   leia(frase)\n   vogais <- 0\n   para i de 1 ate compr(frase) faca\n      c <- minusc(copia(frase, i, 1))\n      se (c = \"a\") ou (c = \"e\") ou (c = \"i\") ou (c = \"o\") ou (c = \"u\") entao\n         vogais <- vogais + 1\n      fimse\n   fimpara\n   escreval(\"Vogais: \", vogais)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <string>\n#include <cctype>\nusing namespace std;\n\nint main() {\n    string frase;\n    cout << \"Frase: \";\n    getline(cin, frase);\n    int vogais = 0;\n    for (unsigned char c : frase) {\n        char m = tolower(c);\n        if (m == 'a' || m == 'e' || m == 'i' || m == 'o' || m == 'u') {\n            vogais++;\n        }\n    }\n    cout << \"Vogais: \" << vogais << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Uma alternativa à condição longa é procurar o caractere em uma string com as vogais: string(\"aeiou\").find(m) != string::npos."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap8-e2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap8",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Iniciais do nome. Escreva um programa que leia um nome completo e mostre as iniciais em maiúsculas, juntas. Considere que as palavras são separadas por um espaço.",
+    "exemplos": [
+      {
+        "entrada": "Ada Lovelace King",
+        "saida": "Iniciais: ALK"
+      },
+      {
+        "entrada": "alan turing",
+        "saida": "Iniciais: AT"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "A primeira letra do nome é sempre uma inicial. As outras são as letras que vêm logo depois de um espaço. Basta percorrer o nome e, a cada espaço, pegar o caractere seguinte, convertido com toupper."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Iniciais\"\nvar\n   nome, iniciais: caractere\n   i: inteiro\ninicio\n   escreva(\"Nome completo: \")\n   leia(nome)\n   iniciais <- maiusc(copia(nome, 1, 1))\n   para i de 2 ate compr(nome) faca\n      se copia(nome, i - 1, 1) = \" \" entao\n         iniciais <- iniciais + maiusc(copia(nome, i, 1))\n      fimse\n   fimpara\n   escreval(\"Iniciais: \", iniciais)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <string>\n#include <cctype>\nusing namespace std;\n\nint main() {\n    string nome, iniciais;\n    cout << \"Nome completo: \";\n    getline(cin, nome);\n    for (size_t i = 0; i < nome.size(); i++) {\n        if (i == 0 || nome[i - 1] == ' ') {\n            iniciais += char(toupper((unsigned char) nome[i]));\n        }\n    }\n    cout << \"Iniciais: \" << iniciais << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "O teste i == 0 vem antes de nome[i - 1] no ||: quando i é 0, a primeira parte já é verdadeira e a segunda nem é avaliada, o que evita acessar nome[-1] (curto-circuito, Seção 3.6)."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap8-e3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap8",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Contar palavras. Escreva um programa que leia uma frase e mostre quantas palavras ela tem. Atenção: a frase pode ter espaços no começo, no fim e vários espaços seguidos entre as palavras.",
+    "exemplos": [
+      {
+        "entrada": "o rato roeu a roupa",
+        "saida": "Palavras: 5"
+      },
+      {
+        "entrada": "   muitos     espaços   aqui  ",
+        "saida": "Palavras: 3"
+      },
+      {
+        "entrada": "sozinha",
+        "saida": "Palavras: 1"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Contar espaços não funciona quando há espaços sobrando. O que define uma palavra é o seu começo: um caractere que não é espaço e que vem logo depois de um espaço (ou no início da frase). Uma variável lógica, dentroDePalavra, guarda se o caractere anterior fazia parte de uma palavra."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"ContarPalavras\"\nvar\n   frase: caractere\n   i, palavras: inteiro\n   dentro: logico\ninicio\n   escreva(\"Frase: \")\n   leia(frase)\n   palavras <- 0\n   dentro <- falso\n   para i de 1 ate compr(frase) faca\n      se copia(frase, i, 1) = \" \" entao\n         dentro <- falso\n      senao\n         se nao dentro entao\n            palavras <- palavras + 1\n            dentro <- verdadeiro\n         fimse\n      fimse\n   fimpara\n   escreval(\"Palavras: \", palavras)\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string frase;\n    cout << \"Frase: \";\n    getline(cin, frase);\n    int palavras = 0;\n    bool dentroDePalavra = false;\n    for (char c : frase) {\n        if (c == ' ') {\n            dentroDePalavra = false;\n        } else if (!dentroDePalavra) {   // começo de palavra\n            palavras++;\n            dentroDePalavra = true;\n        }\n    }\n    cout << \"Palavras: \" << palavras << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Esse padrão, uma variável que lembra o estado anterior enquanto o laço percorre o texto, resolve muitos problemas de processamento de texto."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap8-e4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap8",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Senha forte. Uma senha é forte quando tem pelo menos 8 caracteres, uma letra maiúscula, uma minúscula e um dígito. Escreva um programa que leia uma senha e mostre \"Senha forte\" ou \"Senha fraca\", e, no segundo caso, liste o que falta, um item por linha.",
+    "exemplos": [
+      {
+        "entrada": "Senha123",
+        "saida": "Senha forte"
+      },
+      {
+        "entrada": "abc",
+        "saida": "Senha fraca\n- pelo menos 8 caracteres\n- uma letra maiúscula\n- um dígito"
+      },
+      {
+        "entrada": "SENHASEGURA9",
+        "saida": "Senha fraca\n- uma letra minúscula"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Percorra a senha uma vez marcando, em variáveis lógicas, o que foi encontrado: isupper, islower e isdigit (Seção 8.4) testam cada caractere. Depois do laço, cada variável falsa vira uma linha da lista do que falta."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <string>\n#include <cctype>\nusing namespace std;\n\nint main() {\n    string senha;\n    cout << \"Senha: \";\n    cin >> senha;\n    bool maiuscula = false, minuscula = false, digito = false;\n    for (unsigned char c : senha) {\n        if (isupper(c)) maiuscula = true;\n        if (islower(c)) minuscula = true;\n        if (isdigit(c)) digito = true;\n    }\n    bool tamanho = senha.size() >= 8;\n    if (tamanho && maiuscula && minuscula && digito) {\n        cout << \"Senha forte\" << endl;\n    } else {\n        cout << \"Senha fraca\" << endl;\n        if (!tamanho) cout << \"- pelo menos 8 caracteres\" << endl;\n        if (!maiuscula) cout << \"- uma letra maiúscula\" << endl;\n        if (!minuscula) cout << \"- uma letra minúscula\" << endl;\n        if (!digito) cout << \"- um dígito\" << endl;\n    }\n    return 0;\n}"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"SenhaForte\"\nvar\n   senha, c: caractere\n   i: inteiro\n   mai, mins, dig: logico\ninicio\n   escreva(\"Senha: \")\n   leia(senha)\n   mai <- falso\n   mins <- falso\n   dig <- falso\n   para i de 1 ate compr(senha) faca\n      c <- copia(senha, i, 1)\n      se (c >= \"A\") e (c <= \"Z\") entao\n         mai <- verdadeiro\n      fimse\n      se (c >= \"a\") e (c <= \"z\") entao\n         mins <- verdadeiro\n      fimse\n      se (c >= \"0\") e (c <= \"9\") entao\n         dig <- verdadeiro\n      fimse\n   fimpara\n   se (compr(senha) >= 8) e mai e mins e dig entao\n      escreval(\"Senha forte\")\n   senao\n      escreval(\"Senha fraca\")\n      se compr(senha) < 8 entao\n         escreval(\"- pelo menos 8 caracteres\")\n      fimse\n      se nao mai entao\n         escreval(\"- uma letra maiúscula\")\n      fimse\n      se nao mins entao\n         escreval(\"- uma letra minúscula\")\n      fimse\n      se nao dig entao\n         escreval(\"- um dígito\")\n      fimse\n   fimse\nfimalgoritmo"
+      },
+      {
+        "t": "p",
+        "texto": "No Portugol, sem funções como isupper, a comparação usa a ordem da tabela de caracteres: uma letra maiúscula está entre \"A\" e \"Z\" (Seção 8.1)."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap8-e5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap8",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "dificil",
+    "enunciado": "Compactação de texto. Escreva um programa que leia uma palavra e a compacte trocando cada sequência de letras iguais pela letra seguida do número de repetições. Essa técnica, chamada de codificação por comprimento de sequência (RLE), é usada em formatos de imagem.",
+    "exemplos": [
+      {
+        "entrada": "aaabccdddd",
+        "saida": "a3b1c2d4"
+      },
+      {
+        "entrada": "abc",
+        "saida": "a1b1c1"
+      },
+      {
+        "entrada": "zzzzzzzzzzzz",
+        "saida": "z12"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Percorra a palavra contando quantas vezes seguidas o caractere atual se repete. Quando o próximo caractere for diferente (ou a palavra acabar), a sequência terminou: acrescente o caractere e a contagem ao resultado e recomece a contagem. O número pode ter mais de um dígito, por isso é convertido com to_string."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string palavra, resultado;\n    cout << \"Palavra: \";\n    cin >> palavra;\n    int conta = 1;\n    for (size_t i = 0; i < palavra.size(); i++) {\n        bool fimDaSequencia = i + 1 == palavra.size()\n                              || palavra[i + 1] != palavra[i];\n        if (fimDaSequencia) {\n            resultado += palavra[i];\n            resultado += to_string(conta);\n            conta = 1;\n        } else {\n            conta++;\n        }\n    }\n    cout << resultado << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"RLE\"\nvar\n   palavra, resultado: caractere\n   i, conta: inteiro\ninicio\n   escreva(\"Palavra: \")\n   leia(palavra)\n   resultado <- \"\"\n   conta <- 1\n   para i de 1 ate compr(palavra) faca\n      se (i = compr(palavra)) ou (copia(palavra, i + 1, 1) <> copia(palavra, i, 1)) entao\n         resultado <- resultado + copia(palavra, i, 1) + numpcarac(conta)\n         conta <- 1\n      senao\n         conta <- conta + 1\n      fimse\n   fimpara\n   escreval(resultado)\nfimalgoritmo"
+      },
+      {
+        "t": "p",
+        "texto": "A condição testa primeiro se i é a última posição. Só quando não é, palavra[i + 1] é acessado, o que evita ler além do fim da string. Um bom desafio extra: escreva o programa que faz o caminho inverso, de \"a3b1c2d4\" de volta para \"aaabccdddd\"."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap9-e1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap9",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Soma dos dígitos. Escreva uma função recursiva somaDigitos(n) que devolva a soma dos dígitos de um inteiro não negativo. Por exemplo, somaDigitos(1234) = 1 + 2 + 3 + 4 = 10. Não use laços.",
+    "exemplos": [
+      {
+        "entrada": "1234",
+        "saida": "Soma dos dígitos: 10"
+      },
+      {
+        "entrada": "7",
+        "saida": "Soma dos dígitos: 7"
+      },
+      {
+        "entrada": "9999",
+        "saida": "Soma dos dígitos: 36"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Caso base: um número de um dígito (menor que 10) é a sua própria soma. Caso recursivo: o último dígito (n % 10) mais a soma dos dígitos do resto do número (n / 10). Com 1234: 4 + somaDigitos(123) = 4 + 3 + somaDigitos(12) = ... = 10."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"SomaDigitos\"\nvar\n   n: inteiro\n\nfuncao somaDigitos(k: inteiro): inteiro\ninicio\n   se k < 10 entao\n      retorne k\n   senao\n      retorne (k mod 10) + somaDigitos(k div 10)\n   fimse\nfimfuncao\n\ninicio\n   escreva(\"Número: \")\n   leia(n)\n   escreval(\"Soma dos dígitos: \", somaDigitos(n))\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint somaDigitos(int n) {\n    if (n < 10) return n;                     // caso base\n    return n % 10 + somaDigitos(n / 10);      // último + resto\n}\n\nint main() {\n    int n;\n    cout << \"Número: \";\n    cin >> n;\n    cout << \"Soma dos dígitos: \" << somaDigitos(n) << endl;\n    return 0;\n}"
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap9-e2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap9",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Potência recursiva. Escreva uma função recursiva potencia(b, e) que calcule b elevado a e, para e inteiro não negativo, usando a definição b^0 = 1 e b^e = b × b^(e-1).",
+    "exemplos": [
+      {
+        "entrada": "2\n10",
+        "saida": "2^10 = 1024"
+      },
+      {
+        "entrada": "5\n0",
+        "saida": "5^0 = 1"
+      },
+      {
+        "entrada": "3\n4",
+        "saida": "3^4 = 81"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "A definição matemática já é o algoritmo: o caso base é e = 0, e o caso recursivo diminui o expoente em 1 a cada chamada, caminhando para o caso base. São e + 1 chamadas no total."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"PotenciaRecursiva\"\nvar\n   b, e: inteiro\n\nfuncao potencia(base, expoente: inteiro): inteiro\ninicio\n   se expoente = 0 entao\n      retorne 1\n   senao\n      retorne base * potencia(base, expoente - 1)\n   fimse\nfimfuncao\n\ninicio\n   escreva(\"Base e expoente: \")\n   leia(b, e)\n   escreval(b, \"^\", e, \" = \", potencia(b, e))\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nlong long potencia(long long b, int e) {\n    if (e == 0) return 1;\n    return b * potencia(b, e - 1);\n}\n\nint main() {\n    long long b;\n    int e;\n    cout << \"Base e expoente: \";\n    cin >> b >> e;\n    cout << b << \"^\" << e << \" = \" << potencia(b, e) << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Desafio extra: como b^e = (b^(e/2))² quando e é par, dá para calcular 2^1000000 com cerca de 20 chamadas em vez de um milhão. Essa ideia se chama exponenciação rápida."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap9-e3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap9",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Número em binário. Escreva um procedimento recursivo que mostre um inteiro não negativo em binário. Dica: os dígitos binários de n são os dígitos de n / 2 seguidos do resto n % 2.",
+    "exemplos": [
+      {
+        "entrada": "13",
+        "saida": "13 em binário: 1101"
+      },
+      {
+        "entrada": "8",
+        "saida": "8 em binário: 1000"
+      },
+      {
+        "entrada": "0",
+        "saida": "0 em binário: 0"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "As divisões sucessivas por 2 produzem os dígitos de trás para a frente: 13 % 2 = 1, 6 % 2 = 0, 3 % 2 = 1, 1 % 2 = 1. A recursão resolve a ordem de graça: o procedimento primeiro mostra o binário de n / 2 (os dígitos da esquerda) e só DEPOIS, na volta da chamada, mostra o seu próprio dígito. É o \"ir e voltar\" da Seção 9.2."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Binario\"\nvar\n   n: inteiro\n\nprocedimento binario(k: inteiro)\ninicio\n   se k >= 2 entao\n      binario(k div 2)\n   fimse\n   escreva(k mod 2)\nfimprocedimento\n\ninicio\n   escreva(\"Número: \")\n   leia(n)\n   escreva(n, \" em binário: \")\n   binario(n)\n   escreval(\"\")\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nvoid binario(int n) {\n    if (n >= 2) binario(n / 2);   // primeiro os dígitos da esquerda\n    cout << n % 2;                // depois o último, na volta\n}\n\nint main() {\n    int n;\n    cout << \"Número: \";\n    cin >> n;\n    cout << n << \" em binário: \";\n    binario(n);\n    cout << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Troque a ordem das duas linhas de binario e o número sai invertido: 1011 para o 13. O caso base (n menor que 2) faz o 0 e o 1 serem mostrados diretamente."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap9-e4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap9",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Contar uma letra. Escreva uma função recursiva que receba uma palavra e uma letra e devolva quantas vezes a letra aparece na palavra. Não use laços: pense na primeira letra e no resto da palavra.",
+    "exemplos": [
+      {
+        "entrada": "banana\na",
+        "saida": "A letra a aparece 3 vez(es)"
+      },
+      {
+        "entrada": "recursao\nr",
+        "saida": "A letra r aparece 2 vez(es)"
+      },
+      {
+        "entrada": "pilha\nz",
+        "saida": "A letra z aparece 0 vez(es)"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Caso base: a palavra vazia não tem nenhuma ocorrência. Caso recursivo: conte 1 se a primeira letra for a procurada (0 se não for) e some com a contagem no resto da palavra. Em vez de criar uma string nova a cada chamada com substr, a versão em C++ passa a posição de onde continuar, o que é mais eficiente."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"ContarLetra\"\nvar\n   palavra, letra: caractere\n\nfuncao contar(p, l: caractere): inteiro\nvar\n   primeira: inteiro\ninicio\n   se compr(p) = 0 entao\n      retorne 0\n   fimse\n   primeira <- 0\n   se copia(p, 1, 1) = l entao\n      primeira <- 1\n   fimse\n   retorne primeira + contar(copia(p, 2, compr(p) - 1), l)\nfimfuncao\n\ninicio\n   escreva(\"Palavra: \")\n   leia(palavra)\n   escreva(\"Letra: \")\n   leia(letra)\n   escreval(\"A letra \", letra, \" aparece \", contar(palavra, letra), \" vez(es)\")\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\n// quantas vezes c aparece em p, da posição i até o fim\nint contar(const string &p, char c, size_t i) {\n    if (i == p.size()) return 0;                    // nada mais\n    return (p[i] == c ? 1 : 0) + contar(p, c, i + 1);\n}\n\nint main() {\n    string palavra;\n    char letra;\n    cout << \"Palavra: \";\n    cin >> palavra;\n    cout << \"Letra: \";\n    cin >> letra;\n    cout << \"A letra \" << letra << \" aparece \"\n         << contar(palavra, letra, 0) << \" vez(es)\" << endl;\n    return 0;\n}"
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap9-e5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap9",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "dificil",
+    "enunciado": "Subconjuntos com soma alvo. Leia N, depois N inteiros positivos e, por fim, um valor alvo. Usando backtracking, mostre todos os subconjuntos dos números (respeitando a ordem da leitura) cuja soma é igual ao alvo, um por linha, e no fim a quantidade encontrada.",
+    "exemplos": [
+      {
+        "entrada": "6\n3 34 4 12 5 2\n9",
+        "saida": "3 4 2\n4 5\n2 subconjunto(s)"
+      },
+      {
+        "entrada": "4\n1 2 3 4\n5",
+        "saida": "1 4\n2 3\n2 subconjunto(s)"
+      },
+      {
+        "entrada": "3\n5 10 20\n4",
+        "saida": "0 subconjunto(s)"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Para cada número há duas escolhas: entra ou não entra no subconjunto. A função decide o número da posição i, tenta as duas opções recursivamente e, ao voltar, desfaz a escolha (Seção 9.7). Um vetor guarda os números escolhidos até o momento. Quando a soma chega exatamente ao alvo, o subconjunto é mostrado; quando passa do alvo ou os números acabam, aquele caminho é abandonado. Como os números são positivos, passar do alvo significa que não adianta continuar."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nvoid buscar(const vector<int> &v, size_t i, int falta,\n            vector<int> &escolhidos, int &total) {\n    if (falta == 0) {                       // soma exata: achou\n        for (int x : escolhidos) cout << x << \" \";\n        cout << endl;\n        total++;\n        return;\n    }\n    if (falta < 0 || i == v.size()) return; // passou ou acabou\n    escolhidos.push_back(v[i]);             // escolhe v[i]\n    buscar(v, i + 1, falta - v[i], escolhidos, total);\n    escolhidos.pop_back();                  // desfaz a escolha\n    buscar(v, i + 1, falta, escolhidos, total);   // sem v[i]\n}\n\nint main() {\n    int n, alvo;\n    cin >> n;\n    vector<int> v(n);\n    for (int &x : v) cin >> x;\n    cin >> alvo;\n    vector<int> escolhidos;\n    int total = 0;\n    buscar(v, 0, alvo, escolhidos, total);\n    cout << total << \" subconjunto(s)\" << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "O parâmetro falta é o quanto ainda falta somar, o que evita recalcular a soma dos escolhidos a cada chamada. A ordem das duas tentativas, primeiro com v[i] e depois sem, faz os subconjuntos aparecerem na ordem da leitura. Sem a poda (falta < 0), o programa ainda funcionaria, mas examinaria todas as 2^N combinações."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap10-e1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap10",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Todas as ocorrências. Leia N (até 50), N números inteiros e um valor x. Usando busca sequencial, mostre em que posições (contando a partir de 1) x aparece e quantas vezes. Se não aparecer, mostre \"Não encontrado\".",
+    "exemplos": [
+      {
+        "entrada": "8\n5 3 5 1 5 2 4 5\n5",
+        "saida": "Posições: 1 3 5 8\nAparece 4 vez(es)"
+      },
+      {
+        "entrada": "4\n1 2 3 4\n9",
+        "saida": "Não encontrado"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "A busca sequencial da Seção 10.1 para na primeira ocorrência. Para achar todas, o laço precisa ir até o fim, sem return no meio, contando e mostrando cada posição em que o valor aparece."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Ocorrencias\"\nvar\n   v: vetor[1..50] de inteiro\n   n, i, x, vezes: inteiro\ninicio\n   leia(n)\n   para i de 1 ate n faca\n      leia(v[i])\n   fimpara\n   leia(x)\n   vezes <- 0\n   para i de 1 ate n faca\n      se v[i] = x entao\n         se vezes = 0 entao\n            escreva(\"Posições: \")\n         fimse\n         escreva(i, \" \")\n         vezes <- vezes + 1\n      fimse\n   fimpara\n   se vezes > 0 entao\n      escreval(\"\")\n      escreval(\"Aparece \", vezes, \" vez(es)\")\n   senao\n      escreval(\"Não encontrado\")\n   fimse\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    const int MAX = 50;\n    int v[MAX];\n    int n, x;\n    cin >> n;\n    if (n < 1 || n > MAX) return 0;\n    for (int i = 0; i < n; i++) cin >> v[i];\n    cin >> x;\n    int vezes = 0;\n    for (int i = 0; i < n; i++) {\n        if (v[i] == x) {\n            if (vezes == 0) cout << \"Posições: \";\n            cout << i + 1 << \" \";\n            vezes++;\n        }\n    }\n    if (vezes > 0) {\n        cout << endl << \"Aparece \" << vezes << \" vez(es)\" << endl;\n    } else {\n        cout << \"Não encontrado\" << endl;\n    }\n    return 0;\n}"
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap10-e2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap10",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Está ordenado? Leia N e N números, e diga se eles estão em ordem crescente (valores iguais seguidos são permitidos). Essa verificação é útil antes de usar a busca binária, que só funciona com vetores ordenados.",
+    "exemplos": [
+      {
+        "entrada": "5\n1 3 3 7 9",
+        "saida": "Está em ordem crescente"
+      },
+      {
+        "entrada": "4\n2 1 3 4",
+        "saida": "Não está em ordem (posição 2)"
+      },
+      {
+        "entrada": "1\n42",
+        "saida": "Está em ordem crescente"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Basta comparar cada elemento com o seguinte. Se algum for maior que o seguinte, o vetor não está ordenado, e a busca pode parar ali. O laço vai até n - 2 (ou i + 1 < n), porque o último elemento não tem seguinte. A mensagem mostra a posição (a partir de 1) do primeiro elemento fora de ordem."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"EstaOrdenado\"\nvar\n   v: vetor[1..50] de inteiro\n   n, i, erro: inteiro\ninicio\n   leia(n)\n   para i de 1 ate n faca\n      leia(v[i])\n   fimpara\n   erro <- 0\n   i <- 1\n   enquanto (i < n) e (erro = 0) faca\n      se v[i] > v[i + 1] entao\n         erro <- i + 1\n      fimse\n      i <- i + 1\n   fimenquanto\n   se erro = 0 entao\n      escreval(\"Está em ordem crescente\")\n   senao\n      escreval(\"Não está em ordem (posição \", erro, \")\")\n   fimse\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    vector<int> v(n);\n    for (int &x : v) cin >> x;\n    for (int i = 0; i + 1 < n; i++) {\n        if (v[i] > v[i + 1]) {\n            cout << \"Não está em ordem (posição \" << i + 2 << \")\"\n                 << endl;\n            return 0;\n        }\n    }\n    cout << \"Está em ordem crescente\" << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "A condição i + 1 < n também funciona com n = 1 (o laço não executa nenhuma vez) e com n = 0. Já i < n - 1 seria igual com int, mas com o tipo size_t daria problema para n = 0, porque 0 - 1 vira um número enorme."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap10-e3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap10",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Ordem decrescente. Leia N (até 50) e N números, ordene-os do maior para o menor usando a ordenação por seleção (escrita por você, sem o sort da biblioteca) e mostre o resultado.",
+    "exemplos": [
+      {
+        "entrada": "6\n4 9 1 7 3 8",
+        "saida": "9 8 7 4 3 1"
+      },
+      {
+        "entrada": "3\n5 5 2",
+        "saida": "5 5 2"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "É a seleção da Seção 10.4 com uma única mudança: em vez de procurar o menor elemento da parte que falta, procura-se o maior. A comparação < vira >."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"SelecaoDecrescente\"\nvar\n   v: vetor[1..50] de inteiro\n   n, i, j, iMaior, aux: inteiro\ninicio\n   leia(n)\n   para i de 1 ate n faca\n      leia(v[i])\n   fimpara\n   para i de 1 ate n - 1 faca\n      iMaior <- i\n      para j de i + 1 ate n faca\n         se v[j] > v[iMaior] entao\n            iMaior <- j\n         fimse\n      fimpara\n      aux <- v[i]\n      v[i] <- v[iMaior]\n      v[iMaior] <- aux\n   fimpara\n   para i de 1 ate n faca\n      escreva(v[i], \" \")\n   fimpara\n   escreval(\"\")\nfimalgoritmo"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nvoid selecaoDecrescente(int v[], int n) {\n    for (int i = 0; i < n - 1; i++) {\n        int iMaior = i;\n        for (int j = i + 1; j < n; j++) {\n            if (v[j] > v[iMaior]) iMaior = j;   // > em vez de <\n        }\n        swap(v[i], v[iMaior]);\n    }\n}\n\nint main() {\n    const int MAX = 50;\n    int v[MAX];\n    int n;\n    cin >> n;\n    if (n < 1 || n > MAX) return 0;\n    for (int i = 0; i < n; i++) cin >> v[i];\n    selecaoDecrescente(v, n);\n    for (int i = 0; i < n; i++) cout << v[i] << \" \";\n    cout << endl;\n    return 0;\n}"
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap10-e4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap10",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Busca binária com passos. Leia N, N números já em ordem crescente e um valor x. Faça a busca binária e mostre em que posição (a partir de 1) x foi encontrado e quantos passos (comparações com o elemento do meio) foram necessários, ou \"Não encontrado\" e o número de passos.",
+    "exemplos": [
+      {
+        "entrada": "15\n3 8 11 15 19 23 27 32 36 41 47 52 58 63 70\n41",
+        "saida": "Encontrado na posição 10 em 3 passos"
+      },
+      {
+        "entrada": "15\n3 8 11 15 19 23 27 32 36 41 47 52 58 63 70\n40",
+        "saida": "Não encontrado (4 passos)"
+      },
+      {
+        "entrada": "15\n3 8 11 15 19 23 27 32 36 41 47 52 58 63 70\n32",
+        "saida": "Encontrado na posição 8 em 1 passo"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "É a busca binária da Seção 10.2, com um contador incrementado a cada vez que o elemento do meio é examinado. Com 15 elementos, nunca são necessários mais que 4 passos, porque 15 cabe em 4 divisões ao meio (2^4 = 16). Faça o teste de mesa com x = 40 para ver os índices ini e fim se cruzarem."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    int n, x;\n    cin >> n;\n    vector<int> v(n);\n    for (int &e : v) cin >> e;\n    cin >> x;\n    int ini = 0, fim = n - 1, passos = 0;\n    while (ini <= fim) {\n        int meio = ini + (fim - ini) / 2;\n        passos++;\n        if (v[meio] == x) {\n            cout << \"Encontrado na posição \" << meio + 1 << \" em \"\n                 << passos << (passos == 1 ? \" passo\" : \" passos\")\n                 << endl;\n            return 0;\n        }\n        if (v[meio] < x) ini = meio + 1;\n        else fim = meio - 1;\n    }\n    cout << \"Não encontrado (\" << passos << \" passos)\" << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"BuscaBinaria\"\nvar\n   v: vetor[1..50] de inteiro\n   n, i, x, ini, fim, meio, passos, pos: inteiro\ninicio\n   leia(n)\n   para i de 1 ate n faca\n      leia(v[i])\n   fimpara\n   leia(x)\n   ini <- 1\n   fim <- n\n   passos <- 0\n   pos <- 0\n   enquanto (ini <= fim) e (pos = 0) faca\n      meio <- (ini + fim) div 2\n      passos <- passos + 1\n      se v[meio] = x entao\n         pos <- meio\n      senao\n         se v[meio] < x entao\n            ini <- meio + 1\n         senao\n            fim <- meio - 1\n         fimse\n      fimse\n   fimenquanto\n   se pos > 0 entao\n      se passos = 1 entao\n         escreval(\"Encontrado na posição \", pos, \" em 1 passo\")\n      senao\n         escreval(\"Encontrado na posição \", pos, \" em \", passos, \" passos\")\n      fimse\n   senao\n      escreval(\"Não encontrado (\", passos, \" passos)\")\n   fimse\nfimalgoritmo"
+      },
+      {
+        "t": "p",
+        "texto": "A posição encontrada é igual nas duas versões, mas os passos podem variar em 1 no Portugol, porque com o vetor começando em 1 o elemento do meio de cada faixa às vezes é outro. O que não muda é o máximo: cerca de log₂ N passos."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap10-e5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap10",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "dificil",
+    "enunciado": "Mediana. A mediana de um conjunto de números é o valor do meio depois de ordená-los; quando a quantidade é par, é a média dos dois valores do meio. Leia N e N números, ordene-os com a ordenação por inserção (escrita por você) e mostre a lista ordenada e a mediana.",
+    "exemplos": [
+      {
+        "entrada": "5\n7 1 9 3 5",
+        "saida": "Ordenado: 1 3 5 7 9\nMediana: 5"
+      },
+      {
+        "entrada": "4\n8 2 6 4",
+        "saida": "Ordenado: 2 4 6 8\nMediana: 5"
+      },
+      {
+        "entrada": "6\n10 1 4 4 9 2",
+        "saida": "Ordenado: 1 2 4 4 9 10\nMediana: 4"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Depois de ordenar com a inserção da Seção 10.6, a mediana depende da paridade de N: com N ímpar, é o elemento de índice N / 2 (em C++, com índices a partir de 0); com N par, é a média dos elementos de índices N / 2 - 1 e N / 2. Com N = 4, são os índices 1 e 2."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nvoid insercao(vector<double> &v) {\n    for (size_t i = 1; i < v.size(); i++) {\n        double atual = v[i];\n        size_t j = i;\n        while (j > 0 && v[j - 1] > atual) {   // os maiores andam\n            v[j] = v[j - 1];\n            j--;\n        }\n        v[j] = atual;\n    }\n}\n\nint main() {\n    int n;\n    cin >> n;\n    if (n < 1) return 0;\n    vector<double> v(n);\n    for (double &x : v) cin >> x;\n    insercao(v);\n    cout << \"Ordenado:\";\n    for (double x : v) cout << \" \" << x;\n    cout << endl;\n    double mediana;\n    if (n % 2 == 1) mediana = v[n / 2];\n    else mediana = (v[n / 2 - 1] + v[n / 2]) / 2;\n    cout << \"Mediana: \" << mediana << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Esta versão da inserção usa size_t, um tipo sem sinal, e por isso compara j > 0 e usa v[j - 1], em vez de deixar j chegar a -1 como na Seção 10.6: um size_t não pode ser negativo. A mediana é muito usada em estatística porque, ao contrário da média, não é puxada por um valor extremo: em 1, 2, 3, 4 e 1000, a média é 202, e a mediana, 3."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap11-e1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap11",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Estoque com registros. Crie um registro Produto com nome (uma palavra), preço e quantidade. Leia N produtos para um vetor de registros e mostre o valor total do estoque (a soma de preço × quantidade) e o nome do produto mais caro.",
+    "exemplos": [
+      {
+        "entrada": "3\nCaneta 2.5 10\nCaderno 15 4\nMochila 89.9 1",
+        "saida": "Valor do estoque: 174.9\nMais caro: Mochila"
+      },
+      {
+        "entrada": "2\nLapis 1 100\nBorracha 0.5 40",
+        "saida": "Valor do estoque: 120\nMais caro: Lapis"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Com um registro, os três dados de cada produto ficam juntos, e o vetor de registros substitui três vetores paralelos (Seções 11.1 e 11.2). O campo é acessado com o ponto: estoque[i].preco."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <string>\n#include <vector>\nusing namespace std;\n\nstruct Produto {\n    string nome;\n    double preco;\n    int quantidade;\n};\n\nint main() {\n    int n;\n    cin >> n;\n    if (n < 1) return 0;\n    vector<Produto> estoque(n);\n    for (Produto &p : estoque) cin >> p.nome >> p.preco >> p.quantidade;\n\n    double total = 0;\n    size_t iMaisCaro = 0;\n    for (size_t i = 0; i < estoque.size(); i++) {\n        total += estoque[i].preco * estoque[i].quantidade;\n        if (estoque[i].preco > estoque[iMaisCaro].preco) iMaisCaro = i;\n    }\n    cout << \"Valor do estoque: \" << total << endl;\n    cout << \"Mais caro: \" << estoque[iMaisCaro].nome << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Portugol",
+        "texto": "algoritmo \"Estoque\"\ntipo Produto = registro\n   nome: caractere\n   preco: real\n   quantidade: inteiro\nfimregistro\nvar\n   estoque: vetor[1..50] de Produto\n   n, i, iCaro: inteiro\n   total: real\ninicio\n   leia(n)\n   total <- 0\n   iCaro <- 1\n   para i de 1 ate n faca\n      leia(estoque[i].nome, estoque[i].preco, estoque[i].quantidade)\n      total <- total + estoque[i].preco * estoque[i].quantidade\n      se estoque[i].preco > estoque[iCaro].preco entao\n         iCaro <- i\n      fimse\n   fimpara\n   escreval(\"Valor do estoque: \", total)\n   escreval(\"Mais caro: \", estoque[iCaro].nome)\nfimalgoritmo"
+      },
+      {
+        "t": "p",
+        "texto": "Na versão em C++, o for (Produto &p : estoque) usa uma referência para que a leitura preencha os registros do próprio vetor, e não cópias. O suporte a registros varia entre as ferramentas de Portugol (Seção 11.1)."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap11-e2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap11",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Inverter as palavras. Leia uma frase e mostre as suas palavras em ordem inversa, usando uma pilha: empilhe cada palavra e depois desempilhe todas.",
+    "exemplos": [
+      {
+        "entrada": "o rato roeu a roupa",
+        "saida": "roupa a roeu rato o"
+      },
+      {
+        "entrada": "primeiro segundo",
+        "saida": "segundo primeiro"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "A pilha devolve os elementos na ordem inversa da entrada (LIFO, Seção 11.4), que é exatamente o que o exercício pede. As palavras podem ser lidas uma a uma com cin >>, que para nos espaços, até a entrada acabar."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <string>\n#include <stack>\nusing namespace std;\n\nint main() {\n    stack<string> pilha;\n    string palavra;\n    while (cin >> palavra) pilha.push(palavra);   // até o fim\n    bool primeira = true;\n    while (!pilha.empty()) {\n        if (!primeira) cout << \" \";\n        cout << pilha.top();\n        pilha.pop();\n        primeira = false;\n    }\n    cout << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Ao rodar no terminal, depois de digitar a frase, termine a entrada com Ctrl+Z e Enter (no Windows) ou Ctrl+D (no Linux e no macOS). Outra opção é ler a linha inteira com getline e separar as palavras com um istringstream."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap11-e3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap11",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Fila de atendimento. Simule a fila de um consultório com comandos digitados um por linha: \"C nome\" (um cliente chega), \"A\" (o próximo é atendido) e \"F\" (fim do expediente). A cada \"A\", mostre quem foi atendido ou \"Fila vazia\". No \"F\", mostre quantos ficaram sem atendimento.",
+    "exemplos": [
+      {
+        "entrada": "C Ana\nC Bruno\nA\nC Carla\nA\nA\nA\nF",
+        "saida": "Atendendo: Ana\nAtendendo: Bruno\nAtendendo: Carla\nFila vazia\nSem atendimento: 0"
+      },
+      {
+        "entrada": "C Davi\nC Eva\nA\nF",
+        "saida": "Atendendo: Davi\nSem atendimento: 1"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "O primeiro a chegar é o primeiro a ser atendido: é uma fila (FIFO, Seção 11.5). O comando é lido em um char, e o nome só é lido quando o comando é C. Antes de atender, é preciso verificar se a fila não está vazia."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <string>\n#include <queue>\nusing namespace std;\n\nint main() {\n    queue<string> fila;\n    char comando;\n    while (cin >> comando && comando != 'F') {\n        if (comando == 'C') {\n            string nome;\n            cin >> nome;\n            fila.push(nome);\n        } else if (comando == 'A') {\n            if (fila.empty()) {\n                cout << \"Fila vazia\" << endl;\n            } else {\n                cout << \"Atendendo: \" << fila.front() << endl;\n                fila.pop();\n            }\n        }\n    }\n    cout << \"Sem atendimento: \" << fila.size() << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "O cin >> comando && comando != 'F' no while segue o padrão do laço com sentinela: o laço termina no F ou se a entrada acabar. Sem o teste fila.empty(), chamar front em uma fila vazia levaria a um comportamento indefinido."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap11-e4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap11",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Lista encadeada. Leia números inteiros até o 0 e insira cada um no FIM de uma lista encadeada feita por você (com struct No e ponteiros). Depois, mostre a lista no formato \"1 -> 2 -> 3 -> fim\", a soma dos valores e libere a memória.",
+    "exemplos": [
+      {
+        "entrada": "1 2 3 0",
+        "saida": "1 -> 2 -> 3 -> fim\nSoma: 6"
+      },
+      {
+        "entrada": "0",
+        "saida": "fim\nSoma: 0"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Para inserir no fim sem percorrer a lista toda a cada vez, guarde também um ponteiro para o último nó. Se a lista está vazia, o novo nó é o primeiro e o último; senão, o último passa a apontar para ele. Todo nó criado com new é devolvido com delete no fim (Seção 11.7)."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nstruct No {\n    int valor;\n    No *prox;\n};\n\nint main() {\n    No *inicio = nullptr, *ultimo = nullptr;\n    int x;\n    while (cin >> x && x != 0) {\n        No *novo = new No{x, nullptr};\n        if (inicio == nullptr) inicio = novo;   // lista vazia\n        else ultimo->prox = novo;               // liga no fim\n        ultimo = novo;\n    }\n    int soma = 0;\n    for (No *p = inicio; p != nullptr; p = p->prox) {\n        cout << p->valor << \" -> \";\n        soma += p->valor;\n    }\n    cout << \"fim\" << endl;\n    cout << \"Soma: \" << soma << endl;\n    while (inicio != nullptr) {                 // libera a memória\n        No *p = inicio;\n        inicio = inicio->prox;\n        delete p;\n    }\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "A expressão new No{x, nullptr} cria o nó e já preenche os dois campos. O ponteiro p, usado para percorrer, é separado de inicio, para não perder o começo da lista."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap11-e5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap11",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "dificil",
+    "enunciado": "Calculadora pós-fixa. Na notação pós-fixa, o operador vem depois dos operandos: \"3 4 +\" significa 3 + 4, e \"3 4 + 2 *\" significa (3 + 4) × 2, sem precisar de parênteses. Leia uma expressão pós-fixa com números inteiros e os operadores + - * /, separados por espaços, e calcule o resultado usando uma pilha.",
+    "exemplos": [
+      {
+        "entrada": "3 4 + 2 *",
+        "saida": "Resultado: 14"
+      },
+      {
+        "entrada": "5 1 2 + 4 * + 3 -",
+        "saida": "Resultado: 14"
+      },
+      {
+        "entrada": "10 2 8 * + 3 -",
+        "saida": "Resultado: 23"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Percorra a expressão item a item. Um número é empilhado. Um operador desempilha os dois últimos números, faz a conta e empilha o resultado. Atenção à ordem: o primeiro desempilhado é o operando da DIREITA. No fim, sobra um único número na pilha: o resultado. Calculadoras científicas antigas e várias linguagens usam esse método."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <string>\n#include <stack>\nusing namespace std;\n\nint main() {\n    stack<long long> pilha;\n    string item;\n    while (cin >> item) {\n        if (item == \"+\" || item == \"-\" || item == \"*\" || item == \"/\") {\n            if (pilha.size() < 2) {\n                cout << \"Expressão inválida\" << endl;\n                return 0;\n            }\n            long long b = pilha.top();   // operando da direita\n            pilha.pop();\n            long long a = pilha.top();\n            pilha.pop();\n            if (item == \"+\") pilha.push(a + b);\n            else if (item == \"-\") pilha.push(a - b);\n            else if (item == \"*\") pilha.push(a * b);\n            else pilha.push(a / b);\n        } else {\n            pilha.push(stoll(item));     // número: empilha\n        }\n    }\n    if (pilha.size() == 1) cout << \"Resultado: \" << pilha.top() << endl;\n    else cout << \"Expressão inválida\" << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Teste de mesa com \"3 4 + 2 *\": empilha 3, empilha 4; o + desempilha 4 e 3 e empilha 7; empilha 2; o * desempilha 2 e 7 e empilha 14. A versão acima ainda trata expressões mal formadas, com operadores ou números sobrando. Desafio extra: trate a divisão por zero."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap12-e1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap12",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Classe Retangulo. Crie uma classe Retangulo com os atributos privados largura e altura (inteiros), um construtor que recebe os dois valores e os métodos area() e perimetro(). O programa lê as medidas, cria o objeto e mostra os dois resultados. Faça em C++ ou em Java.",
+    "exemplos": [
+      {
+        "entrada": "5\n3",
+        "saida": "Área: 15\nPerímetro: 16"
+      },
+      {
+        "entrada": "10\n10",
+        "saida": "Área: 100\nPerímetro: 40"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "É o problema do Exercício 1 do Capítulo 1, agora organizado como uma classe: os dados ficam privados, e o cálculo fica nos métodos, que pertencem ao próprio retângulo. Quem usa a classe só pede r.area(), sem saber a fórmula."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nclass Retangulo {\nprivate:\n    int largura, altura;\npublic:\n    Retangulo(int l, int a) : largura(l), altura(a) {}\n    int area() const { return largura * altura; }\n    int perimetro() const { return 2 * (largura + altura); }\n};\n\nint main() {\n    int l, a;\n    cout << \"Largura e altura: \";\n    cin >> l >> a;\n    Retangulo r(l, a);\n    cout << \"Área: \" << r.area() << endl;\n    cout << \"Perímetro: \" << r.perimetro() << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Java",
+        "texto": "import java.util.Scanner;\n\npublic class Retangulo {\n    private int largura, altura;\n\n    public Retangulo(int largura, int altura) {\n        this.largura = largura;\n        this.altura = altura;\n    }\n\n    public int area() { return largura * altura; }\n    public int perimetro() { return 2 * (largura + altura); }\n\n    public static void main(String[] args) {\n        Scanner entrada = new Scanner(System.in);\n        System.out.print(\"Largura e altura: \");\n        int l = entrada.nextInt();\n        int a = entrada.nextInt();\n        Retangulo r = new Retangulo(l, a);\n        System.out.println(\"Área: \" + r.area());\n        System.out.println(\"Perímetro: \" + r.perimetro());\n    }\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Em C++, o const depois de area() indica que o método não altera o objeto. Em Java, o this diferencia o atributo do parâmetro de mesmo nome (Seção 12.7)."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap12-e2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap12",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "facil",
+    "enunciado": "Contador encapsulado. Crie uma classe Contador com um valor privado que começa em 0 e os métodos incrementar(), decrementar() e getValor(). O valor nunca pode ficar negativo: decrementar em 0 não faz nada. O programa lê uma sequência de sinais + e - (sem espaços) e mostra o valor final.",
+    "exemplos": [
+      {
+        "entrada": "++-+",
+        "saida": "Valor final: 2"
+      },
+      {
+        "entrada": "---+",
+        "saida": "Valor final: 1"
+      },
+      {
+        "entrada": "-----",
+        "saida": "Valor final: 0"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "A regra \"nunca negativo\" fica dentro de decrementar, em um único lugar. Como o valor é privado e não há um setValor, nenhuma parte do programa consegue deixar o contador negativo: é o encapsulamento garantindo uma regra (Seção 12.2)."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <string>\nusing namespace std;\n\nclass Contador {\nprivate:\n    int valor = 0;\npublic:\n    void incrementar() { valor++; }\n    void decrementar() {\n        if (valor > 0) valor--;     // nunca fica negativo\n    }\n    int getValor() const { return valor; }\n};\n\nint main() {\n    string sinais;\n    cin >> sinais;\n    Contador c;\n    for (char s : sinais) {\n        if (s == '+') c.incrementar();\n        else if (s == '-') c.decrementar();\n    }\n    cout << \"Valor final: \" << c.getValor() << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Java",
+        "texto": "import java.util.Scanner;\n\npublic class Contador {\n    private int valor = 0;\n\n    public void incrementar() { valor++; }\n    public void decrementar() {\n        if (valor > 0) valor--;     // nunca fica negativo\n    }\n    public int getValor() { return valor; }\n\n    public static void main(String[] args) {\n        Scanner entrada = new Scanner(System.in);\n        String sinais = entrada.next();\n        Contador c = new Contador();\n        for (char s : sinais.toCharArray()) {\n            if (s == '+') c.incrementar();\n            else if (s == '-') c.decrementar();\n        }\n        System.out.println(\"Valor final: \" + c.getValor());\n    }\n}"
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap12-e3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap12",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Extrato bancário. Usando uma classe ContaBancaria (saldo privado, depositar e sacar que recusam valores inválidos), processe comandos, um por linha: \"D valor\" (depósito), \"S valor\" (saque) e \"F\" (fim). Quando um saque for recusado, mostre \"Saque recusado\". No fim, mostre o saldo e quantas operações foram aceitas.",
+    "exemplos": [
+      {
+        "entrada": "D 100\nS 30\nS 500\nD 20\nF",
+        "saida": "Saque recusado\nSaldo: 90\nOperações aceitas: 3"
+      },
+      {
+        "entrada": "S 10\nF",
+        "saida": "Saque recusado\nSaldo: 0\nOperações aceitas: 0"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "A classe guarda as regras (não sacar mais que o saldo, não aceitar valores negativos) e devolve verdadeiro ou falso para dizer se a operação foi feita. O programa principal só interpreta os comandos e conta os sucessos. O saldo é inteiro para simplificar; em um sistema real, valores em dinheiro costumam ser guardados em centavos."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\nusing namespace std;\n\nclass ContaBancaria {\nprivate:\n    int saldo = 0;\npublic:\n    bool depositar(int valor) {\n        if (valor <= 0) return false;\n        saldo += valor;\n        return true;\n    }\n    bool sacar(int valor) {\n        if (valor <= 0 || valor > saldo) return false;\n        saldo -= valor;\n        return true;\n    }\n    int getSaldo() const { return saldo; }\n};\n\nint main() {\n    ContaBancaria conta;\n    int aceitas = 0;\n    char comando;\n    while (cin >> comando && comando != 'F') {\n        int valor;\n        cin >> valor;\n        if (comando == 'D' && conta.depositar(valor)) aceitas++;\n        else if (comando == 'S') {\n            if (conta.sacar(valor)) aceitas++;\n            else cout << \"Saque recusado\" << endl;\n        }\n    }\n    cout << \"Saldo: \" << conta.getSaldo() << endl;\n    cout << \"Operações aceitas: \" << aceitas << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Java",
+        "texto": "import java.util.Scanner;\n\npublic class Extrato {\n    static class ContaBancaria {\n        private int saldo = 0;\n\n        public boolean depositar(int valor) {\n            if (valor <= 0) return false;\n            saldo += valor;\n            return true;\n        }\n        public boolean sacar(int valor) {\n            if (valor <= 0 || valor > saldo) return false;\n            saldo -= valor;\n            return true;\n        }\n        public int getSaldo() { return saldo; }\n    }\n\n    public static void main(String[] args) {\n        Scanner entrada = new Scanner(System.in);\n        ContaBancaria conta = new ContaBancaria();\n        int aceitas = 0;\n        while (entrada.hasNext()) {\n            String comando = entrada.next();\n            if (comando.equals(\"F\")) break;\n            int valor = entrada.nextInt();\n            if (comando.equals(\"D\") && conta.depositar(valor)) aceitas++;\n            else if (comando.equals(\"S\")) {\n                if (conta.sacar(valor)) aceitas++;\n                else System.out.println(\"Saque recusado\");\n            }\n        }\n        System.out.println(\"Saldo: \" + conta.getSaldo());\n        System.out.println(\"Operações aceitas: \" + aceitas);\n    }\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Na versão em Java, os comandos são comparados com equals, e não com == (Seção 12.6). A classe ContaBancaria foi declarada dentro de Extrato (static class) só para caber tudo em um único arquivo; em um projeto, ela ficaria no seu próprio arquivo."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap12-e4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap12",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "medio",
+    "enunciado": "Herança: funcionários. Crie uma classe Funcionario com nome e salário base e um método salario() que devolve o salário base, e uma classe Gerente, filha de Funcionario, em que salario() devolve o base mais um bônus de 20%. Leia N funcionários no formato \"tipo nome salário\" (tipo F ou G), mostre o salário de cada um e o total da folha, usando polimorfismo.",
+    "exemplos": [
+      {
+        "entrada": "3\nF Ana 3000\nG Bruno 5000\nF Carla 2500",
+        "saida": "Ana: 3000\nBruno: 6000\nCarla: 2500\nFolha total: 11500"
+      },
+      {
+        "entrada": "1\nG Davi 10000",
+        "saida": "Davi: 12000\nFolha total: 12000"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Gerente herda tudo de Funcionario e substitui só o cálculo do salário (override). Com polimorfismo, o laço que mostra a folha trata todos como Funcionario e chama salario() sem perguntar o tipo: cada objeto responde com o seu próprio cálculo (Seção 12.3)."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Java",
+        "texto": "import java.util.ArrayList;\nimport java.util.Scanner;\n\npublic class Folha {\n    static class Funcionario {\n        protected String nome;\n        protected int base;\n\n        public Funcionario(String nome, int base) {\n            this.nome = nome;\n            this.base = base;\n        }\n        public int salario() { return base; }\n        public String getNome() { return nome; }\n    }\n\n    static class Gerente extends Funcionario {\n        public Gerente(String nome, int base) { super(nome, base); }\n        @Override\n        public int salario() { return base + base * 20 / 100; }\n    }\n\n    public static void main(String[] args) {\n        Scanner entrada = new Scanner(System.in);\n        int n = entrada.nextInt();\n        ArrayList<Funcionario> equipe = new ArrayList<>();\n        for (int i = 0; i < n; i++) {\n            String tipo = entrada.next();\n            String nome = entrada.next();\n            int base = entrada.nextInt();\n            if (tipo.equals(\"G\")) equipe.add(new Gerente(nome, base));\n            else equipe.add(new Funcionario(nome, base));\n        }\n        int total = 0;\n        for (Funcionario f : equipe) {           // polimorfismo\n            System.out.println(f.getNome() + \": \" + f.salario());\n            total += f.salario();\n        }\n        System.out.println(\"Folha total: \" + total);\n    }\n}"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <string>\n#include <vector>\nusing namespace std;\n\nclass Funcionario {\nprotected:\n    string nome;\n    int base;\npublic:\n    Funcionario(const string &n, int b) : nome(n), base(b) {}\n    virtual ~Funcionario() {}\n    virtual int salario() const { return base; }\n    string getNome() const { return nome; }\n};\n\nclass Gerente : public Funcionario {\npublic:\n    Gerente(const string &n, int b) : Funcionario(n, b) {}\n    int salario() const override { return base + base * 20 / 100; }\n};\n\nint main() {\n    int n;\n    cin >> n;\n    vector<Funcionario*> equipe;\n    for (int i = 0; i < n; i++) {\n        char tipo;\n        string nome;\n        int base;\n        cin >> tipo >> nome >> base;\n        if (tipo == 'G') equipe.push_back(new Gerente(nome, base));\n        else equipe.push_back(new Funcionario(nome, base));\n    }\n    int total = 0;\n    for (Funcionario *f : equipe) {              // polimorfismo\n        cout << f->getNome() << \": \" << f->salario() << endl;\n        total += f->salario();\n    }\n    cout << \"Folha total: \" << total << endl;\n    for (Funcionario *f : equipe) delete f;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Os atributos são protected: privados para o resto do programa, mas acessíveis às classes filhas, para que Gerente possa usar base. Em C++, para guardar objetos de classes diferentes no mesmo vetor e ter polimorfismo, o vetor guarda ponteiros, e por isso cada objeto criado com new é liberado com delete no fim."
+      }
+    ]
+  },
+  {
+    "id": "alg1-cap12-e5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap12",
+    "tipo": "discursiva",
+    "pratica": true,
+    "nivel": "dificil",
+    "enunciado": "Boletim da turma. Crie uma classe Aluno com nome e duas notas, e os métodos media() e situacao() (aprovado com média 6 ou mais, recuperação de 4 até menos de 6, reprovado abaixo de 4), e uma classe Turma que guarda os alunos em uma lista e calcula a média geral. Leia N alunos (\"nome nota1 nota2\"), mostre o boletim e a média da turma. Faça em Java (ou em C++).",
+    "exemplos": [
+      {
+        "entrada": "3\nAna 8 7\nBruno 5 4\nCarla 3 2",
+        "saida": "Ana: 7.5 (aprovado)\nBruno: 4.5 (recuperação)\nCarla: 2.5 (reprovado)\nMédia da turma: 4.83"
+      },
+      {
+        "entrada": "2\nDavi 6 6\nEva 10 9",
+        "saida": "Davi: 6.0 (aprovado)\nEva: 9.5 (aprovado)\nMédia da turma: 7.75"
+      }
+    ],
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Cada classe tem uma responsabilidade: Aluno sabe calcular a própria média e a situação; Turma sabe guardar alunos e calcular a média geral; o main só lê os dados e mostra o boletim. O Scanner usa Locale.US para aceitar notas com ponto decimal (Seção 12.6). A média da turma é mostrada com duas casas decimais com String.format."
+      },
+      {
+        "t": "codigo",
+        "linguagem": "Java",
+        "texto": "import java.util.ArrayList;\nimport java.util.Locale;\nimport java.util.Scanner;\n\npublic class Boletim {\n    static class Aluno {\n        private String nome;\n        private double nota1, nota2;\n\n        public Aluno(String nome, double nota1, double nota2) {\n            this.nome = nome;\n            this.nota1 = nota1;\n            this.nota2 = nota2;\n        }\n        public String getNome() { return nome; }\n        public double media() { return (nota1 + nota2) / 2; }\n        public String situacao() {\n            if (media() >= 6) return \"aprovado\";\n            if (media() >= 4) return \"recuperação\";\n            return \"reprovado\";\n        }\n    }\n\n    static class Turma {\n        private ArrayList<Aluno> alunos = new ArrayList<>();\n\n        public void adicionar(Aluno a) { alunos.add(a); }\n        public ArrayList<Aluno> getAlunos() { return alunos; }\n        public double mediaGeral() {\n            double soma = 0;\n            for (Aluno a : alunos) soma += a.media();\n            return alunos.isEmpty() ? 0 : soma / alunos.size();\n        }\n    }\n\n    public static void main(String[] args) {\n        Scanner entrada = new Scanner(System.in);\n        entrada.useLocale(Locale.US);\n        int n = entrada.nextInt();\n        Turma turma = new Turma();\n        for (int i = 0; i < n; i++) {\n            turma.adicionar(new Aluno(entrada.next(), entrada.nextDouble(),\n                                      entrada.nextDouble()));\n        }\n        for (Aluno a : turma.getAlunos()) {\n            System.out.println(a.getNome() + \": \" + a.media()\n                               + \" (\" + a.situacao() + \")\");\n        }\n        System.out.println(\"Média da turma: \"\n                           + String.format(Locale.US, \"%.2f\", turma.mediaGeral()));\n    }\n}"
+      },
+      {
+        "t": "codigo",
+        "linguagem": "C++",
+        "texto": "#include <iostream>\n#include <iomanip>\n#include <string>\n#include <vector>\nusing namespace std;\n\nclass Aluno {\nprivate:\n    string nome;\n    double nota1, nota2;\npublic:\n    Aluno(const string &n, double a, double b) : nome(n), nota1(a), nota2(b) {}\n    string getNome() const { return nome; }\n    double media() const { return (nota1 + nota2) / 2; }\n    string situacao() const {\n        if (media() >= 6) return \"aprovado\";\n        if (media() >= 4) return \"recuperação\";\n        return \"reprovado\";\n    }\n};\n\nclass Turma {\nprivate:\n    vector<Aluno> alunos;\npublic:\n    void adicionar(const Aluno &a) { alunos.push_back(a); }\n    const vector<Aluno> &getAlunos() const { return alunos; }\n    double mediaGeral() const {\n        double soma = 0;\n        for (const Aluno &a : alunos) soma += a.media();\n        return alunos.empty() ? 0 : soma / alunos.size();\n    }\n};\n\nint main() {\n    int n;\n    cin >> n;\n    Turma turma;\n    for (int i = 0; i < n; i++) {\n        string nome;\n        double a, b;\n        cin >> nome >> a >> b;\n        turma.adicionar(Aluno(nome, a, b));\n    }\n    cout << fixed << setprecision(1);\n    for (const Aluno &al : turma.getAlunos()) {\n        cout << al.getNome() << \": \" << al.media() << \" (\"\n             << al.situacao() << \")\" << endl;\n    }\n    cout << setprecision(2) << \"Média da turma: \" << turma.mediaGeral()\n         << endl;\n    return 0;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "O Java mostra um double sempre com casa decimal (6.0), e por isso o C++ usa fixed com setprecision(1) para que as duas versões mostrem o mesmo boletim. Para continuar: acrescente à Turma um método que devolve o aluno com a maior média, ou que conta quantos estão em cada situação."
+      }
+    ]
+  }
+]

@@ -19,6 +19,12 @@ function Parte({ parte }: { parte: ParteContexto }) {
           {parte.legenda && <figcaption>{parte.legenda}</figcaption>}
         </figure>
       )
+    case 'codigo':
+      return (
+        <pre className="bloco-codigo">
+          <code>{parte.texto}</code>
+        </pre>
+      )
     default:
       return <p className="caso">{parte.texto}</p>
   }
@@ -68,6 +74,31 @@ export default function EnunciadoQuestao({ q, linhasPorItem }: { q: Questao; lin
           ))}
         </ul>
       )}
+      {q.tipo === 'discursiva' && q.exemplos && q.exemplos.length > 0 && (
+        <div className="tabela-rolavel">
+          <table className="exemplos">
+            <caption>Teste seu programa com estes exemplos</caption>
+            <thead>
+              <tr>
+                <th>Você digita</th>
+                <th>O programa mostra</th>
+              </tr>
+            </thead>
+            <tbody>
+              {q.exemplos.map((ex, i) => (
+                <tr key={i}>
+                  <td>
+                    <code>{ex.entrada}</code>
+                  </td>
+                  <td>
+                    <code>{ex.saida}</code>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </>
   )
 }
@@ -78,9 +109,12 @@ export function Resolucao({ partes }: { partes: ParteResolucao[] }) {
     <div className="resolucao">
       {partes.map((p, i) =>
         p.t === 'codigo' ? (
-          <pre key={i} className="bloco-codigo">
-            <code>{p.texto}</code>
-          </pre>
+          <div key={i}>
+            {p.linguagem && <p className="linguagem-codigo">{p.linguagem}</p>}
+            <pre className="bloco-codigo">
+              <code>{p.texto}</code>
+            </pre>
+          </div>
         ) : (
           <p key={i}>{p.texto}</p>
         ),

@@ -22,8 +22,17 @@ export type ParteContexto =
   | { t: 'fonte'; texto: string }
   /** src relativo à pasta public, ex.: 'questoes/gestaoweb/gestaoweb-cap1-figura1.png' */
   | { t: 'imagem'; src: string; legenda?: string }
+  /** trecho de código dentro do enunciado (ex.: um algoritmo com erro para corrigir) */
+  | { t: 'codigo'; texto: string }
 
-export type ParteResolucao = { t: 'p'; texto: string } | { t: 'codigo'; texto: string }
+/** código da resolução; `linguagem` aparece como título do bloco, ex.: 'Portugol', 'C++' */
+export type ParteResolucao = { t: 'p'; texto: string } | { t: 'codigo'; texto: string; linguagem?: string }
+
+/** caso de teste de um exercício prático: o que digitar e o que o programa deve mostrar */
+export interface Exemplo {
+  entrada: string
+  saida: string
+}
 
 interface QuestaoBase {
   id: string
@@ -56,6 +65,8 @@ export interface QuestaoDiscursiva extends QuestaoBase {
   itens?: string[]
   /** exercício prático (feito no computador): sem campo de resposta nem linhas na prova impressa */
   pratica?: boolean
+  /** casos de teste mostrados com o enunciado, para o aluno conferir o próprio programa */
+  exemplos?: Exemplo[]
   /** resolução passo a passo, com trechos de código */
   resolucao?: ParteResolucao[]
   /** resposta esperada, mostrada quando o aluno clica em "Ver resposta esperada" */

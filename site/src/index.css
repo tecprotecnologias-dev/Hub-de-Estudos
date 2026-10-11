@@ -1459,3 +1459,156 @@ select:disabled {
     -webkit-print-color-adjust: exact;
   }
 }
+
+/* Lista de exercícios práticos: código do aluno, exemplos e gabarito no fim */
+.lista-exercicios .questao::before {
+  content: 'Exercício ' counter(q);
+}
+
+.questao .bloco-codigo,
+.gabarito .bloco-codigo {
+  background: #1f2937;
+  color: #f3f4f6;
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  margin: 0.5rem 0 1rem;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.questao .bloco-codigo code,
+.gabarito .bloco-codigo code {
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  white-space: pre;
+}
+
+.gabarito .codigo-do-aluno {
+  background: var(--fundo);
+  color: var(--texto);
+  border: 1px solid var(--borda);
+}
+
+.exemplos {
+  border-collapse: collapse;
+  margin: 0.75rem 0;
+  font-size: 0.9rem;
+  min-width: 60%;
+}
+
+.exemplos caption {
+  text-align: left;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  padding-bottom: 0.3rem;
+}
+
+.exemplos th,
+.exemplos td {
+  border: 1px solid var(--borda);
+  padding: 0.35rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.exemplos th {
+  background: var(--fundo);
+  font-weight: 600;
+}
+
+.exemplos code {
+  white-space: pre-wrap;
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+}
+
+.tabela-rolavel {
+  overflow-x: auto;
+}
+
+.rotulo-codigo {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--texto-suave);
+  margin: 0.75rem 0 0.25rem;
+}
+
+.codigo-aluno {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  tab-size: 4;
+  resize: vertical;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+}
+
+.codigo-aluno[readonly] {
+  background: var(--fundo);
+}
+
+.finalizar-lista {
+  text-align: center;
+  margin: 1.5rem 0 2rem;
+}
+
+.gabarito {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--primaria);
+}
+
+.lista-gabarito {
+  list-style: none;
+  padding: 0;
+}
+
+.questao-gabarito {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.questao-gabarito h3 {
+  margin-top: 0;
+  color: var(--primaria);
+}
+
+.linguagem-codigo {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--primaria);
+  margin: 0.75rem 0 0.1rem !important;
+}
+
+/* Código sempre com os caracteres reais: sem ligaduras, "<-" e "<<" não viram setas */
+code,
+pre,
+kbd,
+.codigo-aluno {
+  font-variant-ligatures: none;
+  font-feature-settings: 'liga' 0, 'calt' 0;
+}
+
+.situacao-codigo {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  color: var(--destaque-prof);
+}
+
+.situacao-codigo.ok {
+  color: var(--certa);
+  font-weight: 600;
+}
