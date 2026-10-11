@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Hub de Estudos">
+  <!-- versão para fundo roxo (cabeçalho): figura branca, capelo escuro -->
+  <defs>
+    <linearGradient id="corpoB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#cbb8ff"/>
+    </linearGradient>
+    <linearGradient id="cabecaB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#ddd1ff"/>
+    </linearGradient>
+  </defs>
+  <path d="M7 19 C9 38 19 52 32 59 C45 52 55 38 57 19 C51 34 42 43 32 44 C22 43 13 34 7 19 Z" fill="url(#corpoB)"/>
+  <circle cx="32" cy="34" r="9.5" fill="url(#cabecaB)"/>
+  <path d="M22 17.5 V22.5 C22 25 26.5 26.5 32 26.5 C37.5 26.5 42 25 42 22.5 V17.5 L32 21 Z" fill="#4a3796"/>
+  <path d="M32 8 L53 15.5 L32 23 L11 15.5 Z" fill="#2b1d63"/>
+  <path d="M50 16.6 V25" stroke="#fbb867" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="50" cy="26.2" r="1.9" fill="#fbb867"/>
+</svg>

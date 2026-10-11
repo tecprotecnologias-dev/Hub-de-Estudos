@@ -13,7 +13,7 @@ export default function App() {
       <header className="topo no-print">
         <div className="topo-conteudo">
           <NavLink to="/" className="marca">
-            <img src={`${import.meta.env.BASE_URL}marca/hub-logo.svg`} alt="" />
+            <img src={`${import.meta.env.BASE_URL}marca/hub-logo-branco.svg`} alt="" />
             <span>Hub de Estudos</span>
           </NavLink>
           <nav>
@@ -45,7 +45,20 @@ export default function App() {
         </Routes>
       </main>
       <footer className="rodape no-print">
-        Desenvolvido por TecPro Tecnologias · <a href="tel:+5521983003074">(21) 98300-3074</a>
+        <div className="rodape-conteudo">
+          <nav className="rodape-links" aria-label="Rodapé">
+            <NavLink to="/" end>
+              Disciplinas
+            </NavLink>
+            <NavLink to="/apostilas">Apostilas</NavLink>
+            <NavLink to="/simulado">Simulados</NavLink>
+            <NavLink to="/dicas">Dicas</NavLink>
+            <NavLink to="/gerar-prova">Gerar prova</NavLink>
+          </nav>
+          <p className="rodape-credito">
+            Desenvolvido por TecPro Tecnologias · <a href="tel:+5521983003074">(21) 98300-3074</a>
+          </p>
+        </div>
       </footer>
     </HashRouter>
   )
