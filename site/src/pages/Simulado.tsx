@@ -6,6 +6,7 @@ import { questoes } from '../data/questoes'
 import type { Apostila, QuestaoDiscursiva, QuestaoObjetiva } from '../data/tipos'
 import { apostilasDaDisciplina, rotuloApostila } from '../lib/capitulos'
 import EnunciadoQuestao, { Resolucao } from '../lib/EnunciadoQuestao'
+import { useDisciplinaVisivel } from '../lib/Protegida'
 import { verificarCodigo } from '../lib/verificarCodigo'
 import { buscarDisciplina, embaralhar, embaralharAlternativas, LETRAS, nomePeriodo, PERIODOS } from '../lib/util'
 
@@ -43,12 +44,13 @@ function NaoEncontrado() {
 /* ---------------------------------------------------------------- disciplinas */
 
 function ListaDisciplinas() {
+  const visivel = useDisciplinaVisivel()
   return (
     <>
       <h1>Simulados</h1>
       <p className="dica">Escolha a disciplina. As questões estão organizadas pelos capítulos da apostila.</p>
       {PERIODOS.map((p) => {
-        const doPeriodo = disciplinas.filter((d) => d.periodo === p)
+        const doPeriodo = disciplinas.filter((d) => d.periodo === p && visivel(d.id))
         if (!doPeriodo.length) return null
         return (
           <section key={p} className="bloco-periodo">

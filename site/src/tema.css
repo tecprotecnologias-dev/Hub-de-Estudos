@@ -624,3 +624,229 @@ body.pagina-inicial {
   background: #ffffff;
   box-shadow: 0 4px 20px rgb(0 0 0 / 0.25);
 }
+
+/* ===================================================================== */
+/* Cadastro e login                                                       */
+/* ===================================================================== */
+.topo nav .botao-entrar {
+  background: var(--primaria);
+  color: #ffffff;
+  font-weight: 600;
+  margin-left: 0.25rem;
+}
+
+.topo nav .botao-entrar:hover {
+  background: var(--primaria-escura);
+  color: #ffffff;
+  box-shadow: var(--brilho);
+}
+
+.topo nav .link-conta {
+  font-weight: 600;
+  color: var(--primaria-texto);
+  border: 1px solid rgb(130 87 229 / 0.35);
+  margin-left: 0.25rem;
+}
+
+.cartao-acesso,
+.aviso-acesso {
+  max-width: 520px;
+  margin: 1rem auto 2rem;
+  padding: 2rem 2rem 1.75rem;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 18px;
+  box-shadow: var(--sombra-cartao);
+}
+
+.cartao-conta {
+  max-width: 600px;
+}
+
+.cartao-acesso h1,
+.aviso-acesso h1 {
+  margin-bottom: 0.4rem;
+}
+
+.formulario-acesso {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 1.25rem;
+}
+
+.formulario-acesso label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--texto);
+}
+
+.formulario-acesso label.inline {
+  flex-direction: row;
+  align-items: flex-start;
+  font-weight: 400;
+}
+
+.formulario-acesso input:not([type='checkbox']),
+.formulario-acesso select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font-weight: 400;
+}
+
+.formulario-acesso button[type='submit'] {
+  padding: 0.7rem 1rem;
+  margin-top: 0.25rem;
+}
+
+.linha-campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+@media (max-width: 520px) {
+  .linha-campos {
+    grid-template-columns: 1fr;
+  }
+
+  .cartao-acesso,
+  .aviso-acesso {
+    padding: 1.5rem 1.25rem;
+  }
+}
+
+.aceite input {
+  margin-top: 0.2rem;
+}
+
+.dica.pequena {
+  font-size: 0.82rem;
+  margin: -0.35rem 0 0;
+}
+
+.erro-acesso,
+.ok-acesso {
+  margin: 0.25rem 0 0;
+  padding: 0.6rem 0.8rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.erro-acesso {
+  color: var(--errada);
+  background: var(--errada-fundo);
+}
+
+.ok-acesso {
+  color: var(--certa);
+  background: var(--certa-fundo);
+}
+
+.links-acesso {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 1.25rem 0 0;
+  font-size: 0.92rem;
+}
+
+.dados-conta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1.5rem;
+  margin: 1.25rem 0 0.75rem;
+}
+
+.dados-conta dt {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+.dados-conta dd {
+  margin: 0.15rem 0 0;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.acoes-conta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--borda);
+}
+
+button.perigo {
+  background: transparent;
+  color: var(--errada);
+  border-color: rgb(198 47 61 / 0.5);
+}
+
+button.perigo:hover:not(:disabled) {
+  background: var(--errada-fundo);
+  box-shadow: 0 0 0 1px rgb(198 47 61 / 0.4);
+}
+
+.aviso-acesso {
+  text-align: center;
+}
+
+.aviso-acesso p {
+  color: var(--texto-suave);
+}
+
+.texto-legal {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 18px;
+  padding: 2rem 2.25rem;
+  line-height: 1.7;
+}
+
+.texto-legal h2 {
+  margin-top: 1.75rem;
+  font-size: 1.15rem;
+}
+
+.tabela-admin {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+
+.tabela-admin th,
+.tabela-admin td {
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+  border-bottom: 1px solid var(--borda);
+  white-space: nowrap;
+}
+
+.tabela-admin th {
+  background: var(--primaria-clara);
+  font-weight: 600;
+}
+
+.tabela-admin tbody tr:hover {
+  background: var(--superficie-alta);
+}
+
+.tabela-admin select {
+  padding: 0.25rem 0.4rem;
+}

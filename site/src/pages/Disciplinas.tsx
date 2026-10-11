@@ -4,12 +4,15 @@ import { apostilas } from '../data/apostilas'
 import { apresentacoes } from '../data/apresentacoes'
 import { disciplinas } from '../data/disciplinas'
 import { questoes } from '../data/questoes'
+import { useDisciplinaVisivel } from '../lib/Protegida'
 import { nomePeriodo, PERIODOS, resumoApresentacao } from '../lib/util'
 
 // Lista de disciplinas por período (antes ficava na página inicial)
 export default function Disciplinas() {
   const [periodo, setPeriodo] = useState<number | null>(null)
-  const visiveis = periodo === null ? PERIODOS : [periodo]
+  const visivel = useDisciplinaVisivel()
+  const periodosDoPerfil = PERIODOS.filter((p) => disciplinas.some((d) => d.periodo === p && visivel(d.id)))
+  const visiveis = periodo === null ? periodosDoPerfil : [periodo]
 
   return (
     <>
@@ -22,7 +25,7 @@ export default function Disciplinas() {
         <button className={periodo === null ? 'aba ativa' : 'aba'} onClick={() => setPeriodo(null)}>
           Todos
         </button>
-        {PERIODOS.map((p) => (
+        {periodosDoPerfil.map((p) => (
           <button key={p} className={periodo === p ? 'aba ativa' : 'aba'} onClick={() => setPeriodo(p)}>
             {nomePeriodo(p)}
           </button>
@@ -34,7 +37,7 @@ export default function Disciplinas() {
           <h2>{nomePeriodo(p)}</h2>
           <div className="cartoes">
             {disciplinas
-              .filter((d) => d.periodo === p)
+              .filter((d) => d.periodo === p && visivel(d.id))
               .map((d) => {
                 const nq = questoes.filter((q) => q.disciplinaId === d.id).length
                 const na = apostilas.filter((a) => a.disciplinaId === d.id).length

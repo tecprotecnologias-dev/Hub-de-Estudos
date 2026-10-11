@@ -4,6 +4,7 @@ import { apostilas } from '../data/apostilas'
 import { disciplinas } from '../data/disciplinas'
 import type { Apostila } from '../data/tipos'
 import { apostilasDaDisciplina, gruposDeApostila, rotuloApostila } from '../lib/capitulos'
+import { useDisciplinaVisivel } from '../lib/Protegida'
 import { buscarDisciplina, nomePeriodo, PERIODOS } from '../lib/util'
 
 const url = (a: Apostila) => import.meta.env.BASE_URL + (a.arquivo ?? '')
@@ -16,6 +17,7 @@ export default function Apostilas() {
   const [disciplinaId, setDisciplinaId] = useState(inicial?.id ?? '')
   const [busca, setBusca] = useState('')
   const [aberta, setAberta] = useState<Apostila | null>(null)
+  const visivel = useDisciplinaVisivel()
 
   const termo = busca.trim().toLowerCase()
   const confere = (a: Apostila) =>
@@ -24,6 +26,7 @@ export default function Apostilas() {
   // disciplinas com apostila, na ordem de período e nome, respeitando os filtros
   const comApostila = disciplinas.filter(
     (d) =>
+      visivel(d.id) &&
       (!periodo || String(d.periodo) === periodo) &&
       (!disciplinaId || d.id === disciplinaId) &&
       apostilasDaDisciplina(d.id).some(confere),
@@ -62,7 +65,7 @@ export default function Apostilas() {
             }}
           >
             <option value="">Todos</option>
-            {PERIODOS.map((p) => (
+            {PERIODOS.filter((p) => disciplinas.some((d) => d.periodo === p && visivel(d.id))).map((p) => (
               <option key={p} value={p}>
                 {nomePeriodo(p)}
               </option>
@@ -74,7 +77,12 @@ export default function Apostilas() {
           <select value={disciplinaId} onChange={(e) => setDisciplinaId(e.target.value)}>
             <option value="">Todas</option>
             {disciplinas
-              .filter((d) => (!periodo || String(d.periodo) === periodo) && apostilasDaDisciplina(d.id).length > 0)
+              .filter(
+                (d) =>
+                  visivel(d.id) &&
+                  (!periodo || String(d.periodo) === periodo) &&
+                  apostilasDaDisciplina(d.id).length > 0,
+              )
               .map((d) => (
                 <option key={d.id} value={d.id}>
                   {d.nome}

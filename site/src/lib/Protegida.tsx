@@ -1,0 +1,69 @@
+import type { ReactNode } from 'react'
+import { Link, Navigate, useLocation } from 'react-router-dom'
+import { disciplinas } from '../data/disciplinas'
+import { authConfigurado } from './supabase'
+import { podeAcessar, podeVerPeriodo, useAuth, type TipoPerfil } from './auth'
+import { nomePeriodo } from './util'
+
+// Portões das áreas restritas. Sem o Supabase configurado (site/.env.local), tudo passa:
+// o site funciona aberto, como antes do cadastro.
+
+function Carregando() {
+  return <p className="dica">Carregando…</p>
+}
+
+/** Só para quem está logado (e, se informado, de um destes tipos de perfil). */
+export function Protegida({ tipos, children }: { tipos?: TipoPerfil[]; children: ReactNode }) {
+  const { pronto, sessao, perfil } = useAuth()
+  const local = useLocation()
+  if (!authConfigurado) return <>{children}</>
+  if (!pronto) return <Carregando />
+  if (!sessao) return <Navigate to="/entrar" replace state={{ de: local.pathname }} />
+  if (!perfil) return <Carregando />
+  if (!podeAcessar(perfil, tipos)) {
+    return (
+      <section className="aviso-acesso">
+        <h1>Área restrita</h1>
+        <p>Esta área é só para {tipos?.includes('professor') ? 'professores' : 'administradores'}.</p>
+        <Link to="/" className="botao">
+          Voltar para o início
+        </Link>
+      </section>
+    )
+  }
+  return <>{children}</>
+}
+
+/** Conteúdo de uma disciplina: o aluno só vê as do seu período e dos anteriores (e as optativas). */
+export function ProtegeDisciplina({ disciplinaId, children }: { disciplinaId: string; children: ReactNode }) {
+  const { perfil } = useAuth()
+  const d = disciplinas.find((x) => x.id === disciplinaId)
+  return (
+    <Protegida>
+      {!d || podeVerPeriodo(perfil, d.periodo) ? (
+        children
+      ) : (
+        <section className="aviso-acesso">
+          <h1>Disciplina de outro período</h1>
+          <p>
+            {d.nome} é do {nomePeriodo(d.periodo)}. Você tem acesso às disciplinas até o{' '}
+            {perfil?.periodo ? nomePeriodo(perfil.periodo) : 'seu período'} e às optativas.
+          </p>
+          <p className="dica">Se o seu período mudou, peça a atualização do cadastro à coordenação do site.</p>
+          <Link to="/disciplinas" className="botao">
+            Ver as minhas disciplinas
+          </Link>
+        </section>
+      )}
+    </Protegida>
+  )
+}
+
+/** Filtro para listas: a disciplina aparece para este perfil? */
+export function useDisciplinaVisivel() {
+  const { perfil } = useAuth()
+  return (disciplinaId: string) => {
+    const d = disciplinas.find((x) => x.id === disciplinaId)
+    return !d || podeVerPeriodo(perfil, d.periodo)
+  }
+}

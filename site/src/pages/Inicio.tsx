@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { apostilas } from '../data/apostilas'
 import { disciplinas } from '../data/disciplinas'
 import { questoes } from '../data/questoes'
+import { podeAcessar, useAuth } from '../lib/auth'
 
 const CAMINHOS: { titulo: string; texto: string; acao: string; para: string }[] = [
   {
@@ -45,6 +46,9 @@ const CAMINHOS: { titulo: string; texto: string; acao: string; para: string }[] 
 
 export default function Inicio() {
   const comApostila = disciplinas.filter((d) => apostilas.some((a) => a.disciplinaId === d.id)).length
+  const { perfil } = useAuth()
+  // o Gerar prova é só para professores e administradores
+  const caminhos = CAMINHOS.filter((c) => c.para !== '/gerar-prova' || podeAcessar(perfil, ['professor', 'admin']))
 
   // Só a página inicial tem o fundo roxo profundo; as páginas de estudo continuam claras.
   useEffect(() => {
@@ -90,7 +94,7 @@ export default function Inicio() {
           Por onde você quer começar?
         </h2>
         <div className="caminhos">
-          {CAMINHOS.map((c) => {
+          {caminhos.map((c) => {
             const conteudo = (
               <>
                 <h3>{c.titulo}</h3>
