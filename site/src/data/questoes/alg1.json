@@ -2444,5 +2444,1193 @@
         "texto": "O Java mostra um double sempre com casa decimal (6.0), e por isso o C++ usa fixed com setprecision(1) para que as duas versões mostrem o mesmo boletim. Para continuar: acrescente à Turma um método que devolve o aluno com a maior média, ou que conta quantos estão em cada situação."
       }
     ]
+  },
+  {
+    "id": "alg1-cap1-o1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap1",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Qual das definições descreve corretamente um algoritmo?",
+    "alternativas": [
+      "Uma sequência finita e ordenada de passos bem definidos que resolve um problema",
+      "Um programa escrito obrigatoriamente em uma linguagem de programação",
+      "Um componente físico do computador que executa os cálculos",
+      "Uma lista de dados de entrada usada para testar um programa"
+    ],
+    "correta": 0,
+    "resolucao": "Um algoritmo é a sequência de passos, não importa em que forma está escrito: em português, em fluxograma, em Portugol ou em uma linguagem de programação. Uma receita de bolo também é um algoritmo."
+  },
+  {
+    "id": "alg1-cap1-o2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap1",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Em um fluxograma, qual forma representa uma decisão, como \"nota >= 6?\"?",
+    "alternativas": [
+      "O retângulo, que representa um cálculo ou atribuição",
+      "O paralelogramo, que representa a leitura ou a exibição de dados",
+      "O retângulo de cantos arredondados, que marca o início e o fim",
+      "O losango, com duas saídas identificadas"
+    ],
+    "correta": 3,
+    "resolucao": "O losango faz uma pergunta de sim ou não, e o caminho seguido depende da resposta. Por isso toda decisão tem duas saídas, cada uma identificada (Seção 1.5)."
+  },
+  {
+    "id": "alg1-cap1-o3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Na arquitetura de Von Neumann, onde fica um programa enquanto está sendo executado?",
+    "alternativas": [
+      "Nos registradores da CPU, que guardam o programa inteiro",
+      "No armazenamento (SSD ou disco), de onde a CPU busca cada instrução diretamente",
+      "Na memória principal (RAM), junto com os dados que ele usa",
+      "Em uma memória separada, exclusiva para programas, sem acesso aos dados"
+    ],
+    "correta": 2,
+    "resolucao": "A grande ideia de Von Neumann foi guardar o programa na mesma memória que os dados. Para executar um programa, o sistema o copia do armazenamento para a RAM, e a CPU busca as instruções ali. Os registradores são pequenos e guardam só os valores em uso."
+  },
+  {
+    "id": "alg1-cap1-o4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "a <- 5\nb <- 3\na <- a + b\nb <- a - b\na <- a - b"
+      }
+    ],
+    "enunciado": "Faça o teste de mesa do trecho em Portugol acima. Quais são os valores de a e b no fim?",
+    "alternativas": [
+      "a = 5 e b = 3",
+      "a = 3 e b = 5",
+      "a = 8 e b = 5",
+      "a = 3 e b = 8"
+    ],
+    "correta": 1,
+    "resolucao": "Linha a linha: a vale 5 e b vale 3; a recebe 5 + 3 = 8; b recebe 8 - 3 = 5; a recebe 8 - 5 = 3. O trecho troca os valores das duas variáveis sem usar uma terceira."
+  },
+  {
+    "id": "alg1-cap1-o5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap1",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "media <- nota1 + nota2 / 2"
+      }
+    ],
+    "enunciado": "Um algoritmo usa a linha acima para calcular a média de duas notas. Com nota1 = 6 e nota2 = 8, que valor ele calcula?",
+    "alternativas": [
+      "10, porque a divisão é feita antes da soma",
+      "7, que é a média correta das duas notas",
+      "7, porque as operações são feitas da esquerda para a direita",
+      "14, porque a divisão por 2 é ignorada"
+    ],
+    "correta": 0,
+    "resolucao": "A divisão tem precedência sobre a soma, então só nota2 é dividida: 6 + 8 / 2 = 6 + 4 = 10. Para a média, são necessários parênteses: (nota1 + nota2) / 2. O algoritmo roda sem nenhum erro aparente, e só um teste de mesa revela o problema."
+  },
+  {
+    "id": "alg1-cap2-o1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap2",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Qual é a diferença entre compilar e interpretar um programa?",
+    "alternativas": [
+      "O compilador traduz o programa inteiro antes de executá-lo, gerando um executável; o interpretador traduz e executa o programa aos poucos, durante a execução",
+      "O compilador executa o programa linha por linha; o interpretador gera um arquivo executável",
+      "Não há diferença: compilador e interpretador são dois nomes para a mesma ferramenta",
+      "O compilador só encontra erros de lógica; o interpretador só encontra erros de sintaxe"
+    ],
+    "correta": 0,
+    "resolucao": "C++ é uma linguagem compilada: o g++ gera um executável, que depois roda sem precisar do compilador. Python e JavaScript costumam ser interpretados (Seção 2.3)."
+  },
+  {
+    "id": "alg1-cap2-o2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap2",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "cout << \"A\" << 1 + 2 << \"B\" << endl;"
+      }
+    ],
+    "enunciado": "O que o comando acima mostra na tela?",
+    "alternativas": [
+      "A1+2B",
+      "A12B",
+      "A 3 B",
+      "A3B"
+    ],
+    "correta": 3,
+    "resolucao": "O que está entre aspas é mostrado como texto; 1 + 2 fora das aspas é uma conta, e o cout mostra o resultado, 3. O cout não acrescenta espaços: só aparecem os que estão dentro das aspas."
+  },
+  {
+    "id": "alg1-cap2-o3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << \"Oi\" << endl\n    return 0;\n}"
+      }
+    ],
+    "enunciado": "O programa acima esqueceu o ponto e vírgula no fim do cout. O que acontece ao compilar?",
+    "alternativas": [
+      "O programa compila e mostra Oi, porque o ponto e vírgula é opcional antes do return",
+      "O programa compila, mas trava ao chegar nessa linha",
+      "O compilador aponta um erro de sintaxe e não gera o executável",
+      "O compilador acrescenta o ponto e vírgula sozinho e só mostra um aviso"
+    ],
+    "correta": 2,
+    "resolucao": "Faltar o ponto e vírgula é um erro de sintaxe: o programa não segue as regras de escrita da linguagem, e o compilador se recusa a continuar. A mensagem costuma apontar a linha seguinte (\"expected ';' before 'return'\"), porque é ali que ele percebe o problema."
+  },
+  {
+    "id": "alg1-cap2-o4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int a = 7, b = 2;\ncout << a / b;"
+      }
+    ],
+    "enunciado": "O que o trecho acima mostra?",
+    "alternativas": [
+      "3.5",
+      "3",
+      "4",
+      "3.0"
+    ],
+    "correta": 1,
+    "resolucao": "Em C++, a divisão entre dois inteiros descarta a parte decimal, sem arredondar: 7 / 2 vale 3. Não é um erro para o compilador, e sim o significado (a semântica) da divisão inteira. Para obter 3.5, um dos lados precisa ser real, como em a / 2.0."
+  },
+  {
+    "id": "alg1-cap2-o5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "enunciado": "Na compilação de um programa C++, qual é o papel do ligador (linker)?",
+    "alternativas": [
+      "Juntar o código-objeto com o código das bibliotecas usadas, como a do cout, e gerar o executável",
+      "Tratar as linhas que começam com #, como o #include",
+      "Verificar a sintaxe e traduzir o código para linguagem de máquina",
+      "Executar o programa e mostrar as mensagens de erro de execução"
+    ],
+    "correta": 0,
+    "resolucao": "As três etapas são: o pré-processador trata as linhas com #; o compilador verifica a sintaxe e gera o código-objeto; e o ligador junta esse código com as bibliotecas e gera o executável. Um erro como \"undefined reference\" vem do ligador, e não do compilador."
+  },
+  {
+    "id": "alg1-cap3-o1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap3",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Qual tipo do C++ é o mais adequado para guardar a altura de uma pessoa em metros, como 1.75?",
+    "alternativas": [
+      "double",
+      "int",
+      "char",
+      "bool"
+    ],
+    "correta": 0,
+    "resolucao": "A altura tem casas decimais, então precisa de um tipo real: double. Com int, 1.75 viraria 1; char guarda um caractere, e bool, só verdadeiro ou falso."
+  },
+  {
+    "id": "alg1-cap3-o2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap3",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "cout << 17 / 5 << \" \" << 17 % 5;"
+      }
+    ],
+    "enunciado": "O que o comando acima mostra?",
+    "alternativas": [
+      "3.4 2",
+      "3 0.4",
+      "3.4 0",
+      "3 2"
+    ],
+    "correta": 3,
+    "resolucao": "Com dois inteiros, / é a divisão inteira (17 / 5 = 3) e % é o resto da divisão (17 = 5 × 3 + 2, então o resto é 2)."
+  },
+  {
+    "id": "alg1-cap3-o3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int x = 5;\nx += 3;\nx *= 2;\ncout << x;"
+      }
+    ],
+    "enunciado": "Qual valor é mostrado?",
+    "alternativas": [
+      "13",
+      "11",
+      "16",
+      "10"
+    ],
+    "correta": 2,
+    "resolucao": "x += 3 é o mesmo que x = x + 3, e x passa a valer 8. Depois, x *= 2 é x = x * 2, e x passa a valer 16."
+  },
+  {
+    "id": "alg1-cap3-o4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "cout << 2 + 3 * 4 - 6 / 2;"
+      }
+    ],
+    "enunciado": "Qual valor é mostrado?",
+    "alternativas": [
+      "7",
+      "11",
+      "17",
+      "8"
+    ],
+    "correta": 1,
+    "resolucao": "Multiplicação e divisão vêm antes de soma e subtração: 3 * 4 = 12 e 6 / 2 = 3, e então 2 + 12 - 3 = 11. Quem calcula da esquerda para a direita, sem precedência, chega a 7."
+  },
+  {
+    "id": "alg1-cap3-o5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int pessoas = 0;\ndouble total = 100;\nbool caro = pessoas > 0 && total / pessoas > 50;"
+      }
+    ],
+    "enunciado": "O que acontece quando o trecho acima é executado?",
+    "alternativas": [
+      "caro recebe false, e a divisão nem é calculada, porque o lado esquerdo do && já é falso",
+      "O programa é interrompido com um erro de divisão por zero",
+      "caro recebe true, porque 100 dividido por 0 é infinito",
+      "O compilador recusa o código por causa da possível divisão por zero"
+    ],
+    "correta": 0,
+    "resolucao": "Os operadores && e || fazem avaliação em curto-circuito: se o lado esquerdo já decide o resultado, o direito não é calculado. Como pessoas > 0 é falso, o && só pode dar falso, e a divisão por zero nunca acontece (Seção 3.6). Por isso a ordem das condições importa."
+  },
+  {
+    "id": "alg1-cap4-o1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap4",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int n = 7;\nif (n % 2 == 0) cout << \"par\";\nelse cout << \"ímpar\";"
+      }
+    ],
+    "enunciado": "O que o trecho acima mostra?",
+    "alternativas": [
+      "ímpar",
+      "par",
+      "parímpar",
+      "Nada, porque falta o bloco com chaves"
+    ],
+    "correta": 0,
+    "resolucao": "7 % 2 vale 1, então a condição é falsa e o else é executado. As chaves são opcionais quando o if ou o else têm um único comando."
+  },
+  {
+    "id": "alg1-cap4-o2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap4",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Qual estrutura é a mais indicada para escolher entre vários valores exatos de uma variável inteira, como os dias da semana de 1 a 7?",
+    "alternativas": [
+      "while (enquanto, no Portugol)",
+      "for (para, no Portugol)",
+      "Um único if, sem else",
+      "switch (escolha, no Portugol)"
+    ],
+    "correta": 3,
+    "resolucao": "O switch compara uma variável com vários valores exatos, um caso para cada valor, e fica mais legível que uma longa sequência de else if (Seção 4.5). While e for são laços, e não decisões."
+  },
+  {
+    "id": "alg1-cap4-o3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int op = 2;\nswitch (op) {\n    case 1: cout << \"A\";\n    case 2: cout << \"B\";\n    case 3: cout << \"C\";\n    default: cout << \"D\";\n}"
+      }
+    ],
+    "enunciado": "O que o trecho acima mostra?",
+    "alternativas": [
+      "B",
+      "BC",
+      "BCD",
+      "ABCD"
+    ],
+    "correta": 2,
+    "resolucao": "Sem break, a execução começa no caso que corresponde ao valor (case 2) e continua pelos casos seguintes, incluindo o default. Por isso cada caso costuma terminar com break."
+  },
+  {
+    "id": "alg1-cap4-o4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "double nota = 9.5;\nif (nota >= 6) cout << \"Aprovado\";\nelse if (nota >= 9) cout << \"Excelente\";\nelse cout << \"Reprovado\";"
+      }
+    ],
+    "enunciado": "A intenção era mostrar \"Excelente\" para notas a partir de 9. O que o trecho mostra?",
+    "alternativas": [
+      "Excelente",
+      "Aprovado",
+      "AprovadoExcelente",
+      "Reprovado"
+    ],
+    "correta": 1,
+    "resolucao": "Em uma cadeia de else if, só o primeiro teste verdadeiro é executado. Como 9.5 >= 6 já é verdadeiro, o teste de 9 nunca é feito. A condição mais restrita (>= 9) precisa vir antes."
+  },
+  {
+    "id": "alg1-cap4-o5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap4",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int x = 0;\nif (x = 5) cout << \"sim\";\nelse cout << \"não\";\ncout << \" \" << x;"
+      }
+    ],
+    "enunciado": "O que o trecho acima mostra?",
+    "alternativas": [
+      "sim 5",
+      "não 0",
+      "não 5",
+      "sim 0"
+    ],
+    "correta": 0,
+    "resolucao": "x = 5 é uma atribuição, e não uma comparação: ela guarda 5 em x e vale 5, que é verdadeiro (qualquer valor diferente de zero). Por isso o if executa, e x termina valendo 5. A comparação seria x == 5. Compilar com -Wall faz o g++ avisar desse engano."
+  },
+  {
+    "id": "alg1-cap5-o1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap5",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "for (int i = 0; i < 10; i++) {\n    cout << \"*\";\n}"
+      }
+    ],
+    "enunciado": "Quantos asteriscos o laço acima mostra?",
+    "alternativas": [
+      "10",
+      "9",
+      "11",
+      "Infinitos, porque o laço nunca termina"
+    ],
+    "correta": 0,
+    "resolucao": "O contador vai de 0 a 9: são 10 voltas. Começar em 0 e parar quando i < n é a forma padrão de repetir n vezes em C++. Começando em 1 com i < 10, seriam 9."
+  },
+  {
+    "id": "alg1-cap5-o2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap5",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Qual laço executa o seu bloco pelo menos uma vez, mesmo que a condição comece falsa?",
+    "alternativas": [
+      "while (enquanto, no Portugol)",
+      "for (para, no Portugol)",
+      "Nenhum: todos testam a condição antes de executar",
+      "do-while (repita ... ate, no Portugol)"
+    ],
+    "correta": 3,
+    "resolucao": "O do-while executa o bloco e só depois testa a condição. Por isso é o laço ideal para pedir um dado e repetir o pedido enquanto ele for inválido (Seção 5.2)."
+  },
+  {
+    "id": "alg1-cap5-o3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int soma = 0;\nfor (int i = 1; i <= 10; i += 3) {\n    soma += i;\n}\ncout << soma;"
+      }
+    ],
+    "enunciado": "Qual valor é mostrado?",
+    "alternativas": [
+      "12",
+      "55",
+      "22",
+      "21"
+    ],
+    "correta": 2,
+    "resolucao": "O contador anda de 3 em 3: 1, 4, 7 e 10 (10 <= 10 ainda é verdadeiro). A soma é 1 + 4 + 7 + 10 = 22. Esquecer a última volta, a do 10, dá 12."
+  },
+  {
+    "id": "alg1-cap5-o4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int conta = 0;\nfor (int i = 0; i < 4; i++) {\n    for (int j = i; j < 4; j++) {\n        conta++;\n    }\n}\ncout << conta;"
+      }
+    ],
+    "enunciado": "Qual valor é mostrado?",
+    "alternativas": [
+      "16",
+      "10",
+      "6",
+      "4"
+    ],
+    "correta": 1,
+    "resolucao": "O laço de dentro começa em i, então dá 4 voltas quando i = 0, 3 quando i = 1, 2 quando i = 2 e 1 quando i = 3: 4 + 3 + 2 + 1 = 10. Se j começasse sempre em 0, seriam 4 × 4 = 16."
+  },
+  {
+    "id": "alg1-cap5-o5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "for (int i = 1; i <= 6; i++) {\n    if (i % 2 == 0) continue;\n    if (i == 5) break;\n    cout << i << \" \";\n}"
+      }
+    ],
+    "enunciado": "O que o laço acima mostra?",
+    "alternativas": [
+      "1 3",
+      "1 3 5",
+      "2 4",
+      "1 2 3 4"
+    ],
+    "correta": 0,
+    "resolucao": "Os pares são pulados pelo continue, que vai direto para a próxima volta. Sobram 1 e 3, que são mostrados. No 5, o break encerra o laço antes do cout, e o 5 não aparece."
+  },
+  {
+    "id": "alg1-cap6-o1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap6",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Qual é a diferença entre uma função e um procedimento?",
+    "alternativas": [
+      "A função devolve um valor com return; o procedimento executa uma tarefa sem devolver valor (void, em C++)",
+      "A função recebe parâmetros; o procedimento nunca recebe parâmetros",
+      "A função só pode ser chamada dentro do main; o procedimento, de qualquer lugar",
+      "Não há diferença: são dois nomes para a mesma coisa"
+    ],
+    "correta": 0,
+    "resolucao": "Uma função é usada como um valor, dentro de uma expressão (x = media(a, b)); um procedimento é usado como um comando, sozinho na linha (linha(30)). Os dois podem receber parâmetros (Seção 6.3)."
+  },
+  {
+    "id": "alg1-cap6-o2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap6",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "void dobrar(int x) {\n    x = x * 2;\n}\n\nint main() {\n    int a = 5;\n    dobrar(a);\n    cout << a;\n}"
+      }
+    ],
+    "enunciado": "O que o programa acima mostra?",
+    "alternativas": [
+      "10",
+      "0",
+      "Nada, porque o programa não compila",
+      "5"
+    ],
+    "correta": 3,
+    "resolucao": "A passagem é por valor: x é uma cópia de a. Dobrar a cópia não altera a variável do main. Para alterar a, o parâmetro precisaria ser uma referência: int &x (Seção 6.6)."
+  },
+  {
+    "id": "alg1-cap6-o3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "void troca(int &a, int b) {\n    int aux = a;\n    a = b;\n    b = aux;\n}\n\nint main() {\n    int x = 1, y = 2;\n    troca(x, y);\n    cout << x << \" \" << y;\n}"
+      }
+    ],
+    "enunciado": "O & foi colocado só no primeiro parâmetro. O que o programa mostra?",
+    "alternativas": [
+      "2 1",
+      "1 2",
+      "2 2",
+      "1 1"
+    ],
+    "correta": 2,
+    "resolucao": "a é uma referência para x, então a = b muda x para 2. Já b é uma cópia de y: b = aux muda só a cópia, e y continua valendo 2. Resultado: x = 2 e y = 2. A troca correta usa & nos dois parâmetros."
+  },
+  {
+    "id": "alg1-cap6-o4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um programa chama media(a, b) dentro do main, mas a função media está escrita depois do main e não há protótipo. Por que o programa não compila?",
+    "alternativas": [
+      "Porque funções só podem ser escritas dentro do main",
+      "Porque o compilador lê o arquivo de cima para baixo e, ao chegar na chamada, ainda não conhece a função",
+      "Porque o main precisa ser sempre a última função do arquivo",
+      "Porque media é uma palavra reservada do C++"
+    ],
+    "correta": 1,
+    "resolucao": "Uma função precisa ser declarada antes de ser chamada. A solução é escrever a função antes do main ou declarar só o seu cabeçalho no início, o protótipo: double media(double a, double b); (Seção 6.7)."
+  },
+  {
+    "id": "alg1-cap6-o5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "void linha(int n = 3, char c = '-') {\n    for (int i = 0; i < n; i++) cout << c;\n    cout << \"|\";\n}\n\nint main() {\n    linha();\n    linha(2);\n    linha(1, '*');\n}"
+      }
+    ],
+    "enunciado": "O que o programa acima mostra?",
+    "alternativas": [
+      "---|--|*|",
+      "|--|*|",
+      "---|---|*|",
+      "Nada, porque linha() é chamada sem os argumentos"
+    ],
+    "correta": 0,
+    "resolucao": "Os parâmetros têm valores padrão, usados quando o argumento é omitido. linha() usa n = 3 e c = '-'; linha(2) usa n = 2 e o c padrão; linha(1, '*') informa os dois. Cada chamada termina com uma barra."
+  },
+  {
+    "id": "alg1-cap7-o1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap7",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int v[10];"
+      }
+    ],
+    "enunciado": "Quais são o primeiro e o último índices válidos do vetor declarado acima?",
+    "alternativas": [
+      "0 e 9",
+      "1 e 10",
+      "0 e 10",
+      "1 e 9"
+    ],
+    "correta": 0,
+    "resolucao": "Em C++, os índices começam sempre em 0. Um vetor de 10 elementos vai de v[0] a v[9]; v[10] já está fora dele. No Portugol, quem escolhe os limites é a declaração, como vetor[1..10]."
+  },
+  {
+    "id": "alg1-cap7-o2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap7",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int v[5] = {2, 4, 6, 8, 10};\ncout << v[1] + v[3];"
+      }
+    ],
+    "enunciado": "O que o trecho acima mostra?",
+    "alternativas": [
+      "10",
+      "6",
+      "14",
+      "12"
+    ],
+    "correta": 3,
+    "resolucao": "Contando a partir de 0, v[1] é o segundo elemento (4) e v[3] é o quarto (8): 4 + 8 = 12. Quem conta a partir de 1 soma 2 + 6 = 8, ou pega v[3] como 6."
+  },
+  {
+    "id": "alg1-cap7-o3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int v[4] = {7};"
+      }
+    ],
+    "enunciado": "Quais valores ficam no vetor depois da declaração acima?",
+    "alternativas": [
+      "7, 7, 7, 7",
+      "7 e três valores imprevisíveis (lixo)",
+      "7, 0, 0, 0",
+      "Nenhum: o código não compila, porque faltam valores"
+    ],
+    "correta": 2,
+    "resolucao": "A lista entre chaves preenche os elementos na ordem, e os que sobram ficam com 0. Por isso = {} é a forma curta de zerar um vetor inteiro (Seção 7.1). Sem nenhuma lista, aí sim os valores seriam lixo."
+  },
+  {
+    "id": "alg1-cap7-o4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int m[3][4];"
+      }
+    ],
+    "enunciado": "Quantos elementos tem a matriz acima, e como se acessa o último deles?",
+    "alternativas": [
+      "12 elementos; o último é m[3][4]",
+      "12 elementos; o último é m[2][3]",
+      "7 elementos; o último é m[2][3]",
+      "12 elementos; o último é m[4][3]"
+    ],
+    "correta": 1,
+    "resolucao": "São 3 linhas de 4 colunas: 3 × 4 = 12 elementos. As linhas vão de 0 a 2 e as colunas de 0 a 3, então o último elemento é m[2][3]. O primeiro índice é sempre a linha."
+  },
+  {
+    "id": "alg1-cap7-o5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap7",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int v[5] = {1, 2, 3, 4, 5};\nfor (int i = 0; i <= 5; i++) {\n    cout << v[i] << \" \";\n}"
+      }
+    ],
+    "enunciado": "O que se pode afirmar sobre o trecho acima?",
+    "alternativas": [
+      "A última volta acessa v[5], fora do vetor: é comportamento indefinido, e o programa pode mostrar lixo, alterar outra variável ou travar",
+      "O C++ detecta o índice inválido e interrompe o programa com uma mensagem de erro",
+      "O compilador recusa o programa, porque o laço passa do tamanho do vetor",
+      "v[5] vale 0, porque as posições depois do fim do vetor são sempre zeradas"
+    ],
+    "correta": 0,
+    "resolucao": "O C++ não confere os índices dos vetores comuns: ele calcula onde estaria v[5] e lê aquela posição da memória, que pertence a outra coisa. O erro está no <=: para percorrer 5 elementos, a condição é i < 5 (Seção 7.3). O vector com at() confere o índice."
+  },
+  {
+    "id": "alg1-cap8-o1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap8",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Em C++, qual é a diferença entre 'A' e \"A\"?",
+    "alternativas": [
+      "'A' é um único caractere (char); \"A\" é um texto (string) que contém um caractere",
+      "Não há diferença: aspas simples e duplas são equivalentes",
+      "'A' é um texto, e \"A\" é um caractere",
+      "'A' é a letra maiúscula, e \"A\" é a letra minúscula"
+    ],
+    "correta": 0,
+    "resolucao": "Aspas simples delimitam um caractere, guardado em um char; aspas duplas delimitam um texto. Por isso 'Ana' não é válido: entre aspas simples cabe um único caractere (Seção 8.1)."
+  },
+  {
+    "id": "alg1-cap8-o2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap8",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "string s = \"Algoritmo\";\ncout << s.size() << \" \" << s[0] << s[8];"
+      }
+    ],
+    "enunciado": "O que o trecho acima mostra?",
+    "alternativas": [
+      "8 Ao",
+      "9 Am",
+      "10 Ao",
+      "9 Ao"
+    ],
+    "correta": 3,
+    "resolucao": "\"Algoritmo\" tem 9 caracteres, com índices de 0 a 8. s[0] é o \"A\" e s[8], o último, é o \"o\". Quem conta a partir de 1 pega s[8] como o \"m\"."
+  },
+  {
+    "id": "alg1-cap8-o3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "cout << ('7' - '0') * 2;"
+      }
+    ],
+    "enunciado": "O que o comando acima mostra?",
+    "alternativas": [
+      "110",
+      "77",
+      "14",
+      "Nada, porque não se pode subtrair caracteres"
+    ],
+    "correta": 2,
+    "resolucao": "Caracteres são números: '7' vale 55 e '0' vale 48 na tabela ASCII. Como os dígitos são consecutivos, '7' - '0' = 7, o valor do dígito, e 7 × 2 = 14. Sem a subtração, '7' * 2 daria 110."
+  },
+  {
+    "id": "alg1-cap8-o4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap8",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int idade;\nstring nome;\ncin >> idade;\ngetline(cin, nome);"
+      }
+    ],
+    "enunciado": "O usuário digita a idade, tecla Enter e o programa nem espera o nome: nome fica vazio. Por quê?",
+    "alternativas": [
+      "O getline não funciona depois de um cin, em nenhuma situação",
+      "O cin >> leu a idade e deixou o Enter na entrada; o getline encontrou esse Enter e leu uma linha vazia",
+      "O nome precisa ser declarado como char para ser lido com getline",
+      "O getline só lê a primeira palavra, e o nome tinha duas"
+    ],
+    "correta": 1,
+    "resolucao": "O cin >> para logo depois do número e deixa o Enter para trás. A solução é descartar os espaços e quebras de linha pendentes antes do getline: getline(cin >> ws, nome) (Seção 8.3)."
+  },
+  {
+    "id": "alg1-cap8-o5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap8",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "string s = \"ação\";\ncout << s.size();"
+      }
+    ],
+    "enunciado": "Em um arquivo salvo em UTF-8, o que o trecho acima mostra?",
+    "alternativas": [
+      "6",
+      "4",
+      "5",
+      "8"
+    ],
+    "correta": 0,
+    "resolucao": "Em UTF-8, as letras sem acento ocupam um byte, mas ç e ã ocupam dois cada. O string conta bytes, e não letras: 1 + 2 + 2 + 1 = 6. Por isso processar letra por letra um texto com acentos exige cuidado (Seção 8.7)."
+  },
+  {
+    "id": "alg1-cap9-o1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap9",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Do que toda função recursiva bem escrita precisa?",
+    "alternativas": [
+      "De um caso base, resolvido sem recursão, e de um caso recursivo que se aproxima dele",
+      "De um laço for dentro da função para controlar as chamadas",
+      "De variáveis globais para guardar os resultados intermediários",
+      "De pelo menos duas chamadas recursivas em cada execução"
+    ],
+    "correta": 0,
+    "resolucao": "Sem caso base, ou sem que cada chamada se aproxime dele, a recursão nunca para e o programa termina com estouro de pilha (Seções 9.1 e 9.2)."
+  },
+  {
+    "id": "alg1-cap9-o2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap9",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "int f(int n) {\n    if (n == 0) return 0;\n    return n + f(n - 1);\n}\n\nint main() {\n    cout << f(4);\n}"
+      }
+    ],
+    "enunciado": "O que o programa acima mostra?",
+    "alternativas": [
+      "4",
+      "24",
+      "0",
+      "10"
+    ],
+    "correta": 3,
+    "resolucao": "f(4) = 4 + f(3) = 4 + 3 + f(2) = 4 + 3 + 2 + 1 + f(0) = 10. A função soma os números de 1 até n. Com uma multiplicação no lugar da soma (e caso base 1), seria o fatorial, 24."
+  },
+  {
+    "id": "alg1-cap9-o3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "void p(int n) {\n    if (n == 0) return;\n    p(n - 1);\n    cout << n << \" \";\n}\n\nint main() {\n    p(3);\n}"
+      }
+    ],
+    "enunciado": "O que o programa acima mostra?",
+    "alternativas": [
+      "3 2 1",
+      "3",
+      "1 2 3",
+      "0 1 2 3"
+    ],
+    "correta": 2,
+    "resolucao": "O cout vem depois da chamada recursiva, então só é executado na volta. p(3) chama p(2), que chama p(1), que chama p(0) e retorna. Na volta, p(1) mostra 1, depois p(2) mostra 2 e p(3) mostra 3. Com o cout antes da chamada, a saída seria 3 2 1."
+  },
+  {
+    "id": "alg1-cap9-o4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Por que a versão recursiva simples de fib(n), com fib(n - 1) + fib(n - 2), fica muito lenta para n = 40?",
+    "alternativas": [
+      "Porque a recursão é sempre mais lenta que um laço, qualquer que seja o problema",
+      "Porque recalcula os mesmos valores muitas vezes, e o número de chamadas cresce quase tão rápido quanto a própria sequência",
+      "Porque fib(40) não cabe em uma variável do tipo int",
+      "Porque a pilha de chamadas chega a ter milhões de registros ao mesmo tempo"
+    ],
+    "correta": 1,
+    "resolucao": "Cada chamada faz duas outras, que repetem o mesmo trabalho: fib(40) faz mais de 300 milhões de chamadas. A pilha, porém, nunca passa de 40 registros ao mesmo tempo, e fib(40) cabe em um int. A memoização ou um laço resolvem o problema (Seção 9.4)."
+  },
+  {
+    "id": "alg1-cap9-o5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap9",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "enunciado": "Quantos movimentos são necessários para resolver as Torres de Hanói com 5 discos?",
+    "alternativas": [
+      "31",
+      "25",
+      "32",
+      "10"
+    ],
+    "correta": 0,
+    "resolucao": "Para mover n discos, movem-se n - 1 para o pino de apoio, o maior para o destino e os n - 1 de novo por cima: M(n) = 2 × M(n - 1) + 1, com M(1) = 1. Isso dá 2^n - 1: com 5 discos, 2^5 - 1 = 31 (Seção 9.6)."
+  },
+  {
+    "id": "alg1-cap10-o1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap10",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Qual é a condição para usar a busca binária em um vetor?",
+    "alternativas": [
+      "O vetor precisa ter um número par de elementos",
+      "O vetor precisa estar ordenado",
+      "O valor procurado precisa estar no vetor",
+      "O vetor precisa ter menos de mil elementos"
+    ],
+    "correta": 1,
+    "resolucao": "A busca binária descarta metade do vetor a cada passo, comparando o valor procurado com o elemento do meio. Isso só faz sentido se o vetor estiver ordenado. Em um vetor desordenado, ela não dá erro: simplesmente responde errado."
+  },
+  {
+    "id": "alg1-cap10-o2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap10",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Em um vetor ordenado com 1.000 elementos, qual é, aproximadamente, o número máximo de comparações da busca binária?",
+    "alternativas": [
+      "Cerca de 10",
+      "Cerca de 500",
+      "1.000",
+      "Cerca de 100"
+    ],
+    "correta": 0,
+    "resolucao": "A cada comparação, a parte que resta cai pela metade: 1.000, 500, 250, 125... Em cerca de 10 passos sobra um único elemento, porque 2^10 = 1.024. A busca sequencial poderia precisar das 1.000 comparações."
+  },
+  {
+    "id": "alg1-cap10-o3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "29 10 14 37 13"
+      }
+    ],
+    "enunciado": "Aplicando a ordenação por seleção (crescente) ao vetor acima, como ele fica depois da PRIMEIRA passada?",
+    "alternativas": [
+      "10 14 29 37 13",
+      "10 13 14 37 29",
+      "10 14 29 13 37",
+      "10 29 14 37 13"
+    ],
+    "correta": 3,
+    "resolucao": "A primeira passada procura o menor elemento do vetor inteiro (10) e o troca com o da posição 0 (29). Os outros elementos não mudam de lugar. Já 10 14 29 13 37 seria o resultado de uma passada da bolha, que leva o maior para o fim (Seções 10.4 e 10.5)."
+  },
+  {
+    "id": "alg1-cap10-o4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Qual destes algoritmos, aplicado a um vetor que já está ordenado, faz apenas n - 1 comparações?",
+    "alternativas": [
+      "A ordenação por seleção",
+      "Nenhum: os algoritmos simples sempre fazem cerca de n² comparações",
+      "A ordenação por inserção",
+      "Todos fazem n - 1: seleção, bolha e inserção"
+    ],
+    "correta": 2,
+    "resolucao": "Na inserção, o laço de dentro para assim que encontra um elemento menor, e em um vetor ordenado isso acontece logo na primeira comparação. A seleção faz sempre n(n - 1)/2 comparações, ordenado ou não (Seção 10.7)."
+  },
+  {
+    "id": "alg1-cap10-o5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap10",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "enunciado": "Um algoritmo de ordenação O(n²) leva 1 segundo para ordenar 10.000 elementos. Quanto tempo, aproximadamente, levará para 100.000 elementos?",
+    "alternativas": [
+      "10 segundos",
+      "100 segundos",
+      "1.000 segundos",
+      "20 segundos"
+    ],
+    "correta": 1,
+    "resolucao": "Com crescimento n², multiplicar n por 10 multiplica o tempo por 10² = 100. Um algoritmo O(n log n), como o sort da biblioteca, ficaria só um pouco mais de 10 vezes mais lento (Seção 10.3)."
+  },
+  {
+    "id": "alg1-cap11-o1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap11",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "struct Aluno {\n    string nome;\n    double nota;\n};\n\nAluno a = {\"Ana\", 8.5};"
+      }
+    ],
+    "enunciado": "Como se acessa a nota do aluno a?",
+    "alternativas": [
+      "Aluno.nota",
+      "a.nota",
+      "a->nota",
+      "nota(a)"
+    ],
+    "correta": 1,
+    "resolucao": "Os campos de um registro são acessados com um ponto depois do nome da variável. Aluno é o tipo, e não uma variável. A seta (->) é usada quando se tem um ponteiro para o registro (Seções 11.1 e 11.7)."
+  },
+  {
+    "id": "alg1-cap11-o2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap11",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Em uma pilha, os valores 1, 2 e 3 são empilhados nessa ordem. Qual sai primeiro?",
+    "alternativas": [
+      "3",
+      "1",
+      "2",
+      "O menor deles"
+    ],
+    "correta": 0,
+    "resolucao": "Na pilha, o último a entrar é o primeiro a sair (LIFO), como em uma pilha de pratos. Em uma fila, sairia o 1."
+  },
+  {
+    "id": "alg1-cap11-o3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "queue<int> f;\nf.push(1);\nf.push(2);\nf.push(3);\nf.pop();\nf.push(4);\ncout << f.front() << \" \" << f.size();"
+      }
+    ],
+    "enunciado": "O que o trecho acima mostra?",
+    "alternativas": [
+      "1 3",
+      "4 3",
+      "2 4",
+      "2 3"
+    ],
+    "correta": 3,
+    "resolucao": "Na fila, o primeiro a entrar é o primeiro a sair: o pop remove o 1, e o 4 entra no fim. A fila fica 2, 3, 4: o primeiro é o 2, e há 3 elementos."
+  },
+  {
+    "id": "alg1-cap11-o4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "O que acontece quando um programa cria nós de uma lista com new e nunca usa delete?",
+    "alternativas": [
+      "O compilador acusa erro, porque todo new precisa de um delete",
+      "Os nós são apagados automaticamente no fim de cada função",
+      "A memória dos nós fica reservada sem uso até o programa terminar: é um vazamento de memória",
+      "O programa é interrompido no primeiro new que não tiver delete"
+    ],
+    "correta": 2,
+    "resolucao": "A memória criada com new não some no fim do bloco, como as variáveis locais: ela só é devolvida com delete. O compilador não confere isso. Em um programa que roda por muito tempo, os vazamentos podem esgotar a memória (Seção 11.6)."
+  },
+  {
+    "id": "alg1-cap11-o5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap11",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "struct No {\n    int valor;\n    No *prox;\n};\n\nNo c = {3, nullptr};\nNo b = {2, &c};\nNo a = {1, &b};\nb.prox = c.prox;\nfor (No *p = &a; p != nullptr; p = p->prox) {\n    cout << p->valor << \" \";\n}"
+      }
+    ],
+    "enunciado": "O que o trecho acima mostra?",
+    "alternativas": [
+      "1 2 3",
+      "1 2",
+      "1 3",
+      "2 3"
+    ],
+    "correta": 1,
+    "resolucao": "A lista começa como a → b → c. A linha b.prox = c.prox faz b apontar para onde c apontava, que é nullptr: o nó c sai da lista. O percurso a partir de a passa por 1 e 2 e para."
+  },
+  {
+    "id": "alg1-cap12-o1",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap12",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Qual é a relação entre uma classe e um objeto?",
+    "alternativas": [
+      "O objeto é o molde, e a classe é um exemplar criado a partir dele",
+      "A classe é o molde que descreve atributos e métodos; o objeto é um exemplar concreto da classe, com os seus próprios valores",
+      "Classe e objeto são a mesma coisa, com nomes diferentes em C++ e em Java",
+      "A classe guarda só os métodos, e o objeto guarda só os atributos"
+    ],
+    "correta": 1,
+    "resolucao": "A classe ContaBancaria descreve que toda conta tem titular e saldo e sabe depositar e sacar; a conta da Ana e a do Bruno são dois objetos dessa classe, cada um com o seu saldo (Seção 12.1)."
+  },
+  {
+    "id": "alg1-cap12-o2",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap12",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Por que os atributos de uma classe costumam ser privados?",
+    "alternativas": [
+      "Para que só os métodos da própria classe possam alterá-los, garantindo as suas regras, como um saldo que nunca fica negativo",
+      "Para que o programa fique mais rápido",
+      "Porque as linguagens orientadas a objetos não permitem atributos públicos",
+      "Para que os objetos ocupem menos memória"
+    ],
+    "correta": 0,
+    "resolucao": "Esse é o encapsulamento: o resto do programa só mexe nos dados por meio dos métodos públicos, que validam cada operação. Assim as regras ficam em um único lugar, e a forma de guardar os dados pode mudar sem quebrar o resto (Seção 12.2)."
+  },
+  {
+    "id": "alg1-cap12-o3",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap12",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "String a = new String(\"oi\");\nString b = new String(\"oi\");\nSystem.out.println((a == b) + \" \" + a.equals(b));"
+      }
+    ],
+    "enunciado": "O que o trecho em Java acima mostra?",
+    "alternativas": [
+      "true true",
+      "true false",
+      "false false",
+      "false true"
+    ],
+    "correta": 3,
+    "resolucao": "Em Java, == compara se as duas variáveis apontam para o MESMO objeto, e a e b são dois objetos diferentes. Já equals compara o conteúdo, que é igual. Por isso textos são comparados com equals (Seção 12.6)."
+  },
+  {
+    "id": "alg1-cap12-o4",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap12",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "class Animal {\npublic:\n    virtual string som() const { return \"...\"; }\n    virtual ~Animal() {}\n};\n\nclass Gato : public Animal {\npublic:\n    string som() const override { return \"miau\"; }\n};\n\nvoid falar(const Animal &a) { cout << a.som(); }\n\nint main() {\n    Gato g;\n    falar(g);\n}"
+      }
+    ],
+    "enunciado": "O que o programa em C++ acima mostra?",
+    "alternativas": [
+      "...",
+      "...miau",
+      "miau",
+      "Nada, porque falar recebe um Animal, e não um Gato"
+    ],
+    "correta": 2,
+    "resolucao": "Como som() é virtual, a chamada a.som() usa o tipo real do objeto, um Gato, mesmo que a função receba um Animal: é o polimorfismo. Sem o virtual, seria chamado o método de Animal, e a saída seria \"...\" (Seção 12.3)."
+  },
+  {
+    "id": "alg1-cap12-o5",
+    "disciplinaId": "algoritmos-e-linguagem-de-programacao-i",
+    "capituloId": "alg1-cap12",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "ContaBancaria a = new ContaBancaria(\"Ana\", 100);\nContaBancaria c = a;\nc.depositar(50);\nSystem.out.println(a.getSaldo());"
+      }
+    ],
+    "enunciado": "Usando a classe ContaBancaria do Capítulo 12 em Java, o que o trecho acima mostra?",
+    "alternativas": [
+      "100.0",
+      "150.0",
+      "50.0",
+      "Nada: c é uma cópia, e o depósito não aparece em a"
+    ],
+    "correta": 1,
+    "resolucao": "Em Java, uma variável de objeto guarda uma referência. c = a não copia a conta: c e a passam a ser dois nomes para o mesmo objeto, e o depósito feito por c aparece no saldo de a (Seção 12.7). O Java mostra o double com a casa decimal: 150.0."
   }
 ]

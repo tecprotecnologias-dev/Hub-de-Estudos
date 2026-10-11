@@ -22,8 +22,8 @@ DISCIPLINA = 'algoritmos-e-linguagem-de-programacao-i'
 TERMOS_PROIBIDOS = ('faeterj', 'faetec', 'barra mansa', 'enade')
 
 
-def carregar(arquivo):
-    spec = importlib.util.spec_from_file_location(arquivo[:-3], os.path.join(AQUI, 'exercicios', arquivo))
+def carregar(arquivo, pasta='exercicios'):
+    spec = importlib.util.spec_from_file_location(f'{pasta}_{arquivo[:-3]}', os.path.join(AQUI, pasta, arquivo))
     modulo = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(modulo)
     return modulo
@@ -70,6 +70,74 @@ def testar_java(codigo, exemplos, rotulo, tmp):
     return erros
 
 
+PRELUDIO = '#include <iostream>\n#include <string>\nusing namespace std;\n'
+normalizar = lambda s: ' '.join(s.split())
+
+
+def testar_objetiva(ob, rotulo, gpp, tmp):
+    """Questão objetiva com 'executar' (C++) ou 'executar_java': a saída do programa tem de ser
+    exatamente a alternativa certa (espaços normalizados) e diferente das erradas."""
+    erros = []
+    alternativas = [ob['certa']] + ob['erradas']
+    if len(ob['erradas']) != 3 or len(set(map(normalizar, alternativas))) != 4:
+        erros.append(f'{rotulo}: precisa de 1 certa e 3 erradas diferentes')
+    programa, linguagem = ob.get('executar'), 'C++'
+    if programa is True:
+        programa = ob['codigo']
+    if ob.get('executar_java'):
+        programa, linguagem = ob['executar_java'], 'Java'
+    if not programa:
+        return erros
+    if linguagem == 'C++':
+        if 'int main' not in programa:
+            programa = PRELUDIO + 'int main() {\n' + programa + '\nreturn 0;\n}\n'
+        elif '#include' not in programa:
+            programa = PRELUDIO + programa
+        fonte, exe = os.path.join(tmp, 'ob.cpp'), os.path.join(tmp, 'ob.exe')
+        open(fonte, 'w', encoding='utf-8').write(programa)
+        # sem -Wextra: algumas questões mostram de propósito código que gera aviso (ex.: switch sem break)
+        r = subprocess.run([gpp, '-std=c++17', fonte, '-o', exe], capture_output=True, text=True)
+        if r.returncode != 0:
+            return erros + [f'{rotulo}: não compila\n{r.stderr[:400]}']
+        r = subprocess.run([exe], capture_output=True, timeout=10)
+    else:
+        import re
+        nome = re.search(r'public\s+class\s+(\w+)', programa).group(1)
+        pasta = os.path.join(tmp, 'objava')
+        os.makedirs(pasta, exist_ok=True)
+        fonte = os.path.join(pasta, nome + '.java')
+        open(fonte, 'w', encoding='utf-8').write(programa)
+        r = subprocess.run(['javac', '-encoding', 'UTF-8', '-d', pasta, fonte], capture_output=True, text=True)
+        if r.returncode != 0:
+            return erros + [f'{rotulo}: Java não compila\n{r.stderr[:400]}']
+        r = subprocess.run(['java', '-Dstdout.encoding=UTF-8', '-cp', pasta, nome], capture_output=True, timeout=20)
+    saida = normalizar(r.stdout.decode('utf-8', 'replace'))
+    if saida != normalizar(ob['certa']):
+        erros.append(f'{rotulo}: o programa mostra {saida!r}, mas a alternativa certa é {ob["certa"]!r}')
+    return erros
+
+
+def converter_objetiva(capitulo, n, ob):
+    # a alternativa certa muda de posição de uma questão para outra (o site ainda embaralha)
+    pos = (n * 3 + len(capitulo)) % 4
+    alternativas = list(ob['erradas'])
+    alternativas.insert(pos, ob['certa'])
+    q = {
+        'id': f'{capitulo}-o{n}',
+        'disciplinaId': DISCIPLINA,
+        'capituloId': capitulo,
+        'tipo': 'objetiva',
+        'nivel': ob['nivel'],
+    }
+    if ob.get('codigo'):
+        q['contexto'] = [{'t': 'codigo', 'texto': ob['codigo']}]
+    q['enunciado'] = ob['enunciado']
+    q['alternativas'] = alternativas
+    q['correta'] = pos
+    q['resolucao'] = ob['resolucao']
+    return q
+
+
 def converter(capitulo, n, ex):
     q = {
         'id': f'{capitulo}-e{n}',
@@ -110,13 +178,23 @@ def main():
                 erros += [f'{rotulo}: termo proibido "{t}"' for t in TERMOS_PROIBIDOS if t in texto]
                 banco.append(q)
             print(f'{m.CAPITULO}: {len(m.EXERCICIOS)} exercícios')
+        for arquivo in sorted(f for f in os.listdir(os.path.join(AQUI, 'objetivas')) if f.startswith('cap')):
+            m = carregar(arquivo, 'objetivas')
+            for n, ob in enumerate(m.QUESTOES, 1):
+                rotulo = f'{m.CAPITULO} objetiva {n}'
+                erros += testar_objetiva(ob, rotulo, gpp, tmp)
+                q = converter_objetiva(m.CAPITULO, n, ob)
+                texto = json.dumps(q, ensure_ascii=False).lower()
+                erros += [f'{rotulo}: termo proibido "{t}"' for t in TERMOS_PROIBIDOS if t in texto]
+                banco.append(q)
+            print(f'{m.CAPITULO}: {len(m.QUESTOES)} objetivas')
     if erros:
         print('\n'.join(erros))
         sys.exit(1)
     with open(DESTINO, 'w', encoding='utf-8', newline='\n') as f:
         json.dump(banco, f, ensure_ascii=False, indent=2)
         f.write('\n')
-    print(f'{len(banco)} exercícios testados e gravados em {os.path.normpath(DESTINO)}')
+    print(f'{len(banco)} questões testadas e gravadas em {os.path.normpath(DESTINO)}')
 
 
 if __name__ == '__main__':
