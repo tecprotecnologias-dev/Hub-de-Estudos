@@ -6,31 +6,31 @@
 <title>Opções de logo</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <style>
-  :root { --fundo: #0e0e16; --sup: #181824; --borda: #2c2c40; --texto: #e7e7f0; --suave: #a3a3b8; --roxo: #8257e5; }
+  :root { --fundo: #f6f5fb; --sup: #ffffff; --borda: #e3e0ef; --texto: #1d1b2c; --suave: #5f5b73; --roxo: #8257e5; }
   * { box-sizing: border-box; }
   body { margin: 0; font-family: Inter, system-ui, sans-serif; background: var(--fundo); color: var(--texto); padding: 24px 16px 48px; }
   h1 { font-size: 1.5rem; margin: 0 0 4px; }
   p.dica { color: var(--suave); margin: 0 0 24px; }
   .opcoes { display: grid; gap: 20px; max-width: 980px; }
   .opcao { background: var(--sup); border: 1px solid var(--borda); border-radius: 14px; padding: 18px; }
-  .opcao h2 { margin: 0 0 14px; font-size: 1rem; font-family: 'JetBrains Mono', monospace; color: #b49cff; }
-  .cabecalho { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: rgb(14 14 22 / .85);
+  .opcao h2 { margin: 0 0 14px; font-size: 1rem; font-family: 'JetBrains Mono', monospace; color: #6a3fd1; }
+  .cabecalho { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #ffffff;
                border: 1px solid var(--borda); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; flex-wrap: wrap; }
   .marca { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.3rem; }
   .marca img { height: 44px; filter: drop-shadow(0 0 10px rgb(130 87 229 / .45)); }
-  .marca span { background: linear-gradient(90deg, #fff, #c9b6ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .marca span { background: linear-gradient(90deg, #2a1a5e, #8257e5); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .menu { display: flex; gap: 14px; color: var(--suave); font-size: .95rem; }
-  .menu b { color: #b49cff; background: rgb(130 87 229 / .16); padding: 4px 10px; border-radius: 6px; font-weight: 600; }
+  .menu b { color: #6a3fd1; background: rgb(130 87 229 / .16); padding: 4px 10px; border-radius: 6px; font-weight: 600; }
   .tamanhos { display: flex; align-items: end; gap: 22px; flex-wrap: wrap; }
   .tamanhos figure { margin: 0; text-align: center; font-size: .75rem; color: var(--suave); }
-  .tamanhos .claro { background: #f6f5f1; border-radius: 10px; padding: 10px; }
-  .aba { display: inline-flex; align-items: center; gap: 6px; background: #2a2a3a; border-radius: 8px 8px 0 0; padding: 6px 12px; font-size: .8rem; color: #ddd; }
+  .tamanhos .claro { background: #1d1b2c; border-radius: 10px; padding: 10px; }
+  .aba { display: inline-flex; align-items: center; gap: 6px; background: #dee1e6; color: #222; border-radius: 8px 8px 0 0; padding: 6px 12px; font-size: .8rem; }
   .aba img { width: 16px; height: 16px; }
 </style>
 </head>
 <body>
   <h1>Opções de logo do Hub de Estudos</h1>
-  <p class="dica">Cada opção aparece no cabeçalho, em vários tamanhos, sobre fundo escuro e claro, e como ícone da aba do navegador (16 px).</p>
+  <p class="dica">Cada opção aparece no cabeçalho, em vários tamanhos, sobre fundo claro e escuro, e como ícone da aba do navegador (16 px).</p>
   <div class="opcoes" id="opcoes"></div>
 <script>
   const opcoes = [
@@ -51,7 +51,7 @@
         <figure><img src="${src}" width="96" height="96" alt=""><figcaption>96 px</figcaption></figure>
         <figure><img src="${src}" width="48" height="48" alt=""><figcaption>48 px</figcaption></figure>
         <figure><img src="${src}" width="32" height="32" alt=""><figcaption>32 px</figcaption></figure>
-        <figure class="claro"><img src="${src}" width="48" height="48" alt=""><figcaption>fundo claro</figcaption></figure>
+        <figure class="claro"><img src="${src}" width="48" height="48" alt=""><figcaption>fundo escuro</figcaption></figure>
         <figure><span class="aba"><img src="${src}" alt="">Hub de Estudos</span><figcaption>aba (16 px)</figcaption></figure>
       </div>
     </section>`;
