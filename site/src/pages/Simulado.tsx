@@ -97,8 +97,11 @@ function ListaDisciplinas() {
 function Capitulos({ disciplinaId }: { disciplinaId: string }) {
   const d = buscarDisciplina(disciplinaId)
   if (!d) return <NaoEncontrado />
-  // guias e infográficos (material sem número de capítulo/módulo) não têm questões
-  const caps = apostilasDaDisciplina(d.id).filter((a) => a.capitulo != null)
+  // guias e infográficos (material sem número de capítulo/módulo) não têm questões, e o material
+  // complementar (cadastrado com grupo) é só para estudo: só entra se tiver questões próprias
+  const caps = apostilasDaDisciplina(d.id).filter(
+    (a) => a.capitulo != null && (!a.grupo || questoes.some((q) => q.capituloId === a.id)),
+  )
   return (
     <>
       <Link to="/simulado" className="voltar">
