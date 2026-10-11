@@ -1,7 +1,7 @@
 /*
  * Tema "Hub de Estudos" (claro): fundo branco levemente lilás, destaque em roxo neon
- * (#8257E5), brilho ao passar o mouse, Inter no texto, JetBrains Mono nos números e
- * detalhes de código e etiquetas em forma de pílula. Carregado depois do index.css:
+ * (#8257E5), brilho ao passar o mouse, Inter no texto, JetBrains Mono nos detalhes de
+ * código e etiquetas só com o texto em roxo. Carregado depois do index.css:
  * redefine as variáveis de cor e acrescenta os efeitos. Os blocos de código continuam escuros.
  */
 
@@ -469,19 +469,12 @@ button.cartao:hover:not(:disabled),
   transform: none;
 }
 
-/* Etiquetas em forma de pílula: Capítulo 1, Fácil, 1º período */
+/* Etiquetas (Capítulo 1, Fácil, 1º período): só o texto, em roxo, sem caixa */
 .etiqueta {
-  display: inline-block;
-  width: fit-content;
-  align-self: flex-start;
-  padding: 0.15rem 0.65rem;
-  border-radius: 999px;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   color: var(--primaria-texto);
-  background: var(--primaria-clara);
-  border: 1px solid rgb(130 87 229 / 0.18);
 }
 
 /* Campos */
