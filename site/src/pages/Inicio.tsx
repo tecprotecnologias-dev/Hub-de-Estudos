@@ -109,16 +109,12 @@ export default function Inicio() {
     <>
       <section className="hero">
         <div className="hero-texto">
-          <p className="hero-selo">estude · pratique · evolua</p>
           <p className="hero-titulo">
             Aprenda no seu ritmo.
             <br />
             <span>Pratique até dominar.</span>
           </p>
-          <p className="hero-sub">
-            Apostilas completas, exercícios com gabarito e simulados para cada capítulo, organizados pelas
-            disciplinas do curso.
-          </p>
+          <p className="hero-sub">Apostilas completas, exercícios com gabarito e simulados.</p>
           <div className="hero-acoes">
             <Link to="/apostilas" className="hero-botao">
               Abrir as apostilas
