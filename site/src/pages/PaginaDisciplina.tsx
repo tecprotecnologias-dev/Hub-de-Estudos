@@ -23,7 +23,7 @@ export default function PaginaDisciplina() {
     return (
       <>
         <h1>Disciplina não encontrada</h1>
-        <Link to="/">Voltar para as disciplinas</Link>
+        <Link to="/disciplinas">Voltar para as disciplinas</Link>
       </>
     )
   }
@@ -35,7 +35,7 @@ export default function PaginaDisciplina() {
 
   return (
     <article className="disciplina">
-      <Link to="/" className="voltar">
+      <Link to="/disciplinas" className="voltar">
         Todas as disciplinas
       </Link>
       <p className="etiqueta">{nomePeriodo(d.periodo)}</p>

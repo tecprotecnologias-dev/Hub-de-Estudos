@@ -1,5 +1,6 @@
 import { HashRouter, NavLink, Route, Routes } from 'react-router-dom'
 import Inicio from './pages/Inicio'
+import Disciplinas from './pages/Disciplinas'
 import PaginaDisciplina from './pages/PaginaDisciplina'
 import Apostilas from './pages/Apostilas'
 import LeituraCapitulo from './pages/LeituraCapitulo'
@@ -17,9 +18,7 @@ export default function App() {
             <span>Hub de Estudos</span>
           </NavLink>
           <nav>
-            <NavLink to="/" end>
-              Disciplinas
-            </NavLink>
+            <NavLink to="/disciplinas">Disciplinas</NavLink>
             <NavLink to="/apostilas">Apostilas</NavLink>
             <NavLink to="/simulado">Simulados</NavLink>
             <NavLink to="/dicas">Dicas</NavLink>
@@ -30,6 +29,7 @@ export default function App() {
       <main className="conteudo">
         <Routes>
           <Route path="/" element={<Inicio />} />
+          <Route path="/disciplinas" element={<Disciplinas />} />
           <Route path="/disciplina/:id" element={<PaginaDisciplina />} />
           <Route path="/apostilas" element={<Apostilas />} />
           <Route path="/apostila/:id" element={<LeituraCapitulo />} />
@@ -47,9 +47,7 @@ export default function App() {
       <footer className="rodape no-print">
         <div className="rodape-conteudo">
           <nav className="rodape-links" aria-label="Rodapé">
-            <NavLink to="/" end>
-              Disciplinas
-            </NavLink>
+            <NavLink to="/disciplinas">Disciplinas</NavLink>
             <NavLink to="/apostilas">Apostilas</NavLink>
             <NavLink to="/simulado">Simulados</NavLink>
             <NavLink to="/dicas">Dicas</NavLink>

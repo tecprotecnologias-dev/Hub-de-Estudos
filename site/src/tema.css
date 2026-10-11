@@ -407,7 +407,7 @@ button.caminho:hover:not(:disabled) {
 }
 
 .caminho h3 {
-  margin: 0.4rem 0 0;
+  margin: 0;
   font-size: 1.15rem;
 }
 
@@ -426,23 +426,6 @@ button.caminho:hover:not(:disabled) {
 .caminho:hover .caminho-acao {
   text-decoration: underline;
 }
-
-.caminho-icone {
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  color: #ffffff;
-  box-shadow: 0 8px 18px rgb(0 0 0 / 0.12);
-}
-
-.caminho-roxo { background: linear-gradient(135deg, #a07bff, #6a3fd1); }
-.caminho-azul { background: linear-gradient(135deg, #6aa8ff, #3b6fe0); }
-.caminho-laranja { background: linear-gradient(135deg, #ffc27a, #f28c1b); }
-.caminho-verde { background: linear-gradient(135deg, #5fe0a0, #14a35c); }
-.caminho-rosa { background: linear-gradient(135deg, #ff9ac5, #e0457f); }
-.caminho-cinza { background: linear-gradient(135deg, #9a96b4, #5f5b73); }
 
 .passos {
   list-style: none;
