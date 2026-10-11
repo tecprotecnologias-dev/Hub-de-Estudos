@@ -14,7 +14,7 @@ export default function App() {
       <header className="topo no-print">
         <div className="topo-conteudo">
           <NavLink to="/" className="marca">
-            <img src={`${import.meta.env.BASE_URL}marca/hub-logo-branco.svg`} alt="" />
+            <img src={`${import.meta.env.BASE_URL}marca/hub-logo.svg`} alt="" />
             <span>Hub de Estudos</span>
           </NavLink>
           <nav>
