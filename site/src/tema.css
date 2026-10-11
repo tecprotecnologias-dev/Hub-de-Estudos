@@ -1,8 +1,8 @@
 /*
  * Tema "Hub de Estudos" (claro): fundo branco levemente lilás, destaque em roxo neon
- * (#8257E5), brilho ao passar o mouse, Inter no texto e JetBrains Mono nos detalhes
- * (etiquetas). Carregado depois do index.css: redefine as variáveis de cor e acrescenta os
- * efeitos. Os blocos de código continuam escuros.
+ * (#8257E5), brilho ao passar o mouse, Inter no texto, JetBrains Mono nos números e
+ * detalhes de código e etiquetas em forma de pílula. Carregado depois do index.css:
+ * redefine as variáveis de cor e acrescenta os efeitos. Os blocos de código continuam escuros.
  */
 
 :root {
@@ -469,22 +469,19 @@ button.cartao:hover:not(:disabled),
   transform: none;
 }
 
-/* Etiquetas em fonte de código, no estilo [Capítulo 1] */
+/* Etiquetas em forma de pílula: Capítulo 1, Fácil, 1º período */
 .etiqueta {
-  font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  display: inline-block;
+  width: fit-content;
+  align-self: flex-start;
+  padding: 0.15rem 0.65rem;
+  border-radius: 999px;
   font-size: 0.72rem;
-  letter-spacing: 0.02em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   color: var(--primaria-texto);
-}
-
-.etiqueta::before {
-  content: '[';
-  opacity: 0.6;
-}
-
-.etiqueta::after {
-  content: ']';
-  opacity: 0.6;
+  background: var(--primaria-clara);
+  border: 1px solid rgb(130 87 229 / 0.18);
 }
 
 /* Campos */
@@ -538,9 +535,10 @@ textarea:focus {
     background: #ffffff;
   }
 
-  .etiqueta::before,
-  .etiqueta::after {
-    content: none;
+  .etiqueta {
+    background: none;
+    border: none;
+    padding: 0;
   }
 
   .cartao,
@@ -549,9 +547,10 @@ textarea:focus {
   }
 }
 
-.folha .etiqueta::before,
-.folha .etiqueta::after {
-  content: none;
+.folha .etiqueta {
+  background: none;
+  border: none;
+  padding: 0;
 }
 
 /*
