@@ -109,7 +109,6 @@ export default function Inicio() {
       </section>
 
       <section className="secao-inicio" aria-labelledby="titulo-como">
-        <p className="etiqueta">como funciona</p>
         <h2 id="titulo-como" className="titulo-secao">
           Três passos para aprender de verdade
         </h2>
