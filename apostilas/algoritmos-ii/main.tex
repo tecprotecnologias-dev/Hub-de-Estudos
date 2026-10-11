@@ -15,10 +15,12 @@
 \usetikzlibrary{arrows.meta, positioning, shapes.geometric, calc}
 \usepackage[table]{xcolor}
 
-% Cores do logo da TecPro
+% Cores da apostila (navy, laranja, cinza) e do logo do Hub de Estudos (roxo)
 \definecolor{navy}{RGB}{23,45,80}
 \definecolor{laranja}{RGB}{250,110,29}
 \definecolor{cinzalogo}{RGB}{107,114,126}
+\definecolor{roxo}{RGB}{130,87,229}
+\definecolor{roxoescuro}{RGB}{36,18,79}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{enumitem}
@@ -82,16 +84,15 @@
 
 \vspace*{1.1cm}
 
-\includegraphics[width=2.3cm]{icone_tecpro.png}
+\includegraphics[width=2.4cm]{hub_logo.png}
 
 \vspace{0.3cm}
 
-{\Large \textbf{\textcolor{navy}{Tec}\textcolor{laranja}{Pro}}}\\[1pt]
-{\footnotesize \textcolor{cinzalogo}{T E C N O L O G I A S}}
+{\Large \textbf{\textcolor{navy}{Hub de} \textcolor{roxo}{Estudos}}}
 
 \vspace{0.2cm}
 
-{\footnotesize \textcolor{cinzalogo}{Desenvolvimento, Apostilas e Cursos Online}}
+{\footnotesize \textcolor{cinzalogo}{Apostilas, exercícios e simulados}}
 
 \vspace{1cm}
 
@@ -134,16 +135,17 @@
 \vspace{1.3cm}
 
 \begin{tikzpicture}[remember picture, overlay]
-  \fill[navy] (current page.south west) rectangle
+  \fill[roxoescuro] (current page.south west) rectangle
     ($(current page.south east)!0.32!(current page.north east)$);
   \draw[laranja, line width=3.2pt]
     ($(current page.south west)!0.32!(current page.north west)$) --
     ($(current page.south east)!0.32!(current page.north east)$);
-  \begin{scope}[opacity=0.16]
-    \draw[laranja, line width=5mm, line cap=round]
-      ($(current page.south east)+(-14mm,10mm)$) --
-      ($(current page.south east)+(-6mm,17mm)$) --
-      ($(current page.south east)+(-14mm,24mm)$);
+  % capelo discreto, o símbolo do logo do Hub de Estudos
+  \begin{scope}[shift={($(current page.south east)+(-16mm,17mm)$)}, opacity=0.18]
+    \fill[white] (0,4mm) -- (9mm,0.5mm) -- (0,-3mm) -- (-9mm,0.5mm) -- cycle;
+    \fill[white] (-4.5mm,-1.2mm) -- (-4.5mm,-4.5mm) arc[start angle=180, end angle=360,
+      x radius=4.5mm, y radius=1.6mm] -- (4.5mm,-1.2mm) -- (0,-3mm) -- cycle;
+    \draw[laranja, line width=0.7mm, line cap=round] (7.5mm,0) -- (7.5mm,-5mm);
   \end{scope}
   \node[align=center, text width=0.84\paperwidth] at
     ($(current page.south west)!0.20!(current page.north west)+(0.5\paperwidth,0)$)
@@ -173,8 +175,8 @@
 
 \vspace{0.4cm}
 
-\textbf{TecPro Tecnologias}\\
-{\footnotesize Desenvolvimento, Apostilas e Cursos Online}
+\textbf{Hub de Estudos}\\
+{\footnotesize Apostilas, exercícios e simulados}
 
 \vspace{0.5cm}
 
@@ -183,7 +185,10 @@
 
 \vspace*{\fill}
 
-\noindent\footnotesize Todos os direitos reservados. Nenhuma parte desta publicação pode ser reproduzida, armazenada ou transmitida de qualquer forma, ou por qualquer meio, sem autorização prévia da TecPro Tecnologias.
+\noindent\footnotesize Todos os direitos reservados. Nenhuma parte desta publicação pode ser reproduzida, armazenada ou transmitida de qualquer forma, ou por qualquer meio, sem autorização prévia.
+
+\medskip
+\noindent Desenvolvido por TecPro Tecnologias.
 
 \newpage
 
