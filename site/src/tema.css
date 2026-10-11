@@ -934,3 +934,17 @@ button.perigo:hover:not(:disabled) {
   color: #8a4b00;
   background: rgb(251 169 76 / 0.2);
 }
+
+/* Cabeçalho: com os itens de professor e administrador, o menu ainda cabe numa linha */
+.topo-conteudo {
+  max-width: 1200px;
+}
+
+.topo nav {
+  gap: 0.15rem;
+}
+
+.topo nav a {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.95rem;
+}
