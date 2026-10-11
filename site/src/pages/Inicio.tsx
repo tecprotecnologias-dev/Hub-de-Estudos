@@ -55,14 +55,6 @@ export default function Inicio() {
             <span>Pratique até dominar.</span>
           </h1>
           <p className="hero-sub">Apostilas completas, exercícios com gabarito e simulados.</p>
-          <div className="hero-acoes">
-            <Link to="/apostilas" className="hero-botao">
-              Abrir as apostilas
-            </Link>
-            <Link to="/simulado" className="hero-botao hero-botao-claro">
-              Fazer um simulado
-            </Link>
-          </div>
         </div>
         <ul className="hero-numeros" aria-label="O que há no site">
           <li>
