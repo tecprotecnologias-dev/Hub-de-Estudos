@@ -102,7 +102,7 @@ export default function Inicio() {
 
       <section className="secao-inicio" aria-labelledby="titulo-como">
         <h2 id="titulo-como" className="titulo-secao">
-          Três passos para aprender de verdade
+          Três passos para aprender e sair na frente
         </h2>
         <ol className="passos">
           <li>
