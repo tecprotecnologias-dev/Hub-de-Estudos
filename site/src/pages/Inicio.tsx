@@ -6,6 +6,12 @@ import { questoes } from '../data/questoes'
 
 const CAMINHOS: { titulo: string; texto: string; acao: string; para: string }[] = [
   {
+    titulo: 'Disciplinas',
+    texto: 'Veja cada disciplina do curso, com objetivos, conteúdo e o material disponível.',
+    acao: 'Ver disciplinas',
+    para: '/disciplinas',
+  },
+  {
     titulo: 'Apostilas',
     texto: 'Capítulos completos para ler no site ou imprimir, com exemplos, figuras e erros comuns.',
     acao: 'Abrir apostilas',
@@ -22,12 +28,6 @@ const CAMINHOS: { titulo: string; texto: string; acao: string; para: string }[] 
     texto: 'Programe no seu computador, cole o código e confira com o gabarito no fim da lista.',
     acao: 'Praticar',
     para: '/simulado',
-  },
-  {
-    titulo: 'Disciplinas',
-    texto: 'Veja cada disciplina do curso, com objetivos, conteúdo e o material disponível.',
-    acao: 'Ver disciplinas',
-    para: '/disciplinas',
   },
   {
     titulo: 'Dicas',
