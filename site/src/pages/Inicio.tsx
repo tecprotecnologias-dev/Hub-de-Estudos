@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { apostilas } from '../data/apostilas'
 import { disciplinas } from '../data/disciplinas'
@@ -44,6 +45,12 @@ const CAMINHOS: { titulo: string; texto: string; acao: string; para: string }[] 
 
 export default function Inicio() {
   const comApostila = disciplinas.filter((d) => apostilas.some((a) => a.disciplinaId === d.id)).length
+
+  // Só a página inicial tem o fundo roxo profundo; as páginas de estudo continuam claras.
+  useEffect(() => {
+    document.body.classList.add('pagina-inicial')
+    return () => document.body.classList.remove('pagina-inicial')
+  }, [])
 
   return (
     <>
