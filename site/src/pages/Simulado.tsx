@@ -69,7 +69,10 @@ function ListaDisciplinas() {
                   )
                 }
                 const nObj = questoes.filter((q) => q.disciplinaId === d.id && q.tipo === 'objetiva').length
-                const nDis = questoes.filter((q) => q.disciplinaId === d.id && q.tipo === 'discursiva').length
+                const discursivas = questoes.filter((q) => q.disciplinaId === d.id && q.tipo === 'discursiva')
+                const nDis = discursivas.length
+                // exercícios práticos (feitos no computador) são contados à parte das discursivas
+                const nPrat = discursivas.filter((q) => (q as QuestaoDiscursiva).pratica).length
                 return (
                   <Link key={d.id} to={`/simulado/${d.id}`} className="cartao">
                     <h3>{d.nome}</h3>
@@ -79,7 +82,8 @@ function ListaDisciplinas() {
                       ) : (
                         <>
                           <span>{plural(nObj, 'objetiva', 'objetivas')}</span>
-                          <span>{plural(nDis, 'discursiva', 'discursivas')}</span>
+                          {nDis - nPrat > 0 && <span>{plural(nDis - nPrat, 'discursiva', 'discursivas')}</span>}
+                          {nPrat > 0 && <span>{plural(nPrat, 'exercício prático', 'exercícios práticos')}</span>}
                         </>
                       )}
                     </p>

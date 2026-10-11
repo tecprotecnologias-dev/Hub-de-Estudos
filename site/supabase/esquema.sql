@@ -37,6 +37,12 @@ alter table public.perfis add column if not exists solicita_professor boolean no
 
 alter table public.perfis enable row level security;
 
+-- Quem está logado pode consultar e editar a tabela, mas só dentro das regras (RLS)
+-- abaixo. Quem não está logado (anon) não tem acesso nenhum. Necessário nos projetos em
+-- que o Supabase não libera tabelas novas automaticamente.
+grant select, update on public.perfis to authenticated;
+revoke all on public.perfis from anon;
+
 -- O usuário logado é administrador? (security definer: consulta a tabela sem
 -- passar pelas regras abaixo, para não entrar em laço)
 create or replace function public.eh_admin()
