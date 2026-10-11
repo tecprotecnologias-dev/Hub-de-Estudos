@@ -46,13 +46,6 @@ export default function App() {
       </main>
       <footer className="rodape no-print">
         <div className="rodape-conteudo">
-          <nav className="rodape-links" aria-label="Rodapé">
-            <NavLink to="/disciplinas">Disciplinas</NavLink>
-            <NavLink to="/apostilas">Apostilas</NavLink>
-            <NavLink to="/simulado">Simulados</NavLink>
-            <NavLink to="/dicas">Dicas</NavLink>
-            <NavLink to="/gerar-prova">Gerar prova</NavLink>
-          </nav>
           <div className="rodape-redes">
             <a href="https://www.instagram.com/tecpro_tecnologias/" target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8"
