@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Hub de Estudos">
+  <defs>
+    <linearGradient id="livro2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b49cff"/>
+      <stop offset="1" stop-color="#6a3fd1"/>
+    </linearGradient>
+  </defs>
+  <!-- livro aberto -->
+  <path d="M5 30 C15 26 25 28 31 33 V57 C25 52 15 51 5 54 Z" fill="url(#livro2)"/>
+  <path d="M59 30 C49 26 39 28 33 33 V57 C39 52 49 51 59 54 Z" fill="url(#livro2)"/>
+  <g stroke="#ffffff" stroke-opacity="0.55" stroke-width="1.4" fill="none" stroke-linecap="round">
+    <path d="M10 37 C17 35 23 36 27 39"/>
+    <path d="M10 43 C17 41 23 42 27 45"/>
+    <path d="M54 37 C47 35 41 36 37 39"/>
+    <path d="M54 43 C47 41 41 42 37 45"/>
+  </g>
+  <!-- capelo -->
+  <path d="M22 15.5 V20.5 C22 23 26.5 24.5 32 24.5 C37.5 24.5 42 23 42 20.5 V15.5 L32 19 Z" fill="#c8c1e0"/>
+  <path d="M32 6 L53 13.5 L32 21 L11 13.5 Z" fill="#f1eefb"/>
+  <path d="M50 14.6 V23" stroke="#fba94c" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="50" cy="24.2" r="1.9" fill="#fba94c"/>
+</svg>

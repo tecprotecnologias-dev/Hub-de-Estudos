@@ -1,0 +1,277 @@
+/*
+ * Tema "Hub de Estudos": fundo escuro, destaque em roxo neon (#8257E5), brilho ao passar o
+ * mouse, Inter no texto e JetBrains Mono nos detalhes (etiquetas). Carregado depois do
+ * index.css: redefine as variáveis de cor e acrescenta os efeitos. A prova impressa
+ * (.folha) e a impressão continuam claras.
+ */
+
+:root {
+  --fundo: #0e0e16;
+  --superficie: #181824;
+  --superficie-alta: #20202f;
+  --texto: #e7e7f0;
+  --texto-suave: #a3a3b8;
+  --borda: #2c2c40;
+  --primaria: #8257e5;
+  --primaria-escura: #9466ff;
+  --primaria-clara: rgb(130 87 229 / 0.16);
+  --primaria-texto: #b49cff;
+  --certa: #3ddc84;
+  --certa-fundo: rgb(61 220 132 / 0.12);
+  --errada: #f75a68;
+  --errada-fundo: rgb(247 90 104 / 0.12);
+  --destaque-prof: #fba94c;
+  --brilho: 0 0 0 1px rgb(130 87 229 / 0.55), 0 0 22px rgb(130 87 229 / 0.35);
+  --sombra-cartao: 0 8px 24px rgb(0 0 0 / 0.35);
+
+  font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  color-scheme: dark;
+}
+
+body {
+  background:
+    radial-gradient(900px 400px at 15% -10%, rgb(130 87 229 / 0.18), transparent 60%),
+    radial-gradient(700px 360px at 100% 0%, rgb(79 142 247 / 0.10), transparent 60%),
+    var(--fundo);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--primaria-texto);
+}
+
+/* Textos em roxo usam o tom mais claro, legível sobre o fundo escuro
+   (o #8257E5 fica para fundos de botões e destaques) */
+.rodape a,
+.questao::before,
+.nota,
+.ver-mais,
+.voltar,
+.unidades > li::marker,
+.link-apostila,
+.capitulos a strong,
+.sumario a:hover,
+.capitulo h3,
+.quadro-exemplo .quadro-titulo,
+.apresentacao h2,
+.bloco-apostila > h2 a:hover,
+.questao-gabarito h3,
+.linguagem-codigo,
+.cartao a,
+.cartao .link {
+  color: var(--primaria-texto);
+}
+
+/* Topo: translúcido, fixo no alto ao rolar */
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgb(14 14 22 / 0.82);
+  backdrop-filter: blur(10px);
+}
+
+.marca img {
+  height: 44px;
+  filter: drop-shadow(0 0 10px rgb(130 87 229 / 0.45));
+}
+
+.marca span {
+  background: linear-gradient(90deg, #ffffff, #c9b6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+nav a {
+  transition: color 0.15s, background 0.15s;
+}
+
+nav a:hover {
+  color: var(--texto);
+  background: var(--superficie-alta);
+}
+
+nav a.active {
+  color: var(--primaria-texto);
+}
+
+/* Botões com brilho neon */
+button,
+.botao {
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.15s, box-shadow 0.2s, transform 0.15s;
+}
+
+button:hover:not(:disabled),
+.botao:hover:not(.desativado) {
+  box-shadow: var(--brilho);
+  transform: translateY(-1px);
+}
+
+button.secundario,
+.botao.secundario {
+  background: transparent;
+  color: var(--primaria-texto);
+  border-color: rgb(130 87 229 / 0.6);
+}
+
+/* Cartões flutuantes */
+.cartao,
+.questao,
+.questao-gabarito,
+.resultado,
+.barra-simulado,
+.lista-simulado li {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+}
+
+.cartao {
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+button.cartao:hover:not(:disabled),
+.cartao:hover {
+  background: var(--superficie-alta);
+  border-color: rgb(130 87 229 / 0.7);
+  box-shadow: var(--brilho), var(--sombra-cartao);
+  transform: translateY(-3px);
+}
+
+.cartao h2,
+.cartao h3 {
+  color: var(--texto);
+}
+
+.cartao-em-breve:hover {
+  transform: none;
+}
+
+/* Etiquetas em fonte de código, no estilo [Capítulo 1] */
+.etiqueta {
+  font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--primaria-texto);
+}
+
+.etiqueta::before {
+  content: '[';
+  opacity: 0.6;
+}
+
+.etiqueta::after {
+  content: ']';
+  opacity: 0.6;
+}
+
+/* Campos */
+input,
+select,
+textarea {
+  background: var(--fundo);
+  border-color: var(--borda);
+  border-radius: 8px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primaria);
+  box-shadow: 0 0 0 3px rgb(130 87 229 / 0.25);
+}
+
+/* Código: blocos escuros com borda, sem se confundir com o fundo */
+.capitulo .bloco-codigo,
+.resolucao .bloco-codigo,
+.questao .bloco-codigo,
+.gabarito .bloco-codigo {
+  background: #0a0a10;
+  border: 1px solid var(--borda);
+}
+
+.capitulo code {
+  background: var(--superficie-alta);
+  color: #d6c8ff;
+}
+
+/* Figuras desenhadas para fundo claro ficam sobre um cartão claro */
+.figura img,
+.figura-questao img {
+  background: #ffffff;
+  padding: 0.75rem;
+  border-radius: 10px;
+}
+
+/* Quadros das apostilas */
+.quadro-atencao {
+  border-left-color: #fba94c;
+  background: rgb(251 169 76 / 0.1);
+}
+
+.quadro-atencao .quadro-titulo {
+  color: #fba94c;
+}
+
+.quadro-resposta {
+  background: rgb(251 169 76 / 0.08);
+}
+
+.capitulo th {
+  color: var(--texto);
+}
+
+/* Alternativas e correções */
+.alternativa {
+  border-radius: 10px;
+}
+
+.alternativa:hover {
+  background: var(--superficie-alta);
+}
+
+/* Impressão e prova impressa continuam claras */
+@media print {
+  :root {
+    --fundo: #ffffff;
+    --superficie: #ffffff;
+    --texto: #000000;
+    --texto-suave: #333333;
+    --borda: #999999;
+    color-scheme: light;
+  }
+
+  body {
+    background: #ffffff;
+  }
+
+  .etiqueta::before,
+  .etiqueta::after {
+    content: none;
+  }
+}
+
+.folha {
+  color: #000;
+  --texto: #000000;
+  --texto-suave: #333333;
+  --borda: #999999;
+  --superficie: #ffffff;
+  --fundo: #ffffff;
+}
+
+.folha .etiqueta::before,
+.folha .etiqueta::after {
+  content: none;
+}
