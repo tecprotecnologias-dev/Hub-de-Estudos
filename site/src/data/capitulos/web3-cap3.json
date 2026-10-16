@@ -1,0 +1,403 @@
+{
+ "numero": 3,
+ "titulo": "Preparando o projeto",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Com a API do TaskFlow desenhada no Capítulo 2, é hora de montar a base onde ela vai funcionar. Neste capítulo você vai criar o projeto com Next.js e TypeScript, criar um banco de dados PostgreSQL na nuvem, descrever as tabelas com o Prisma, aplicar a primeira migração, preencher o banco com dados de teste e escrever a primeira rota da API, que confere se tudo está ligado. Cada comando deste capítulo foi testado com as versões indicadas; se você usar versões mais novas, confira as mensagens do terminal, porque elas indicam o que mudou."
+  },
+  {
+   "t": "h2",
+   "id": "3-1-as-ferramentas",
+   "texto": "3.1 As ferramentas"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Ferramenta",
+    "Papel no projeto"
+   ],
+   "linhas": [
+    [
+     "Node.js 20 ou mais novo",
+     "executa o JavaScript fora do navegador e traz o <code>npm</code>"
+    ],
+    [
+     "Next.js 16",
+     "o <em>framework</em>: as rotas da API ficam nos <em>Route Handlers</em>, arquivos <code>route.ts</code> dentro de <code>app/</code> (o Capítulo 4 detalha)"
+    ],
+    [
+     "TypeScript",
+     "JavaScript com tipos, que acusa erros antes de o código rodar"
+    ],
+    [
+     "PostgreSQL",
+     "o banco de dados relacional"
+    ],
+    [
+     "NeonDB",
+     "serviço que hospeda o PostgreSQL na nuvem, com plano gratuito"
+    ],
+    [
+     "Prisma 7",
+     "o ORM, que traduz entre o banco e o código"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Um <strong>ORM</strong> (<em>Object-Relational Mapping</em>, mapeamento objeto-relacional) é a camada que deixa o programa trabalhar com objetos em vez de escrever SQL à mão. Com o Prisma, buscar as tarefas pendentes de um usuário é <code>db.task.findMany({ where: { userId, status: \"PENDING\" } })</code>, e o resultado já vem com os tipos certos do TypeScript: o editor sabe que <code>title</code> é um texto e avisa se você escrever <code>titulo</code> por engano. O Prisma também gera o SQL que cria e altera as tabelas, a partir de um arquivo que descreve o banco."
+  },
+  {
+   "t": "h2",
+   "id": "3-2-criando-o-projeto-next-js",
+   "texto": "3.2 Criando o projeto Next.js"
+  },
+  {
+   "t": "p",
+   "html": "No terminal, dentro da pasta onde você guarda os seus projetos, rode:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npx create-next-app@latest taskflow --api --ts --eslint\n    --no-src-dir --import-alias \"@/*\" --use-npm"
+  },
+  {
+   "t": "p",
+   "html": "Digite tudo em uma linha só. A opção <code>--api</code> cria um projeto <strong>só de API</strong>, sem páginas, estilos nem React no navegador: exatamente o caso do TaskFlow. As outras opções escolhem o TypeScript, o ESLint (que aponta problemas no código), a estrutura sem a pasta <code>src/</code>, o atalho de importação <code>@/</code> e o <code>npm</code>. Com elas, o assistente não precisa fazer perguntas; se fizer alguma, aceite a sugestão. Depois, entre na pasta e inicie o servidor de desenvolvimento:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ cd taskflow\n$ npm run dev"
+  },
+  {
+   "t": "p",
+   "html": "Abra <code>http://localhost:3000</code> no navegador. Em vez de uma página, aparece um JSON: <code>{\"message\":\"Hello world!\"}</code>. É a resposta do arquivo <code>app/route.ts</code>, a primeira rota de API do projeto. O <code>create-next-app</code> também cria a pasta <code>app/[slug]</code>, um exemplo de rota com parte variável; apague essa pasta, porque o Capítulo 4 mostra como criar as rotas do TaskFlow. Para parar o servidor, aperte <code>Ctrl + C</code> no terminal. Os arquivos que importam por enquanto são estes:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Arquivo",
+    "Para que serve"
+   ],
+   "linhas": [
+    [
+     "<code>app/</code>",
+     "as rotas; as do TaskFlow vão ficar em <code>app/api/</code>"
+    ],
+    [
+     "<code>package.json</code>",
+     "dependências e <em>scripts</em> (<code>dev</code>, <code>build</code>, <code>start</code>)"
+    ],
+    [
+     "<code>tsconfig.json</code>",
+     "configuração do TypeScript, inclusive o atalho <code>@/</code>, que aponta para a raiz do projeto"
+    ],
+    [
+     "<code>next.config.ts</code>",
+     "configuração do Next.js"
+    ],
+    [
+     "<code>.gitignore</code>",
+     "o que não vai para o Git; já inclui <code>node_modules</code> e os arquivos <code>.env</code>"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-3-o-banco-de-dados-na-nuvem-com-o-neondb",
+   "texto": "3.3 O banco de dados na nuvem com o NeonDB"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>NeonDB</strong> oferece PostgreSQL na nuvem com um plano gratuito suficiente para estudo, e o banco fica disponível tanto no seu computador quanto, mais tarde, na Vercel. Para criar o banco:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. Acesse <code>neon.tech</code> e crie uma conta; a forma mais rápida é entrar com o GitHub.",
+    "2. Crie um projeto chamado <code>taskflow</code>. Na região, escolha <strong>AWS US East (N. Virginia)</strong>, a mesma região padrão da Vercel, onde a API será publicada: banco e servidor perto um do outro deixam as consultas mais rápidas.",
+    "3. No painel do projeto, clique em <strong>Connect</strong>. Aparece a <em>connection string</em>, o endereço completo do banco, com usuário e senha."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O Neon mostra duas versões dessa string. Com a opção <strong>Connection pooling</strong> ligada, o endereço tem <code>-pooler</code> no nome do servidor; desligada, é a conexão direta. Copie as duas:"
+  },
+  {
+   "t": "codigo",
+   "texto": "postgresql://usuario:senha@ep-xxx-pooler.us-east-1.aws.neon.tech/\nneondb?sslmode=require\n\npostgresql://usuario:senha@ep-xxx.us-east-1.aws.neon.tech/\nneondb?sslmode=require"
+  },
+  {
+   "t": "p",
+   "html": "Cada string é uma linha só; aqui elas foram quebradas para caber na página. A versão com <em>pooler</em> passa por um <strong>gerenciador de conexões</strong>, que reaproveita poucas conexões reais para atender muitas requisições. Isso é essencial na Vercel, em que cada requisição pode rodar em uma instância diferente da API: sem o <em>pooler</em>, o banco recusaria conexões com poucos usuários. A conexão <strong>direta</strong> é usada pelas ferramentas do Prisma que alteram as tabelas, as migrações, que precisam de uma conexão exclusiva."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A <em>connection string</em> contém a senha do banco. Ela nunca vai para o código nem para o GitHub: fica só no arquivo <code>.env</code>, que o <code>.gitignore</code> já protege."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Se quiser trabalhar sem internet, o Prisma também sobe um PostgreSQL local com o comando <code>npx prisma dev</code>, depois de instalado (próxima seção). Ele mostra uma <em>connection string</em> começando com <code>postgres://postgres:postgres@localhost</code>, que pode ser usada no lugar das do Neon enquanto você estuda."
+  },
+  {
+   "t": "h2",
+   "id": "3-4-instalando-e-configurando-o-prisma",
+   "texto": "3.4 Instalando e configurando o Prisma"
+  },
+  {
+   "t": "p",
+   "html": "Instale o Prisma e as bibliotecas de que ele precisa. O <code>@7</code> fixa a versão principal, para que os comandos da apostila continuem valendo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install -D prisma@7 tsx\n$ npm install @prisma/client@7 @prisma/adapter-pg dotenv\n$ npx prisma init --datasource-provider postgresql --no-skills"
+  },
+  {
+   "t": "p",
+   "html": "O <code>prisma</code> é a ferramenta de linha de comando, usada só no desenvolvimento, por isso a opção <code>-D</code>; o <code>tsx</code> executa arquivos TypeScript direto, e vai rodar o <em>seed</em>. O <code>@prisma/client</code> é a biblioteca que a API usa para consultar o banco; o <code>@prisma/adapter-pg</code> é o <strong>adaptador</strong> que faz a conexão com o PostgreSQL, obrigatório a partir do Prisma 7; e o <code>dotenv</code> lê o arquivo <code>.env</code>. A opção <code>--no-skills</code> evita que o <code>init</code> crie pastas de instruções para assistentes de IA, que não serão usadas."
+  },
+  {
+   "t": "p",
+   "html": "O <code>init</code> cria três arquivos: <code>prisma/schema.prisma</code>, que descreve o banco; o arquivo de configuração do Prisma, que na versão 7.10 se chama <code>prisma7.config.ts</code> (o nome <code>prisma.config.ts</code>, usado em outras versões e na documentação, também funciona); e o <code>.env</code>. Abra o <code>.env</code>, apague o exemplo e coloque as duas strings do Neon:"
+  },
+  {
+   "t": "codigo",
+   "texto": "# .env -- NUNCA vai para o Git\n# com -pooler: usada pela API\nDATABASE_URL=\"postgresql://usuario:senha@ep-xxx-pooler...\"\n# sem -pooler: usada pelas migrações\nDIRECT_URL=\"postgresql://usuario:senha@ep-xxx...\""
+  },
+  {
+   "t": "p",
+   "html": "O Next.js também lê um arquivo chamado <code>.env.local</code>, mas o Prisma não: use o <code>.env</code>, que os dois leem. Agora ajuste o arquivo de configuração para que as ferramentas do Prisma usem a conexão direta:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// prisma7.config.ts\nimport \"dotenv/config\";\nimport { defineConfig } from \"prisma/config\";\n\nexport default defineConfig({\n  schema: \"prisma/schema.prisma\",\n  migrations: {\n    path: \"prisma/migrations\",\n    seed: \"tsx prisma/seed.ts\",\n  },\n  datasource: {\n    url: process.env[\"DIRECT_URL\"],\n  },\n});"
+  },
+  {
+   "t": "p",
+   "html": "O <code>import \"dotenv/config\"</code> carrega o <code>.env</code>; sem ele, as variáveis ficam vazias, porque o Prisma 7 não lê o arquivo sozinho. A linha <code>seed</code> indica o comando que preenche o banco com dados de teste (Seção 3.8). Se estiver usando o banco local do <code>prisma dev</code>, coloque a mesma string nas duas variáveis."
+  },
+  {
+   "t": "h2",
+   "id": "3-5-o-esquema-do-banco",
+   "texto": "3.5 O esquema do banco"
+  },
+  {
+   "t": "p",
+   "html": "O <code>schema.prisma</code> descreve as tabelas em uma linguagem própria, simples de ler. Substitua o conteúdo dele por este:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// prisma/schema.prisma\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id        String   @id @default(cuid())\n  name      String\n  email     String   @unique\n  password  String   // o hash da senha, nunca a senha\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  tasks     Task[]\n\n  @@map(\"users\")\n}\n\nmodel Task {\n  id          String     @id @default(cuid())\n  title       String\n  description String?\n  status      TaskStatus @default(PENDING)\n  priority    Priority   @default(MEDIUM)\n  dueDate     DateTime?\n  createdAt   DateTime   @default(now())\n  updatedAt   DateTime   @updatedAt\n  userId      String\n  user        User       @relation(fields: [userId],\n                           references: [id], onDelete: Cascade)\n\n  @@index([userId])\n  @@map(\"tasks\")\n}\n\nenum TaskStatus {\n  PENDING\n  IN_PROGRESS\n  DONE\n}\n\nenum Priority {\n  LOW\n  MEDIUM\n  HIGH\n}"
+  },
+  {
+   "t": "p",
+   "html": "O bloco <code>generator</code> diz onde o Prisma gera o código do cliente: na pasta <code>app/generated/prisma</code>, que não vai para o Git (o <code>init</code> já a acrescentou ao <code>.gitignore</code>). Cada <code>model</code> vira uma tabela, e cada linha dentro dele, uma coluna. Os símbolos que aparecem são estes:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Símbolo",
+    "Significado"
+   ],
+   "linhas": [
+    [
+     "<code>@id</code>",
+     "chave primária"
+    ],
+    [
+     "<code>@default(cuid())</code>",
+     "o banco gera um identificador aleatório, como <code>cm3x9k2a0001</code>"
+    ],
+    [
+     "<code>@unique</code>",
+     "não pode haver dois iguais; dois usuários não têm o mesmo e-mail"
+    ],
+    [
+     "<code>String?</code>",
+     "o <code>?</code> torna o campo opcional (aceita <code>null</code>)"
+    ],
+    [
+     "<code>@default(now())</code>",
+     "preenchido com a data e a hora da criação"
+    ],
+    [
+     "<code>@updatedAt</code>",
+     "atualizado sozinho a cada alteração"
+    ],
+    [
+     "<code>Task[]</code>",
+     "um usuário tem várias tarefas (lado “um” da relação)"
+    ],
+    [
+     "<code>@relation(...)</code>",
+     "a chave estrangeira: <code>userId</code> aponta para o <code>id</code> do usuário"
+    ],
+    [
+     "<code>onDelete: Cascade</code>",
+     "ao excluir um usuário, as tarefas dele são excluídas também"
+    ],
+    [
+     "<code>@@index([userId])</code>",
+     "índice para buscar rápido as tarefas de um usuário"
+    ],
+    [
+     "<code>@@map(\"tasks\")</code>",
+     "o nome da tabela no banco"
+    ],
+    [
+     "<code>enum</code>",
+     "lista fechada de valores permitidos"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O índice em <code>userId</code> tem motivo: quase toda consulta da API filtra as tarefas pelo dono, e sem o índice o banco teria de percorrer a tabela inteira a cada requisição."
+  },
+  {
+   "t": "h2",
+   "id": "3-6-a-primeira-migracao",
+   "texto": "3.6 A primeira migração"
+  },
+  {
+   "t": "p",
+   "html": "Uma <strong>migração</strong> é um arquivo SQL que leva o banco de um estado a outro, como “criar a tabela de tarefas”. As migrações ficam guardadas no projeto e vão para o Git, assim qualquer pessoa da equipe, e o servidor de produção, chega exatamente ao mesmo banco. Crie e aplique a primeira:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npx prisma migrate dev --name init\n$ npx prisma generate"
+  },
+  {
+   "t": "p",
+   "html": "O <code>migrate dev</code> compara o esquema com o banco, escreve o SQL em <code>prisma/migrations/&lt;data&gt;_init/migration.sql</code> e o executa. Um trecho do arquivo gerado:"
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE TYPE \"TaskStatus\"\n  AS ENUM ('PENDING', 'IN_PROGRESS', 'DONE');\n\nCREATE TABLE \"tasks\" (\n    \"id\" TEXT NOT NULL,\n    \"title\" TEXT NOT NULL,\n    \"description\" TEXT,\n    \"status\" \"TaskStatus\" NOT NULL DEFAULT 'PENDING',\n    ...\n    \"userId\" TEXT NOT NULL,\n    CONSTRAINT \"tasks_pkey\" PRIMARY KEY (\"id\")\n);\n\nCREATE UNIQUE INDEX \"users_email_key\" ON \"users\"(\"email\");\nCREATE INDEX \"tasks_userId_idx\" ON \"tasks\"(\"userId\");\nALTER TABLE \"tasks\" ADD CONSTRAINT \"tasks_userId_fkey\"\n  FOREIGN KEY (\"userId\") REFERENCES \"users\"(\"id\")\n  ON DELETE CASCADE ON UPDATE CASCADE;"
+  },
+  {
+   "t": "p",
+   "html": "Vale ler o SQL: ele mostra que o <code>@unique</code> virou um índice único e que o <code>onDelete: Cascade</code> virou <code>ON DELETE CASCADE</code>. O <code>generate</code> cria o código do cliente, com os tipos do TypeScript, em <code>app/generated/prisma</code>. No Prisma 7, ele não roda mais sozinho depois da migração: <strong>sempre que alterar o esquema, rode os dois comandos</strong>. Mais tarde, quando o esquema mudar, você cria outra migração com outro nome, como <code>--name add-categorias</code>, e o Prisma escreve só a diferença."
+  },
+  {
+   "t": "h2",
+   "id": "3-7-uma-conexao-para-toda-a-api",
+   "texto": "3.7 Uma conexão para toda a API"
+  },
+  {
+   "t": "p",
+   "html": "A API vai consultar o banco em vários arquivos, e todos devem usar o mesmo cliente do Prisma. Crie a pasta <code>lib</code> na raiz do projeto e, dentro dela, o arquivo <code>db.ts</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/db.ts -- uma única conexão com o banco para toda a API\nimport { PrismaPg } from \"@prisma/adapter-pg\";\nimport { PrismaClient } from \"@/app/generated/prisma/client\";\n\nconst adapter = new PrismaPg({\n  connectionString: process.env.DATABASE_URL,\n});\n\n// Em desenvolvimento, o Next.js recarrega os arquivos a cada\n// alteração; guardar o cliente em globalThis evita abrir uma\n// conexão nova a cada recarga.\nconst globalParaPrisma = globalThis as unknown as {\n  prisma?: PrismaClient;\n};\n\nexport const db =\n  globalParaPrisma.prisma ?? new PrismaClient({ adapter });\n\nif (process.env.NODE_ENV !== \"production\") {\n  globalParaPrisma.prisma = db;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O cliente é importado da pasta gerada, <code>@/app/generated/prisma/client</code>, e não do pacote <code>@prisma/client</code>, como em versões antigas do Prisma. O adaptador recebe a <code>DATABASE_URL</code>, a do <em>pooler</em>. A parte do <code>globalThis</code> resolve um problema do desenvolvimento: a cada arquivo salvo, o Next.js recarrega os módulos, e cada recarga criaria um cliente novo, com conexões novas, até esgotar o limite do banco. Guardando o cliente em uma variável global, a recarga reaproveita o mesmo. Em produção não há recarga, então o <code>if</code> não guarda nada. Esse padrão, de ter um único objeto compartilhado, se chama <strong><em>singleton</em></strong>."
+  },
+  {
+   "t": "p",
+   "html": "O operador <code>??</code> devolve o valor da esquerda quando ele existe, e o da direita quando é <code>null</code> ou <code>undefined</code>: “use o cliente guardado ou, se não houver, crie um”."
+  },
+  {
+   "t": "h2",
+   "id": "3-8-dados-de-teste-e-o-prisma-studio",
+   "texto": "3.8 Dados de teste e o Prisma Studio"
+  },
+  {
+   "t": "p",
+   "html": "Para testar a API, é bom ter dados no banco desde o início. O <strong><em>seed</em></strong> é um <em>script</em> que os cria. Para criar o usuário de teste com a senha protegida, instale o <code>bcryptjs</code>, que transforma a senha em um <em>hash</em>, assunto do Capítulo 9:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install bcryptjs"
+  },
+  {
+   "t": "codigo",
+   "texto": "// prisma/seed.ts -- dados de teste para o desenvolvimento\nimport \"dotenv/config\";\nimport bcrypt from \"bcryptjs\";\nimport { PrismaPg } from \"@prisma/adapter-pg\";\nimport { PrismaClient } from \"../app/generated/prisma/client\";\n\nconst adapter = new PrismaPg({\n  connectionString: process.env.DATABASE_URL,\n});\nconst db = new PrismaClient({ adapter });\n\nasync function main() {\n  const senha = await bcrypt.hash(\"senha123\", 10);\n\n  const usuario = await db.user.upsert({\n    where: { email: \"demo@taskflow.com\" },\n    update: {},\n    create: {\n      name: \"Usuária Demo\",\n      email: \"demo@taskflow.com\",\n      password: senha,\n      tasks: {\n        create: [\n          { title: \"Ler o Capítulo 1\", status: \"DONE\" },\n          { title: \"Projetar a API\", status: \"DONE\" },\n          { title: \"Configurar o Prisma\", status: \"IN_PROGRESS\",\n            priority: \"HIGH\" },\n          { title: \"Criar as rotas\", priority: \"HIGH\" },\n          { title: \"Publicar na Vercel\", priority: \"LOW\" },\n        ],\n      },\n    },\n    include: { tasks: true },\n  });\n\n  const total = usuario.tasks.length;\n  console.log(`${usuario.email}: ${total} tarefas`);\n}\n\nmain()\n  .catch((erro) => {\n    console.error(erro);\n    process.exit(1);\n  })\n  .finally(() => db.$disconnect());"
+  },
+  {
+   "t": "p",
+   "html": "O <em>seed</em> roda fora do Next.js, por isso cria o próprio cliente e importa a pasta gerada pelo caminho relativo (<code>../app/...</code>), e não pelo atalho <code>@/</code>. O <code>upsert</code> é “atualize se existir, crie se não existir”: procura o usuário pelo e-mail e, como <code>update</code> está vazio, não muda nada se ele já existir. Assim, o <em>seed</em> pode ser rodado várias vezes sem duplicar dados. As tarefas são criadas junto com o usuário, dentro de <code>tasks: { create: [...] }</code>, e os campos não informados recebem os valores padrão do esquema. Rode:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npx prisma db seed\nRunning seed command `tsx prisma/seed.ts` ...\ndemo@taskflow.com: 5 tarefas"
+  },
+  {
+   "t": "p",
+   "html": "Para ver o banco, abra o <strong>Prisma Studio</strong> com <code>npx prisma studio</code>. Ele abre no navegador uma tela parecida com uma planilha, em que você consulta e edita as tabelas. O painel do Neon também tem um editor de tabelas e um editor de SQL."
+  },
+  {
+   "t": "h2",
+   "id": "3-9-a-primeira-rota-conferindo-a-conexao",
+   "texto": "3.9 A primeira rota: conferindo a conexão"
+  },
+  {
+   "t": "p",
+   "html": "Para terminar, uma rota que confirma que a API fala com o banco. No App Router, uma rota de API é um arquivo <code>route.ts</code>, e o caminho das pastas vira a URL, como as páginas. Crie <code>app/api/health/route.ts</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/api/health/route.ts -- confere se a API fala com o banco\nimport { db } from \"@/lib/db\";\n\nexport async function GET() {\n  const tarefas = await db.task.count();\n  return Response.json({ status: \"ok\", tarefas });\n}"
+  },
+  {
+   "t": "p",
+   "html": "A função se chama <code>GET</code> porque responde ao método GET; o Capítulo 4 mostra as outras. <code>Response.json</code> monta uma resposta com o corpo em JSON e o cabeçalho <code>Content-Type</code> certo. Com o <code>npm run dev</code> rodando, teste no navegador ou no terminal:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ curl -i http://localhost:3000/api/health\nHTTP/1.1 200 OK\ncontent-type: application/json\n\n{\"status\":\"ok\",\"tarefas\":5}"
+  },
+  {
+   "t": "p",
+   "html": "Se aparecer <code>\"tarefas\":5</code>, o caminho inteiro funciona: a requisição chegou ao Next.js, a rota usou o cliente do Prisma, o adaptador se conectou ao Neon e a contagem voltou em JSON. Rotas como esta, chamadas de <em>health check</em>, são usadas de verdade em produção, para que os serviços de monitoramento saibam se a API está no ar."
+  },
+  {
+   "t": "h2",
+   "id": "3-10-a-estrutura-do-projeto",
+   "texto": "3.10 A estrutura do projeto"
+  },
+  {
+   "t": "codigo",
+   "texto": "taskflow/\n  app/\n    api/\n      health/route.ts     GET /api/health\n    generated/prisma/     cliente gerado (fora do Git)\n    route.ts              GET / (a mensagem de boas-vindas)\n  lib/\n    db.ts                 o cliente do Prisma (singleton)\n  prisma/\n    migrations/           o histórico do banco (vai para o Git)\n    schema.prisma         as tabelas\n    seed.ts               dados de teste\n  .env                    senhas e strings (fora do Git)\n  prisma7.config.ts       configuração do Prisma\n  package.json"
+  },
+  {
+   "t": "p",
+   "html": "A partir do próximo capítulo, as rotas do TaskFlow vão sendo criadas dentro de <code>app/api/</code>, e as funções de apoio, como a validação e a autenticação, dentro de <code>lib/</code>."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Esquecer o <code>prisma generate</code>.</strong> Depois de alterar o esquema e migrar, o código antigo do cliente continua lá, e o TypeScript não reconhece os campos novos. No Prisma 7, a migração não gera o cliente sozinha.",
+    "<strong>Importar o cliente de <code>@prisma/client</code>.</strong> Com o gerador <code>prisma-client</code>, o cliente fica na pasta indicada em <code>output</code>: importe de <code>@/app/generated/prisma/client</code>.",
+    "<strong>Esquecer o <code>import \"dotenv/config\"</code>.</strong> O Prisma 7 não lê o <code>.env</code> sozinho, e o erro diz que a URL do banco está vazia.",
+    "<strong>Colocar as strings no <code>.env.local</code>.</strong> O Next.js lê esse arquivo, mas as ferramentas do Prisma, não. Use o <code>.env</code>.",
+    "<strong>Usar a string do <em>pooler</em> nas migrações.</strong> As migrações precisam da conexão direta, sem <code>-pooler</code>, na <code>DIRECT_URL</code>.",
+    "<strong>Criar um <code>new PrismaClient()</code> em cada arquivo.</strong> Cada cliente abre conexões próprias. Importe sempre o <code>db</code> de <code>lib/db.ts</code>.",
+    "<strong>Enviar o <code>.env</code> para o GitHub.</strong> Se acontecer, troque a senha do banco no Neon imediatamente: apagar o arquivo depois não basta, porque ele fica no histórico do Git.",
+    "<strong>Editar um arquivo de migração já aplicado.</strong> O Prisma confere as migrações aplicadas; para mudar o banco, altere o esquema e crie uma migração nova."
+   ]
+  }
+ ]
+}

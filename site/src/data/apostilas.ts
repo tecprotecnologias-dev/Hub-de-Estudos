@@ -789,4 +789,13 @@ export const apostilas: Apostila[] = [
     descricao:
       'Recursos e representações, as restrições do REST, boas URLs, métodos seguros e idempotentes, PUT e PATCH, códigos de status, paginação, versionamento, HATEOAS e o projeto da API do TaskFlow.',
   },
+  {
+    id: 'web3-cap3',
+    capitulo: 3,
+    titulo: 'Preparando o projeto',
+    disciplinaId: 'programacao-e-design-para-web-iii',
+    unidades: ['Construção de API – Back-End'],
+    descricao:
+      'O projeto Next.js só de API, o PostgreSQL na nuvem com o NeonDB, o Prisma 7 (esquema, migrações e cliente), dados de teste com seed, o Prisma Studio e a primeira rota.',
+  },
 ]

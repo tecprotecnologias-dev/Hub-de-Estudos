@@ -1,0 +1,435 @@
+\section{Capítulo 3 -- Preparando o projeto}
+
+Com a API do TaskFlow desenhada no Capítulo 2, é hora de montar a base onde ela vai funcionar. Neste capítulo você vai criar o projeto com Next.js e TypeScript, criar um banco de dados PostgreSQL na nuvem, descrever as tabelas com o Prisma, aplicar a primeira migração, preencher o banco com dados de teste e escrever a primeira rota da API, que confere se tudo está ligado. Cada comando deste capítulo foi testado com as versões indicadas; se você usar versões mais novas, confira as mensagens do terminal, porque elas indicam o que mudou.
+
+\subsection{3.1 As ferramentas}
+
+\begin{center}
+\begin{tabular}{@{}P{0.24\linewidth}P{0.66\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Ferramenta} & \tblheader{Papel no projeto} \\
+\midrule
+Node.js 20 ou mais novo & executa o JavaScript fora do navegador e traz o \texttt{npm} \\
+\rowcolor{rowgray} Next.js 16 & o \textit{framework}: as rotas da API ficam nos \textit{Route Handlers}, arquivos \texttt{route.ts} dentro de \texttt{app/} (o Capítulo 4 detalha) \\
+TypeScript & JavaScript com tipos, que acusa erros antes de o código rodar \\
+\rowcolor{rowgray} PostgreSQL & o banco de dados relacional \\
+NeonDB & serviço que hospeda o PostgreSQL na nuvem, com plano gratuito \\
+\rowcolor{rowgray} Prisma 7 & o ORM, que traduz entre o banco e o código \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Um \textbf{ORM} (\textit{Object-Relational Mapping}, mapeamento objeto-relacional) é a camada que deixa o programa trabalhar com objetos em vez de escrever SQL à mão. Com o Prisma, buscar as tarefas pendentes de um usuário é \texttt{db.task.findMany(\{ where: \{ userId, status: "PENDING" \} \})}, e o resultado já vem com os tipos certos do TypeScript: o editor sabe que \texttt{title} é um texto e avisa se você escrever \texttt{titulo} por engano. O Prisma também gera o SQL que cria e altera as tabelas, a partir de um arquivo que descreve o banco.
+
+\subsection{3.2 Criando o projeto Next.js}
+
+No terminal, dentro da pasta onde você guarda os seus projetos, rode:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$ npx create-next-app@latest taskflow --api --ts --eslint
+    --no-src-dir --import-alias "@/*" --use-npm
+\end{Verbatim}
+\end{codigo}
+
+Digite tudo em uma linha só. A opção \texttt{--api} cria um projeto \textbf{só de API}, sem páginas, estilos nem React no navegador: exatamente o caso do TaskFlow. As outras opções escolhem o TypeScript, o ESLint (que aponta problemas no código), a estrutura sem a pasta \texttt{src/}, o atalho de importação \texttt{@/} e o \texttt{npm}. Com elas, o assistente não precisa fazer perguntas; se fizer alguma, aceite a sugestão. Depois, entre na pasta e inicie o servidor de desenvolvimento:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$ cd taskflow
+$ npm run dev
+\end{Verbatim}
+\end{codigo}
+
+Abra \texttt{http://localhost:3000} no navegador. Em vez de uma página, aparece um JSON: \texttt{\{"message":"Hello world!"\}}. É a resposta do arquivo \texttt{app/route.ts}, a primeira rota de API do projeto. O \texttt{create-next-app} também cria a pasta \texttt{app/[slug]}, um exemplo de rota com parte variável; apague essa pasta, porque o Capítulo 4 mostra como criar as rotas do TaskFlow. Para parar o servidor, aperte \texttt{Ctrl + C} no terminal. Os arquivos que importam por enquanto são estes:
+
+\begin{center}
+\begin{tabular}{@{}P{0.3\linewidth}P{0.6\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Arquivo} & \tblheader{Para que serve} \\
+\midrule
+\texttt{app/} & as rotas; as do TaskFlow vão ficar em \texttt{app/api/} \\
+\rowcolor{rowgray} \texttt{package.json} & dependências e \textit{scripts} (\texttt{dev}, \texttt{build}, \texttt{start}) \\
+\texttt{tsconfig.json} & configuração do TypeScript, inclusive o atalho \texttt{@/}, que aponta para a raiz do projeto \\
+\rowcolor{rowgray} \texttt{next.config.ts} & configuração do Next.js \\
+\texttt{.gitignore} & o que não vai para o Git; já inclui \texttt{node\_modules} e os arquivos \texttt{.env} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{3.3 O banco de dados na nuvem com o NeonDB}
+
+O \textbf{NeonDB} oferece PostgreSQL na nuvem com um plano gratuito suficiente para estudo, e o banco fica disponível tanto no seu computador quanto, mais tarde, na Vercel. Para criar o banco:
+
+\begin{enumerate}
+  \item Acesse \texttt{neon.tech} e crie uma conta; a forma mais rápida é entrar com o GitHub.
+  \item Crie um projeto chamado \texttt{taskflow}. Na região, escolha \textbf{AWS US East (N. Virginia)}, a mesma região padrão da Vercel, onde a API será publicada: banco e servidor perto um do outro deixam as consultas mais rápidas.
+  \item No painel do projeto, clique em \textbf{Connect}. Aparece a \textit{connection string}, o endereço completo do banco, com usuário e senha.
+\end{enumerate}
+
+O Neon mostra duas versões dessa string. Com a opção \textbf{Connection pooling} ligada, o endereço tem \texttt{-pooler} no nome do servidor; desligada, é a conexão direta. Copie as duas:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+postgresql://usuario:senha@ep-xxx-pooler.us-east-1.aws.neon.tech/
+neondb?sslmode=require
+
+postgresql://usuario:senha@ep-xxx.us-east-1.aws.neon.tech/
+neondb?sslmode=require
+\end{Verbatim}
+\end{codigo}
+
+Cada string é uma linha só; aqui elas foram quebradas para caber na página. A versão com \textit{pooler} passa por um \textbf{gerenciador de conexões}, que reaproveita poucas conexões reais para atender muitas requisições. Isso é essencial na Vercel, em que cada requisição pode rodar em uma instância diferente da API: sem o \textit{pooler}, o banco recusaria conexões com poucos usuários. A conexão \textbf{direta} é usada pelas ferramentas do Prisma que alteram as tabelas, as migrações, que precisam de uma conexão exclusiva.
+
+\begin{destaque}{Atenção}
+A \textit{connection string} contém a senha do banco. Ela nunca vai para o código nem para o GitHub: fica só no arquivo \texttt{.env}, que o \texttt{.gitignore} já protege.
+\end{destaque}
+
+Se quiser trabalhar sem internet, o Prisma também sobe um PostgreSQL local com o comando \texttt{npx prisma dev}, depois de instalado (próxima seção). Ele mostra uma \textit{connection string} começando com \texttt{postgres://postgres:postgres@localhost}, que pode ser usada no lugar das do Neon enquanto você estuda.
+
+\subsection{3.4 Instalando e configurando o Prisma}
+
+Instale o Prisma e as bibliotecas de que ele precisa. O \texttt{@7} fixa a versão principal, para que os comandos da apostila continuem valendo:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$ npm install -D prisma@7 tsx
+$ npm install @prisma/client@7 @prisma/adapter-pg dotenv
+$ npx prisma init --datasource-provider postgresql --no-skills
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{prisma} é a ferramenta de linha de comando, usada só no desenvolvimento, por isso a opção \texttt{-D}; o \texttt{tsx} executa arquivos TypeScript direto, e vai rodar o \textit{seed}. O \texttt{@prisma/client} é a biblioteca que a API usa para consultar o banco; o \texttt{@prisma/adapter-pg} é o \textbf{adaptador} que faz a conexão com o PostgreSQL, obrigatório a partir do Prisma 7; e o \texttt{dotenv} lê o arquivo \texttt{.env}. A opção \texttt{--no-skills} evita que o \texttt{init} crie pastas de instruções para assistentes de IA, que não serão usadas.
+
+O \texttt{init} cria três arquivos: \texttt{prisma/schema.prisma}, que descreve o banco; o arquivo de configuração do Prisma, que na versão 7.10 se chama \texttt{prisma7.config.ts} (o nome \texttt{prisma.config.ts}, usado em outras versões e na documentação, também funciona); e o \texttt{.env}. Abra o \texttt{.env}, apague o exemplo e coloque as duas strings do Neon:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+# .env -- NUNCA vai para o Git
+# com -pooler: usada pela API
+DATABASE_URL="postgresql://usuario:senha@ep-xxx-pooler..."
+# sem -pooler: usada pelas migrações
+DIRECT_URL="postgresql://usuario:senha@ep-xxx..."
+\end{Verbatim}
+\end{codigo}
+
+O Next.js também lê um arquivo chamado \texttt{.env.local}, mas o Prisma não: use o \texttt{.env}, que os dois leem. Agora ajuste o arquivo de configuração para que as ferramentas do Prisma usem a conexão direta:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// prisma7.config.ts
+import "dotenv/config";
+import { defineConfig } from "prisma/config";
+
+export default defineConfig({
+  schema: "prisma/schema.prisma",
+  migrations: {
+    path: "prisma/migrations",
+    seed: "tsx prisma/seed.ts",
+  },
+  datasource: {
+    url: process.env["DIRECT_URL"],
+  },
+});
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{import "dotenv/config"} carrega o \texttt{.env}; sem ele, as variáveis ficam vazias, porque o Prisma 7 não lê o arquivo sozinho. A linha \texttt{seed} indica o comando que preenche o banco com dados de teste (Seção 3.8). Se estiver usando o banco local do \texttt{prisma dev}, coloque a mesma string nas duas variáveis.
+
+\subsection{3.5 O esquema do banco}
+
+O \texttt{schema.prisma} descreve as tabelas em uma linguagem própria, simples de ler. Substitua o conteúdo dele por este:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String   // o hash da senha, nunca a senha
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tasks     Task[]
+
+  @@map("users")
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  status      TaskStatus @default(PENDING)
+  priority    Priority   @default(MEDIUM)
+  dueDate     DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  userId      String
+  user        User       @relation(fields: [userId],
+                           references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("tasks")
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  DONE
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+\end{Verbatim}
+\end{codigo}
+
+O bloco \texttt{generator} diz onde o Prisma gera o código do cliente: na pasta \texttt{app/generated/prisma}, que não vai para o Git (o \texttt{init} já a acrescentou ao \texttt{.gitignore}). Cada \texttt{model} vira uma tabela, e cada linha dentro dele, uma coluna. Os símbolos que aparecem são estes:
+
+\begin{center}
+\begin{tabular}{@{}P{0.33\linewidth}P{0.57\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Símbolo} & \tblheader{Significado} \\
+\midrule
+\texttt{@id} & chave primária \\
+\rowcolor{rowgray} \texttt{@default(cuid())} & o banco gera um identificador aleatório, como \texttt{cm3x9k2a0001} \\
+\texttt{@unique} & não pode haver dois iguais; dois usuários não têm o mesmo e-mail \\
+\rowcolor{rowgray} \texttt{String?} & o \texttt{?} torna o campo opcional (aceita \texttt{null}) \\
+\texttt{@default(now())} & preenchido com a data e a hora da criação \\
+\rowcolor{rowgray} \texttt{@updatedAt} & atualizado sozinho a cada alteração \\
+\texttt{Task[]} & um usuário tem várias tarefas (lado ``um'' da relação) \\
+\rowcolor{rowgray} \texttt{@relation(...)} & a chave estrangeira: \texttt{userId} aponta para o \texttt{id} do usuário \\
+\texttt{onDelete: Cascade} & ao excluir um usuário, as tarefas dele são excluídas também \\
+\rowcolor{rowgray} \texttt{@@index([userId])} & índice para buscar rápido as tarefas de um usuário \\
+\texttt{@@map("tasks")} & o nome da tabela no banco \\
+\rowcolor{rowgray} \texttt{enum} & lista fechada de valores permitidos \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+O índice em \texttt{userId} tem motivo: quase toda consulta da API filtra as tarefas pelo dono, e sem o índice o banco teria de percorrer a tabela inteira a cada requisição.
+
+\subsection{3.6 A primeira migração}
+
+Uma \textbf{migração} é um arquivo SQL que leva o banco de um estado a outro, como ``criar a tabela de tarefas''. As migrações ficam guardadas no projeto e vão para o Git, assim qualquer pessoa da equipe, e o servidor de produção, chega exatamente ao mesmo banco. Crie e aplique a primeira:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$ npx prisma migrate dev --name init
+$ npx prisma generate
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{migrate dev} compara o esquema com o banco, escreve o SQL em \texttt{prisma/migrations/<data>\_init/migration.sql} e o executa. Um trecho do arquivo gerado:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+CREATE TYPE "TaskStatus"
+  AS ENUM ('PENDING', 'IN_PROGRESS', 'DONE');
+
+CREATE TABLE "tasks" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
+    "status" "TaskStatus" NOT NULL DEFAULT 'PENDING',
+    ...
+    "userId" TEXT NOT NULL,
+    CONSTRAINT "tasks_pkey" PRIMARY KEY ("id")
+);
+
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+CREATE INDEX "tasks_userId_idx" ON "tasks"("userId");
+ALTER TABLE "tasks" ADD CONSTRAINT "tasks_userId_fkey"
+  FOREIGN KEY ("userId") REFERENCES "users"("id")
+  ON DELETE CASCADE ON UPDATE CASCADE;
+\end{Verbatim}
+\end{codigo}
+
+Vale ler o SQL: ele mostra que o \texttt{@unique} virou um índice único e que o \texttt{onDelete: Cascade} virou \texttt{ON DELETE CASCADE}. O \texttt{generate} cria o código do cliente, com os tipos do TypeScript, em \texttt{app/generated/prisma}. No Prisma 7, ele não roda mais sozinho depois da migração: \textbf{sempre que alterar o esquema, rode os dois comandos}. Mais tarde, quando o esquema mudar, você cria outra migração com outro nome, como \texttt{--name add-categorias}, e o Prisma escreve só a diferença.
+
+\subsection{3.7 Uma conexão para toda a API}
+
+A API vai consultar o banco em vários arquivos, e todos devem usar o mesmo cliente do Prisma. Crie a pasta \texttt{lib} na raiz do projeto e, dentro dela, o arquivo \texttt{db.ts}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// lib/db.ts -- uma única conexão com o banco para toda a API
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@/app/generated/prisma/client";
+
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL,
+});
+
+// Em desenvolvimento, o Next.js recarrega os arquivos a cada
+// alteração; guardar o cliente em globalThis evita abrir uma
+// conexão nova a cada recarga.
+const globalParaPrisma = globalThis as unknown as {
+  prisma?: PrismaClient;
+};
+
+export const db =
+  globalParaPrisma.prisma ?? new PrismaClient({ adapter });
+
+if (process.env.NODE_ENV !== "production") {
+  globalParaPrisma.prisma = db;
+}
+\end{Verbatim}
+\end{codigo}
+
+O cliente é importado da pasta gerada, \texttt{@/app/generated/prisma/client}, e não do pacote \texttt{@prisma/client}, como em versões antigas do Prisma. O adaptador recebe a \texttt{DATABASE\_URL}, a do \textit{pooler}. A parte do \texttt{globalThis} resolve um problema do desenvolvimento: a cada arquivo salvo, o Next.js recarrega os módulos, e cada recarga criaria um cliente novo, com conexões novas, até esgotar o limite do banco. Guardando o cliente em uma variável global, a recarga reaproveita o mesmo. Em produção não há recarga, então o \texttt{if} não guarda nada. Esse padrão, de ter um único objeto compartilhado, se chama \textbf{\textit{singleton}}.
+
+O operador \texttt{??} devolve o valor da esquerda quando ele existe, e o da direita quando é \texttt{null} ou \texttt{undefined}: ``use o cliente guardado ou, se não houver, crie um''.
+
+\subsection{3.8 Dados de teste e o Prisma Studio}
+
+Para testar a API, é bom ter dados no banco desde o início. O \textbf{\textit{seed}} é um \textit{script} que os cria. Para criar o usuário de teste com a senha protegida, instale o \texttt{bcryptjs}, que transforma a senha em um \textit{hash}, assunto do Capítulo 9:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$ npm install bcryptjs
+\end{Verbatim}
+\end{codigo}
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// prisma/seed.ts -- dados de teste para o desenvolvimento
+import "dotenv/config";
+import bcrypt from "bcryptjs";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "../app/generated/prisma/client";
+
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL,
+});
+const db = new PrismaClient({ adapter });
+
+async function main() {
+  const senha = await bcrypt.hash("senha123", 10);
+
+  const usuario = await db.user.upsert({
+    where: { email: "demo@taskflow.com" },
+    update: {},
+    create: {
+      name: "Usuária Demo",
+      email: "demo@taskflow.com",
+      password: senha,
+      tasks: {
+        create: [
+          { title: "Ler o Capítulo 1", status: "DONE" },
+          { title: "Projetar a API", status: "DONE" },
+          { title: "Configurar o Prisma", status: "IN_PROGRESS",
+            priority: "HIGH" },
+          { title: "Criar as rotas", priority: "HIGH" },
+          { title: "Publicar na Vercel", priority: "LOW" },
+        ],
+      },
+    },
+    include: { tasks: true },
+  });
+
+  const total = usuario.tasks.length;
+  console.log(`${usuario.email}: ${total} tarefas`);
+}
+
+main()
+  .catch((erro) => {
+    console.error(erro);
+    process.exit(1);
+  })
+  .finally(() => db.$disconnect());
+\end{Verbatim}
+\end{codigo}
+
+O \textit{seed} roda fora do Next.js, por isso cria o próprio cliente e importa a pasta gerada pelo caminho relativo (\texttt{../app/...}), e não pelo atalho \texttt{@/}. O \texttt{upsert} é ``atualize se existir, crie se não existir'': procura o usuário pelo e-mail e, como \texttt{update} está vazio, não muda nada se ele já existir. Assim, o \textit{seed} pode ser rodado várias vezes sem duplicar dados. As tarefas são criadas junto com o usuário, dentro de \texttt{tasks: \{ create: [...] \}}, e os campos não informados recebem os valores padrão do esquema. Rode:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$ npx prisma db seed
+Running seed command `tsx prisma/seed.ts` ...
+demo@taskflow.com: 5 tarefas
+\end{Verbatim}
+\end{codigo}
+
+Para ver o banco, abra o \textbf{Prisma Studio} com \texttt{npx prisma studio}. Ele abre no navegador uma tela parecida com uma planilha, em que você consulta e edita as tabelas. O painel do Neon também tem um editor de tabelas e um editor de SQL.
+
+\subsection{3.9 A primeira rota: conferindo a conexão}
+
+Para terminar, uma rota que confirma que a API fala com o banco. No App Router, uma rota de API é um arquivo \texttt{route.ts}, e o caminho das pastas vira a URL, como as páginas. Crie \texttt{app/api/health/route.ts}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// app/api/health/route.ts -- confere se a API fala com o banco
+import { db } from "@/lib/db";
+
+export async function GET() {
+  const tarefas = await db.task.count();
+  return Response.json({ status: "ok", tarefas });
+}
+\end{Verbatim}
+\end{codigo}
+
+A função se chama \texttt{GET} porque responde ao método GET; o Capítulo 4 mostra as outras. \texttt{Response.json} monta uma resposta com o corpo em JSON e o cabeçalho \texttt{Content-Type} certo. Com o \texttt{npm run dev} rodando, teste no navegador ou no terminal:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$ curl -i http://localhost:3000/api/health
+HTTP/1.1 200 OK
+content-type: application/json
+
+{"status":"ok","tarefas":5}
+\end{Verbatim}
+\end{codigo}
+
+Se aparecer \texttt{"tarefas":5}, o caminho inteiro funciona: a requisição chegou ao Next.js, a rota usou o cliente do Prisma, o adaptador se conectou ao Neon e a contagem voltou em JSON. Rotas como esta, chamadas de \textit{health check}, são usadas de verdade em produção, para que os serviços de monitoramento saibam se a API está no ar.
+
+\subsection{3.10 A estrutura do projeto}
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+taskflow/
+  app/
+    api/
+      health/route.ts     GET /api/health
+    generated/prisma/     cliente gerado (fora do Git)
+    route.ts              GET / (a mensagem de boas-vindas)
+  lib/
+    db.ts                 o cliente do Prisma (singleton)
+  prisma/
+    migrations/           o histórico do banco (vai para o Git)
+    schema.prisma         as tabelas
+    seed.ts               dados de teste
+  .env                    senhas e strings (fora do Git)
+  prisma7.config.ts       configuração do Prisma
+  package.json
+\end{Verbatim}
+\end{codigo}
+
+A partir do próximo capítulo, as rotas do TaskFlow vão sendo criadas dentro de \texttt{app/api/}, e as funções de apoio, como a validação e a autenticação, dentro de \texttt{lib/}.
+
+\subsection{Erros Comuns}
+
+\begin{itemize}
+  \item \textbf{Esquecer o \texttt{prisma generate}.} Depois de alterar o esquema e migrar, o código antigo do cliente continua lá, e o TypeScript não reconhece os campos novos. No Prisma 7, a migração não gera o cliente sozinha.
+  \item \textbf{Importar o cliente de \texttt{@prisma/client}.} Com o gerador \texttt{prisma-client}, o cliente fica na pasta indicada em \texttt{output}: importe de \texttt{@/app/generated/prisma/client}.
+  \item \textbf{Esquecer o \texttt{import "dotenv/config"}.} O Prisma 7 não lê o \texttt{.env} sozinho, e o erro diz que a URL do banco está vazia.
+  \item \textbf{Colocar as strings no \texttt{.env.local}.} O Next.js lê esse arquivo, mas as ferramentas do Prisma, não. Use o \texttt{.env}.
+  \item \textbf{Usar a string do \textit{pooler} nas migrações.} As migrações precisam da conexão direta, sem \texttt{-pooler}, na \texttt{DIRECT\_URL}.
+  \item \textbf{Criar um \texttt{new PrismaClient()} em cada arquivo.} Cada cliente abre conexões próprias. Importe sempre o \texttt{db} de \texttt{lib/db.ts}.
+  \item \textbf{Enviar o \texttt{.env} para o GitHub.} Se acontecer, troque a senha do banco no Neon imediatamente: apagar o arquivo depois não basta, porque ele fica no histórico do Git.
+  \item \textbf{Editar um arquivo de migração já aplicado.} O Prisma confere as migrações aplicadas; para mudar o banco, altere o esquema e crie uma migração nova.
+\end{itemize}
