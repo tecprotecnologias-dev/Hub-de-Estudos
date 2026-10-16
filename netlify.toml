@@ -1,0 +1,5 @@
+# O site fica na pasta site/ (Vite); o Netlify precisa saber disso.
+[build]
+  base = "site"
+  command = "npm run build"
+  publish = "dist"
