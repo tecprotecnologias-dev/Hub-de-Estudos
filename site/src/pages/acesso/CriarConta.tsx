@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { criarConta, criarContaProfessor, useAuth } from '../../lib/auth'
+import { criarConta, criarContaProfessor, normalizarTelefone, useAuth } from '../../lib/auth'
 import { authConfigurado } from '../../lib/supabase'
 import { AvisoSemCadastro } from './AvisoSemCadastro'
 
@@ -20,6 +20,7 @@ export default function CriarConta() {
   const [matricula, setMatricula] = useState('')
   const [periodo, setPeriodo] = useState('')
   const [email, setEmail] = useState('')
+  const [telefone, setTelefone] = useState('')
   const [senha, setSenha] = useState('')
   const [confirmar, setConfirmar] = useState('')
   const [aceite, setAceite] = useState(false)
@@ -64,14 +65,16 @@ export default function CriarConta() {
       if (!matricula.trim()) return setErro('Informe a sua matrícula.')
       if (!periodo) return setErro('Escolha o período que você está cursando.')
     }
+    const celular = normalizarTelefone(telefone)
+    if (!celular) return setErro('Informe o seu celular com DDD, por exemplo (21) 99999-8888.')
     if (senha.length < MIN_SENHA) return setErro(`A senha precisa ter pelo menos ${MIN_SENHA} caracteres.`)
     if (senha !== confirmar) return setErro('As duas senhas não são iguais.')
     if (!aceite) return setErro('Para criar a conta, é preciso aceitar a Política de Privacidade.')
     setEnviando(true)
     const r =
       tipo === 'aluno'
-        ? await criarConta({ nome, matricula, periodo: Number(periodo), email, senha })
-        : await criarContaProfessor({ nome, email, senha })
+        ? await criarConta({ nome, matricula, periodo: Number(periodo), email, telefone: celular, senha })
+        : await criarContaProfessor({ nome, email, telefone: celular, senha })
     setEnviando(false)
     if (r.erro) setErro(r.erro)
     else if (r.precisaConfirmar || tipo === 'professor') setConcluido({ precisaConfirmar: r.precisaConfirmar })
@@ -138,6 +141,18 @@ export default function CriarConta() {
         <label>
           E-mail
           <input type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+        </label>
+        <label>
+          Celular (WhatsApp)
+          <input
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel-national"
+            placeholder="(21) 99999-8888"
+            required
+            value={telefone}
+            onChange={(e) => setTelefone(e.target.value)}
+          />
         </label>
         <div className="linha-campos">
           <label>

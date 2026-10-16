@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { NOMES_TIPO, traduzirErro, useAuth, type Perfil, type TipoPerfil } from '../../lib/auth'
+import { formatarTelefone, NOMES_TIPO, traduzirErro, useAuth, type Perfil, type TipoPerfil } from '../../lib/auth'
 import { supabase } from '../../lib/supabase'
 
 // Área da administradora: ver os cadastros, mudar o perfil (aluno, professor,
@@ -36,7 +36,7 @@ export default function Administracao() {
     const t = busca.trim().toLowerCase()
     return pessoas.filter(
       (p) =>
-        (!t || `${p.nome} ${p.matricula ?? ''} ${p.email}`.toLowerCase().includes(t)) &&
+        (!t || `${p.nome} ${p.matricula ?? ''} ${p.email} ${p.telefone ?? ''}`.toLowerCase().includes(t)) &&
         (!filtroTipo || p.tipo === filtroTipo) &&
         (!filtroPeriodo || String(p.periodo) === filtroPeriodo),
     )
@@ -121,7 +121,7 @@ export default function Administracao() {
                 <div>
                   <strong>{p.nome}</strong>
                   <span className="dica">
-                    {p.email} · pedido em {new Date(p.criado_em).toLocaleDateString('pt-BR')}
+                    {p.email} · {formatarTelefone(p.telefone)} · pedido em {new Date(p.criado_em).toLocaleDateString('pt-BR')}
                   </span>
                 </div>
                 <div className="botoes-pendente">
@@ -191,6 +191,7 @@ export default function Administracao() {
                 <th>Nome</th>
                 <th>Matrícula</th>
                 <th>E-mail</th>
+                <th>Celular</th>
                 <th>Período</th>
                 <th>Perfil</th>
                 <th>Cadastro</th>
@@ -213,6 +214,15 @@ export default function Administracao() {
                   </td>
                   <td>{p.matricula ?? '—'}</td>
                   <td>{p.email}</td>
+                  <td>
+                    {p.telefone ? (
+                      <a href={`https://wa.me/${p.telefone}`} target="_blank" rel="noreferrer" title="Abrir no WhatsApp">
+                        {formatarTelefone(p.telefone)}
+                      </a>
+                    ) : (
+                      '—'
+                    )}
+                  </td>
                   <td>
                     <select
                       aria-label={`Período de ${p.nome}`}

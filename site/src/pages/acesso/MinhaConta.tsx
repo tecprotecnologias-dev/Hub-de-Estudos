@@ -1,30 +1,41 @@
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { emAnalise, NOMES_TIPO, traduzirErro, useAuth } from '../../lib/auth'
+import { emAnalise, formatarTelefone, NOMES_TIPO, normalizarTelefone, traduzirErro, useAuth } from '../../lib/auth'
 import { supabase } from '../../lib/supabase'
 
 export default function MinhaConta() {
   const { perfil, recarregarPerfil, sair } = useAuth()
   const navegar = useNavigate()
   const [nome, setNome] = useState(perfil?.nome ?? '')
+  const [telefone, setTelefone] = useState(perfil?.telefone ? formatarTelefone(perfil.telefone) : '')
   const [mensagem, setMensagem] = useState<{ tipo: 'ok' | 'erro'; texto: string } | null>(null)
   const [salvando, setSalvando] = useState(false)
 
   if (!perfil || !supabase) return null
   const cliente = supabase
 
-  async function salvarNome(e: FormEvent) {
+  const celular = normalizarTelefone(telefone)
+  const semMudanca = nome.trim() === perfil.nome && celular === perfil.telefone
+
+  async function salvarDados(e: FormEvent) {
     e.preventDefault()
     if (nome.trim().split(/\s+/).length < 2) {
       setMensagem({ tipo: 'erro', texto: 'Informe o nome completo (nome e sobrenome).' })
       return
     }
+    if (!celular) {
+      setMensagem({ tipo: 'erro', texto: 'Informe o seu celular com DDD, por exemplo (21) 99999-8888.' })
+      return
+    }
     setSalvando(true)
-    const { error } = await cliente.from('perfis').update({ nome: nome.trim() }).eq('id', perfil!.id)
+    const { error } = await cliente
+      .from('perfis')
+      .update({ nome: nome.trim(), telefone: celular })
+      .eq('id', perfil!.id)
     setSalvando(false)
     if (error) setMensagem({ tipo: 'erro', texto: traduzirErro(error.message) })
     else {
-      setMensagem({ tipo: 'ok', texto: 'Nome atualizado.' })
+      setMensagem({ tipo: 'ok', texto: 'Dados atualizados.' })
       await recarregarPerfil()
     }
   }
@@ -80,13 +91,29 @@ export default function MinhaConta() {
         </p>
       )}
 
-      <form onSubmit={salvarNome} className="formulario-acesso">
+      {!perfil.telefone && (
+        <p className="erro-acesso" role="status">
+          Falta o seu celular no cadastro. Informe abaixo e clique em Salvar.
+        </p>
+      )}
+      <form onSubmit={salvarDados} className="formulario-acesso">
         <label>
           Nome completo
           <input value={nome} onChange={(e) => setNome(e.target.value)} />
         </label>
-        <button type="submit" disabled={salvando || nome.trim() === perfil.nome}>
-          {salvando ? 'Salvando…' : 'Salvar nome'}
+        <label>
+          Celular (WhatsApp)
+          <input
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel-national"
+            placeholder="(21) 99999-8888"
+            value={telefone}
+            onChange={(e) => setTelefone(e.target.value)}
+          />
+        </label>
+        <button type="submit" disabled={salvando || semMudanca}>
+          {salvando ? 'Salvando…' : 'Salvar'}
         </button>
       </form>
       {mensagem && (

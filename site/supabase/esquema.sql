@@ -19,6 +19,8 @@ create table if not exists public.perfis (
   -- matrícula na instituição: única (uma conta por matrícula); só o administrador muda
   matricula text unique,
   email text not null,
+  -- celular com DDI e DDD, só dígitos (ex.: 5521999998888), pronto para o WhatsApp
+  telefone text,
   tipo text not null default 'aluno' check (tipo in ('aluno', 'professor', 'admin')),
   -- período do curso (1 a 5) informado no cadastro: o aluno vê as disciplinas do seu
   -- período e dos anteriores (as optativas, para todos). Só o administrador muda.
@@ -34,6 +36,7 @@ create table if not exists public.perfis (
 alter table public.perfis add column if not exists periodo smallint check (periodo between 1 and 5);
 alter table public.perfis add column if not exists matricula text unique;
 alter table public.perfis add column if not exists solicita_professor boolean not null default false;
+alter table public.perfis add column if not exists telefone text;
 
 alter table public.perfis enable row level security;
 
@@ -109,8 +112,8 @@ create trigger proteger_perfil
   for each row execute function public.proteger_perfil();
 
 -- Quando alguém se cadastra, o perfil é criado automaticamente, sempre como aluno.
--- Pela aba "Sou aluno": com o nome, a matrícula e o período do formulário.
--- Pela aba "Sou professor": só com o nome, e o pedido de professor fica em análise.
+-- Pela aba "Sou aluno": com o nome, a matrícula, o período e o telefone do formulário.
+-- Pela aba "Sou professor": só com o nome e o telefone, e o pedido de professor fica em análise.
 -- Ninguém se cadastra como administrador: o administrador muda o perfil depois.
 create or replace function public.criar_perfil()
 returns trigger
@@ -119,13 +122,14 @@ security definer
 set search_path = public
 as $$
 begin
-  insert into public.perfis (id, nome, matricula, email, periodo, solicita_professor, aceite_privacidade_em)
+  insert into public.perfis (id, nome, matricula, email, telefone, periodo, solicita_professor, aceite_privacidade_em)
   values (
     new.id,
     coalesce(nullif(new.raw_user_meta_data ->> 'nome', ''), split_part(new.email, '@', 1)),
     case when (new.raw_user_meta_data ->> 'professor') = 'true' then null
          else nullif(trim(new.raw_user_meta_data ->> 'matricula'), '') end,
     new.email,
+    nullif(regexp_replace(coalesce(new.raw_user_meta_data ->> 'telefone', ''), '\D', '', 'g'), ''),
     case when (new.raw_user_meta_data ->> 'professor') = 'true' then null
          when (new.raw_user_meta_data ->> 'periodo') in ('1', '2', '3', '4', '5')
          then (new.raw_user_meta_data ->> 'periodo')::smallint end,
@@ -169,3 +173,6 @@ as $$
 $$;
 
 grant execute on function public.matricula_em_uso(text) to anon, authenticated;
+
+-- Avisa a API do Supabase que o esquema mudou (colunas novas passam a valer na hora).
+notify pgrst, 'reload schema';

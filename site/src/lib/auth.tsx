@@ -13,6 +13,8 @@ export interface Perfil {
   nome: string
   matricula: string | null
   email: string
+  /** celular com DDI e DDD, só dígitos (ex.: 5521999998888); contas antigas podem não ter */
+  telefone: string | null
   tipo: TipoPerfil
   /** período do curso (1 a 5), informado no cadastro; só o administrador muda */
   periodo: number | null
@@ -146,10 +148,33 @@ export interface DadosCadastro {
   matricula: string
   periodo: number
   email: string
+  telefone: string
   senha: string
 }
 
-export async function criarConta({ nome, matricula, periodo, email, senha }: DadosCadastro) {
+/**
+ * Celular brasileiro digitado em qualquer formato -> só dígitos com o DDI 55
+ * (ex.: "(21) 99999-8888" -> "5521999998888"), o formato que o WhatsApp usa.
+ * Devolve null se não for um número com DDD válido.
+ */
+export function normalizarTelefone(texto: string): string | null {
+  let d = texto.replace(/\D/g, '')
+  if (d.length === 13 && d.startsWith('55')) d = d.slice(2)
+  if (d.length === 12 && d.startsWith('55')) d = d.slice(2)
+  if (d.length !== 10 && d.length !== 11) return null
+  if (d[0] === '0' || d[1] === '0') return null
+  return '55' + d
+}
+
+/** "5521999998888" -> "(21) 99999-8888" */
+export function formatarTelefone(telefone: string | null): string {
+  if (!telefone) return '—'
+  const d = telefone.startsWith('55') ? telefone.slice(2) : telefone
+  if (d.length < 10) return telefone
+  return `(${d.slice(0, 2)}) ${d.slice(2, -4)}-${d.slice(-4)}`
+}
+
+export async function criarConta({ nome, matricula, periodo, email, telefone, senha }: DadosCadastro) {
   const { data: emUso, error: erroBusca } = await supabase!.rpc('matricula_em_uso', { m: matricula.trim() })
   if (erroBusca) return { erro: traduzirErro(erroBusca.message), precisaConfirmar: false }
   if (emUso) {
@@ -167,6 +192,7 @@ export async function criarConta({ nome, matricula, periodo, email, senha }: Dad
         nome: nome.trim(),
         matricula: matricula.trim(),
         periodo: String(periodo),
+        telefone,
         aceite_privacidade: 'true',
       },
     },
@@ -177,13 +203,18 @@ export async function criarConta({ nome, matricula, periodo, email, senha }: Dad
 }
 
 /** Cadastro pela aba "Sou professor": só nome, e-mail e senha; fica em análise até a aprovação. */
-export async function criarContaProfessor({ nome, email, senha }: Pick<DadosCadastro, 'nome' | 'email' | 'senha'>) {
+export async function criarContaProfessor({
+  nome,
+  email,
+  telefone,
+  senha,
+}: Pick<DadosCadastro, 'nome' | 'email' | 'telefone' | 'senha'>) {
   const { data, error } = await supabase!.auth.signUp({
     email: email.trim(),
     password: senha,
     options: {
       emailRedirectTo: enderecoDoSite(),
-      data: { nome: nome.trim(), professor: 'true', aceite_privacidade: 'true' },
+      data: { nome: nome.trim(), telefone, professor: 'true', aceite_privacidade: 'true' },
     },
   })
   if (error) return { erro: traduzirErro(error.message), precisaConfirmar: false }
