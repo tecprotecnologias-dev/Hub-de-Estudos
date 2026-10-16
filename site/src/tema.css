@@ -1,53 +1,111 @@
 /*
- * Tema "Hub de Estudos" (claro): fundo branco levemente lilás, destaque em roxo neon
- * (#8257E5), brilho ao passar o mouse, Inter no texto, JetBrains Mono nos detalhes de
- * código e etiquetas só com o texto em roxo. Carregado depois do index.css:
- * redefine as variáveis de cor e acrescenta os efeitos. Os blocos de código continuam escuros.
+ * Tema "Hub de Estudos": visual sóbrio e sofisticado. Fundo marfim, roxo berinjela
+ * (o mesmo do logo) com detalhes em dourado, títulos em Fraunces (serifada), texto em
+ * Inter e JetBrains Mono nos detalhes de código. Sem brilhos neon: sombras suaves e
+ * linhas finas. Carregado depois do index.css: redefine as variáveis de cor e os
+ * acabamentos. Modo escuro em :root[data-tema='escuro'] (botão no cabeçalho, ver App.tsx).
+ * A prova impressa (.folha) continua papel branco nos dois modos.
  */
 
 :root {
-  --fundo: #f6f5fb;
+  --fundo: #f8f6f1;
   --superficie: #ffffff;
-  --superficie-alta: #faf8ff;
-  --texto: #1d1b2c;
-  --texto-suave: #5f5b73;
-  --borda: #e3e0ef;
-  --primaria: #8257e5;
-  --primaria-escura: #6d43d6;
-  --primaria-clara: #efe9fd;
-  --primaria-texto: #6a3fd1;
-  --certa: #138a4b;
-  --certa-fundo: #e5f6ec;
-  --errada: #c62f3d;
-  --errada-fundo: #fdebed;
-  --destaque-prof: #a35f00;
-  --brilho: 0 0 0 1px rgb(130 87 229 / 0.45), 0 0 20px rgb(130 87 229 / 0.30);
-  --sombra-cartao: 0 6px 18px rgb(46 32 99 / 0.08);
+  --superficie-alta: #fbfaf7;
+  --texto: #1c1830;
+  --texto-suave: #5d586c;
+  --borda: #e7e2d8;
+  --borda-forte: #d6cfc2;
+  --primaria: #4b2a9e;
+  --primaria-escura: #361c7a;
+  --primaria-clara: #f0ebf8;
+  --primaria-texto: #4b2a9e;
+  --ouro: #a87b25;
+  --ouro-claro: #d9b26a;
+  --certa: #17794a;
+  --certa-fundo: #e7f4ec;
+  --errada: #b42b39;
+  --errada-fundo: #fbecee;
+  --atencao: #b4500e;
+  --atencao-fundo: #fdf3ea;
+  --destaque-prof: #8f5a0b;
+  --resposta-fundo: #faf5ea;
+  --codigo-inline: #43249a;
+  --topo-fundo: rgb(248 246 241 / 0.86);
+  --anel-foco: 0 0 0 3px rgb(75 42 158 / 0.18);
+  /* mantida por compatibilidade: antes era o brilho neon, agora uma sombra discreta */
+  --brilho: 0 10px 28px rgb(28 24 48 / 0.08);
+  --sombra-cartao: 0 1px 2px rgb(28 24 48 / 0.04), 0 6px 20px rgb(28 24 48 / 0.05);
+  --sombra-cartao-alta: 0 2px 4px rgb(28 24 48 / 0.05), 0 16px 36px rgb(28 24 48 / 0.09);
+  --serifada: 'Fraunces', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
 
   font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+}
+
+:root[data-tema='escuro'] {
+  --fundo: #121019;
+  --superficie: #1a1724;
+  --superficie-alta: #211d2e;
+  --texto: #ece8f3;
+  --texto-suave: #a59fb5;
+  --borda: #2c2839;
+  --borda-forte: #3a3549;
+  --primaria: #7357d6;
+  --primaria-escura: #6247c4;
+  --primaria-clara: #262038;
+  --primaria-texto: #b9a5ff;
+  --ouro: #d9b26a;
+  --ouro-claro: #e6c587;
+  --certa: #5cc995;
+  --certa-fundo: #15291f;
+  --errada: #ff8a93;
+  --errada-fundo: #34191e;
+  --atencao: #f2a165;
+  --atencao-fundo: #33221a;
+  --destaque-prof: #e3b061;
+  --resposta-fundo: #2a2318;
+  --codigo-inline: #cdbdff;
+  --topo-fundo: rgb(18 16 25 / 0.86);
+  --anel-foco: 0 0 0 3px rgb(185 165 255 / 0.25);
+  --brilho: 0 10px 28px rgb(0 0 0 / 0.35);
+  --sombra-cartao: 0 1px 2px rgb(0 0 0 / 0.3), 0 6px 20px rgb(0 0 0 / 0.2);
+  --sombra-cartao-alta: 0 2px 4px rgb(0 0 0 / 0.35), 0 16px 36px rgb(0 0 0 / 0.35);
+
+  color-scheme: dark;
 }
 
 body {
-  background:
-    radial-gradient(900px 380px at 10% -12%, rgb(130 87 229 / 0.10), transparent 60%),
-    radial-gradient(700px 340px at 100% -5%, rgb(79 142 247 / 0.07), transparent 60%),
-    var(--fundo);
-  background-attachment: fixed;
+  background: var(--fundo);
   min-height: 100vh;
+  transition: background-color 0.25s, color 0.25s;
 }
 
-h1,
-h2,
-h3 {
-  letter-spacing: -0.01em;
+/* Títulos em serifada (a prova impressa mantém a fonte própria) */
+:is(h1, h2, h3):not(.folha *) {
+  font-family: var(--serifada);
+  font-weight: 600;
+  font-optical-sizing: auto;
+  letter-spacing: -0.012em;
+  line-height: 1.2;
+}
+
+h1:not(.folha *) {
+  font-size: clamp(1.75rem, 3.4vw, 2.25rem);
+  font-weight: 600;
 }
 
 a {
   color: var(--primaria-texto);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
-/* Textos em roxo usam o tom mais escuro, com bom contraste no fundo claro
-   (o #8257E5 fica para fundos de botões e destaques) */
+::selection {
+  background: rgb(217 178 106 / 0.35);
+}
+
+/* Textos em roxo */
 .rodape a,
 .questao::before,
 .nota,
@@ -65,39 +123,65 @@ a {
 .linguagem-codigo,
 .cartao a,
 .cartao .link,
-nav a.active,
 .botao.secundario {
   color: var(--primaria-texto);
 }
 
-/* Topo: branco translúcido, fixo no alto ao rolar */
+/* ===================================================================== */
+/* Cabeçalho                                                              */
+/* ===================================================================== */
 .topo {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgb(255 255 255 / 0.85);
-  backdrop-filter: blur(10px);
+  background: var(--topo-fundo);
+  backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--borda);
 }
 
 .marca img {
-  height: 44px;
-  filter: drop-shadow(0 2px 6px rgb(130 87 229 / 0.35));
+  height: 42px;
+}
+
+/* no escuro, o capelo (roxo-escuro) ganha um contorno claro para não sumir */
+:root[data-tema='escuro'] .marca img {
+  filter: drop-shadow(0 0 1px rgb(255 255 255 / 0.55)) drop-shadow(0 0 6px rgb(185 165 255 / 0.25));
 }
 
 .marca span {
-  background: linear-gradient(90deg, #2a1a5e, #8257e5);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  font-family: var(--serifada);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--texto);
 }
 
 nav a {
-  transition: color 0.15s, background 0.15s;
+  position: relative;
+  color: var(--texto-suave);
+  transition: color 0.15s;
 }
 
 nav a:hover {
   color: var(--texto);
-  background: var(--primaria-clara);
+  background: transparent;
+}
+
+/* página atual: texto escuro com um fio dourado embaixo, sem caixa colorida */
+nav a.active {
+  background: transparent;
+  color: var(--texto);
+  font-weight: 600;
+}
+
+nav a.active::after {
+  content: '';
+  position: absolute;
+  left: 0.6rem;
+  right: 0.6rem;
+  bottom: 0.1rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ouro);
 }
 
 /* Rodapé sempre no fim da tela, mesmo em páginas curtas */
@@ -112,13 +196,15 @@ nav a:hover {
   width: 100%;
 }
 
-/* Rodapé em roxo */
+/* ===================================================================== */
+/* Rodapé: berinjela sólido com um fio dourado                            */
+/* ===================================================================== */
 .rodape {
-  margin-top: 2rem;
-  background: linear-gradient(100deg, #8257e5 0%, #4b26b0 50%, #24124f 100%);
-  border-top: none;
-  color: rgb(255 255 255 / 0.85);
-  padding: 2rem 1rem 1.5rem;
+  margin-top: 3rem;
+  background: #1a1433;
+  border-top: 1px solid rgb(217 178 106 / 0.35);
+  color: rgb(255 255 255 / 0.8);
+  padding: 2.5rem 1rem 2rem;
 }
 
 .rodape-conteudo {
@@ -127,7 +213,7 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1.1rem;
 }
 
 .rodape-redes {
@@ -140,145 +226,138 @@ nav a:hover {
 .rodape-redes a {
   display: inline-grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  color: #ffffff;
+  color: rgb(255 255 255 / 0.85);
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  background: rgb(255 255 255 / 0.12);
-  border: 1px solid rgb(255 255 255 / 0.25);
-  transition: background 0.15s, box-shadow 0.2s;
+  background: transparent;
+  border: 1px solid rgb(255 255 255 / 0.22);
+  transition: border-color 0.2s, color 0.2s;
 }
 
 .rodape-redes a:hover {
-  background: rgb(255 255 255 / 0.22);
-  box-shadow: 0 0 18px rgb(255 255 255 / 0.25);
+  color: var(--ouro-claro);
+  border-color: rgb(217 178 106 / 0.7);
 }
 
 .rodape-credito {
   margin: 0;
   text-align: center;
-  line-height: 1.6;
-  font-size: 0.85rem;
-  color: rgb(255 255 255 / 0.75);
+  line-height: 1.7;
+  font-size: 0.84rem;
+  letter-spacing: 0.01em;
+  color: rgb(255 255 255 / 0.65);
 }
 
 .rodape .rodape-credito a {
   color: #ffffff;
 }
 
-/* Faixa de destaque da página inicial */
+/* ===================================================================== */
+/* Página inicial                                                         */
+/* ===================================================================== */
 .hero {
   position: relative;
   overflow: hidden;
-  margin: 0 0 2rem;
-  padding: 2.5rem 2.25rem;
-  border-radius: 22px;
+  margin: 0.5rem 0 3rem;
+  padding: 3.5rem 3rem;
+  border-radius: 20px;
   color: #ffffff;
   background:
-    radial-gradient(500px 260px at 85% 10%, rgb(79 142 247 / 0.45), transparent 60%),
-    radial-gradient(420px 260px at 0% 100%, rgb(251 169 76 / 0.22), transparent 60%),
-    linear-gradient(120deg, #24124f 0%, #4b26b0 55%, #8257e5 100%);
-  box-shadow: 0 18px 40px rgb(75 38 176 / 0.35);
+    radial-gradient(600px 320px at 100% 0%, rgb(217 178 106 / 0.12), transparent 65%),
+    linear-gradient(135deg, #2a1d5c 0%, #1d1440 60%, #160f30 100%);
+  border: 1px solid rgb(217 178 106 / 0.22);
+  box-shadow: 0 24px 60px rgb(22 15 48 / 0.28);
+}
+
+/* fio dourado acima do título */
+.hero-texto::before {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 2px;
+  margin-bottom: 1.5rem;
+  background: var(--ouro-claro);
 }
 
 .hero-selo {
   display: inline-block;
   margin: 0 0 1rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 999px;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 0.8rem;
-  background: rgb(255 255 255 / 0.14);
-  border: 1px solid rgb(255 255 255 / 0.25);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ouro-claro);
 }
 
 .hero-titulo {
-  margin: 0 0 0.75rem;
-  font-size: clamp(1.9rem, 4.2vw, 2.9rem);
-  font-weight: 800;
-  line-height: 1.12;
+  margin: 0 0 1rem;
+  font-family: var(--serifada);
+  font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.08;
   letter-spacing: -0.02em;
 }
 
 .hero-titulo span {
-  background: linear-gradient(90deg, #ffd7a1, #fba94c);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ouro-claro);
 }
 
 .hero-sub {
   margin: 0;
   max-width: 34rem;
-  font-size: 1.05rem;
-  color: rgb(255 255 255 / 0.85);
+  font-size: 1.08rem;
+  line-height: 1.6;
+  color: rgb(255 255 255 / 0.75);
 }
 
-/* símbolos de código flutuando ao fundo */
-.hero-codigo span {
-  position: absolute;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-weight: 600;
-  color: rgb(255 255 255 / 0.1);
-  pointer-events: none;
-  animation: flutuar 7s ease-in-out infinite;
-}
-
-.hero-codigo span:nth-child(1) { top: 8%; right: 4%; font-size: 4.5rem; }
-.hero-codigo span:nth-child(2) { bottom: 8%; right: 20%; font-size: 3rem; animation-delay: -2s; }
-.hero-codigo span:nth-child(3) { top: 14%; right: 26%; font-size: 2.2rem; animation-delay: -4s; }
-.hero-codigo span:nth-child(4) { bottom: 12%; right: 6%; font-size: 1.8rem; animation-delay: -1s; }
-
-@keyframes flutuar {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-codigo span { animation: none; }
+/* os símbolos de código flutuando saem: o destaque fica na tipografia */
+.hero-codigo {
+  display: none;
 }
 
 @media (max-width: 760px) {
   .hero {
-    padding: 1.75rem 1.25rem;
+    padding: 2.25rem 1.5rem;
   }
 }
 
-/* Seções da página inicial: caminhos e passos */
 .secao-inicio {
-  margin: 0 0 2.5rem;
+  margin: 0 0 3rem;
 }
 
 .titulo-secao {
-  font-size: clamp(1.35rem, 2.6vw, 1.75rem);
-  margin: 0.1rem 0 1.1rem;
+  font-size: clamp(1.45rem, 2.8vw, 1.9rem);
+  margin: 0.1rem 0 1.4rem;
 }
 
 .caminhos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
+  gap: 1.1rem;
 }
 
 .caminho {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.35rem;
+  gap: 0.45rem;
   text-align: left;
   font: inherit;
   color: var(--texto);
   text-decoration: none;
   background: var(--superficie);
   border: 1px solid var(--borda);
-  border-radius: 16px;
-  padding: 1.35rem 1.35rem 1.2rem;
+  border-radius: 14px;
+  padding: 1.6rem 1.5rem 1.4rem;
   box-shadow: var(--sombra-cartao);
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 button.caminho {
@@ -288,30 +367,35 @@ button.caminho {
 .caminho:hover,
 button.caminho:hover:not(:disabled) {
   background: var(--superficie);
-  transform: translateY(-4px);
-  border-color: rgb(130 87 229 / 0.6);
-  box-shadow: var(--brilho), 0 14px 30px rgb(46 32 99 / 0.12);
+  transform: translateY(-2px);
+  border-color: var(--borda-forte);
+  box-shadow: var(--sombra-cartao-alta);
 }
 
 .caminho h3 {
   margin: 0;
-  font-size: 1.15rem;
+  font-size: 1.3rem;
 }
 
 .caminho p {
   margin: 0;
   color: var(--texto-suave);
+  line-height: 1.6;
   flex: 1;
 }
 
 .caminho-acao {
-  margin-top: 0.6rem;
-  font-weight: 700;
+  margin-top: 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--primaria-texto);
 }
 
 .caminho:hover .caminho-acao {
-  text-decoration: underline;
+  text-decoration: none;
+  color: var(--ouro);
 }
 
 .passos {
@@ -320,38 +404,42 @@ button.caminho:hover:not(:disabled) {
   padding: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  gap: 1.1rem;
   counter-reset: none;
 }
 
 .passos li {
   position: relative;
-  padding: 1.25rem 1.25rem 1.1rem;
-  border-radius: 16px;
-  background: linear-gradient(160deg, #ffffff, #f3eeff);
+  padding: 1.5rem 1.4rem 1.3rem;
+  border-radius: 14px;
+  background: var(--superficie);
   border: 1px solid var(--borda);
 }
 
 .passos h3 {
-  margin: 0.5rem 0 0.25rem;
+  margin: 0.75rem 0 0.3rem;
+  font-size: 1.25rem;
 }
 
 .passos p {
   margin: 0;
   color: var(--texto-suave);
+  line-height: 1.6;
 }
 
+/* número em serifada dourada, dentro de um círculo de linha fina */
 .passo-numero {
   display: inline-grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-weight: 700;
-  color: #ffffff;
-  background: linear-gradient(135deg, #8257e5, #4b26b0);
-  box-shadow: 0 0 0 4px rgb(130 87 229 / 0.15);
+  font-family: var(--serifada);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--ouro);
+  background: transparent;
+  border: 1px solid var(--ouro);
 }
 
 @media (max-width: 760px) {
@@ -360,28 +448,116 @@ button.caminho:hover:not(:disabled) {
   }
 }
 
-/* Botões com brilho neon */
+/*
+ * A página inicial (vitrine) tem fundo berinjela de ponta a ponta. Ativado pela classe
+ * .pagina-inicial no body (ver pages/Inicio.tsx); as outras páginas usam o fundo do tema.
+ */
+:root:has(body.pagina-inicial) {
+  background: #120c26;
+}
+
+body.pagina-inicial {
+  background:
+    radial-gradient(1000px 520px at 85% 0%, rgb(217 178 106 / 0.08), transparent 60%),
+    linear-gradient(180deg, #171030 0%, #120c26 70%);
+  color: #eeeaf6;
+}
+
+.pagina-inicial .hero {
+  background:
+    radial-gradient(600px 320px at 100% 0%, rgb(217 178 106 / 0.12), transparent 65%),
+    linear-gradient(135deg, #2a1d5c 0%, #20164a 100%);
+  box-shadow: 0 30px 70px rgb(0 0 0 / 0.4);
+}
+
+.pagina-inicial .titulo-secao {
+  color: #ffffff;
+}
+
+.pagina-inicial .caminho,
+.pagina-inicial button.caminho,
+.pagina-inicial .passos li {
+  background: rgb(255 255 255 / 0.035);
+  border-color: rgb(255 255 255 / 0.09);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.pagina-inicial .caminho:hover,
+.pagina-inicial button.caminho:hover:not(:disabled) {
+  background: rgb(255 255 255 / 0.06);
+  border-color: rgb(217 178 106 / 0.45);
+  box-shadow: 0 18px 40px rgb(0 0 0 / 0.3);
+}
+
+.pagina-inicial .caminho p,
+.pagina-inicial .passos p {
+  color: rgb(238 234 246 / 0.68);
+}
+
+.pagina-inicial .caminho-acao {
+  color: #c9b8ff;
+}
+
+.pagina-inicial .caminho:hover .caminho-acao,
+.pagina-inicial .passo-numero {
+  color: var(--ouro-claro);
+}
+
+.pagina-inicial .passo-numero {
+  border-color: rgb(217 178 106 / 0.7);
+}
+
+.pagina-inicial .passos h3 {
+  color: #ffffff;
+}
+
+.pagina-inicial .rodape {
+  background: #0e0a1e;
+}
+
+/* sobre o fundo escuro, o cabeçalho fica sólido */
+.pagina-inicial .topo {
+  background: var(--superficie);
+  border-bottom-color: transparent;
+  box-shadow: 0 1px 0 rgb(217 178 106 / 0.25), 0 8px 30px rgb(0 0 0 / 0.25);
+}
+
+/* ===================================================================== */
+/* Botões, cartões e campos                                               */
+/* ===================================================================== */
 button,
 .botao {
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: 600;
-  transition: background 0.15s, box-shadow 0.2s, transform 0.15s;
+  letter-spacing: 0.005em;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 button:hover:not(:disabled),
 .botao:hover:not(.desativado) {
-  box-shadow: var(--brilho);
-  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgb(54 28 122 / 0.18);
 }
 
 button.secundario,
 .botao.secundario {
-  background: var(--superficie);
+  background: transparent;
   color: var(--primaria-texto);
-  border-color: rgb(130 87 229 / 0.55);
+  border-color: var(--borda-forte);
 }
 
-/* Cartões flutuantes */
+button.secundario:hover:not(:disabled),
+.botao.secundario:hover:not(.desativado) {
+  background: var(--primaria-clara);
+  border-color: var(--primaria-texto);
+  box-shadow: none;
+}
+
+button.aba.ativa,
+button.aba:hover:not(:disabled) {
+  box-shadow: none;
+}
+
 .cartao,
 .questao,
 .questao-gabarito,
@@ -395,15 +571,15 @@ button.secundario,
 }
 
 .cartao {
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
 }
 
 button.cartao:hover:not(:disabled),
 .cartao:hover {
   background: var(--superficie);
-  border-color: rgb(130 87 229 / 0.6);
-  box-shadow: var(--brilho), var(--sombra-cartao);
-  transform: translateY(-3px);
+  border-color: var(--borda-forte);
+  box-shadow: var(--sombra-cartao-alta);
+  transform: translateY(-2px);
 }
 
 .cartao h2,
@@ -415,37 +591,44 @@ button.cartao:hover:not(:disabled),
   transform: none;
 }
 
-/* Etiquetas (Capítulo 1, Fácil, 1º período): só o texto, em roxo, sem caixa */
+/* Etiquetas (Capítulo 1, Fácil, 1º período): versalete discreto, sem caixa */
 .etiqueta {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--primaria-texto);
 }
 
-/* Campos */
 input,
 select,
 textarea {
-  border-radius: 8px;
+  border-radius: 10px;
+  border-color: var(--borda-forte);
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: var(--primaria);
-  box-shadow: 0 0 0 3px rgb(130 87 229 / 0.2);
+  border-color: var(--primaria-texto);
+  box-shadow: var(--anel-foco);
 }
 
-/* Código: blocos escuros, com um toque de roxo */
+:focus-visible {
+  outline-color: var(--primaria-texto);
+}
+
+/* Código: blocos escuros nos dois modos */
 .capitulo .bloco-codigo,
 .resolucao .bloco-codigo,
 .questao .bloco-codigo,
 .gabarito .bloco-codigo {
-  background: #1b1830;
+  background: #17142a;
   color: #ece8ff;
-  border: 1px solid #2c2748;
+  border: 1px solid #2a2544;
+  border-radius: 10px;
 }
 
 .gabarito .codigo-do-aluno {
@@ -456,10 +639,23 @@ textarea:focus {
 
 .capitulo code {
   background: var(--primaria-clara);
-  color: #4b2aa8;
+  color: var(--codigo-inline);
 }
 
-/* Alternativas */
+/* Quadros das apostilas que tinham cor fixa */
+.quadro-atencao {
+  border-left-color: var(--atencao);
+  background: var(--atencao-fundo);
+}
+
+.quadro-atencao .quadro-titulo {
+  color: var(--atencao);
+}
+
+.quadro-resposta {
+  background: var(--resposta-fundo);
+}
+
 .alternativa {
   border-radius: 10px;
 }
@@ -492,83 +688,39 @@ textarea:focus {
   padding: 0;
 }
 
-/*
- * Página inicial (vitrine): fundo roxo profundo de ponta a ponta, com brilhos.
- * Ativado pela classe .pagina-inicial no body (ver pages/Inicio.tsx); as outras
- * páginas continuam com o fundo claro, melhor para ler.
- */
-body.pagina-inicial {
-  background:
-    radial-gradient(900px 500px at 12% 0%, rgb(130 87 229 / 0.45), transparent 60%),
-    radial-gradient(800px 480px at 95% 30%, rgb(79 142 247 / 0.22), transparent 60%),
-    radial-gradient(700px 420px at 30% 100%, rgb(251 169 76 / 0.12), transparent 60%),
-    linear-gradient(180deg, #160b33 0%, #1d0f45 45%, #120a2a 100%);
-  background-attachment: fixed;
-  color: #eeeaff;
+/* A prova é papel branco: no modo escuro, as cores dentro dela voltam às do claro */
+:root[data-tema='escuro'] .folha {
+  --texto: #1c1830;
+  --texto-suave: #5d586c;
+  --borda: #cccccc;
+  --primaria-texto: #4b2a9e;
+  --superficie: #ffffff;
+  --fundo: #ffffff;
 }
 
-/* a faixa de destaque se destaca do fundo com uma borda luminosa */
-.pagina-inicial .hero {
-  border: 1px solid rgb(255 255 255 / 0.14);
-  box-shadow: 0 0 0 1px rgb(130 87 229 / 0.35), 0 24px 60px rgb(0 0 0 / 0.45),
-    0 0 60px rgb(130 87 229 / 0.25);
+/* ===================================================================== */
+/* Botão de tema claro / escuro                                           */
+/* ===================================================================== */
+.topo nav .botao-tema {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin-left: 0.25rem;
+  border-radius: 50%;
+  border: 1px solid var(--borda-forte);
+  background: transparent;
+  color: var(--texto-suave);
+  font-size: 1rem;
+  line-height: 1;
 }
 
-.pagina-inicial .titulo-secao {
-  color: #ffffff;
-}
-
-/* cartões de vidro sobre o roxo */
-.pagina-inicial .caminho,
-.pagina-inicial button.caminho {
-  background: rgb(255 255 255 / 0.06);
-  border-color: rgb(255 255 255 / 0.12);
-  color: #ffffff;
-  box-shadow: 0 10px 30px rgb(0 0 0 / 0.25);
-  backdrop-filter: blur(8px);
-}
-
-.pagina-inicial .caminho:hover,
-.pagina-inicial button.caminho:hover:not(:disabled) {
-  background: rgb(255 255 255 / 0.1);
-  border-color: rgb(180 156 255 / 0.7);
-  box-shadow: 0 0 0 1px rgb(180 156 255 / 0.5), 0 0 28px rgb(130 87 229 / 0.55), 0 14px 34px rgb(0 0 0 / 0.35);
-}
-
-.pagina-inicial .caminho p {
-  color: rgb(238 234 255 / 0.75);
-}
-
-.pagina-inicial .caminho-acao {
-  color: #c9b6ff;
-}
-
-.pagina-inicial .passos li {
-  background: rgb(255 255 255 / 0.05);
-  border-color: rgb(255 255 255 / 0.12);
-}
-
-.pagina-inicial .passos h3 {
-  color: #ffffff;
-}
-
-.pagina-inicial .passos p {
-  color: rgb(238 234 255 / 0.75);
-}
-
-.pagina-inicial .passo-numero {
-  box-shadow: 0 0 0 4px rgb(130 87 229 / 0.3), 0 0 18px rgb(130 87 229 / 0.6);
-}
-
-/* o rodapé ganha uma linha de separação sobre o fundo escuro */
-.pagina-inicial .rodape {
-  border-top: 1px solid rgb(255 255 255 / 0.1);
-}
-
-/* sobre o fundo escuro, o cabeçalho translúcido ficaria cinza: na inicial ele é branco sólido */
-.pagina-inicial .topo {
-  background: #ffffff;
-  box-shadow: 0 4px 20px rgb(0 0 0 / 0.25);
+.topo nav .botao-tema:hover:not(:disabled) {
+  color: var(--ouro);
+  border-color: var(--ouro);
+  background: transparent;
+  box-shadow: none;
 }
 
 /* ===================================================================== */
@@ -578,31 +730,43 @@ body.pagina-inicial {
   background: var(--primaria);
   color: #ffffff;
   font-weight: 600;
-  margin-left: 0.25rem;
+  margin-left: 0.35rem;
+  padding-inline: 1rem;
+  border-radius: 999px;
 }
 
 .topo nav .botao-entrar:hover {
   background: var(--primaria-escura);
   color: #ffffff;
-  box-shadow: var(--brilho);
+}
+
+.topo nav .botao-entrar::after,
+.topo nav .link-conta::after {
+  display: none;
 }
 
 .topo nav .link-conta {
   font-weight: 600;
-  color: var(--primaria-texto);
-  border: 1px solid rgb(130 87 229 / 0.35);
-  margin-left: 0.25rem;
+  color: var(--texto);
+  border: 1px solid var(--borda-forte);
+  border-radius: 999px;
+  margin-left: 0.35rem;
+  padding-inline: 0.9rem;
+}
+
+.topo nav .link-conta:hover {
+  border-color: var(--ouro);
 }
 
 .cartao-acesso,
 .aviso-acesso {
   max-width: 520px;
-  margin: 1rem auto 2rem;
-  padding: 2rem 2rem 1.75rem;
+  margin: 1.5rem auto 2.5rem;
+  padding: 2.5rem 2.25rem 2rem;
   background: var(--superficie);
   border: 1px solid var(--borda);
   border-radius: 18px;
-  box-shadow: var(--sombra-cartao);
+  box-shadow: var(--sombra-cartao-alta);
 }
 
 .cartao-conta {
@@ -617,15 +781,15 @@ body.pagina-inicial {
 .formulario-acesso {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  margin-top: 1.25rem;
+  gap: 0.95rem;
+  margin-top: 1.5rem;
 }
 
 .formulario-acesso label {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
-  font-size: 0.9rem;
+  gap: 0.35rem;
+  font-size: 0.86rem;
   font-weight: 600;
   color: var(--texto);
 }
@@ -639,19 +803,19 @@ body.pagina-inicial {
 .formulario-acesso input:not([type='checkbox']),
 .formulario-acesso select {
   width: 100%;
-  padding: 0.6rem 0.75rem;
+  padding: 0.7rem 0.85rem;
   font-weight: 400;
 }
 
 .formulario-acesso button[type='submit'] {
-  padding: 0.7rem 1rem;
-  margin-top: 0.25rem;
+  padding: 0.8rem 1rem;
+  margin-top: 0.35rem;
 }
 
 .linha-campos {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.85rem;
+  gap: 0.95rem;
 }
 
 @media (max-width: 520px) {
@@ -661,12 +825,13 @@ body.pagina-inicial {
 
   .cartao-acesso,
   .aviso-acesso {
-    padding: 1.5rem 1.25rem;
+    padding: 1.75rem 1.25rem;
   }
 }
 
 .aceite input {
   margin-top: 0.2rem;
+  accent-color: var(--primaria);
 }
 
 .dica.pequena {
@@ -677,7 +842,7 @@ body.pagina-inicial {
 .erro-acesso,
 .ok-acesso {
   margin: 0.25rem 0 0;
-  padding: 0.6rem 0.8rem;
+  padding: 0.7rem 0.9rem;
   border-radius: 10px;
   font-size: 0.9rem;
 }
@@ -697,27 +862,27 @@ body.pagina-inicial {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.5rem;
-  margin: 1.25rem 0 0;
+  margin: 1.5rem 0 0;
   font-size: 0.92rem;
 }
 
 .dados-conta {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75rem 1.5rem;
-  margin: 1.25rem 0 0.75rem;
+  gap: 0.9rem 1.5rem;
+  margin: 1.5rem 0 1rem;
 }
 
 .dados-conta dt {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--texto-suave);
 }
 
 .dados-conta dd {
-  margin: 0.15rem 0 0;
+  margin: 0.2rem 0 0;
   font-weight: 600;
   word-break: break-word;
 }
@@ -727,20 +892,20 @@ body.pagina-inicial {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.75rem;
-  margin-top: 1.75rem;
-  padding-top: 1.25rem;
+  margin-top: 2rem;
+  padding-top: 1.4rem;
   border-top: 1px solid var(--borda);
 }
 
 button.perigo {
   background: transparent;
   color: var(--errada);
-  border-color: rgb(198 47 61 / 0.5);
+  border-color: var(--errada);
 }
 
 button.perigo:hover:not(:disabled) {
   background: var(--errada-fundo);
-  box-shadow: 0 0 0 1px rgb(198 47 61 / 0.4);
+  box-shadow: none;
 }
 
 .aviso-acesso {
@@ -757,13 +922,19 @@ button.perigo:hover:not(:disabled) {
   background: var(--superficie);
   border: 1px solid var(--borda);
   border-radius: 18px;
-  padding: 2rem 2.25rem;
-  line-height: 1.7;
+  padding: 2.5rem 2.75rem;
+  line-height: 1.75;
 }
 
 .texto-legal h2 {
-  margin-top: 1.75rem;
-  font-size: 1.15rem;
+  margin-top: 2rem;
+  font-size: 1.3rem;
+}
+
+@media (max-width: 520px) {
+  .texto-legal {
+    padding: 1.75rem 1.25rem;
+  }
 }
 
 .tabela-admin {
@@ -778,15 +949,19 @@ button.perigo:hover:not(:disabled) {
 
 .tabela-admin th,
 .tabela-admin td {
-  padding: 0.55rem 0.7rem;
+  padding: 0.65rem 0.8rem;
   text-align: left;
   border-bottom: 1px solid var(--borda);
   white-space: nowrap;
 }
 
 .tabela-admin th {
-  background: var(--primaria-clara);
+  background: var(--superficie-alta);
+  font-size: 0.72rem;
   font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
 }
 
 .tabela-admin tbody tr:hover {
@@ -802,43 +977,44 @@ button.perigo:hover:not(:disabled) {
   grid-template-columns: 1fr 1fr;
   gap: 0.35rem;
   padding: 0.3rem;
-  margin: 0.75rem 0 0.9rem;
-  background: var(--primaria-clara);
+  margin: 0.9rem 0 1rem;
+  background: var(--superficie-alta);
+  border: 1px solid var(--borda);
   border-radius: 12px;
 }
 
 .abas-acesso button {
   background: transparent;
   border: none;
-  color: var(--primaria-texto);
+  color: var(--texto-suave);
   font-weight: 600;
-  padding: 0.55rem;
+  padding: 0.6rem;
   border-radius: 9px;
 }
 
 .abas-acesso button:hover:not(:disabled) {
-  background: rgb(255 255 255 / 0.6);
+  background: transparent;
+  color: var(--texto);
   box-shadow: none;
-  transform: none;
 }
 
 .abas-acesso button.ativa {
   background: var(--superficie);
   color: var(--texto);
-  box-shadow: 0 2px 8px rgb(46 32 99 / 0.12);
+  box-shadow: 0 1px 2px rgb(28 24 48 / 0.08), 0 2px 8px rgb(28 24 48 / 0.06);
 }
 
 .pendentes {
   margin: 0 0 1.5rem;
-  padding: 1.1rem 1.25rem;
-  border: 1px solid rgb(251 169 76 / 0.6);
-  background: rgb(251 169 76 / 0.08);
+  padding: 1.25rem 1.35rem;
+  border: 1px solid rgb(217 178 106 / 0.55);
+  background: rgb(217 178 106 / 0.08);
   border-radius: 14px;
 }
 
 .pendentes h2 {
-  font-size: 1.05rem;
-  margin: 0 0 0.75rem;
+  font-size: 1.15rem;
+  margin: 0 0 0.85rem;
 }
 
 .pendentes ul {
@@ -855,7 +1031,7 @@ button.perigo:hover:not(:disabled) {
   align-items: center;
   justify-content: space-between;
   gap: 0.6rem;
-  padding: 0.7rem 0.9rem;
+  padding: 0.8rem 1rem;
   background: var(--superficie);
   border: 1px solid var(--borda);
   border-radius: 10px;
@@ -873,12 +1049,13 @@ button.perigo:hover:not(:disabled) {
 
 .selo-pendente {
   margin-left: 0.5rem;
-  padding: 0.05rem 0.45rem;
+  padding: 0.05rem 0.5rem;
   border-radius: 999px;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  color: #8a4b00;
-  background: rgb(251 169 76 / 0.2);
+  letter-spacing: 0.04em;
+  color: var(--destaque-prof);
+  background: rgb(217 178 106 / 0.2);
 }
 
 /* Cabeçalho: com os itens de professor e administrador, o menu ainda cabe numa linha */
@@ -887,10 +1064,11 @@ button.perigo:hover:not(:disabled) {
 }
 
 .topo nav {
+  align-items: center;
   gap: 0.15rem;
 }
 
 .topo nav a {
   padding: 0.4rem 0.6rem;
-  font-size: 0.95rem;
+  font-size: 0.93rem;
 }

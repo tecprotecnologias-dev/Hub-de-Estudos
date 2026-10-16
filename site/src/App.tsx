@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { HashRouter, NavLink, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom'
 import Inicio from './pages/Inicio'
 import Disciplinas from './pages/Disciplinas'
@@ -68,6 +68,33 @@ function DesvioRecuperacao() {
   return null
 }
 
+/** Alterna entre o tema claro e o escuro; a escolha fica guardada neste navegador. */
+function BotaoTema() {
+  const [escuro, setEscuro] = useState(() => document.documentElement.dataset.tema === 'escuro')
+  function alternar() {
+    const novo = !escuro
+    setEscuro(novo)
+    if (novo) document.documentElement.dataset.tema = 'escuro'
+    else delete document.documentElement.dataset.tema
+    try {
+      localStorage.setItem('tema', novo ? 'escuro' : 'claro')
+    } catch {
+      // sem armazenamento (janela anônima): vale só até fechar a página
+    }
+  }
+  return (
+    <button
+      type="button"
+      className="botao-tema"
+      onClick={alternar}
+      aria-label={escuro ? 'Usar o tema claro' : 'Usar o tema escuro'}
+      title={escuro ? 'Tema claro' : 'Tema escuro'}
+    >
+      {escuro ? '☀' : '☾'}
+    </button>
+  )
+}
+
 function Cabecalho() {
   const { sessao, perfil } = useAuth()
   const professor = podeAcessar(perfil, ['professor', 'admin'])
@@ -96,6 +123,7 @@ function Cabecalho() {
                 Entrar
               </NavLink>
             ))}
+          <BotaoTema />
         </nav>
       </div>
     </header>
