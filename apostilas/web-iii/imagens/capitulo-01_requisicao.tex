@@ -1,0 +1,28 @@
+% Capítulo 1: o ciclo requisição/resposta entre cliente e servidor.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-fluxo}
+\tikzset{
+  caixa/.style={base, rectangle, rounded corners=3pt, fill=laranja!12, minimum width=30mm, minimum height=22mm},
+  msg/.style={base, rectangle, fill=white, font=\ttfamily\scriptsize, align=left, text width=50mm},
+  nota/.style={font=\sffamily\scriptsize, text=cinzalogo, align=center},
+}
+\begin{document}
+\begin{tikzpicture}
+  \node[caixa] (cli) at (0, 0) {\textbf{Cliente}\\[2pt]\scriptsize navegador,\\\scriptsize app ou sistema};
+  \node[caixa, fill=azul] (srv) at (9.6, 0) {\textbf{Servidor}\\[2pt]\scriptsize API + banco\\\scriptsize de dados};
+
+  \node[msg] (req) at (4.8, 1.25) {GET /api/tasks HTTP/1.1\\Host: taskflow.com.br\\Accept: application/json};
+  \node[msg] (res) at (4.8, -1.25) {HTTP/1.1 200 OK\\Content-Type: application/json\\{} [\{"id": 1, "title": "Estudar"\}]};
+
+  \draw[fluxo] (cli.north east) to[out=30, in=180] (req.west);
+  \draw[fluxo] (req.east) to[out=0, in=150] (srv.north west);
+  \draw[fluxo] (srv.south west) to[out=210, in=0] (res.east);
+  \draw[fluxo] (res.west) to[out=180, in=-30] (cli.south east);
+
+  \node[rotulo] at (4.8, 2.25) {1. requisição};
+  \node[rotulo] at (4.8, -2.25) {2. resposta};
+  \node[nota] at (4.8, -3.0) {o servidor não guarda memória entre uma requisição e outra (sem estado)};
+\end{tikzpicture}
+\end{document}

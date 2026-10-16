@@ -1,0 +1,405 @@
+{
+ "numero": 1,
+ "titulo": "APIs e Web Services",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Quando você abre o aplicativo do banco e vê o seu saldo, quando um site de compras calcula o frete a partir do CEP ou quando um sistema emite uma nota fiscal eletrônica, há sempre dois programas conversando: um que pede uma informação e outro que a entrega. Essa conversa acontece por meio de uma <strong>API</strong>. Neste capítulo você vai entender o que é uma API, como funciona o protocolo HTTP, que transporta essas conversas na web, e quais são os principais estilos de serviço web: SOAP, REST e GraphQL. No final, vai consultar uma API pública de verdade e conhecer o projeto que será construído ao longo da apostila."
+  },
+  {
+   "t": "h2",
+   "id": "1-1-o-que-e-uma-api",
+   "texto": "1.1 O que é uma API"
+  },
+  {
+   "t": "p",
+   "html": "<strong>API</strong> é a sigla de <em>Application Programming Interface</em>, ou interface de programação de aplicações. É um conjunto de regras que define como um programa pode pedir algo a outro: quais pedidos existem, que dados cada pedido precisa receber e o que vem de volta."
+  },
+  {
+   "t": "p",
+   "html": "Uma comparação comum é a do restaurante. O cliente não entra na cozinha: ele consulta o cardápio e faz o pedido ao garçom, que leva o pedido à cozinha e traz o prato. O cardápio é o <strong>contrato</strong> da API (o que pode ser pedido), o garçom é a API, e a cozinha é o sistema que faz o trabalho. O cliente não precisa saber como a cozinha funciona, e a cozinha pode mudar de fogão sem que o cliente perceba, desde que o cardápio continue o mesmo."
+  },
+  {
+   "t": "p",
+   "html": "Esse é o grande valor de uma API: ela <strong>separa quem usa de quem implementa</strong>. Um mesmo servidor pode atender, ao mesmo tempo, o site, o aplicativo de celular e o sistema de um parceiro, todos usando o mesmo contrato."
+  },
+  {
+   "t": "p",
+   "html": "O termo API é amplo. As funções de uma biblioteca, como o <code>readFile</code> do Node.js, também formam uma API. Nesta apostila, porém, o foco são as <strong>APIs web</strong>: aquelas acessadas pela rede, usando o protocolo HTTP. Quando essas APIs são oferecidas por um sistema para ser usadas por outros sistemas, também são chamadas de <strong>serviços web</strong> (<em>web services</em>)."
+  },
+  {
+   "t": "h2",
+   "id": "1-2-cliente-servidor-e-o-protocolo-http",
+   "texto": "1.2 Cliente, servidor e o protocolo HTTP"
+  },
+  {
+   "t": "p",
+   "html": "Toda conversa com uma API web segue o modelo <strong>cliente-servidor</strong>: o <strong>cliente</strong> envia uma <strong>requisição</strong> (<em>request</em>) e o <strong>servidor</strong> devolve uma <strong>resposta</strong> (<em>response</em>). O cliente pode ser um navegador, um aplicativo de celular ou outro servidor. As regras dessa troca são as do <strong>HTTP</strong> (<em>HyperText Transfer Protocol</em>), o mesmo protocolo que o navegador usa para carregar páginas."
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web3/capitulo-01_requisicao.png",
+   "alt": "capitulo 01 requisicao"
+  },
+  {
+   "t": "p",
+   "html": "Uma requisição HTTP tem quatro partes:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "o <strong>método</strong>, que diz o que o cliente quer fazer: <code>GET</code> para buscar, <code>POST</code> para criar, <code>PUT</code> e <code>PATCH</code> para alterar, <code>DELETE</code> para excluir;",
+    "a <strong>URL</strong>, que diz em que recurso a ação será feita, como <code>/api/tasks</code>;",
+    "os <strong>cabeçalhos</strong> (<em>headers</em>), pares nome e valor com informações extras, como o formato aceito na resposta;",
+    "o <strong>corpo</strong> (<em>body</em>), opcional, com os dados enviados, por exemplo os campos de uma tarefa nova."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A resposta tem três: o <strong>código de status</strong>, um número que resume o resultado (<code>200</code> deu certo, <code>404</code> não encontrado, <code>500</code> erro no servidor), os <strong>cabeçalhos</strong> e o <strong>corpo</strong>, com os dados pedidos. Por baixo de tudo, requisição e resposta são apenas texto. Veja como fica a criação de uma tarefa:"
+  },
+  {
+   "t": "codigo",
+   "texto": "POST /api/tasks HTTP/1.1\nHost: taskflow.com.br\nContent-Type: application/json\n\n{\"title\": \"Estudar HTTP\", \"priority\": \"HIGH\"}"
+  },
+  {
+   "t": "codigo",
+   "texto": "HTTP/1.1 201 Created\nContent-Type: application/json\nLocation: /api/tasks/42\n\n{\"id\": 42, \"title\": \"Estudar HTTP\", \"priority\": \"HIGH\"}"
+  },
+  {
+   "t": "p",
+   "html": "A linha em branco separa os cabeçalhos do corpo. O cabeçalho <code>Content-Type</code> informa o formato do corpo; aqui, <code>application/json</code>. O status <code>201 Created</code> indica que um recurso novo foi criado, e o cabeçalho <code>Location</code> diz onde ele pode ser encontrado. Os métodos e os códigos de status são estudados em detalhe nos Capítulos 2 e 8."
+  },
+  {
+   "t": "p",
+   "html": "Uma característica essencial do HTTP é ser <strong>sem estado</strong> (<em>stateless</em>): cada requisição é independente, e o servidor não se lembra das anteriores. Se o servidor precisa saber quem está pedindo, a própria requisição tem de trazer essa informação, normalmente um <strong>token</strong> em um cabeçalho. É assim que funciona o login em APIs, assunto do Capítulo 9."
+  },
+  {
+   "t": "h2",
+   "id": "1-3-a-anatomia-de-uma-url",
+   "texto": "1.3 A anatomia de uma URL"
+  },
+  {
+   "t": "p",
+   "html": "A URL (<em>Uniform Resource Locator</em>) identifica onde está o recurso. Cada parte tem uma função:"
+  },
+  {
+   "t": "codigo",
+   "texto": "https://api.taskflow.com.br:443/v1/tasks?status=DONE&page=2"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Parte",
+    "Exemplo",
+    "Função"
+   ],
+   "linhas": [
+    [
+     "protocolo",
+     "<code>https</code>",
+     "como a conversa acontece; o <code>s</code> indica conexão criptografada"
+    ],
+    [
+     "domínio",
+     "<code>api.taskflow.com.br</code>",
+     "o nome do servidor"
+    ],
+    [
+     "porta",
+     "<code>443</code>",
+     "a “porta de entrada”; 443 é o padrão do HTTPS e costuma ser omitida"
+    ],
+    [
+     "caminho",
+     "<code>/v1/tasks</code>",
+     "o recurso dentro do servidor"
+    ],
+    [
+     "<em>query string</em>",
+     "<code>?status=DONE&amp;page=2</code>",
+     "parâmetros extras, como filtros e paginação, em pares nome=valor separados por <code>&amp;</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Na <em>query string</em>, espaços e acentos não podem aparecer como são: eles são codificados, e “São Paulo” vira <code>S%C3%A3o%20Paulo</code>. O <code>fetch</code> e as bibliotecas de HTTP cuidam disso com <code>encodeURIComponent</code> ou com a classe <code>URLSearchParams</code>."
+  },
+  {
+   "t": "h2",
+   "id": "1-4-servicos-web-com-soap",
+   "texto": "1.4 Serviços web com SOAP"
+  },
+  {
+   "t": "p",
+   "html": "Os primeiros serviços web populares, no início dos anos 2000, usavam o <strong>SOAP</strong> (<em>Simple Object Access Protocol</em>), um protocolo padronizado pelo W3C. No SOAP, toda mensagem é um documento <strong>XML</strong> com uma estrutura fixa, o <strong>envelope</strong>, e o serviço é descrito em um arquivo <strong>WSDL</strong> (<em>Web Services Description Language</em>), também em XML, que lista as operações, os parâmetros e os tipos de cada uma. A partir do WSDL, ferramentas geram automaticamente o código do cliente."
+  },
+  {
+   "t": "codigo",
+   "texto": "<soap:Envelope\n    xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"\n    xmlns:t=\"http://taskflow.com.br/ws\">\n  <soap:Header/>\n  <soap:Body>\n    <t:BuscarTarefa>\n      <t:id>42</t:id>\n    </t:BuscarTarefa>\n  </soap:Body>\n</soap:Envelope>"
+  },
+  {
+   "t": "p",
+   "html": "Repare que a operação, <code>BuscarTarefa</code>, aparece dentro da mensagem. No SOAP, todas as chamadas costumam ir para uma mesma URL, quase sempre com o método <code>POST</code>, e é o conteúdo do envelope que diz o que fazer. O padrão também define como devolver erros (o elemento <code>Fault</code>) e tem extensões para segurança e transações, como o WS-Security."
+  },
+  {
+   "t": "p",
+   "html": "O SOAP é verboso e rígido, mas essa rigidez é justamente o que alguns sistemas querem: um contrato formal, validado automaticamente. Por isso ele continua presente em bancos, seguradoras e em sistemas de governo. No Brasil, a emissão da Nota Fiscal Eletrônica (NF-e) é feita por serviços web SOAP das secretarias da Fazenda."
+  },
+  {
+   "t": "h2",
+   "id": "1-5-apis-rest",
+   "texto": "1.5 APIs REST"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>REST</strong> (<em>Representational State Transfer</em>) não é um protocolo, e sim um <strong>estilo de arquitetura</strong>, descrito por Roy Fielding em sua tese de doutorado, em 2000. A ideia central é organizar a API em torno de <strong>recursos</strong>, as “coisas” do sistema (tarefas, usuários, pedidos), cada um identificado por uma URL, e usar os <strong>métodos do próprio HTTP</strong> para dizer o que fazer com eles:"
+  },
+  {
+   "t": "codigo",
+   "texto": "GET    /api/tasks       lista as tarefas\nPOST   /api/tasks       cria uma tarefa\nGET    /api/tasks/42    busca a tarefa 42\nPATCH  /api/tasks/42    altera parte da tarefa 42\nDELETE /api/tasks/42    exclui a tarefa 42"
+  },
+  {
+   "t": "p",
+   "html": "O servidor devolve uma <strong>representação</strong> do recurso, hoje quase sempre em <strong>JSON</strong>, um formato de texto leve e fácil de ler tanto por pessoas quanto por programas:"
+  },
+  {
+   "t": "codigo",
+   "texto": "{\n  \"id\": 42,\n  \"title\": \"Estudar HTTP\",\n  \"status\": \"PENDING\",\n  \"priority\": \"HIGH\",\n  \"dueDate\": \"2026-11-20\"\n}"
+  },
+  {
+   "t": "p",
+   "html": "Compare com o SOAP: em vez de uma operação <code>BuscarTarefa</code> escrita dentro de um envelope, o REST usa <code>GET</code> na URL da tarefa. As regras do estilo, como a ausência de estado e o uso de URLs para identificar recursos, são o tema do Capítulo 2. Por ser simples, usar o HTTP como ele foi pensado e funcionar bem com JavaScript, o REST se tornou o estilo dominante nas APIs web, e é o estilo usado nesta apostila."
+  },
+  {
+   "t": "h2",
+   "id": "1-6-graphql",
+   "texto": "1.6 GraphQL"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>GraphQL</strong> foi criado pelo Facebook em 2012 e aberto ao público em 2015. Ele é uma <strong>linguagem de consulta</strong> para APIs: em vez de várias URLs, há um único endereço, normalmente <code>/graphql</code>, e o cliente envia uma consulta dizendo exatamente quais campos quer receber."
+  },
+  {
+   "t": "codigo",
+   "texto": "query {\n  usuario(id: 7) {\n    nome\n    tarefas(status: PENDING) {\n      title\n      dueDate\n    }\n  }\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "{\n  \"data\": {\n    \"usuario\": {\n      \"nome\": \"Ana\",\n      \"tarefas\": [\n        { \"title\": \"Estudar HTTP\", \"dueDate\": \"2026-11-20\" }\n      ]\n    }\n  }\n}"
+  },
+  {
+   "t": "p",
+   "html": "A resposta tem o mesmo formato da consulta. Isso resolve dois problemas comuns do REST: receber campos demais, que o cliente não vai usar (<em>over-fetching</em>), e precisar de várias requisições para montar uma tela, como uma para o usuário e outra para as tarefas dele (<em>under-fetching</em>). Em troca, o servidor fica mais complexo, e recursos simples do HTTP, como o <em>cache</em> por URL, deixam de funcionar sozinhos. O GraphQL brilha em aplicações com telas muito variadas, como redes sociais; para a maioria das APIs, o REST continua mais simples."
+  },
+  {
+   "t": "h2",
+   "id": "1-7-outros-estilos-de-comunicacao",
+   "texto": "1.7 Outros estilos de comunicação"
+  },
+  {
+   "t": "p",
+   "html": "Três outras formas de comunicação aparecem com frequência ao lado das APIs:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>gRPC</strong>: criado pelo Google, usa o HTTP/2 e um formato binário, o <em>Protocol Buffers</em>, muito mais compacto que o JSON. É comum na comunicação entre servidores de uma mesma empresa, em que o desempenho importa mais que a facilidade de leitura.",
+    "<strong>WebSocket</strong>: abre uma conexão que fica aberta, e o servidor pode enviar dados ao cliente a qualquer momento, sem esperar uma requisição. É a base de chats, placares ao vivo e notificações em tempo real.",
+    "<strong>Webhook</strong>: é o caminho inverso de uma API. Em vez de o seu sistema perguntar de tempos em tempos “o pagamento foi aprovado?”, o serviço de pagamento faz uma requisição <code>POST</code> para uma URL do seu sistema assim que o pagamento é aprovado."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "1-8-comparando-soap-rest-e-graphql",
+   "texto": "1.8 Comparando SOAP, REST e GraphQL"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    "SOAP",
+    "REST",
+    "GraphQL"
+   ],
+   "linhas": [
+    [
+     "o que é",
+     "protocolo",
+     "estilo de arquitetura",
+     "linguagem de consulta"
+    ],
+    [
+     "formato",
+     "XML (envelope)",
+     "qualquer um; quase sempre JSON",
+     "JSON"
+    ],
+    [
+     "endereços",
+     "uma URL por serviço",
+     "uma URL por recurso",
+     "uma URL só"
+    ],
+    [
+     "operação indicada",
+     "no envelope",
+     "pelo método HTTP",
+     "na consulta"
+    ],
+    [
+     "contrato",
+     "WSDL, obrigatório",
+     "opcional (OpenAPI, Capítulo 10)",
+     "esquema, obrigatório"
+    ],
+    [
+     "uso típico",
+     "bancos, governo, sistemas legados",
+     "APIs públicas e a maioria dos sistemas web",
+     "telas com dados muito variados"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Nenhum estilo é melhor em tudo. A escolha depende de quem vai usar a API, do tipo de dado e das exigências do sistema. Um mesmo produto pode, inclusive, usar mais de um: REST para o aplicativo, SOAP para falar com o sistema fiscal e WebSocket para as notificações."
+  },
+  {
+   "t": "h2",
+   "id": "1-9-consultando-uma-api-publica",
+   "texto": "1.9 Consultando uma API pública"
+  },
+  {
+   "t": "p",
+   "html": "A melhor forma de entender uma API é usar uma. O <strong>ViaCEP</strong> é um serviço gratuito que devolve o endereço de um CEP e não exige cadastro. Como a consulta usa o método <code>GET</code>, basta colar a URL no navegador:"
+  },
+  {
+   "t": "codigo",
+   "texto": "https://viacep.com.br/ws/01001000/json/"
+  },
+  {
+   "t": "p",
+   "html": "Pelo terminal, a ferramenta <code>curl</code> faz a mesma requisição e mostra a resposta. Ela já vem instalada no Windows 10 e 11, no macOS e no Linux; no PowerShell, digite <code>curl.exe</code>. A opção <code>-i</code> mostra também a linha de status e os cabeçalhos:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ curl -i https://viacep.com.br/ws/01001000/json/\nHTTP/1.1 200 OK\nContent-Type: application/json; charset=utf-8\n\n{\n  \"cep\": \"01001-000\",\n  \"logradouro\": \"Praça da Sé\",\n  \"complemento\": \"lado ímpar\",\n  \"bairro\": \"Sé\",\n  \"localidade\": \"São Paulo\",\n  \"uf\": \"SP\",\n  \"ddd\": \"11\"\n}"
+  },
+  {
+   "t": "p",
+   "html": "A resposta real tem mais campos e cabeçalhos; aqui aparecem só os principais. Em um programa, a requisição é feita com o <code>fetch</code>, que existe no navegador e, desde a versão 18, também no Node.js:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// cep.mjs  -- rode com: node cep.mjs\nconst cep = \"01001000\";\nconst url = `https://viacep.com.br/ws/${cep}/json/`;\n\nconst resposta = await fetch(url);\nconsole.log(resposta.status);     // 200\n\nconst endereco = await resposta.json();\nconsole.log(`${endereco.logradouro}, ${endereco.localidade}`);\n// Praça da Sé, São Paulo"
+  },
+  {
+   "t": "p",
+   "html": "O <code>fetch</code> devolve uma <em>Promise</em> com a resposta; <code>resposta.status</code> é o código de status, e <code>resposta.json()</code> lê o corpo e o converte em um objeto JavaScript. Troque <code>json</code> por <code>xml</code> no fim da URL e o mesmo serviço responde em XML, assunto do Capítulo 5."
+  },
+  {
+   "t": "p",
+   "html": "Experimente também um CEP que não existe, como <code>99999999</code>. O ViaCEP responde com status <code>200</code> e o corpo <code>{\"erro\": \"true\"}</code>. É uma escolha de projeto discutível: o Capítulo 8 mostra por que, em uma API REST, o mais adequado seria o status <code>404</code>."
+  },
+  {
+   "t": "h2",
+   "id": "1-10-o-projeto-da-apostila-a-api-do-taskflow",
+   "texto": "1.10 O projeto da apostila: a API do TaskFlow"
+  },
+  {
+   "t": "p",
+   "html": "Ao longo da apostila, você vai construir a API do <strong>TaskFlow</strong>, um gerenciador de tarefas em que cada pessoa cria uma conta e organiza as próprias tarefas. A cada capítulo, a API ganha uma parte nova, até ser publicada na internet com domínio próprio. As ferramentas são as mesmas usadas por empresas no dia a dia:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Next.js</strong> com <strong>TypeScript</strong>, para criar as rotas da API (Capítulos 3 e 4);",
+    "<strong>PostgreSQL</strong> na nuvem, com o NeonDB, e o <strong>Prisma</strong> para acessar o banco (Capítulos 3 e 7);",
+    "<strong>Zod</strong>, para validar os dados recebidos (Capítulo 6);",
+    "<strong>JWT</strong>, para a autenticação (Capítulo 9);",
+    "<strong>Vitest</strong>, para os testes automatizados (Capítulo 11);",
+    "<strong>Vercel</strong>, para a publicação (Capítulo 12)."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Ao final, a API terá estes <em>endpoints</em>, ou seja, as combinações de método e URL que ela atende:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Método",
+    "URL",
+    "O que faz"
+   ],
+   "linhas": [
+    [
+     "<code>POST</code>",
+     "<code>/api/auth/register</code>",
+     "cria uma conta"
+    ],
+    [
+     "<code>POST</code>",
+     "<code>/api/auth/login</code>",
+     "entra e recebe um token"
+    ],
+    [
+     "<code>GET</code>",
+     "<code>/api/tasks</code>",
+     "lista as tarefas de quem está logado, com filtros"
+    ],
+    [
+     "<code>POST</code>",
+     "<code>/api/tasks</code>",
+     "cria uma tarefa"
+    ],
+    [
+     "<code>GET</code>",
+     "<code>/api/tasks/:id</code>",
+     "busca uma tarefa"
+    ],
+    [
+     "<code>PATCH</code>",
+     "<code>/api/tasks/:id</code>",
+     "altera uma tarefa"
+    ],
+    [
+     "<code>DELETE</code>",
+     "<code>/api/tasks/:id</code>",
+     "exclui uma tarefa"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O <code>:id</code> indica uma parte variável da URL: <code>/api/tasks/42</code> é a tarefa 42. Para acompanhar, você vai precisar do Node.js (versão 20 ou mais nova), do VS Code e de uma conta gratuita no GitHub, que também serve para entrar no NeonDB e na Vercel."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Achar que API é sinônimo de REST.</strong> REST é um estilo; SOAP, GraphQL e gRPC também são formas de construir APIs.",
+    "<strong>Achar que o servidor “lembra” do cliente.</strong> O HTTP é sem estado: cada requisição precisa trazer tudo o que o servidor precisa saber, inclusive quem está pedindo.",
+    "<strong>Confundir a URL com o <em>endpoint</em>.</strong> O mesmo caminho, <code>/api/tasks</code>, é um <em>endpoint</em> com <code>GET</code> (listar) e outro com <code>POST</code> (criar).",
+    "<strong>Esquecer o <code>await</code> no <code>fetch</code>.</strong> Sem ele, a variável guarda uma <em>Promise</em>, e não a resposta. O mesmo vale para <code>resposta.json()</code>.",
+    "<strong>Confiar apenas no status.</strong> Algumas APIs, como o ViaCEP com um CEP inexistente, respondem <code>200</code> e indicam o erro no corpo. Leia a documentação de cada API.",
+    "<strong>Colocar acentos e espaços direto na <em>query string</em>.</strong> Use <code>encodeURIComponent</code> ou <code>URLSearchParams</code> para montar os parâmetros."
+   ]
+  }
+ ]
+}

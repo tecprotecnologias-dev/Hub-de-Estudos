@@ -765,4 +765,19 @@ export const apostilas: Apostila[] = [
     disciplinaId: 'programacao-e-design-para-web-ii',
     descricao: 'Para que serve cada arquivo e pasta do projeto, o fluxo de uma requisição, os pacotes usados e o que nunca fazer.',
   },
+
+  // Programação e Design para Web III — "Desenvolvimento de APIs para a Web: REST, Next.js, Prisma e
+  // segurança" (TecPro). Texto próprio, escrito a partir da ementa; o material da faculdade (projeto
+  // TaskFlow) serviu só de roteiro e virou o projeto que atravessa a apostila.
+  // Fonte: apostilas/web-iii/capitulos/capitulo-NN.tex (raiz do repositório), convertida com
+  //   ferramentas/converter_latex.py <tex> src/data/capitulos/web3-capN.json --imagens public/apostilas/web3 apostilas/web3
+  {
+    id: 'web3-cap1',
+    capitulo: 1,
+    titulo: 'APIs e Web Services',
+    disciplinaId: 'programacao-e-design-para-web-iii',
+    unidades: ['Introdução a APIs e Web Services'],
+    descricao:
+      'O que é uma API, cliente e servidor, o protocolo HTTP, a anatomia de uma URL, SOAP, REST, GraphQL, gRPC, WebSocket e webhooks, e a primeira consulta a uma API pública.',
+  },
 ]
