@@ -780,4 +780,13 @@ export const apostilas: Apostila[] = [
     descricao:
       'O que é uma API, cliente e servidor, o protocolo HTTP, a anatomia de uma URL, SOAP, REST, GraphQL, gRPC, WebSocket e webhooks, e a primeira consulta a uma API pública.',
   },
+  {
+    id: 'web3-cap2',
+    capitulo: 2,
+    titulo: 'Design RESTful e métodos HTTP',
+    disciplinaId: 'programacao-e-design-para-web-iii',
+    unidades: ['Design de API e Boas Práticas'],
+    descricao:
+      'Recursos e representações, as restrições do REST, boas URLs, métodos seguros e idempotentes, PUT e PATCH, códigos de status, paginação, versionamento, HATEOAS e o projeto da API do TaskFlow.',
+  },
 ]

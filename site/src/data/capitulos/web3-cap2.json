@@ -1,0 +1,545 @@
+{
+ "numero": 2,
+ "titulo": "Design RESTful e métodos HTTP",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "No Capítulo 1, o REST apareceu como o estilo que organiza a API em torno de recursos e usa os métodos do HTTP. Mas dizer que uma API “é REST” não basta: duas APIs REST podem ser fáceis ou difíceis de usar dependendo de como foram projetadas. Neste capítulo você vai conhecer as regras do estilo REST, aprender a escolher boas URLs, entender o significado preciso de cada método HTTP, inclusive os conceitos de método seguro e idempotente, e ver as convenções de filtros, paginação e versionamento. No final, vai projetar no papel a API completa do TaskFlow, antes de escrever qualquer código."
+  },
+  {
+   "t": "h2",
+   "id": "2-1-recursos-e-representacoes",
+   "texto": "2.1 Recursos e representações"
+  },
+  {
+   "t": "p",
+   "html": "Em REST, tudo gira em torno de <strong>recursos</strong>: as “coisas” que o sistema guarda e que fazem sentido para quem usa a API. No TaskFlow, os recursos são os usuários e as tarefas. Em uma loja, seriam produtos, clientes e pedidos."
+  },
+  {
+   "t": "p",
+   "html": "Cada recurso tem um identificador único, a sua <strong>URI</strong> (<em>Uniform Resource Identifier</em>), como <code>/api/tasks/42</code>. A URI é o “endereço” do recurso, e não muda conforme a ação: buscar, alterar e excluir a tarefa 42 usam todas a mesma URI, com métodos diferentes."
+  },
+  {
+   "t": "p",
+   "html": "O cliente nunca recebe o recurso em si, que está guardado no banco de dados, e sim uma <strong>representação</strong> dele: um retrato em algum formato, quase sempre JSON. O mesmo recurso pode ter várias representações. O cliente diz qual prefere com o cabeçalho <code>Accept</code>, e o servidor informa qual enviou com o <code>Content-Type</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "GET /api/tasks/42 HTTP/1.1\nAccept: application/json\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n{\"id\": 42, \"title\": \"Estudar REST\", \"status\": \"PENDING\"}"
+  },
+  {
+   "t": "p",
+   "html": "Essa escolha do formato pelos cabeçalhos se chama <strong>negociação de conteúdo</strong> e volta no Capítulo 5, com JSON e XML."
+  },
+  {
+   "t": "h2",
+   "id": "2-2-as-restricoes-do-rest",
+   "texto": "2.2 As restrições do REST"
+  },
+  {
+   "t": "p",
+   "html": "Roy Fielding definiu o REST como um conjunto de <strong>restrições</strong>: regras que, quando seguidas, dão ao sistema escalabilidade, simplicidade e independência entre as partes. Uma API é RESTful quando respeita essas regras:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Restrição",
+    "O que significa"
+   ],
+   "linhas": [
+    [
+     "cliente-servidor",
+     "interface e dados ficam separados; o site, o aplicativo e o servidor evoluem de forma independente"
+    ],
+    [
+     "sem estado",
+     "cada requisição traz tudo o que o servidor precisa; ele não guarda sessão entre uma e outra"
+    ],
+    [
+     "<em>cache</em>",
+     "a resposta diz se pode ser guardada e reaproveitada, o que poupa requisições"
+    ],
+    [
+     "interface uniforme",
+     "recursos identificados por URIs, manipulados por representações, com mensagens que se explicam sozinhas"
+    ],
+    [
+     "sistema em camadas",
+     "o cliente não sabe se fala direto com o servidor ou com intermediários, como um balanceador de carga ou uma CDN"
+    ],
+    [
+     "código sob demanda (opcional)",
+     "o servidor pode enviar código para o cliente executar, como um <em>script</em>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A restrição <strong>sem estado</strong> é a que mais influencia o projeto. Como o servidor não guarda nada entre as requisições, qualquer servidor de um grupo pode atender qualquer requisição. É isso que permite colocar dez cópias da API atrás de um balanceador de carga quando o número de usuários cresce. O preço é que o cliente precisa mandar, a cada requisição, a sua identificação, normalmente um <em>token</em>."
+  },
+  {
+   "t": "h2",
+   "id": "2-3-boas-urls",
+   "texto": "2.3 Boas URLs"
+  },
+  {
+   "t": "p",
+   "html": "A URL é a primeira coisa que o desenvolvedor vê da sua API, e um bom padrão torna a API previsível: quem aprendeu a listar tarefas consegue adivinhar como listar usuários. As convenções mais aceitas são estas:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Use substantivos, nunca verbos.</strong> A ação já está no método HTTP. <code>POST /tasks</code>, e não <code>POST /criarTarefa</code>.",
+    "<strong>Use o plural para coleções.</strong> <code>/tasks</code> é a coleção; <code>/tasks/42</code> é um item dela. O mesmo nome serve aos dois casos.",
+    "<strong>Mostre a hierarquia quando ela existe.</strong> As tarefas do usuário 7 ficam em <code>/users/7/tasks</code>. Evite passar de dois níveis: <code>/users/7/tasks/42/comments/3</code> já é difícil de manter.",
+    "<strong>Use letras minúsculas e hífens.</strong> <code>/task-categories</code>, e não <code>/TaskCategories</code> nem <code>/task_categories</code>. Partes da URL podem diferenciar maiúsculas de minúsculas, o que confunde.",
+    "<strong>Filtros vão na <em>query string</em>.</strong> <code>/tasks?status=DONE</code>, e não <code>/tasks/done</code>: a tarefa concluída continua sendo uma tarefa.",
+    "<strong>Não exponha detalhes de implementação.</strong> Nada de <code>/tasks.php</code> ou <code>/api/tabela_tarefas</code>. Se a tecnologia mudar, a URL continua a mesma."
+   ]
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Evite",
+    "Prefira"
+   ],
+   "linhas": [
+    [
+     "<code>GET /getTasks</code>",
+     "<code>GET /tasks</code>"
+    ],
+    [
+     "<code>POST /tasks/create</code>",
+     "<code>POST /tasks</code>"
+    ],
+    [
+     "<code>GET /task/42</code>",
+     "<code>GET /tasks/42</code>"
+    ],
+    [
+     "<code>POST /tasks/42/delete</code>",
+     "<code>DELETE /tasks/42</code>"
+    ],
+    [
+     "<code>GET /tasks/pendentes</code>",
+     "<code>GET /tasks?status=PENDING</code>"
+    ],
+    [
+     "<code>GET /tasksDoUsuario?id=7</code>",
+     "<code>GET /users/7/tasks</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Há casos em que uma ação não se encaixa bem em criar, ler, alterar ou excluir, como “reenviar o e-mail de confirmação”. A saída usual é tratar a ação como um sub-recurso e usar <code>POST</code>: <code>POST /users/7/confirmation-email</code>. Use isso com moderação; na maioria das vezes, a ação pode ser expressa como alteração de um campo, como <code>PATCH /tasks/42</code> com <code>{\"status\": \"DONE\"}</code> em vez de <code>POST /tasks/42/concluir</code>."
+  },
+  {
+   "t": "h2",
+   "id": "2-4-os-metodos-http",
+   "texto": "2.4 Os métodos HTTP"
+  },
+  {
+   "t": "p",
+   "html": "O método diz <strong>o que</strong> o cliente quer fazer com o recurso indicado pela URL. Cada método tem um significado definido pela especificação do HTTP (a RFC 9110), e respeitá-lo é o que permite a navegadores, <em>caches</em> e bibliotecas tratarem a sua API corretamente."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Método",
+    "Uso",
+    "Corpo",
+    "Seguro",
+    "Idem-po-ten-te"
+   ],
+   "linhas": [
+    [
+     "<code>GET</code>",
+     "buscar um recurso ou uma coleção",
+     "não",
+     "sim",
+     "sim"
+    ],
+    [
+     "<code>POST</code>",
+     "criar um recurso em uma coleção",
+     "sim",
+     "não",
+     "não"
+    ],
+    [
+     "<code>PUT</code>",
+     "substituir o recurso inteiro",
+     "sim",
+     "não",
+     "sim"
+    ],
+    [
+     "<code>PATCH</code>",
+     "alterar parte do recurso",
+     "sim",
+     "não",
+     "não*"
+    ],
+    [
+     "<code>DELETE</code>",
+     "excluir o recurso",
+     "não",
+     "não",
+     "sim"
+    ],
+    [
+     "<code>HEAD</code>",
+     "como o GET, mas só os cabeçalhos",
+     "não",
+     "sim",
+     "sim"
+    ],
+    [
+     "<code>OPTIONS</code>",
+     "perguntar quais métodos a URL aceita",
+     "não",
+     "sim",
+     "sim"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "* O PATCH pode ser idempotente, dependendo de como a alteração é descrita (Seção 2.6)."
+  },
+  {
+   "t": "p",
+   "html": "O <code>HEAD</code> serve, por exemplo, para saber o tamanho de um arquivo pelo cabeçalho <code>Content-Length</code> sem baixá-lo. O <code>OPTIONS</code> é usado automaticamente pelo navegador antes de certas requisições entre domínios diferentes, no mecanismo chamado CORS, estudado no Capítulo 12."
+  },
+  {
+   "t": "h2",
+   "id": "2-5-metodos-seguros-e-idempotentes",
+   "texto": "2.5 Métodos seguros e idempotentes"
+  },
+  {
+   "t": "p",
+   "html": "Duas propriedades da tabela anterior merecem atenção, porque são cobradas com frequência e evitam erros graves."
+  },
+  {
+   "t": "p",
+   "html": "Um método é <strong>seguro</strong> quando não altera nada no servidor: ele só lê. <code>GET</code>, <code>HEAD</code> e <code>OPTIONS</code> são seguros. Por isso, navegadores e robôs de busca seguem links (que fazem <code>GET</code>) livremente, e ferramentas de <em>cache</em> guardam as respostas. Uma API que exclui algo em um <code>GET</code>, como <code>GET /tasks/42/delete</code>, corre o risco de ver os dados sumirem quando um robô ou uma pré-visualização de link visitar a URL."
+  },
+  {
+   "t": "p",
+   "html": "Um método é <strong>idempotente</strong> quando repetir a mesma requisição várias vezes deixa o servidor no mesmo estado que fazê-la uma vez só. Pense em um elevador: apertar o botão do 5º andar uma ou dez vezes leva ao mesmo lugar."
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<code>DELETE /tasks/42</code> é idempotente: depois da primeira vez, a tarefa já não existe, e as repetições não mudam nada. A resposta pode mudar (a segunda recebe <code>404</code>), mas o <strong>estado</strong> do servidor é o mesmo.",
+    "<code>PUT /tasks/42</code> com a tarefa completa é idempotente: gravar os mesmos dados de novo dá no mesmo.",
+    "<code>POST /tasks</code> <strong>não</strong> é idempotente: cada repetição cria uma tarefa nova."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Isso importa na prática por causa das falhas de rede. Se o cliente envia uma requisição e a conexão cai antes da resposta, ele não sabe se o servidor a recebeu. Com um método idempotente, basta repetir. Com um <code>POST</code>, repetir pode criar um pedido em dobro, e é por isso que sites de compra pedem para você não apertar o botão “Pagar” duas vezes. APIs de pagamento resolvem o problema com uma <strong>chave de idempotência</strong>: o cliente gera um código único e o envia em um cabeçalho, como <code>Idempotency-Key</code>; se o servidor já processou aquele código, devolve o resultado anterior em vez de cobrar de novo."
+  },
+  {
+   "t": "h2",
+   "id": "2-6-put-ou-patch",
+   "texto": "2.6 PUT ou PATCH?"
+  },
+  {
+   "t": "p",
+   "html": "Os dois alteram um recurso existente, mas de formas diferentes. O <code>PUT</code> <strong>substitui</strong> o recurso inteiro pela representação enviada; o <code>PATCH</code> aplica uma <strong>alteração parcial</strong>. Considere a tarefa 42:"
+  },
+  {
+   "t": "codigo",
+   "texto": "{\"id\": 42, \"title\": \"Estudar REST\",\n \"status\": \"PENDING\", \"priority\": \"HIGH\"}"
+  },
+  {
+   "t": "p",
+   "html": "Para marcá-la como concluída, o <code>PATCH</code> envia só o que muda:"
+  },
+  {
+   "t": "codigo",
+   "texto": "PATCH /api/tasks/42\n{\"status\": \"DONE\"}"
+  },
+  {
+   "t": "p",
+   "html": "Com <code>PUT</code>, é preciso enviar a tarefa completa. Se o cliente mandar só <code>{\"status\": \"DONE\"}</code>, um servidor que segue a regra à risca entende que o título e a prioridade foram retirados:"
+  },
+  {
+   "t": "codigo",
+   "texto": "PUT /api/tasks/42\n{\"title\": \"Estudar REST\", \"status\": \"DONE\", \"priority\": \"HIGH\"}"
+  },
+  {
+   "t": "p",
+   "html": "Na prática, o <code>PATCH</code> é o mais usado para edições, porque os formulários costumam alterar poucos campos e a requisição fica menor. Um <code>PATCH</code> como o acima, que define valores, é idempotente. Já um <code>PATCH</code> que descreve uma operação relativa, como “some 1 ao contador de visualizações”, não é: cada repetição soma de novo. Por isso a especificação não garante a idempotência do <code>PATCH</code>. A API do TaskFlow usa <code>PATCH</code> para editar tarefas."
+  },
+  {
+   "t": "h2",
+   "id": "2-7-os-codigos-de-status-mais-usados",
+   "texto": "2.7 Os códigos de status mais usados"
+  },
+  {
+   "t": "p",
+   "html": "O código de status resume o resultado em três dígitos, e o primeiro indica a família:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Família",
+    "Significado"
+   ],
+   "linhas": [
+    [
+     "<code>1xx</code>",
+     "informação: a requisição foi recebida e continua em processamento (raro em APIs)"
+    ],
+    [
+     "<code>2xx</code>",
+     "sucesso"
+    ],
+    [
+     "<code>3xx</code>",
+     "redirecionamento: o recurso está em outro lugar"
+    ],
+    [
+     "<code>4xx</code>",
+     "erro do cliente: a requisição tem algum problema"
+    ],
+    [
+     "<code>5xx</code>",
+     "erro do servidor: a requisição estava certa, mas o servidor falhou"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A distinção entre <code>4xx</code> e <code>5xx</code> é importante: com <code>4xx</code>, o cliente precisa corrigir algo antes de tentar de novo; com <code>5xx</code>, a mesma requisição pode funcionar mais tarde. Os códigos que aparecem em quase toda API são estes, e o Capítulo 8 trata de como escolher e montar as respostas de erro:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Código",
+    "Quando usar"
+   ],
+   "linhas": [
+    [
+     "<code>200 OK</code>",
+     "sucesso com corpo na resposta: GET, PUT, PATCH"
+    ],
+    [
+     "<code>201 Created</code>",
+     "POST que criou um recurso; envie o cabeçalho <code>Location</code> com a URI dele"
+    ],
+    [
+     "<code>204 No Content</code>",
+     "sucesso sem corpo, típico do DELETE"
+    ],
+    [
+     "<code>400 Bad Request</code>",
+     "dados malformados ou inválidos"
+    ],
+    [
+     "<code>401 Unauthorized</code>",
+     "falta autenticação, ou o <em>token</em> é inválido"
+    ],
+    [
+     "<code>403 Forbidden</code>",
+     "autenticado, mas sem permissão para aquele recurso"
+    ],
+    [
+     "<code>404 Not Found</code>",
+     "o recurso não existe"
+    ],
+    [
+     "<code>405 Method Not Allowed</code>",
+     "a URL existe, mas não aceita aquele método"
+    ],
+    [
+     "<code>409 Conflict</code>",
+     "conflito com o estado atual, como um e-mail já cadastrado"
+    ],
+    [
+     "<code>500 Internal Server Error</code>",
+     "falha inesperada no servidor"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-8-filtros-ordenacao-e-paginacao",
+   "texto": "2.8 Filtros, ordenação e paginação"
+  },
+  {
+   "t": "p",
+   "html": "Uma coleção pode ter milhares de itens, e devolver tudo de uma vez deixa a API lenta e a resposta enorme. As operações sobre coleções usam a <em>query string</em>, com nomes que sigam sempre o mesmo padrão:"
+  },
+  {
+   "t": "codigo",
+   "texto": "GET /api/tasks?status=PENDING&priority=HIGH\nGET /api/tasks?search=relatorio\nGET /api/tasks?sort=dueDate\nGET /api/tasks?sort=-createdAt\nGET /api/tasks?page=2&limit=10"
+  },
+  {
+   "t": "p",
+   "html": "Os filtros usam o nome do próprio campo. A busca por texto costuma usar <code>search</code> ou <code>q</code>. Na ordenação, uma convenção comum é o sinal de menos indicar a ordem decrescente: <code>-createdAt</code> lista as mais recentes primeiro. Na <strong>paginação</strong>, <code>page</code> indica a página e <code>limit</code> quantos itens vêm em cada uma. A resposta deve informar ao cliente quanto falta, para que ele saiba se mostra o botão “próxima página”:"
+  },
+  {
+   "t": "codigo",
+   "texto": "{\n  \"data\": [\n    {\"id\": 11, \"title\": \"Revisar capítulo 1\"},\n    {\"id\": 12, \"title\": \"Ler sobre PATCH\"}\n  ],\n  \"meta\": {\"page\": 2, \"limit\": 10, \"total\": 37, \"totalPages\": 4}\n}"
+  },
+  {
+   "t": "p",
+   "html": "Os dados ficam em <code>data</code> e as informações da paginação em <code>meta</code>. Esse “envelope” é uma convenção, e não uma regra do REST, mas usar sempre o mesmo formato facilita a vida de quem consome a API. Defina também um <code>limit</code> máximo, como 100: sem ele, um cliente pode pedir <code>limit=1000000</code> e sobrecarregar o servidor."
+  },
+  {
+   "t": "p",
+   "html": "A paginação por número de página é simples, mas tem um defeito: se uma tarefa nova é criada enquanto o usuário navega, os itens “escorregam” e um deles aparece em duas páginas. APIs com muito movimento, como as de redes sociais, usam a paginação por <strong>cursor</strong>: a resposta traz um código que aponta para o último item visto, e a próxima página começa depois dele (<code>?cursor=abc123</code>)."
+  },
+  {
+   "t": "h2",
+   "id": "2-9-versionamento",
+   "texto": "2.9 Versionamento"
+  },
+  {
+   "t": "p",
+   "html": "Uma API publicada tem clientes que dependem dela, e mudar o contrato pode quebrá-los. Mudanças que <strong>não quebram</strong> os clientes, como acrescentar um campo novo na resposta ou um <em>endpoint</em> novo, podem ser feitas a qualquer momento. Mudanças que <strong>quebram</strong>, como renomear ou remover um campo, mudar o tipo de um valor ou tornar obrigatório um campo que era opcional, exigem uma nova <strong>versão</strong> da API."
+  },
+  {
+   "t": "p",
+   "html": "A forma mais comum e mais visível é colocar a versão na URL:"
+  },
+  {
+   "t": "codigo",
+   "texto": "GET /api/v1/tasks\nGET /api/v2/tasks"
+  },
+  {
+   "t": "p",
+   "html": "Outra opção é indicar a versão em um cabeçalho, deixando as URLs limpas. Qualquer que seja a escolha, a versão antiga deve continuar funcionando por um tempo, com aviso aos clientes, até ser desativada. A API do TaskFlow é pequena e tem um único cliente no início, então começa sem versão; se um dia precisar de uma segunda versão, ela nasce em <code>/api/v2</code>."
+  },
+  {
+   "t": "h2",
+   "id": "2-10-hateoas-e-o-modelo-de-maturidade",
+   "texto": "2.10 HATEOAS e o modelo de maturidade"
+  },
+  {
+   "t": "p",
+   "html": "A última parte da restrição de interface uniforme tem um nome comprido: <strong>HATEOAS</strong> (<em>Hypermedia as the Engine of Application State</em>). A ideia é que a resposta traga <strong>links</strong> para as ações possíveis, como uma página web traz links para as próximas páginas. O cliente descobre o que pode fazer navegando, sem precisar conhecer todas as URLs de antemão:"
+  },
+  {
+   "t": "codigo",
+   "texto": "{\n  \"id\": 42,\n  \"title\": \"Estudar REST\",\n  \"status\": \"PENDING\",\n  \"_links\": {\n    \"self\":     {\"href\": \"/api/tasks/42\"},\n    \"complete\": {\"href\": \"/api/tasks/42\", \"method\": \"PATCH\"},\n    \"delete\":   {\"href\": \"/api/tasks/42\", \"method\": \"DELETE\"}\n  }\n}"
+  },
+  {
+   "t": "p",
+   "html": "Leonard Richardson propôs um modelo que classifica as APIs em quatro níveis, conforme o quanto aproveitam as ideias do REST:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web3/capitulo-02_maturidade.png",
+   "alt": "capitulo 02 maturidade"
+  },
+  {
+   "t": "p",
+   "html": "No <strong>nível 0</strong>, a API usa o HTTP só como transporte: uma URL e tudo com <code>POST</code>, como no SOAP. No <strong>nível 1</strong>, cada recurso tem a sua URL. No <strong>nível 2</strong>, os métodos e os códigos de status são usados com o seu significado. O <strong>nível 3</strong> acrescenta os links. A grande maioria das APIs chamadas de REST está no nível 2, que já traz quase todos os benefícios práticos, e é o nível da API do TaskFlow."
+  },
+  {
+   "t": "h2",
+   "id": "2-11-projetando-a-api-do-taskflow",
+   "texto": "2.11 Projetando a API do TaskFlow"
+  },
+  {
+   "t": "p",
+   "html": "Antes de escrever código, uma boa prática é desenhar a API: listar os recursos, os <em>endpoints</em>, o que cada um recebe e o que devolve. Esse desenho serve de contrato entre quem faz o servidor e quem faz o cliente, que podem trabalhar ao mesmo tempo."
+  },
+  {
+   "t": "p",
+   "html": "O TaskFlow tem dois recursos. O <strong>usuário</strong> tem nome, e-mail e senha. A <strong>tarefa</strong> tem título, descrição opcional, situação (<code>PENDING</code>, <code>IN_PROGRESS</code> ou <code>DONE</code>), prioridade (<code>LOW</code>, <code>MEDIUM</code> ou <code>HIGH</code>) e data de vencimento opcional, e pertence a um usuário. Cada pessoa só enxerga as próprias tarefas, então a URL não precisa trazer o usuário: o servidor descobre quem é pelo <em>token</em>. Por isso a API usa <code>/api/tasks</code>, e não <code>/api/users/7/tasks</code>."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Endpoint",
+    "Recebe",
+    "Sucesso"
+   ],
+   "linhas": [
+    [
+     "<code>POST /api/auth/register</code>",
+     "nome, e-mail e senha",
+     "<code>201</code> e o usuário, sem a senha"
+    ],
+    [
+     "<code>POST /api/auth/login</code>",
+     "e-mail e senha",
+     "<code>200</code> e o <em>token</em>"
+    ],
+    [
+     "<code>GET /api/tasks</code>",
+     "filtros: <code>status</code>, <code>priority</code>, <code>search</code>, <code>sort</code>, <code>page</code>, <code>limit</code>",
+     "<code>200</code>, <code>data</code> e <code>meta</code>"
+    ],
+    [
+     "<code>POST /api/tasks</code>",
+     "título e, opcionalmente, os demais campos",
+     "<code>201</code>, a tarefa e <code>Location</code>"
+    ],
+    [
+     "<code>GET /api/tasks/:id</code>",
+     "–",
+     "<code>200</code> e a tarefa"
+    ],
+    [
+     "<code>PATCH /api/tasks/:id</code>",
+     "os campos que mudam",
+     "<code>200</code> e a tarefa atualizada"
+    ],
+    [
+     "<code>DELETE /api/tasks/:id</code>",
+     "–",
+     "<code>204</code>, sem corpo"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Os erros também fazem parte do contrato. Todo <em>endpoint</em> de tarefas responde <code>401</code> sem um <em>token</em> válido; os que recebem dados respondem <code>400</code> quando eles são inválidos; os que usam <code>:id</code> respondem <code>404</code> quando a tarefa não existe <strong>ou pertence a outra pessoa</strong>. Responder <code>404</code>, e não <code>403</code>, no segundo caso evita revelar que existe uma tarefa com aquele número. O cadastro responde <code>409</code> quando o e-mail já está em uso. Um exemplo completo de criação:"
+  },
+  {
+   "t": "codigo",
+   "texto": "POST /api/tasks HTTP/1.1\nAuthorization: Bearer eyJhbGciOi...\nContent-Type: application/json\n\n{\"title\": \"Entregar o trabalho\", \"priority\": \"HIGH\",\n \"dueDate\": \"2026-12-01\"}"
+  },
+  {
+   "t": "codigo",
+   "texto": "HTTP/1.1 201 Created\nLocation: /api/tasks/cm3x9k2a0001\nContent-Type: application/json\n\n{\n  \"id\": \"cm3x9k2a0001\",\n  \"title\": \"Entregar o trabalho\",\n  \"description\": null,\n  \"status\": \"PENDING\",\n  \"priority\": \"HIGH\",\n  \"dueDate\": \"2026-12-01T00:00:00.000Z\",\n  \"createdAt\": \"2026-10-16T14:05:12.000Z\"\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare em três detalhes. O servidor preencheu sozinho os campos que o cliente não enviou: <code>status</code> começou como <code>PENDING</code>, e <code>description</code> veio como <code>null</code>. O identificador não é um número sequencial, e sim um texto aleatório (um <em>cuid</em>), gerado pelo banco no Capítulo 3; isso impede que alguém adivinhe quantas tarefas existem ou tente os números em sequência. E as datas vêm no formato ISO 8601, com o fuso UTC indicado pelo <code>Z</code>, assunto do Capítulo 5."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Verbos na URL.</strong> <code>/getTasks</code> ou <code>/deleteTask/42</code> repetem o que o método já diz. Use substantivos e deixe a ação para o método.",
+    "<strong>Alterar dados com GET.</strong> O GET deve ser seguro. Robôs, pré-visualizações de links e <em>caches</em> fazem GET sem pedir licença.",
+    "<strong>Usar POST para tudo.</strong> A API funciona, mas perde o significado dos métodos, a idempotência e o <em>cache</em>: é o nível 0 de maturidade.",
+    "<strong>Mandar só parte dos campos em um PUT.</strong> O PUT substitui o recurso inteiro. Para alterar só alguns campos, use PATCH.",
+    "<strong>Responder 200 para tudo, inclusive erros.</strong> O cliente precisa ler o corpo para saber se deu certo. Use os códigos de status com o seu significado.",
+    "<strong>Confundir 401 e 403.</strong> 401: “não sei quem é você”. 403: “sei quem é você, mas você não pode”.",
+    "<strong>Devolver a coleção inteira sem paginação.</strong> Funciona com dez itens e derruba o servidor com cem mil. Defina um limite máximo.",
+    "<strong>Mudar o formato da resposta sem nova versão.</strong> Renomear um campo quebra todos os clientes que dependem dele."
+   ]
+  }
+ ]
+}

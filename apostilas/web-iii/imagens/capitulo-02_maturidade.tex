@@ -1,0 +1,23 @@
+% Capítulo 2: o modelo de maturidade de Richardson, em degraus.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-fluxo}
+\tikzset{
+  degrau/.style={base, rectangle, anchor=south west, minimum width=26mm, align=left, text width=23mm, font=\sffamily\scriptsize},
+  nivel/.style={font=\sffamily\small\bfseries, text=navy},
+}
+\begin{document}
+\begin{tikzpicture}
+  \node[degrau, fill=white, minimum height=10mm] at (0, 0)
+    {\textbf{Nível 0}\\uma URL, tudo com POST};
+  \node[degrau, fill=laranja!12, minimum height=17mm] at (2.8, 0)
+    {\textbf{Nível 1}\\uma URL para cada recurso};
+  \node[degrau, fill=laranja!30, minimum height=24mm] at (5.6, 0)
+    {\textbf{Nível 2}\\métodos HTTP e códigos de status};
+  \node[degrau, fill=azul, minimum height=31mm] at (8.4, 0)
+    {\textbf{Nível 3}\\links na resposta (HATEOAS)};
+  \draw[fluxo] (0, 3.6) -- node[above, legenda] {mais aderente ao REST} (11, 3.6);
+  \node[legenda] at (5.5, -0.45) {a maioria das APIs REST do mercado está no nível 2, como a API do TaskFlow};
+\end{tikzpicture}
+\end{document}
