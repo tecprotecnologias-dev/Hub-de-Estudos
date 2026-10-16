@@ -36,11 +36,29 @@ O navegador precisa baixar o código do site para mostrá-lo, então **não exis
 - [ ] A proteção de verdade é a **Etapa 2** acima: o que for importante (gabaritos, apostilas) fica no servidor e só é entregue a quem tem permissão. O que não é enviado ao navegador não aparece no Inspecionar.
 - [ ] Manter o repositório do GitHub privado (o código-fonte original fica só lá).
 
-## Publicação (depois das apostilas)
-- [ ] Publicar na Vercel com as variáveis `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
-- [ ] No Supabase, trocar Site URL e Redirect URLs para o domínio da Vercel.
+## Publicação
+- [x] Site no ar no Netlify: https://hubdeestudos.netlify.app (16/10/2026), ligado ao Supabase.
+- [x] No Supabase, Site URL e Redirect URLs com o endereço do Netlify.
+- [ ] **Arrastar a pasta `site\dist` para o Netlify** para publicar o que foi feito depois (design novo já publicado; faltam os simulados da Web II e os capítulos 1 a 7 da Web III). Antes de arrastar, rodar `npm run build` dentro de `site`.
+- [ ] (Opcional) Ligar o Netlify ao GitHub, para publicar sozinho a cada envio, sem arrastar pasta.
 - [ ] Revisar a Política de Privacidade.
 - [ ] Testar o fluxo de aprovação de professor.
 
 ## Conteúdo
-- [ ] Apostilas seguintes: Estrutura de Dados, Análise e Projeto de Sistemas, Cliente-Servidor, Dispositivos Móveis, Gestão de Banco de Dados, Web I, Web III.
+- [x] Web II: 50 questões objetivas no estilo de concurso (10 por módulo).
+- [ ] **Web III — apostila "Desenvolvimento de APIs para a Web" (PAUSADA em 16/10/2026)**
+  - [x] Cap. 1 APIs e Web Services
+  - [x] Cap. 2 Design RESTful e métodos HTTP
+  - [x] Cap. 3 Preparando o projeto
+  - [x] Cap. 4 Roteamento e endpoints
+  - [x] Cap. 5 JSON, XML e serialização
+  - [x] Cap. 6 Validação com Zod
+  - [x] Cap. 7 CRUD
+  - [ ] **Cap. 8 Tratamento de erros e códigos HTTP ← retomar aqui**
+  - [ ] Cap. 9 Autenticação com JWT
+  - [ ] Cap. 10 Documentação: Swagger/OpenAPI e Postman
+  - [ ] Cap. 11 Testes de API
+  - [ ] Cap. 12 Segurança e deploy
+  - [ ] Depois da apostila: exercícios práticos e simulados da Web III
+  - Arquivos: `apostilas/web-iii` (LaTeX e PDF). Para retomar, basta dizer ao Claude "vamos continuar a apostila da Web III": o passo a passo técnico está guardado na memória dele.
+- [ ] Apostilas seguintes: Estrutura de Dados, Análise e Projeto de Sistemas, Cliente-Servidor, Dispositivos Móveis, Gestão de Banco de Dados, Web I.
