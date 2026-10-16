@@ -1,0 +1,331 @@
+{
+ "numero": 5,
+ "titulo": "JSON, XML e serialização",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Uma API recebe e devolve dados pela rede, e a rede só transporta texto (ou, mais precisamente, bytes). Os objetos que existem na memória do programa, com as suas datas, listas e números, precisam ser transformados em texto para viajar e reconstruídos do outro lado. Neste capítulo você vai entender esse processo, chamado serialização, conhecer em detalhe os dois formatos mais usados, o JSON e o XML, e ver as armadilhas que mais causam erros: datas, valores que o JSON não representa e campos que não deveriam sair da API. No final, o TaskFlow passa a controlar exatamente os campos que devolve e a responder também em XML a quem pedir."
+  },
+  {
+   "t": "h2",
+   "id": "5-1-serializar-e-desserializar",
+   "texto": "5.1 Serializar e desserializar"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Serializar</strong> é transformar um objeto da memória em uma sequência de texto ou bytes que possa ser guardada ou transmitida. <strong>Desserializar</strong> é o caminho inverso: ler o texto e reconstruir o objeto. Em JavaScript, as duas operações com JSON são <code>JSON.stringify</code> e <code>JSON.parse</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const tarefa = { title: \"Estudar JSON\", done: false };\n\nconst texto = JSON.stringify(tarefa);   // serializar\nconsole.log(texto);\n// {\"title\":\"Estudar JSON\",\"done\":false}\nconsole.log(typeof texto);  // string\n\nconst deVolta = JSON.parse(texto);      // desserializar\nconsole.log(deVolta.title); // Estudar JSON"
+  },
+  {
+   "t": "p",
+   "html": "Em uma API, isso acontece em toda requisição. Quando a rota faz <code>await request.json()</code>, o Next.js lê o corpo como texto e aplica <code>JSON.parse</code>; quando ela devolve <code>Response.json(tarefa)</code>, ele aplica <code>JSON.stringify</code> e põe o resultado no corpo. Do outro lado, o <code>fetch</code> do cliente faz o mesmo com <code>resposta.json()</code>."
+  },
+  {
+   "t": "p",
+   "html": "O <code>JSON.stringify</code> aceita dois parâmetros extras. O terceiro indica a indentação, útil para ler ou gravar arquivos: <code>JSON.stringify(obj, null, 2)</code> põe cada campo em uma linha, com dois espaços. O segundo, que aqui ficou <code>null</code>, permite filtrar ou transformar campos."
+  },
+  {
+   "t": "h2",
+   "id": "5-2-json-em-detalhe",
+   "texto": "5.2 JSON em detalhe"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>JSON</strong> (<em>JavaScript Object Notation</em>) nasceu da sintaxe de objetos do JavaScript, mas é um formato independente, padronizado na RFC 8259 e usado por praticamente todas as linguagens. Ele tem só seis tipos de valor:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo",
+    "Exemplo",
+    "Observação"
+   ],
+   "linhas": [
+    [
+     "texto",
+     "<code>\"Estudar\"</code>",
+     "sempre entre aspas duplas"
+    ],
+    [
+     "número",
+     "<code>42</code>, <code>3.14</code>, <code>-1e3</code>",
+     "sem distinção entre inteiro e decimal"
+    ],
+    [
+     "booleano",
+     "<code>true</code>, <code>false</code>",
+     "em minúsculas"
+    ],
+    [
+     "nulo",
+     "<code>null</code>",
+     "ausência de valor"
+    ],
+    [
+     "objeto",
+     "<code>{\"a\": 1}</code>",
+     "pares nome-valor; o nome sempre entre aspas duplas"
+    ],
+    [
+     "lista",
+     "<code>[1, \"dois\", null]</code>",
+     "valores em ordem, de qualquer tipo"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O JSON é mais rígido que o JavaScript. Não aceita aspas simples, vírgula depois do último item, comentários, nem nomes de campo sem aspas. Um JSON escrito à mão com um desses detalhes faz o <code>JSON.parse</code> falhar:"
+  },
+  {
+   "t": "codigo",
+   "texto": "JSON.parse(\"{'title': 'x'}\");\n// SyntaxError: Expected property name or '}' in JSON\nJSON.parse('{\"a\": 1,}');\n// SyntaxError: Expected double-quoted property name in JSON"
+  },
+  {
+   "t": "p",
+   "html": "Também há valores do JavaScript que o JSON não sabe representar. O <code>JSON.stringify</code> não avisa: ele simplesmente descarta ou troca esses valores, e o dado chega diferente do outro lado."
+  },
+  {
+   "t": "codigo",
+   "texto": "const tarefa = {\n  title: \"Estudar JSON\",\n  dueDate: new Date(\"2026-12-01T15:30:00Z\"),\n  description: undefined,\n  nota: NaN,\n  salvar() {},\n};\nconsole.log(JSON.stringify(tarefa));\n// {\"title\":\"Estudar JSON\",\"dueDate\":\"2026-12-01T15:30:00.000Z\",\n//  \"nota\":null}"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Valor em JavaScript",
+    "O que vira no JSON"
+   ],
+   "linhas": [
+    [
+     "<code>Date</code>",
+     "texto no formato ISO 8601 (e não volta a ser data no <code>parse</code>)"
+    ],
+    [
+     "<code>undefined</code> e funções",
+     "o campo desaparece"
+    ],
+    [
+     "<code>NaN</code> e <code>Infinity</code>",
+     "<code>null</code>"
+    ],
+    [
+     "<code>Map</code> e <code>Set</code>",
+     "<code>{}</code>, vazios"
+    ],
+    [
+     "<code>BigInt</code> (<code>10n</code>)",
+     "erro: <code>TypeError: Do not know how to serialize a BigInt</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Por isso, em uma API, use <code>null</code> para dizer “sem valor” (e não <code>undefined</code>, que some), e converta <code>Map</code>, <code>Set</code> e <code>BigInt</code> para objetos, listas e textos antes de responder. Há ainda o limite dos números: o JSON não restringe o tamanho, mas o JavaScript só representa inteiros com exatidão até cerca de 9 quatrilhões (<code>Number.MAX_SAFE_INTEGER</code>). Identificadores muito grandes, como os de algumas redes sociais, são enviados como texto por esse motivo."
+  },
+  {
+   "t": "h2",
+   "id": "5-3-datas-a-armadilha-classica",
+   "texto": "5.3 Datas: a armadilha clássica"
+  },
+  {
+   "t": "p",
+   "html": "O JSON não tem um tipo de data. A convenção adotada por quase todas as APIs é enviar a data como texto no formato <strong>ISO 8601</strong>, o mesmo que o <code>Date</code> produz ao ser serializado:"
+  },
+  {
+   "t": "codigo",
+   "texto": "\"2026-12-01T15:30:00.000Z\"\n ano-mês-dia T hora:min:seg.ms  Z = horário UTC"
+  },
+  {
+   "t": "p",
+   "html": "A ordem ano-mês-dia elimina a confusão entre o formato brasileiro (dia/mês) e o americano (mês/dia), e ainda faz as datas ficarem em ordem quando ordenadas como texto. O <code>Z</code> no final indica o <strong>UTC</strong>, o horário de referência mundial, de onde se calculam os fusos: o horário de Brasília é UTC menos 3 horas, escrito <code>-03:00</code>. A boa prática é <strong>guardar e transmitir em UTC</strong> e converter para o fuso do usuário só na hora de mostrar. Os problemas aparecem quando a data é lida sem pensar no fuso:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// rodando em um computador no Brasil\nconst d = new Date(\"2026-12-01\");\nd.toISOString();          // 2026-12-01T00:00:00.000Z\nd.toLocaleString(\"pt-BR\");    // 30/11/2026, 21:00:00\n\nnew Date(\"2026-12-01T00:00:00\").toISOString();\n// 2026-12-01T03:00:00.000Z\n\nnew Date(\"01/12/2026\").toISOString();\n// 2026-01-12T03:00:00.000Z   (12 de janeiro!)\nnew Date(\"31/12/2026\").getTime();   // NaN"
+  },
+  {
+   "t": "p",
+   "html": "Os resultados acima foram obtidos com o fuso de São Paulo. Uma data sem horário, como <code>\"2026-12-01\"</code>, é lida como meia-noite em UTC; mostrada no Brasil, vira 21h do dia <strong>anterior</strong>, e a tarefa que vence em 1º de dezembro aparece como vencendo em 30 de novembro. Já a mesma data com horário e sem o <code>Z</code> é lida no fuso do computador. E o formato com barras é interpretado à americana: <code>01/12</code> vira 12 de janeiro, e <code>31/12</code> nem é uma data válida."
+  },
+  {
+   "t": "p",
+   "html": "Para o campo <code>dueDate</code> do TaskFlow, que é uma data de vencimento, as regras ficam assim: o cliente envia <code>\"2026-12-01\"</code>, a API guarda meia-noite em UTC e devolve <code>\"2026-12-01T00:00:00.000Z\"</code>, e quem exibe a data mostra apenas a parte do dia, lida em UTC, como em <code>d.toLocaleDateString(\"pt-BR\", { timeZone: \"UTC\" })</code>, que dá <code>01/12/2026</code>. Nunca aceite datas com barras em uma API: exija o formato ISO, e o Capítulo 6 mostra como validar isso."
+  },
+  {
+   "t": "h2",
+   "id": "5-4-nomes-dos-campos",
+   "texto": "5.4 Nomes dos campos"
+  },
+  {
+   "t": "p",
+   "html": "Duas convenções disputam o nome dos campos em JSON: <strong>camelCase</strong> (<code>dueDate</code>, <code>createdAt</code>), a do JavaScript, e <strong>snake_case</strong> (<code>due_date</code>, <code>created_at</code>), comum em APIs feitas em Python e Ruby. Nenhuma é melhor; o que importa é escolher uma e usá-la em toda a API. O TaskFlow usa camelCase, que é o padrão do Prisma e do TypeScript, e por isso os nomes do banco chegam à resposta sem nenhuma conversão."
+  },
+  {
+   "t": "p",
+   "html": "Outra decisão de projeto: os campos da API do TaskFlow estão em inglês (<code>title</code>, <code>status</code>), enquanto as mensagens de erro, lidas por pessoas, estão em português. É o padrão mais comum no mercado, porque bibliotecas, documentações e colegas de outros países esperam nomes em inglês. Também aqui, consistência vale mais que a escolha em si."
+  },
+  {
+   "t": "h2",
+   "id": "5-5-controlando-o-que-sai-da-api",
+   "texto": "5.5 Controlando o que sai da API"
+  },
+  {
+   "t": "p",
+   "html": "No Capítulo 4, as rotas devolviam a tarefa exatamente como veio do banco, inclusive o <code>userId</code>. Devolver o registro inteiro é um hábito perigoso: no dia em que alguém acrescentar ao banco um campo interno, ele vaza para a API sem que ninguém perceba. No caso do usuário, o campo seria a senha. A forma segura é definir <strong>explicitamente</strong> quais campos formam a representação pública do recurso:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/tarefas.ts -- o formato público de uma tarefa\nimport type { Prisma } from \"@/app/generated/prisma/client\";\n\n// Os campos que a API devolve. O userId fica de fora: o cliente\n// já sabe que as tarefas são dele.\nexport const camposTarefa = {\n  id: true,\n  title: true,\n  description: true,\n  status: true,\n  priority: true,\n  dueDate: true,\n  createdAt: true,\n  updatedAt: true,\n} satisfies Prisma.TaskSelect;"
+  },
+  {
+   "t": "p",
+   "html": "O objeto segue o formato do <code>select</code> do Prisma, e o <code>satisfies Prisma.TaskSelect</code> faz o TypeScript conferir que cada nome existe no modelo: um erro de digitação, como <code>titel</code>, é acusado no editor. Agora, todas as consultas que devolvem tarefas usam o mesmo <code>select</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// em app/api/tasks/route.ts\nimport { camposTarefa } from \"@/lib/tarefas\";\n\nconst tarefas = await db.task.findMany({\n  where: { userId: usuario.id },\n  select: camposTarefa,\n  orderBy: { createdAt: \"desc\" },\n});"
+  },
+  {
+   "t": "p",
+   "html": "Faça o mesmo no <code>create</code> do <code>POST</code> e no <code>findFirst</code> do <code>GET</code> de uma tarefa. Além da segurança, o <code>select</code> tem duas vantagens: o banco envia menos dados, e o tipo do resultado, calculado pelo Prisma, passa a ter só esses campos. O conjunto de campos que uma API aceita ou devolve é chamado de <strong>DTO</strong> (<em>Data Transfer Object</em>, objeto de transferência de dados), e separá-lo do formato do banco é uma prática de qualquer API profissional."
+  },
+  {
+   "t": "h2",
+   "id": "5-6-xml",
+   "texto": "5.6 XML"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>XML</strong> (<em>eXtensible Markup Language</em>) organiza os dados em <strong>elementos</strong> delimitados por marcas de abertura e fechamento, como o HTML, só que com nomes livres. Foi o formato dominante na troca de dados entre sistemas nos anos 2000 e continua presente no SOAP, na Nota Fiscal Eletrônica, em arquivos de configuração e em formatos de documento, como o <code>.docx</code>. O ViaCEP, visto no Capítulo 1, devolve XML se a URL terminar em <code>/xml/</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xmlcep>\n  <cep>01001-000</cep>\n  <logradouro>Praça da Sé</logradouro>\n  <complemento>lado ímpar</complemento>\n  <bairro>Sé</bairro>\n  <localidade>São Paulo</localidade>\n  <uf>SP</uf>\n</xmlcep>"
+  },
+  {
+   "t": "p",
+   "html": "A primeira linha é a <strong>declaração</strong>, com a versão e a codificação. Todo documento tem um único <strong>elemento raiz</strong>, aqui <code>&lt;xmlcep&gt;</code>, e os demais ficam aninhados dentro dele. Um elemento vazio pode ser escrito como <code>&lt;unidade&gt;&lt;/unidade&gt;</code> ou de forma abreviada, <code>&lt;unidade/&gt;</code>. Os elementos também podem ter <strong>atributos</strong>, como em <code>&lt;tarefa id=\"42\" status=\"DONE\"&gt;</code>; a escolha entre atributo e elemento é de quem projeta o formato, e a regra mais comum é usar atributos para metadados curtos e elementos para os dados."
+  },
+  {
+   "t": "p",
+   "html": "Cinco caracteres têm significado especial no XML e precisam ser trocados por <strong>entidades</strong> quando aparecem no conteúdo: <code>&lt;</code> vira <code>&amp;lt;</code>, <code>&gt;</code> vira <code>&amp;gt;</code>, <code>&amp;</code> vira <code>&amp;amp;</code>, e as aspas viram <code>&amp;quot;</code> e <code>&amp;apos;</code>. Esquecer essa troca gera um XML inválido e, pior, abre espaço para ataques de injeção. Recursos como os <strong><em>namespaces</em></strong> (os <code>xmlns</code> vistos no envelope SOAP), que evitam conflito de nomes, e o <strong>XML Schema</strong> (XSD), que descreve e valida a estrutura, tornam o XML mais poderoso e mais formal que o JSON."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    "JSON",
+    "XML"
+   ],
+   "linhas": [
+    [
+     "tamanho",
+     "menor",
+     "maior: cada nome aparece duas vezes"
+    ],
+    [
+     "tipos",
+     "texto, número, booleano, nulo, objeto, lista",
+     "tudo é texto; os tipos vêm de um esquema (XSD)"
+    ],
+    [
+     "listas",
+     "nativas, com <code>[ ]</code>",
+     "elementos repetidos"
+    ],
+    [
+     "validação",
+     "JSON Schema (opcional)",
+     "XSD, muito usado"
+    ],
+    [
+     "comentários",
+     "não aceita",
+     "aceita"
+    ],
+    [
+     "uso típico",
+     "APIs REST e web",
+     "SOAP, documentos fiscais, sistemas legados"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-7-respondendo-em-json-ou-em-xml",
+   "texto": "5.7 Respondendo em JSON ou em XML"
+  },
+  {
+   "t": "p",
+   "html": "Uma API pode oferecer mais de um formato e deixar o cliente escolher pelo cabeçalho <code>Accept</code>, a negociação de conteúdo apresentada no Capítulo 2. Para o TaskFlow, o JSON continua sendo o padrão, e quem enviar <code>Accept: application/xml</code> recebe XML. Primeiro, uma função que serializa um objeto simples:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/xml.ts -- serializa um objeto simples em XML\n\n// Os cinco caracteres que têm significado especial no XML\nfunction escapar(valor: unknown): string {\n  return String(valor)\n    .replaceAll(\"&\", \"&amp;\")\n    .replaceAll(\"<\", \"&lt;\")\n    .replaceAll(\">\", \"&gt;\")\n    .replaceAll('\"', \"&quot;\")\n    .replaceAll(\"'\", \"&apos;\");\n}\n\nexport function paraXml(raiz: string, dados: object): string {\n  const campos = Object.entries(dados).map(([nome, valor]) => {\n    if (valor === null) return `  <${nome}/>`;\n    const texto =\n      valor instanceof Date ? valor.toISOString() : valor;\n    return `  <${nome}>${escapar(texto)}</${nome}>`;\n  });\n  return [\n    '<?xml version=\"1.0\" encoding=\"UTF-8\"?>',\n    `<${raiz}>`,\n    ...campos,\n    `</${raiz}>`,\n  ].join(\"\\n\");\n}"
+  },
+  {
+   "t": "p",
+   "html": "A ordem das trocas importa: o <code>&amp;</code> é trocado primeiro, porque as outras entidades também começam com <code>&amp;</code>, e trocá-lo depois estragaria o <code>&amp;lt;</code> já escrito. O <code>Object.entries</code> transforma o objeto em uma lista de pares <code>[nome, valor]</code>, e cada par vira uma linha. As datas são convertidas para ISO 8601, como no JSON, e os valores nulos viram elementos vazios. Em seguida, no <code>GET</code> de uma tarefa, depois de conferir que ela existe:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// em app/api/tasks/[id]/route.ts, no fim do GET\nconst aceita = request.headers.get(\"accept\") ?? \"\";\nif (aceita.includes(\"application/xml\")) {\n  return new Response(paraXml(\"tarefa\", tarefa), {\n    headers: { \"Content-Type\": \"application/xml; charset=utf-8\" },\n  });\n}\nreturn Response.json(tarefa);"
+  },
+  {
+   "t": "p",
+   "html": "Testando com uma tarefa cujo título tem caracteres especiais:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ curl -i http://localhost:3000/api/tasks/cmvbb124... \\\n    -H \"Accept: application/xml\"\nHTTP/1.1 200 OK\ncontent-type: application/xml; charset=utf-8\n\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<tarefa>\n  <id>cmvbb12470000icv9900ayko6</id>\n  <title>Comprar &lt;papel&gt; &amp; caneta</title>\n  <description/>\n  <status>PENDING</status>\n  <priority>MEDIUM</priority>\n  <dueDate/>\n  <createdAt>2026-10-16T18:31:55.639Z</createdAt>\n  <updatedAt>2026-10-16T18:31:55.639Z</updatedAt>\n</tarefa>"
+  },
+  {
+   "t": "p",
+   "html": "O título <code>Comprar &lt;papel&gt; &amp; caneta</code> saiu com as entidades, e qualquer leitor de XML o reconstrói corretamente. Sem o <code>Accept</code>, a mesma URL devolve JSON. A função <code>paraXml</code> é propositalmente simples, para mostrar o que a serialização faz; ela não trata objetos aninhados nem listas. Em projetos reais, use uma biblioteca, como a <code>fast-xml-parser</code>, que serializa e desserializa XML completo. No navegador, o XML recebido é lido com a classe <code>DOMParser</code>, que já vem embutida."
+  },
+  {
+   "t": "h2",
+   "id": "5-8-desserializar-nao-e-validar",
+   "texto": "5.8 Desserializar não é validar"
+  },
+  {
+   "t": "p",
+   "html": "Do lado de quem recebe, há um cuidado que o TypeScript esconde. O resultado de <code>await request.json()</code> tem o tipo <code>any</code>: o TypeScript não sabe nada sobre ele. É tentador escrever:"
+  },
+  {
+   "t": "codigo",
+   "texto": "type NovaTarefa = { title: string; priority: \"LOW\" | \"HIGH\" };\nconst corpo = (await request.json()) as NovaTarefa;  // perigoso"
+  },
+  {
+   "t": "p",
+   "html": "O <code>as NovaTarefa</code> não confere nada: ele só diz ao TypeScript “confie em mim”. Se o cliente enviar <code>{\"title\": 123, \"priority\": \"URGENTE\"}</code>, o código segue achando que <code>title</code> é um texto, e o erro aparece mais adiante, longe da causa, ou o dado errado vai parar no banco. Os tipos do TypeScript existem só enquanto o código é escrito e compilado; quando a requisição chega, eles já não existem. Todo dado que vem de fora da API precisa ser <strong>validado em tempo de execução</strong>, campo por campo. Fazer isso com vários <code>if</code>, como no <code>POST</code> do Capítulo 4, não escala. A solução é o assunto do próximo capítulo: descrever o formato esperado uma vez, com o Zod, e deixar que ele valide os dados e produza os tipos ao mesmo tempo."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Escrever JSON à mão com aspas simples ou vírgula sobrando.</strong> O JSON só aceita aspas duplas e não tem vírgula depois do último item.",
+    "<strong>Usar <code>undefined</code> para “sem valor”.</strong> O campo desaparece da resposta. Use <code>null</code>.",
+    "<strong>Esperar uma data depois do <code>JSON.parse</code>.</strong> O campo continua sendo texto; converta com <code>new Date(...)</code> quando precisar calcular.",
+    "<strong>Criar datas sem pensar no fuso.</strong> <code>new Date(\"2026-12-01\")</code> é meia-noite em UTC, e no Brasil aparece como o dia anterior. Guarde em UTC e converta só para exibir.",
+    "<strong>Aceitar datas no formato dd/mm/aaaa.</strong> O JavaScript lê como mês/dia. Exija ISO 8601.",
+    "<strong>Devolver o registro inteiro do banco.</strong> Campos internos, como <code>userId</code> ou a senha, vazam. Defina os campos públicos com <code>select</code>.",
+    "<strong>Montar XML sem escapar os caracteres especiais.</strong> Um <code>&amp;</code> ou um <code>&lt;</code> no conteúdo invalida o documento e abre espaço para injeção.",
+    "<strong>Confiar no <code>as</code> do TypeScript para dados recebidos.</strong> Ele não verifica nada em tempo de execução. Valide (Capítulo 6)."
+   ]
+  }
+ ]
+}

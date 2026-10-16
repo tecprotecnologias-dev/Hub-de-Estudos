@@ -807,4 +807,13 @@ export const apostilas: Apostila[] = [
     descricao:
       'Route Handlers do Next.js, como ler parâmetros, cabeçalhos e corpo, montar respostas, segmentos dinâmicos, o que o Next.js faz sozinho (HEAD, OPTIONS, 405) e como testar com curl e REST Client.',
   },
+  {
+    id: 'web3-cap5',
+    capitulo: 5,
+    titulo: 'JSON, XML e serialização',
+    disciplinaId: 'programacao-e-design-para-web-iii',
+    unidades: ['Formatos de Dados e Serialização'],
+    descricao:
+      'Serializar e desserializar, os tipos do JSON e o que ele perde, datas em ISO 8601 e fusos, nomes de campos, os campos públicos da API (DTO), XML, negociação de conteúdo e por que desserializar não é validar.',
+  },
 ]

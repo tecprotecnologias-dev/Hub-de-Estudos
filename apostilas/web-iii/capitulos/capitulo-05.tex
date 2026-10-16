@@ -1,0 +1,309 @@
+\section{Capítulo 5 -- JSON, XML e serialização}
+
+Uma API recebe e devolve dados pela rede, e a rede só transporta texto (ou, mais precisamente, bytes). Os objetos que existem na memória do programa, com as suas datas, listas e números, precisam ser transformados em texto para viajar e reconstruídos do outro lado. Neste capítulo você vai entender esse processo, chamado serialização, conhecer em detalhe os dois formatos mais usados, o JSON e o XML, e ver as armadilhas que mais causam erros: datas, valores que o JSON não representa e campos que não deveriam sair da API. No final, o TaskFlow passa a controlar exatamente os campos que devolve e a responder também em XML a quem pedir.
+
+\subsection{5.1 Serializar e desserializar}
+
+\textbf{Serializar} é transformar um objeto da memória em uma sequência de texto ou bytes que possa ser guardada ou transmitida. \textbf{Desserializar} é o caminho inverso: ler o texto e reconstruir o objeto. Em JavaScript, as duas operações com JSON são \texttt{JSON.stringify} e \texttt{JSON.parse}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+const tarefa = { title: "Estudar JSON", done: false };
+
+const texto = JSON.stringify(tarefa);   // serializar
+console.log(texto);
+// {"title":"Estudar JSON","done":false}
+console.log(typeof texto);  // string
+
+const deVolta = JSON.parse(texto);      // desserializar
+console.log(deVolta.title); // Estudar JSON
+\end{Verbatim}
+\end{codigo}
+
+Em uma API, isso acontece em toda requisição. Quando a rota faz \texttt{await request.json()}, o Next.js lê o corpo como texto e aplica \texttt{JSON.parse}; quando ela devolve \texttt{Response.json(tarefa)}, ele aplica \texttt{JSON.stringify} e põe o resultado no corpo. Do outro lado, o \texttt{fetch} do cliente faz o mesmo com \texttt{resposta.json()}.
+
+O \texttt{JSON.stringify} aceita dois parâmetros extras. O terceiro indica a indentação, útil para ler ou gravar arquivos: \texttt{JSON.stringify(obj, null, 2)} põe cada campo em uma linha, com dois espaços. O segundo, que aqui ficou \texttt{null}, permite filtrar ou transformar campos.
+
+\subsection{5.2 JSON em detalhe}
+
+O \textbf{JSON} (\textit{JavaScript Object Notation}) nasceu da sintaxe de objetos do JavaScript, mas é um formato independente, padronizado na RFC 8259 e usado por praticamente todas as linguagens. Ele tem só seis tipos de valor:
+
+\begin{center}
+\begin{tabular}{@{}P{0.22\linewidth}P{0.35\linewidth}P{0.33\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Tipo} & \tblheader{Exemplo} & \tblheader{Observação} \\
+\midrule
+texto & \texttt{"Estudar"} & sempre entre aspas duplas \\
+\rowcolor{rowgray} número & \texttt{42}, \texttt{3.14}, \texttt{-1e3} & sem distinção entre inteiro e decimal \\
+booleano & \texttt{true}, \texttt{false} & em minúsculas \\
+\rowcolor{rowgray} nulo & \texttt{null} & ausência de valor \\
+objeto & \texttt{\{"a": 1\}} & pares nome-valor; o nome sempre entre aspas duplas \\
+\rowcolor{rowgray} lista & \texttt{[1, "dois", null]} & valores em ordem, de qualquer tipo \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+O JSON é mais rígido que o JavaScript. Não aceita aspas simples, vírgula depois do último item, comentários, nem nomes de campo sem aspas. Um JSON escrito à mão com um desses detalhes faz o \texttt{JSON.parse} falhar:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+JSON.parse("{'title': 'x'}");
+// SyntaxError: Expected property name or '}' in JSON
+JSON.parse('{"a": 1,}');
+// SyntaxError: Expected double-quoted property name in JSON
+\end{Verbatim}
+\end{codigo}
+
+Também há valores do JavaScript que o JSON não sabe representar. O \texttt{JSON.stringify} não avisa: ele simplesmente descarta ou troca esses valores, e o dado chega diferente do outro lado.
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+const tarefa = {
+  title: "Estudar JSON",
+  dueDate: new Date("2026-12-01T15:30:00Z"),
+  description: undefined,
+  nota: NaN,
+  salvar() {},
+};
+console.log(JSON.stringify(tarefa));
+// {"title":"Estudar JSON","dueDate":"2026-12-01T15:30:00.000Z",
+//  "nota":null}
+\end{Verbatim}
+\end{codigo}
+
+\begin{center}
+\begin{tabular}{@{}P{0.38\linewidth}P{0.52\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Valor em JavaScript} & \tblheader{O que vira no JSON} \\
+\midrule
+\texttt{Date} & texto no formato ISO 8601 (e não volta a ser data no \texttt{parse}) \\
+\rowcolor{rowgray} \texttt{undefined} e funções & o campo desaparece \\
+\texttt{NaN} e \texttt{Infinity} & \texttt{null} \\
+\rowcolor{rowgray} \texttt{Map} e \texttt{Set} & \texttt{\{\}}, vazios \\
+\texttt{BigInt} (\texttt{10n}) & erro: \texttt{TypeError: Do not know how to serialize a BigInt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Por isso, em uma API, use \texttt{null} para dizer ``sem valor'' (e não \texttt{undefined}, que some), e converta \texttt{Map}, \texttt{Set} e \texttt{BigInt} para objetos, listas e textos antes de responder. Há ainda o limite dos números: o JSON não restringe o tamanho, mas o JavaScript só representa inteiros com exatidão até cerca de 9 quatrilhões (\texttt{Number.MAX\_SAFE\_INTEGER}). Identificadores muito grandes, como os de algumas redes sociais, são enviados como texto por esse motivo.
+
+\subsection{5.3 Datas: a armadilha clássica}
+
+O JSON não tem um tipo de data. A convenção adotada por quase todas as APIs é enviar a data como texto no formato \textbf{ISO 8601}, o mesmo que o \texttt{Date} produz ao ser serializado:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+"2026-12-01T15:30:00.000Z"
+ ano-mês-dia T hora:min:seg.ms  Z = horário UTC
+\end{Verbatim}
+\end{codigo}
+
+A ordem ano-mês-dia elimina a confusão entre o formato brasileiro (dia/mês) e o americano (mês/dia), e ainda faz as datas ficarem em ordem quando ordenadas como texto. O \texttt{Z} no final indica o \textbf{UTC}, o horário de referência mundial, de onde se calculam os fusos: o horário de Brasília é UTC menos 3 horas, escrito \texttt{-03:00}. A boa prática é \textbf{guardar e transmitir em UTC} e converter para o fuso do usuário só na hora de mostrar. Os problemas aparecem quando a data é lida sem pensar no fuso:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// rodando em um computador no Brasil
+const d = new Date("2026-12-01");
+d.toISOString();          // 2026-12-01T00:00:00.000Z
+d.toLocaleString("pt-BR");    // 30/11/2026, 21:00:00
+
+new Date("2026-12-01T00:00:00").toISOString();
+// 2026-12-01T03:00:00.000Z
+
+new Date("01/12/2026").toISOString();
+// 2026-01-12T03:00:00.000Z   (12 de janeiro!)
+new Date("31/12/2026").getTime();   // NaN
+\end{Verbatim}
+\end{codigo}
+
+Os resultados acima foram obtidos com o fuso de São Paulo. Uma data sem horário, como \texttt{"2026-12-01"}, é lida como meia-noite em UTC; mostrada no Brasil, vira 21h do dia \textbf{anterior}, e a tarefa que vence em 1º de dezembro aparece como vencendo em 30 de novembro. Já a mesma data com horário e sem o \texttt{Z} é lida no fuso do computador. E o formato com barras é interpretado à americana: \texttt{01/12} vira 12 de janeiro, e \texttt{31/12} nem é uma data válida.
+
+Para o campo \texttt{dueDate} do TaskFlow, que é uma data de vencimento, as regras ficam assim: o cliente envia \texttt{"2026-12-01"}, a API guarda meia-noite em UTC e devolve \texttt{"2026-12-01T00:00:00.000Z"}, e quem exibe a data mostra apenas a parte do dia, lida em UTC, como em \texttt{d.toLocaleDateString("pt-BR", \{ timeZone: "UTC" \})}, que dá \texttt{01/12/2026}. Nunca aceite datas com barras em uma API: exija o formato ISO, e o Capítulo 6 mostra como validar isso.
+
+\subsection{5.4 Nomes dos campos}
+
+Duas convenções disputam o nome dos campos em JSON: \textbf{camelCase} (\texttt{dueDate}, \texttt{createdAt}), a do JavaScript, e \textbf{snake\_case} (\texttt{due\_date}, \texttt{created\_at}), comum em APIs feitas em Python e Ruby. Nenhuma é melhor; o que importa é escolher uma e usá-la em toda a API. O TaskFlow usa camelCase, que é o padrão do Prisma e do TypeScript, e por isso os nomes do banco chegam à resposta sem nenhuma conversão.
+
+Outra decisão de projeto: os campos da API do TaskFlow estão em inglês (\texttt{title}, \texttt{status}), enquanto as mensagens de erro, lidas por pessoas, estão em português. É o padrão mais comum no mercado, porque bibliotecas, documentações e colegas de outros países esperam nomes em inglês. Também aqui, consistência vale mais que a escolha em si.
+
+\subsection{5.5 Controlando o que sai da API}
+
+No Capítulo 4, as rotas devolviam a tarefa exatamente como veio do banco, inclusive o \texttt{userId}. Devolver o registro inteiro é um hábito perigoso: no dia em que alguém acrescentar ao banco um campo interno, ele vaza para a API sem que ninguém perceba. No caso do usuário, o campo seria a senha. A forma segura é definir \textbf{explicitamente} quais campos formam a representação pública do recurso:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// lib/tarefas.ts -- o formato público de uma tarefa
+import type { Prisma } from "@/app/generated/prisma/client";
+
+// Os campos que a API devolve. O userId fica de fora: o cliente
+// já sabe que as tarefas são dele.
+export const camposTarefa = {
+  id: true,
+  title: true,
+  description: true,
+  status: true,
+  priority: true,
+  dueDate: true,
+  createdAt: true,
+  updatedAt: true,
+} satisfies Prisma.TaskSelect;
+\end{Verbatim}
+\end{codigo}
+
+O objeto segue o formato do \texttt{select} do Prisma, e o \texttt{satisfies Prisma.TaskSelect} faz o TypeScript conferir que cada nome existe no modelo: um erro de digitação, como \texttt{titel}, é acusado no editor. Agora, todas as consultas que devolvem tarefas usam o mesmo \texttt{select}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// em app/api/tasks/route.ts
+import { camposTarefa } from "@/lib/tarefas";
+
+const tarefas = await db.task.findMany({
+  where: { userId: usuario.id },
+  select: camposTarefa,
+  orderBy: { createdAt: "desc" },
+});
+\end{Verbatim}
+\end{codigo}
+
+Faça o mesmo no \texttt{create} do \texttt{POST} e no \texttt{findFirst} do \texttt{GET} de uma tarefa. Além da segurança, o \texttt{select} tem duas vantagens: o banco envia menos dados, e o tipo do resultado, calculado pelo Prisma, passa a ter só esses campos. O conjunto de campos que uma API aceita ou devolve é chamado de \textbf{DTO} (\textit{Data Transfer Object}, objeto de transferência de dados), e separá-lo do formato do banco é uma prática de qualquer API profissional.
+
+\subsection{5.6 XML}
+
+O \textbf{XML} (\textit{eXtensible Markup Language}) organiza os dados em \textbf{elementos} delimitados por marcas de abertura e fechamento, como o HTML, só que com nomes livres. Foi o formato dominante na troca de dados entre sistemas nos anos 2000 e continua presente no SOAP, na Nota Fiscal Eletrônica, em arquivos de configuração e em formatos de documento, como o \texttt{.docx}. O ViaCEP, visto no Capítulo 1, devolve XML se a URL terminar em \texttt{/xml/}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+<?xml version="1.0" encoding="UTF-8"?>
+<xmlcep>
+  <cep>01001-000</cep>
+  <logradouro>Praça da Sé</logradouro>
+  <complemento>lado ímpar</complemento>
+  <bairro>Sé</bairro>
+  <localidade>São Paulo</localidade>
+  <uf>SP</uf>
+</xmlcep>
+\end{Verbatim}
+\end{codigo}
+
+A primeira linha é a \textbf{declaração}, com a versão e a codificação. Todo documento tem um único \textbf{elemento raiz}, aqui \texttt{<xmlcep>}, e os demais ficam aninhados dentro dele. Um elemento vazio pode ser escrito como \texttt{<unidade></unidade>} ou de forma abreviada, \texttt{<unidade/>}. Os elementos também podem ter \textbf{atributos}, como em \texttt{<tarefa id="42" status="DONE">}; a escolha entre atributo e elemento é de quem projeta o formato, e a regra mais comum é usar atributos para metadados curtos e elementos para os dados.
+
+Cinco caracteres têm significado especial no XML e precisam ser trocados por \textbf{entidades} quando aparecem no conteúdo: \texttt{<} vira \texttt{\&lt;}, \texttt{>} vira \texttt{\&gt;}, \texttt{\&} vira \texttt{\&amp;}, e as aspas viram \texttt{\&quot;} e \texttt{\&apos;}. Esquecer essa troca gera um XML inválido e, pior, abre espaço para ataques de injeção. Recursos como os \textbf{\textit{namespaces}} (os \texttt{xmlns} vistos no envelope SOAP), que evitam conflito de nomes, e o \textbf{XML Schema} (XSD), que descreve e valida a estrutura, tornam o XML mais poderoso e mais formal que o JSON.
+
+\begin{center}
+\begin{tabular}{@{}P{0.24\linewidth}P{0.33\linewidth}P{0.33\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{} & \tblheader{JSON} & \tblheader{XML} \\
+\midrule
+tamanho & menor & maior: cada nome aparece duas vezes \\
+\rowcolor{rowgray} tipos & texto, número, booleano, nulo, objeto, lista & tudo é texto; os tipos vêm de um esquema (XSD) \\
+listas & nativas, com \texttt{[ ]} & elementos repetidos \\
+\rowcolor{rowgray} validação & JSON Schema (opcional) & XSD, muito usado \\
+comentários & não aceita & aceita \\
+\rowcolor{rowgray} uso típico & APIs REST e web & SOAP, documentos fiscais, sistemas legados \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{5.7 Respondendo em JSON ou em XML}
+
+Uma API pode oferecer mais de um formato e deixar o cliente escolher pelo cabeçalho \texttt{Accept}, a negociação de conteúdo apresentada no Capítulo 2. Para o TaskFlow, o JSON continua sendo o padrão, e quem enviar \texttt{Accept: application/xml} recebe XML. Primeiro, uma função que serializa um objeto simples:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// lib/xml.ts -- serializa um objeto simples em XML
+
+// Os cinco caracteres que têm significado especial no XML
+function escapar(valor: unknown): string {
+  return String(valor)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
+}
+
+export function paraXml(raiz: string, dados: object): string {
+  const campos = Object.entries(dados).map(([nome, valor]) => {
+    if (valor === null) return `  <${nome}/>`;
+    const texto =
+      valor instanceof Date ? valor.toISOString() : valor;
+    return `  <${nome}>${escapar(texto)}</${nome}>`;
+  });
+  return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    `<${raiz}>`,
+    ...campos,
+    `</${raiz}>`,
+  ].join("\n");
+}
+\end{Verbatim}
+\end{codigo}
+
+A ordem das trocas importa: o \texttt{\&} é trocado primeiro, porque as outras entidades também começam com \texttt{\&}, e trocá-lo depois estragaria o \texttt{\&lt;} já escrito. O \texttt{Object.entries} transforma o objeto em uma lista de pares \texttt{[nome, valor]}, e cada par vira uma linha. As datas são convertidas para ISO 8601, como no JSON, e os valores nulos viram elementos vazios. Em seguida, no \texttt{GET} de uma tarefa, depois de conferir que ela existe:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// em app/api/tasks/[id]/route.ts, no fim do GET
+const aceita = request.headers.get("accept") ?? "";
+if (aceita.includes("application/xml")) {
+  return new Response(paraXml("tarefa", tarefa), {
+    headers: { "Content-Type": "application/xml; charset=utf-8" },
+  });
+}
+return Response.json(tarefa);
+\end{Verbatim}
+\end{codigo}
+
+Testando com uma tarefa cujo título tem caracteres especiais:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$ curl -i http://localhost:3000/api/tasks/cmvbb124... \
+    -H "Accept: application/xml"
+HTTP/1.1 200 OK
+content-type: application/xml; charset=utf-8
+
+<?xml version="1.0" encoding="UTF-8"?>
+<tarefa>
+  <id>cmvbb12470000icv9900ayko6</id>
+  <title>Comprar &lt;papel&gt; &amp; caneta</title>
+  <description/>
+  <status>PENDING</status>
+  <priority>MEDIUM</priority>
+  <dueDate/>
+  <createdAt>2026-10-16T18:31:55.639Z</createdAt>
+  <updatedAt>2026-10-16T18:31:55.639Z</updatedAt>
+</tarefa>
+\end{Verbatim}
+\end{codigo}
+
+O título \texttt{Comprar <papel> \& caneta} saiu com as entidades, e qualquer leitor de XML o reconstrói corretamente. Sem o \texttt{Accept}, a mesma URL devolve JSON. A função \texttt{paraXml} é propositalmente simples, para mostrar o que a serialização faz; ela não trata objetos aninhados nem listas. Em projetos reais, use uma biblioteca, como a \texttt{fast-xml-parser}, que serializa e desserializa XML completo. No navegador, o XML recebido é lido com a classe \texttt{DOMParser}, que já vem embutida.
+
+\subsection{5.8 Desserializar não é validar}
+
+Do lado de quem recebe, há um cuidado que o TypeScript esconde. O resultado de \texttt{await request.json()} tem o tipo \texttt{any}: o TypeScript não sabe nada sobre ele. É tentador escrever:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+type NovaTarefa = { title: string; priority: "LOW" | "HIGH" };
+const corpo = (await request.json()) as NovaTarefa;  // perigoso
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{as NovaTarefa} não confere nada: ele só diz ao TypeScript ``confie em mim''. Se o cliente enviar \texttt{\{"title": 123, "priority": "URGENTE"\}}, o código segue achando que \texttt{title} é um texto, e o erro aparece mais adiante, longe da causa, ou o dado errado vai parar no banco. Os tipos do TypeScript existem só enquanto o código é escrito e compilado; quando a requisição chega, eles já não existem. Todo dado que vem de fora da API precisa ser \textbf{validado em tempo de execução}, campo por campo. Fazer isso com vários \texttt{if}, como no \texttt{POST} do Capítulo 4, não escala. A solução é o assunto do próximo capítulo: descrever o formato esperado uma vez, com o Zod, e deixar que ele valide os dados e produza os tipos ao mesmo tempo.
+
+\subsection{Erros Comuns}
+
+\begin{itemize}
+  \item \textbf{Escrever JSON à mão com aspas simples ou vírgula sobrando.} O JSON só aceita aspas duplas e não tem vírgula depois do último item.
+  \item \textbf{Usar \texttt{undefined} para ``sem valor''.} O campo desaparece da resposta. Use \texttt{null}.
+  \item \textbf{Esperar uma data depois do \texttt{JSON.parse}.} O campo continua sendo texto; converta com \texttt{new Date(...)} quando precisar calcular.
+  \item \textbf{Criar datas sem pensar no fuso.} \texttt{new Date("2026-12-01")} é meia-noite em UTC, e no Brasil aparece como o dia anterior. Guarde em UTC e converta só para exibir.
+  \item \textbf{Aceitar datas no formato dd/mm/aaaa.} O JavaScript lê como mês/dia. Exija ISO 8601.
+  \item \textbf{Devolver o registro inteiro do banco.} Campos internos, como \texttt{userId} ou a senha, vazam. Defina os campos públicos com \texttt{select}.
+  \item \textbf{Montar XML sem escapar os caracteres especiais.} Um \texttt{\&} ou um \texttt{<} no conteúdo invalida o documento e abre espaço para injeção.
+  \item \textbf{Confiar no \texttt{as} do TypeScript para dados recebidos.} Ele não verifica nada em tempo de execução. Valide (Capítulo 6).
+\end{itemize}
