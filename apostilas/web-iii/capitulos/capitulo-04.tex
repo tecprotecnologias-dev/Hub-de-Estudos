@@ -1,0 +1,340 @@
+\section{Capítulo 4 -- Roteamento e endpoints}
+
+No Capítulo 3, a rota \texttt{/api/health} mostrou que basta um arquivo para criar um \textit{endpoint}. Neste capítulo você vai entender a regra que liga cada URL a uma função do código, ler tudo o que chega em uma requisição (parâmetros, cabeçalhos e corpo), montar respostas com o status certo e criar as primeiras rotas de verdade do TaskFlow: listar, criar, buscar e excluir tarefas. No final, vai conhecer o que o Next.js faz sozinho, como as respostas a \texttt{OPTIONS} e o status \texttt{405}, e as formas práticas de testar uma API durante o desenvolvimento.
+
+\subsection{4.1 Do endereço ao código}
+
+\textbf{Roteamento} é o mapeamento entre uma requisição (método e URL) e a função que vai atendê-la. Em muitos \textit{frameworks}, como o Express, as rotas são escritas em código, uma por linha: \texttt{app.get("/api/tasks", listar)}. No Next.js, o mapeamento é feito pelas \textbf{pastas}: cada pasta dentro de \texttt{app/} é um pedaço da URL, e um arquivo \texttt{route.ts} transforma aquela pasta em \textit{endpoint}.
+
+\begin{center}
+\begin{tabular}{@{}P{0.47\linewidth}P{0.43\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Arquivo} & \tblheader{URL} \\
+\midrule
+\texttt{app/route.ts} & \texttt{/} \\
+\rowcolor{rowgray} \texttt{app/api/health/route.ts} & \texttt{/api/health} \\
+\texttt{app/api/tasks/route.ts} & \texttt{/api/tasks} \\
+\rowcolor{rowgray} \texttt{app/api/tasks/[id]/route.ts} & \texttt{/api/tasks/42}, \texttt{/api/tasks/abc}... \\
+\texttt{app/api/auth/login/route.ts} & \texttt{/api/auth/login} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Dentro do \texttt{route.ts}, cada função exportada com o nome de um método HTTP atende àquele método: \texttt{GET}, \texttt{POST}, \texttt{PUT}, \texttt{PATCH}, \texttt{DELETE}, \texttt{HEAD} e \texttt{OPTIONS}. O nome precisa estar em maiúsculas. Assim, o mapeamento completo de um \textit{endpoint} é ``pasta + nome da função'': \texttt{POST /api/tasks} é a função \texttt{POST} do arquivo \texttt{app/api/tasks/route.ts}. Esses arquivos se chamam \textbf{\textit{Route Handlers}}.
+
+Uma pasta pode ter um \texttt{route.ts} ou uma página (\texttt{page.tsx}), mas não os dois: o Next.js não saberia se deve devolver HTML ou executar a rota.
+
+\subsection{4.2 Lendo a requisição}
+
+Toda função de rota recebe a requisição como primeiro parâmetro. O tipo \texttt{NextRequest} é o \texttt{Request} padrão da web, o mesmo do \texttt{fetch}, com alguns atalhos a mais. Ela traz tudo o que o cliente enviou:
+
+\begin{center}
+\begin{tabular}{@{}P{0.3\linewidth}P{0.6\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{O quê} & \tblheader{Como ler} \\
+\midrule
+\textit{query string} & \texttt{request.nextUrl.searchParams.get("status")} \\
+\rowcolor{rowgray} cabeçalho & \texttt{request.headers.get("authorization")} \\
+corpo em JSON & \texttt{await request.json()} \\
+\rowcolor{rowgray} corpo em texto & \texttt{await request.text()} \\
+corpo de formulário & \texttt{await request.formData()} \\
+\rowcolor{rowgray} parte variável da URL & \texttt{(await contexto.params).id} (Seção 4.6) \\
+método e URL & \texttt{request.method} e \texttt{request.url} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Três detalhes evitam surpresas. O \texttt{searchParams.get} devolve sempre um texto, ou \texttt{null} se o parâmetro não veio: \texttt{?page=2} chega como \texttt{"2"}, e não como o número 2. O nome dos cabeçalhos não diferencia maiúsculas de minúsculas, então \texttt{get("Authorization")} e \texttt{get("authorization")} dão no mesmo. E o corpo só pode ser lido \textbf{uma vez}: depois de um \texttt{request.json()}, um \texttt{request.text()} falha.
+
+\subsection{4.3 Montando a resposta}
+
+A função devolve um \texttt{Response}, também o padrão da web. As três formas que aparecem em quase toda API são estas:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// 200 com corpo JSON (o status padrão é 200)
+return Response.json({ data: tarefas });
+
+// outro status e cabeçalhos extras
+return Response.json(tarefa, {
+  status: 201,
+  headers: { Location: `/api/tasks/${tarefa.id}` },
+});
+
+// sem corpo: o 204 não pode ter corpo
+return new Response(null, { status: 204 });
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{Response.json} transforma o objeto em texto JSON e acrescenta o cabeçalho \texttt{Content-Type: application/json}. Você vai encontrar também o \texttt{NextResponse.json}, de \texttt{next/server}, que faz o mesmo e tem recursos extras para \textit{cookies} e redirecionamentos; para uma API, o \texttt{Response} padrão basta.
+
+\subsection{4.4 Um usuário provisório}
+
+Cada pessoa só pode ver as próprias tarefas, então toda rota precisa saber quem está fazendo a requisição. Isso depende da autenticação, que chega no Capítulo 9. Até lá, uma função provisória finge que toda requisição vem da usuária de teste criada pelo \textit{seed}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// lib/usuario-atual.ts -- PROVISÓRIO: até o Capítulo 9, toda
+// requisição age como a usuária de teste criada pelo seed.
+import { db } from "@/lib/db";
+
+export async function usuarioAtual() {
+  return db.user.findUniqueOrThrow({
+    where: { email: "demo@taskflow.com" },
+    select: { id: true, name: true },
+  });
+}
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{findUniqueOrThrow} busca pelo e-mail, que é único, e lança um erro se não encontrar. O \texttt{select} traz só o identificador e o nome: a senha nunca precisa sair do banco aqui. As rotas vão chamar \texttt{usuarioAtual()} sem saber como ela funciona por dentro. Quando a autenticação estiver pronta, só esta função muda, e nenhuma rota precisa ser alterada. Isolar o que vai mudar atrás de uma função é uma das técnicas mais úteis de organização de código.
+
+\subsection{4.5 A coleção de tarefas}
+
+O arquivo \texttt{app/api/tasks/route.ts} atende à coleção: listar (\texttt{GET}) e criar (\texttt{POST}).
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// app/api/tasks/route.ts -- a coleção de tarefas
+import type { NextRequest } from "next/server";
+import { db } from "@/lib/db";
+import { TaskStatus } from "@/app/generated/prisma/client";
+import { usuarioAtual } from "@/lib/usuario-atual";
+
+// GET /api/tasks e GET /api/tasks?status=PENDING
+export async function GET(request: NextRequest) {
+  const usuario = await usuarioAtual();
+  const status = request.nextUrl.searchParams.get("status");
+
+  if (status && !Object.hasOwn(TaskStatus, status)) {
+    return Response.json(
+      { erro: "status deve ser PENDING, IN_PROGRESS ou DONE" },
+      { status: 400 },
+    );
+  }
+
+  const tarefas = await db.task.findMany({
+    where: {
+      userId: usuario.id,
+      ...(status && { status: status as TaskStatus }),
+    },
+    orderBy: { createdAt: "desc" },
+  });
+
+  return Response.json({ data: tarefas });
+}
+\end{Verbatim}
+\end{codigo}
+
+O Prisma gera, para cada \texttt{enum} do esquema, um objeto com os valores permitidos: \texttt{TaskStatus} é \texttt{\{ PENDING: "PENDING", IN\_PROGRESS: ..., DONE: ... \}}. O \texttt{Object.hasOwn(TaskStatus, status)} confere se o texto recebido é uma dessas chaves. Repare que não foi usado \texttt{status in TaskStatus}: o operador \texttt{in} também enxerga as propriedades herdadas de todo objeto, e \texttt{?status=toString} passaria pela verificação e quebraria a consulta.
+
+O filtro usa uma construção comum em JavaScript: \texttt{...(status \&\& \{ status \})}. Se \texttt{status} for \texttt{null}, a expressão vale \texttt{null}, e espalhar \texttt{null} em um objeto não acrescenta nada; se houver um valor, o campo \texttt{status} entra no \texttt{where}. O \texttt{as TaskStatus} diz ao TypeScript que o texto já foi conferido. Por fim, \texttt{orderBy} lista as tarefas mais recentes primeiro, e o resultado vai dentro de \texttt{data}, o envelope combinado no Capítulo 2. A criação fica no mesmo arquivo:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// POST /api/tasks  -- corpo: {"title": "..."}
+export async function POST(request: NextRequest) {
+  const usuario = await usuarioAtual();
+  const corpo = await request.json().catch(() => null);
+
+  if (typeof corpo?.title !== "string" || !corpo.title.trim()) {
+    return Response.json(
+      { erro: "O título é obrigatório." },
+      { status: 400 },
+    );
+  }
+
+  const tarefa = await db.task.create({
+    data: { title: corpo.title.trim(), userId: usuario.id },
+  });
+
+  return Response.json(tarefa, {
+    status: 201,
+    headers: { Location: `/api/tasks/${tarefa.id}` },
+  });
+}
+\end{Verbatim}
+\end{codigo}
+
+Se o corpo não for um JSON válido, \texttt{request.json()} lança um erro, e a API responderia \texttt{500}, como se a falha fosse do servidor. O \texttt{.catch(() => null)} transforma esse caso em \texttt{null}, que cai na verificação seguinte e recebe um \texttt{400}, o código certo para um erro do cliente. O \texttt{corpo?.title} usa o \textbf{encadeamento opcional}: se \texttt{corpo} for \texttt{null}, o resultado é \texttt{undefined} em vez de um erro. A verificação aceita só um texto que não fique vazio depois do \texttt{trim}, que tira os espaços das pontas.
+
+Esta verificação ``à mão'' cobre só o título. Conferir todos os campos (prioridade, data, tamanho do texto) desse jeito seria longo e fácil de errar; o Capítulo 6 substitui tudo por um esquema do Zod, e o Capítulo 7 completa a criação com os demais campos.
+
+\subsection{4.6 Segmentos dinâmicos: uma tarefa}
+
+Para atender \texttt{/api/tasks/42}, \texttt{/api/tasks/abc} e qualquer outro identificador, o nome da pasta vai entre colchetes: \texttt{app/api/tasks/[id]/}. É um \textbf{segmento dinâmico}, e o valor que veio na URL chega à função no segundo parâmetro, o \textbf{contexto}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// app/api/tasks/[id]/route.ts -- uma tarefa
+import type { NextRequest } from "next/server";
+import { db } from "@/lib/db";
+import { usuarioAtual } from "@/lib/usuario-atual";
+
+// GET /api/tasks/:id
+export async function GET(
+  request: NextRequest,
+  contexto: RouteContext<"/api/tasks/[id]">,
+) {
+  const { id } = await contexto.params;
+  const usuario = await usuarioAtual();
+
+  const tarefa = await db.task.findFirst({
+    where: { id, userId: usuario.id },
+  });
+
+  if (!tarefa) {
+    return Response.json(
+      { erro: "Tarefa não encontrada." },
+      { status: 404 },
+    );
+  }
+  return Response.json(tarefa);
+}
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{RouteContext<"/api/tasks/[id]">} é um tipo que o próprio Next.js gera a partir das pastas do projeto, ao rodar \texttt{npm run dev} ou \texttt{npm run build}: ele sabe que essa rota tem um parâmetro \texttt{id}. Os parâmetros chegam como uma \textit{Promise}, por isso o \texttt{await contexto.params}; até a versão 14 do Next.js, eles eram um objeto comum, e você vai encontrar exemplos antigos sem o \texttt{await}.
+
+A consulta é a parte mais importante. Buscar só pelo \texttt{id}, com \texttt{findUnique(\{ where: \{ id \} \})}, devolveria a tarefa de qualquer pessoa que soubesse o identificador. O \texttt{findFirst} com \texttt{id} \textbf{e} \texttt{userId} só encontra a tarefa se ela pertencer a quem pediu. Se for de outra pessoa, o resultado é o mesmo de uma tarefa que não existe: \texttt{404}. Como combinado no Capítulo 2, isso não revela a existência de tarefas alheias. A exclusão segue a mesma regra:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// DELETE /api/tasks/:id
+export async function DELETE(
+  request: NextRequest,
+  contexto: RouteContext<"/api/tasks/[id]">,
+) {
+  const { id } = await contexto.params;
+  const usuario = await usuarioAtual();
+
+  const { count } = await db.task.deleteMany({
+    where: { id, userId: usuario.id },
+  });
+
+  if (count === 0) {
+    return Response.json(
+      { erro: "Tarefa não encontrada." },
+      { status: 404 },
+    );
+  }
+  return new Response(null, { status: 204 });
+}
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{deleteMany} aceita qualquer filtro e devolve quantos registros apagou. Com o filtro por \texttt{id} e dono, o resultado é 1 (apagou) ou 0 (não havia tarefa daquele dono com aquele \texttt{id}). Fazer tudo em uma única consulta evita buscar primeiro e apagar depois. O parâmetro \texttt{request} não é usado em nenhuma das duas funções, mas precisa estar lá, porque o contexto é sempre o segundo parâmetro. A edição (\texttt{PATCH}) entra no Capítulo 7, junto com a validação de todos os campos.
+
+\subsection{4.7 O que o Next.js faz sozinho}
+
+Com os dois arquivos prontos, alguns comportamentos aparecem sem nenhuma linha de código a mais. Estes resultados foram obtidos com o servidor rodando:
+
+\begin{center}
+\begin{tabular}{@{}P{0.4\linewidth}P{0.5\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Requisição} & \tblheader{Resposta} \\
+\midrule
+\texttt{HEAD /api/tasks} & \texttt{200}, só com os cabeçalhos: o Next.js usa a função \texttt{GET} \\
+\rowcolor{rowgray} \texttt{OPTIONS /api/tasks} & \texttt{204} com o cabeçalho \texttt{allow: GET, HEAD, OPTIONS, POST} \\
+\texttt{PATCH /api/tasks/42} & \texttt{405 Method Not Allowed}: o arquivo não exporta \texttt{PATCH} \\
+\rowcolor{rowgray} \texttt{GET /api/tarefas} & \texttt{404}: não há pasta com esse nome \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Ou seja: o \texttt{405} aparece quando a URL existe mas o método não, e o \texttt{404}, quando nem a URL existe, exatamente como manda o HTTP.
+
+\subsection{4.8 Outras convenções de pastas}
+
+Além do segmento dinâmico, o App Router tem outras convenções de nome de pasta que aparecem em APIs maiores:
+
+\begin{center}
+\begin{tabular}{@{}P{0.25\linewidth}P{0.65\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Pasta} & \tblheader{Efeito} \\
+\midrule
+\texttt{[id]} & um segmento variável: \texttt{/tasks/42} \\
+\rowcolor{rowgray} \texttt{[...caminho]} & um ou mais segmentos: \texttt{/arquivos/a/b/c}; o parâmetro vira a lista \texttt{["a", "b", "c"]} \\
+\texttt{[[...caminho]]} & como o anterior, mas também atende à URL sem nenhum segmento: \texttt{/arquivos} \\
+\rowcolor{rowgray} \texttt{(grupo)} & organiza as pastas sem entrar na URL: \texttt{app/(admin)/api/users} atende \texttt{/api/users} \\
+\texttt{\_privada} & ignorada pelo roteamento; serve para guardar arquivos auxiliares ao lado das rotas \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Quando uma URL combina com mais de uma pasta, vence a mais específica: com \texttt{app/api/tasks/[id]} e \texttt{app/api/tasks/resumo}, a URL \texttt{/api/tasks/resumo} vai para a pasta \texttt{resumo}, e não para o \texttt{[id]}.
+
+\subsection{4.9 Testando as rotas}
+
+O navegador só faz \texttt{GET} pela barra de endereços. Para os outros métodos, há três caminhos comuns. O primeiro é o \texttt{curl}, no terminal:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$ curl http://localhost:3000/api/tasks?status=DONE
+$ curl -i -X POST http://localhost:3000/api/tasks \
+    -H "Content-Type: application/json" \
+    -d '{"title": "Testar as rotas"}'
+$ curl -i -X DELETE http://localhost:3000/api/tasks/cm3x9k2a0001
+\end{Verbatim}
+\end{codigo}
+
+A opção \texttt{-X} escolhe o método, \texttt{-H} acrescenta um cabeçalho e \texttt{-d} envia o corpo. A barra invertida no fim da linha continua o comando na linha seguinte; ela funciona no terminal Git Bash, no macOS e no Linux. No PowerShell, as aspas dentro do JSON exigem cuidados extras, por isso, no Windows, prefira o segundo caminho.
+
+O segundo é a extensão \textbf{REST Client}, do VS Code. Crie um arquivo com a extensão \texttt{.http}, escreva as requisições separadas por \texttt{\#\#\#} e clique em \textit{Send Request} acima de cada uma:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+### Listar as tarefas pendentes
+GET http://localhost:3000/api/tasks?status=PENDING
+
+### Criar uma tarefa
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{"title": "Testar as rotas"}
+
+### Criar sem título (espera 400)
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{}
+\end{Verbatim}
+\end{codigo}
+
+O arquivo fica no projeto e documenta os testes: qualquer pessoa da equipe consegue repeti-los. O terceiro caminho são programas com interface gráfica, como o \textbf{Postman}, assunto do Capítulo 10. Seja qual for a ferramenta, teste sempre os casos de erro, e não só o caminho feliz: título vazio, JSON quebrado, \texttt{status} inválido, identificador inexistente e exclusão repetida.
+
+\subsection{4.10 Como está o projeto}
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+app/
+  api/
+    health/route.ts     GET
+    tasks/
+      route.ts          GET (com ?status), POST
+      [id]/route.ts     GET, DELETE
+lib/
+  db.ts
+  usuario-atual.ts      provisório, até o Capítulo 9
+testes.http             requisições para o REST Client
+\end{Verbatim}
+\end{codigo}
+
+Repare que as respostas ainda trazem todos os campos da tarefa, inclusive o \texttt{userId}, que não interessa ao cliente, e que cada rota escreve a sua própria mensagem de erro. O Capítulo 5 cuida do formato dos dados que entram e saem, e o Capítulo 8 padroniza os erros.
+
+\subsection{Erros Comuns}
+
+\begin{itemize}
+  \item \textbf{Nome da função em minúsculas.} \texttt{export async function get()} não é reconhecido, e a rota responde \texttt{405}. O nome é o do método, em maiúsculas.
+  \item \textbf{\texttt{route.ts} e \texttt{page.tsx} na mesma pasta.} O Next.js acusa conflito. Rotas de API ficam em pastas próprias, como \texttt{app/api/}.
+  \item \textbf{Esquecer o \texttt{await} em \texttt{contexto.params}.} Os parâmetros são uma \textit{Promise}; sem o \texttt{await}, \texttt{id} fica \texttt{undefined}.
+  \item \textbf{Buscar só pelo \texttt{id}.} Sem o \texttt{userId} no filtro, qualquer pessoa lê ou apaga a tarefa de outra. Essa falha é tão comum que lidera a lista de riscos de APIs da OWASP, estudada no Capítulo 12.
+  \item \textbf{Deixar o JSON inválido virar 500.} Trate o erro de \texttt{request.json()} e responda \texttt{400}.
+  \item \textbf{Tratar a \textit{query string} como número.} \texttt{searchParams.get("page")} devolve o texto \texttt{"2"}; converta com \texttt{Number()} e confira o resultado.
+  \item \textbf{Mandar corpo com o status 204.} O 204 significa ``sem conteúdo''; use \texttt{new Response(null, \{ status: 204 \})}.
+  \item \textbf{Esquecer o \texttt{return}.} Se a função monta a resposta de erro mas não a devolve, o código continua e executa a consulta mesmo assim.
+\end{itemize}

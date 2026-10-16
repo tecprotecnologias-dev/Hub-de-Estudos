@@ -1,0 +1,348 @@
+{
+ "numero": 4,
+ "titulo": "Roteamento e endpoints",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "No Capítulo 3, a rota <code>/api/health</code> mostrou que basta um arquivo para criar um <em>endpoint</em>. Neste capítulo você vai entender a regra que liga cada URL a uma função do código, ler tudo o que chega em uma requisição (parâmetros, cabeçalhos e corpo), montar respostas com o status certo e criar as primeiras rotas de verdade do TaskFlow: listar, criar, buscar e excluir tarefas. No final, vai conhecer o que o Next.js faz sozinho, como as respostas a <code>OPTIONS</code> e o status <code>405</code>, e as formas práticas de testar uma API durante o desenvolvimento."
+  },
+  {
+   "t": "h2",
+   "id": "4-1-do-endereco-ao-codigo",
+   "texto": "4.1 Do endereço ao código"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Roteamento</strong> é o mapeamento entre uma requisição (método e URL) e a função que vai atendê-la. Em muitos <em>frameworks</em>, como o Express, as rotas são escritas em código, uma por linha: <code>app.get(\"/api/tasks\", listar)</code>. No Next.js, o mapeamento é feito pelas <strong>pastas</strong>: cada pasta dentro de <code>app/</code> é um pedaço da URL, e um arquivo <code>route.ts</code> transforma aquela pasta em <em>endpoint</em>."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Arquivo",
+    "URL"
+   ],
+   "linhas": [
+    [
+     "<code>app/route.ts</code>",
+     "<code>/</code>"
+    ],
+    [
+     "<code>app/api/health/route.ts</code>",
+     "<code>/api/health</code>"
+    ],
+    [
+     "<code>app/api/tasks/route.ts</code>",
+     "<code>/api/tasks</code>"
+    ],
+    [
+     "<code>app/api/tasks/[id]/route.ts</code>",
+     "<code>/api/tasks/42</code>, <code>/api/tasks/abc</code>..."
+    ],
+    [
+     "<code>app/api/auth/login/route.ts</code>",
+     "<code>/api/auth/login</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Dentro do <code>route.ts</code>, cada função exportada com o nome de um método HTTP atende àquele método: <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code>, <code>HEAD</code> e <code>OPTIONS</code>. O nome precisa estar em maiúsculas. Assim, o mapeamento completo de um <em>endpoint</em> é “pasta + nome da função”: <code>POST /api/tasks</code> é a função <code>POST</code> do arquivo <code>app/api/tasks/route.ts</code>. Esses arquivos se chamam <strong><em>Route Handlers</em></strong>."
+  },
+  {
+   "t": "p",
+   "html": "Uma pasta pode ter um <code>route.ts</code> ou uma página (<code>page.tsx</code>), mas não os dois: o Next.js não saberia se deve devolver HTML ou executar a rota."
+  },
+  {
+   "t": "h2",
+   "id": "4-2-lendo-a-requisicao",
+   "texto": "4.2 Lendo a requisição"
+  },
+  {
+   "t": "p",
+   "html": "Toda função de rota recebe a requisição como primeiro parâmetro. O tipo <code>NextRequest</code> é o <code>Request</code> padrão da web, o mesmo do <code>fetch</code>, com alguns atalhos a mais. Ela traz tudo o que o cliente enviou:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "O quê",
+    "Como ler"
+   ],
+   "linhas": [
+    [
+     "<em>query string</em>",
+     "<code>request.nextUrl.searchParams.get(\"status\")</code>"
+    ],
+    [
+     "cabeçalho",
+     "<code>request.headers.get(\"authorization\")</code>"
+    ],
+    [
+     "corpo em JSON",
+     "<code>await request.json()</code>"
+    ],
+    [
+     "corpo em texto",
+     "<code>await request.text()</code>"
+    ],
+    [
+     "corpo de formulário",
+     "<code>await request.formData()</code>"
+    ],
+    [
+     "parte variável da URL",
+     "<code>(await contexto.params).id</code> (Seção 4.6)"
+    ],
+    [
+     "método e URL",
+     "<code>request.method</code> e <code>request.url</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Três detalhes evitam surpresas. O <code>searchParams.get</code> devolve sempre um texto, ou <code>null</code> se o parâmetro não veio: <code>?page=2</code> chega como <code>\"2\"</code>, e não como o número 2. O nome dos cabeçalhos não diferencia maiúsculas de minúsculas, então <code>get(\"Authorization\")</code> e <code>get(\"authorization\")</code> dão no mesmo. E o corpo só pode ser lido <strong>uma vez</strong>: depois de um <code>request.json()</code>, um <code>request.text()</code> falha."
+  },
+  {
+   "t": "h2",
+   "id": "4-3-montando-a-resposta",
+   "texto": "4.3 Montando a resposta"
+  },
+  {
+   "t": "p",
+   "html": "A função devolve um <code>Response</code>, também o padrão da web. As três formas que aparecem em quase toda API são estas:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// 200 com corpo JSON (o status padrão é 200)\nreturn Response.json({ data: tarefas });\n\n// outro status e cabeçalhos extras\nreturn Response.json(tarefa, {\n  status: 201,\n  headers: { Location: `/api/tasks/${tarefa.id}` },\n});\n\n// sem corpo: o 204 não pode ter corpo\nreturn new Response(null, { status: 204 });"
+  },
+  {
+   "t": "p",
+   "html": "O <code>Response.json</code> transforma o objeto em texto JSON e acrescenta o cabeçalho <code>Content-Type: application/json</code>. Você vai encontrar também o <code>NextResponse.json</code>, de <code>next/server</code>, que faz o mesmo e tem recursos extras para <em>cookies</em> e redirecionamentos; para uma API, o <code>Response</code> padrão basta."
+  },
+  {
+   "t": "h2",
+   "id": "4-4-um-usuario-provisorio",
+   "texto": "4.4 Um usuário provisório"
+  },
+  {
+   "t": "p",
+   "html": "Cada pessoa só pode ver as próprias tarefas, então toda rota precisa saber quem está fazendo a requisição. Isso depende da autenticação, que chega no Capítulo 9. Até lá, uma função provisória finge que toda requisição vem da usuária de teste criada pelo <em>seed</em>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/usuario-atual.ts -- PROVISÓRIO: até o Capítulo 9, toda\n// requisição age como a usuária de teste criada pelo seed.\nimport { db } from \"@/lib/db\";\n\nexport async function usuarioAtual() {\n  return db.user.findUniqueOrThrow({\n    where: { email: \"demo@taskflow.com\" },\n    select: { id: true, name: true },\n  });\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>findUniqueOrThrow</code> busca pelo e-mail, que é único, e lança um erro se não encontrar. O <code>select</code> traz só o identificador e o nome: a senha nunca precisa sair do banco aqui. As rotas vão chamar <code>usuarioAtual()</code> sem saber como ela funciona por dentro. Quando a autenticação estiver pronta, só esta função muda, e nenhuma rota precisa ser alterada. Isolar o que vai mudar atrás de uma função é uma das técnicas mais úteis de organização de código."
+  },
+  {
+   "t": "h2",
+   "id": "4-5-a-colecao-de-tarefas",
+   "texto": "4.5 A coleção de tarefas"
+  },
+  {
+   "t": "p",
+   "html": "O arquivo <code>app/api/tasks/route.ts</code> atende à coleção: listar (<code>GET</code>) e criar (<code>POST</code>)."
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/api/tasks/route.ts -- a coleção de tarefas\nimport type { NextRequest } from \"next/server\";\nimport { db } from \"@/lib/db\";\nimport { TaskStatus } from \"@/app/generated/prisma/client\";\nimport { usuarioAtual } from \"@/lib/usuario-atual\";\n\n// GET /api/tasks e GET /api/tasks?status=PENDING\nexport async function GET(request: NextRequest) {\n  const usuario = await usuarioAtual();\n  const status = request.nextUrl.searchParams.get(\"status\");\n\n  if (status && !Object.hasOwn(TaskStatus, status)) {\n    return Response.json(\n      { erro: \"status deve ser PENDING, IN_PROGRESS ou DONE\" },\n      { status: 400 },\n    );\n  }\n\n  const tarefas = await db.task.findMany({\n    where: {\n      userId: usuario.id,\n      ...(status && { status: status as TaskStatus }),\n    },\n    orderBy: { createdAt: \"desc\" },\n  });\n\n  return Response.json({ data: tarefas });\n}"
+  },
+  {
+   "t": "p",
+   "html": "O Prisma gera, para cada <code>enum</code> do esquema, um objeto com os valores permitidos: <code>TaskStatus</code> é <code>{ PENDING: \"PENDING\", IN_PROGRESS: ..., DONE: ... }</code>. O <code>Object.hasOwn(TaskStatus, status)</code> confere se o texto recebido é uma dessas chaves. Repare que não foi usado <code>status in TaskStatus</code>: o operador <code>in</code> também enxerga as propriedades herdadas de todo objeto, e <code>?status=toString</code> passaria pela verificação e quebraria a consulta."
+  },
+  {
+   "t": "p",
+   "html": "O filtro usa uma construção comum em JavaScript: <code>...(status &amp;&amp; { status })</code>. Se <code>status</code> for <code>null</code>, a expressão vale <code>null</code>, e espalhar <code>null</code> em um objeto não acrescenta nada; se houver um valor, o campo <code>status</code> entra no <code>where</code>. O <code>as TaskStatus</code> diz ao TypeScript que o texto já foi conferido. Por fim, <code>orderBy</code> lista as tarefas mais recentes primeiro, e o resultado vai dentro de <code>data</code>, o envelope combinado no Capítulo 2. A criação fica no mesmo arquivo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// POST /api/tasks  -- corpo: {\"title\": \"...\"}\nexport async function POST(request: NextRequest) {\n  const usuario = await usuarioAtual();\n  const corpo = await request.json().catch(() => null);\n\n  if (typeof corpo?.title !== \"string\" || !corpo.title.trim()) {\n    return Response.json(\n      { erro: \"O título é obrigatório.\" },\n      { status: 400 },\n    );\n  }\n\n  const tarefa = await db.task.create({\n    data: { title: corpo.title.trim(), userId: usuario.id },\n  });\n\n  return Response.json(tarefa, {\n    status: 201,\n    headers: { Location: `/api/tasks/${tarefa.id}` },\n  });\n}"
+  },
+  {
+   "t": "p",
+   "html": "Se o corpo não for um JSON válido, <code>request.json()</code> lança um erro, e a API responderia <code>500</code>, como se a falha fosse do servidor. O <code>.catch(() =&gt; null)</code> transforma esse caso em <code>null</code>, que cai na verificação seguinte e recebe um <code>400</code>, o código certo para um erro do cliente. O <code>corpo?.title</code> usa o <strong>encadeamento opcional</strong>: se <code>corpo</code> for <code>null</code>, o resultado é <code>undefined</code> em vez de um erro. A verificação aceita só um texto que não fique vazio depois do <code>trim</code>, que tira os espaços das pontas."
+  },
+  {
+   "t": "p",
+   "html": "Esta verificação “à mão” cobre só o título. Conferir todos os campos (prioridade, data, tamanho do texto) desse jeito seria longo e fácil de errar; o Capítulo 6 substitui tudo por um esquema do Zod, e o Capítulo 7 completa a criação com os demais campos."
+  },
+  {
+   "t": "h2",
+   "id": "4-6-segmentos-dinamicos-uma-tarefa",
+   "texto": "4.6 Segmentos dinâmicos: uma tarefa"
+  },
+  {
+   "t": "p",
+   "html": "Para atender <code>/api/tasks/42</code>, <code>/api/tasks/abc</code> e qualquer outro identificador, o nome da pasta vai entre colchetes: <code>app/api/tasks/[id]/</code>. É um <strong>segmento dinâmico</strong>, e o valor que veio na URL chega à função no segundo parâmetro, o <strong>contexto</strong>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/api/tasks/[id]/route.ts -- uma tarefa\nimport type { NextRequest } from \"next/server\";\nimport { db } from \"@/lib/db\";\nimport { usuarioAtual } from \"@/lib/usuario-atual\";\n\n// GET /api/tasks/:id\nexport async function GET(\n  request: NextRequest,\n  contexto: RouteContext<\"/api/tasks/[id]\">,\n) {\n  const { id } = await contexto.params;\n  const usuario = await usuarioAtual();\n\n  const tarefa = await db.task.findFirst({\n    where: { id, userId: usuario.id },\n  });\n\n  if (!tarefa) {\n    return Response.json(\n      { erro: \"Tarefa não encontrada.\" },\n      { status: 404 },\n    );\n  }\n  return Response.json(tarefa);\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>RouteContext&lt;\"/api/tasks/[id]\"&gt;</code> é um tipo que o próprio Next.js gera a partir das pastas do projeto, ao rodar <code>npm run dev</code> ou <code>npm run build</code>: ele sabe que essa rota tem um parâmetro <code>id</code>. Os parâmetros chegam como uma <em>Promise</em>, por isso o <code>await contexto.params</code>; até a versão 14 do Next.js, eles eram um objeto comum, e você vai encontrar exemplos antigos sem o <code>await</code>."
+  },
+  {
+   "t": "p",
+   "html": "A consulta é a parte mais importante. Buscar só pelo <code>id</code>, com <code>findUnique({ where: { id } })</code>, devolveria a tarefa de qualquer pessoa que soubesse o identificador. O <code>findFirst</code> com <code>id</code> <strong>e</strong> <code>userId</code> só encontra a tarefa se ela pertencer a quem pediu. Se for de outra pessoa, o resultado é o mesmo de uma tarefa que não existe: <code>404</code>. Como combinado no Capítulo 2, isso não revela a existência de tarefas alheias. A exclusão segue a mesma regra:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// DELETE /api/tasks/:id\nexport async function DELETE(\n  request: NextRequest,\n  contexto: RouteContext<\"/api/tasks/[id]\">,\n) {\n  const { id } = await contexto.params;\n  const usuario = await usuarioAtual();\n\n  const { count } = await db.task.deleteMany({\n    where: { id, userId: usuario.id },\n  });\n\n  if (count === 0) {\n    return Response.json(\n      { erro: \"Tarefa não encontrada.\" },\n      { status: 404 },\n    );\n  }\n  return new Response(null, { status: 204 });\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>deleteMany</code> aceita qualquer filtro e devolve quantos registros apagou. Com o filtro por <code>id</code> e dono, o resultado é 1 (apagou) ou 0 (não havia tarefa daquele dono com aquele <code>id</code>). Fazer tudo em uma única consulta evita buscar primeiro e apagar depois. O parâmetro <code>request</code> não é usado em nenhuma das duas funções, mas precisa estar lá, porque o contexto é sempre o segundo parâmetro. A edição (<code>PATCH</code>) entra no Capítulo 7, junto com a validação de todos os campos."
+  },
+  {
+   "t": "h2",
+   "id": "4-7-o-que-o-next-js-faz-sozinho",
+   "texto": "4.7 O que o Next.js faz sozinho"
+  },
+  {
+   "t": "p",
+   "html": "Com os dois arquivos prontos, alguns comportamentos aparecem sem nenhuma linha de código a mais. Estes resultados foram obtidos com o servidor rodando:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Requisição",
+    "Resposta"
+   ],
+   "linhas": [
+    [
+     "<code>HEAD /api/tasks</code>",
+     "<code>200</code>, só com os cabeçalhos: o Next.js usa a função <code>GET</code>"
+    ],
+    [
+     "<code>OPTIONS /api/tasks</code>",
+     "<code>204</code> com o cabeçalho <code>allow: GET, HEAD, OPTIONS, POST</code>"
+    ],
+    [
+     "<code>PATCH /api/tasks/42</code>",
+     "<code>405 Method Not Allowed</code>: o arquivo não exporta <code>PATCH</code>"
+    ],
+    [
+     "<code>GET /api/tarefas</code>",
+     "<code>404</code>: não há pasta com esse nome"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Ou seja: o <code>405</code> aparece quando a URL existe mas o método não, e o <code>404</code>, quando nem a URL existe, exatamente como manda o HTTP."
+  },
+  {
+   "t": "h2",
+   "id": "4-8-outras-convencoes-de-pastas",
+   "texto": "4.8 Outras convenções de pastas"
+  },
+  {
+   "t": "p",
+   "html": "Além do segmento dinâmico, o App Router tem outras convenções de nome de pasta que aparecem em APIs maiores:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Pasta",
+    "Efeito"
+   ],
+   "linhas": [
+    [
+     "<code>[id]</code>",
+     "um segmento variável: <code>/tasks/42</code>"
+    ],
+    [
+     "<code>[...caminho]</code>",
+     "um ou mais segmentos: <code>/arquivos/a/b/c</code>; o parâmetro vira a lista <code>[\"a\", \"b\", \"c\"]</code>"
+    ],
+    [
+     "<code>[[...caminho]]</code>",
+     "como o anterior, mas também atende à URL sem nenhum segmento: <code>/arquivos</code>"
+    ],
+    [
+     "<code>(grupo)</code>",
+     "organiza as pastas sem entrar na URL: <code>app/(admin)/api/users</code> atende <code>/api/users</code>"
+    ],
+    [
+     "<code>_privada</code>",
+     "ignorada pelo roteamento; serve para guardar arquivos auxiliares ao lado das rotas"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Quando uma URL combina com mais de uma pasta, vence a mais específica: com <code>app/api/tasks/[id]</code> e <code>app/api/tasks/resumo</code>, a URL <code>/api/tasks/resumo</code> vai para a pasta <code>resumo</code>, e não para o <code>[id]</code>."
+  },
+  {
+   "t": "h2",
+   "id": "4-9-testando-as-rotas",
+   "texto": "4.9 Testando as rotas"
+  },
+  {
+   "t": "p",
+   "html": "O navegador só faz <code>GET</code> pela barra de endereços. Para os outros métodos, há três caminhos comuns. O primeiro é o <code>curl</code>, no terminal:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ curl http://localhost:3000/api/tasks?status=DONE\n$ curl -i -X POST http://localhost:3000/api/tasks \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\"title\": \"Testar as rotas\"}'\n$ curl -i -X DELETE http://localhost:3000/api/tasks/cm3x9k2a0001"
+  },
+  {
+   "t": "p",
+   "html": "A opção <code>-X</code> escolhe o método, <code>-H</code> acrescenta um cabeçalho e <code>-d</code> envia o corpo. A barra invertida no fim da linha continua o comando na linha seguinte; ela funciona no terminal Git Bash, no macOS e no Linux. No PowerShell, as aspas dentro do JSON exigem cuidados extras, por isso, no Windows, prefira o segundo caminho."
+  },
+  {
+   "t": "p",
+   "html": "O segundo é a extensão <strong>REST Client</strong>, do VS Code. Crie um arquivo com a extensão <code>.http</code>, escreva as requisições separadas por <code>###</code> e clique em <em>Send Request</em> acima de cada uma:"
+  },
+  {
+   "t": "codigo",
+   "texto": "### Listar as tarefas pendentes\nGET http://localhost:3000/api/tasks?status=PENDING\n\n### Criar uma tarefa\nPOST http://localhost:3000/api/tasks\nContent-Type: application/json\n\n{\"title\": \"Testar as rotas\"}\n\n### Criar sem título (espera 400)\nPOST http://localhost:3000/api/tasks\nContent-Type: application/json\n\n{}"
+  },
+  {
+   "t": "p",
+   "html": "O arquivo fica no projeto e documenta os testes: qualquer pessoa da equipe consegue repeti-los. O terceiro caminho são programas com interface gráfica, como o <strong>Postman</strong>, assunto do Capítulo 10. Seja qual for a ferramenta, teste sempre os casos de erro, e não só o caminho feliz: título vazio, JSON quebrado, <code>status</code> inválido, identificador inexistente e exclusão repetida."
+  },
+  {
+   "t": "h2",
+   "id": "4-10-como-esta-o-projeto",
+   "texto": "4.10 Como está o projeto"
+  },
+  {
+   "t": "codigo",
+   "texto": "app/\n  api/\n    health/route.ts     GET\n    tasks/\n      route.ts          GET (com ?status), POST\n      [id]/route.ts     GET, DELETE\nlib/\n  db.ts\n  usuario-atual.ts      provisório, até o Capítulo 9\ntestes.http             requisições para o REST Client"
+  },
+  {
+   "t": "p",
+   "html": "Repare que as respostas ainda trazem todos os campos da tarefa, inclusive o <code>userId</code>, que não interessa ao cliente, e que cada rota escreve a sua própria mensagem de erro. O Capítulo 5 cuida do formato dos dados que entram e saem, e o Capítulo 8 padroniza os erros."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Nome da função em minúsculas.</strong> <code>export async function get()</code> não é reconhecido, e a rota responde <code>405</code>. O nome é o do método, em maiúsculas.",
+    "<strong><code>route.ts</code> e <code>page.tsx</code> na mesma pasta.</strong> O Next.js acusa conflito. Rotas de API ficam em pastas próprias, como <code>app/api/</code>.",
+    "<strong>Esquecer o <code>await</code> em <code>contexto.params</code>.</strong> Os parâmetros são uma <em>Promise</em>; sem o <code>await</code>, <code>id</code> fica <code>undefined</code>.",
+    "<strong>Buscar só pelo <code>id</code>.</strong> Sem o <code>userId</code> no filtro, qualquer pessoa lê ou apaga a tarefa de outra. Essa falha é tão comum que lidera a lista de riscos de APIs da OWASP, estudada no Capítulo 12.",
+    "<strong>Deixar o JSON inválido virar 500.</strong> Trate o erro de <code>request.json()</code> e responda <code>400</code>.",
+    "<strong>Tratar a <em>query string</em> como número.</strong> <code>searchParams.get(\"page\")</code> devolve o texto <code>\"2\"</code>; converta com <code>Number()</code> e confira o resultado.",
+    "<strong>Mandar corpo com o status 204.</strong> O 204 significa “sem conteúdo”; use <code>new Response(null, { status: 204 })</code>.",
+    "<strong>Esquecer o <code>return</code>.</strong> Se a função monta a resposta de erro mas não a devolve, o código continua e executa a consulta mesmo assim."
+   ]
+  }
+ ]
+}

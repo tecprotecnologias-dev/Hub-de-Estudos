@@ -798,4 +798,13 @@ export const apostilas: Apostila[] = [
     descricao:
       'O projeto Next.js só de API, o PostgreSQL na nuvem com o NeonDB, o Prisma 7 (esquema, migrações e cliente), dados de teste com seed, o Prisma Studio e a primeira rota.',
   },
+  {
+    id: 'web3-cap4',
+    capitulo: 4,
+    titulo: 'Roteamento e endpoints',
+    disciplinaId: 'programacao-e-design-para-web-iii',
+    unidades: ['Roteamento e Endpoints'],
+    descricao:
+      'Route Handlers do Next.js, como ler parâmetros, cabeçalhos e corpo, montar respostas, segmentos dinâmicos, o que o Next.js faz sozinho (HEAD, OPTIONS, 405) e como testar com curl e REST Client.',
+  },
 ]
