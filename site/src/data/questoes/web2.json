@@ -1139,5 +1139,1119 @@
         "texto": "mini-loja/\n  node_modules/\n  public/\n    produtos.json\n  app/\n    components/\n      Navbar.js\n      Container.js\n      ProdutoCard.js\n    sobre/\n      page.js\n    produtos/\n      page.js\n      [id]/\n        page.js\n    layout.js\n    page.js\n    globals.css\n  gerar-produtos.js\n  package.json\n  next.config.js"
       }
     ]
+  },
+  {
+    "id": "web2-cap1-o1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em uma reunião de planejamento, uma equipe de desenvolvimento discute se deve instalar o Node.js nas máquinas, já que o projeto será uma aplicação web com React e não terá, a princípio, um servidor próprio."
+      }
+    ],
+    "enunciado": "Sobre o Node.js, assinale a alternativa correta.",
+    "alternativas": [
+      "É um ambiente de execução (runtime) que roda JavaScript fora do navegador, com o motor V8, e dá acesso a arquivos, rede, processos e variáveis de ambiente.",
+      "É um compilador que transforma todo o código JavaScript em um arquivo executável separado antes de rodá-lo.",
+      "É um framework de interfaces que leva o DOM e o objeto window para o servidor.",
+      "É uma linguagem de programação diferente do JavaScript, criada especificamente para servidores.",
+      "É um navegador sem interface gráfica, usado apenas para executar testes automatizados."
+    ],
+    "correta": 0,
+    "resolucao": "O Node.js é um runtime: lê e executa o arquivo .js na hora, sem gerar executável, usando o mesmo motor V8 do Chrome. Ele não tem DOM nem window; em troca, oferece APIs de sistema (fs, path, http, process.env). A linguagem continua sendo JavaScript."
+  },
+  {
+    "id": "web2-cap1-o2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Após o comando npm install -D typescript, o pacote é registrado no package.json na seção",
+    "alternativas": [
+      "devDependencies, pois é necessário apenas durante o desenvolvimento.",
+      "dependencies, pois todo pacote instalado pelo npm vai para produção.",
+      "scripts, pois o TypeScript passa a ser executado por npm run.",
+      "globalDependencies, pois a opção -D instala o pacote para todo o sistema.",
+      "peerDependencies, pois o TypeScript depende da versão do Node.js instalada."
+    ],
+    "correta": 0,
+    "resolucao": "A opção -D (ou --save-dev) grava o pacote em devDependencies: ferramentas usadas só no desenvolvimento, como TypeScript, ESLint e tipos @types. Pacotes sem -D vão para dependencies, e a instalação global usa a opção -g, que não grava nada no package.json do projeto."
+  },
+  {
+    "id": "web2-cap1-o3",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Sobre o package.json, o package-lock.json e os scripts do npm, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "O package-lock.json deve ser editado manualmente sempre que for preciso trocar a versão de uma dependência.",
+      "O package.json descreve o projeto, lista as dependências e define os scripts que podem ser executados.",
+      "O comando npm start executa o script \"start\" sem precisar da palavra run.",
+      "O comando npm run build executa o script \"build\" definido no package.json.",
+      "O package-lock.json é gerado pelo npm para garantir que todos instalem exatamente as mesmas versões."
+    ],
+    "correta": 0,
+    "resolucao": "O package-lock.json nunca deve ser editado à mão: ele é gerado automaticamente pelo npm para tornar as instalações reproduzíveis. Para trocar a versão de uma dependência, usa-se o npm (npm install pacote@versão), que atualiza os dois arquivos. As demais afirmações estão corretas."
+  },
+  {
+    "id": "web2-cap1-o4",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Considere o arquivo tasks.js a seguir."
+      },
+      {
+        "t": "codigo",
+        "texto": "const args = process.argv.slice(2);\nconsole.log(args.length, args[1]);"
+      }
+    ],
+    "enunciado": "Se o usuário executar node tasks.js add \"Estudar Node.js\", o que será exibido no terminal?",
+    "alternativas": [
+      "2 Estudar Node.js",
+      "4 Estudar Node.js",
+      "2 add",
+      "3 tasks.js",
+      "4 add"
+    ],
+    "correta": 0,
+    "resolucao": "process.argv traz, nas posições 0 e 1, o caminho do executável do Node e o caminho do script; os argumentos reais começam na posição 2. Com slice(2), args fica [\"add\", \"Estudar Node.js\"]: o tamanho é 2 e args[1] é o texto \"Estudar Node.js\"."
+  },
+  {
+    "id": "web2-cap1-o5",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma desenvolvedora está configurando as variáveis de ambiente de uma aplicação que acessa um banco de dados e consome uma API pública. Ela precisa decidir o que fica no arquivo .env e como cada variável será exposta."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. O arquivo .env deve ser enviado ao repositório Git, para que toda a equipe use as mesmas senhas e chaves.",
+      "II. Em um projeto Next.js, variáveis com o prefixo NEXT_PUBLIC_ ficam visíveis no navegador e, por isso, não devem guardar chaves secretas.",
+      "III. Em um projeto Next.js, variáveis sem o prefixo NEXT_PUBLIC_ ficam disponíveis apenas no servidor."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "II e III, apenas.",
+      "II, apenas.",
+      "III, apenas.",
+      "I e II, apenas.",
+      "I e III, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é falsa: o .env guarda segredos e deve constar do .gitignore; se for para o Git, as senhas ficam expostas. II é verdadeira: o prefixo NEXT_PUBLIC_ faz a variável ser embutida no código enviado ao navegador. III é verdadeira: sem o prefixo, a variável só é lida no servidor, o lugar certo para senhas e tokens."
+  },
+  {
+    "id": "web2-cap1-o6",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um projeto antigo em CommonJS tem o módulo e a importação abaixo, e será migrado para ES Modules."
+      },
+      {
+        "t": "codigo",
+        "texto": "// utils.js\nfunction somar(a, b) { return a + b; }\nconst PI = 3.14159;\nmodule.exports = { somar, PI };\n\n// app.js\nconst { somar, PI } = require(\"./utils\");"
+      }
+    ],
+    "enunciado": "Qual alternativa reescreve corretamente esse módulo e essa importação no formato ES Modules?",
+    "alternativas": [
+      "No utils.js: export { somar, PI }; e, no outro arquivo: import { somar, PI } from \"./utils\";",
+      "No utils.js: module.export = { somar, PI }; e, no outro arquivo: import { somar, PI } = require(\"./utils\");",
+      "No utils.js: exports.default = { somar, PI }; e, no outro arquivo: const { somar, PI } = import(\"./utils\");",
+      "No utils.js: export require { somar, PI }; e, no outro arquivo: import require(\"./utils\");",
+      "No utils.js: module.exports = { somar, PI }; e, no outro arquivo: import * from \"./utils\";"
+    ],
+    "correta": 0,
+    "resolucao": "Em ES Modules, a exportação nomeada usa export (export { somar, PI } ou export antes de cada declaração) e a importação usa import { ... } from \"...\". require e module.exports pertencem ao CommonJS, e import * exige um nome (import * as Utils from ...)."
+  },
+  {
+    "id": "web2-cap1-o7",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Em um arquivo escrito como ES Module, usar diretamente a variável __dirname provoca erro.",
+      "PORQUE",
+      "II. Em ES Modules, __dirname não é criada automaticamente; o equivalente é obtido a partir de import.meta.url, com fileURLToPath e dirname."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas asserções são verdadeiras, e a II explica a I: __dirname e __filename só existem no CommonJS. Em ES Modules, obtém-se o mesmo valor com const __dirname = dirname(fileURLToPath(import.meta.url))."
+  },
+  {
+    "id": "web2-cap1-o8",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Considere o servidor HTTP abaixo, feito apenas com os módulos nativos do Node.js."
+      },
+      {
+        "t": "codigo",
+        "texto": "const MIME = {\n  \".html\": \"text/html\",\n  \".css\": \"text/css\",\n  \".js\": \"application/javascript\",\n  \".png\": \"image/png\",\n};\n\nconst server = createServer(async (req, res) => {\n  const url = req.url === \"/\" ? \"/index.html\" : req.url;\n  const filePath = join(process.cwd(), \"public\", url);\n  try {\n    const content = await readFile(filePath);\n    const mime = MIME[extname(filePath)] || \"application/octet-stream\";\n    res.writeHead(200, { \"Content-Type\": mime });\n    res.end(content);\n  } catch {\n    res.writeHead(404, { \"Content-Type\": \"text/plain\" });\n    res.end(\"404 -- Arquivo nao encontrado\");\n  }\n});"
+      }
+    ],
+    "enunciado": "Existe o arquivo public/logo.svg. Ao receber uma requisição GET para /logo.svg, o servidor responde com",
+    "alternativas": [
+      "status 200 e Content-Type application/octet-stream, porque a extensão .svg não está no objeto MIME.",
+      "status 404, porque a extensão .svg não está no objeto MIME.",
+      "status 200 e Content-Type image/svg+xml, identificado automaticamente pelo readFile.",
+      "status 200 e Content-Type text/html, porque o servidor devolve o index.html.",
+      "status 500, porque o readFile não consegue ler arquivos de imagem."
+    ],
+    "correta": 0,
+    "resolucao": "O arquivo existe, então readFile lê o conteúdo e o bloco try segue com status 200. Como MIME[\".svg\"] é undefined, o operador || usa o valor padrão \"application/octet-stream\". O 404 só acontece quando readFile lança erro (arquivo inexistente), e o index.html só é usado para a URL \"/\"."
+  },
+  {
+    "id": "web2-cap1-o9",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. O Node.js consegue atender centenas de conexões simultâneas usando uma única thread principal.",
+      "PORQUE",
+      "II. O Node.js cria uma nova thread do sistema operacional para cada requisição recebida, como fazem os servidores tradicionais."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A I é verdadeira: o Node.js usa um modelo assíncrono e não bloqueante, com o Event Loop, e atende muitas conexões com uma única thread principal. A II é falsa: criar uma thread por requisição é justamente o modelo tradicional (como o do Apache) que o Node.js evita."
+  },
+  {
+    "id": "web2-cap1-o10",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap1",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Considere este trecho de uma ferramenta de linha de comando que guarda tarefas em um arquivo JSON."
+      },
+      {
+        "t": "codigo",
+        "texto": "async function carregarTarefas() {\n  try {\n    const conteudo = await readFile(\"tarefas.json\", \"utf-8\");\n    return JSON.parse(conteudo);\n  } catch {\n    return [];\n  }\n}\n\nasync function main() {\n  const [comando, valor] = process.argv.slice(2);\n  const tarefas = await carregarTarefas();\n  if (comando === \"add\") {\n    tarefas.push({ id: tarefas.length + 1, texto: valor, feita: false });\n    await salvarTarefas(tarefas);\n  } else if (comando === \"list\") {\n    tarefas.forEach(t => console.log(`${t.id} - ${t.texto}`));\n  } else {\n    console.log(\"Uso: node tasks.js [add | list | done]\");\n  }\n}"
+      }
+    ],
+    "enunciado": "Na primeira vez que o programa é usado, ainda não existe o arquivo tarefas.json. O que acontece ao executar node tasks.js list?",
+    "alternativas": [
+      "Nada é exibido e o programa termina normalmente, sem criar o arquivo tarefas.json.",
+      "O programa é interrompido com um erro de arquivo não encontrado (ENOENT).",
+      "O programa cria um arquivo tarefas.json vazio e não exibe nada.",
+      "O programa exibe a mensagem de uso \"Uso: node tasks.js ...\".",
+      "O programa exibe \"Tarefa undefined nao encontrada.\""
+    ],
+    "correta": 0,
+    "resolucao": "O readFile lança erro porque o arquivo não existe, mas o catch de carregarTarefas devolve uma lista vazia. Com o comando \"list\", o forEach percorre uma lista vazia e não imprime nada. Só os comandos \"add\" e \"done\" chamam salvarTarefas, então o arquivo também não é criado."
+  },
+  {
+    "id": "web2-cap2-o1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Sobre o React, assinale a alternativa correta.",
+    "alternativas": [
+      "É uma biblioteca JavaScript focada em construir interfaces, sem roteamento, busca de dados ou banco de dados embutidos.",
+      "É um framework completo, com roteamento, acesso a banco de dados e servidor embutidos.",
+      "É uma linguagem que substitui o JavaScript na construção de interfaces.",
+      "É um servidor web que entrega páginas HTML prontas ao navegador.",
+      "É uma ferramenta de build, usada no lugar do Vite para empacotar o projeto."
+    ],
+    "correta": 0,
+    "resolucao": "O React é uma biblioteca escrita em JavaScript e focada em uma coisa: renderizar a interface de forma eficiente e previsível. Roteamento, renderização no servidor e rotas de API ficam a cargo de frameworks construídos sobre ele, como o Next.js."
+  },
+  {
+    "id": "web2-cap2-o2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Sobre as diferenças entre JSX e HTML, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "No JSX, o atributo class é usado normalmente para aplicar classes CSS, exatamente como no HTML.",
+      "No JSX, o atributo for do rótulo é escrito como htmlFor.",
+      "No JSX, os eventos são escritos em camelCase, como onClick.",
+      "No JSX, toda tag precisa ser fechada, como em <br />.",
+      "No JSX, valores JavaScript são inseridos entre chaves, como em {nome}."
+    ],
+    "correta": 0,
+    "resolucao": "Como class é palavra reservada do JavaScript, o JSX usa className. Pelo mesmo motivo, for vira htmlFor. As demais afirmações descrevem corretamente o JSX."
+  },
+  {
+    "id": "web2-cap2-o3",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Por que o nome de um componente React deve começar com letra maiúscula?",
+    "alternativas": [
+      "Porque é assim que o React diferencia um componente, como <Botao />, de uma tag HTML comum, como <button>.",
+      "Porque o TypeScript não compila funções com nome em letra minúscula.",
+      "Porque é apenas uma convenção de estilo, sem nenhum efeito no funcionamento.",
+      "Porque só funções com inicial maiúscula podem ser exportadas com export default.",
+      "Porque o Vite ignora os arquivos cujo nome começa com letra minúscula."
+    ],
+    "correta": 0,
+    "resolucao": "Ao encontrar <botao />, o React entende que é uma tag HTML; ao encontrar <Botao />, chama a função Botao. Por isso a inicial maiúscula não é só estilo: muda o que o React faz."
+  },
+  {
+    "id": "web2-cap2-o4",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Considere o componente abaixo."
+      },
+      {
+        "t": "codigo",
+        "texto": "function Carrinho({ quantidade }: { quantidade: number }) {\n  return (\n    <div>\n      {quantidade && <p>Itens: {quantidade}</p>}\n    </div>\n  );\n}"
+      }
+    ],
+    "enunciado": "Ao renderizar <Carrinho quantidade={0} />, o que aparece na tela?",
+    "alternativas": [
+      "O número 0.",
+      "Nada.",
+      "O texto \"Itens: 0\".",
+      "O texto \"false\".",
+      "Uma mensagem de erro do React."
+    ],
+    "correta": 0,
+    "resolucao": "O operador && devolve o primeiro valor \"falso\" que encontra. Com quantidade igual a 0, a expressão vale 0, e o React mostra números na tela, mesmo o zero (só false, null e undefined não aparecem). A forma segura é quantidade > 0 && ..."
+  },
+  {
+    "id": "web2-cap2-o5",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Considere o componente Card abaixo."
+      },
+      {
+        "t": "codigo",
+        "texto": "interface CardProps {\n  titulo: string;\n  children: React.ReactNode;\n  footer?: React.ReactNode;\n}\n\nfunction Card({ titulo, children, footer }: CardProps) {\n  return (\n    <div className=\"card\">\n      <h3>{titulo}</h3>\n      <div>{children}</div>\n      {footer && <div className=\"rodape\">{footer}</div>}\n    </div>\n  );\n}"
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. As props são somente leitura: o componente filho não deve alterar os valores que recebeu.",
+      "II. O conteúdo colocado entre as tags de abertura e de fechamento de um componente chega a ele pela prop children.",
+      "III. Na interface CardProps, o ponto de interrogação em footer?: React.ReactNode torna essa prop obrigatória."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e II, apenas.",
+      "I, apenas.",
+      "II, apenas.",
+      "I e III, apenas.",
+      "II e III, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I e II são verdadeiras. III é falsa: o ? torna a prop opcional; o componente funciona com ou sem ela. Se um valor precisa mudar com o tempo, ele deve ser estado (useState), e não uma prop alterada pelo filho."
+  },
+  {
+    "id": "web2-cap2-o6",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Em uma lista que pode ser reordenada, filtrada ou ter itens removidos, recomenda-se usar como key um identificador estável, como o id vindo do banco de dados, e não o índice do array.",
+      "PORQUE",
+      "II. A key ajuda o React a identificar qual item mudou, foi adicionado ou foi removido durante a reconciliação."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II justifica a I. Se a key for o índice, ao remover ou reordenar itens os índices mudam, e o React passa a confundir um item com outro. Um id estável mantém cada item reconhecível entre as renderizações."
+  },
+  {
+    "id": "web2-cap2-o7",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Qual trecho JSX exibe corretamente \"Maior de idade\" ou \"Menor de idade\", conforme o valor de idade?",
+    "alternativas": [
+      "<p>{idade >= 18 ? \"Maior de idade\" : \"Menor de idade\"}</p>",
+      "<p>{if (idade >= 18) \"Maior de idade\" else \"Menor de idade\"}</p>",
+      "<p>{switch (idade >= 18) { case true: \"Maior de idade\" }}</p>",
+      "<p>if (idade >= 18) {\"Maior de idade\"} else {\"Menor de idade\"}</p>",
+      "<p>{for (idade >= 18) \"Maior de idade\"}</p>"
+    ],
+    "correta": 0,
+    "resolucao": "Dentro das chaves do JSX só cabem expressões, ou seja, algo que produz um valor. if, switch e for são comandos e não podem ficar ali. O operador ternário é uma expressão; por isso é a forma usada no JSX. Fora das chaves, o texto \"if (...)\" seria exibido literalmente."
+  },
+  {
+    "id": "web2-cap2-o8",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "enunciado": "Sobre a forma como o React atualiza a tela quando os dados mudam, assinale a alternativa correta.",
+    "alternativas": [
+      "O React gera uma nova árvore no Virtual DOM, compara-a com a anterior (reconciliação) e altera no DOM real apenas os nós que mudaram.",
+      "O React apaga e recria todo o DOM real a cada mudança, o que garante que a tela fique sempre correta.",
+      "O Virtual DOM é uma cópia da página guardada no servidor, que envia o HTML atualizado a cada mudança.",
+      "O React altera o DOM real diretamente, sem comparação, assim que uma variável comum do componente muda.",
+      "A reconciliação é a junção do código de vários componentes em um único arquivo durante o build."
+    ],
+    "correta": 0,
+    "resolucao": "O Virtual DOM é uma cópia leve da árvore de elementos, mantida em memória no navegador. Quando o estado muda, o React monta a nova árvore, compara-a com a anterior e aplica no DOM real só as diferenças. Mudar uma variável comum não avisa o React de nada."
+  },
+  {
+    "id": "web2-cap2-o9",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Considere a definição do componente Botao, escrito em TypeScript."
+      },
+      {
+        "t": "codigo",
+        "texto": "interface BotaoProps {\n  texto: string;\n  variante: \"primary\" | \"secondary\" | \"danger\";\n}\n\nfunction Botao({ texto, variante }: BotaoProps) {\n  return <button className={`btn btn-${variante}`}>{texto}</button>;\n}"
+      }
+    ],
+    "enunciado": "Ao escrever <Botao texto=\"Ok\" variante=\"azul\" />, o que acontece?",
+    "alternativas": [
+      "O TypeScript aponta um erro antes da execução, porque \"azul\" não faz parte dos valores aceitos por variante.",
+      "O botão é exibido com o estilo padrão, porque valores desconhecidos são ignorados.",
+      "O erro só aparece no navegador, quando o usuário clicar no botão.",
+      "O TypeScript converte \"azul\" para \"primary\", o primeiro valor da lista.",
+      "O código é aceito, porque \"azul\" é uma string, e variante espera uma string."
+    ],
+    "correta": 0,
+    "resolucao": "O tipo \"primary\" | \"secondary\" | \"danger\" é uma união de valores literais: só essas três strings são aceitas. O TypeScript verifica isso no editor e na compilação, antes de o código rodar, e não converte valores automaticamente."
+  },
+  {
+    "id": "web2-cap2-o10",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um projeto foi criado com o comando a seguir."
+      },
+      {
+        "t": "codigo",
+        "texto": "$ npm create vite@latest meu-app -- --template react-ts"
+      }
+    ],
+    "caso": [
+      "Sobre a estrutura do projeto criado, avalie as afirmativas a seguir.",
+      "I. O arquivo src/main.tsx é o ponto de entrada: ele monta o React na página.",
+      "II. O arquivo index.html é a página HTML na qual o React é injetado.",
+      "III. O template react-ts configura o projeto com TypeScript desde o início."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e III.",
+      "I, apenas.",
+      "II, apenas.",
+      "III, apenas.",
+      "I e II, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "As três estão corretas. O index.html é a página que o navegador abre; o main.tsx é o ponto de entrada que monta o componente App dentro dela; e o template react-ts já traz o TypeScript configurado, permitindo tipar props e funções."
+  },
+  {
+    "id": "web2-cap3-o1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Qual alternativa diferencia corretamente props e estado em um componente React?",
+    "alternativas": [
+      "Props vêm do componente pai e são somente leitura; estado é um valor guardado e controlado pelo próprio componente, que pode mudar.",
+      "Props são criadas com useState; estado é recebido do componente pai.",
+      "Props e estado são a mesma coisa, com nomes diferentes conforme a versão do React.",
+      "Estado é somente leitura; props podem ser alteradas livremente pelo componente filho.",
+      "Props só existem em componentes de classe; estado só existe em componentes de função."
+    ],
+    "correta": 0,
+    "resolucao": "Props são como uma carta recebida pronta: vêm de fora e o filho não as altera. Estado é como um caderno de anotações: vive dentro do componente, só ele muda, e a mudança faz a tela ser redesenhada."
+  },
+  {
+    "id": "web2-cap3-o2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "O que a chamada useState(0) devolve?",
+    "alternativas": [
+      "Um array com dois itens: o valor atual do estado e a função que o atualiza.",
+      "Apenas o valor inicial do estado, o número 0.",
+      "Um objeto com as propriedades value e set.",
+      "Uma Promise, que é resolvida quando o estado muda.",
+      "Uma função que reinicia o componente com o valor 0."
+    ],
+    "correta": 0,
+    "resolucao": "useState recebe o valor inicial e devolve [valor, função]. Por isso se escreve const [contagem, setContagem] = useState(0): contagem é o valor atual, e setContagem atualiza o estado e manda o React redesenhar a tela."
+  },
+  {
+    "id": "web2-cap3-o3",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Sobre Hooks e estado no React, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "Alterar diretamente a variável de estado, como em contagem = contagem + 1, faz o React redesenhar o componente.",
+      "Todo Hook do React começa com o prefixo use.",
+      "Chamar a função setter faz o React executar a função do componente de novo, com o novo valor.",
+      "O useEffect é usado para efeitos colaterais, como mudar o título da aba do navegador.",
+      "Um useEffect com o array de dependências vazio roda uma vez, quando o componente aparece na tela."
+    ],
+    "correta": 0,
+    "resolucao": "Mudar a variável diretamente não avisa o React de nada, e a tela não muda. Só a função setter (setContagem, setNome...) dispara uma nova renderização. As demais afirmações estão corretas."
+  },
+  {
+    "id": "web2-cap3-o4",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Considere o trecho de um formulário controlado."
+      },
+      {
+        "t": "codigo",
+        "texto": "const [dados, setDados] = useState({\n  nome: \"Ana\",\n  email: \"ana@x.com\",\n  mensagem: \"\",\n});\n\nfunction atualizarCampo(campo, valor) {\n  setDados({ [campo]: valor });\n}"
+      }
+    ],
+    "enunciado": "Com o estado inicial abaixo, qual é o valor de dados depois de atualizarCampo(\"email\", \"novo@x.com\")?",
+    "alternativas": [
+      "{ email: \"novo@x.com\" }",
+      "{ nome: \"Ana\", email: \"novo@x.com\", mensagem: \"\" }",
+      "{ nome: \"Ana\", email: \"ana@x.com\", mensagem: \"\" }",
+      "{ nome: \"Ana\", email: \"novo@x.com\" }",
+      "O React lança um erro, porque a propriedade nome deixou de existir."
+    ],
+    "correta": 0,
+    "resolucao": "O setter substitui o estado inteiro pelo objeto recebido; o React não mistura objetos automaticamente. Como falta o spread, nome e mensagem se perdem. O certo é setDados({ ...dados, [campo]: valor }), que copia os campos e troca só o que mudou."
+  },
+  {
+    "id": "web2-cap3-o5",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Considere o componente abaixo."
+      },
+      {
+        "t": "codigo",
+        "texto": "function Contador() {\n  const [contagem, setContagem] = useState(0);\n\n  function somarTres() {\n    setContagem(contagem + 1);\n    setContagem(contagem + 1);\n    setContagem(contagem + 1);\n  }\n\n  return <button onClick={somarTres}>{contagem}</button>;\n}"
+      }
+    ],
+    "enunciado": "O estado contagem começa em 0. Depois de um clique no botão, qual valor aparece na tela?",
+    "alternativas": [
+      "1",
+      "3",
+      "0",
+      "2",
+      "O React lança um erro por chamar o setter três vezes seguidas."
+    ],
+    "correta": 0,
+    "resolucao": "As três chamadas usam o mesmo valor de contagem daquela renderização (0), então cada uma pede setContagem(0 + 1). O resultado é 1. Para somar 3, é preciso a forma com função: setContagem((valorAtual) => valorAtual + 1), que recebe sempre o valor mais atualizado."
+  },
+  {
+    "id": "web2-cap3-o6",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "enunciado": "Um componente precisa buscar a lista de produtos de uma API apenas uma vez, quando aparece na tela pela primeira vez. Qual é a forma adequada?",
+    "alternativas": [
+      "useEffect(() => { buscarProdutos(); }, []);",
+      "useEffect(() => { buscarProdutos(); });",
+      "useEffect(() => { buscarProdutos(); }, [produtos]); com setProdutos chamado dentro de buscarProdutos.",
+      "Chamar buscarProdutos() diretamente no corpo do componente, antes do return.",
+      "const [produtos] = useState(buscarProdutos);"
+    ],
+    "correta": 0,
+    "resolucao": "O array de dependências vazio faz o efeito rodar só uma vez, quando o componente aparece. Sem array, o efeito roda depois de toda renderização. Com [produtos] e a atualização de produtos dentro do efeito, ele dispara de novo a cada busca, em repetição sem fim. Chamar a busca no corpo do componente a repete em toda renderização."
+  },
+  {
+    "id": "web2-cap3-o7",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Em um input controlado, o valor exibido no campo vem do estado do React, ligado à propriedade value.",
+      "PORQUE",
+      "II. A cada digitação, o evento onChange atualiza o estado com e.target.value, e o React redesenha o campo com o novo valor."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II explica a I. É o ciclo do formulário controlado: o estado define o value, a digitação dispara o onChange, o onChange atualiza o estado, e o novo estado volta ao value. Assim, quem manda no conteúdo do campo é sempre o React."
+  },
+  {
+    "id": "web2-cap3-o8",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "function Lista() {\n  const [itens, setItens] = useState<string[]>([]);\n\n  useEffect(() => {\n    setItens([...itens, \"novo item\"]);\n  }, [itens]);\n\n  return <p>{itens.length} itens</p>;\n}"
+      }
+    ],
+    "enunciado": "O que acontece quando o componente abaixo aparece na tela?",
+    "alternativas": [
+      "O efeito entra em repetição sem fim: ele altera itens, que está no array de dependências, e isso dispara o efeito de novo.",
+      "O efeito roda uma única vez e itens fica com um elemento.",
+      "O efeito roda duas vezes e para, porque o React limita as repetições.",
+      "O React lança um erro, porque não é permitido chamar o setter dentro de um useEffect.",
+      "Nada acontece, porque itens começa vazio e o efeito não é executado."
+    ],
+    "correta": 0,
+    "resolucao": "Na primeira renderização o efeito roda e cria um novo array. Como itens mudou e está no array de dependências, o efeito roda de novo, muda itens de novo, e assim por diante. Chamar o setter dentro de um efeito é permitido; o problema é a dependência alterada pelo próprio efeito."
+  },
+  {
+    "id": "web2-cap3-o9",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "caso": [
+      "Sobre os Hooks useEffect e useState, avalie as afirmativas a seguir.",
+      "I. Um useEffect sem o array de dependências roda apenas uma vez, quando o componente aparece na tela.",
+      "II. Um useEffect com o array [contagem] roda quando o componente aparece e, depois, toda vez que contagem mudar.",
+      "III. Quando o novo valor depende do anterior, setContagem((valorAtual) => valorAtual + 1) é mais seguro do que setContagem(contagem + 1)."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "II e III, apenas.",
+      "II, apenas.",
+      "III, apenas.",
+      "I e II, apenas.",
+      "I e III, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é falsa: sem array, o efeito roda depois de TODA renderização; quem roda uma vez só é o efeito com array vazio []. II é verdadeira: o efeito roda na primeira vez e sempre que uma dependência muda. III é verdadeira: a forma com função recebe o valor mais atualizado, mesmo com várias chamadas seguidas."
+  },
+  {
+    "id": "web2-cap3-o10",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Um Hook como useState pode ser chamado dentro de um if, desde que a condição seja verdadeira na primeira renderização.",
+      "PORQUE",
+      "II. O React identifica cada Hook pela ordem em que ele é chamado em cada renderização do componente."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A I é falsa: Hooks devem ser chamados sempre no nível mais alto do componente, nunca dentro de if, laços ou funções internas. A II é verdadeira e é justamente o motivo da regra: se a condição mudar, a ordem das chamadas muda, e o React associa o estado ao Hook errado."
+  },
+  {
+    "id": "web2-cap4-o1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Qual alternativa descreve corretamente a relação entre Next.js e React?",
+    "alternativas": [
+      "O Next.js é um framework construído sobre o React que acrescenta roteamento por arquivos, renderização no servidor e rotas de API.",
+      "O Next.js substitui o React; componentes, props e Hooks deixam de ser usados.",
+      "O Next.js é uma biblioteca de gerenciamento de estado que substitui o useState.",
+      "O Next.js é um banco de dados para aplicações React.",
+      "O Next.js é a versão antiga do React, anterior aos Hooks."
+    ],
+    "correta": 0,
+    "resolucao": "Tudo o que se aprende de React continua valendo no Next.js. Ele acrescenta o que o React sozinho não tem: estrutura de projeto, roteamento baseado em pastas, renderização no servidor, API Routes e otimização de imagens, fontes e SEO."
+  },
+  {
+    "id": "web2-cap4-o2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Em um projeto com App Router, o arquivo app/sobre/page.tsx corresponde a qual endereço?",
+    "alternativas": [
+      "/sobre",
+      "/app/sobre",
+      "/sobre/page",
+      "/page/sobre",
+      "Nenhum, até que a rota seja registrada em um arquivo de configuração."
+    ],
+    "correta": 0,
+    "resolucao": "No App Router, cada pasta dentro de app/ vira um trecho da URL, e o arquivo page.tsx é o que aparece naquela rota. A pasta app não entra no endereço, o nome page também não, e não existe arquivo de configuração de rotas."
+  },
+  {
+    "id": "web2-cap4-o3",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Sobre o App Router e o Pages Router do Next.js, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "No App Router, os componentes são Client Components por padrão, como no Pages Router.",
+      "O App Router usa a pasta app/ e é o padrão dos projetos novos desde a versão 13.",
+      "O App Router permite layouts aninhados, com um layout.tsx em cada pasta de rota.",
+      "O Pages Router usa a pasta pages/ e um layout único definido em _app.js.",
+      "No Pages Router, os componentes são Client Components por padrão."
+    ],
+    "correta": 0,
+    "resolucao": "No App Router, todo componente dentro de app/ é Server Component por padrão; só vira Client Component com a diretiva \"use client\". O padrão Client é característica do Pages Router. As demais afirmações estão corretas."
+  },
+  {
+    "id": "web2-cap4-o4",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Ao criar a página de projetos do portfólio, um estudante criou por engano a pasta projetos dentro da pasta blog, ficando com o arquivo app/blog/projetos/page.tsx."
+      }
+    ],
+    "enunciado": "Qual endereço passa a exibir essa página?",
+    "alternativas": [
+      "/blog/projetos",
+      "/projetos",
+      "/blog",
+      "Os dois endereços, /projetos e /blog/projetos.",
+      "Nenhum: o Next.js mostra um erro de rota duplicada."
+    ],
+    "correta": 0,
+    "resolucao": "A estrutura de pastas define a URL: como projetos/ ficou dentro de blog/, o endereço vira /blog/projetos. Para ter /projetos, a pasta precisa ficar diretamente dentro de app/, ao lado de blog/."
+  },
+  {
+    "id": "web2-cap4-o5",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma desenvolvedora criou a pasta app/contato/ e, dentro dela, o arquivo index.tsx com o conteúdo da página de contato."
+      }
+    ],
+    "enunciado": "O que acontece ao acessar o endereço /contato?",
+    "alternativas": [
+      "A rota não é reconhecida, porque o App Router só transforma em página o arquivo chamado page (page.tsx, page.jsx ou page.js).",
+      "A página é exibida normalmente, porque index.tsx é o nome padrão de página em qualquer ferramenta.",
+      "O Next.js renomeia automaticamente o arquivo para page.tsx na primeira execução.",
+      "A página só é exibida depois de registrada em um arquivo de rotas.",
+      "A página funciona apenas no servidor de produção, depois do npm run build."
+    ],
+    "correta": 0,
+    "resolucao": "No App Router, só uma pasta com um arquivo chamado literalmente page vira URL. Nomes como index.tsx, comuns em outras ferramentas, não são reconhecidos, e o endereço responde com a página de erro 404."
+  },
+  {
+    "id": "web2-cap4-o6",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Em uma aplicação Next.js, recomenda-se usar o componente Link, de next/link, em vez da tag <a> para navegar entre as páginas internas.",
+      "PORQUE",
+      "II. A tag <a> comum recarrega a página inteira a cada clique, perdendo o estado do React, enquanto o Link troca apenas o conteúdo necessário."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II justifica a I. O Link mantém a navegação instantânea, típica de uma aplicação de página única (SPA), sem recarregar a página e sem perder o estado dos componentes."
+  },
+  {
+    "id": "web2-cap4-o7",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "caso": [
+      "Sobre a estrutura de um projeto Next.js com App Router, avalie as afirmativas a seguir.",
+      "I. O layout.tsx da raiz define as tags <html> e <body> e envolve todas as páginas da aplicação.",
+      "II. Só pode existir um arquivo layout.tsx em todo o projeto: o da raiz.",
+      "III. As pastas de rota devem ficar uma dentro da outra, como app/sobre/projetos/, para gerar os endereços /sobre e /projetos."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, apenas.",
+      "I e II, apenas.",
+      "I e III, apenas.",
+      "I, II e III.",
+      "II, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira. II é falsa: cada pasta de rota pode ter o seu layout.tsx, que envolve só as páginas daquela seção (layouts aninhados). III é falsa: pastas uma dentro da outra geram endereços aninhados (app/sobre/projetos/ vira /sobre/projetos); para /sobre e /projetos, as duas pastas ficam lado a lado dentro de app/."
+  },
+  {
+    "id": "web2-cap4-o8",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em um projeto com App Router, existe o arquivo app/blog/[slug]/page.tsx."
+      }
+    ],
+    "enunciado": "Quais endereços são atendidos por essa página?",
+    "alternativas": [
+      "Endereços como /blog/primeiro-post e /blog/novidades, em que o último trecho da URL é variável.",
+      "Apenas o endereço literal /blog/[slug].",
+      "Apenas o endereço /slug.",
+      "Apenas o endereço /blog.",
+      "Qualquer endereço com vários níveis após /blog, como /blog/2025/03/post."
+    ],
+    "correta": 0,
+    "resolucao": "Uma pasta com o nome entre colchetes cria um segmento dinâmico: [slug] aceita qualquer valor naquele trecho da URL, e a página recebe esse valor. Ela atende um nível só; para vários níveis seria preciso outra convenção. O endereço /blog é atendido pelo page.tsx da pasta blog, se existir."
+  },
+  {
+    "id": "web2-cap4-o9",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "enunciado": "Comparando um projeto React criado com o Vite e um projeto Next.js com App Router, assinale a alternativa correta.",
+    "alternativas": [
+      "O projeto do Vite tem uma única página (index.html) que carrega o App.tsx; no Next.js, cada pasta com page.tsx vira um endereço próprio.",
+      "Os dois projetos criam automaticamente uma página para cada componente da pasta src/.",
+      "O projeto do Vite já tem endereços como /projetos e /contato, criados pelos nomes dos componentes.",
+      "No Next.js, todas as páginas ficam empilhadas dentro de um único App.tsx, como no Vite.",
+      "O Vite roda tudo no servidor, enquanto o Next.js roda tudo no navegador."
+    ],
+    "correta": 0,
+    "resolucao": "Um projeto React \"puro\" com Vite é uma única página que carrega um único componente; não há endereços separados. O Next.js resolve isso com o roteamento por pastas e ainda oferece renderização no servidor, o que o Vite sozinho não faz."
+  },
+  {
+    "id": "web2-cap4-o10",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um site tem a estrutura de pastas abaixo. O layout do blog acrescenta um menu lateral."
+      },
+      {
+        "t": "codigo",
+        "texto": "app/\n  layout.tsx          <- layout da raiz\n  sobre/\n    page.tsx\n  blog/\n    layout.tsx        <- menu lateral do blog\n    [slug]/\n      page.tsx"
+      }
+    ],
+    "enunciado": "Considerando o funcionamento dos layouts aninhados, assinale a alternativa correta.",
+    "alternativas": [
+      "A página /sobre é envolvida apenas pelo layout da raiz, e a página /blog/primeiro-post é envolvida pelo layout da raiz e pelo layout do blog.",
+      "O menu lateral do blog também aparece na página /sobre, porque todo layout vale para o site inteiro.",
+      "A página /blog/primeiro-post é envolvida só pelo layout do blog, que substitui o layout da raiz.",
+      "O layout do blog precisa repetir as tags <html> e <body>, senão as páginas do blog ficam sem elas.",
+      "Cada page.tsx precisa importar o layout da sua pasta para que ele seja aplicado."
+    ],
+    "correta": 0,
+    "resolucao": "Os layouts se acumulam do mais externo para o mais interno: a raiz envolve tudo, e o layout do blog envolve só o que está dentro de app/blog/. As tags <html> e <body> ficam só no layout da raiz, e o Next.js aplica os layouts sozinho, sem importação nas páginas."
+  },
+  {
+    "id": "web2-cap5-o1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "No App Router do Next.js, um componente criado dentro da pasta app/ sem nenhuma diretiva é",
+    "alternativas": [
+      "um Server Component: renderizado no servidor, envia ao navegador só o HTML, sem o JavaScript do componente.",
+      "um Client Component: renderizado no navegador, como em um projeto React com Vite.",
+      "um componente híbrido, que decide sozinho onde rodar conforme a velocidade da conexão.",
+      "um componente estático, que não pode receber props.",
+      "um componente inválido, porque toda página precisa declarar \"use server\" ou \"use client\"."
+    ],
+    "correta": 0,
+    "resolucao": "No App Router, todo componente dentro de app/ é Server Component por padrão. Ele vira HTML no servidor, e o código dele não vai para o navegador. Para rodar no navegador, o arquivo precisa da diretiva \"use client\"."
+  },
+  {
+    "id": "web2-cap5-o2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Em uma página de notícias feita com Next.js, qual componente precisa ser um Client Component?",
+    "alternativas": [
+      "Um botão de curtir que guarda com useState se a notícia foi curtida.",
+      "A página que busca as notícias com await e as lista na tela.",
+      "Um rodapé fixo com o nome do site e os links das redes sociais.",
+      "Um título que apenas exibe o texto recebido por props.",
+      "Um componente que consulta o banco de dados para contar as notícias publicadas."
+    ],
+    "correta": 0,
+    "resolucao": "Estado (useState), efeitos (useEffect) e eventos (onClick, onChange) só funcionam no navegador, em Client Components. Buscar dados e apenas exibir informação são tarefas de Server Components, o padrão."
+  },
+  {
+    "id": "web2-cap5-o3",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Sobre os Server Components do Next.js, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "Podem usar useState e useEffect diretamente, sem nenhuma diretiva.",
+      "Reduzem o JavaScript enviado ao navegador, porque o código deles não vai para o cliente.",
+      "Podem buscar dados direto de um banco de dados, sem precisar de uma API intermediária.",
+      "Deixam o carregamento mais rápido, porque o HTML já chega pronto ao navegador.",
+      "Podem ser funções assíncronas e usar await dentro do componente."
+    ],
+    "correta": 0,
+    "resolucao": "Um Server Component nunca chega a existir no navegador; ele já virou HTML antes de sair do servidor. Por isso não tem como guardar estado nem reagir a cliques: useState e useEffect exigem \"use client\". As demais afirmações são vantagens reais dos Server Components."
+  },
+  {
+    "id": "web2-cap5-o4",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Considere os dois arquivos de um projeto Next.js com App Router."
+      },
+      {
+        "t": "codigo",
+        "texto": "// components/Contador.tsx\nimport { useState } from \"react\";\n\nexport default function Contador() {\n  const [contagem, setContagem] = useState(0);\n  return (\n    <button onClick={() => setContagem(contagem + 1)}>\n      Cliquei {contagem} vezes\n    </button>\n  );\n}\n\n// app/page.tsx\nimport Contador from \"@/components/Contador\";\n\nexport default function Inicio() {\n  return <Contador />;\n}"
+      }
+    ],
+    "enunciado": "O que acontece ao abrir a página?",
+    "alternativas": [
+      "O Next.js trata Contador como Server Component e o uso do useState provoca erro; é preciso colocar \"use client\" no topo de Contador.tsx.",
+      "O contador funciona normalmente, porque todo componente importado por uma página vira Client Component.",
+      "O contador aparece, mas fica sempre em 0, sem nenhum erro.",
+      "O Next.js acrescenta \"use client\" sozinho ao perceber o useState.",
+      "Basta transformar Contador em função async para o useState funcionar."
+    ],
+    "correta": 0,
+    "resolucao": "Sem a diretiva, o componente é tratado como Server Component, e Hooks como useState só existem no navegador. A solução é a primeira linha \"use client\"; no Next.js isso não é automático, e async não resolve."
+  },
+  {
+    "id": "web2-cap5-o5",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Colocar \"use client\" no topo do page.tsx \"só para garantir\" é uma boa prática no App Router.",
+      "PORQUE",
+      "II. A diretiva \"use client\" no page.tsx transforma a página inteira em Client Component, que perde a vantagem de buscar dados direto no servidor."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A I é falsa e a II é verdadeira. A boa prática é usar \"use client\" só nos componentes que realmente precisam de interatividade, o mais \"embaixo\" possível na árvore. Na página inteira, ela manda mais JavaScript ao navegador e perde o acesso direto aos dados no servidor."
+  },
+  {
+    "id": "web2-cap5-o6",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "caso": [
+      "Sobre a combinação de Server Components e Client Components, avalie as afirmativas a seguir.",
+      "I. Um Server Component pode importar e renderizar um Client Component.",
+      "II. Um Client Component pode importar diretamente um Server Component.",
+      "III. Para que um Client Component exiba conteúdo gerado no servidor, esse conteúdo pode ser passado a ele pela prop children."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e III, apenas.",
+      "I, apenas.",
+      "III, apenas.",
+      "I e II, apenas.",
+      "II e III, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: é o padrão mais comum, com a página (Server) buscando os dados e renderizando componentes interativos (Client). II é falsa: o caminho inverso não é permitido diretamente. III é verdadeira: passar o conteúdo por children (props) é a forma de contornar essa restrição."
+  },
+  {
+    "id": "web2-cap5-o7",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "// app/projetos/page.tsx\nexport default async function Projetos() {\n  const projetos = await buscarProjetos();\n\n  return (\n    <ul>\n      {projetos.map((p) => (\n        <li key={p.id}>{p.titulo}</li>\n      ))}\n    </ul>\n  );\n}"
+      }
+    ],
+    "enunciado": "Sobre o componente acima, assinale a alternativa correta.",
+    "alternativas": [
+      "É válido como Server Component: no servidor, o componente pode ser assíncrono e usar await diretamente.",
+      "É inválido, porque componentes React nunca podem ser funções async.",
+      "Só funciona se o arquivo tiver \"use client\" no topo, porque o await roda no navegador.",
+      "Só funciona se a busca for colocada dentro de um useEffect.",
+      "É válido apenas dentro de API Routes, e não em arquivos page.tsx."
+    ],
+    "correta": 0,
+    "resolucao": "A possibilidade de ser async é exclusiva dos Server Components: o componente espera os dados no servidor e devolve o HTML já pronto. Em componentes que rodam no navegador (os dos módulos de React e os Client Components), isso não é permitido."
+  },
+  {
+    "id": "web2-cap5-o8",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma página de painel administrativo terá quatro partes: (1) a lista de pedidos, lida de uma consulta ao banco de dados; (2) um campo de busca que filtra os pedidos enquanto o usuário digita; (3) um botão que abre uma janela de detalhes; (4) um cabeçalho que apenas exibe o título recebido por props."
+      }
+    ],
+    "enunciado": "Qual classificação segue a regra de decisão entre Server e Client Components?",
+    "alternativas": [
+      "1 e 4 como Server Components; 2 e 3 como Client Components.",
+      "1 e 2 como Server Components; 3 e 4 como Client Components.",
+      "Todos como Client Components, para que a página fique interativa.",
+      "Todos como Server Components, pois a página está dentro de app/.",
+      "2 e 4 como Server Components; 1 e 3 como Client Components."
+    ],
+    "correta": 0,
+    "resolucao": "Buscar dados (1) e só exibir informação recebida por props (4) ficam no servidor, o padrão. O filtro que reage à digitação (2) usa estado e onChange, e o botão do modal (3) usa onClick e estado; os dois precisam de \"use client\"."
+  },
+  {
+    "id": "web2-cap5-o9",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Colocar a diretiva \"use client\" o mais \"embaixo\" possível na árvore de componentes reduz o JavaScript enviado ao navegador.",
+      "PORQUE",
+      "II. O código dos Server Components não é enviado ao cliente; só os Client Components precisam ter o seu JavaScript carregado no navegador."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II explica a I. Quanto menos componentes forem Client, menos código vai para o navegador. Por isso a página e as partes que só exibem dados ficam no servidor, e só os pedaços interativos (um botão, um campo) recebem \"use client\"."
+  },
+  {
+    "id": "web2-cap5-o10",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Na página de projetos de um portfólio, o componente Projetos (Server) busca a lista de projetos e, para cada um, renderiza um BotaoFavoritar (Client), passando o id do projeto por props."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Um Server Component nunca chega a existir no navegador e, por isso, não reage a cliques nem a digitação.",
+      "II. Um Server Component pode buscar dados em um banco de dados sem precisar de uma API intermediária.",
+      "III. Quando um Server Component passa dados a um Client Component por props, o Client Component precisa saber de onde esses dados vieram."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e II, apenas.",
+      "I, apenas.",
+      "II, apenas.",
+      "I e III, apenas.",
+      "II e III, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I e II são verdadeiras: o Server Component vira HTML no servidor, onde pode acessar dados diretamente. III é falsa: o Client Component só recebe os dados prontos por props e cuida da parte interativa, sem precisar saber de onde vieram."
   }
 ]
