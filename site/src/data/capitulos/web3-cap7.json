@@ -1,0 +1,219 @@
+{
+ "numero": 7,
+ "titulo": "CRUD: manipulação de recursos",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, a API do TaskFlow cria, lista, busca e exclui tarefas, cada operação escrita direto na sua rota. Neste capítulo ela fica completa. Você vai organizar o acesso ao banco em uma camada de serviço, separada das rotas, implementar a edição com <code>PATCH</code>, transformar a listagem em uma consulta com filtros, busca por texto, ordenação e paginação, e entender as consultas do Prisma por trás de cada operação. No final, todos os <em>endpoints</em> de tarefas projetados no Capítulo 2 estarão funcionando e testados."
+  },
+  {
+   "t": "h2",
+   "id": "7-1-crud-http-e-prisma",
+   "texto": "7.1 CRUD, HTTP e Prisma"
+  },
+  {
+   "t": "p",
+   "html": "<strong>CRUD</strong> é a sigla das quatro operações básicas sobre dados: <em>Create</em> (criar), <em>Read</em> (ler), <em>Update</em> (atualizar) e <em>Delete</em> (excluir). Em uma API REST, cada uma corresponde a um método HTTP, e no Prisma, a um grupo de funções:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Operação",
+    "HTTP",
+    "Status de sucesso",
+    "Prisma"
+   ],
+   "linhas": [
+    [
+     "<em>Create</em>",
+     "<code>POST</code> na coleção",
+     "<code>201</code> e <code>Location</code>",
+     "<code>create</code>"
+    ],
+    [
+     "<em>Read</em>",
+     "<code>GET</code> na coleção ou no item",
+     "<code>200</code>",
+     "<code>findMany</code>, <code>findFirst</code>, <code>count</code>"
+    ],
+    [
+     "<em>Update</em>",
+     "<code>PATCH</code> (ou <code>PUT</code>) no item",
+     "<code>200</code> e o recurso atualizado",
+     "<code>update</code>, <code>updateMany</code>"
+    ],
+    [
+     "<em>Delete</em>",
+     "<code>DELETE</code> no item",
+     "<code>204</code>",
+     "<code>delete</code>, <code>deleteMany</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "As funções terminadas em <code>Many</code> aceitam qualquer filtro e devolvem apenas quantos registros foram afetados. As outras trabalham com um único registro e devolvem o próprio registro; <code>update</code> e <code>delete</code> lançam um erro se ele não existir. Essa diferença decide qual usar em cada caso, como você vai ver na edição."
+  },
+  {
+   "t": "h2",
+   "id": "7-2-uma-camada-de-servico",
+   "texto": "7.2 Uma camada de serviço"
+  },
+  {
+   "t": "p",
+   "html": "Nos capítulos anteriores, cada rota fazia tudo: lia a requisição, validava, consultava o banco e montava a resposta. Com o CRUD completo, as consultas crescem, e misturar HTTP com acesso a dados deixa as rotas longas e difíceis de testar. A solução comum é dividir o trabalho em <strong>camadas</strong>:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "a <strong>rota</strong> cuida do HTTP: lê a requisição, chama a validação e o serviço, e escolhe o status e o formato da resposta;",
+    "o <strong>serviço</strong> cuida das regras e do banco: recebe dados já validados e devolve resultados, sem saber nada de requisições, cabeçalhos ou códigos de status."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Assim, a mesma função <code>listarTarefas</code> pode ser usada por uma rota da API, por uma página do Next.js ou por um teste automatizado (Capítulo 11). Os serviços das tarefas ficam em <code>lib/servicos/tarefas.ts</code>. As três operações mais simples:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/servicos/tarefas.ts -- as operações sobre tarefas\nimport { db } from \"@/lib/db\";\nimport { Prisma } from \"@/app/generated/prisma/client\";\nimport { camposTarefa } from \"@/lib/tarefas\";\nimport type {\n  EdicaoTarefa,\n  Filtros,\n  NovaTarefa,\n} from \"@/lib/esquemas/tarefas\";\n\nexport async function criarTarefa(\n  userId: string,\n  dados: NovaTarefa,\n) {\n  return db.task.create({\n    data: { ...dados, userId },\n    select: camposTarefa,\n  });\n}\n\nexport async function buscarTarefa(userId: string, id: string) {\n  return db.task.findFirst({\n    where: { id, userId },\n    select: camposTarefa,\n  });\n}\n\n// Devolve true se excluiu, false se não havia o que excluir\nexport async function excluirTarefa(userId: string, id: string) {\n  const { count } = await db.task.deleteMany({\n    where: { id, userId },\n  });\n  return count > 0;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Todas as funções recebem o <code>userId</code> como primeiro parâmetro e o usam em toda consulta. É uma regra de projeto: no serviço de tarefas, não existe operação que ignore o dono. Assim, o isolamento entre as contas não depende de cada rota lembrar de filtrar. Repare também que <code>buscarTarefa</code> devolve <code>null</code> quando não acha, e <code>excluirTarefa</code> devolve <code>false</code>: decidir que isso vira um <code>404</code> é trabalho da rota."
+  },
+  {
+   "t": "h2",
+   "id": "7-3-editando-com-patch",
+   "texto": "7.3 Editando com PATCH"
+  },
+  {
+   "t": "p",
+   "html": "A edição recebe os campos validados pelo <code>esquemaEdicaoTarefa</code> do Capítulo 6 e altera só esses campos. O Prisma não mexe nos campos ausentes, e os que vieram com <code>null</code> (como <code>dueDate</code>) são apagados, exatamente a semântica do <code>PATCH</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// Devolve a tarefa atualizada, ou null se ela não existir\n// (ou for de outra pessoa)\nexport async function editarTarefa(\n  userId: string,\n  id: string,\n  dados: EdicaoTarefa,\n) {\n  try {\n    return await db.task.update({\n      where: { id, userId },\n      data: dados,\n      select: camposTarefa,\n    });\n  } catch (erro) {\n    if (\n      erro instanceof Prisma.PrismaClientKnownRequestError &&\n      erro.code === \"P2025\"\n    ) {\n      return null;\n    }\n    throw erro;\n  }\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>update</code> precisa de um campo único no <code>where</code>, o <code>id</code>, mas aceita filtros extras, como o <code>userId</code>: a tarefa só é alterada se as duas condições valerem. Ele devolve a tarefa já atualizada em uma única consulta, o que o <code>updateMany</code> não faz (devolveria só a contagem, e seria preciso buscar a tarefa de novo). Em troca, quando nenhum registro atende ao filtro, o <code>update</code> lança um erro. O Prisma identifica os erros conhecidos por códigos, e <code>P2025</code> significa “registro não encontrado”. O <code>catch</code> transforma só esse erro em <code>null</code>; qualquer outro, como o banco fora do ar, é relançado com <code>throw</code>, porque esconder um erro inesperado é pior que deixá-lo aparecer."
+  },
+  {
+   "t": "p",
+   "html": "O <code>return await</code> dentro do <code>try</code> tem motivo: sem o <code>await</code>, a função devolveria a <em>Promise</em> antes de ela falhar, e o <code>catch</code> nunca seria executado."
+  },
+  {
+   "t": "h2",
+   "id": "7-4-a-listagem-completa",
+   "texto": "7.4 A listagem completa"
+  },
+  {
+   "t": "p",
+   "html": "O Capítulo 2 combinou que a listagem aceita filtros, busca, ordenação e paginação. Primeiro, o esquema da <em>query string</em>, acrescentado a <code>lib/esquemas/tarefas.ts</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// GET /api/tasks: os filtros da listagem, vindos da query string\nconst ordens = [\n  \"createdAt\", \"dueDate\", \"priority\", \"title\",\n] as const;\n\nexport const esquemaFiltros = z.object({\n  status: z.enum(TaskStatus, {\n    error: \"status deve ser PENDING, IN_PROGRESS ou DONE.\",\n  }).optional(),\n  priority: z.enum(Priority, {\n    error: \"priority deve ser LOW, MEDIUM ou HIGH.\",\n  }).optional(),\n  search: z.string().trim().min(1).max(100).optional(),\n  sort: z\n    .enum([...ordens, ...ordens.map((o) => `-${o}` as const)], {\n      error: \"sort deve ser createdAt, dueDate, priority ou \"\n        + \"title, com - na frente para a ordem decrescente.\",\n    })\n    .default(\"-createdAt\"),\n  page: z.coerce\n    .number({ error: \"page deve ser um número.\" })\n    .int({ error: \"page deve ser um número inteiro.\" })\n    .min(1, { error: \"page começa em 1.\" })\n    .default(1),\n  limit: z.coerce\n    .number({ error: \"limit deve ser um número.\" })\n    .int({ error: \"limit deve ser um número inteiro.\" })\n    .min(1, { error: \"limit deve ser ao menos 1.\" })\n    .max(100, { error: \"limit pode ser no máximo 100.\" })\n    .default(20),\n});\n\nexport type Filtros = z.infer<typeof esquemaFiltros>;"
+  },
+  {
+   "t": "p",
+   "html": "O <code>sort</code> aceita só oito valores: os quatro campos, com ou sem o sinal de menos. A lista é montada a partir de <code>ordens</code>, e o <code>as const</code> faz o TypeScript conhecer cada valor exato, e não apenas “um texto”. Limitar a ordenação a uma lista fechada é importante: aceitar qualquer nome de campo vindo da URL permitiria ordenar por campos internos ou provocar erros no banco. Agora, o serviço:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// Monta o orderBy do Prisma a partir de \"dueDate\" ou \"-dueDate\"\nfunction ordenacao(sort: Filtros[\"sort\"]) {\n  const direcao = sort.startsWith(\"-\") ? \"desc\" : \"asc\";\n  const campo = sort.replace(\"-\", \"\") as\n    \"createdAt\" | \"dueDate\" | \"priority\" | \"title\";\n  if (campo === \"dueDate\") {\n    // tarefas sem data sempre no fim, nas duas direções\n    return { dueDate: { sort: direcao, nulls: \"last\" } } as const;\n  }\n  return { [campo]: direcao };\n}\n\nexport async function listarTarefas(userId: string, f: Filtros) {\n  const where: Prisma.TaskWhereInput = {\n    userId,\n    status: f.status,\n    priority: f.priority,\n  };\n  if (f.search) {\n    where.OR = [\n      { title: { contains: f.search, mode: \"insensitive\" } },\n      {\n        description: { contains: f.search, mode: \"insensitive\" },\n      },\n    ];\n  }\n\n  const [total, tarefas] = await db.$transaction([\n    db.task.count({ where }),\n    db.task.findMany({\n      where,\n      select: camposTarefa,\n      orderBy: [ordenacao(f.sort), { id: \"asc\" }],\n      skip: (f.page - 1) * f.limit,\n      take: f.limit,\n    }),\n  ]);\n\n  return {\n    data: tarefas,\n    meta: {\n      page: f.page,\n      limit: f.limit,\n      total,\n      totalPages: Math.ceil(total / f.limit),\n    },\n  };\n}"
+  },
+  {
+   "t": "p",
+   "html": "Cada parte da consulta tem um papel:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Filtros.</strong> No <code>where</code>, um campo com valor <code>undefined</code> é ignorado pelo Prisma. Por isso <code>status: f.status</code> só filtra quando o parâmetro veio na URL, sem precisar de <code>if</code>.",
+    "<strong>Busca.</strong> O <code>OR</code> encontra a tarefa se o texto aparecer no título <strong>ou</strong> na descrição. O <code>contains</code> vira um <code>ILIKE '%texto%'</code> no PostgreSQL, e o <code>mode: \"insensitive\"</code> ignora maiúsculas e minúsculas, inclusive em letras acentuadas: <code>RELATÓRIO</code> encontra “Relatório”. Mas ele <strong>não</strong> ignora acentos: <code>relatorio</code> não encontra “Relatório”. Para isso, o PostgreSQL tem a extensão <code>unaccent</code>, ou se usa a busca textual completa (<em>full-text search</em>), fora do escopo desta apostila.",
+    "<strong>Ordenação.</strong> A função <code>ordenacao</code> converte <code>\"-dueDate\"</code> no formato do Prisma. No PostgreSQL, os valores nulos ficam no fim na ordem crescente e no <strong>início</strong> na decrescente; o <code>nulls: \"last\"</code> mantém as tarefas sem data sempre no fim. O enum <code>Priority</code> é ordenado na ordem em que foi declarado no esquema, então <code>-priority</code> lista <code>HIGH</code> primeiro. O segundo critério, <code>{ id: \"asc\" }</code>, desempata tarefas iguais; sem ele, duas tarefas com a mesma prioridade podem trocar de lugar entre uma página e outra.",
+    "<strong>Paginação.</strong> O <code>skip</code> pula as tarefas das páginas anteriores e o <code>take</code> limita a quantidade: na página 3 com 20 por página, pula 40 e pega 20.",
+    "<strong>Transação.</strong> A contagem e a busca são duas consultas. O <code>$transaction</code> as executa juntas, em uma transação do banco, para que o <code>total</code> e a lista vejam os mesmos dados."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "7-5-as-rotas-finais",
+   "texto": "7.5 As rotas finais"
+  },
+  {
+   "t": "p",
+   "html": "Com o serviço pronto, as rotas ficam curtas: validar, chamar o serviço, responder."
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/api/tasks/route.ts -- a coleção de tarefas\nimport type { NextRequest } from \"next/server\";\nimport { usuarioAtual } from \"@/lib/usuario-atual\";\nimport { validar } from \"@/lib/validar\";\nimport {\n  esquemaFiltros,\n  esquemaNovaTarefa,\n} from \"@/lib/esquemas/tarefas\";\nimport {\n  criarTarefa,\n  listarTarefas,\n} from \"@/lib/servicos/tarefas\";\n\n// GET /api/tasks?status=&priority=&search=&sort=&page=&limit=\nexport async function GET(request: NextRequest) {\n  const usuario = await usuarioAtual();\n  const query = Object.fromEntries(request.nextUrl.searchParams);\n\n  const { dados, erro } = validar(esquemaFiltros, query);\n  if (erro) return erro;\n\n  return Response.json(await listarTarefas(usuario.id, dados));\n}\n\n// POST /api/tasks\nexport async function POST(request: NextRequest) {\n  const usuario = await usuarioAtual();\n  const corpo = await request.json().catch(() => null);\n\n  const { dados, erro } = validar(esquemaNovaTarefa, corpo);\n  if (erro) return erro;\n\n  const tarefa = await criarTarefa(usuario.id, dados);\n  return Response.json(tarefa, {\n    status: 201,\n    headers: { Location: `/api/tasks/${tarefa.id}` },\n  });\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/api/tasks/[id]/route.ts -- uma tarefa\nimport type { NextRequest } from \"next/server\";\nimport { usuarioAtual } from \"@/lib/usuario-atual\";\nimport { validar } from \"@/lib/validar\";\nimport { esquemaEdicaoTarefa } from \"@/lib/esquemas/tarefas\";\nimport {\n  buscarTarefa,\n  editarTarefa,\n  excluirTarefa,\n} from \"@/lib/servicos/tarefas\";\n\ntype Contexto = RouteContext<\"/api/tasks/[id]\">;\n\nconst naoEncontrada = () =>\n  Response.json(\n    { erro: \"Tarefa não encontrada.\" },\n    { status: 404 },\n  );\n\n// GET /api/tasks/:id\nexport async function GET(\n  request: NextRequest,\n  ctx: Contexto,\n) {\n  const { id } = await ctx.params;\n  const usuario = await usuarioAtual();\n\n  const tarefa = await buscarTarefa(usuario.id, id);\n  return tarefa ? Response.json(tarefa) : naoEncontrada();\n}\n\n// PATCH /api/tasks/:id\nexport async function PATCH(\n  request: NextRequest,\n  ctx: Contexto,\n) {\n  const { id } = await ctx.params;\n  const usuario = await usuarioAtual();\n  const corpo = await request.json().catch(() => null);\n\n  const { dados, erro } = validar(esquemaEdicaoTarefa, corpo);\n  if (erro) return erro;\n\n  const tarefa = await editarTarefa(usuario.id, id, dados);\n  return tarefa ? Response.json(tarefa) : naoEncontrada();\n}\n\n// DELETE /api/tasks/:id\nexport async function DELETE(\n  request: NextRequest,\n  ctx: Contexto,\n) {\n  const { id } = await ctx.params;\n  const usuario = await usuarioAtual();\n\n  const excluiu = await excluirTarefa(usuario.id, id);\n  return excluiu\n    ? new Response(null, { status: 204 })\n    : naoEncontrada();\n}"
+  },
+  {
+   "t": "p",
+   "html": "O tipo <code>Contexto</code> e a função <code>naoEncontrada</code> evitam repetir o mesmo trecho nas três funções. A resposta em XML do Capítulo 5, que serviu para mostrar a negociação de conteúdo, foi retirada para simplificar; se quiser mantê-la, ela continua funcionando no <code>GET</code>."
+  },
+  {
+   "t": "h2",
+   "id": "7-6-testando-o-crud",
+   "texto": "7.6 Testando o CRUD"
+  },
+  {
+   "t": "p",
+   "html": "Os resultados abaixo vieram da API em funcionamento, com a usuária de teste e mais algumas tarefas. Para testar o isolamento, foi criada no banco uma segunda pessoa com uma tarefa própria."
+  },
+  {
+   "t": "codigo",
+   "texto": "GET /api/tasks\n200 meta: {\"page\":1, \"limit\":20, \"total\":13, \"totalPages\":1}\n\nGET /api/tasks?search=RELAT\n200 títulos: [\"Relatório final\", \"Revisar o relatório\"]\n\nGET /api/tasks?sort=-priority&limit=4\n200 prioridades: HIGH, HIGH, HIGH, HIGH\n\nGET /api/tasks?sort=dueDate\n200 datas: 2026-11-05, 2026-11-10, 2026-12-01, 2026-12-20, (sem)\n\nGET /api/tasks?limit=3&page=2\n200 3 tarefas; meta: {\"page\":2, \"limit\":3, \"total\":13,\n                      \"totalPages\":5}\n\nGET /api/tasks?limit=500&sort=nome&page=0\n400 {\"erro\":\"Dados inválidos.\",\"campos\":{\n      \"sort\":[\"sort deve ser createdAt, dueDate, ...\"],\n      \"page\":[\"page começa em 1.\"],\n      \"limit\":[\"limit pode ser no máximo 100.\"]}}\n\nPATCH /api/tasks/<id>  {\"status\":\"DONE\"}\n200 a tarefa com \"status\":\"DONE\" e o updatedAt novo\n\nPATCH /api/tasks/<id>  {}\n400 {\"erro\":\"Envie ao menos um campo para alterar.\",\"campos\":{}}\n\nPATCH /api/tasks/<id>\n      {\"dueDate\":null,\"title\":\"Comprar café e leite\"}\n200 a tarefa sem data e com o título novo\n\nPATCH, GET e DELETE em /api/tasks/<id da outra pessoa>\n404 {\"erro\":\"Tarefa não encontrada.\"}"
+  },
+  {
+   "t": "p",
+   "html": "Repare em dois resultados. Uma página além do fim, como <code>?page=99</code>, não é erro: devolve <code>data</code> vazio e o <code>meta</code> correto, e o cliente percebe pelo <code>totalPages</code> que passou do fim. E a tarefa da outra pessoa recebe exatamente a mesma resposta que uma tarefa inexistente, nas três operações."
+  },
+  {
+   "t": "h2",
+   "id": "7-7-e-o-put",
+   "texto": "7.7 E o PUT?"
+  },
+  {
+   "t": "p",
+   "html": "A API do TaskFlow não implementa <code>PUT</code>. O <code>PATCH</code> cobre todas as edições, e oferecer os dois obrigaria a manter duas regras de validação para a mesma operação. Se a rota recebe um <code>PUT</code>, o Next.js responde <code>405</code>, como visto no Capítulo 4. Isso é comum em APIs reais: implemente os métodos que fazem sentido para os seus clientes, e não todos os possíveis."
+  },
+  {
+   "t": "p",
+   "html": "Um último cuidado sobre edições: se duas pessoas (ou duas abas do navegador) editam a mesma tarefa quase ao mesmo tempo, a última gravação vence, e a primeira se perde sem aviso. Para o TaskFlow, em que cada pessoa edita só as próprias tarefas, o risco é pequeno. Sistemas em que muitos editam o mesmo registro, como um estoque, usam o <strong>controle de concorrência otimista</strong>: o cliente envia junto a versão que leu (por exemplo, o <code>updatedAt</code>), e o servidor recusa a gravação com <code>409 Conflict</code> se o registro mudou nesse meio-tempo."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Esquecer o dono em uma consulta.</strong> Uma única consulta sem <code>userId</code> expõe dados de todos. Centralize as consultas em um serviço que sempre recebe o dono.",
+    "<strong>Usar <code>update</code> sem tratar o erro <code>P2025</code>.</strong> A tarefa inexistente vira <code>500</code>. Trate o <code>P2025</code> e responda <code>404</code>.",
+    "<strong>Esconder todos os erros no <code>catch</code>.</strong> Trate só o erro esperado e relance os outros com <code>throw</code>.",
+    "<strong><code>return</code> sem <code>await</code> dentro do <code>try</code>.</strong> A <em>Promise</em> sai da função antes de falhar, e o <code>catch</code> não a vê.",
+    "<strong>Aceitar qualquer campo em <code>sort</code>.</strong> Limite a ordenação a uma lista fechada.",
+    "<strong>Paginar sem desempate.</strong> Com valores iguais no campo ordenado, a ordem entre eles não é garantida, e itens se repetem ou somem entre as páginas. Acrescente o <code>id</code> como segundo critério.",
+    "<strong>Contar e buscar em momentos diferentes.</strong> Use <code>$transaction</code> para que o total e a lista sejam consistentes.",
+    "<strong>Esperar que a busca ignore acentos.</strong> O <code>mode: \"insensitive\"</code> ignora maiúsculas, não acentos."
+   ]
+  }
+ ]
+}

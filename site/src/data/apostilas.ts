@@ -825,4 +825,13 @@ export const apostilas: Apostila[] = [
     descricao:
       'Por que validar no servidor, esquemas do Zod 4, parse e safeParse, mensagens de erro por campo, os esquemas de criação e edição do TaskFlow, atribuição em massa e a validação da query string.',
   },
+  {
+    id: 'web3-cap7',
+    capitulo: 7,
+    titulo: 'CRUD: manipulação de recursos',
+    disciplinaId: 'programacao-e-design-para-web-iii',
+    unidades: ['Manipulação de Recursos'],
+    descricao:
+      'CRUD, métodos HTTP e funções do Prisma, a camada de serviço, edição com PATCH e o erro P2025, listagem com filtros, busca, ordenação e paginação, transações e controle de concorrência.',
+  },
 ]

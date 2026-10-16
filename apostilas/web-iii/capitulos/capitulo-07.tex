@@ -1,0 +1,396 @@
+\section{Capítulo 7 -- CRUD: manipulação de recursos}
+
+Até aqui, a API do TaskFlow cria, lista, busca e exclui tarefas, cada operação escrita direto na sua rota. Neste capítulo ela fica completa. Você vai organizar o acesso ao banco em uma camada de serviço, separada das rotas, implementar a edição com \texttt{PATCH}, transformar a listagem em uma consulta com filtros, busca por texto, ordenação e paginação, e entender as consultas do Prisma por trás de cada operação. No final, todos os \textit{endpoints} de tarefas projetados no Capítulo 2 estarão funcionando e testados.
+
+\subsection{7.1 CRUD, HTTP e Prisma}
+
+\textbf{CRUD} é a sigla das quatro operações básicas sobre dados: \textit{Create} (criar), \textit{Read} (ler), \textit{Update} (atualizar) e \textit{Delete} (excluir). Em uma API REST, cada uma corresponde a um método HTTP, e no Prisma, a um grupo de funções:
+
+\begin{center}
+\begin{tabular}{@{}P{0.16\linewidth}P{0.2\linewidth}P{0.24\linewidth}P{0.3\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Operação} & \tblheader{HTTP} & \tblheader{Status de sucesso} & \tblheader{Prisma} \\
+\midrule
+\textit{Create} & \texttt{POST} na coleção & \texttt{201} e \texttt{Location} & \texttt{create} \\
+\rowcolor{rowgray} \textit{Read} & \texttt{GET} na coleção ou no item & \texttt{200} & \texttt{findMany}, \texttt{findFirst}, \texttt{count} \\
+\textit{Update} & \texttt{PATCH} (ou \texttt{PUT}) no item & \texttt{200} e o recurso atualizado & \texttt{update}, \texttt{updateMany} \\
+\rowcolor{rowgray} \textit{Delete} & \texttt{DELETE} no item & \texttt{204} & \texttt{delete}, \texttt{deleteMany} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+As funções terminadas em \texttt{Many} aceitam qualquer filtro e devolvem apenas quantos registros foram afetados. As outras trabalham com um único registro e devolvem o próprio registro; \texttt{update} e \texttt{delete} lançam um erro se ele não existir. Essa diferença decide qual usar em cada caso, como você vai ver na edição.
+
+\subsection{7.2 Uma camada de serviço}
+
+Nos capítulos anteriores, cada rota fazia tudo: lia a requisição, validava, consultava o banco e montava a resposta. Com o CRUD completo, as consultas crescem, e misturar HTTP com acesso a dados deixa as rotas longas e difíceis de testar. A solução comum é dividir o trabalho em \textbf{camadas}:
+
+\begin{itemize}
+  \item a \textbf{rota} cuida do HTTP: lê a requisição, chama a validação e o serviço, e escolhe o status e o formato da resposta;
+  \item o \textbf{serviço} cuida das regras e do banco: recebe dados já validados e devolve resultados, sem saber nada de requisições, cabeçalhos ou códigos de status.
+\end{itemize}
+
+Assim, a mesma função \texttt{listarTarefas} pode ser usada por uma rota da API, por uma página do Next.js ou por um teste automatizado (Capítulo 11). Os serviços das tarefas ficam em \texttt{lib/servicos/tarefas.ts}. As três operações mais simples:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// lib/servicos/tarefas.ts -- as operações sobre tarefas
+import { db } from "@/lib/db";
+import { Prisma } from "@/app/generated/prisma/client";
+import { camposTarefa } from "@/lib/tarefas";
+import type {
+  EdicaoTarefa,
+  Filtros,
+  NovaTarefa,
+} from "@/lib/esquemas/tarefas";
+
+export async function criarTarefa(
+  userId: string,
+  dados: NovaTarefa,
+) {
+  return db.task.create({
+    data: { ...dados, userId },
+    select: camposTarefa,
+  });
+}
+
+export async function buscarTarefa(userId: string, id: string) {
+  return db.task.findFirst({
+    where: { id, userId },
+    select: camposTarefa,
+  });
+}
+
+// Devolve true se excluiu, false se não havia o que excluir
+export async function excluirTarefa(userId: string, id: string) {
+  const { count } = await db.task.deleteMany({
+    where: { id, userId },
+  });
+  return count > 0;
+}
+\end{Verbatim}
+\end{codigo}
+
+Todas as funções recebem o \texttt{userId} como primeiro parâmetro e o usam em toda consulta. É uma regra de projeto: no serviço de tarefas, não existe operação que ignore o dono. Assim, o isolamento entre as contas não depende de cada rota lembrar de filtrar. Repare também que \texttt{buscarTarefa} devolve \texttt{null} quando não acha, e \texttt{excluirTarefa} devolve \texttt{false}: decidir que isso vira um \texttt{404} é trabalho da rota.
+
+\subsection{7.3 Editando com PATCH}
+
+A edição recebe os campos validados pelo \texttt{esquemaEdicaoTarefa} do Capítulo 6 e altera só esses campos. O Prisma não mexe nos campos ausentes, e os que vieram com \texttt{null} (como \texttt{dueDate}) são apagados, exatamente a semântica do \texttt{PATCH}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// Devolve a tarefa atualizada, ou null se ela não existir
+// (ou for de outra pessoa)
+export async function editarTarefa(
+  userId: string,
+  id: string,
+  dados: EdicaoTarefa,
+) {
+  try {
+    return await db.task.update({
+      where: { id, userId },
+      data: dados,
+      select: camposTarefa,
+    });
+  } catch (erro) {
+    if (
+      erro instanceof Prisma.PrismaClientKnownRequestError &&
+      erro.code === "P2025"
+    ) {
+      return null;
+    }
+    throw erro;
+  }
+}
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{update} precisa de um campo único no \texttt{where}, o \texttt{id}, mas aceita filtros extras, como o \texttt{userId}: a tarefa só é alterada se as duas condições valerem. Ele devolve a tarefa já atualizada em uma única consulta, o que o \texttt{updateMany} não faz (devolveria só a contagem, e seria preciso buscar a tarefa de novo). Em troca, quando nenhum registro atende ao filtro, o \texttt{update} lança um erro. O Prisma identifica os erros conhecidos por códigos, e \texttt{P2025} significa ``registro não encontrado''. O \texttt{catch} transforma só esse erro em \texttt{null}; qualquer outro, como o banco fora do ar, é relançado com \texttt{throw}, porque esconder um erro inesperado é pior que deixá-lo aparecer.
+
+O \texttt{return await} dentro do \texttt{try} tem motivo: sem o \texttt{await}, a função devolveria a \textit{Promise} antes de ela falhar, e o \texttt{catch} nunca seria executado.
+
+\subsection{7.4 A listagem completa}
+
+O Capítulo 2 combinou que a listagem aceita filtros, busca, ordenação e paginação. Primeiro, o esquema da \textit{query string}, acrescentado a \texttt{lib/esquemas/tarefas.ts}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// GET /api/tasks: os filtros da listagem, vindos da query string
+const ordens = [
+  "createdAt", "dueDate", "priority", "title",
+] as const;
+
+export const esquemaFiltros = z.object({
+  status: z.enum(TaskStatus, {
+    error: "status deve ser PENDING, IN_PROGRESS ou DONE.",
+  }).optional(),
+  priority: z.enum(Priority, {
+    error: "priority deve ser LOW, MEDIUM ou HIGH.",
+  }).optional(),
+  search: z.string().trim().min(1).max(100).optional(),
+  sort: z
+    .enum([...ordens, ...ordens.map((o) => `-${o}` as const)], {
+      error: "sort deve ser createdAt, dueDate, priority ou "
+        + "title, com - na frente para a ordem decrescente.",
+    })
+    .default("-createdAt"),
+  page: z.coerce
+    .number({ error: "page deve ser um número." })
+    .int({ error: "page deve ser um número inteiro." })
+    .min(1, { error: "page começa em 1." })
+    .default(1),
+  limit: z.coerce
+    .number({ error: "limit deve ser um número." })
+    .int({ error: "limit deve ser um número inteiro." })
+    .min(1, { error: "limit deve ser ao menos 1." })
+    .max(100, { error: "limit pode ser no máximo 100." })
+    .default(20),
+});
+
+export type Filtros = z.infer<typeof esquemaFiltros>;
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{sort} aceita só oito valores: os quatro campos, com ou sem o sinal de menos. A lista é montada a partir de \texttt{ordens}, e o \texttt{as const} faz o TypeScript conhecer cada valor exato, e não apenas ``um texto''. Limitar a ordenação a uma lista fechada é importante: aceitar qualquer nome de campo vindo da URL permitiria ordenar por campos internos ou provocar erros no banco. Agora, o serviço:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// Monta o orderBy do Prisma a partir de "dueDate" ou "-dueDate"
+function ordenacao(sort: Filtros["sort"]) {
+  const direcao = sort.startsWith("-") ? "desc" : "asc";
+  const campo = sort.replace("-", "") as
+    "createdAt" | "dueDate" | "priority" | "title";
+  if (campo === "dueDate") {
+    // tarefas sem data sempre no fim, nas duas direções
+    return { dueDate: { sort: direcao, nulls: "last" } } as const;
+  }
+  return { [campo]: direcao };
+}
+
+export async function listarTarefas(userId: string, f: Filtros) {
+  const where: Prisma.TaskWhereInput = {
+    userId,
+    status: f.status,
+    priority: f.priority,
+  };
+  if (f.search) {
+    where.OR = [
+      { title: { contains: f.search, mode: "insensitive" } },
+      {
+        description: { contains: f.search, mode: "insensitive" },
+      },
+    ];
+  }
+
+  const [total, tarefas] = await db.$transaction([
+    db.task.count({ where }),
+    db.task.findMany({
+      where,
+      select: camposTarefa,
+      orderBy: [ordenacao(f.sort), { id: "asc" }],
+      skip: (f.page - 1) * f.limit,
+      take: f.limit,
+    }),
+  ]);
+
+  return {
+    data: tarefas,
+    meta: {
+      page: f.page,
+      limit: f.limit,
+      total,
+      totalPages: Math.ceil(total / f.limit),
+    },
+  };
+}
+\end{Verbatim}
+\end{codigo}
+
+Cada parte da consulta tem um papel:
+
+\begin{itemize}
+  \item \textbf{Filtros.} No \texttt{where}, um campo com valor \texttt{undefined} é ignorado pelo Prisma. Por isso \texttt{status: f.status} só filtra quando o parâmetro veio na URL, sem precisar de \texttt{if}.
+  \item \textbf{Busca.} O \texttt{OR} encontra a tarefa se o texto aparecer no título \textbf{ou} na descrição. O \texttt{contains} vira um \texttt{ILIKE '\%texto\%'} no PostgreSQL, e o \texttt{mode: "insensitive"} ignora maiúsculas e minúsculas, inclusive em letras acentuadas: \texttt{RELATÓRIO} encontra ``Relatório''. Mas ele \textbf{não} ignora acentos: \texttt{relatorio} não encontra ``Relatório''. Para isso, o PostgreSQL tem a extensão \texttt{unaccent}, ou se usa a busca textual completa (\textit{full-text search}), fora do escopo desta apostila.
+  \item \textbf{Ordenação.} A função \texttt{ordenacao} converte \texttt{"-dueDate"} no formato do Prisma. No PostgreSQL, os valores nulos ficam no fim na ordem crescente e no \textbf{início} na decrescente; o \texttt{nulls: "last"} mantém as tarefas sem data sempre no fim. O enum \texttt{Priority} é ordenado na ordem em que foi declarado no esquema, então \texttt{-priority} lista \texttt{HIGH} primeiro. O segundo critério, \texttt{\{ id: "asc" \}}, desempata tarefas iguais; sem ele, duas tarefas com a mesma prioridade podem trocar de lugar entre uma página e outra.
+  \item \textbf{Paginação.} O \texttt{skip} pula as tarefas das páginas anteriores e o \texttt{take} limita a quantidade: na página 3 com 20 por página, pula 40 e pega 20.
+  \item \textbf{Transação.} A contagem e a busca são duas consultas. O \texttt{\$transaction} as executa juntas, em uma transação do banco, para que o \texttt{total} e a lista vejam os mesmos dados.
+\end{itemize}
+
+\subsection{7.5 As rotas finais}
+
+Com o serviço pronto, as rotas ficam curtas: validar, chamar o serviço, responder.
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// app/api/tasks/route.ts -- a coleção de tarefas
+import type { NextRequest } from "next/server";
+import { usuarioAtual } from "@/lib/usuario-atual";
+import { validar } from "@/lib/validar";
+import {
+  esquemaFiltros,
+  esquemaNovaTarefa,
+} from "@/lib/esquemas/tarefas";
+import {
+  criarTarefa,
+  listarTarefas,
+} from "@/lib/servicos/tarefas";
+
+// GET /api/tasks?status=&priority=&search=&sort=&page=&limit=
+export async function GET(request: NextRequest) {
+  const usuario = await usuarioAtual();
+  const query = Object.fromEntries(request.nextUrl.searchParams);
+
+  const { dados, erro } = validar(esquemaFiltros, query);
+  if (erro) return erro;
+
+  return Response.json(await listarTarefas(usuario.id, dados));
+}
+
+// POST /api/tasks
+export async function POST(request: NextRequest) {
+  const usuario = await usuarioAtual();
+  const corpo = await request.json().catch(() => null);
+
+  const { dados, erro } = validar(esquemaNovaTarefa, corpo);
+  if (erro) return erro;
+
+  const tarefa = await criarTarefa(usuario.id, dados);
+  return Response.json(tarefa, {
+    status: 201,
+    headers: { Location: `/api/tasks/${tarefa.id}` },
+  });
+}
+\end{Verbatim}
+\end{codigo}
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// app/api/tasks/[id]/route.ts -- uma tarefa
+import type { NextRequest } from "next/server";
+import { usuarioAtual } from "@/lib/usuario-atual";
+import { validar } from "@/lib/validar";
+import { esquemaEdicaoTarefa } from "@/lib/esquemas/tarefas";
+import {
+  buscarTarefa,
+  editarTarefa,
+  excluirTarefa,
+} from "@/lib/servicos/tarefas";
+
+type Contexto = RouteContext<"/api/tasks/[id]">;
+
+const naoEncontrada = () =>
+  Response.json(
+    { erro: "Tarefa não encontrada." },
+    { status: 404 },
+  );
+
+// GET /api/tasks/:id
+export async function GET(
+  request: NextRequest,
+  ctx: Contexto,
+) {
+  const { id } = await ctx.params;
+  const usuario = await usuarioAtual();
+
+  const tarefa = await buscarTarefa(usuario.id, id);
+  return tarefa ? Response.json(tarefa) : naoEncontrada();
+}
+
+// PATCH /api/tasks/:id
+export async function PATCH(
+  request: NextRequest,
+  ctx: Contexto,
+) {
+  const { id } = await ctx.params;
+  const usuario = await usuarioAtual();
+  const corpo = await request.json().catch(() => null);
+
+  const { dados, erro } = validar(esquemaEdicaoTarefa, corpo);
+  if (erro) return erro;
+
+  const tarefa = await editarTarefa(usuario.id, id, dados);
+  return tarefa ? Response.json(tarefa) : naoEncontrada();
+}
+
+// DELETE /api/tasks/:id
+export async function DELETE(
+  request: NextRequest,
+  ctx: Contexto,
+) {
+  const { id } = await ctx.params;
+  const usuario = await usuarioAtual();
+
+  const excluiu = await excluirTarefa(usuario.id, id);
+  return excluiu
+    ? new Response(null, { status: 204 })
+    : naoEncontrada();
+}
+\end{Verbatim}
+\end{codigo}
+
+O tipo \texttt{Contexto} e a função \texttt{naoEncontrada} evitam repetir o mesmo trecho nas três funções. A resposta em XML do Capítulo 5, que serviu para mostrar a negociação de conteúdo, foi retirada para simplificar; se quiser mantê-la, ela continua funcionando no \texttt{GET}.
+
+\subsection{7.6 Testando o CRUD}
+
+Os resultados abaixo vieram da API em funcionamento, com a usuária de teste e mais algumas tarefas. Para testar o isolamento, foi criada no banco uma segunda pessoa com uma tarefa própria.
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+GET /api/tasks
+200 meta: {"page":1, "limit":20, "total":13, "totalPages":1}
+
+GET /api/tasks?search=RELAT
+200 títulos: ["Relatório final", "Revisar o relatório"]
+
+GET /api/tasks?sort=-priority&limit=4
+200 prioridades: HIGH, HIGH, HIGH, HIGH
+
+GET /api/tasks?sort=dueDate
+200 datas: 2026-11-05, 2026-11-10, 2026-12-01, 2026-12-20, (sem)
+
+GET /api/tasks?limit=3&page=2
+200 3 tarefas; meta: {"page":2, "limit":3, "total":13,
+                      "totalPages":5}
+
+GET /api/tasks?limit=500&sort=nome&page=0
+400 {"erro":"Dados inválidos.","campos":{
+      "sort":["sort deve ser createdAt, dueDate, ..."],
+      "page":["page começa em 1."],
+      "limit":["limit pode ser no máximo 100."]}}
+
+PATCH /api/tasks/<id>  {"status":"DONE"}
+200 a tarefa com "status":"DONE" e o updatedAt novo
+
+PATCH /api/tasks/<id>  {}
+400 {"erro":"Envie ao menos um campo para alterar.","campos":{}}
+
+PATCH /api/tasks/<id>
+      {"dueDate":null,"title":"Comprar café e leite"}
+200 a tarefa sem data e com o título novo
+
+PATCH, GET e DELETE em /api/tasks/<id da outra pessoa>
+404 {"erro":"Tarefa não encontrada."}
+\end{Verbatim}
+\end{codigo}
+
+Repare em dois resultados. Uma página além do fim, como \texttt{?page=99}, não é erro: devolve \texttt{data} vazio e o \texttt{meta} correto, e o cliente percebe pelo \texttt{totalPages} que passou do fim. E a tarefa da outra pessoa recebe exatamente a mesma resposta que uma tarefa inexistente, nas três operações.
+
+\subsection{7.7 E o PUT?}
+
+A API do TaskFlow não implementa \texttt{PUT}. O \texttt{PATCH} cobre todas as edições, e oferecer os dois obrigaria a manter duas regras de validação para a mesma operação. Se a rota recebe um \texttt{PUT}, o Next.js responde \texttt{405}, como visto no Capítulo 4. Isso é comum em APIs reais: implemente os métodos que fazem sentido para os seus clientes, e não todos os possíveis.
+
+Um último cuidado sobre edições: se duas pessoas (ou duas abas do navegador) editam a mesma tarefa quase ao mesmo tempo, a última gravação vence, e a primeira se perde sem aviso. Para o TaskFlow, em que cada pessoa edita só as próprias tarefas, o risco é pequeno. Sistemas em que muitos editam o mesmo registro, como um estoque, usam o \textbf{controle de concorrência otimista}: o cliente envia junto a versão que leu (por exemplo, o \texttt{updatedAt}), e o servidor recusa a gravação com \texttt{409 Conflict} se o registro mudou nesse meio-tempo.
+
+\subsection{Erros Comuns}
+
+\begin{itemize}
+  \item \textbf{Esquecer o dono em uma consulta.} Uma única consulta sem \texttt{userId} expõe dados de todos. Centralize as consultas em um serviço que sempre recebe o dono.
+  \item \textbf{Usar \texttt{update} sem tratar o erro \texttt{P2025}.} A tarefa inexistente vira \texttt{500}. Trate o \texttt{P2025} e responda \texttt{404}.
+  \item \textbf{Esconder todos os erros no \texttt{catch}.} Trate só o erro esperado e relance os outros com \texttt{throw}.
+  \item \textbf{\texttt{return} sem \texttt{await} dentro do \texttt{try}.} A \textit{Promise} sai da função antes de falhar, e o \texttt{catch} não a vê.
+  \item \textbf{Aceitar qualquer campo em \texttt{sort}.} Limite a ordenação a uma lista fechada.
+  \item \textbf{Paginar sem desempate.} Com valores iguais no campo ordenado, a ordem entre eles não é garantida, e itens se repetem ou somem entre as páginas. Acrescente o \texttt{id} como segundo critério.
+  \item \textbf{Contar e buscar em momentos diferentes.} Use \texttt{\$transaction} para que o total e a lista sejam consistentes.
+  \item \textbf{Esperar que a busca ignore acentos.} O \texttt{mode: "insensitive"} ignora maiúsculas, não acentos.
+\end{itemize}
