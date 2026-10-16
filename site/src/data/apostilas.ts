@@ -816,4 +816,13 @@ export const apostilas: Apostila[] = [
     descricao:
       'Serializar e desserializar, os tipos do JSON e o que ele perde, datas em ISO 8601 e fusos, nomes de campos, os campos públicos da API (DTO), XML, negociação de conteúdo e por que desserializar não é validar.',
   },
+  {
+    id: 'web3-cap6',
+    capitulo: 6,
+    titulo: 'Validação com Zod',
+    disciplinaId: 'programacao-e-design-para-web-iii',
+    unidades: ['Formatos de Dados e Serialização', 'Segurança em APIs'],
+    descricao:
+      'Por que validar no servidor, esquemas do Zod 4, parse e safeParse, mensagens de erro por campo, os esquemas de criação e edição do TaskFlow, atribuição em massa e a validação da query string.',
+  },
 ]

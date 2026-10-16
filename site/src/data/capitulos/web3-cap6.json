@@ -1,0 +1,285 @@
+{
+ "numero": 6,
+ "titulo": "Validação com Zod",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "O Capítulo 5 terminou com um alerta: os tipos do TypeScript desaparecem quando o programa roda, e o que chega em uma requisição pode ser qualquer coisa. Neste capítulo você vai entender por que toda API precisa validar os dados no servidor, conhecer o Zod, a biblioteca de validação mais usada no ecossistema TypeScript, e escrever os esquemas que descrevem uma tarefa do TaskFlow. No final, a criação de tarefas passa a aceitar todos os campos, recusa dados inválidos com mensagens claras para cada campo e ignora campos que o cliente não tem o direito de enviar."
+  },
+  {
+   "t": "h2",
+   "id": "6-1-por-que-validar-no-servidor",
+   "texto": "6.1 Por que validar no servidor"
+  },
+  {
+   "t": "p",
+   "html": "Um formulário bem-feito valida os dados antes de enviar: campo obrigatório, tamanho máximo, e-mail no formato certo. Essa validação é ótima para a experiência de quem usa, porque o aviso aparece na hora. Mas ela <strong>não protege a API</strong>. Qualquer pessoa pode enviar uma requisição sem passar pelo formulário, com o <code>curl</code>, o REST Client ou um <em>script</em>; pode também abrir as ferramentas do navegador e alterar a página. Do ponto de vista da API, todo dado que chega é <strong>não confiável</strong>, venha de onde vier."
+  },
+  {
+   "t": "p",
+   "html": "Sem validação no servidor, três coisas ruins acontecem. Dados errados vão parar no banco, como uma tarefa com título vazio ou uma data impossível. Erros que eram do cliente viram erros <code>500</code>, quando o banco ou o código quebram mais adiante, longe da causa, e a mensagem não ajuda ninguém a corrigir. E, pior, o cliente pode alterar o que não devia, como o dono de um registro, uma falha estudada na Seção 6.7. A regra é simples: <strong>a validação no cliente é para conforto; a validação no servidor é obrigatória</strong>."
+  },
+  {
+   "t": "h2",
+   "id": "6-2-o-zod",
+   "texto": "6.2 O Zod"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>Zod</strong> é uma biblioteca em que você descreve, em código, o formato que um dado deve ter, chamado de <strong>esquema</strong>. A partir do esquema, o Zod faz duas coisas: confere um valor qualquer em tempo de execução e fornece o tipo do TypeScript correspondente. Assim, a regra é escrita uma vez só e vale para a validação e para o editor. Instale a versão 4:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install zod@4"
+  },
+  {
+   "t": "p",
+   "html": "Um primeiro esquema e as duas formas de usá-lo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "import * as z from \"zod\";\n\nconst tarefa = z.object({\n  title: z.string().trim().min(1).max(120),\n  priority: z.enum([\"LOW\", \"MEDIUM\", \"HIGH\"]),\n});\n\n// parse: devolve o dado validado ou LANÇA um erro (ZodError)\nconst ok = tarefa.parse({\n  title: \"  Estudar Zod \",\n  priority: \"HIGH\",\n});\n// { title: \"Estudar Zod\", priority: \"HIGH\" }\n\n// safeParse: nunca lança; devolve um resultado para conferir\nconst r = tarefa.safeParse({ title: \"\", priority: \"URGENTE\" });\nif (!r.success) {\n  console.log(r.error.issues.length);   // 2\n} else {\n  console.log(r.data.title);\n}"
+  },
+  {
+   "t": "p",
+   "html": "Repare que o <code>parse</code> devolveu o título sem os espaços: o <code>.trim()</code> não só confere, ele <strong>transforma</strong> o valor. O dado que sai do Zod é o dado limpo, pronto para usar. Em uma API, prefira o <code>safeParse</code>: dados inválidos são uma situação esperada, e não uma exceção, e o resultado com <code>success</code> obriga o código a tratar os dois casos. O TypeScript entende o <code>if</code>: dentro do <code>else</code>, ele sabe que <code>r.data</code> existe e tem o tipo do esquema."
+  },
+  {
+   "t": "h2",
+   "id": "6-3-os-blocos-de-um-esquema",
+   "texto": "6.3 Os blocos de um esquema"
+  },
+  {
+   "t": "p",
+   "html": "Os esquemas são montados combinando tipos básicos com regras encadeadas por pontos. Os mais usados em APIs:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Esquema",
+    "Aceita"
+   ],
+   "linhas": [
+    [
+     "<code>z.string().min(1).max(120)</code>",
+     "texto com 1 a 120 caracteres"
+    ],
+    [
+     "<code>z.string().trim()</code>",
+     "texto, já sem os espaços das pontas"
+    ],
+    [
+     "<code>z.email()</code>",
+     "texto no formato de e-mail"
+    ],
+    [
+     "<code>z.number().int().positive()</code>",
+     "número inteiro maior que zero"
+    ],
+    [
+     "<code>z.boolean()</code>",
+     "<code>true</code> ou <code>false</code>"
+    ],
+    [
+     "<code>z.enum([\"LOW\", \"HIGH\"])</code>",
+     "um dos valores da lista"
+    ],
+    [
+     "<code>z.iso.date()</code>",
+     "texto de data no formato <code>AAAA-MM-DD</code>"
+    ],
+    [
+     "<code>z.array(z.string()).max(10)</code>",
+     "lista de até 10 textos"
+    ],
+    [
+     "<code>z.object({ ... })</code>",
+     "objeto com os campos descritos"
+    ],
+    [
+     "<code>.optional()</code>",
+     "o campo pode faltar (<code>undefined</code>)"
+    ],
+    [
+     "<code>.nullable()</code>",
+     "o campo pode ser <code>null</code>"
+    ],
+    [
+     "<code>.default(valor)</code>",
+     "se faltar, usa o valor indicado"
+    ],
+    [
+     "<code>.transform(f)</code>",
+     "converte o valor aprovado com a função <code>f</code>"
+    ],
+    [
+     "<code>.refine(f, ...)</code>",
+     "regra personalizada, escrita como função"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A diferença entre <code>optional</code> e <code>nullable</code> importa em uma API. “Campo ausente” e “campo com <code>null</code>” significam coisas diferentes em uma edição: <code>{\"title\": \"Novo\"}</code> não mexe na data de vencimento, enquanto <code>{\"dueDate\": null}</code> pede para <strong>apagar</strong> a data. Por isso os campos que podem ser apagados aceitam os dois."
+  },
+  {
+   "t": "h2",
+   "id": "6-4-mensagens-de-erro",
+   "texto": "6.4 Mensagens de erro"
+  },
+  {
+   "t": "p",
+   "html": "Quando a validação falha, o Zod devolve uma lista de problemas (<code>issues</code>), cada um com o caminho do campo e uma mensagem. A função <code>z.flattenError</code> organiza essa lista por campo, o formato mais fácil para quem consome a API:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const r = tarefa.safeParse({ title: \"\", priority: \"URGENTE\" });\nconsole.log(z.flattenError(r.error));\n// {\n//   formErrors: [],\n//   fieldErrors: {\n//     title: [\"Too small: expected string to have\n//              >=1 characters\"],\n//     priority: [\"Invalid option: expected one of\n//                \\\"LOW\\\"|\\\"MEDIUM\\\"|\\\"HIGH\\\"\"]\n//   }\n// }"
+  },
+  {
+   "t": "p",
+   "html": "Os erros de um campo ficam em <code>fieldErrors</code>; os do objeto como um todo, em <code>formErrors</code>. As mensagens padrão estão em inglês. O Zod traz traduções, ligadas com <code>z.config(z.locales.pt())</code>, mas elas seguem o português de Portugal e são genéricas: “Demasiado pequeno: esperava que o texto tivesse &gt;= 1 caracteres”. Para uma API brasileira, o melhor é escrever as próprias mensagens, com a opção <code>error</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "z.string({ error: \"O título precisa ser um texto.\" })\n  .min(1, { error: \"O título é obrigatório.\" })"
+  },
+  {
+   "t": "p",
+   "html": "A mensagem do <code>z.string(...)</code> vale quando o valor nem é um texto (um número, por exemplo, ou o campo ausente); a do <code>.min(...)</code> vale quando é um texto curto demais. Escreva mensagens que digam ao cliente o que fazer, e não só o que deu errado: “Use a data no formato AAAA-MM-DD” resolve o problema; “Data inválida”, não."
+  },
+  {
+   "t": "h2",
+   "id": "6-5-os-esquemas-do-taskflow",
+   "texto": "6.5 Os esquemas do TaskFlow"
+  },
+  {
+   "t": "p",
+   "html": "Os esquemas da tarefa ficam em um arquivo próprio, separados das rotas:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/esquemas/tarefas.ts -- o que a API aceita para uma tarefa\nimport * as z from \"zod\";\nimport {\n  Priority,\n  TaskStatus,\n} from \"@/app/generated/prisma/client\";\n\n// Os campos de uma tarefa, sem valores padrão: quem preenche o\n// que faltar é o banco (os @default do schema.prisma).\nconst campos = z.object({\n  title: z\n    .string({ error: \"O título precisa ser um texto.\" })\n    .trim()\n    .min(1, { error: \"O título é obrigatório.\" })\n    .max(120, {\n      error: \"O título pode ter até 120 caracteres.\",\n    }),\n  description: z\n    .string({ error: \"A descrição precisa ser um texto.\" })\n    .trim()\n    .max(2000, {\n      error: \"A descrição pode ter até 2000 caracteres.\",\n    })\n    .nullable(),\n  status: z.enum(TaskStatus, {\n    error: \"status deve ser PENDING, IN_PROGRESS ou DONE.\",\n  }),\n  priority: z.enum(Priority, {\n    error: \"priority deve ser LOW, MEDIUM ou HIGH.\",\n  }),\n  dueDate: z.iso\n    .date({ error: \"Use a data no formato AAAA-MM-DD.\" })\n    .transform((texto) => new Date(texto))\n    .nullable(),\n}, { error: \"O corpo deve ser um objeto JSON.\" });\n\n// POST: só o título é obrigatório\nexport const esquemaNovaTarefa = campos\n  .partial()\n  .required({ title: true });\n\n// PATCH: tudo opcional, mas ao menos um campo\nexport const esquemaEdicaoTarefa = campos\n  .partial()\n  .refine((dados) => Object.keys(dados).length > 0, {\n    error: \"Envie ao menos um campo para alterar.\",\n  });\n\nexport type NovaTarefa = z.infer<typeof esquemaNovaTarefa>;\nexport type EdicaoTarefa = z.infer<typeof esquemaEdicaoTarefa>;"
+  },
+  {
+   "t": "p",
+   "html": "Os pontos principais:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "O <code>z.enum</code> aceita diretamente os objetos <code>TaskStatus</code> e <code>Priority</code> gerados pelo Prisma. Se um dia o esquema do banco ganhar uma prioridade nova, a validação a aceita sem nenhuma alteração aqui.",
+    "O <code>dueDate</code> aceita só o formato ISO, o que barra o <code>01/12/2026</code> do Capítulo 5, e o <code>.transform</code> converte o texto aprovado no <code>Date</code> que o Prisma espera. O <code>.nullable()</code> vem depois, então <code>null</code> passa direto, sem conversão.",
+    "O segundo parâmetro de <code>z.object</code> é a mensagem para quando o corpo nem é um objeto: <code>null</code> (JSON quebrado, graças ao <code>.catch</code> do Capítulo 4), uma lista ou um número.",
+    "Os dois esquemas finais partem do mesmo conjunto de campos. O <code>.partial()</code> torna todos opcionais; o <code>.required({ title: true })</code> devolve a obrigatoriedade só ao título. Na edição, o <code>.refine</code> recusa um corpo vazio, que não alteraria nada.",
+    "O <code>z.infer</code> extrai o tipo do TypeScript do esquema. Ninguém precisa escrever uma <code>interface</code> à parte, e o tipo nunca fica diferente da validação."
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: valores padrão e partial",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Seria natural escrever <code>priority: z.enum(Priority).default(\"MEDIUM\")</code> no esquema de criação. Mas o <code>.partial()</code> mantém os valores padrão: um esquema de edição derivado dele transforma <code>{}</code> em <code>{ priority: \"MEDIUM\" }</code>. Uma edição que mandasse só o título voltaria a prioridade para média sem ninguém pedir. Por isso os campos aqui não têm <code>.default()</code>: o banco já aplica os valores padrão na criação, e a edição só altera o que veio."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-6-validando-nas-rotas",
+   "texto": "6.6 Validando nas rotas"
+  },
+  {
+   "t": "p",
+   "html": "Toda rota que recebe dados vai fazer o mesmo: validar e, se falhar, responder <code>400</code> com os erros por campo. Uma função auxiliar evita repetir isso:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/validar.ts -- confere dados com um esquema do Zod\nimport * as z from \"zod\";\n\ntype Resultado<T> =\n  | { dados: T; erro?: never }\n  | { dados?: never; erro: Response };\n\nexport function validar<E extends z.ZodType>(\n  esquema: E,\n  entrada: unknown,\n): Resultado<z.output<E>> {\n  const resultado = esquema.safeParse(entrada);\n  if (resultado.success) {\n    return { dados: resultado.data };\n  }\n\n  const { formErrors, fieldErrors } =\n    z.flattenError(resultado.error);\n  return {\n    erro: Response.json(\n      {\n        erro: formErrors[0] ?? \"Dados inválidos.\",\n        campos: fieldErrors,\n      },\n      { status: 400 },\n    ),\n  };\n}"
+  },
+  {
+   "t": "p",
+   "html": "A função é <strong>genérica</strong>: o <code>E</code> representa qualquer esquema, e <code>z.output&lt;E&gt;</code> é o tipo dos dados que ele produz (já transformados, como a data convertida). O tipo <code>Resultado</code> diz que ou há <code>dados</code>, ou há <code>erro</code>, nunca os dois; com isso, depois de testar o <code>erro</code>, o TypeScript sabe que <code>dados</code> existe. A rota de criação fica assim:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// em app/api/tasks/route.ts\nimport { validar } from \"@/lib/validar\";\nimport { esquemaNovaTarefa } from \"@/lib/esquemas/tarefas\";\n\n// POST /api/tasks\nexport async function POST(request: NextRequest) {\n  const usuario = await usuarioAtual();\n  const corpo = await request.json().catch(() => null);\n\n  const { dados, erro } = validar(esquemaNovaTarefa, corpo);\n  if (erro) return erro;\n\n  const tarefa = await db.task.create({\n    data: { ...dados, userId: usuario.id },\n    select: camposTarefa,\n  });\n\n  return Response.json(tarefa, {\n    status: 201,\n    headers: { Location: `/api/tasks/${tarefa.id}` },\n  });\n}"
+  },
+  {
+   "t": "p",
+   "html": "Os <code>if</code> do Capítulo 4 sumiram, e a rota ficou mais curta e mais completa: agora aceita descrição, situação, prioridade e data. Estes são resultados reais de requisições enviadas à rota:"
+  },
+  {
+   "t": "codigo",
+   "texto": "POST {\"title\": \" Entregar \", \"priority\": \"HIGH\",\n      \"dueDate\": \"2026-12-01\"}\n201 {\"id\": \"cmvbb8py...\", \"title\": \"Entregar\",\n     \"status\": \"PENDING\", \"priority\": \"HIGH\",\n     \"dueDate\": \"2026-12-01T00:00:00.000Z\", ...}\n\nPOST {\"title\": \"\", \"priority\": \"URGENTE\", \"dueDate\": \"01/12/2026\"}\n400 {\"erro\": \"Dados inválidos.\",\n     \"campos\": {\"title\": [\"O título é obrigatório.\"],\n                \"priority\": [\"priority deve ser LOW, MEDIUM\n                             ou HIGH.\"],\n                \"dueDate\": [\"Use a data no formato AAAA-MM-DD.\"]}}\n\nPOST {\"title\": 5}\n400 {\"erro\": \"Dados inválidos.\",\n     \"campos\": {\"title\": [\"O título precisa ser um texto.\"]}}\n\nPOST {title          (JSON quebrado)\n400 {\"erro\": \"O corpo deve ser um objeto JSON.\", \"campos\": {}}"
+  },
+  {
+   "t": "p",
+   "html": "Repare no segundo caso: <strong>todos</strong> os problemas vêm de uma vez, cada um no seu campo. O cliente corrige tudo em uma só tentativa, e um formulário pode mostrar cada mensagem embaixo do campo certo."
+  },
+  {
+   "t": "h2",
+   "id": "6-7-campos-que-o-cliente-nao-pode-enviar",
+   "texto": "6.7 Campos que o cliente não pode enviar"
+  },
+  {
+   "t": "p",
+   "html": "Considere esta requisição, feita por alguém mal-intencionado:"
+  },
+  {
+   "t": "codigo",
+   "texto": "POST /api/tasks\n{\"title\": \"Invasão\", \"userId\": \"id-de-outra-pessoa\",\n \"id\": \"id-escolhido\", \"createdAt\": \"2000-01-01\"}"
+  },
+  {
+   "t": "p",
+   "html": "Se a rota passasse o corpo direto para o banco, com <code>db.task.create({ data: corpo })</code>, a tarefa seria criada na conta de outra pessoa, com o identificador e a data que o atacante escolheu. Essa falha se chama <strong>atribuição em massa</strong> (<em>mass assignment</em>): o cliente define campos que só o servidor deveria definir. Com o Zod, ela não acontece. O <code>z.object</code> <strong>descarta</strong> os campos que não estão no esquema, e a requisição acima cria uma tarefa comum, com <code>id</code> e <code>createdAt</code> gerados pelo banco e o <code>userId</code> de quem está logado, como foi conferido no teste. Por isso o <code>userId</code> é acrescentado na rota, depois da validação: <code>{ ...dados, userId: usuario.id }</code>."
+  },
+  {
+   "t": "p",
+   "html": "Descartar os campos extras em silêncio é o comportamento padrão. Se preferir recusar a requisição quando vier um campo desconhecido, use <code>z.strictObject</code> no lugar de <code>z.object</code>: o Zod responde com um erro dizendo qual campo não é aceito. A escolha é de projeto; o importante é que <strong>nenhum</strong> campo chegue ao banco sem passar pelo esquema."
+  },
+  {
+   "t": "h2",
+   "id": "6-8-validando-a-query-string",
+   "texto": "6.8 Validando a query string"
+  },
+  {
+   "t": "p",
+   "html": "Os parâmetros da URL também são dados de fora, e chegam sempre como texto. O Zod converte e valida com o <code>z.coerce</code>, que tenta transformar o valor no tipo pedido antes de conferir:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const paginacao = z.object({\n  page: z.coerce.number().int().min(1).default(1),\n  limit: z.coerce.number().int().min(1).max(100).default(20),\n});\n\nconst params = request.nextUrl.searchParams;\npaginacao.parse(Object.fromEntries(params));\n// ?page=2          -> { page: 2, limit: 20 }\n// ?limit=500       -> erro: o máximo é 100\n// ?page=abc        -> erro: não é um número"
+  },
+  {
+   "t": "p",
+   "html": "O <code>Object.fromEntries</code> transforma os parâmetros da URL em um objeto comum, e o esquema faz o resto: converte <code>\"2\"</code> em 2, aplica os valores padrão e impõe o limite máximo combinado no Capítulo 2. Aqui o <code>.default()</code> é bem-vindo, porque a listagem sempre precisa de uma página e de um limite. O esquema completo de filtros da listagem, com situação, prioridade, busca e ordenação, entra no Capítulo 7, junto com a paginação."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Validar só no formulário.</strong> Qualquer pessoa chama a API sem passar por ele. A validação no servidor é obrigatória.",
+    "<strong>Usar <code>parse</code> sem <code>try</code>.</strong> Ele lança um erro que vira <code>500</code>. Nas rotas, use <code>safeParse</code> e responda <code>400</code>.",
+    "<strong>Usar o corpo original depois de validar.</strong> Use o <code>dados</code> devolvido pelo Zod: ele está limpo, convertido e sem os campos extras. O <code>corpo</code> continua sujo.",
+    "<strong>Passar o corpo inteiro para o banco.</strong> <code>create({ data: corpo })</code> permite atribuição em massa. Valide e acrescente os campos do servidor (como o <code>userId</code>) depois.",
+    "<strong>Derivar o esquema de edição de um esquema com <code>.default()</code>.</strong> O <code>.partial()</code> mantém os padrões, e a edição altera campos que não vieram.",
+    "<strong>Confundir <code>optional</code> com <code>nullable</code>.</strong> Ausente é “não mexa”; <code>null</code> é “apague”.",
+    "<strong>Escrever a <code>interface</code> à mão ao lado do esquema.</strong> Os dois ficam diferentes com o tempo. Use <code>z.infer</code>.",
+    "<strong>Mensagens que não ajudam.</strong> “Inválido” não diz o que fazer. Diga o formato esperado."
+   ]
+  }
+ ]
+}

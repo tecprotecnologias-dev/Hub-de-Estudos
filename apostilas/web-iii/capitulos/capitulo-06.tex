@@ -1,0 +1,327 @@
+\section{Capítulo 6 -- Validação com Zod}
+
+O Capítulo 5 terminou com um alerta: os tipos do TypeScript desaparecem quando o programa roda, e o que chega em uma requisição pode ser qualquer coisa. Neste capítulo você vai entender por que toda API precisa validar os dados no servidor, conhecer o Zod, a biblioteca de validação mais usada no ecossistema TypeScript, e escrever os esquemas que descrevem uma tarefa do TaskFlow. No final, a criação de tarefas passa a aceitar todos os campos, recusa dados inválidos com mensagens claras para cada campo e ignora campos que o cliente não tem o direito de enviar.
+
+\subsection{6.1 Por que validar no servidor}
+
+Um formulário bem-feito valida os dados antes de enviar: campo obrigatório, tamanho máximo, e-mail no formato certo. Essa validação é ótima para a experiência de quem usa, porque o aviso aparece na hora. Mas ela \textbf{não protege a API}. Qualquer pessoa pode enviar uma requisição sem passar pelo formulário, com o \texttt{curl}, o REST Client ou um \textit{script}; pode também abrir as ferramentas do navegador e alterar a página. Do ponto de vista da API, todo dado que chega é \textbf{não confiável}, venha de onde vier.
+
+Sem validação no servidor, três coisas ruins acontecem. Dados errados vão parar no banco, como uma tarefa com título vazio ou uma data impossível. Erros que eram do cliente viram erros \texttt{500}, quando o banco ou o código quebram mais adiante, longe da causa, e a mensagem não ajuda ninguém a corrigir. E, pior, o cliente pode alterar o que não devia, como o dono de um registro, uma falha estudada na Seção 6.7. A regra é simples: \textbf{a validação no cliente é para conforto; a validação no servidor é obrigatória}.
+
+\subsection{6.2 O Zod}
+
+O \textbf{Zod} é uma biblioteca em que você descreve, em código, o formato que um dado deve ter, chamado de \textbf{esquema}. A partir do esquema, o Zod faz duas coisas: confere um valor qualquer em tempo de execução e fornece o tipo do TypeScript correspondente. Assim, a regra é escrita uma vez só e vale para a validação e para o editor. Instale a versão 4:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$ npm install zod@4
+\end{Verbatim}
+\end{codigo}
+
+Um primeiro esquema e as duas formas de usá-lo:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+import * as z from "zod";
+
+const tarefa = z.object({
+  title: z.string().trim().min(1).max(120),
+  priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
+});
+
+// parse: devolve o dado validado ou LANÇA um erro (ZodError)
+const ok = tarefa.parse({
+  title: "  Estudar Zod ",
+  priority: "HIGH",
+});
+// { title: "Estudar Zod", priority: "HIGH" }
+
+// safeParse: nunca lança; devolve um resultado para conferir
+const r = tarefa.safeParse({ title: "", priority: "URGENTE" });
+if (!r.success) {
+  console.log(r.error.issues.length);   // 2
+} else {
+  console.log(r.data.title);
+}
+\end{Verbatim}
+\end{codigo}
+
+Repare que o \texttt{parse} devolveu o título sem os espaços: o \texttt{.trim()} não só confere, ele \textbf{transforma} o valor. O dado que sai do Zod é o dado limpo, pronto para usar. Em uma API, prefira o \texttt{safeParse}: dados inválidos são uma situação esperada, e não uma exceção, e o resultado com \texttt{success} obriga o código a tratar os dois casos. O TypeScript entende o \texttt{if}: dentro do \texttt{else}, ele sabe que \texttt{r.data} existe e tem o tipo do esquema.
+
+\subsection{6.3 Os blocos de um esquema}
+
+Os esquemas são montados combinando tipos básicos com regras encadeadas por pontos. Os mais usados em APIs:
+
+\begin{center}
+\begin{tabular}{@{}P{0.42\linewidth}P{0.48\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Esquema} & \tblheader{Aceita} \\
+\midrule
+\texttt{z.string().min(1).max(120)} & texto com 1 a 120 caracteres \\
+\rowcolor{rowgray} \texttt{z.string().trim()} & texto, já sem os espaços das pontas \\
+\texttt{z.email()} & texto no formato de e-mail \\
+\rowcolor{rowgray} \texttt{z.number().int().positive()} & número inteiro maior que zero \\
+\texttt{z.boolean()} & \texttt{true} ou \texttt{false} \\
+\rowcolor{rowgray} \texttt{z.enum(["LOW", "HIGH"])} & um dos valores da lista \\
+\texttt{z.iso.date()} & texto de data no formato \texttt{AAAA-MM-DD} \\
+\rowcolor{rowgray} \texttt{z.array(z.string()).max(10)} & lista de até 10 textos \\
+\texttt{z.object(\{ ... \})} & objeto com os campos descritos \\
+\rowcolor{rowgray} \texttt{.optional()} & o campo pode faltar (\texttt{undefined}) \\
+\texttt{.nullable()} & o campo pode ser \texttt{null} \\
+\rowcolor{rowgray} \texttt{.default(valor)} & se faltar, usa o valor indicado \\
+\texttt{.transform(f)} & converte o valor aprovado com a função \texttt{f} \\
+\rowcolor{rowgray} \texttt{.refine(f, ...)} & regra personalizada, escrita como função \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+A diferença entre \texttt{optional} e \texttt{nullable} importa em uma API. ``Campo ausente'' e ``campo com \texttt{null}'' significam coisas diferentes em uma edição: \texttt{\{"title": "Novo"\}} não mexe na data de vencimento, enquanto \texttt{\{"dueDate": null\}} pede para \textbf{apagar} a data. Por isso os campos que podem ser apagados aceitam os dois.
+
+\subsection{6.4 Mensagens de erro}
+
+Quando a validação falha, o Zod devolve uma lista de problemas (\texttt{issues}), cada um com o caminho do campo e uma mensagem. A função \texttt{z.flattenError} organiza essa lista por campo, o formato mais fácil para quem consome a API:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+const r = tarefa.safeParse({ title: "", priority: "URGENTE" });
+console.log(z.flattenError(r.error));
+// {
+//   formErrors: [],
+//   fieldErrors: {
+//     title: ["Too small: expected string to have
+//              >=1 characters"],
+//     priority: ["Invalid option: expected one of
+//                \"LOW\"|\"MEDIUM\"|\"HIGH\""]
+//   }
+// }
+\end{Verbatim}
+\end{codigo}
+
+Os erros de um campo ficam em \texttt{fieldErrors}; os do objeto como um todo, em \texttt{formErrors}. As mensagens padrão estão em inglês. O Zod traz traduções, ligadas com \texttt{z.config(z.locales.pt())}, mas elas seguem o português de Portugal e são genéricas: ``Demasiado pequeno: esperava que o texto tivesse >= 1 caracteres''. Para uma API brasileira, o melhor é escrever as próprias mensagens, com a opção \texttt{error}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+z.string({ error: "O título precisa ser um texto." })
+  .min(1, { error: "O título é obrigatório." })
+\end{Verbatim}
+\end{codigo}
+
+A mensagem do \texttt{z.string(...)} vale quando o valor nem é um texto (um número, por exemplo, ou o campo ausente); a do \texttt{.min(...)} vale quando é um texto curto demais. Escreva mensagens que digam ao cliente o que fazer, e não só o que deu errado: ``Use a data no formato AAAA-MM-DD'' resolve o problema; ``Data inválida'', não.
+
+\subsection{6.5 Os esquemas do TaskFlow}
+
+Os esquemas da tarefa ficam em um arquivo próprio, separados das rotas:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// lib/esquemas/tarefas.ts -- o que a API aceita para uma tarefa
+import * as z from "zod";
+import {
+  Priority,
+  TaskStatus,
+} from "@/app/generated/prisma/client";
+
+// Os campos de uma tarefa, sem valores padrão: quem preenche o
+// que faltar é o banco (os @default do schema.prisma).
+const campos = z.object({
+  title: z
+    .string({ error: "O título precisa ser um texto." })
+    .trim()
+    .min(1, { error: "O título é obrigatório." })
+    .max(120, {
+      error: "O título pode ter até 120 caracteres.",
+    }),
+  description: z
+    .string({ error: "A descrição precisa ser um texto." })
+    .trim()
+    .max(2000, {
+      error: "A descrição pode ter até 2000 caracteres.",
+    })
+    .nullable(),
+  status: z.enum(TaskStatus, {
+    error: "status deve ser PENDING, IN_PROGRESS ou DONE.",
+  }),
+  priority: z.enum(Priority, {
+    error: "priority deve ser LOW, MEDIUM ou HIGH.",
+  }),
+  dueDate: z.iso
+    .date({ error: "Use a data no formato AAAA-MM-DD." })
+    .transform((texto) => new Date(texto))
+    .nullable(),
+}, { error: "O corpo deve ser um objeto JSON." });
+
+// POST: só o título é obrigatório
+export const esquemaNovaTarefa = campos
+  .partial()
+  .required({ title: true });
+
+// PATCH: tudo opcional, mas ao menos um campo
+export const esquemaEdicaoTarefa = campos
+  .partial()
+  .refine((dados) => Object.keys(dados).length > 0, {
+    error: "Envie ao menos um campo para alterar.",
+  });
+
+export type NovaTarefa = z.infer<typeof esquemaNovaTarefa>;
+export type EdicaoTarefa = z.infer<typeof esquemaEdicaoTarefa>;
+\end{Verbatim}
+\end{codigo}
+
+Os pontos principais:
+
+\begin{itemize}
+  \item O \texttt{z.enum} aceita diretamente os objetos \texttt{TaskStatus} e \texttt{Priority} gerados pelo Prisma. Se um dia o esquema do banco ganhar uma prioridade nova, a validação a aceita sem nenhuma alteração aqui.
+  \item O \texttt{dueDate} aceita só o formato ISO, o que barra o \texttt{01/12/2026} do Capítulo 5, e o \texttt{.transform} converte o texto aprovado no \texttt{Date} que o Prisma espera. O \texttt{.nullable()} vem depois, então \texttt{null} passa direto, sem conversão.
+  \item O segundo parâmetro de \texttt{z.object} é a mensagem para quando o corpo nem é um objeto: \texttt{null} (JSON quebrado, graças ao \texttt{.catch} do Capítulo 4), uma lista ou um número.
+  \item Os dois esquemas finais partem do mesmo conjunto de campos. O \texttt{.partial()} torna todos opcionais; o \texttt{.required(\{ title: true \})} devolve a obrigatoriedade só ao título. Na edição, o \texttt{.refine} recusa um corpo vazio, que não alteraria nada.
+  \item O \texttt{z.infer} extrai o tipo do TypeScript do esquema. Ninguém precisa escrever uma \texttt{interface} à parte, e o tipo nunca fica diferente da validação.
+\end{itemize}
+
+\begin{destaque}{Atenção: valores padrão e partial}
+Seria natural escrever \texttt{priority: z.enum(Priority).default("MEDIUM")} no esquema de criação. Mas o \texttt{.partial()} mantém os valores padrão: um esquema de edição derivado dele transforma \texttt{\{\}} em \texttt{\{ priority: "MEDIUM" \}}. Uma edição que mandasse só o título voltaria a prioridade para média sem ninguém pedir. Por isso os campos aqui não têm \texttt{.default()}: o banco já aplica os valores padrão na criação, e a edição só altera o que veio.
+\end{destaque}
+
+\subsection{6.6 Validando nas rotas}
+
+Toda rota que recebe dados vai fazer o mesmo: validar e, se falhar, responder \texttt{400} com os erros por campo. Uma função auxiliar evita repetir isso:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// lib/validar.ts -- confere dados com um esquema do Zod
+import * as z from "zod";
+
+type Resultado<T> =
+  | { dados: T; erro?: never }
+  | { dados?: never; erro: Response };
+
+export function validar<E extends z.ZodType>(
+  esquema: E,
+  entrada: unknown,
+): Resultado<z.output<E>> {
+  const resultado = esquema.safeParse(entrada);
+  if (resultado.success) {
+    return { dados: resultado.data };
+  }
+
+  const { formErrors, fieldErrors } =
+    z.flattenError(resultado.error);
+  return {
+    erro: Response.json(
+      {
+        erro: formErrors[0] ?? "Dados inválidos.",
+        campos: fieldErrors,
+      },
+      { status: 400 },
+    ),
+  };
+}
+\end{Verbatim}
+\end{codigo}
+
+A função é \textbf{genérica}: o \texttt{E} representa qualquer esquema, e \texttt{z.output<E>} é o tipo dos dados que ele produz (já transformados, como a data convertida). O tipo \texttt{Resultado} diz que ou há \texttt{dados}, ou há \texttt{erro}, nunca os dois; com isso, depois de testar o \texttt{erro}, o TypeScript sabe que \texttt{dados} existe. A rota de criação fica assim:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// em app/api/tasks/route.ts
+import { validar } from "@/lib/validar";
+import { esquemaNovaTarefa } from "@/lib/esquemas/tarefas";
+
+// POST /api/tasks
+export async function POST(request: NextRequest) {
+  const usuario = await usuarioAtual();
+  const corpo = await request.json().catch(() => null);
+
+  const { dados, erro } = validar(esquemaNovaTarefa, corpo);
+  if (erro) return erro;
+
+  const tarefa = await db.task.create({
+    data: { ...dados, userId: usuario.id },
+    select: camposTarefa,
+  });
+
+  return Response.json(tarefa, {
+    status: 201,
+    headers: { Location: `/api/tasks/${tarefa.id}` },
+  });
+}
+\end{Verbatim}
+\end{codigo}
+
+Os \texttt{if} do Capítulo 4 sumiram, e a rota ficou mais curta e mais completa: agora aceita descrição, situação, prioridade e data. Estes são resultados reais de requisições enviadas à rota:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+POST {"title": " Entregar ", "priority": "HIGH",
+      "dueDate": "2026-12-01"}
+201 {"id": "cmvbb8py...", "title": "Entregar",
+     "status": "PENDING", "priority": "HIGH",
+     "dueDate": "2026-12-01T00:00:00.000Z", ...}
+
+POST {"title": "", "priority": "URGENTE", "dueDate": "01/12/2026"}
+400 {"erro": "Dados inválidos.",
+     "campos": {"title": ["O título é obrigatório."],
+                "priority": ["priority deve ser LOW, MEDIUM
+                             ou HIGH."],
+                "dueDate": ["Use a data no formato AAAA-MM-DD."]}}
+
+POST {"title": 5}
+400 {"erro": "Dados inválidos.",
+     "campos": {"title": ["O título precisa ser um texto."]}}
+
+POST {title          (JSON quebrado)
+400 {"erro": "O corpo deve ser um objeto JSON.", "campos": {}}
+\end{Verbatim}
+\end{codigo}
+
+Repare no segundo caso: \textbf{todos} os problemas vêm de uma vez, cada um no seu campo. O cliente corrige tudo em uma só tentativa, e um formulário pode mostrar cada mensagem embaixo do campo certo.
+
+\subsection{6.7 Campos que o cliente não pode enviar}
+
+Considere esta requisição, feita por alguém mal-intencionado:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+POST /api/tasks
+{"title": "Invasão", "userId": "id-de-outra-pessoa",
+ "id": "id-escolhido", "createdAt": "2000-01-01"}
+\end{Verbatim}
+\end{codigo}
+
+Se a rota passasse o corpo direto para o banco, com \texttt{db.task.create(\{ data: corpo \})}, a tarefa seria criada na conta de outra pessoa, com o identificador e a data que o atacante escolheu. Essa falha se chama \textbf{atribuição em massa} (\textit{mass assignment}): o cliente define campos que só o servidor deveria definir. Com o Zod, ela não acontece. O \texttt{z.object} \textbf{descarta} os campos que não estão no esquema, e a requisição acima cria uma tarefa comum, com \texttt{id} e \texttt{createdAt} gerados pelo banco e o \texttt{userId} de quem está logado, como foi conferido no teste. Por isso o \texttt{userId} é acrescentado na rota, depois da validação: \texttt{\{ ...dados, userId: usuario.id \}}.
+
+Descartar os campos extras em silêncio é o comportamento padrão. Se preferir recusar a requisição quando vier um campo desconhecido, use \texttt{z.strictObject} no lugar de \texttt{z.object}: o Zod responde com um erro dizendo qual campo não é aceito. A escolha é de projeto; o importante é que \textbf{nenhum} campo chegue ao banco sem passar pelo esquema.
+
+\subsection{6.8 Validando a query string}
+
+Os parâmetros da URL também são dados de fora, e chegam sempre como texto. O Zod converte e valida com o \texttt{z.coerce}, que tenta transformar o valor no tipo pedido antes de conferir:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+const paginacao = z.object({
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(100).default(20),
+});
+
+const params = request.nextUrl.searchParams;
+paginacao.parse(Object.fromEntries(params));
+// ?page=2          -> { page: 2, limit: 20 }
+// ?limit=500       -> erro: o máximo é 100
+// ?page=abc        -> erro: não é um número
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{Object.fromEntries} transforma os parâmetros da URL em um objeto comum, e o esquema faz o resto: converte \texttt{"2"} em 2, aplica os valores padrão e impõe o limite máximo combinado no Capítulo 2. Aqui o \texttt{.default()} é bem-vindo, porque a listagem sempre precisa de uma página e de um limite. O esquema completo de filtros da listagem, com situação, prioridade, busca e ordenação, entra no Capítulo 7, junto com a paginação.
+
+\subsection{Erros Comuns}
+
+\begin{itemize}
+  \item \textbf{Validar só no formulário.} Qualquer pessoa chama a API sem passar por ele. A validação no servidor é obrigatória.
+  \item \textbf{Usar \texttt{parse} sem \texttt{try}.} Ele lança um erro que vira \texttt{500}. Nas rotas, use \texttt{safeParse} e responda \texttt{400}.
+  \item \textbf{Usar o corpo original depois de validar.} Use o \texttt{dados} devolvido pelo Zod: ele está limpo, convertido e sem os campos extras. O \texttt{corpo} continua sujo.
+  \item \textbf{Passar o corpo inteiro para o banco.} \texttt{create(\{ data: corpo \})} permite atribuição em massa. Valide e acrescente os campos do servidor (como o \texttt{userId}) depois.
+  \item \textbf{Derivar o esquema de edição de um esquema com \texttt{.default()}.} O \texttt{.partial()} mantém os padrões, e a edição altera campos que não vieram.
+  \item \textbf{Confundir \texttt{optional} com \texttt{nullable}.} Ausente é ``não mexa''; \texttt{null} é ``apague''.
+  \item \textbf{Escrever a \texttt{interface} à mão ao lado do esquema.} Os dois ficam diferentes com o tempo. Use \texttt{z.infer}.
+  \item \textbf{Mensagens que não ajudam.} ``Inválido'' não diz o que fazer. Diga o formato esperado.
+\end{itemize}
