@@ -870,4 +870,13 @@ export const apostilas: Apostila[] = [
     descricao:
       'Por que testar automaticamente, testes de unidade, integração e ponta a ponta, o Vitest (e o Jest), um banco só para os testes, describe, it e expect, espiões, relógio falso, mocks, testes das rotas sem o servidor, teste de contrato com o OpenAPI e cobertura.',
   },
+  {
+    id: 'web3-cap12',
+    capitulo: 12,
+    titulo: 'Segurança e deploy',
+    disciplinaId: 'programacao-e-design-para-web-iii',
+    unidades: ['Segurança em APIs'],
+    descricao:
+      'Defesa em profundidade, o OWASP API Security Top 10, CORS e preflight, limite de tentativas com o 429, cabeçalhos de segurança e CSP, cookies HttpOnly e CSRF, ambientes e segredos, deploy na Vercel, migrações em produção, CI/CD com GitHub Actions e domínio próprio.',
+  },
 ]

@@ -1,0 +1,609 @@
+{
+ "numero": 12,
+ "titulo": "Segurança e deploy",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "O TaskFlow está completo: autenticação, CRUD, erros padronizados, documentação e testes. Falta colocá-lo na internet, onde qualquer pessoa, e qualquer programa, pode chamá-lo. Neste capítulo você vai revisar a API contra a lista de riscos mais conhecida do mercado, o OWASP API Security Top 10; liberar o acesso de outros sites com o CORS; limitar as tentativas de <em>login</em>; acrescentar os cabeçalhos de segurança; publicar a API na Vercel, com o banco de produção no Neon; e montar um <em>pipeline</em> que testa cada envio de código e só publica o que passou em todos os testes."
+  },
+  {
+   "t": "h2",
+   "id": "12-1-seguranca-em-camadas",
+   "texto": "12.1 Segurança em camadas"
+  },
+  {
+   "t": "p",
+   "html": "Nenhuma medida isolada protege uma API. A estratégia usada na prática se chama <strong>defesa em profundidade</strong>: várias camadas independentes, de modo que, se uma falhar, a seguinte ainda segure o ataque. O TaskFlow já tem várias: a validação de todas as entradas (Capítulo 6), o <code>userId</code> em todas as consultas (Capítulo 7), erros que não revelam detalhes internos (Capítulo 8), senhas com bcrypt e <em>tokens</em> assinados (Capítulo 9) e testes que conferem as regras de segurança (Capítulo 11). Este capítulo acrescenta as camadas que só fazem sentido quando a API sai do seu computador."
+  },
+  {
+   "t": "p",
+   "html": "Vale também o princípio do <strong>menor privilégio</strong>: cada parte do sistema recebe só o acesso de que precisa. O <em>token</em> carrega só o <code>id</code>; a resposta traz só os campos públicos; a chave da Vercel usada pelo GitHub dá acesso só ao projeto do TaskFlow; o banco de testes não é o de produção. Quando algo vaza, o estrago fica limitado ao que aquela parte podia fazer."
+  },
+  {
+   "t": "h2",
+   "id": "12-2-o-owasp-api-security-top-10",
+   "texto": "12.2 O OWASP API Security Top 10"
+  },
+  {
+   "t": "p",
+   "html": "A <strong>OWASP</strong> (<em>Open Worldwide Application Security Project</em>) é uma fundação sem fins lucrativos que publica guias e ferramentas de segurança. O <strong>API Security Top 10</strong>, na versão de 2023, lista os riscos mais comuns e mais graves em APIs. Esta é a lista, com o que o TaskFlow faz a respeito de cada item:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Risco",
+    "No TaskFlow"
+   ],
+   "linhas": [
+    [
+     "API1 Autorização quebrada no nível do objeto (BOLA)",
+     "toda consulta filtra pelo <code>userId</code>, e a tarefa de outra pessoa recebe <code>404</code> (Capítulos 4 e 7), com um teste que confere isso (Capítulo 11)"
+    ],
+    [
+     "API2 Autenticação quebrada",
+     "bcrypt, JWT com prazo e algoritmo fixo (Capítulo 9) e limite de tentativas de <em>login</em> (Seção 12.4)"
+    ],
+    [
+     "API3 Autorização quebrada no nível da propriedade",
+     "a resposta traz só os campos do <code>select</code> (Capítulo 5), e o Zod descarta campos como <code>userId</code> na entrada (Capítulo 6)"
+    ],
+    [
+     "API4 Consumo irrestrito de recursos",
+     "<code>limit</code> de no máximo 100 (Capítulo 7), tamanhos máximos nos campos (Capítulo 6) e limite de tentativas (Seção 12.4)"
+    ],
+    [
+     "API5 Autorização quebrada no nível da função",
+     "o TaskFlow não tem funções de administrador; se tiver, cada rota delas deve conferir o papel da pessoa e responder <code>403</code>"
+    ],
+    [
+     "API6 Acesso irrestrito a fluxos sensíveis",
+     "um robô pode criar milhares de contas; o limite da Seção 12.4 pode ser aplicado também ao cadastro"
+    ],
+    [
+     "API7 Falsificação de requisição pelo servidor (SSRF)",
+     "o TaskFlow não busca endereços informados pelo cliente; uma API que faça isso deve aceitar só destinos de uma lista"
+    ],
+    [
+     "API8 Configuração de segurança incorreta",
+     "erros sem detalhes internos (Capítulo 8), CORS restrito e cabeçalhos de segurança (Seções 12.3 e 12.5)"
+    ],
+    [
+     "API9 Gestão inadequada do inventário",
+     "todos os <em>endpoints</em> documentados no OpenAPI (Capítulo 10), com uma versão no <code>info</code>"
+    ],
+    [
+     "API10 Consumo inseguro de APIs",
+     "os dados de outras APIs, como o ViaCEP do Capítulo 1, passam pela mesma validação que os do cliente"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Repare que o primeiro item, o BOLA, é também o mais simples de entender: trocar o número de um recurso na URL e ver o que é de outra pessoa. Ele lidera a lista desde a primeira edição, em 2019, justamente porque basta um esquecimento em uma única consulta. É por isso que o TaskFlow concentra as consultas na camada de serviço e tem um teste para essa regra."
+  },
+  {
+   "t": "h2",
+   "id": "12-3-cors-quem-pode-chamar-a-api-pelo-navegador",
+   "texto": "12.3 CORS: quem pode chamar a API pelo navegador"
+  },
+  {
+   "t": "p",
+   "html": "Os navegadores seguem a <strong>política de mesma origem</strong> (<em>same-origin policy</em>): o JavaScript de uma página só pode ler as respostas de pedidos feitos à mesma <strong>origem</strong> da página, que é a combinação de protocolo, domínio e porta. <code>https://app.com</code> e <code>https://api.app.com</code> são origens diferentes, assim como <code>http://localhost:5173</code> e <code>http://localhost:3000</code>. Sem essa regra, qualquer site que você visitasse poderia usar o seu navegador, com os seus <em>cookies</em>, para ler os seus e-mails em outra aba."
+  },
+  {
+   "t": "p",
+   "html": "Mas uma API muitas vezes é feita justamente para ser usada por outro site, como a interface do TaskFlow feita em React, em outro domínio. O <strong>CORS</strong> (<em>Cross-Origin Resource Sharing</em>) é o mecanismo pelo qual o servidor diz ao navegador quais origens podem ler as suas respostas. Ele funciona por cabeçalhos:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "o navegador envia o cabeçalho <code>Origin</code>, com a origem da página;",
+    "se a origem é permitida, o servidor responde com <code>Access-Control-Allow-Origin</code> e o valor dela; sem esse cabeçalho, o navegador recebe a resposta, mas não a entrega ao JavaScript da página;",
+    "antes de pedidos que não são “simples”, como os que têm o cabeçalho <code>Authorization</code> ou o corpo em JSON, o navegador faz um <strong><em>preflight</em></strong>: um pedido <code>OPTIONS</code>, que pergunta se o método e os cabeçalhos são aceitos. Só se a resposta autorizar, ele envia o pedido de verdade."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Como todo pedido ao TaskFlow tem <code>Authorization</code> ou JSON, quase todos passam pelo <em>preflight</em>, o <code>OPTIONS</code> que o Capítulo 2 citou. No Next.js 16, código que deve rodar antes das rotas fica no arquivo <code>proxy.ts</code>, na raiz do projeto, que nas versões anteriores se chamava <code>middleware.ts</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// proxy.ts -- roda antes das rotas da API e cuida do CORS\nimport { NextResponse, type NextRequest } from \"next/server\";\n\n// Os sites que podem chamar a API pelo navegador, separados por\n// vírgula no .env, como \"https://app.com,http://localhost:5173\"\nconst origens = (process.env.ORIGENS_PERMITIDAS ?? \"\")\n  .split(\",\")\n  .map((origem) => origem.trim())\n  .filter(Boolean);\n\nconst preflight = {\n  \"Access-Control-Allow-Methods\": \"GET, POST, PATCH, DELETE\",\n  \"Access-Control-Allow-Headers\": \"Content-Type, Authorization\",\n  \"Access-Control-Max-Age\": \"600\", // guardar por 10 minutos\n};\n\n// os cabeçalhos da resposta que o JavaScript do site pode ler\nconst expostos = \"Location, Retry-After, WWW-Authenticate\";\n\nexport function proxy(request: NextRequest) {\n  const origem = request.headers.get(\"origin\");\n  const permitida = origem !== null && origens.includes(origem);\n\n  // Preflight: o navegador pergunta antes do pedido de verdade\n  if (request.method === \"OPTIONS\" && origem) {\n    const headers = new Headers({ Vary: \"Origin\" });\n    if (permitida) {\n      headers.set(\"Access-Control-Allow-Origin\", origem);\n      for (const [nome, valor] of Object.entries(preflight)) {\n        headers.set(nome, valor);\n      }\n    }\n    return new Response(null, { status: 204, headers });\n  }\n\n  // Pedido comum: a rota responde, e o proxy só acrescenta\n  // os cabeçalhos do CORS\n  const resposta = NextResponse.next();\n  resposta.headers.set(\"Vary\", \"Origin\");\n  if (permitida) {\n    resposta.headers.set(\"Access-Control-Allow-Origin\", origem);\n    resposta.headers.set(\n      \"Access-Control-Expose-Headers\",\n      expostos,\n    );\n  }\n  return resposta;\n}\n\nexport const config = {\n  matcher: \"/api/:path*\",\n};"
+  },
+  {
+   "t": "p",
+   "html": "O <code>config.matcher</code> limita o <em>proxy</em> aos endereços da API. As origens permitidas vêm do <code>.env</code>, porque mudam de um ambiente para outro: no desenvolvimento, a interface roda em <code>http://localhost:5173</code>; em produção, no domínio dela. Acrescente ao <code>.env</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "ORIGENS_PERMITIDAS=\"http://localhost:5173\""
+  },
+  {
+   "t": "p",
+   "html": "Alguns detalhes do código merecem atenção. O <code>Access-Control-Allow-Origin</code> repete a origem que pediu, e não um <code>*</code>, que liberaria qualquer site. O <code>Vary: Origin</code> avisa os <em>caches</em> de que a resposta muda conforme a origem; sem ele, um <em>cache</em> poderia entregar a um site a resposta liberada para outro. O <code>Access-Control-Expose-Headers</code> é necessário porque, por padrão, o JavaScript de outra origem só lê alguns cabeçalhos básicos; sem ele, a interface não leria o <code>Location</code> da tarefa criada nem o <code>Retry-After</code> da próxima seção. Estes são resultados reais:"
+  },
+  {
+   "t": "codigo",
+   "texto": "OPTIONS /api/tasks   Origin: http://localhost:5173\n                     (preflight de um POST com Authorization)\n204 access-control-allow-origin: http://localhost:5173\n    access-control-allow-methods: GET, POST, PATCH, DELETE\n    access-control-allow-headers: Content-Type, Authorization\n    access-control-max-age: 600\n    vary: Origin\n\nOPTIONS /api/tasks   Origin: https://site-malicioso.com\n204 vary: Origin                       (nenhuma permissão)\n\nGET /api/health      Origin: http://localhost:5173\n200 access-control-allow-origin: http://localhost:5173\n    access-control-expose-headers: Location, Retry-After,\n                                   WWW-Authenticate"
+  },
+  {
+   "t": "p",
+   "html": "O site desconhecido recebe uma resposta sem permissões, e o navegador bloqueia o pedido de verdade antes de enviá-lo."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: o CORS não é autenticação",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O CORS só vale dentro dos navegadores. O <code>curl</code>, o Postman, um aplicativo de celular ou um programa qualquer ignoram esses cabeçalhos e chamam a API normalmente. O CORS protege as <strong>pessoas que usam o navegador</strong> contra sites maliciosos; quem protege a API é a autenticação. Nunca use o CORS como única barreira, e nunca libere <code>*</code> em uma API que use <em>cookies</em> para autenticar."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "12-4-limite-de-tentativas-o-429",
+   "texto": "12.4 Limite de tentativas: o 429"
+  },
+  {
+   "t": "p",
+   "html": "Com a API na internet, nada impede um programa de tentar milhares de senhas por minuto na rota de <em>login</em>, o <strong>ataque de força bruta</strong>. O bcrypt deixa cada tentativa lenta (Capítulo 9), mas a defesa de verdade é contar as tentativas e recusar as que passarem de um limite, com o status <code>429 Too Many Requests</code> e o cabeçalho <code>Retry-After</code>, que diz em quantos segundos tentar de novo. Essa técnica se chama <strong><em>rate limiting</em></strong>."
+  },
+  {
+   "t": "p",
+   "html": "Onde guardar a contagem? Em uma variável do servidor seria o mais simples, mas na Vercel a API roda em várias instâncias ao mesmo tempo, que não dividem a memória, e cada uma é desligada quando fica parada: o atacante teria um limite por instância, que recomeçaria do zero de tempos em tempos. A contagem precisa ficar em um lugar compartilhado. Projetos grandes usam o Redis, um banco de dados em memória, ou o <em>firewall</em> da própria plataforma; o TaskFlow usa o PostgreSQL, que já tem. Acrescente um modelo ao fim do <code>schema.prisma</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// Tentativas contadas pelo limite de requisições (Capítulo 12)\nmodel Limite {\n  chave      String   @id\n  tentativas Int\n  expiraEm   DateTime\n\n  @@map(\"limites\")\n}"
+  },
+  {
+   "t": "p",
+   "html": "A <code>chave</code> identifica o que está sendo contado, como “<em>login</em> deste IP com este e-mail”. Crie a migração e gere o cliente:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npx prisma migrate dev --name limite\n$ npx prisma generate"
+  },
+  {
+   "t": "p",
+   "html": "O SQL gerado em <code>prisma/migrations/..._limite/migration.sql</code> cria a tabela:"
+  },
+  {
+   "t": "codigo",
+   "texto": "CREATE TABLE \"limites\" (\n    \"chave\" TEXT NOT NULL,\n    \"tentativas\" INTEGER NOT NULL,\n    \"expiraEm\" TIMESTAMP(3) NOT NULL,\n\n    CONSTRAINT \"limites_pkey\" PRIMARY KEY (\"chave\")\n);"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: a segunda migração no banco local do prisma dev",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Se você usa o banco local do <code>prisma dev</code> (Capítulo 3), esta é a primeira vez que o <code>migrate dev</code> roda em um banco que já tem tabelas, e ele falha com <code>type \"TaskStatus\" already exists</code>. O <code>migrate dev</code> usa um segundo banco, o <em>shadow database</em>, para conferir as migrações; no Neon, ele o cria sozinho, mas o servidor local tem um só banco. O <code>prisma dev</code> oferece um segundo endereço para isso, numa porta logo acima da do banco principal. Coloque-o no <code>.env</code>, como <code>SHADOW_DATABASE_URL</code>, e acrescente uma linha ao <code>prisma7.config.ts</code>:"
+    }
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "// prisma7.config.ts\nimport \"dotenv/config\";\nimport { defineConfig } from \"prisma/config\";\n\nexport default defineConfig({\n  schema: \"prisma/schema.prisma\",\n  migrations: {\n    path: \"prisma/migrations\",\n    seed: \"tsx prisma/seed.ts\",\n  },\n  datasource: {\n    url: process.env[\"DIRECT_URL\"],\n    // só para o banco local do prisma dev (veja o texto)\n    shadowDatabaseUrl: process.env[\"SHADOW_DATABASE_URL\"],\n  },\n});"
+  },
+  {
+   "t": "p",
+   "html": "Agora, o módulo que conta as tentativas:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/limite.ts -- limita quantas vezes algo pode ser feito em\n// um intervalo de tempo (rate limiting)\nimport { db } from \"@/lib/db\";\n\n// Conta uma tentativa para a chave. Devolve 0 se ela ainda está\n// dentro do limite, ou quantos segundos faltam para liberar.\nexport async function contarTentativa(\n  chave: string,\n  maximo: number,\n  janelaSegundos: number,\n) {\n  const agora = new Date();\n\n  const registro = await db.$transaction(async (tx) => {\n    const atual = await tx.limite.findUnique({\n      where: { chave },\n    });\n\n    // sem registro, ou com a janela vencida: a contagem recomeça\n    if (!atual || atual.expiraEm <= agora) {\n      const expiraEm = new Date(\n        agora.getTime() + janelaSegundos * 1000,\n      );\n      return tx.limite.upsert({\n        where: { chave },\n        create: { chave, tentativas: 1, expiraEm },\n        update: { tentativas: 1, expiraEm },\n      });\n    }\n    return tx.limite.update({\n      where: { chave },\n      data: { tentativas: { increment: 1 } },\n    });\n  });\n\n  if (registro.tentativas <= maximo) return 0;\n  const faltam = registro.expiraEm.getTime() - agora.getTime();\n  return Math.ceil(faltam / 1000);\n}\n\n// Esquece as tentativas da chave, como depois de um login certo\nexport async function zerarTentativas(chave: string) {\n  await db.limite.deleteMany({ where: { chave } });\n}"
+  },
+  {
+   "t": "p",
+   "html": "A janela é fixa: a primeira tentativa marca o início, e o registro guarda quando ela termina. Enquanto a janela vale, cada tentativa soma um; vencida, a contagem recomeça. A busca e a gravação ficam em uma <strong>transação interativa</strong>, o <code>$transaction</code> com uma função, em que o <code>tx</code> faz as consultas como uma unidade. O <code>increment</code> soma no próprio banco, sem ler e regravar o valor, o que evita perder contagens quando duas tentativas chegam ao mesmo tempo. A função devolve quantos segundos faltam, exatamente o que o <code>Retry-After</code> precisa. O <code>429</code> também ganha um título na lista do Capítulo 8:"
+  },
+  {
+   "t": "codigo",
+   "texto": "const titulos: Record<number, string> = {\n  400: \"Requisição inválida\",\n  401: \"Não autenticado\",\n  403: \"Acesso negado\",\n  404: \"Não encontrado\",\n  409: \"Conflito\",\n  429: \"Muitas requisições\",\n  500: \"Erro interno\",\n};"
+  },
+  {
+   "t": "p",
+   "html": "E a rota de <em>login</em> passa a usar o limite:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/api/auth/login/route.ts -- troca e-mail e senha por um\n// token, com um limite de tentativas\nimport type { NextRequest } from \"next/server\";\nimport { comErros, problema } from \"@/lib/erros\";\nimport { validar } from \"@/lib/validar\";\nimport { esquemaLogin } from \"@/lib/esquemas/auth\";\nimport { autenticar } from \"@/lib/servicos/usuarios\";\nimport { criarToken } from \"@/lib/token\";\nimport { contarTentativa, zerarTentativas } from \"@/lib/limite\";\n\nconst MAXIMO = 5; // tentativas...\nconst JANELA = 15 * 60; // ...a cada 15 minutos (em segundos)\n\n// POST /api/auth/login\nexport const POST = comErros(async (request: NextRequest) => {\n  const corpo = await request.json().catch(() => null);\n  const dados = validar(esquemaLogin, corpo);\n\n  // O IP de quem pede. Na Vercel, a própria plataforma preenche\n  // este cabeçalho, e um valor enviado pelo cliente é ignorado.\n  const ip = request.headers.get(\"x-forwarded-for\")\n    ?.split(\",\")[0].trim() || \"local\";\n  const chave = `login:${ip}:${dados.email}`;\n\n  const espera = await contarTentativa(chave, MAXIMO, JANELA);\n  if (espera > 0) {\n    const resposta = problema(\n      429,\n      \"Muitas tentativas de login. Tente de novo mais tarde.\",\n    );\n    resposta.headers.set(\"Retry-After\", String(espera));\n    return resposta;\n  }\n\n  const userId = await autenticar(dados);\n  if (!userId) {\n    return problema(401, \"E-mail ou senha incorretos.\");\n  }\n  await zerarTentativas(chave);\n\n  // um token não deve ficar guardado em caches pelo caminho\n  return Response.json(await criarToken(userId), {\n    headers: { \"Cache-Control\": \"no-store\" },\n  });\n});"
+  },
+  {
+   "t": "p",
+   "html": "A chave combina o IP e o e-mail: assim, quem erra a própria senha não bloqueia outras pessoas que usam a mesma rede, como em uma faculdade, e um atacante não consegue bloquear a conta de alguém só sabendo o e-mail dela, porque o bloqueio vale para o IP dele. A contagem acontece <strong>antes</strong> de conferir a senha: durante o bloqueio, nem a senha certa entra, senão o atacante continuaria testando senhas e só pararia ao acertar. Um <em>login</em> bem-sucedido zera a contagem. Como o <code>problema</code> devolve um <code>Response</code>, o <code>Retry-After</code> é acrescentado aos cabeçalhos da resposta já pronta. O resultado de sete tentativas com a senha errada:"
+  },
+  {
+   "t": "codigo",
+   "texto": "POST /api/auth/login   (senha errada, 5 vezes)\n401 \"E-mail ou senha incorretos.\"\n\nPOST /api/auth/login   (6.a e 7.a vez)\n429 Retry-After: 900\n    {\"title\":\"Muitas requisições\",\"status\":429,\n     \"detail\":\"Muitas tentativas de login. Tente de novo\n               mais tarde.\"}\n\nPOST /api/auth/login   (a senha certa, ainda no bloqueio)\n429\n\nPOST /api/auth/login   (outro e-mail, do mesmo IP)\n401"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: em quem confiar para saber o IP",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O IP vem do cabeçalho <code>X-Forwarded-For</code>, preenchido pelos servidores que ficam entre o cliente e a API. A documentação da Vercel garante que ela sobrescreve esse cabeçalho, justamente para impedir IPs falsos. Fora da Vercel, isso não vale: rodando o TaskFlow com o <code>next start</code>, uma requisição com <code>X-Forwarded-For: 1.2.3.4</code>, inventado pelo cliente, ganhou uma chave nova e escapou do bloqueio, recebendo <code>200</code>. Em um servidor próprio, só use esse cabeçalho se houver um <em>proxy</em> reverso, como o Nginx, configurado para sobrescrevê-lo."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O limite também ganha testes, no padrão do Capítulo 11. O relógio falso permite conferir a janela sem esperar 15 minutos:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// testes/integracao/limite.test.ts -- o limite de tentativas\nimport {\n  afterEach,\n  beforeEach,\n  describe,\n  expect,\n  it,\n  vi,\n} from \"vitest\";\nimport { db } from \"@/lib/db\";\nimport { contarTentativa, zerarTentativas } from \"@/lib/limite\";\n\nconst JANELA = 15 * 60; // 15 minutos, em segundos\n\ndescribe(\"limite de tentativas\", () => {\n  beforeEach(async () => {\n    await db.limite.deleteMany();\n  });\n  afterEach(() => {\n    vi.useRealTimers();\n  });\n\n  it(\"libera até o máximo e depois manda esperar\", async () => {\n    for (let i = 1; i <= 5; i++) {\n      expect(await contarTentativa(\"a\", 5, JANELA)).toBe(0);\n    }\n    const espera = await contarTentativa(\"a\", 5, JANELA);\n    expect(espera).toBeGreaterThan(0);\n    expect(espera).toBeLessThanOrEqual(JANELA);\n  });\n\n  it(\"libera de novo quando a janela termina\", async () => {\n    vi.useFakeTimers({ toFake: [\"Date\"] });\n    vi.setSystemTime(new Date(\"2026-10-17T10:00:00Z\"));\n    for (let i = 1; i <= 6; i++) {\n      await contarTentativa(\"a\", 5, JANELA);\n    }\n\n    vi.setSystemTime(new Date(\"2026-10-17T10:14:00Z\"));\n    expect(await contarTentativa(\"a\", 5, JANELA)).toBe(60);\n\n    vi.setSystemTime(new Date(\"2026-10-17T10:16:00Z\"));\n    expect(await contarTentativa(\"a\", 5, JANELA)).toBe(0);\n  });\n\n  it(\"conta cada chave em separado e pode zerar\", async () => {\n    for (let i = 1; i <= 6; i++) {\n      await contarTentativa(\"a\", 5, JANELA);\n    }\n    expect(await contarTentativa(\"b\", 5, JANELA)).toBe(0);\n\n    await zerarTentativas(\"a\");\n    expect(await contarTentativa(\"a\", 5, JANELA)).toBe(0);\n  });\n});"
+  },
+  {
+   "t": "p",
+   "html": "O <code>beforeEach</code> limpa a tabela de limites, que a <code>limparBanco</code> do Capítulo 11 não conhece. Com eles, a suíte passou a ter 7 arquivos e 37 testes, todos aprovados."
+  },
+  {
+   "t": "h2",
+   "id": "12-5-cabecalhos-de-seguranca",
+   "texto": "12.5 Cabeçalhos de segurança"
+  },
+  {
+   "t": "p",
+   "html": "Alguns cabeçalhos de resposta pedem ao navegador comportamentos mais seguros. Eles não substituem nada do que a API já faz, mas fecham portas que um descuido poderia abrir. No Next.js, cabeçalhos fixos ficam no <code>next.config.ts</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// next.config.ts -- a configuração do Next.js\nimport type { NextConfig } from \"next\";\n\nconst nextConfig: NextConfig = {\n  cacheComponents: true,\n  partialPrefetching: true,\n  // não anunciar \"X-Powered-By: Next.js\" em cada resposta\n  poweredByHeader: false,\n\n  async headers() {\n    return [\n      {\n        // todas as respostas\n        source: \"/:path*\",\n        headers: [\n          { key: \"X-Content-Type-Options\", value: \"nosniff\" },\n          { key: \"X-Frame-Options\", value: \"DENY\" },\n          { key: \"Referrer-Policy\", value: \"no-referrer\" },\n          {\n            key: \"Strict-Transport-Security\",\n            value: \"max-age=31536000; includeSubDomains\",\n          },\n        ],\n      },\n      {\n        // a API devolve só dados: nada de scripts nem de cache\n        source: \"/api/:path*\",\n        headers: [\n          {\n            key: \"Content-Security-Policy\",\n            value: \"default-src 'none'; frame-ancestors 'none'\",\n          },\n          { key: \"Cache-Control\", value: \"no-store\" },\n        ],\n      },\n    ];\n  },\n};\n\nexport default nextConfig;"
+  },
+  {
+   "t": "p",
+   "html": "As duas primeiras opções vieram do <code>create-next-app</code> e continuam como estavam. O <code>poweredByHeader: false</code> tira o cabeçalho <code>X-Powered-By: Next.js</code>: anunciar a tecnologia usada ajuda quem procura falhas conhecidas de uma versão. Os outros:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Cabeçalho",
+    "O que pede ao navegador"
+   ],
+   "linhas": [
+    [
+     "<code>X-Content-Type-Options: nosniff</code>",
+     "usar o <code>Content-Type</code> informado, sem tentar adivinhar; impede que um JSON seja tratado como página"
+    ],
+    [
+     "<code>X-Frame-Options: DENY</code>",
+     "não exibir a resposta dentro de um <code>iframe</code> de outro site, o que evita o <em>clickjacking</em>"
+    ],
+    [
+     "<code>Referrer-Policy: no-referrer</code>",
+     "não enviar o endereço da página atual nos pedidos seguintes"
+    ],
+    [
+     "<code>Strict-Transport-Security</code>",
+     "usar só HTTPS com este domínio por um ano (HSTS), mesmo que alguém digite <code>http://</code>"
+    ],
+    [
+     "<code>Content-Security-Policy</code>",
+     "de onde a página pode carregar scripts, estilos e imagens; na API, de lugar nenhum"
+    ],
+    [
+     "<code>Cache-Control: no-store</code>",
+     "não guardar as respostas da API em <em>cache</em>, porque elas trazem dados pessoais"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A <strong>CSP</strong> (<em>Content Security Policy</em>) é a mais poderosa. Na API, <code>default-src 'none'</code> proíbe tudo: uma resposta JSON não tem motivo para carregar nada. A página do Swagger UI, do Capítulo 10, é diferente: ela carrega código da CDN e tem um pequeno <em>script</em> próprio. O Capítulo 10 prometeu limitar de onde ela pode carregar código, e a política dela fica na própria rota:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/docs/route.ts -- a documentação navegável (Swagger UI),\n// agora com uma Content Security Policy\nimport { createHash } from \"node:crypto\";\n\nconst cdn = \"https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.33.1\";\n\nconst iniciar = `SwaggerUIBundle({\n      url: \"/api/openapi.json\",\n      dom_id: \"#swagger-ui\",\n      persistAuthorization: true,\n    });`;\n\n// A \"impressão digital\" do script da página: com ela na\n// política, só este script, sem nenhuma alteração, pode rodar\nconst hash = createHash(\"sha256\")\n  .update(iniciar)\n  .digest(\"base64\");\n\nconst politica = [\n  \"default-src 'self'\",\n  `script-src ${cdn}/ 'sha256-${hash}'`,\n  `style-src ${cdn}/ 'unsafe-inline'`,\n  \"img-src 'self' data:\",\n  \"frame-ancestors 'none'\",\n].join(\"; \");\n\nconst pagina = `<!doctype html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>TaskFlow API</title>\n  <link rel=\"stylesheet\" href=\"${cdn}/swagger-ui.css\">\n</head>\n<body>\n  <div id=\"swagger-ui\"></div>\n  <script src=\"${cdn}/swagger-ui-bundle.js\"></script>\n  <script>${iniciar}</script>\n</body>\n</html>`;\n\nexport function GET() {\n  return new Response(pagina, {\n    headers: {\n      \"Content-Type\": \"text/html; charset=utf-8\",\n      \"Content-Security-Policy\": politica,\n    },\n  });\n}"
+  },
+  {
+   "t": "p",
+   "html": "A política só permite <em>scripts</em> vindos da pasta exata do <code>swagger-ui-dist@5.33.1</code> na CDN, e o <em>script</em> da própria página, identificado pelo seu <em>hash</em> SHA-256. Se alguém conseguir injetar outro <em>script</em> na página, o ataque chamado XSS, ele não terá o mesmo <em>hash</em>, e o navegador se recusará a executá-lo. Os estilos precisam do <code>'unsafe-inline'</code>, porque o Swagger UI usa estilos escritos direto nos elementos. A página foi aberta em um navegador, com o Playwright, uma ferramenta que controla navegadores por código:"
+  },
+  {
+   "t": "codigo",
+   "texto": "GET /docs                          as 7 operações, sem erros\nfetch(\"/api/health\") pela página   200\num <script> injetado na página     bloqueado pela CSP\n                                   (script-src-elem)"
+  },
+  {
+   "t": "p",
+   "html": "A documentação continua funcionando, e o <em>script</em> injetado, simulando um ataque, foi bloqueado."
+  },
+  {
+   "t": "h2",
+   "id": "12-6-tokens-no-navegador-cookies-httponly-e-csrf",
+   "texto": "12.6 Tokens no navegador: cookies, HttpOnly e CSRF"
+  },
+  {
+   "t": "p",
+   "html": "O Capítulo 9 deixou uma pergunta: onde a interface guarda o <em>token</em>? No <code>localStorage</code>, qualquer <em>script</em> da página o lê, inclusive um injetado por XSS, que o enviaria para o atacante. Por isso muitos sistemas guardam o <em>token</em> em um <em>cookie</em> com estes atributos:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<code>HttpOnly</code>: o JavaScript da página não consegue ler o <em>cookie</em>; o navegador só o envia nos pedidos;",
+    "<code>Secure</code>: o <em>cookie</em> só viaja por HTTPS;",
+    "<code>SameSite=Lax</code> ou <code>Strict</code>: o navegador não envia o <em>cookie</em> em pedidos que partem de outros sites."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O <em>cookie</em> resolve o XSS, mas traz outro risco. Como o navegador envia o <em>cookie</em> sozinho, um site malicioso pode montar um formulário que faz um <code>POST</code> para a sua API, e o pedido iria com o <em>cookie</em> de quem visitou o site. É o ataque <strong>CSRF</strong> (<em>Cross-Site Request Forgery</em>). As defesas são o <code>SameSite</code>, que já bloqueia a maior parte dos casos, e um <strong><em>token</em> anti-CSRF</strong>: um valor aleatório que a página precisa enviar em um cabeçalho, e que um site de fora não tem como conhecer."
+  },
+  {
+   "t": "p",
+   "html": "O TaskFlow, como foi construído, não sofre de CSRF: o <em>token</em> vai no cabeçalho <code>Authorization</code>, que o navegador nunca envia sozinho. O risco dele é o XSS, contra o qual a CSP da seção anterior é uma boa camada. As duas formas são usadas no mercado; o que não se pode é usar <em>cookies</em> sem <code>HttpOnly</code>, <code>Secure</code> e <code>SameSite</code>, ou liberar o CORS para qualquer origem junto com <em>cookies</em>."
+  },
+  {
+   "t": "h2",
+   "id": "12-7-preparando-a-producao",
+   "texto": "12.7 Preparando a produção"
+  },
+  {
+   "t": "p",
+   "html": "Antes de publicar, três ajustes no projeto. O primeiro: a pasta <code>app/generated/prisma</code>, com o cliente do Prisma, não vai para o Git (Capítulo 3), então todo computador que baixar o projeto precisa gerá-la. Um <em>script</em> <code>postinstall</code> roda sozinho, logo depois de cada <code>npm install</code> ou <code>npm ci</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "\"scripts\": {\n  \"dev\": \"next dev\",\n  \"build\": \"next build\",\n  \"start\": \"next start\",\n  \"postinstall\": \"prisma generate\",\n  \"test\": \"vitest\",\n  \"cobertura\": \"vitest run --coverage\"\n}"
+  },
+  {
+   "t": "p",
+   "html": "O segundo: o documento OpenAPI do Capítulo 10 só conhece o servidor de desenvolvimento. Na Vercel, a variável de sistema <code>VERCEL_PROJECT_PRODUCTION_URL</code> traz o domínio de produção, sem o <code>https://</code>. O <code>servers</code> do documento passa a ser este:"
+  },
+  {
+   "t": "codigo",
+   "texto": "  servers: [\n    // Na Vercel, o endereço de produção vem do próprio sistema\n    ...(process.env.VERCEL_PROJECT_PRODUCTION_URL\n      ? [{\n          url: \"https://\"\n            + process.env.VERCEL_PROJECT_PRODUCTION_URL,\n          description: \"Produção\",\n        }]\n      : []),\n    {\n      url: \"http://localhost:3000\",\n      description: \"Desenvolvimento\",\n    },\n  ],"
+  },
+  {
+   "t": "p",
+   "html": "Os três pontos dentro do vetor espalham os itens de outro vetor: com a variável, entra o servidor de produção; sem ela, um vetor vazio, e nada é acrescentado. Num <em>build</em> feito com <code>VERCEL_PROJECT_PRODUCTION_URL=taskflow-exemplo.vercel.app</code>, o documento passou a listar <code>https://taskflow-exemplo.vercel.app</code> como “Produção”, antes do servidor de desenvolvimento."
+  },
+  {
+   "t": "p",
+   "html": "O terceiro é separar os <strong>ambientes</strong>. Cada um tem o seu banco e os seus segredos:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Ambiente",
+    "Banco",
+    "Segredos"
+   ],
+   "linhas": [
+    [
+     "desenvolvimento",
+     "o do Capítulo 3",
+     "no <code>.env</code> do seu computador"
+    ],
+    [
+     "testes",
+     "o banco dos testes (Capítulo 11)",
+     "no <code>.env.test</code>; no CI, gerados pelo <em>workflow</em>"
+    ],
+    [
+     "<em>preview</em>",
+     "um <em>branch</em> <code>preview</code> no Neon",
+     "nas variáveis de <em>Preview</em> da Vercel"
+    ],
+    [
+     "produção",
+     "o banco principal no Neon",
+     "nas variáveis de <em>Production</em> da Vercel"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O <code>JWT_SECRET</code> de produção deve ser <strong>novo</strong>, gerado com o comando do Capítulo 9, e não o do seu <code>.env</code>: uma chave que passou pelo seu computador, por um <em>print</em> de tela ou por um repositório não é mais secreta. No Neon, crie os bancos de produção e de <em>preview</em> como <em>branches</em> do projeto do Capítulo 3, cada um com as suas duas <em>connection strings</em>."
+  },
+  {
+   "t": "h2",
+   "id": "12-8-publicando-na-vercel",
+   "texto": "12.8 Publicando na Vercel"
+  },
+  {
+   "t": "p",
+   "html": "A <strong>Vercel</strong>, a empresa que mantém o Next.js, hospeda aplicações Next.js sem nenhuma configuração de servidor. As rotas da API viram funções que rodam sob demanda, e a Vercel cuida de HTTPS, domínios e escala. O plano gratuito, o <em>Hobby</em>, é para projetos pessoais e de estudo, sem fins comerciais; para um produto de verdade, o plano pago é necessário. Os passos a seguir seguem a documentação da Vercel de outubro de 2026; os nomes dos menus podem mudar com o tempo."
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. Envie o projeto para um repositório no GitHub. Confira antes que o <code>.env</code> e o <code>.env.test</code> não estão entre os arquivos enviados.",
+    "2. Na Vercel, entre com a conta do GitHub, clique em <strong>Add New... → Project</strong> e importe o repositório. A Vercel reconhece o Next.js e preenche o <em>build</em> sozinha.",
+    "3. Antes de publicar, abra <strong>Environment Variables</strong> e cadastre <code>DATABASE_URL</code> e <code>DIRECT_URL</code> do banco de produção, o <code>JWT_SECRET</code> novo e as <code>ORIGENS_PERMITIDAS</code>, marcando o ambiente <strong>Production</strong>. Repita com os valores do banco de <em>preview</em>, marcando <strong>Preview</strong>. Use o tipo <strong>Secret</strong> para as <em>connection strings</em> e para a chave: depois de salvos, eles não podem mais ser lidos no painel, só substituídos.",
+    "4. Aplique as migrações no banco de produção, a partir do seu computador, com a <code>DIRECT_URL</code> dele (próxima seção).",
+    "5. Clique em <strong>Deploy</strong>. Em cerca de um minuto, a API estará em um endereço como <code>https://taskflow-seunome.vercel.app</code>."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A partir daí, cada envio à <code>main</code> gera uma nova publicação de produção, e cada envio a outro <em>branch</em> gera uma publicação de <em>preview</em>, com endereço próprio, ligada ao banco de <em>preview</em>: um lugar para testar a mudança antes de ela chegar às pessoas. Uma variável alterada no painel só vale para as próximas publicações, e não para as que já estão no ar."
+  },
+  {
+   "t": "p",
+   "html": "Os <em>logs</em> prometidos no Capítulo 8 ficam na aba <strong>Logs</strong> do projeto: tudo o que a API escreve com o <code>console.error</code>, inclusive o identificador de cada erro <code>500</code>, aparece lá, e o campo de busca encontra o identificador que uma pessoa informar ao suporte. Se o <em>build</em> falhar, a aba <strong>Deployments</strong> mostra o terminal da compilação, com a mesma mensagem que o <code>npm run build</code> mostraria no seu computador."
+  },
+  {
+   "t": "h2",
+   "id": "12-9-migracoes-em-producao",
+   "texto": "12.9 Migrações em produção"
+  },
+  {
+   "t": "p",
+   "html": "O <code>prisma migrate dev</code>, usado até aqui, é uma ferramenta de <strong>desenvolvimento</strong>: ele cria migrações novas, usa um banco auxiliar e, quando encontra diferenças que não sabe resolver, oferece apagar o banco e recomeçar. Em produção, isso seria um desastre. O comando de produção é outro:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npx prisma migrate deploy\n2 migrations found in prisma/migrations\nApplying migration `20261017211144_limite`\nAll migrations have been successfully applied."
+  },
+  {
+   "t": "p",
+   "html": "O <code>migrate deploy</code> só aplica, em ordem, as migrações da pasta <code>prisma/migrations</code> que o banco ainda não tem, e registra cada uma na tabela <code>_prisma_migrations</code>. Ele não cria migrações, não pergunta nada e nunca apaga dados por conta própria. É o mesmo comando que o Capítulo 11 usou no banco dos testes. Para rodá-lo no banco de produção a partir do seu computador, sem alterar o <code>.env</code>, defina a <code>DIRECT_URL</code> só no terminal; o <code>dotenv</code> não sobrescreve uma variável que já existe, e o Prisma usa a do terminal:"
+  },
+  {
+   "t": "codigo",
+   "texto": "# PowerShell\n$env:DIRECT_URL=\"postgresql://...produção...\"\nnpx prisma migrate deploy\nRemove-Item Env:DIRECT_URL\n\n# Git Bash, Linux ou macOS (vale só para este comando)\nDIRECT_URL=\"postgresql://...produção...\" npx prisma migrate deploy"
+  },
+  {
+   "t": "p",
+   "html": "Algumas regras para mudanças no banco de produção:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>as migrações são criadas só no desenvolvimento</strong>, com o <code>migrate dev</code>, e vão para o Git junto com o código que precisa delas;",
+    "<strong>nunca</strong> rode <code>migrate dev</code>, <code>migrate reset</code> ou <code>db push</code> no banco de produção;",
+    "<strong>a migração roda antes do código novo</strong>: a publicação do código que usa a tabela <code>limites</code> só pode acontecer depois que a tabela existe;",
+    "<strong>mudanças destrutivas em etapas</strong>: para renomear uma coluna, a migração cria a nova, o código passa a gravar nas duas, os dados antigos são copiados e só numa publicação seguinte a antiga é removida. Assim, a versão que está no ar continua funcionando durante a troca;",
+    "<strong>cópia de segurança antes</strong>: o Neon permite criar um <em>branch</em> a partir do banco de produção em segundos, uma cópia completa para voltar atrás se algo der errado."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "12-10-integracao-e-entrega-continuas",
+   "texto": "12.10 Integração e entrega contínuas"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, publicar dependia de alguém lembrar de rodar os testes. A <strong>integração contínua</strong> (CI) roda os testes automaticamente a cada envio de código; a <strong>entrega contínua</strong> (CD) publica automaticamente o que passou. O <strong>GitHub Actions</strong> executa esses passos em máquinas do próprio GitHub, descritos em arquivos YAML na pasta <code>.github/workflows</code>. Antes, exporte a coleção do Postman do Capítulo 10 para <code>testes/postman/taskflow.postman_collection.json</code>, sem valores nas variáveis <code>bearerToken</code> e <code>tarefaId</code>. O <em>workflow</em> tem dois <em>jobs</em>. O primeiro testa:"
+  },
+  {
+   "t": "codigo",
+   "texto": "# .github/workflows/ci.yml -- testa a cada envio e, se tudo\n# passar na main, publica na Vercel\nname: CI\n\non:\n  push:\n    branches: [main]\n  pull_request:\n\njobs:\n  testes:\n    runs-on: ubuntu-latest\n    services:\n      postgres:\n        image: postgres:17\n        env:\n          POSTGRES_PASSWORD: postgres\n        ports:\n          - 5432:5432\n        options: >-\n          --health-cmd pg_isready\n          --health-interval 5s\n          --health-timeout 5s\n          --health-retries 10\n    env:\n      BANCO: postgresql://postgres:postgres@localhost:5432\n      # uma chave só para os testes; a de produção fica na Vercel\n      JWT_SECRET: chave-so-dos-testes-do-ci-com-mais-de-32-letras\n    steps:\n      - uses: actions/checkout@v5\n      - uses: actions/setup-node@v5\n        with:\n          node-version: 24\n          cache: npm\n\n      - name: Cria os bancos e os arquivos .env\n        run: |\n          psql \"$BANCO\" -c \"CREATE DATABASE taskflow\"\n          psql \"$BANCO\" -c \"CREATE DATABASE taskflow_testes\"\n          echo \"DATABASE_URL=$BANCO/taskflow\" > .env\n          echo \"DIRECT_URL=$BANCO/taskflow\" >> .env\n          echo \"JWT_SECRET=$JWT_SECRET\" >> .env\n          echo \"DATABASE_URL=$BANCO/taskflow_testes\" > .env.test\n          echo \"DIRECT_URL=$BANCO/taskflow_testes\" >> .env.test\n\n      - run: npm ci\n\n      - name: Testes de unidade e integração (Vitest)\n        run: npx vitest run\n\n      - name: Prepara o banco e compila\n        run: |\n          npx prisma migrate deploy\n          npx prisma db seed\n          npm run build\n\n      - name: Testes de ponta a ponta (Newman)\n        run: |\n          npm start &\n          curl --retry 30 --retry-connrefused --retry-delay 1 \\\n            --silent --output /dev/null \\\n            http://localhost:3000/api/health\n          npx newman@6 run \\\n            testes/postman/taskflow.postman_collection.json"
+  },
+  {
+   "t": "p",
+   "html": "O <em>workflow</em> roda em cada envio à <code>main</code> e em cada <em>pull request</em>. O <em>job</em> <code>testes</code> roda em uma máquina Linux nova, apagada no fim. Os <code>services</code> sobem um PostgreSQL 17 ao lado dela, e o <code>health-cmd</code> faz o GitHub esperar o banco ficar pronto antes do primeiro passo. Os passos com <code>uses</code> são ações prontas: uma baixa o código do repositório, a outra instala o Node.js 24 e guarda os pacotes do <code>npm</code> entre execuções. Os passos com <code>run</code> são comandos de terminal:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. cria os dois bancos, o da API e o dos testes, e escreve o <code>.env</code> e o <code>.env.test</code>, que não estão no repositório; a trava do Capítulo 11 confere que eles apontam para bancos diferentes;",
+    "2. <code>npm ci</code> instala exatamente as versões do <code>package-lock.json</code>, e o <code>postinstall</code> gera o cliente do Prisma;",
+    "3. roda o Vitest, que aplica as migrações no banco dos testes;",
+    "4. prepara o banco da API, com as migrações e o <em>seed</em>, e compila;",
+    "5. sobe o servidor em segundo plano (o <code>&amp;</code> no fim do comando), espera a rota <code>/api/health</code> responder e roda a coleção com o Newman."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Se qualquer comando terminar com erro, o <em>job</em> para e é marcado com um “X” vermelho no GitHub, ao lado do <em>commit</em>. O segundo <em>job</em> publica:"
+  },
+  {
+   "t": "codigo",
+   "texto": "  publicar:\n    needs: testes\n    if: github.event_name == 'push'\n    runs-on: ubuntu-latest\n    env:\n      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}\n      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}\n      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}\n    steps:\n      - uses: actions/checkout@v5\n      - uses: actions/setup-node@v5\n        with:\n          node-version: 24\n          cache: npm\n      - run: npm ci\n\n      - name: Aplica as migrações no banco de produção\n        run: npx prisma migrate deploy\n        env:\n          DIRECT_URL: ${{ secrets.DIRECT_URL_PRODUCAO }}\n\n      - name: Publica na Vercel\n        run: |\n          npx vercel@64 pull --yes --environment=production \\\n            --token=$VERCEL_TOKEN\n          npx vercel@64 build --prod --token=$VERCEL_TOKEN\n          npx vercel@64 deploy --prebuilt --prod \\\n            --token=$VERCEL_TOKEN"
+  },
+  {
+   "t": "p",
+   "html": "O <code>needs: testes</code> faz este <em>job</em> esperar o primeiro e só rodar se ele passar: é isso que impede a publicação de um código que quebrou um teste. O <code>if</code> restringe a publicação aos envios, deixando de fora os <em>pull requests</em>, que só são testados. As migrações rodam antes da publicação, como pede a seção anterior. Os três comandos da Vercel baixam as configurações e as variáveis do projeto, compilam na máquina do GitHub e publicam o resultado em produção."
+  },
+  {
+   "t": "p",
+   "html": "Os valores <code>secrets.*</code> são <strong>segredos</strong> do repositório, cadastrados no GitHub em <strong>Settings → Secrets and variables → Actions</strong>. Eles nunca aparecem nos <em>logs</em>, nem para quem tem acesso ao repositório. São quatro: o <code>VERCEL_TOKEN</code>, criado na página de <em>tokens</em> da conta da Vercel; o <code>VERCEL_ORG_ID</code> e o <code>VERCEL_PROJECT_ID</code>, que aparecem no arquivo <code>.vercel/project.json</code> depois de rodar <code>npx vercel link</code> no projeto; e a <code>DIRECT_URL_PRODUCAO</code>. Como agora quem publica é o <em>workflow</em>, desligue a publicação automática da Vercel, que publicaria de novo, sem esperar os testes, com um arquivo na raiz do projeto:"
+  },
+  {
+   "t": "codigo",
+   "texto": "{\n  \"git\": { \"deploymentEnabled\": false }\n}"
+  },
+  {
+   "t": "p",
+   "html": "O arquivo se chama <code>vercel.json</code>. O <em>workflow</em> foi conferido de duas formas. O arquivo passou por um validador do formato do GitHub Actions. E o <em>job</em> <code>testes</code> foi executado passo a passo, a partir de uma cópia limpa do projeto, sem <code>node_modules</code>, sem <code>.env</code> e sem o cliente gerado, com um PostgreSQL 17 no Docker no lugar do serviço do GitHub. Um trecho da saída, resumido:"
+  },
+  {
+   "t": "codigo",
+   "texto": "== Cria os bancos e os arquivos .env\nCREATE DATABASE\nCREATE DATABASE\n== npm ci\n== Testes de unidade e integração (Vitest)\nApplying migration `20261017155115_init`\nApplying migration `20261017211144_limite`\n Test Files  7 passed (7)\n      Tests  37 passed (37)\n== Prepara o banco e compila\nApplying migration `20261017155115_init`\nApplying migration `20261017211144_limite`\ndemo@taskflow.com: 5 tarefas\nOK Compiled successfully\n== Testes de ponta a ponta (Newman)\n  POST .../api/auth/register [201 Created]\n  ...\n  GET .../api/tasks [401 Unauthorized]\n  assertions: 16 executadas, 0 falhas"
+  },
+  {
+   "t": "p",
+   "html": "O <em>job</em> <code>publicar</code> depende das suas credenciais da Vercel e só pode ser executado no seu repositório."
+  },
+  {
+   "t": "h2",
+   "id": "12-11-um-dominio-proprio",
+   "texto": "12.11 Um domínio próprio"
+  },
+  {
+   "t": "p",
+   "html": "O endereço <code>.vercel.app</code> funciona, mas uma API de verdade costuma ter um domínio próprio, como <code>api.taskflow.com.br</code>. Os domínios <code>.br</code> são registrados no Registro.br; os outros, em empresas como a própria Vercel, a Cloudflare ou a Hostinger. Depois de registrar o domínio:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. no projeto da Vercel, em <strong>Settings → Domains</strong>, acrescente o domínio, como <code>api.taskflow.com.br</code>;",
+    "2. a Vercel mostra o registro de DNS que precisa ser criado: para um subdomínio, um registro <code>CNAME</code> apontando para o endereço indicado por ela; crie-o no painel de DNS de onde o domínio foi registrado;",
+    "3. quando o DNS se propagar, o que leva de minutos a algumas horas, a Vercel emite o certificado HTTPS sozinha e o renova antes de vencer."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Com o domínio novo, a variável <code>VERCEL_PROJECT_PRODUCTION_URL</code> passa a trazê-lo, e o documento OpenAPI acompanha na próxima publicação. Lembre também de atualizar as <code>ORIGENS_PERMITIDAS</code>, se a interface mudar de endereço."
+  },
+  {
+   "t": "h2",
+   "id": "12-12-antes-de-publicar",
+   "texto": "12.12 Antes de publicar"
+  },
+  {
+   "t": "p",
+   "html": "Uma lista para conferir antes de cada publicação importante:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "todos os testes passam, e o CI está verde;",
+    "nenhum segredo está no código ou no Git: <code>.env</code>, <code>.env.test</code>, chaves, senhas de banco;",
+    "os segredos de produção são diferentes dos de desenvolvimento;",
+    "as migrações novas foram aplicadas com <code>migrate deploy</code>, antes do código;",
+    "o CORS libera só as origens conhecidas;",
+    "as rotas que recebem dados validam tudo com o Zod, e as que usam <code>:id</code> filtram pelo dono;",
+    "os erros <code>500</code> não mostram detalhes, e os <em>logs</em> estão acessíveis;",
+    "a documentação OpenAPI corresponde ao que a API faz;",
+    "há uma cópia de segurança recente do banco."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Com isso, o TaskFlow chega ao fim da apostila como uma API completa: projetada no Capítulo 2, construída sobre o Next.js e o Prisma, validada, documentada, testada, protegida e publicada por um <em>pipeline</em> automático. Os mesmos princípios valem para qualquer linguagem e <em>framework</em>: recursos e métodos bem escolhidos, contratos claros, nada de confiar no cliente, erros previsíveis e testes que garantem que tudo isso continua verdade a cada mudança."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Liberar o CORS para qualquer origem.</strong> O <code>*</code> permite que qualquer site use a API pelo navegador de quem a visita. Liste as origens conhecidas.",
+    "<strong>Achar que o CORS protege a API.</strong> Ele só vale nos navegadores. Quem protege a API é a autenticação.",
+    "<strong>Esquecer o <code>Access-Control-Expose-Headers</code>.</strong> O site de outra origem não consegue ler o <code>Location</code> nem o <code>Retry-After</code>.",
+    "<strong>Contar tentativas na memória do servidor.</strong> Em plataformas com várias instâncias, cada uma tem a sua contagem. Use um armazenamento compartilhado.",
+    "<strong>Conferir a senha antes do limite.</strong> O atacante continua testando senhas durante o bloqueio. Conte e bloqueie antes.",
+    "<strong>Confiar no <code>X-Forwarded-For</code> sem saber quem o preenche.</strong> Sem uma plataforma ou um <em>proxy</em> que o sobrescreva, o cliente escolhe o próprio IP.",
+    "<strong>Usar a mesma chave secreta em todos os ambientes.</strong> Um vazamento no desenvolvimento compromete a produção. Gere uma chave por ambiente.",
+    "<strong>Rodar <code>migrate dev</code> ou <code>migrate reset</code> em produção.</strong> Eles podem apagar dados. Em produção, só <code>migrate deploy</code>.",
+    "<strong>Publicar o código antes da migração.</strong> A versão nova procura uma tabela que ainda não existe. Migre primeiro.",
+    "<strong>Guardar <em>tokens</em> em <em>cookies</em> sem <code>HttpOnly</code>, <code>Secure</code> e <code>SameSite</code>.</strong> O <em>cookie</em> fica exposto ao XSS ou ao CSRF.",
+    "<strong>Publicar sem os testes no caminho.</strong> Um <em>workflow</em> em que a publicação não depende dos testes deixa passar os defeitos. Use o <code>needs</code>."
+   ]
+  }
+ ]
+}
