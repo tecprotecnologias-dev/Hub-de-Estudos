@@ -1,0 +1,411 @@
+{
+ "numero": 11,
+ "titulo": "Testes de API",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, cada capítulo testou o TaskFlow à mão: rodar o servidor, enviar requisições com o <code>curl</code>, o REST Client ou o Postman, e conferir as respostas com os próprios olhos. Esse cuidado encontrou defeitos, mas não se repete sozinho: a cada mudança no código, tudo precisaria ser conferido de novo. Neste capítulo você vai escrever testes automáticos com o Vitest: testes de unidade, para as funções que não dependem de nada; testes de integração, que usam um banco de dados de verdade; testes das rotas, sem precisar do servidor; e um teste de contrato, que confere as respostas contra o documento OpenAPI do Capítulo 10. No final, um único comando confere, em poucos segundos, o que antes levava uma tarde."
+  },
+  {
+   "t": "h2",
+   "id": "11-1-por-que-testar-automaticamente",
+   "texto": "11.1 Por que testar automaticamente"
+  },
+  {
+   "t": "p",
+   "html": "Um teste automático é um programa que usa o seu código e confere o resultado. Ele não substitui o raciocínio de quem programa, mas traz três coisas que o teste manual não traz:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Repetição sem custo.</strong> Os 34 testes deste capítulo rodam em cerca de 10 segundos. Rodá-los a cada mudança é barato; repetir à mão o roteiro de testes dos Capítulos 6 a 10 não é.",
+    "<strong>Proteção contra regressões.</strong> Uma <strong>regressão</strong> é um defeito em algo que já funcionava, causado por uma mudança em outro lugar. É o tipo mais comum de defeito, e o mais difícil de perceber à mão, porque ninguém volta a testar o que “já estava pronto”.",
+    "<strong>Coragem para mudar.</strong> Com os testes passando, uma reorganização do código, como a camada de serviço do Capítulo 7 ou o tratador de erros do Capítulo 8, pode ser feita sem medo: se algo quebrar, um teste avisa."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Os testes também servem de documentação. Um teste chamado “não deixa mexer na tarefa de outra pessoa” explica uma regra da API melhor que um comentário, e, ao contrário do comentário, avisa quando deixa de ser verdade."
+  },
+  {
+   "t": "h2",
+   "id": "11-2-unidade-integracao-e-ponta-a-ponta",
+   "texto": "11.2 Unidade, integração e ponta a ponta"
+  },
+  {
+   "t": "p",
+   "html": "Os testes costumam ser divididos pelo tamanho do pedaço do sistema que exercitam:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Tipo",
+    "O que exercita",
+    "No TaskFlow"
+   ],
+   "linhas": [
+    [
+     "unidade",
+     "uma função ou módulo isolado, sem banco nem rede",
+     "os esquemas do Zod, o <code>problema</code>, os <em>tokens</em>"
+    ],
+    [
+     "integração",
+     "várias partes juntas, com dependências reais, como o banco",
+     "os serviços e as rotas, com um banco de testes"
+    ],
+    [
+     "ponta a ponta",
+     "o sistema inteiro, do jeito que o cliente o usa",
+     "a coleção do Postman rodada pelo Newman (Capítulo 10)"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Os testes de unidade são os mais rápidos e apontam o defeito com precisão, mas não veem os problemas que surgem quando as partes se juntam, como uma consulta do Prisma que não faz o que se esperava. Os de ponta a ponta veem tudo, mas são lentos, precisam do servidor no ar e, quando falham, não dizem onde está o defeito. Por isso a recomendação clássica, a <strong>pirâmide de testes</strong>, é ter muitos testes de unidade, uma boa quantidade de testes de integração e poucos de ponta a ponta. Em APIs, em que boa parte da lógica está nas consultas ao banco, os testes de integração costumam ser os que mais valem."
+  },
+  {
+   "t": "h2",
+   "id": "11-3-instalando-o-vitest",
+   "texto": "11.3 Instalando o Vitest"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>Vitest</strong> é um <em>framework</em> de testes para JavaScript e TypeScript. Ele roda o TypeScript sem configuração extra, entende os módulos modernos (<code>import</code>) e é rápido. A forma de escrever os testes é praticamente a mesma do <strong>Jest</strong>, o <em>framework</em> mais antigo e ainda muito usado: <code>describe</code>, <code>it</code> e <code>expect</code> funcionam igual nos dois, e quem aprende um sabe usar o outro."
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install -D vitest@5 @vitest/coverage-v8@5 @types/node@24 ajv"
+  },
+  {
+   "t": "p",
+   "html": "O <code>@vitest/coverage-v8</code> mede a cobertura dos testes (Seção 11.11), e o <code>ajv</code> será usado no teste de contrato (Seção 11.10). O <code>@types/node@24</code> está na lista por um motivo prático: o <code>create-next-app</code> instala os tipos do Node.js 20, e o Vitest 5 exige os do 22 ou mais novo. Sem ele, o <code>npm</code> recusa a instalação com um erro <code>ERESOLVE</code>, “conflito de dependências”. Instalar os tipos da versão do Node.js que você usa resolve. A configuração fica em um arquivo na raiz do projeto:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// vitest.config.mts -- a configuração dos testes\nimport { loadEnv } from \"vite\";\nimport { defineConfig } from \"vitest/config\";\n\nexport default defineConfig({\n  resolve: {\n    // o mesmo atalho \"@/\" do tsconfig.json\n    alias: { \"@\": import.meta.dirname },\n  },\n  test: {\n    // carrega o .env e, por cima dele, o .env.test\n    env: loadEnv(\"test\", import.meta.dirname, \"\"),\n    // prepara o banco dos testes uma vez, antes de tudo\n    globalSetup: \"./testes/preparar-banco.ts\",\n    // os arquivos dividem o mesmo banco: um de cada vez\n    fileParallelism: false,\n    coverage: {\n      include: [\"lib/**\", \"app/api/**\"],\n      exclude: [\"lib/openapi.ts\"],\n    },\n  },\n});"
+  },
+  {
+   "t": "p",
+   "html": "O arquivo usa a extensão <code>.mts</code>, de “módulo TypeScript”: o <code>package.json</code> do Next.js não declara o projeto como módulo, e com <code>.ts</code> o Vitest mostra um aviso a cada execução. Cada opção tem um motivo:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "o <code>alias</code> ensina ao Vitest o atalho <code>@/</code>, que o Next.js lê do <code>tsconfig.json</code>; sem ele, nenhum <code>import</code> do projeto funcionaria nos testes;",
+    "o <code>loadEnv(\"test\", ...)</code> carrega as variáveis do <code>.env</code> e, por cima delas, as do <code>.env.test</code>, assunto da próxima seção;",
+    "o <code>globalSetup</code> roda um arquivo uma única vez, antes de todos os testes;",
+    "o <code>fileParallelism: false</code> faz os arquivos de teste rodarem um de cada vez. Por padrão, o Vitest roda vários ao mesmo tempo, o que é ótimo para testes de unidade, mas aqui todos usam o mesmo banco, e um apagaria os dados do outro no meio do caminho;",
+    "o <code>coverage</code> diz quais arquivos entram na medição de cobertura. O documento OpenAPI fica de fora: ele é uma descrição, não uma lógica a testar."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Por fim, dois <em>scripts</em> no <code>package.json</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "\"scripts\": {\n  \"dev\": \"next dev\",\n  \"build\": \"next build\",\n  \"start\": \"next start\",\n  \"test\": \"vitest\",\n  \"cobertura\": \"vitest run --coverage\"\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>npm test</code> abre o Vitest no <strong>modo de observação</strong> (<em>watch</em>): ele roda os testes e fica esperando; a cada arquivo salvo, roda de novo só os testes afetados. É o jeito mais confortável de trabalhar. Em servidores de integração contínua, onde não há ninguém olhando, o Vitest percebe a variável <code>CI</code> e roda uma única vez. O <code>npm run cobertura</code> roda uma vez e mede a cobertura."
+  },
+  {
+   "t": "h2",
+   "id": "11-4-um-banco-so-para-os-testes",
+   "texto": "11.4 Um banco só para os testes"
+  },
+  {
+   "t": "p",
+   "html": "Os testes de integração criam e apagam dados à vontade: cada teste começa com o banco vazio, para não depender do que outro teste deixou. Por isso eles precisam de um banco <strong>só deles</strong>, e nunca o de desenvolvimento, onde estão os dados do <em>seed</em> e os seus testes manuais, e muito menos o de produção. Crie um segundo banco, como fez no Capítulo 3: no Neon, um <em>branch</em> chamado <code>testes</code>, ou, no computador, outra instância do <code>prisma dev</code>, com <code>npx prisma dev --name taskflow-testes</code>. Depois, coloque a <em>connection string</em> dele em um arquivo próprio:"
+  },
+  {
+   "t": "codigo",
+   "texto": "# .env.test -- o banco dos testes (os testes APAGAM os dados)\nDATABASE_URL=\"postgresql://...o banco dos testes...\"\nDIRECT_URL=\"postgresql://...o banco dos testes...\""
+  },
+  {
+   "t": "p",
+   "html": "O <code>.gitignore</code> do Next.js já protege todos os arquivos que começam com <code>.env</code>. O <code>JWT_SECRET</code> não precisa ser repetido: o <code>loadEnv</code> carrega o <code>.env</code> primeiro, e o <code>.env.test</code> só troca o que ele define. O banco dos testes começa vazio, sem as tabelas. Quem as cria é o arquivo do <code>globalSetup</code>, que também confere se o banco é mesmo outro:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// testes/preparar-banco.ts -- roda uma vez, antes de todos os\n// testes: confere o banco dos testes e aplica as migrações\nimport { execSync } from \"node:child_process\";\nimport { existsSync, readFileSync } from \"node:fs\";\nimport { parse } from \"dotenv\";\n\nexport default function prepararBanco() {\n  if (!existsSync(\".env.test\")) {\n    throw new Error(\"Crie o .env.test com o banco dos testes.\");\n  }\n  const desenvolvimento = parse(readFileSync(\".env\"));\n  const testes = parse(readFileSync(\".env.test\"));\n\n  // Os testes apagam dados: nunca podem rodar no banco de\n  // desenvolvimento, e muito menos no de produção\n  if (\n    !testes.DATABASE_URL ||\n    testes.DATABASE_URL === desenvolvimento.DATABASE_URL\n  ) {\n    throw new Error(\n      \"O .env.test precisa apontar para OUTRO banco.\",\n    );\n  }\n\n  execSync(\"npx prisma migrate deploy\", {\n    stdio: \"inherit\",\n    env: { ...process.env, ...testes },\n  });\n}"
+  },
+  {
+   "t": "p",
+   "html": "A comparação é uma trava de segurança: se o <code>.env.test</code> faltar, ou apontar para o mesmo banco do <code>.env</code>, os testes nem começam. Um descuido aqui apagaria todos os dados de desenvolvimento na primeira execução; em um projeto real, com o <code>.env</code> apontando para produção, o estrago seria muito pior. O <code>execSync</code> roda um comando no terminal e espera ele terminar. O <code>prisma migrate deploy</code> aplica as migrações que ainda não foram aplicadas, sem criar novas e sem perguntar nada, o comando certo para bancos que não são o de desenvolvimento. As variáveis do <code>.env.test</code> vão no <code>env</code>, por cima das do sistema; o <code>dotenv</code> do <code>prisma7.config.ts</code> não sobrescreve variáveis que já existem, então o Prisma usa o banco dos testes. O comando só é executado na primeira vez em que há migrações novas; nas outras, ele responde “No pending migrations to apply”."
+  },
+  {
+   "t": "p",
+   "html": "Algumas funções vão ser usadas por vários arquivos de teste:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// testes/apoio.ts -- funções que vários testes usam\nimport { db } from \"@/lib/db\";\nimport { cadastrarUsuario } from \"@/lib/servicos/usuarios\";\n\n// Cada teste começa com o banco vazio\nexport async function limparBanco() {\n  await db.task.deleteMany();\n  await db.user.deleteMany();\n}\n\nlet contador = 0;\n\n// Cadastra uma pessoa com um e-mail que ainda não existe\nexport async function criarPessoa(nome = \"Pessoa de Teste\") {\n  contador++;\n  const usuario = await cadastrarUsuario({\n    name: nome,\n    email: `pessoa${contador}@teste.com`,\n    password: \"senha12345\",\n  });\n  if (!usuario) throw new Error(\"E-mail repetido no teste.\");\n  return usuario;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A <code>limparBanco</code> apaga as tarefas antes dos usuários, por causa da chave estrangeira. A <code>criarPessoa</code> usa o próprio serviço de cadastro, com um contador para que cada pessoa tenha um e-mail diferente."
+  },
+  {
+   "t": "h2",
+   "id": "11-5-o-primeiro-teste",
+   "texto": "11.5 O primeiro teste"
+  },
+  {
+   "t": "p",
+   "html": "Os testes ficam na pasta <code>testes</code>, em arquivos terminados em <code>.test.ts</code>, que é o padrão que o Vitest procura. Comece pelos esquemas do Zod, que são funções puras: recebem dados e devolvem dados, sem banco nem rede."
+  },
+  {
+   "t": "codigo",
+   "texto": "// testes/unidade/esquemas.test.ts -- o que a API aceita\nimport { describe, expect, it } from \"vitest\";\nimport {\n  esquemaFiltros,\n  esquemaNovaTarefa,\n} from \"@/lib/esquemas/tarefas\";\nimport { esquemaCadastro } from \"@/lib/esquemas/auth\";\n\ndescribe(\"esquemaNovaTarefa\", () => {\n  it(\"aceita só o título e tira os espaços das pontas\", () => {\n    const dados = esquemaNovaTarefa.parse({\n      title: \"  Estudar \",\n    });\n    expect(dados).toEqual({ title: \"Estudar\" });\n  });\n\n  it(\"recusa o título vazio, com a mensagem certa\", () => {\n    const resultado = esquemaNovaTarefa.safeParse({ title: \"\" });\n    expect(resultado.success).toBe(false);\n    expect(resultado.error?.issues[0].message).toBe(\n      \"O título é obrigatório.\",\n    );\n  });\n\n  it(\"transforma a data em um Date\", () => {\n    const dados = esquemaNovaTarefa.parse({\n      title: \"Entregar\",\n      dueDate: \"2026-12-01\",\n    });\n    expect(dados.dueDate).toEqual(new Date(\"2026-12-01\"));\n  });\n\n  it(\"descarta campos que não são da tarefa, como userId\", () => {\n    const dados = esquemaNovaTarefa.parse({\n      title: \"Invasão\",\n      userId: \"id-de-outra-pessoa\",\n    });\n    expect(dados).not.toHaveProperty(\"userId\");\n  });\n});"
+  },
+  {
+   "t": "p",
+   "html": "O <code>describe</code> agrupa testes relacionados, e o <code>it</code> define um teste: um nome, que diz o comportamento esperado, e uma função que o confere. Dentro dela, o <code>expect</code> recebe o valor obtido, e o <strong><em>matcher</em></strong> diz o que se espera dele: <code>toBe</code> compara valores simples, como números e textos; <code>toEqual</code> compara objetos campo a campo; <code>not.toHaveProperty</code> confere que um campo não existe. Se alguma expectativa não se cumpre, o <code>expect</code> lança um erro, e o teste falha."
+  },
+  {
+   "t": "p",
+   "html": "Os testes seguem uma estrutura conhecida como <strong>AAA</strong>: <em>Arrange</em>, preparar os dados; <em>Act</em>, executar o que está sendo testado; <em>Assert</em>, conferir o resultado. Nos testes curtos, as três partes cabem em duas linhas; nos maiores, uma linha em branco entre elas ajuda a leitura. Repare também no último teste: ele confere a proteção contra a atribuição em massa do Capítulo 6, uma regra de segurança que nenhuma revisão futura do esquema pode quebrar sem que alguém perceba."
+  },
+  {
+   "t": "codigo",
+   "texto": "describe(\"esquemaFiltros\", () => {\n  it(\"preenche os valores padrão\", () => {\n    expect(esquemaFiltros.parse({})).toEqual({\n      sort: \"-createdAt\",\n      page: 1,\n      limit: 20,\n    });\n  });\n\n  it(\"converte os textos da query string em números\", () => {\n    const filtros = esquemaFiltros.parse({\n      page: \"2\",\n      limit: \"5\",\n    });\n    expect(filtros.page).toBe(2);\n    expect(filtros.limit).toBe(5);\n  });\n\n  it.each([\n    { query: { page: \"0\" }, campo: \"page\" },\n    { query: { page: \"abc\" }, campo: \"page\" },\n    { query: { limit: \"500\" }, campo: \"limit\" },\n    { query: { sort: \"nome\" }, campo: \"sort\" },\n    { query: { status: \"FEITO\" }, campo: \"status\" },\n  ])(\"recusa $query\", ({ query, campo }) => {\n    const resultado = esquemaFiltros.safeParse(query);\n    expect(resultado.success).toBe(false);\n    expect(resultado.error?.issues[0].path).toEqual([campo]);\n  });\n});\n\ndescribe(\"esquemaCadastro\", () => {\n  it(\"guarda o e-mail sem espaços e em minúsculas\", () => {\n    const dados = esquemaCadastro.parse({\n      name: \"Ana\",\n      email: \" Ana@Mail.COM \",\n      password: \"senha12345\",\n    });\n    expect(dados.email).toBe(\"ana@mail.com\");\n  });\n\n  it(\"recusa senha de mais de 72 bytes\", () => {\n    const resultado = esquemaCadastro.safeParse({\n      name: \"Ana\",\n      email: \"ana@mail.com\",\n      password: \"á\".repeat(40), // 40 letras, 80 bytes\n    });\n    expect(resultado.success).toBe(false);\n  });\n});"
+  },
+  {
+   "t": "p",
+   "html": "O <code>it.each</code> roda o mesmo teste com vários dados, um para cada item da lista. O <code>$query</code> no nome é trocado pelo valor de cada caso, e cada um aparece como um teste separado no resultado: “recusa { page: '0' }”, “recusa { limit: '500' }”. Escrever cinco testes quase iguais seria cansativo e, pior, convidaria a testar menos casos. O teste de senha usa a letra “á”, que ocupa 2 bytes: 40 letras passam do limite de 72 bytes do Capítulo 9, embora sejam menos de 72 caracteres."
+  },
+  {
+   "t": "h2",
+   "id": "11-6-testando-os-erros-e-usando-espioes",
+   "texto": "11.6 Testando os erros e usando espiões"
+  },
+  {
+   "t": "p",
+   "html": "O módulo de erros do Capítulo 8 é outro bom candidato a testes de unidade:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// testes/unidade/erros.test.ts -- o formato dos erros\nimport { describe, expect, it, vi } from \"vitest\";\nimport { ErroApi, problema, respostaDeErro } from \"@/lib/erros\";\nimport { validar } from \"@/lib/validar\";\nimport { esquemaNovaTarefa } from \"@/lib/esquemas/tarefas\";\n\ndescribe(\"problema\", () => {\n  it(\"monta uma resposta no formato da RFC 9457\", async () => {\n    const resposta = problema(404, \"Tarefa não encontrada.\");\n\n    expect(resposta.status).toBe(404);\n    expect(resposta.headers.get(\"Content-Type\")).toBe(\n      \"application/problem+json\",\n    );\n    expect(await resposta.json()).toEqual({\n      title: \"Não encontrado\",\n      status: 404,\n      detail: \"Tarefa não encontrada.\",\n    });\n  });\n\n  it(\"acrescenta o WWW-Authenticate só no 401\", () => {\n    expect(\n      problema(401, \"x\").headers.get(\"WWW-Authenticate\"),\n    ).toBe(\"Bearer\");\n    expect(problema(403, \"x\").headers.has(\"WWW-Authenticate\"))\n      .toBe(false);\n  });\n});\n\ndescribe(\"validar\", () => {\n  it(\"devolve os dados quando são válidos\", () => {\n    expect(validar(esquemaNovaTarefa, { title: \"Ok\" }))\n      .toEqual({ title: \"Ok\" });\n  });\n\n  it(\"lança um ErroApi 400 com os erros por campo\", () => {\n    expect(() => validar(esquemaNovaTarefa, { title: \"\" }))\n      .toThrow(expect.objectContaining({\n        status: 400,\n        campos: { title: [\"O título é obrigatório.\"] },\n      }));\n  });\n});"
+  },
+  {
+   "t": "p",
+   "html": "Para conferir que uma função <strong>lança</strong> um erro, ela não pode ser chamada diretamente, porque o erro interromperia o teste. Ela vai dentro de uma função, <code>() =&gt; validar(...)</code>, que o <code>expect</code> chama e observa. O <code>toThrow</code> aceita o tipo de erro esperado ou, como aqui, um <code>expect.objectContaining</code>, que confere só os campos indicados do erro lançado: o <code>status</code> e os erros por campo."
+  },
+  {
+   "t": "p",
+   "html": "O teste mais interessante é o do erro inesperado. A <code>respostaDeErro</code> escreve no <em>log</em> com o <code>console.error</code>, e o teste precisa conferir <strong>o que</strong> foi escrito. Para isso servem os <strong>espiões</strong>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "describe(\"respostaDeErro\", () => {\n  it(\"transforma um ErroApi na resposta que ele descreve\", () => {\n    const resposta = respostaDeErro(\n      new ErroApi(409, \"Conflito.\"),\n    );\n    expect(resposta.status).toBe(409);\n  });\n\n  it(\"esconde o erro inesperado e o registra\", async () => {\n    // troca o console.error por uma função espiã, que só anota\n    const log = vi.spyOn(console, \"error\")\n      .mockImplementation(() => {});\n\n    const resposta = respostaDeErro(\n      new Error(\"falha no banco: senha=123\"),\n    );\n    const corpo = await resposta.json();\n\n    expect(resposta.status).toBe(500);\n    expect(JSON.stringify(corpo)).not.toContain(\"senha=123\");\n\n    // o mesmo identificador vai para a resposta e para o log\n    const id = corpo.instance.replace(\"urn:uuid:\", \"\");\n    expect(log).toHaveBeenCalledWith(\n      `[erro ${id}]`,\n      expect.any(Error),\n    );\n    log.mockRestore();\n  });\n});"
+  },
+  {
+   "t": "p",
+   "html": "O <code>vi.spyOn(console, \"error\")</code> troca o <code>console.error</code> por um espião, que anota cada chamada, com os argumentos. O <code>mockImplementation(() =&gt; {})</code> faz o espião não escrever nada, para o erro de propósito não poluir o resultado dos testes. O teste confere as duas regras do Capítulo 8: a mensagem interna, com a “senha”, não vai para o cliente, e o identificador da resposta é o mesmo do <em>log</em>. O <code>expect.any(Error)</code> aceita qualquer objeto do tipo <code>Error</code>. No fim, o <code>mockRestore</code> devolve o <code>console.error</code> original, para não afetar os outros testes."
+  },
+  {
+   "t": "h2",
+   "id": "11-7-controlando-o-relogio",
+   "texto": "11.7 Controlando o relógio"
+  },
+  {
+   "t": "p",
+   "html": "Como testar que um <em>token</em> vence depois de uma hora, sem esperar uma hora? O Vitest permite trocar o relógio do JavaScript por um relógio falso:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// testes/unidade/token.test.ts -- os tokens JWT\nimport { afterEach, describe, expect, it, vi } from \"vitest\";\nimport { conferirToken, criarToken } from \"@/lib/token\";\n\ndescribe(\"tokens\", () => {\n  afterEach(() => {\n    vi.useRealTimers();\n  });\n\n  it(\"aceita o token que criou e devolve o id\", async () => {\n    const { token, expiresIn } = await criarToken(\"usuario-1\");\n    expect(expiresIn).toBe(3600);\n    expect(await conferirToken(token)).toBe(\"usuario-1\");\n  });\n\n  it(\"recusa um token com a carga alterada\", async () => {\n    const { token } = await criarToken(\"usuario-1\");\n    const [cabecalho, , assinatura] = token.split(\".\");\n    const outraCarga = Buffer.from(\n      JSON.stringify({ sub: \"usuario-2\" }),\n    ).toString(\"base64url\");\n\n    const falso = [cabecalho, outraCarga, assinatura].join(\".\");\n    expect(await conferirToken(falso)).toBeNull();\n  });\n\n  it(\"recusa textos que não são um JWT\", async () => {\n    expect(await conferirToken(\"abc\")).toBeNull();\n    expect(await conferirToken(\"\")).toBeNull();\n  });\n\n  it(\"recusa o token depois de uma hora\", async () => {\n    // relógio falso: o teste não precisa esperar uma hora\n    vi.useFakeTimers({ toFake: [\"Date\"] });\n    vi.setSystemTime(new Date(\"2026-10-17T10:00:00Z\"));\n    const { token } = await criarToken(\"usuario-1\");\n\n    vi.setSystemTime(new Date(\"2026-10-17T10:59:00Z\"));\n    expect(await conferirToken(token)).toBe(\"usuario-1\");\n\n    vi.setSystemTime(new Date(\"2026-10-17T11:01:00Z\"));\n    expect(await conferirToken(token)).toBeNull();\n  });\n});"
+  },
+  {
+   "t": "p",
+   "html": "O <code>vi.useFakeTimers({ toFake: [\"Date\"] })</code> troca só o <code>Date</code>, que é o que a <code>jose</code> consulta para saber a hora atual; as outras funções de tempo continuam verdadeiras. O <code>vi.setSystemTime</code> acerta o relógio falso em qualquer data: o <em>token</em> é criado às 10h, ainda vale às 10h59 e é recusado às 11h01. O <code>afterEach</code> roda depois de cada teste e devolve o relógio verdadeiro, mesmo que o teste falhe no meio."
+  },
+  {
+   "t": "p",
+   "html": "O segundo teste refaz o ataque do Capítulo 9: troca a carga do <em>token</em>, mantendo a assinatura original. Os testes de segurança são dos mais valiosos, porque o defeito que eles pegam não aparece no uso normal: ninguém percebe que a API aceita um <em>token</em> falso até que alguém o envie."
+  },
+  {
+   "t": "h2",
+   "id": "11-8-testes-de-integracao-os-servicos-com-o-banco",
+   "texto": "11.8 Testes de integração: os serviços com o banco"
+  },
+  {
+   "t": "p",
+   "html": "Os serviços do Capítulo 7 são o coração da API, e o que eles fazem depende do banco: os filtros, a ordenação e, principalmente, o <code>userId</code> em cada consulta. Testá-los com um banco falso esconderia justamente o que pode dar errado. Os testes de integração usam o banco dos testes:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// testes/integracao/usuarios.test.ts -- cadastro e login\nimport { beforeEach, describe, expect, it } from \"vitest\";\nimport { db } from \"@/lib/db\";\nimport {\n  autenticar,\n  cadastrarUsuario,\n} from \"@/lib/servicos/usuarios\";\nimport { limparBanco } from \"../apoio\";\n\nconst ana = {\n  name: \"Ana\",\n  email: \"ana@teste.com\",\n  password: \"senha12345\",\n};\n\ndescribe(\"serviço de usuários\", () => {\n  beforeEach(limparBanco);\n\n  it(\"cadastra sem devolver a senha; guarda o hash\", async () => {\n    const usuario = await cadastrarUsuario(ana);\n    expect(usuario).not.toHaveProperty(\"password\");\n\n    const noBanco = await db.user.findUniqueOrThrow({\n      where: { email: ana.email },\n    });\n    expect(noBanco.password).not.toBe(ana.password);\n    expect(noBanco.password).toMatch(/^\\$2b\\$10\\$/);\n  });\n\n  it(\"devolve null quando o e-mail já existe\", async () => {\n    await cadastrarUsuario(ana);\n    expect(await cadastrarUsuario(ana)).toBeNull();\n  });\n\n  it(\"autentica só com o e-mail e a senha certos\", async () => {\n    const usuario = await cadastrarUsuario(ana);\n\n    expect(await autenticar(ana)).toBe(usuario?.id);\n    expect(\n      await autenticar({ ...ana, password: \"errada123\" }),\n    ).toBeNull();\n    expect(\n      await autenticar({ ...ana, email: \"nao@existe.com\" }),\n    ).toBeNull();\n  });\n});"
+  },
+  {
+   "t": "p",
+   "html": "O <code>beforeEach(limparBanco)</code> roda a limpeza antes de cada teste do grupo. Assim, cada teste começa do zero e pode ser rodado sozinho, em qualquer ordem, com o mesmo resultado. O <code>toMatch</code> confere um texto contra uma expressão regular: o que está guardado no banco tem de começar com <code>$2b$10$</code>, o início de um <em>hash</em> do bcrypt com custo 10. Agora, as tarefas:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// testes/integracao/tarefas.test.ts -- o serviço de tarefas\nimport { beforeEach, describe, expect, it } from \"vitest\";\nimport { esquemaFiltros } from \"@/lib/esquemas/tarefas\";\nimport {\n  buscarTarefa,\n  criarTarefa,\n  editarTarefa,\n  excluirTarefa,\n  listarTarefas,\n} from \"@/lib/servicos/tarefas\";\nimport { criarPessoa, limparBanco } from \"../apoio\";\n\n// Os filtros completos, com os padrões, a partir da query string\nconst filtros = (query: Record<string, string> = {}) =>\n  esquemaFiltros.parse(query);\n\ndescribe(\"serviço de tarefas\", () => {\n  beforeEach(limparBanco);\n\n  it(\"cria uma tarefa com os padrões do banco\", async () => {\n    const ana = await criarPessoa();\n    const tarefa = await criarTarefa(ana.id, {\n      title: \"Estudar\",\n    });\n\n    expect(tarefa).toMatchObject({\n      title: \"Estudar\",\n      status: \"PENDING\",\n      priority: \"MEDIUM\",\n      dueDate: null,\n    });\n    expect(tarefa).not.toHaveProperty(\"userId\");\n  });\n\n  it(\"não deixa mexer na tarefa de outra pessoa\", async () => {\n    const ana = await criarPessoa(\"Ana\");\n    const bia = await criarPessoa(\"Bia\");\n    const tarefa = await criarTarefa(ana.id, { title: \"Da Ana\" });\n\n    expect(await buscarTarefa(bia.id, tarefa.id)).toBeNull();\n    expect(\n      await editarTarefa(bia.id, tarefa.id, { title: \"Outro\" }),\n    ).toBeNull();\n    expect(await excluirTarefa(bia.id, tarefa.id)).toBe(false);\n\n    // e a tarefa continua intacta para a dona\n    const daAna = await buscarTarefa(ana.id, tarefa.id);\n    expect(daAna?.title).toBe(\"Da Ana\");\n  });"
+  },
+  {
+   "t": "p",
+   "html": "O <code>toMatchObject</code> confere só os campos indicados e ignora os outros, como o <code>id</code> e as datas, que mudam a cada execução. O segundo teste é o mais importante do arquivo. Ele confere a regra de segurança do Capítulo 2, que o OWASP chama de BOLA (Capítulo 12): a Bia não consegue ver, editar nem excluir a tarefa da Ana, e a tarefa continua intacta depois das tentativas."
+  },
+  {
+   "t": "codigo",
+   "texto": "  it(\"filtra, busca e pagina a lista\", async () => {\n    const ana = await criarPessoa();\n    for (let i = 1; i <= 5; i++) {\n      await criarTarefa(ana.id, { title: `Tarefa ${i}` });\n    }\n    await criarTarefa(ana.id, {\n      title: \"Relatório final\",\n      status: \"DONE\",\n    });\n\n    const feitas = await listarTarefas(\n      ana.id,\n      filtros({ status: \"DONE\" }),\n    );\n    expect(feitas.data.map((t) => t.title))\n      .toEqual([\"Relatório final\"]);\n\n    const busca = await listarTarefas(\n      ana.id,\n      filtros({ search: \"RELAT\" }),\n    );\n    expect(busca.meta.total).toBe(1);\n\n    const pagina2 = await listarTarefas(\n      ana.id,\n      filtros({ limit: \"4\", page: \"2\" }),\n    );\n    expect(pagina2.data).toHaveLength(2);\n    expect(pagina2.meta).toEqual({\n      page: 2,\n      limit: 4,\n      total: 6,\n      totalPages: 2,\n    });\n  });\n\n  it(\"ordena pela data, com as sem data no fim\", async () => {\n    const ana = await criarPessoa();\n    await criarTarefa(ana.id, { title: \"Sem data\" });\n    await criarTarefa(ana.id, {\n      title: \"Dezembro\",\n      dueDate: new Date(\"2026-12-01\"),\n    });\n    await criarTarefa(ana.id, {\n      title: \"Novembro\",\n      dueDate: new Date(\"2026-11-05\"),\n    });\n\n    for (const sort of [\"dueDate\", \"-dueDate\"]) {\n      const lista = await listarTarefas(\n        ana.id,\n        filtros({ sort }),\n      );\n      expect(lista.data.at(-1)?.title).toBe(\"Sem data\");\n    }\n  });\n});"
+  },
+  {
+   "t": "p",
+   "html": "A função <code>filtros</code> passa a <em>query string</em> pelo <code>esquemaFiltros</code>, para obter o objeto completo, com os padrões, exatamente como a rota faz. O teste da ordenação confere, nas duas direções, que as tarefas sem data ficam no fim, o detalhe do <code>nulls: \"last\"</code> do Capítulo 7. O <code>at(-1)</code> pega o último item de uma lista."
+  },
+  {
+   "t": "h2",
+   "id": "11-9-testando-as-rotas-sem-o-servidor",
+   "texto": "11.9 Testando as rotas sem o servidor"
+  },
+  {
+   "t": "p",
+   "html": "Uma rota do Next.js é uma função exportada: dá para importá-la e chamá-la no teste, com uma requisição montada à mão, sem subir o servidor. O obstáculo é a <code>usuarioAtual</code>, que lê os cabeçalhos com o <code>headers()</code> do Next.js, e essa função só funciona dentro do servidor. A solução é um <strong><em>mock</em></strong>: uma versão falsa de um módulo, usada só nos testes."
+  },
+  {
+   "t": "codigo",
+   "texto": "// testes/integracao/rotas.test.ts -- as rotas, sem o servidor\nimport { beforeEach, describe, expect, it, vi } from \"vitest\";\nimport { NextRequest } from \"next/server\";\nimport { Ajv2020 } from \"ajv/dist/2020.js\";\nimport * as colecao from \"@/app/api/tasks/route\";\nimport * as umaTarefa from \"@/app/api/tasks/[id]/route\";\nimport { documento } from \"@/lib/openapi\";\nimport { criarToken } from \"@/lib/token\";\nimport { criarPessoa, limparBanco } from \"../apoio\";\n\n// A usuarioAtual lê os cabeçalhos com o headers() do Next.js,\n// que só funciona com o servidor no ar. No teste, o módulo é\n// trocado por um falso (mock), que devolve estes cabeçalhos.\nconst cabecalhos = vi.hoisted(() => new Headers());\nvi.mock(\"next/headers\", () => ({\n  headers: async () => cabecalhos,\n}));\n\nasync function entrarComo(userId: string) {\n  const { token } = await criarToken(userId);\n  cabecalhos.set(\"Authorization\", `Bearer ${token}`);\n}\n\nconst requisicao = (url: string, corpo?: unknown) =>\n  new NextRequest(`http://localhost${url}`, {\n    method: corpo === undefined ? \"GET\" : \"POST\",\n    body: corpo === undefined ? undefined : JSON.stringify(corpo),\n  });\n\nconst contexto = (id: string) => ({\n  params: Promise.resolve({ id }),\n});"
+  },
+  {
+   "t": "p",
+   "html": "O <code>vi.mock(\"next/headers\", ...)</code> faz todo <code>import</code> desse módulo, inclusive o que está dentro da <code>usuarioAtual</code>, receber o objeto devolvido pela função, em que o <code>headers</code> devolve os cabeçalhos do teste. O Vitest move o <code>vi.mock</code> para o começo do arquivo, antes dos <code>import</code>, porque o módulo falso precisa existir antes que alguém o importe. Por isso a variável <code>cabecalhos</code> é criada com o <code>vi.hoisted</code>, que também é movido para o começo; uma variável comum ainda não existiria quando o <em>mock</em> fosse criado. A <code>entrarComo</code> cria um <em>token</em> de verdade e o coloca no cabeçalho, como faria um cliente depois do <em>login</em>."
+  },
+  {
+   "t": "codigo",
+   "texto": "describe(\"rotas de tarefas\", () => {\n  beforeEach(async () => {\n    await limparBanco();\n    cabecalhos.delete(\"Authorization\");\n  });\n\n  it(\"responde 401 sem token, antes de validar\", async () => {\n    const resposta = await colecao.POST(\n      requisicao(\"/api/tasks\", { title: \"\" }),\n      {},\n    );\n    expect(resposta.status).toBe(401);\n    expect(resposta.headers.get(\"WWW-Authenticate\"))\n      .toBe(\"Bearer\");\n  });\n\n  it(\"cria com 201 e Location, e a tarefa existe\", async () => {\n    const ana = await criarPessoa();\n    await entrarComo(ana.id);\n\n    const criada = await colecao.POST(\n      requisicao(\"/api/tasks\", { title: \"Pela rota\" }),\n      {},\n    );\n    expect(criada.status).toBe(201);\n    const { id } = await criada.json();\n    expect(criada.headers.get(\"Location\"))\n      .toBe(`/api/tasks/${id}`);\n\n    const lida = await umaTarefa.GET(\n      requisicao(`/api/tasks/${id}`),\n      contexto(id),\n    );\n    expect(lida.status).toBe(200);\n  });\n\n  it(\"responde 400 no formato Problem Details\", async () => {\n    const ana = await criarPessoa();\n    await entrarComo(ana.id);\n\n    const resposta = await colecao.POST(\n      requisicao(\"/api/tasks\", {\n        title: \"\",\n        priority: \"URGENTE\",\n      }),\n      {},\n    );\n    expect(resposta.status).toBe(400);\n    const corpo = await resposta.json();\n    expect(Object.keys(corpo.errors))\n      .toEqual([\"title\", \"priority\"]);\n  });\n});"
+  },
+  {
+   "t": "p",
+   "html": "Os testes chamam o <code>POST</code> e o <code>GET</code> exportados pelas rotas, que já vêm envolvidos pela <code>comErros</code>; por isso a resposta de erro é a mesma que o cliente receberia. O <code>{}</code> é o contexto da rota da coleção, que não tem parâmetros. O primeiro teste confere a ordem combinada no Capítulo 8: sem <em>token</em>, a resposta é <code>401</code>, mesmo com um título vazio, que daria <code>400</code>."
+  },
+  {
+   "t": "p",
+   "html": "Repare no que ficou de fora do <em>mock</em>: o <em>token</em>, a validação, o serviço e o banco são todos verdadeiros. Só foi trocado o que não funciona fora do servidor. Quanto mais coisas um teste troca por versões falsas, menos ele prova sobre o sistema de verdade."
+  },
+  {
+   "t": "h2",
+   "id": "11-10-o-teste-de-contrato",
+   "texto": "11.10 O teste de contrato"
+  },
+  {
+   "t": "p",
+   "html": "O Capítulo 10 deixou um risco anotado: os esquemas das <strong>respostas</strong> no documento OpenAPI foram escritos à mão, e podem deixar de corresponder ao que a API devolve. Um <strong>teste de contrato</strong> confere a resposta real contra o documento:"
+  },
+  {
+   "t": "codigo",
+   "texto": "describe(\"contrato: as respostas seguem o OpenAPI\", () => {\n  // O Ajv confere dados contra um JSON Schema; os esquemas vêm\n  // dos components do documento do Capítulo 10\n  const ajv = new Ajv2020({ validateFormats: false });\n  for (const [nome, esquema] of Object.entries(\n    documento.components.schemas,\n  )) {\n    ajv.addSchema(esquema, `#/components/schemas/${nome}`);\n  }\n\n  beforeEach(async () => {\n    await limparBanco();\n    cabecalhos.delete(\"Authorization\");\n  });\n\n  it(\"GET /api/tasks devolve uma ListaDeTarefas\", async () => {\n    const ana = await criarPessoa();\n    await entrarComo(ana.id);\n    await colecao.POST(\n      requisicao(\"/api/tasks\", {\n        title: \"Com data\",\n        dueDate: \"2026-12-01\",\n      }),\n      {},\n    );\n\n    const resposta = await colecao.GET(\n      requisicao(\"/api/tasks\"),\n      {},\n    );\n    const confere = ajv.getSchema(\n      \"#/components/schemas/ListaDeTarefas\",\n    );\n    const valido = confere?.(await resposta.json());\n    expect(confere?.errors ?? []).toEqual([]);\n    expect(valido).toBe(true);\n  });\n});"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>Ajv</strong> é a biblioteca mais usada para conferir dados contra um JSON Schema. A classe <code>Ajv2020</code> entende a versão 2020-12 do JSON Schema, a do OpenAPI 3.1. O laço registra cada esquema do documento com o mesmo endereço usado nos <code>$ref</code>, como <code>#/components/schemas/Tarefa</code>; assim, quando a <code>ListaDeTarefas</code> aponta para a <code>Tarefa</code>, o Ajv sabe onde encontrá-la. O <code>getSchema</code> devolve uma função que confere os dados e deixa os problemas encontrados em <code>errors</code>. Comparar o <code>errors</code> com uma lista vazia, antes de conferir o <code>true</code>, faz o Vitest mostrar quais campos não bateram, se o teste falhar. A opção <code>validateFormats: false</code> dispensa o Ajv de conferir formatos como <code>date-time</code>: as datas já são conferidas pelos padrões (<code>pattern</code>) que o Zod incluiu nos esquemas."
+  },
+  {
+   "t": "p",
+   "html": "Se alguém acrescentar um campo ao <code>camposTarefa</code> e esquecer o documento, este teste ainda passa, porque o JSON Schema aceita campos extras por padrão. Mas se um campo mudar de tipo, ou sumir da resposta, ele falha, e a documentação errada é descoberta antes de chegar a quem usa a API."
+  },
+  {
+   "t": "h2",
+   "id": "11-11-rodando-os-testes",
+   "texto": "11.11 Rodando os testes"
+  },
+  {
+   "t": "p",
+   "html": "Com o banco dos testes criado, um comando roda tudo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npx vitest run\n\n RUN  v5.0.5\n\n1 migration found in prisma/migrations\nNo pending migrations to apply.\n\n Test Files  6 passed (6)\n      Tests  34 passed (34)\n   Duration  10.85s"
+  },
+  {
+   "t": "p",
+   "html": "Seis arquivos e 34 testes, todos aprovados. Para ver como aparece uma falha, a busca de uma tarefa, no serviço do Capítulo 7, foi alterada de propósito: o <code>where: { id, userId }</code> virou <code>where: { id }</code>, um esquecimento que deixaria qualquer pessoa ler a tarefa de qualquer outra. O resultado, com os símbolos do Vitest trocados por <code>&gt;</code> e <code>X</code>, alguns espaços reduzidos e a tarefa resumida:"
+  },
+  {
+   "t": "codigo",
+   "texto": " > testes/integracao/tarefas.test.ts (4 tests | 1 failed)\n   > serviço de tarefas (4)\n     X não deixa mexer na tarefa de outra pessoa\n\n FAIL  testes/integracao/tarefas.test.ts > serviço de tarefas\n       > não deixa mexer na tarefa de outra pessoa\nAssertionError: expected { ...(8) } to be null\n- Expected:\nnull\n+ Received:\n{\n  \"id\": \"cmvcv6xxo00040ov9b7h5jp2k\",\n  \"title\": \"Da Ana\",\n  ...\n}\n > testes/integracao/tarefas.test.ts:40:51\n38| const tarefa = await criarTarefa(ana.id, { title: \"Da Ana\" });\n39|\n40| expect(await buscarTarefa(bia.id, tarefa.id)).toBeNull();"
+  },
+  {
+   "t": "p",
+   "html": "O Vitest diz qual teste falhou, o que era esperado (<code>null</code>), o que veio (a tarefa da Ana) e em qual linha. O nome do teste já explica a gravidade do problema. Com o <code>userId</code> de volta, os 34 testes voltaram a passar."
+  },
+  {
+   "t": "p",
+   "html": "A <strong>cobertura</strong> mede quanto do código os testes executaram. O <code>npm run cobertura</code> mostra uma tabela; este é um trecho do resultado, com as linhas de cada pasta:"
+  },
+  {
+   "t": "codigo",
+   "texto": "File               | % Stmts | % Branch | % Funcs | % Lines\n-------------------|---------|----------|---------|--------\nAll files          |   67.51 |    67.69 |   58.97 |   69.33\n .../auth/register |       0 |        0 |       0 |       0\n app/api/tasks     |   91.66 |      100 |   66.66 |     100\n ...api/tasks/[id] |      40 |    16.66 |      20 |    42.1\n  erros.ts         |     100 |    85.71 |     100 |     100\n  token.ts         |    90.9 |    66.66 |     100 |    90.9\n  xml.ts           |       0 |        0 |       0 |       0\n lib/servicos      |   93.54 |       90 |     100 |   93.54"
+  },
+  {
+   "t": "p",
+   "html": "As colunas contam instruções (<em>Stmts</em>), caminhos de <code>if</code> e <code>?:</code> (<em>Branch</em>), funções e linhas. A tabela mostra o que ainda não foi testado: as rotas de cadastro e de <em>login</em>, e o <code>PATCH</code> e o <code>DELETE</code> da rota de uma tarefa, cujos serviços foram testados, mas as rotas, não. Ela também mostra o <code>lib/xml.ts</code> com zero: desde o Capítulo 7, nenhuma rota usa a resposta em XML. A cobertura encontra também código que ninguém usa."
+  },
+  {
+   "t": "p",
+   "html": "Use a cobertura para descobrir o que falta testar, e não como meta. Cem por cento de cobertura não garante nada: um teste pode executar uma linha sem conferir o resultado dela. E correr atrás dos últimos pontos leva a testes que conferem detalhes sem importância. O que importa é que as regras de negócio e de segurança estejam cobertas, como estão, no TaskFlow, os serviços, os erros e os <em>tokens</em>."
+  },
+  {
+   "t": "h2",
+   "id": "11-12-bons-testes",
+   "texto": "11.12 Bons testes"
+  },
+  {
+   "t": "p",
+   "html": "Alguns hábitos separam os testes que ajudam dos que atrapalham:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Independentes.</strong> Cada teste prepara o que precisa e não depende de outro ter rodado antes. Por isso o banco é limpo antes de cada um.",
+    "<strong>Determinísticos.</strong> O mesmo código dá sempre o mesmo resultado. Datas, horas e valores aleatórios são as causas mais comuns de testes que falham “de vez em quando”; controle-os, como o relógio falso fez com o <em>token</em>.",
+    "<strong>Testam o comportamento, e não a implementação.</strong> O teste do isolamento confere que a Bia não vê a tarefa da Ana, e não que a consulta tem um <code>userId</code>. Se a consulta for reescrita de outro jeito, o teste continua valendo.",
+    "<strong>Nomes que explicam.</strong> O nome diz a regra: “recusa o <em>token</em> depois de uma hora”. Quando ele falhar, a mensagem já diz o que quebrou.",
+    "<strong>Testam os erros.</strong> O caminho feliz é o que menos quebra. Dados inválidos, <em>tokens</em> falsos e recursos de outra pessoa são onde estão os defeitos e as falhas de segurança.",
+    "<strong>Viu falhar, confiou.</strong> Um teste que nunca falhou pode não estar testando nada. Ao escrever um teste novo, quebre o código de propósito, como foi feito com o <code>userId</code>, e confira que ele falha."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Os três tipos de teste do TaskFlow se completam: o Vitest confere as regras, por dentro, em segundos; a coleção do Postman, rodada pelo Newman, confere a API de fora, com o servidor no ar, como o cliente a vê. No Capítulo 12, os dois passam a rodar sozinhos a cada envio de código ao GitHub, e uma falha impede a publicação. O projeto fica assim:"
+  },
+  {
+   "t": "codigo",
+   "texto": ".env.test                  o banco dos testes (fora do Git)\nvitest.config.mts          a configuração do Vitest\ntestes/\n  preparar-banco.ts        a trava e as migrações\n  apoio.ts                 limparBanco, criarPessoa\n  unidade/\n    esquemas.test.ts       o que a API aceita\n    erros.test.ts          o formato dos erros, espiões\n    token.test.ts          os tokens, relógio falso\n  integracao/\n    usuarios.test.ts       cadastro e login, com o banco\n    tarefas.test.ts        serviço de tarefas, isolamento\n    rotas.test.ts          rotas com mock e contrato"
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Rodar os testes no banco de desenvolvimento ou de produção.</strong> Os testes apagam dados. Use um banco só para eles e uma trava que confira isso antes de começar.",
+    "<strong>Testes que dependem da ordem.</strong> Um teste que só passa se outro rodou antes quebra ao ser rodado sozinho. Prepare tudo dentro de cada teste ou no <code>beforeEach</code>.",
+    "<strong>Rodar em paralelo testes que dividem o banco.</strong> Um apaga os dados do outro, e as falhas parecem aleatórias. Use o <code>fileParallelism: false</code>, ou um banco por processo.",
+    "<strong>Chamar diretamente a função que deve lançar o erro.</strong> O erro interrompe o teste. Passe uma função ao <code>expect</code>: <code>expect(() =&gt; validar(...)).toThrow()</code>.",
+    "<strong>Esquecer o <code>await</code>.</strong> Sem ele, o <code>expect</code> compara uma <em>Promise</em>, e não o resultado. Em funções <code>async</code>, use <code>await</code> em toda chamada que devolve uma <em>Promise</em>.",
+    "<strong>Trocar tudo por <em>mocks</em>.</strong> Um teste em que o banco, o serviço e a validação são falsos só prova que os <em>mocks</em> funcionam. Troque apenas o que não funciona no ambiente de testes.",
+    "<strong>Não restaurar espiões e relógios.</strong> Um <code>console.error</code> silenciado ou um relógio falso esquecido afetam os testes seguintes. Use <code>mockRestore</code> e <code>useRealTimers</code>.",
+    "<strong>Perseguir 100% de cobertura.</strong> A cobertura mostra o que não foi executado, não o que foi bem testado. Priorize as regras de negócio e de segurança."
+   ]
+  }
+ ]
+}

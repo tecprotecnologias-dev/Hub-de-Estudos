@@ -39,14 +39,14 @@ O navegador precisa baixar o código do site para mostrá-lo, então **não exis
 ## Publicação
 - [x] Site no ar no Netlify: https://hubdeestudos.netlify.app (16/10/2026), ligado ao Supabase.
 - [x] No Supabase, Site URL e Redirect URLs com o endereço do Netlify.
-- [ ] **Arrastar a pasta `site\dist` para o Netlify** para publicar o que foi feito depois (design novo já publicado; faltam os simulados da Web II e os capítulos 1 a 10 da Web III). Antes de arrastar, rodar `npm run build` dentro de `site`.
-- [ ] (Opcional) Ligar o Netlify ao GitHub, para publicar sozinho a cada envio, sem arrastar pasta.
+- [ ] **Arrastar a pasta `site\dist` para o Netlify** para publicar o que foi feito depois (design novo já publicado; faltam os simulados da Web II e os capítulos 1 a 11 da Web III). Antes de arrastar, rodar `npm run build` dentro de `site`.
+- [ ] **Mudar a hospedagem do Netlify para o Cloudflare Pages** (decidido em 17/10/2026, para depois da Web III): o Netlify gasta créditos a cada publicação. O plano gratuito do Cloudflare aceita uso comercial, até 100 sites por conta e 500 publicações por mês (somadas entre os sites), e publica sozinho a partir do GitHub. Na mudança: configurar o build (pasta `site`, `npm run build`, saída `site/dist`), cadastrar `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` e atualizar a Site URL e as Redirect URLs no Supabase. Os outros sites de venda usam checkout externo (Mercado Pago, Stripe, Hotmart): no plano gratuito, o site não pode receber dados de cartão.
 - [ ] Revisar a Política de Privacidade.
 - [ ] Testar o fluxo de aprovação de professor.
 
 ## Conteúdo
 - [x] Web II: 50 questões objetivas no estilo de concurso (10 por módulo).
-- [ ] **Web III — apostila "Desenvolvimento de APIs para a Web" (caps. 1 a 10 prontos em 17/10/2026)**
+- [ ] **Web III — apostila "Desenvolvimento de APIs para a Web" (caps. 1 a 11 prontos em 17/10/2026)**
   - [x] Cap. 1 APIs e Web Services
   - [x] Cap. 2 Design RESTful e métodos HTTP
   - [x] Cap. 3 Preparando o projeto
@@ -57,8 +57,8 @@ O navegador precisa baixar o código do site para mostrá-lo, então **não exis
   - [x] Cap. 8 Tratamento de erros e códigos HTTP
   - [x] Cap. 9 Autenticação com JWT
   - [x] Cap. 10 Documentação: Swagger/OpenAPI e Postman
-  - [ ] **Cap. 11 Testes de API ← retomar aqui**
-  - [ ] Cap. 12 Segurança e deploy
+  - [x] Cap. 11 Testes de API
+  - [ ] **Cap. 12 Segurança e deploy ← retomar aqui**
   - [ ] Depois da apostila: exercícios práticos e simulados da Web III
   - Arquivos: `apostilas/web-iii` (LaTeX e PDF). Para retomar, basta dizer ao Claude "vamos continuar a apostila da Web III": o passo a passo técnico está guardado na memória dele.
 - [ ] Apostilas seguintes: Estrutura de Dados, Análise e Projeto de Sistemas, Cliente-Servidor, Dispositivos Móveis, Gestão de Banco de Dados, Web I.

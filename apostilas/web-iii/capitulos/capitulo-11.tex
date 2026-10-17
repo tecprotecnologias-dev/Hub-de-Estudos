@@ -1,0 +1,889 @@
+\section{Capítulo 11 -- Testes de API}
+
+Até aqui, cada capítulo testou o TaskFlow à mão: rodar o servidor, enviar requisições com o \texttt{curl}, o REST Client ou o Postman, e conferir as respostas com os próprios olhos. Esse cuidado encontrou defeitos, mas não se repete sozinho: a cada mudança no código, tudo precisaria ser conferido de novo. Neste capítulo você vai escrever testes automáticos com o Vitest: testes de unidade, para as funções que não dependem de nada; testes de integração, que usam um banco de dados de verdade; testes das rotas, sem precisar do servidor; e um teste de contrato, que confere as respostas contra o documento OpenAPI do Capítulo 10. No final, um único comando confere, em poucos segundos, o que antes levava uma tarde.
+
+\subsection{11.1 Por que testar automaticamente}
+
+Um teste automático é um programa que usa o seu código e confere o resultado. Ele não substitui o raciocínio de quem programa, mas traz três coisas que o teste manual não traz:
+
+\begin{itemize}
+  \item \textbf{Repetição sem custo.} Os 34 testes deste capítulo rodam em cerca de 10 segundos. Rodá-los a cada mudança é barato; repetir à mão o roteiro de testes dos Capítulos 6 a 10 não é.
+  \item \textbf{Proteção contra regressões.} Uma \textbf{regressão} é um defeito em algo que já funcionava, causado por uma mudança em outro lugar. É o tipo mais comum de defeito, e o mais difícil de perceber à mão, porque ninguém volta a testar o que ``já estava pronto''.
+  \item \textbf{Coragem para mudar.} Com os testes passando, uma reorganização do código, como a camada de serviço do Capítulo 7 ou o tratador de erros do Capítulo 8, pode ser feita sem medo: se algo quebrar, um teste avisa.
+\end{itemize}
+
+Os testes também servem de documentação. Um teste chamado ``não deixa mexer na tarefa de outra pessoa'' explica uma regra da API melhor que um comentário, e, ao contrário do comentário, avisa quando deixa de ser verdade.
+
+\subsection{11.2 Unidade, integração e ponta a ponta}
+
+Os testes costumam ser divididos pelo tamanho do pedaço do sistema que exercitam:
+
+\begin{center}
+\begin{tabular}{@{}P{0.2\linewidth}P{0.36\linewidth}P{0.34\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Tipo} & \tblheader{O que exercita} & \tblheader{No TaskFlow} \\
+\midrule
+unidade & uma função ou módulo isolado, sem banco nem rede & os esquemas do Zod, o \texttt{problema}, os \textit{tokens} \\
+\rowcolor{rowgray} integração & várias partes juntas, com dependências reais, como o banco & os serviços e as rotas, com um banco de testes \\
+ponta a ponta & o sistema inteiro, do jeito que o cliente o usa & a coleção do Postman rodada pelo Newman (Capítulo 10) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Os testes de unidade são os mais rápidos e apontam o defeito com precisão, mas não veem os problemas que surgem quando as partes se juntam, como uma consulta do Prisma que não faz o que se esperava. Os de ponta a ponta veem tudo, mas são lentos, precisam do servidor no ar e, quando falham, não dizem onde está o defeito. Por isso a recomendação clássica, a \textbf{pirâmide de testes}, é ter muitos testes de unidade, uma boa quantidade de testes de integração e poucos de ponta a ponta. Em APIs, em que boa parte da lógica está nas consultas ao banco, os testes de integração costumam ser os que mais valem.
+
+\subsection{11.3 Instalando o Vitest}
+
+O \textbf{Vitest} é um \textit{framework} de testes para JavaScript e TypeScript. Ele roda o TypeScript sem configuração extra, entende os módulos modernos (\texttt{import}) e é rápido. A forma de escrever os testes é praticamente a mesma do \textbf{Jest}, o \textit{framework} mais antigo e ainda muito usado: \texttt{describe}, \texttt{it} e \texttt{expect} funcionam igual nos dois, e quem aprende um sabe usar o outro.
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$ npm install -D vitest@5 @vitest/coverage-v8@5 @types/node@24 ajv
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{@vitest/coverage-v8} mede a cobertura dos testes (Seção 11.11), e o \texttt{ajv} será usado no teste de contrato (Seção 11.10). O \texttt{@types/node@24} está na lista por um motivo prático: o \texttt{create-next-app} instala os tipos do Node.js 20, e o Vitest 5 exige os do 22 ou mais novo. Sem ele, o \texttt{npm} recusa a instalação com um erro \texttt{ERESOLVE}, ``conflito de dependências''. Instalar os tipos da versão do Node.js que você usa resolve. A configuração fica em um arquivo na raiz do projeto:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// vitest.config.mts -- a configuração dos testes
+import { loadEnv } from "vite";
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  resolve: {
+    // o mesmo atalho "@/" do tsconfig.json
+    alias: { "@": import.meta.dirname },
+  },
+  test: {
+    // carrega o .env e, por cima dele, o .env.test
+    env: loadEnv("test", import.meta.dirname, ""),
+    // prepara o banco dos testes uma vez, antes de tudo
+    globalSetup: "./testes/preparar-banco.ts",
+    // os arquivos dividem o mesmo banco: um de cada vez
+    fileParallelism: false,
+    coverage: {
+      include: ["lib/**", "app/api/**"],
+      exclude: ["lib/openapi.ts"],
+    },
+  },
+});
+\end{Verbatim}
+\end{codigo}
+
+O arquivo usa a extensão \texttt{.mts}, de ``módulo TypeScript'': o \texttt{package.json} do Next.js não declara o projeto como módulo, e com \texttt{.ts} o Vitest mostra um aviso a cada execução. Cada opção tem um motivo:
+
+\begin{itemize}
+  \item o \texttt{alias} ensina ao Vitest o atalho \texttt{@/}, que o Next.js lê do \texttt{tsconfig.json}; sem ele, nenhum \texttt{import} do projeto funcionaria nos testes;
+  \item o \texttt{loadEnv("test", ...)} carrega as variáveis do \texttt{.env} e, por cima delas, as do \texttt{.env.test}, assunto da próxima seção;
+  \item o \texttt{globalSetup} roda um arquivo uma única vez, antes de todos os testes;
+  \item o \texttt{fileParallelism: false} faz os arquivos de teste rodarem um de cada vez. Por padrão, o Vitest roda vários ao mesmo tempo, o que é ótimo para testes de unidade, mas aqui todos usam o mesmo banco, e um apagaria os dados do outro no meio do caminho;
+  \item o \texttt{coverage} diz quais arquivos entram na medição de cobertura. O documento OpenAPI fica de fora: ele é uma descrição, não uma lógica a testar.
+\end{itemize}
+
+Por fim, dois \textit{scripts} no \texttt{package.json}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "test": "vitest",
+  "cobertura": "vitest run --coverage"
+}
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{npm test} abre o Vitest no \textbf{modo de observação} (\textit{watch}): ele roda os testes e fica esperando; a cada arquivo salvo, roda de novo só os testes afetados. É o jeito mais confortável de trabalhar. Em servidores de integração contínua, onde não há ninguém olhando, o Vitest percebe a variável \texttt{CI} e roda uma única vez. O \texttt{npm run cobertura} roda uma vez e mede a cobertura.
+
+\subsection{11.4 Um banco só para os testes}
+
+Os testes de integração criam e apagam dados à vontade: cada teste começa com o banco vazio, para não depender do que outro teste deixou. Por isso eles precisam de um banco \textbf{só deles}, e nunca o de desenvolvimento, onde estão os dados do \textit{seed} e os seus testes manuais, e muito menos o de produção. Crie um segundo banco, como fez no Capítulo 3: no Neon, um \textit{branch} chamado \texttt{testes}, ou, no computador, outra instância do \texttt{prisma dev}, com \texttt{npx prisma dev --name taskflow-testes}. Depois, coloque a \textit{connection string} dele em um arquivo próprio:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+# .env.test -- o banco dos testes (os testes APAGAM os dados)
+DATABASE_URL="postgresql://...o banco dos testes..."
+DIRECT_URL="postgresql://...o banco dos testes..."
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{.gitignore} do Next.js já protege todos os arquivos que começam com \texttt{.env}. O \texttt{JWT\_SECRET} não precisa ser repetido: o \texttt{loadEnv} carrega o \texttt{.env} primeiro, e o \texttt{.env.test} só troca o que ele define. O banco dos testes começa vazio, sem as tabelas. Quem as cria é o arquivo do \texttt{globalSetup}, que também confere se o banco é mesmo outro:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// testes/preparar-banco.ts -- roda uma vez, antes de todos os
+// testes: confere o banco dos testes e aplica as migrações
+import { execSync } from "node:child_process";
+import { existsSync, readFileSync } from "node:fs";
+import { parse } from "dotenv";
+
+export default function prepararBanco() {
+  if (!existsSync(".env.test")) {
+    throw new Error("Crie o .env.test com o banco dos testes.");
+  }
+  const desenvolvimento = parse(readFileSync(".env"));
+  const testes = parse(readFileSync(".env.test"));
+
+  // Os testes apagam dados: nunca podem rodar no banco de
+  // desenvolvimento, e muito menos no de produção
+  if (
+    !testes.DATABASE_URL ||
+    testes.DATABASE_URL === desenvolvimento.DATABASE_URL
+  ) {
+    throw new Error(
+      "O .env.test precisa apontar para OUTRO banco.",
+    );
+  }
+
+  execSync("npx prisma migrate deploy", {
+    stdio: "inherit",
+    env: { ...process.env, ...testes },
+  });
+}
+\end{Verbatim}
+\end{codigo}
+
+A comparação é uma trava de segurança: se o \texttt{.env.test} faltar, ou apontar para o mesmo banco do \texttt{.env}, os testes nem começam. Um descuido aqui apagaria todos os dados de desenvolvimento na primeira execução; em um projeto real, com o \texttt{.env} apontando para produção, o estrago seria muito pior. O \texttt{execSync} roda um comando no terminal e espera ele terminar. O \texttt{prisma migrate deploy} aplica as migrações que ainda não foram aplicadas, sem criar novas e sem perguntar nada, o comando certo para bancos que não são o de desenvolvimento. As variáveis do \texttt{.env.test} vão no \texttt{env}, por cima das do sistema; o \texttt{dotenv} do \texttt{prisma7.config.ts} não sobrescreve variáveis que já existem, então o Prisma usa o banco dos testes. O comando só é executado na primeira vez em que há migrações novas; nas outras, ele responde ``No pending migrations to apply''.
+
+Algumas funções vão ser usadas por vários arquivos de teste:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// testes/apoio.ts -- funções que vários testes usam
+import { db } from "@/lib/db";
+import { cadastrarUsuario } from "@/lib/servicos/usuarios";
+
+// Cada teste começa com o banco vazio
+export async function limparBanco() {
+  await db.task.deleteMany();
+  await db.user.deleteMany();
+}
+
+let contador = 0;
+
+// Cadastra uma pessoa com um e-mail que ainda não existe
+export async function criarPessoa(nome = "Pessoa de Teste") {
+  contador++;
+  const usuario = await cadastrarUsuario({
+    name: nome,
+    email: `pessoa${contador}@teste.com`,
+    password: "senha12345",
+  });
+  if (!usuario) throw new Error("E-mail repetido no teste.");
+  return usuario;
+}
+\end{Verbatim}
+\end{codigo}
+
+A \texttt{limparBanco} apaga as tarefas antes dos usuários, por causa da chave estrangeira. A \texttt{criarPessoa} usa o próprio serviço de cadastro, com um contador para que cada pessoa tenha um e-mail diferente.
+
+\subsection{11.5 O primeiro teste}
+
+Os testes ficam na pasta \texttt{testes}, em arquivos terminados em \texttt{.test.ts}, que é o padrão que o Vitest procura. Comece pelos esquemas do Zod, que são funções puras: recebem dados e devolvem dados, sem banco nem rede.
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// testes/unidade/esquemas.test.ts -- o que a API aceita
+import { describe, expect, it } from "vitest";
+import {
+  esquemaFiltros,
+  esquemaNovaTarefa,
+} from "@/lib/esquemas/tarefas";
+import { esquemaCadastro } from "@/lib/esquemas/auth";
+
+describe("esquemaNovaTarefa", () => {
+  it("aceita só o título e tira os espaços das pontas", () => {
+    const dados = esquemaNovaTarefa.parse({
+      title: "  Estudar ",
+    });
+    expect(dados).toEqual({ title: "Estudar" });
+  });
+
+  it("recusa o título vazio, com a mensagem certa", () => {
+    const resultado = esquemaNovaTarefa.safeParse({ title: "" });
+    expect(resultado.success).toBe(false);
+    expect(resultado.error?.issues[0].message).toBe(
+      "O título é obrigatório.",
+    );
+  });
+
+  it("transforma a data em um Date", () => {
+    const dados = esquemaNovaTarefa.parse({
+      title: "Entregar",
+      dueDate: "2026-12-01",
+    });
+    expect(dados.dueDate).toEqual(new Date("2026-12-01"));
+  });
+
+  it("descarta campos que não são da tarefa, como userId", () => {
+    const dados = esquemaNovaTarefa.parse({
+      title: "Invasão",
+      userId: "id-de-outra-pessoa",
+    });
+    expect(dados).not.toHaveProperty("userId");
+  });
+});
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{describe} agrupa testes relacionados, e o \texttt{it} define um teste: um nome, que diz o comportamento esperado, e uma função que o confere. Dentro dela, o \texttt{expect} recebe o valor obtido, e o \textbf{\textit{matcher}} diz o que se espera dele: \texttt{toBe} compara valores simples, como números e textos; \texttt{toEqual} compara objetos campo a campo; \texttt{not.toHaveProperty} confere que um campo não existe. Se alguma expectativa não se cumpre, o \texttt{expect} lança um erro, e o teste falha.
+
+Os testes seguem uma estrutura conhecida como \textbf{AAA}: \textit{Arrange}, preparar os dados; \textit{Act}, executar o que está sendo testado; \textit{Assert}, conferir o resultado. Nos testes curtos, as três partes cabem em duas linhas; nos maiores, uma linha em branco entre elas ajuda a leitura. Repare também no último teste: ele confere a proteção contra a atribuição em massa do Capítulo 6, uma regra de segurança que nenhuma revisão futura do esquema pode quebrar sem que alguém perceba.
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+describe("esquemaFiltros", () => {
+  it("preenche os valores padrão", () => {
+    expect(esquemaFiltros.parse({})).toEqual({
+      sort: "-createdAt",
+      page: 1,
+      limit: 20,
+    });
+  });
+
+  it("converte os textos da query string em números", () => {
+    const filtros = esquemaFiltros.parse({
+      page: "2",
+      limit: "5",
+    });
+    expect(filtros.page).toBe(2);
+    expect(filtros.limit).toBe(5);
+  });
+
+  it.each([
+    { query: { page: "0" }, campo: "page" },
+    { query: { page: "abc" }, campo: "page" },
+    { query: { limit: "500" }, campo: "limit" },
+    { query: { sort: "nome" }, campo: "sort" },
+    { query: { status: "FEITO" }, campo: "status" },
+  ])("recusa $query", ({ query, campo }) => {
+    const resultado = esquemaFiltros.safeParse(query);
+    expect(resultado.success).toBe(false);
+    expect(resultado.error?.issues[0].path).toEqual([campo]);
+  });
+});
+
+describe("esquemaCadastro", () => {
+  it("guarda o e-mail sem espaços e em minúsculas", () => {
+    const dados = esquemaCadastro.parse({
+      name: "Ana",
+      email: " Ana@Mail.COM ",
+      password: "senha12345",
+    });
+    expect(dados.email).toBe("ana@mail.com");
+  });
+
+  it("recusa senha de mais de 72 bytes", () => {
+    const resultado = esquemaCadastro.safeParse({
+      name: "Ana",
+      email: "ana@mail.com",
+      password: "á".repeat(40), // 40 letras, 80 bytes
+    });
+    expect(resultado.success).toBe(false);
+  });
+});
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{it.each} roda o mesmo teste com vários dados, um para cada item da lista. O \texttt{\$query} no nome é trocado pelo valor de cada caso, e cada um aparece como um teste separado no resultado: ``recusa \{ page: '0' \}'', ``recusa \{ limit: '500' \}''. Escrever cinco testes quase iguais seria cansativo e, pior, convidaria a testar menos casos. O teste de senha usa a letra ``á'', que ocupa 2 bytes: 40 letras passam do limite de 72 bytes do Capítulo 9, embora sejam menos de 72 caracteres.
+
+\subsection{11.6 Testando os erros e usando espiões}
+
+O módulo de erros do Capítulo 8 é outro bom candidato a testes de unidade:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// testes/unidade/erros.test.ts -- o formato dos erros
+import { describe, expect, it, vi } from "vitest";
+import { ErroApi, problema, respostaDeErro } from "@/lib/erros";
+import { validar } from "@/lib/validar";
+import { esquemaNovaTarefa } from "@/lib/esquemas/tarefas";
+
+describe("problema", () => {
+  it("monta uma resposta no formato da RFC 9457", async () => {
+    const resposta = problema(404, "Tarefa não encontrada.");
+
+    expect(resposta.status).toBe(404);
+    expect(resposta.headers.get("Content-Type")).toBe(
+      "application/problem+json",
+    );
+    expect(await resposta.json()).toEqual({
+      title: "Não encontrado",
+      status: 404,
+      detail: "Tarefa não encontrada.",
+    });
+  });
+
+  it("acrescenta o WWW-Authenticate só no 401", () => {
+    expect(
+      problema(401, "x").headers.get("WWW-Authenticate"),
+    ).toBe("Bearer");
+    expect(problema(403, "x").headers.has("WWW-Authenticate"))
+      .toBe(false);
+  });
+});
+
+describe("validar", () => {
+  it("devolve os dados quando são válidos", () => {
+    expect(validar(esquemaNovaTarefa, { title: "Ok" }))
+      .toEqual({ title: "Ok" });
+  });
+
+  it("lança um ErroApi 400 com os erros por campo", () => {
+    expect(() => validar(esquemaNovaTarefa, { title: "" }))
+      .toThrow(expect.objectContaining({
+        status: 400,
+        campos: { title: ["O título é obrigatório."] },
+      }));
+  });
+});
+\end{Verbatim}
+\end{codigo}
+
+Para conferir que uma função \textbf{lança} um erro, ela não pode ser chamada diretamente, porque o erro interromperia o teste. Ela vai dentro de uma função, \texttt{() => validar(...)}, que o \texttt{expect} chama e observa. O \texttt{toThrow} aceita o tipo de erro esperado ou, como aqui, um \texttt{expect.objectContaining}, que confere só os campos indicados do erro lançado: o \texttt{status} e os erros por campo.
+
+O teste mais interessante é o do erro inesperado. A \texttt{respostaDeErro} escreve no \textit{log} com o \texttt{console.error}, e o teste precisa conferir \textbf{o que} foi escrito. Para isso servem os \textbf{espiões}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+describe("respostaDeErro", () => {
+  it("transforma um ErroApi na resposta que ele descreve", () => {
+    const resposta = respostaDeErro(
+      new ErroApi(409, "Conflito."),
+    );
+    expect(resposta.status).toBe(409);
+  });
+
+  it("esconde o erro inesperado e o registra", async () => {
+    // troca o console.error por uma função espiã, que só anota
+    const log = vi.spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    const resposta = respostaDeErro(
+      new Error("falha no banco: senha=123"),
+    );
+    const corpo = await resposta.json();
+
+    expect(resposta.status).toBe(500);
+    expect(JSON.stringify(corpo)).not.toContain("senha=123");
+
+    // o mesmo identificador vai para a resposta e para o log
+    const id = corpo.instance.replace("urn:uuid:", "");
+    expect(log).toHaveBeenCalledWith(
+      `[erro ${id}]`,
+      expect.any(Error),
+    );
+    log.mockRestore();
+  });
+});
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{vi.spyOn(console, "error")} troca o \texttt{console.error} por um espião, que anota cada chamada, com os argumentos. O \texttt{mockImplementation(() => \{\})} faz o espião não escrever nada, para o erro de propósito não poluir o resultado dos testes. O teste confere as duas regras do Capítulo 8: a mensagem interna, com a ``senha'', não vai para o cliente, e o identificador da resposta é o mesmo do \textit{log}. O \texttt{expect.any(Error)} aceita qualquer objeto do tipo \texttt{Error}. No fim, o \texttt{mockRestore} devolve o \texttt{console.error} original, para não afetar os outros testes.
+
+\subsection{11.7 Controlando o relógio}
+
+Como testar que um \textit{token} vence depois de uma hora, sem esperar uma hora? O Vitest permite trocar o relógio do JavaScript por um relógio falso:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// testes/unidade/token.test.ts -- os tokens JWT
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { conferirToken, criarToken } from "@/lib/token";
+
+describe("tokens", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("aceita o token que criou e devolve o id", async () => {
+    const { token, expiresIn } = await criarToken("usuario-1");
+    expect(expiresIn).toBe(3600);
+    expect(await conferirToken(token)).toBe("usuario-1");
+  });
+
+  it("recusa um token com a carga alterada", async () => {
+    const { token } = await criarToken("usuario-1");
+    const [cabecalho, , assinatura] = token.split(".");
+    const outraCarga = Buffer.from(
+      JSON.stringify({ sub: "usuario-2" }),
+    ).toString("base64url");
+
+    const falso = [cabecalho, outraCarga, assinatura].join(".");
+    expect(await conferirToken(falso)).toBeNull();
+  });
+
+  it("recusa textos que não são um JWT", async () => {
+    expect(await conferirToken("abc")).toBeNull();
+    expect(await conferirToken("")).toBeNull();
+  });
+
+  it("recusa o token depois de uma hora", async () => {
+    // relógio falso: o teste não precisa esperar uma hora
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(new Date("2026-10-17T10:00:00Z"));
+    const { token } = await criarToken("usuario-1");
+
+    vi.setSystemTime(new Date("2026-10-17T10:59:00Z"));
+    expect(await conferirToken(token)).toBe("usuario-1");
+
+    vi.setSystemTime(new Date("2026-10-17T11:01:00Z"));
+    expect(await conferirToken(token)).toBeNull();
+  });
+});
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{vi.useFakeTimers(\{ toFake: ["Date"] \})} troca só o \texttt{Date}, que é o que a \texttt{jose} consulta para saber a hora atual; as outras funções de tempo continuam verdadeiras. O \texttt{vi.setSystemTime} acerta o relógio falso em qualquer data: o \textit{token} é criado às 10h, ainda vale às 10h59 e é recusado às 11h01. O \texttt{afterEach} roda depois de cada teste e devolve o relógio verdadeiro, mesmo que o teste falhe no meio.
+
+O segundo teste refaz o ataque do Capítulo 9: troca a carga do \textit{token}, mantendo a assinatura original. Os testes de segurança são dos mais valiosos, porque o defeito que eles pegam não aparece no uso normal: ninguém percebe que a API aceita um \textit{token} falso até que alguém o envie.
+
+\subsection{11.8 Testes de integração: os serviços com o banco}
+
+Os serviços do Capítulo 7 são o coração da API, e o que eles fazem depende do banco: os filtros, a ordenação e, principalmente, o \texttt{userId} em cada consulta. Testá-los com um banco falso esconderia justamente o que pode dar errado. Os testes de integração usam o banco dos testes:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// testes/integracao/usuarios.test.ts -- cadastro e login
+import { beforeEach, describe, expect, it } from "vitest";
+import { db } from "@/lib/db";
+import {
+  autenticar,
+  cadastrarUsuario,
+} from "@/lib/servicos/usuarios";
+import { limparBanco } from "../apoio";
+
+const ana = {
+  name: "Ana",
+  email: "ana@teste.com",
+  password: "senha12345",
+};
+
+describe("serviço de usuários", () => {
+  beforeEach(limparBanco);
+
+  it("cadastra sem devolver a senha; guarda o hash", async () => {
+    const usuario = await cadastrarUsuario(ana);
+    expect(usuario).not.toHaveProperty("password");
+
+    const noBanco = await db.user.findUniqueOrThrow({
+      where: { email: ana.email },
+    });
+    expect(noBanco.password).not.toBe(ana.password);
+    expect(noBanco.password).toMatch(/^\$2b\$10\$/);
+  });
+
+  it("devolve null quando o e-mail já existe", async () => {
+    await cadastrarUsuario(ana);
+    expect(await cadastrarUsuario(ana)).toBeNull();
+  });
+
+  it("autentica só com o e-mail e a senha certos", async () => {
+    const usuario = await cadastrarUsuario(ana);
+
+    expect(await autenticar(ana)).toBe(usuario?.id);
+    expect(
+      await autenticar({ ...ana, password: "errada123" }),
+    ).toBeNull();
+    expect(
+      await autenticar({ ...ana, email: "nao@existe.com" }),
+    ).toBeNull();
+  });
+});
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{beforeEach(limparBanco)} roda a limpeza antes de cada teste do grupo. Assim, cada teste começa do zero e pode ser rodado sozinho, em qualquer ordem, com o mesmo resultado. O \texttt{toMatch} confere um texto contra uma expressão regular: o que está guardado no banco tem de começar com \texttt{\$2b\$10\$}, o início de um \textit{hash} do bcrypt com custo 10. Agora, as tarefas:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// testes/integracao/tarefas.test.ts -- o serviço de tarefas
+import { beforeEach, describe, expect, it } from "vitest";
+import { esquemaFiltros } from "@/lib/esquemas/tarefas";
+import {
+  buscarTarefa,
+  criarTarefa,
+  editarTarefa,
+  excluirTarefa,
+  listarTarefas,
+} from "@/lib/servicos/tarefas";
+import { criarPessoa, limparBanco } from "../apoio";
+
+// Os filtros completos, com os padrões, a partir da query string
+const filtros = (query: Record<string, string> = {}) =>
+  esquemaFiltros.parse(query);
+
+describe("serviço de tarefas", () => {
+  beforeEach(limparBanco);
+
+  it("cria uma tarefa com os padrões do banco", async () => {
+    const ana = await criarPessoa();
+    const tarefa = await criarTarefa(ana.id, {
+      title: "Estudar",
+    });
+
+    expect(tarefa).toMatchObject({
+      title: "Estudar",
+      status: "PENDING",
+      priority: "MEDIUM",
+      dueDate: null,
+    });
+    expect(tarefa).not.toHaveProperty("userId");
+  });
+
+  it("não deixa mexer na tarefa de outra pessoa", async () => {
+    const ana = await criarPessoa("Ana");
+    const bia = await criarPessoa("Bia");
+    const tarefa = await criarTarefa(ana.id, { title: "Da Ana" });
+
+    expect(await buscarTarefa(bia.id, tarefa.id)).toBeNull();
+    expect(
+      await editarTarefa(bia.id, tarefa.id, { title: "Outro" }),
+    ).toBeNull();
+    expect(await excluirTarefa(bia.id, tarefa.id)).toBe(false);
+
+    // e a tarefa continua intacta para a dona
+    const daAna = await buscarTarefa(ana.id, tarefa.id);
+    expect(daAna?.title).toBe("Da Ana");
+  });
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{toMatchObject} confere só os campos indicados e ignora os outros, como o \texttt{id} e as datas, que mudam a cada execução. O segundo teste é o mais importante do arquivo. Ele confere a regra de segurança do Capítulo 2, que o OWASP chama de BOLA (Capítulo 12): a Bia não consegue ver, editar nem excluir a tarefa da Ana, e a tarefa continua intacta depois das tentativas.
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+  it("filtra, busca e pagina a lista", async () => {
+    const ana = await criarPessoa();
+    for (let i = 1; i <= 5; i++) {
+      await criarTarefa(ana.id, { title: `Tarefa ${i}` });
+    }
+    await criarTarefa(ana.id, {
+      title: "Relatório final",
+      status: "DONE",
+    });
+
+    const feitas = await listarTarefas(
+      ana.id,
+      filtros({ status: "DONE" }),
+    );
+    expect(feitas.data.map((t) => t.title))
+      .toEqual(["Relatório final"]);
+
+    const busca = await listarTarefas(
+      ana.id,
+      filtros({ search: "RELAT" }),
+    );
+    expect(busca.meta.total).toBe(1);
+
+    const pagina2 = await listarTarefas(
+      ana.id,
+      filtros({ limit: "4", page: "2" }),
+    );
+    expect(pagina2.data).toHaveLength(2);
+    expect(pagina2.meta).toEqual({
+      page: 2,
+      limit: 4,
+      total: 6,
+      totalPages: 2,
+    });
+  });
+
+  it("ordena pela data, com as sem data no fim", async () => {
+    const ana = await criarPessoa();
+    await criarTarefa(ana.id, { title: "Sem data" });
+    await criarTarefa(ana.id, {
+      title: "Dezembro",
+      dueDate: new Date("2026-12-01"),
+    });
+    await criarTarefa(ana.id, {
+      title: "Novembro",
+      dueDate: new Date("2026-11-05"),
+    });
+
+    for (const sort of ["dueDate", "-dueDate"]) {
+      const lista = await listarTarefas(
+        ana.id,
+        filtros({ sort }),
+      );
+      expect(lista.data.at(-1)?.title).toBe("Sem data");
+    }
+  });
+});
+\end{Verbatim}
+\end{codigo}
+
+A função \texttt{filtros} passa a \textit{query string} pelo \texttt{esquemaFiltros}, para obter o objeto completo, com os padrões, exatamente como a rota faz. O teste da ordenação confere, nas duas direções, que as tarefas sem data ficam no fim, o detalhe do \texttt{nulls: "last"} do Capítulo 7. O \texttt{at(-1)} pega o último item de uma lista.
+
+\subsection{11.9 Testando as rotas sem o servidor}
+
+Uma rota do Next.js é uma função exportada: dá para importá-la e chamá-la no teste, com uma requisição montada à mão, sem subir o servidor. O obstáculo é a \texttt{usuarioAtual}, que lê os cabeçalhos com o \texttt{headers()} do Next.js, e essa função só funciona dentro do servidor. A solução é um \textbf{\textit{mock}}: uma versão falsa de um módulo, usada só nos testes.
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// testes/integracao/rotas.test.ts -- as rotas, sem o servidor
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { NextRequest } from "next/server";
+import { Ajv2020 } from "ajv/dist/2020.js";
+import * as colecao from "@/app/api/tasks/route";
+import * as umaTarefa from "@/app/api/tasks/[id]/route";
+import { documento } from "@/lib/openapi";
+import { criarToken } from "@/lib/token";
+import { criarPessoa, limparBanco } from "../apoio";
+
+// A usuarioAtual lê os cabeçalhos com o headers() do Next.js,
+// que só funciona com o servidor no ar. No teste, o módulo é
+// trocado por um falso (mock), que devolve estes cabeçalhos.
+const cabecalhos = vi.hoisted(() => new Headers());
+vi.mock("next/headers", () => ({
+  headers: async () => cabecalhos,
+}));
+
+async function entrarComo(userId: string) {
+  const { token } = await criarToken(userId);
+  cabecalhos.set("Authorization", `Bearer ${token}`);
+}
+
+const requisicao = (url: string, corpo?: unknown) =>
+  new NextRequest(`http://localhost${url}`, {
+    method: corpo === undefined ? "GET" : "POST",
+    body: corpo === undefined ? undefined : JSON.stringify(corpo),
+  });
+
+const contexto = (id: string) => ({
+  params: Promise.resolve({ id }),
+});
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{vi.mock("next/headers", ...)} faz todo \texttt{import} desse módulo, inclusive o que está dentro da \texttt{usuarioAtual}, receber o objeto devolvido pela função, em que o \texttt{headers} devolve os cabeçalhos do teste. O Vitest move o \texttt{vi.mock} para o começo do arquivo, antes dos \texttt{import}, porque o módulo falso precisa existir antes que alguém o importe. Por isso a variável \texttt{cabecalhos} é criada com o \texttt{vi.hoisted}, que também é movido para o começo; uma variável comum ainda não existiria quando o \textit{mock} fosse criado. A \texttt{entrarComo} cria um \textit{token} de verdade e o coloca no cabeçalho, como faria um cliente depois do \textit{login}.
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+describe("rotas de tarefas", () => {
+  beforeEach(async () => {
+    await limparBanco();
+    cabecalhos.delete("Authorization");
+  });
+
+  it("responde 401 sem token, antes de validar", async () => {
+    const resposta = await colecao.POST(
+      requisicao("/api/tasks", { title: "" }),
+      {},
+    );
+    expect(resposta.status).toBe(401);
+    expect(resposta.headers.get("WWW-Authenticate"))
+      .toBe("Bearer");
+  });
+
+  it("cria com 201 e Location, e a tarefa existe", async () => {
+    const ana = await criarPessoa();
+    await entrarComo(ana.id);
+
+    const criada = await colecao.POST(
+      requisicao("/api/tasks", { title: "Pela rota" }),
+      {},
+    );
+    expect(criada.status).toBe(201);
+    const { id } = await criada.json();
+    expect(criada.headers.get("Location"))
+      .toBe(`/api/tasks/${id}`);
+
+    const lida = await umaTarefa.GET(
+      requisicao(`/api/tasks/${id}`),
+      contexto(id),
+    );
+    expect(lida.status).toBe(200);
+  });
+
+  it("responde 400 no formato Problem Details", async () => {
+    const ana = await criarPessoa();
+    await entrarComo(ana.id);
+
+    const resposta = await colecao.POST(
+      requisicao("/api/tasks", {
+        title: "",
+        priority: "URGENTE",
+      }),
+      {},
+    );
+    expect(resposta.status).toBe(400);
+    const corpo = await resposta.json();
+    expect(Object.keys(corpo.errors))
+      .toEqual(["title", "priority"]);
+  });
+});
+\end{Verbatim}
+\end{codigo}
+
+Os testes chamam o \texttt{POST} e o \texttt{GET} exportados pelas rotas, que já vêm envolvidos pela \texttt{comErros}; por isso a resposta de erro é a mesma que o cliente receberia. O \texttt{\{\}} é o contexto da rota da coleção, que não tem parâmetros. O primeiro teste confere a ordem combinada no Capítulo 8: sem \textit{token}, a resposta é \texttt{401}, mesmo com um título vazio, que daria \texttt{400}.
+
+Repare no que ficou de fora do \textit{mock}: o \textit{token}, a validação, o serviço e o banco são todos verdadeiros. Só foi trocado o que não funciona fora do servidor. Quanto mais coisas um teste troca por versões falsas, menos ele prova sobre o sistema de verdade.
+
+\subsection{11.10 O teste de contrato}
+
+O Capítulo 10 deixou um risco anotado: os esquemas das \textbf{respostas} no documento OpenAPI foram escritos à mão, e podem deixar de corresponder ao que a API devolve. Um \textbf{teste de contrato} confere a resposta real contra o documento:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+describe("contrato: as respostas seguem o OpenAPI", () => {
+  // O Ajv confere dados contra um JSON Schema; os esquemas vêm
+  // dos components do documento do Capítulo 10
+  const ajv = new Ajv2020({ validateFormats: false });
+  for (const [nome, esquema] of Object.entries(
+    documento.components.schemas,
+  )) {
+    ajv.addSchema(esquema, `#/components/schemas/${nome}`);
+  }
+
+  beforeEach(async () => {
+    await limparBanco();
+    cabecalhos.delete("Authorization");
+  });
+
+  it("GET /api/tasks devolve uma ListaDeTarefas", async () => {
+    const ana = await criarPessoa();
+    await entrarComo(ana.id);
+    await colecao.POST(
+      requisicao("/api/tasks", {
+        title: "Com data",
+        dueDate: "2026-12-01",
+      }),
+      {},
+    );
+
+    const resposta = await colecao.GET(
+      requisicao("/api/tasks"),
+      {},
+    );
+    const confere = ajv.getSchema(
+      "#/components/schemas/ListaDeTarefas",
+    );
+    const valido = confere?.(await resposta.json());
+    expect(confere?.errors ?? []).toEqual([]);
+    expect(valido).toBe(true);
+  });
+});
+\end{Verbatim}
+\end{codigo}
+
+O \textbf{Ajv} é a biblioteca mais usada para conferir dados contra um JSON Schema. A classe \texttt{Ajv2020} entende a versão 2020-12 do JSON Schema, a do OpenAPI 3.1. O laço registra cada esquema do documento com o mesmo endereço usado nos \texttt{\$ref}, como \texttt{\#/components/schemas/Tarefa}; assim, quando a \texttt{ListaDeTarefas} aponta para a \texttt{Tarefa}, o Ajv sabe onde encontrá-la. O \texttt{getSchema} devolve uma função que confere os dados e deixa os problemas encontrados em \texttt{errors}. Comparar o \texttt{errors} com uma lista vazia, antes de conferir o \texttt{true}, faz o Vitest mostrar quais campos não bateram, se o teste falhar. A opção \texttt{validateFormats: false} dispensa o Ajv de conferir formatos como \texttt{date-time}: as datas já são conferidas pelos padrões (\texttt{pattern}) que o Zod incluiu nos esquemas.
+
+Se alguém acrescentar um campo ao \texttt{camposTarefa} e esquecer o documento, este teste ainda passa, porque o JSON Schema aceita campos extras por padrão. Mas se um campo mudar de tipo, ou sumir da resposta, ele falha, e a documentação errada é descoberta antes de chegar a quem usa a API.
+
+\subsection{11.11 Rodando os testes}
+
+Com o banco dos testes criado, um comando roda tudo:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$ npx vitest run
+
+ RUN  v5.0.5
+
+1 migration found in prisma/migrations
+No pending migrations to apply.
+
+ Test Files  6 passed (6)
+      Tests  34 passed (34)
+   Duration  10.85s
+\end{Verbatim}
+\end{codigo}
+
+Seis arquivos e 34 testes, todos aprovados. Para ver como aparece uma falha, a busca de uma tarefa, no serviço do Capítulo 7, foi alterada de propósito: o \texttt{where: \{ id, userId \}} virou \texttt{where: \{ id \}}, um esquecimento que deixaria qualquer pessoa ler a tarefa de qualquer outra. O resultado, com os símbolos do Vitest trocados por \texttt{>} e \texttt{X}, alguns espaços reduzidos e a tarefa resumida:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+ > testes/integracao/tarefas.test.ts (4 tests | 1 failed)
+   > serviço de tarefas (4)
+     X não deixa mexer na tarefa de outra pessoa
+
+ FAIL  testes/integracao/tarefas.test.ts > serviço de tarefas
+       > não deixa mexer na tarefa de outra pessoa
+AssertionError: expected { ...(8) } to be null
+- Expected:
+null
++ Received:
+{
+  "id": "cmvcv6xxo00040ov9b7h5jp2k",
+  "title": "Da Ana",
+  ...
+}
+ > testes/integracao/tarefas.test.ts:40:51
+38| const tarefa = await criarTarefa(ana.id, { title: "Da Ana" });
+39|
+40| expect(await buscarTarefa(bia.id, tarefa.id)).toBeNull();
+\end{Verbatim}
+\end{codigo}
+
+O Vitest diz qual teste falhou, o que era esperado (\texttt{null}), o que veio (a tarefa da Ana) e em qual linha. O nome do teste já explica a gravidade do problema. Com o \texttt{userId} de volta, os 34 testes voltaram a passar.
+
+A \textbf{cobertura} mede quanto do código os testes executaram. O \texttt{npm run cobertura} mostra uma tabela; este é um trecho do resultado, com as linhas de cada pasta:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+File               | % Stmts | % Branch | % Funcs | % Lines
+-------------------|---------|----------|---------|--------
+All files          |   67.51 |    67.69 |   58.97 |   69.33
+ .../auth/register |       0 |        0 |       0 |       0
+ app/api/tasks     |   91.66 |      100 |   66.66 |     100
+ ...api/tasks/[id] |      40 |    16.66 |      20 |    42.1
+  erros.ts         |     100 |    85.71 |     100 |     100
+  token.ts         |    90.9 |    66.66 |     100 |    90.9
+  xml.ts           |       0 |        0 |       0 |       0
+ lib/servicos      |   93.54 |       90 |     100 |   93.54
+\end{Verbatim}
+\end{codigo}
+
+As colunas contam instruções (\textit{Stmts}), caminhos de \texttt{if} e \texttt{?:} (\textit{Branch}), funções e linhas. A tabela mostra o que ainda não foi testado: as rotas de cadastro e de \textit{login}, e o \texttt{PATCH} e o \texttt{DELETE} da rota de uma tarefa, cujos serviços foram testados, mas as rotas, não. Ela também mostra o \texttt{lib/xml.ts} com zero: desde o Capítulo 7, nenhuma rota usa a resposta em XML. A cobertura encontra também código que ninguém usa.
+
+Use a cobertura para descobrir o que falta testar, e não como meta. Cem por cento de cobertura não garante nada: um teste pode executar uma linha sem conferir o resultado dela. E correr atrás dos últimos pontos leva a testes que conferem detalhes sem importância. O que importa é que as regras de negócio e de segurança estejam cobertas, como estão, no TaskFlow, os serviços, os erros e os \textit{tokens}.
+
+\subsection{11.12 Bons testes}
+
+Alguns hábitos separam os testes que ajudam dos que atrapalham:
+
+\begin{itemize}
+  \item \textbf{Independentes.} Cada teste prepara o que precisa e não depende de outro ter rodado antes. Por isso o banco é limpo antes de cada um.
+  \item \textbf{Determinísticos.} O mesmo código dá sempre o mesmo resultado. Datas, horas e valores aleatórios são as causas mais comuns de testes que falham ``de vez em quando''; controle-os, como o relógio falso fez com o \textit{token}.
+  \item \textbf{Testam o comportamento, e não a implementação.} O teste do isolamento confere que a Bia não vê a tarefa da Ana, e não que a consulta tem um \texttt{userId}. Se a consulta for reescrita de outro jeito, o teste continua valendo.
+  \item \textbf{Nomes que explicam.} O nome diz a regra: ``recusa o \textit{token} depois de uma hora''. Quando ele falhar, a mensagem já diz o que quebrou.
+  \item \textbf{Testam os erros.} O caminho feliz é o que menos quebra. Dados inválidos, \textit{tokens} falsos e recursos de outra pessoa são onde estão os defeitos e as falhas de segurança.
+  \item \textbf{Viu falhar, confiou.} Um teste que nunca falhou pode não estar testando nada. Ao escrever um teste novo, quebre o código de propósito, como foi feito com o \texttt{userId}, e confira que ele falha.
+\end{itemize}
+
+Os três tipos de teste do TaskFlow se completam: o Vitest confere as regras, por dentro, em segundos; a coleção do Postman, rodada pelo Newman, confere a API de fora, com o servidor no ar, como o cliente a vê. No Capítulo 12, os dois passam a rodar sozinhos a cada envio de código ao GitHub, e uma falha impede a publicação. O projeto fica assim:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+.env.test                  o banco dos testes (fora do Git)
+vitest.config.mts          a configuração do Vitest
+testes/
+  preparar-banco.ts        a trava e as migrações
+  apoio.ts                 limparBanco, criarPessoa
+  unidade/
+    esquemas.test.ts       o que a API aceita
+    erros.test.ts          o formato dos erros, espiões
+    token.test.ts          os tokens, relógio falso
+  integracao/
+    usuarios.test.ts       cadastro e login, com o banco
+    tarefas.test.ts        serviço de tarefas, isolamento
+    rotas.test.ts          rotas com mock e contrato
+\end{Verbatim}
+\end{codigo}
+
+\subsection{Erros Comuns}
+
+\begin{itemize}
+  \item \textbf{Rodar os testes no banco de desenvolvimento ou de produção.} Os testes apagam dados. Use um banco só para eles e uma trava que confira isso antes de começar.
+  \item \textbf{Testes que dependem da ordem.} Um teste que só passa se outro rodou antes quebra ao ser rodado sozinho. Prepare tudo dentro de cada teste ou no \texttt{beforeEach}.
+  \item \textbf{Rodar em paralelo testes que dividem o banco.} Um apaga os dados do outro, e as falhas parecem aleatórias. Use o \texttt{fileParallelism: false}, ou um banco por processo.
+  \item \textbf{Chamar diretamente a função que deve lançar o erro.} O erro interrompe o teste. Passe uma função ao \texttt{expect}: \texttt{expect(() => validar(...)).toThrow()}.
+  \item \textbf{Esquecer o \texttt{await}.} Sem ele, o \texttt{expect} compara uma \textit{Promise}, e não o resultado. Em funções \texttt{async}, use \texttt{await} em toda chamada que devolve uma \textit{Promise}.
+  \item \textbf{Trocar tudo por \textit{mocks}.} Um teste em que o banco, o serviço e a validação são falsos só prova que os \textit{mocks} funcionam. Troque apenas o que não funciona no ambiente de testes.
+  \item \textbf{Não restaurar espiões e relógios.} Um \texttt{console.error} silenciado ou um relógio falso esquecido afetam os testes seguintes. Use \texttt{mockRestore} e \texttt{useRealTimers}.
+  \item \textbf{Perseguir 100\% de cobertura.} A cobertura mostra o que não foi executado, não o que foi bem testado. Priorize as regras de negócio e de segurança.
+\end{itemize}

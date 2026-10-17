@@ -395,6 +395,7 @@ O \texttt{security} do nível de cima vale para todas as operações: todas exig
         },
       },
     },
+  },
 \end{Verbatim}
 \end{codigo}
 
@@ -402,8 +403,6 @@ O caminho \texttt{/api/tasks/\{id\}} usa chaves para a parte variável, onde o N
 
 \begin{codigo}
 \begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
-  },
-
   components: {
     securitySchemes: {
       bearer: {
@@ -428,6 +427,8 @@ O caminho \texttt{/api/tasks/\{id\}} usa chaves para a parte variável, onde o N
       NaoAutenticado: erro("Token ausente, inválido ou vencido"),
       NaoEncontrada: erro("A tarefa não existe ou não é sua"),
     },
+  },
+};
 \end{Verbatim}
 \end{codigo}
 

@@ -861,4 +861,13 @@ export const apostilas: Apostila[] = [
     descricao:
       'O que uma boa documentação precisa ter, a Especificação OpenAPI 3.1, design-first e code-first, esquemas gerados a partir do Zod, o Swagger UI com Try it out e Authorize, a validação com o Redocly e o Postman: importação, variáveis, scripts, testes, Collection Runner e Newman.',
   },
+  {
+    id: 'web3-cap11',
+    capitulo: 11,
+    titulo: 'Testes de API',
+    disciplinaId: 'programacao-e-design-para-web-iii',
+    unidades: ['Testes de API'],
+    descricao:
+      'Por que testar automaticamente, testes de unidade, integração e ponta a ponta, o Vitest (e o Jest), um banco só para os testes, describe, it e expect, espiões, relógio falso, mocks, testes das rotas sem o servidor, teste de contrato com o OpenAPI e cobertura.',
+  },
 ]
