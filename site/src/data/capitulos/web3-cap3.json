@@ -200,7 +200,11 @@
   },
   {
    "t": "codigo",
-   "texto": "// prisma/schema.prisma\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id        String   @id @default(cuid())\n  name      String\n  email     String   @unique\n  password  String   // o hash da senha, nunca a senha\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  tasks     Task[]\n\n  @@map(\"users\")\n}\n\nmodel Task {\n  id          String     @id @default(cuid())\n  title       String\n  description String?\n  status      TaskStatus @default(PENDING)\n  priority    Priority   @default(MEDIUM)\n  dueDate     DateTime?\n  createdAt   DateTime   @default(now())\n  updatedAt   DateTime   @updatedAt\n  userId      String\n  user        User       @relation(fields: [userId],\n                           references: [id], onDelete: Cascade)\n\n  @@index([userId])\n  @@map(\"tasks\")\n}\n\nenum TaskStatus {\n  PENDING\n  IN_PROGRESS\n  DONE\n}\n\nenum Priority {\n  LOW\n  MEDIUM\n  HIGH\n}"
+   "texto": "// prisma/schema.prisma\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id        String   @id @default(cuid())\n  name      String\n  email     String   @unique\n  password  String   // o hash da senha, nunca a senha\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  tasks     Task[]\n\n  @@map(\"users\")\n}\n\nmodel Task {\n  id          String     @id @default(cuid())\n  title       String\n  description String?\n  status      TaskStatus @default(PENDING)\n  priority    Priority   @default(MEDIUM)\n  dueDate     DateTime?\n  createdAt   DateTime   @default(now())\n  updatedAt   DateTime   @updatedAt\n  userId      String\n  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@index([userId])\n  @@map(\"tasks\")\n}\n\nenum TaskStatus {\n  PENDING\n  IN_PROGRESS\n  DONE\n}\n\nenum Priority {\n  LOW\n  MEDIUM\n  HIGH\n}"
+  },
+  {
+   "t": "p",
+   "html": "A linha do campo <code>user</code>, que começa com <code>user User @relation</code>, é uma só no arquivo; aqui ela foi quebrada para caber na página. Digite-a em uma linha: o Prisma não aceita um atributo dividido em duas linhas e acusa o erro <code>P1012</code>."
   },
   {
    "t": "p",

@@ -176,8 +176,7 @@ model Task {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   userId      String
-  user        User       @relation(fields: [userId],
-                           references: [id], onDelete: Cascade)
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map("tasks")
@@ -196,6 +195,8 @@ enum Priority {
 }
 \end{Verbatim}
 \end{codigo}
+
+A linha do campo \texttt{user}, que começa com \texttt{user User @relation}, é uma só no arquivo; aqui ela foi quebrada para caber na página. Digite-a em uma linha: o Prisma não aceita um atributo dividido em duas linhas e acusa o erro \texttt{P1012}.
 
 O bloco \texttt{generator} diz onde o Prisma gera o código do cliente: na pasta \texttt{app/generated/prisma}, que não vai para o Git (o \texttt{init} já a acrescentou ao \texttt{.gitignore}). Cada \texttt{model} vira uma tabela, e cada linha dentro dele, uma coluna. Os símbolos que aparecem são estes:
 

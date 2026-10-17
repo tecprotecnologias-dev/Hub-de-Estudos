@@ -1,0 +1,520 @@
+\section{Capítulo 8 -- Erros e códigos HTTP}
+
+Até aqui, cada parte da API do TaskFlow respondeu aos erros do seu jeito: a validação devolve \texttt{\{erro, campos\}}, as rotas devolvem \texttt{\{erro\}}, uma falha inesperada devolve um \texttt{500} sem corpo e um endereço inexistente devolve uma página HTML. Neste capítulo você vai aprender a escolher o código de status certo para cada situação, adotar um formato único para todos os erros, o \textit{Problem Details} da RFC 9457, e criar um tratador central, que transforma qualquer erro lançado em qualquer parte do código em uma resposta bem formada. No final, o \texttt{500} passa a ser seguro e rastreável, e a API fica pronta para a autenticação do Capítulo 9.
+
+\subsection{8.1 O erro também é uma resposta}
+
+Uma resposta de erro tem dois leitores. O primeiro é um \textbf{programa}, o cliente da API, que precisa decidir o que fazer: mostrar as mensagens no formulário, pedir um novo \textit{login}, tentar de novo mais tarde. O segundo é uma \textbf{pessoa}, quem desenvolve o cliente, que precisa entender o que deu errado e como corrigir. Um bom erro atende os dois: tem o \textbf{código de status certo}, para o programa; um \textbf{formato previsível}, para que o mesmo código leia qualquer erro da API; e uma \textbf{mensagem útil}, para a pessoa, sem revelar nada que não deva.
+
+O Capítulo 1 mostrou um exemplo que falha no primeiro ponto. O ViaCEP, consultado com um CEP que não existe, responde \texttt{200} com o corpo \texttt{\{"erro": "true"\}}. Para o HTTP, essa requisição deu certo, e quem olha só o status é enganado:
+
+\begin{itemize}
+  \item o cliente não pode confiar no \texttt{resposta.ok} do \texttt{fetch}, que vale \texttt{true} para todo \texttt{2xx}: precisa conhecer e conferir o campo \texttt{erro}, uma regra particular dessa API;
+  \item bibliotecas como o Axios, que tratam os códigos \texttt{4xx} e \texttt{5xx} como falha automaticamente, tratam a resposta como sucesso;
+  \item ferramentas de monitoramento, que contam quantas respostas de erro a API dá por minuto, não enxergam o problema.
+\end{itemize}
+
+Com \texttt{404 Not Found}, o recurso ``endereço do CEP 99999-999'' simplesmente não existe, e todas as ferramentas entendem isso sem ler a documentação. É a ideia do nível 2 do modelo de maturidade (Capítulo 2): usar os códigos de status com o seu significado.
+
+\subsection{8.2 Escolhendo o código de status}
+
+A tabela do Capítulo 2 apresentou os códigos mais comuns. Esta é a versão completa para os erros, com um exemplo do TaskFlow para cada um:
+
+\begin{center}
+\begin{tabular}{@{}P{0.25\linewidth}P{0.33\linewidth}P{0.32\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Código} & \tblheader{Quando usar} & \tblheader{No TaskFlow} \\
+\midrule
+\texttt{400 Bad Request} & dados malformados ou inválidos & título vazio, JSON quebrado, \texttt{?page=0} \\
+\rowcolor{rowgray} \texttt{401 Unauthorized} & falta autenticação, ou ela é inválida & requisição sem \textit{token} (Capítulo 9) \\
+\texttt{403 Forbidden} & a pessoa é conhecida, mas não tem permissão & uma área só para administradores \\
+\rowcolor{rowgray} \texttt{404 Not Found} & o recurso não existe, ou a pessoa não pode saber que ele existe & tarefa inexistente ou de outra pessoa \\
+\texttt{405 Method Not Allowed} & a URL existe, mas não aceita o método & \texttt{PUT /api/tasks} \\
+\rowcolor{rowgray} \texttt{409 Conflict} & conflito com o estado atual do recurso & e-mail já cadastrado (Capítulo 9) \\
+\texttt{415 Unsupported Media Type} & o corpo veio em um formato que a rota não aceita & XML onde só se aceita JSON \\
+\rowcolor{rowgray} \texttt{422 Unprocessable Content} & dados bem formados, mas que violam uma regra & alternativa ao \texttt{400}, discutida abaixo \\
+\texttt{429 Too Many Requests} & a pessoa passou do limite de requisições & limite de tentativas de \textit{login} (Capítulo 12) \\
+\rowcolor{rowgray} \texttt{500 Internal Server Error} & falha inesperada no servidor & banco de dados fora do ar \\
+\texttt{503 Service Unavailable} & o serviço está fora do ar por um tempo & manutenção programada \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Quando mais de um código parece servir, a ordem em que a API faz as verificações resolve a dúvida. Uma sequência comum, e a que o TaskFlow segue, é esta:
+
+\begin{enumerate}
+  \item a URL e o método existem? Se não, \texttt{404} ou \texttt{405};
+  \item quem está pedindo? Sem autenticação válida, \texttt{401};
+  \item os dados estão no formato certo? Se não, \texttt{400};
+  \item o recurso existe para essa pessoa? Se não, \texttt{404};
+  \item ela pode fazer essa operação? Se não, \texttt{403};
+  \item a operação conflita com o estado atual? Se sim, \texttt{409};
+  \item deu tudo certo: \texttt{200}, \texttt{201} ou \texttt{204}.
+\end{enumerate}
+
+A autenticação vem antes de tudo por segurança: quem não se identificou não deve aprender nada sobre a API, nem as regras de validação, nem quais recursos existem. Alguns pares de códigos merecem atenção:
+
+\begin{itemize}
+  \item \textbf{400 ou 422?} A RFC 9110, que define o HTTP, descreve o \texttt{422} para dados que estão no formato certo, mas violam uma regra, como uma data de vencimento no passado. Por isso, algumas APIs, como a do GitHub e as feitas com FastAPI, usam \texttt{400} para o JSON quebrado e \texttt{422} para a validação; outras usam \texttt{400} para tudo. As duas escolhas são aceitas. O TaskFlow usa \texttt{400} para todos os dados inválidos, como foi combinado no Capítulo 2. O que não pode é misturar: escolha uma regra e registre-a na documentação (Capítulo 10).
+  \item \textbf{401 ou 403?} Apesar do nome, \texttt{Unauthorized}, o \texttt{401} quer dizer ``não autenticado'': a API não sabe quem é você. O \texttt{403} quer dizer ``sei quem é você, e você não pode''. Repetir a requisição com outro \textit{token} pode resolver um \texttt{401}; um \texttt{403}, não.
+  \item \textbf{403 ou 404?} Como combinado no Capítulo 2, a tarefa de outra pessoa recebe \texttt{404}, porque um \texttt{403} confirmaria que ela existe. O \texttt{403} fica para quando a existência do recurso não é segredo, mas a operação é proibida.
+  \item \textbf{4xx ou 5xx?} Um \texttt{5xx} diz ``a culpa é do servidor''. Se um dado enviado pelo cliente provoca um \texttt{500}, a API tem um defeito: faltou validar esse dado e responder \texttt{400}. Todo \texttt{500} que aparece nos testes é um defeito a corrigir.
+\end{itemize}
+
+\subsection{8.3 Um formato para todos os erros}
+
+Hoje, o cliente do TaskFlow precisaria de quatro formas de ler um erro: \texttt{\{erro, campos\}} da validação, \texttt{\{erro\}} das rotas, um corpo vazio no \texttt{500} e uma página HTML para os endereços que não existem. Além disso, os nomes \texttt{erro} e \texttt{campos} quebram a convenção do Capítulo 5, de campos em inglês. É hora de padronizar.
+
+Em vez de inventar um formato, a API pode adotar um padrão. A \textbf{RFC 9457}, \textit{Problem Details for HTTP APIs}, publicada em 2023 para substituir a RFC 7807, define um formato de erro em JSON, com um tipo de mídia próprio, \texttt{application/problem+json}. Os campos previstos são estes:
+
+\begin{center}
+\begin{tabular}{@{}P{0.18\linewidth}P{0.72\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Campo} & \tblheader{Conteúdo} \\
+\midrule
+\texttt{type} & uma URI que identifica o tipo de problema; se faltar, vale \texttt{"about:blank"}, ``nenhum tipo além do próprio status'' \\
+\rowcolor{rowgray} \texttt{title} & um resumo curto do tipo de problema, que não muda de uma ocorrência para outra \\
+\texttt{status} & o código de status HTTP, repetido no corpo \\
+\rowcolor{rowgray} \texttt{detail} & a explicação desta ocorrência, escrita para pessoas \\
+\texttt{instance} & uma URI que identifica esta ocorrência específica \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Todos são opcionais, e a API pode acrescentar campos próprios, as \textbf{extensões}. A mais comum é uma lista de erros por campo, que o TaskFlow vai chamar de \texttt{errors}. Um erro de validação fica assim:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+HTTP/1.1 400 Bad Request
+Content-Type: application/problem+json
+
+{
+  "title": "Requisição inválida",
+  "status": 400,
+  "detail": "Um ou mais campos estão inválidos.",
+  "errors": {
+    "title": ["O título é obrigatório."],
+    "priority": ["priority deve ser LOW, MEDIUM ou HIGH."]
+  }
+}
+\end{Verbatim}
+\end{codigo}
+
+O TaskFlow não usa o campo \texttt{type}. Nesse caso, a RFC pede que o \texttt{title} seja o nome do próprio status, e permite traduzi-lo: por isso o título é sempre o mesmo para cada código, como ``Não encontrado'' para o \texttt{404}, e a explicação específica vai no \texttt{detail}. APIs maiores usam o \texttt{type} para distinguir problemas diferentes com o mesmo status, como \texttt{https://api.exemplo.com/erros/saldo-insuficiente} e \texttt{.../cartao-recusado}, ambos \texttt{400}; a URI pode apontar para uma página que explica o problema.
+
+Uma regra vale para qualquer formato: o programa cliente decide pelo \texttt{status} (e pelo \texttt{type}, se houver), \textbf{nunca} pelo texto do \texttt{detail}. Mensagens mudam, são corrigidas e traduzidas; um cliente que compara textos quebra na primeira revisão.
+
+\subsection{8.4 O módulo de erros}
+
+Tudo o que diz respeito a erros fica em um arquivo, \texttt{lib/erros.ts}. A primeira parte monta a resposta no formato da RFC 9457:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// lib/erros.ts -- as respostas de erro da API, no formato
+// Problem Details (RFC 9457)
+import type { NextRequest } from "next/server";
+
+const titulos: Record<number, string> = {
+  400: "Requisição inválida",
+  401: "Não autenticado",
+  403: "Acesso negado",
+  404: "Não encontrado",
+  409: "Conflito",
+  500: "Erro interno",
+};
+
+type Campos = Record<string, string[] | undefined>;
+
+// Monta a resposta de erro; os extras (errors, instance) são
+// acrescentados ao corpo quando existem
+export function problema(
+  status: number,
+  detail: string,
+  extras: { errors?: Campos; instance?: string } = {},
+) {
+  return Response.json(
+    {
+      title: titulos[status] ?? "Erro",
+      status,
+      detail,
+      ...extras,
+    },
+    {
+      status,
+      headers: { "Content-Type": "application/problem+json" },
+    },
+  );
+}
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{Response.json} só acrescenta o \texttt{Content-Type: application/json} quando ele não foi informado; aqui, o cabeçalho passado em \texttt{headers} prevalece, e a resposta sai como \texttt{application/problem+json}. O tipo \texttt{Record<number, string>} descreve um objeto cujas chaves são números e cujos valores são textos. Para um status fora da lista, o \texttt{??} usa o título genérico ``Erro''. Com essa função, uma rota responde um erro em uma linha: \texttt{return problema(404, "Tarefa não encontrada.")}.
+
+Mas há erros que não nascem na rota. A validação, uma função auxiliar, descobre que os dados são inválidos; no Capítulo 9, a função \texttt{usuarioAtual} vai descobrir que o \textit{token} é inválido. Fazer essas funções devolverem uma resposta, e cada rota conferir se recebeu uma, enche o código de \texttt{if}. A solução é \textbf{lançar} o erro, com \texttt{throw}, e tratá-lo em um único lugar. Para isso, um tipo de erro que já sabe qual resposta virar:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// Um erro que já sabe qual resposta virar. Qualquer parte do
+// código pode lançá-lo; o tratador central (abaixo) responde.
+export class ErroApi extends Error {
+  status: number;
+  campos?: Campos;
+
+  constructor(status: number, mensagem: string, campos?: Campos) {
+    super(mensagem);
+    this.status = status;
+    this.campos = campos;
+  }
+}
+\end{Verbatim}
+\end{codigo}
+
+A classe \texttt{ErroApi} herda de \texttt{Error} (\texttt{extends}), então tem tudo o que um erro comum tem, como a mensagem e o registro de onde foi lançado, e acrescenta o status e os erros por campo. O \texttt{super(mensagem)} chama o construtor de \texttt{Error}, que guarda a mensagem em \texttt{this.message}. Qualquer função pode agora fazer \texttt{throw new ErroApi(409, "Este e-mail já está em uso.")}, e o erro sobe pelas funções que a chamaram até que alguém o trate.
+
+\begin{destaque}{Atenção: erros de HTTP e camadas}
+O \texttt{ErroApi} carrega um status HTTP, e o Capítulo 7 combinou que os serviços não sabem nada de HTTP. Em projetos maiores, os serviços lançam erros do próprio domínio, como \texttt{EmailEmUso} ou \texttt{SaldoInsuficiente}, e só o tratador central os traduz em status. No TaskFlow, que é pequeno, o \texttt{ErroApi} será usado pela validação e pela autenticação, que já são partes ligadas ao HTTP, e os serviços continuam devolvendo \texttt{null} ou \texttt{false}.
+\end{destaque}
+
+Por fim, o tratador. A função \texttt{respostaDeErro} recebe qualquer coisa que tenha sido lançada e escolhe a resposta; a \texttt{comErros} envolve uma função de rota, para que nada do que ela lançar escape sem tratamento:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+export function respostaDeErro(erro: unknown) {
+  if (erro instanceof ErroApi) {
+    return problema(erro.status, erro.message, {
+      errors: erro.campos,
+    });
+  }
+
+  // Erro inesperado: o detalhe fica só no log do servidor
+  const id = crypto.randomUUID();
+  console.error(`[erro ${id}]`, erro);
+  return problema(
+    500,
+    "Algo deu errado no servidor. Tente de novo mais tarde.",
+    { instance: `urn:uuid:${id}` },
+  );
+}
+
+// Envolve uma função de rota: o que ela lançar vira resposta
+export function comErros<C>(
+  rota: (request: NextRequest, ctx: C) => Promise<Response>,
+) {
+  return async (request: NextRequest, ctx: C) => {
+    try {
+      return await rota(request, ctx);
+    } catch (erro) {
+      return respostaDeErro(erro);
+    }
+  };
+}
+\end{Verbatim}
+\end{codigo}
+
+O parâmetro de \texttt{respostaDeErro} tem o tipo \texttt{unknown}, porque em JavaScript qualquer valor pode ser lançado, até um texto ou um número. O \texttt{instanceof} confere se o erro é um \texttt{ErroApi}: se for, ele é um erro \textbf{esperado}, e vira a resposta que ele mesmo descreve. Qualquer outra coisa é um erro \textbf{inesperado}, assunto da próxima seção.
+
+A \texttt{comErros} é uma função que recebe uma função e devolve outra, com o mesmo formato, mas protegida por um \texttt{try}/\texttt{catch}. O \texttt{<C>} a torna genérica: \texttt{C} é o tipo do contexto da rota, que muda de rota para rota, e o TypeScript o descobre sozinho a partir da função recebida. O \texttt{return await} dentro do \texttt{try} tem o mesmo motivo do Capítulo 7: sem o \texttt{await}, a \textit{Promise} sairia da função antes de falhar, e o \texttt{catch} não a veria.
+
+\subsection{8.5 O erro inesperado}
+
+Erros inesperados acontecem em qualquer API: o banco sai do ar, um serviço externo demora demais, um caso que ninguém previu chega pela primeira vez. Antes deste capítulo, o TaskFlow deixava o Next.js cuidar deles. Estes resultados foram obtidos com a versão do Capítulo 7 e uma rota de teste que lança um erro:
+
+\begin{center}
+\begin{tabular}{@{}P{0.42\linewidth}P{0.48\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Situação} & \tblheader{Resposta do Next.js} \\
+\midrule
+erro lançado dentro da rota & \texttt{500}, com o corpo vazio \\
+\rowcolor{rowgray} \texttt{GET /api/naoexiste} & \texttt{404}, com uma página HTML de 7 KB \\
+\texttt{PUT /api/tasks} & \texttt{405}, com o corpo vazio \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+O Next.js acerta no essencial: a mensagem do erro vai só para o terminal do servidor, e não para o cliente. Isso importa, porque a mensagem de um erro inesperado costuma conter o que ninguém de fora deve ver: o SQL que falhou, nomes de tabelas, caminhos de arquivos, versões de bibliotecas, às vezes até uma \textit{connection string}. Essas informações ajudam um atacante a planejar o próximo passo, e por isso a regra é absoluta: \textbf{a mensagem e a pilha de chamadas de um erro inesperado nunca vão para a resposta}.
+
+Mas um corpo vazio também não ajuda. Quem usa a API não sabe o que aconteceu, e quem a mantém não tem como achar, entre milhares de linhas de \textit{log}, o erro de que a pessoa está falando. A \texttt{respostaDeErro} resolve as duas coisas com um \textbf{identificador de ocorrência}. O \texttt{crypto.randomUUID()}, embutido no Node.js e nos navegadores, gera um código aleatório, praticamente impossível de repetir; o mesmo código vai para o \textit{log}, junto com o erro completo, e para a resposta, no campo \texttt{instance}, no formato de URI \texttt{urn:uuid:...}. Para testar, o banco de dados foi desligado com o servidor no ar:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+GET /api/tasks           (com o banco desligado)
+500 Content-Type: application/problem+json
+    {"title":"Erro interno","status":500,
+     "detail":"Algo deu errado no servidor. Tente de novo
+               mais tarde.",
+     "instance":"urn:uuid:da4a7691-89c4-4506-bd99-2691e554e182"}
+
+No terminal do servidor:
+[erro da4a7691-89c4-4506-bd99-2691e554e182] Error
+  [PrismaClientKnownRequestError]:
+Invalid `prisma.user.findUniqueOrThrow()` invocation:
+  ...
+  code: 'ECONNREFUSED',
+\end{Verbatim}
+\end{codigo}
+
+O cliente recebe uma resposta no formato de sempre, sem nenhum detalhe interno. Se a pessoa entrar em contato com o suporte e informar o código, quem mantém a API procura \texttt{da4a7691} no \textit{log} e encontra a causa: o banco recusou a conexão (\texttt{ECONNREFUSED}). Quando o banco voltou, a API voltou a responder normalmente, sem reiniciar. Na Vercel (Capítulo 12), tudo o que o \texttt{console.error} escreve aparece no painel de \textit{logs}; em projetos maiores, serviços como o Sentry recebem esses erros e avisam a equipe.
+
+\subsection{8.6 A validação lança o erro}
+
+Com o tratador central, a função \texttt{validar} do Capítulo 6 fica mais simples. Em vez de devolver um objeto com \texttt{dados} ou \texttt{erro}, ela devolve os dados validados ou lança um \texttt{ErroApi}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// lib/validar.ts -- confere dados com um esquema do Zod
+import * as z from "zod";
+import { ErroApi } from "@/lib/erros";
+
+// Devolve os dados validados ou lança um ErroApi com o 400
+export function validar<E extends z.ZodType>(
+  esquema: E,
+  entrada: unknown,
+): z.output<E> {
+  const resultado = esquema.safeParse(entrada);
+  if (resultado.success) return resultado.data;
+
+  const { formErrors, fieldErrors } =
+    z.flattenError(resultado.error);
+  throw new ErroApi(
+    400,
+    formErrors[0] ?? "Um ou mais campos estão inválidos.",
+    fieldErrors,
+  );
+}
+\end{Verbatim}
+\end{codigo}
+
+O tipo \texttt{Resultado} do Capítulo 6 desapareceu: o tipo de retorno agora é simplesmente \texttt{z.output<E>}, os dados validados. Se a validação falha, a função não retorna; o \texttt{throw} interrompe a rota que a chamou, e o tratador responde o \texttt{400}. O \texttt{detail} é o erro do objeto como um todo, quando existe (``O corpo deve ser um objeto JSON.'', ``Envie ao menos um campo para alterar.''), ou uma frase geral, quando os problemas estão nos campos. O \texttt{errors} está sempre presente nas respostas \texttt{400} da validação, mesmo que vazio; assim, o cliente pode lê-lo sem conferir antes se ele existe.
+
+\subsection{8.7 As rotas com o tratador}
+
+As rotas de tarefas passam a ser envolvidas pela \texttt{comErros}. A coleção:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// app/api/tasks/route.ts -- a coleção de tarefas
+import type { NextRequest } from "next/server";
+import { comErros } from "@/lib/erros";
+import { usuarioAtual } from "@/lib/usuario-atual";
+import { validar } from "@/lib/validar";
+import {
+  esquemaFiltros,
+  esquemaNovaTarefa,
+} from "@/lib/esquemas/tarefas";
+import {
+  criarTarefa,
+  listarTarefas,
+} from "@/lib/servicos/tarefas";
+
+// GET /api/tasks?status=&priority=&search=&sort=&page=&limit=
+export const GET = comErros(async (request: NextRequest) => {
+  const usuario = await usuarioAtual();
+  const query = Object.fromEntries(request.nextUrl.searchParams);
+
+  const filtros = validar(esquemaFiltros, query);
+  return Response.json(await listarTarefas(usuario.id, filtros));
+});
+
+// POST /api/tasks
+export const POST = comErros(async (request: NextRequest) => {
+  const usuario = await usuarioAtual();
+  const corpo = await request.json().catch(() => null);
+
+  const dados = validar(esquemaNovaTarefa, corpo);
+  const tarefa = await criarTarefa(usuario.id, dados);
+  return Response.json(tarefa, {
+    status: 201,
+    headers: { Location: `/api/tasks/${tarefa.id}` },
+  });
+});
+\end{Verbatim}
+\end{codigo}
+
+As rotas deixaram de ser declaradas com \texttt{export async function GET} e passaram a ser constantes, \texttt{export const GET = comErros(...)}. Para o Next.js não há diferença: ele procura no arquivo algo exportado com o nome do método e que seja uma função, e o resultado de \texttt{comErros} é uma função. O \texttt{if (erro) return erro} do Capítulo 7 sumiu das duas rotas. Agora, uma tarefa:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// app/api/tasks/[id]/route.ts -- uma tarefa
+import type { NextRequest } from "next/server";
+import { comErros, problema } from "@/lib/erros";
+import { usuarioAtual } from "@/lib/usuario-atual";
+import { validar } from "@/lib/validar";
+import { esquemaEdicaoTarefa } from "@/lib/esquemas/tarefas";
+import {
+  buscarTarefa,
+  editarTarefa,
+  excluirTarefa,
+} from "@/lib/servicos/tarefas";
+
+type Contexto = RouteContext<"/api/tasks/[id]">;
+
+const naoEncontrada = () =>
+  problema(404, "Tarefa não encontrada.");
+
+// GET /api/tasks/:id
+export const GET = comErros(
+  async (request: NextRequest, ctx: Contexto) => {
+    const { id } = await ctx.params;
+    const usuario = await usuarioAtual();
+
+    const tarefa = await buscarTarefa(usuario.id, id);
+    return tarefa ? Response.json(tarefa) : naoEncontrada();
+  },
+);
+
+// PATCH /api/tasks/:id
+export const PATCH = comErros(
+  async (request: NextRequest, ctx: Contexto) => {
+    const { id } = await ctx.params;
+    const usuario = await usuarioAtual();
+    const corpo = await request.json().catch(() => null);
+
+    const dados = validar(esquemaEdicaoTarefa, corpo);
+    const tarefa = await editarTarefa(usuario.id, id, dados);
+    return tarefa ? Response.json(tarefa) : naoEncontrada();
+  },
+);
+
+// DELETE /api/tasks/:id
+export const DELETE = comErros(
+  async (request: NextRequest, ctx: Contexto) => {
+    const { id } = await ctx.params;
+    const usuario = await usuarioAtual();
+
+    const excluiu = await excluirTarefa(usuario.id, id);
+    return excluiu
+      ? new Response(null, { status: 204 })
+      : naoEncontrada();
+  },
+);
+\end{Verbatim}
+\end{codigo}
+
+Repare que a tarefa não encontrada continua sendo \textbf{devolvida} com \texttt{return}, e não lançada. A regra prática é esta: dentro da própria rota, onde a resposta está à mão, \texttt{return problema(...)} deixa o caminho do código visível; o \texttt{throw new ErroApi(...)} é para as funções auxiliares, que estão longe da resposta e não devem obrigar a rota a conferir o que elas devolveram.
+
+O tratador também prepara o próximo capítulo. A função \texttt{usuarioAtual}, hoje provisória, vai ler o \textit{token} da requisição e, se ele faltar ou for inválido, lançar um \texttt{ErroApi} com o \texttt{401}. Como todas as rotas já passam pela \texttt{comErros}, esse \texttt{401} vira a resposta certa sem que nenhuma rota seja alterada.
+
+\subsection{8.8 Endereços que não existem}
+
+Falta a página HTML do \texttt{404}. Um cliente que erra o endereço, como \texttt{/api/task} em vez de \texttt{/api/tasks}, recebe 7 KB de HTML, e o \texttt{resposta.json()} dele falha com um erro confuso. A solução usa uma convenção de pastas do Capítulo 4, o segmento \texttt{[...caminho]}, que atende a um ou mais segmentos quaisquer:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// app/api/[...rota]/route.ts -- endereços que não existem
+import { problema } from "@/lib/erros";
+
+async function naoExiste() {
+  return problema(404, "Este endereço não existe na API.");
+}
+
+export const GET = naoExiste;
+export const POST = naoExiste;
+export const PUT = naoExiste;
+export const PATCH = naoExiste;
+export const DELETE = naoExiste;
+\end{Verbatim}
+\end{codigo}
+
+A pasta \texttt{app/api/[...rota]} combina com qualquer endereço que comece com \texttt{/api/}. Como vence sempre a rota mais específica, \texttt{/api/tasks} e \texttt{/api/tasks/:id} continuam indo para as suas pastas, e só o que não combina com nenhuma outra cai aqui, como \texttt{/api/naoexiste} ou \texttt{/api/tasks/a/b}. As URLs fora de \texttt{/api}, que não fazem parte da API, continuam com o \texttt{404} padrão do Next.js.
+
+O \texttt{405} continua sendo respondido pelo Next.js, sem corpo. A RFC 9110 pede que ele traga o cabeçalho \texttt{Allow}, com os métodos aceitos; na versão testada, o Next.js não o envia no \texttt{405}, mas o envia na resposta a \texttt{OPTIONS}, onde o cliente pode consultá-lo. O projeto fica assim:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+app/api/
+  [...rota]/route.ts    404 em JSON para o que não existe
+  health/route.ts
+  tasks/route.ts        GET, POST (com comErros)
+  tasks/[id]/route.ts   GET, PATCH, DELETE (com comErros)
+lib/
+  erros.ts              problema, ErroApi, comErros
+  validar.ts            agora lança ErroApi
+\end{Verbatim}
+\end{codigo}
+
+\subsection{8.9 Testando os erros}
+
+Estes são resultados reais da API com o código deste capítulo. Os cabeçalhos repetidos foram omitidos: todas as respostas de erro trazem \texttt{Content-Type: application/problem+json}.
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+GET /api/tasks?limit=500&sort=nome&page=0
+400 {"title":"Requisição inválida","status":400,
+     "detail":"Um ou mais campos estão inválidos.",
+     "errors":{"sort":["sort deve ser createdAt, ..."],
+               "page":["page começa em 1."],
+               "limit":["limit pode ser no máximo 100."]}}
+
+POST /api/tasks  {title          (JSON quebrado)
+400 {"title":"Requisição inválida","status":400,
+     "detail":"O corpo deve ser um objeto JSON.","errors":{}}
+
+PATCH /api/tasks/<id>  {}
+400 {"title":"Requisição inválida","status":400,
+     "detail":"Envie ao menos um campo para alterar.",
+     "errors":{}}
+
+GET, PATCH e DELETE em /api/tasks/naoexiste
+404 {"title":"Não encontrado","status":404,
+     "detail":"Tarefa não encontrada."}
+
+GET /api/naoexiste  e  POST /api/tasks/a/b
+404 {"title":"Não encontrado","status":404,
+     "detail":"Este endereço não existe na API."}
+
+PUT /api/tasks
+405 (sem corpo)
+
+OPTIONS /api/tasks
+204 allow: GET, HEAD, OPTIONS, POST
+\end{Verbatim}
+\end{codigo}
+
+As respostas de sucesso não mudaram: a criação continua respondendo \texttt{201} com \texttt{Content-Type: application/json}, a tarefa e o \texttt{Location}. Agora, qualquer erro da API, de qualquer rota, pode ser lido pelo mesmo código.
+
+\subsection{8.10 Do lado do cliente}
+
+Um detalhe do \texttt{fetch} pega muita gente: ele \textbf{não} lança um erro quando a resposta é \texttt{4xx} ou \texttt{5xx}. Para o \texttt{fetch}, receber um \texttt{404} é sucesso, porque o servidor respondeu; ele só lança um erro quando não há resposta nenhuma, como na falta de internet. Quem confere o resultado é o cliente, com a propriedade \texttt{ok}, que vale \texttt{true} para os status de 200 a 299:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+async function criarTarefa(dados) {
+  const resposta = await fetch("/api/tasks", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(dados),
+  });
+
+  if (!resposta.ok) {
+    const problema = await resposta.json();
+    console.log(resposta.status, problema.detail);
+    console.log(problema.errors?.title);
+    return null;
+  }
+  return resposta.json();
+}
+
+await criarTarefa({ title: "" });
+// 400 Um ou mais campos estão inválidos.
+// [ 'O título é obrigatório.' ]
+\end{Verbatim}
+\end{codigo}
+
+Como todos os erros do TaskFlow têm o mesmo formato, esse único \texttt{if} serve para qualquer chamada. Uma interface pode mostrar o \texttt{detail} em um aviso e cada mensagem de \texttt{errors} embaixo do campo correspondente do formulário; e pode reagir ao \texttt{status}, levando à tela de \textit{login} no \texttt{401}, por exemplo. Se a API estiver atrás de outros servidores, como um balanceador de carga, um erro pode chegar de um deles, em HTML; um cliente cuidadoso confere o cabeçalho \texttt{Content-Type} antes de chamar o \texttt{json()}.
+
+\subsection{Erros Comuns}
+
+\begin{itemize}
+  \item \textbf{Responder 200 com um erro no corpo.} Clientes, bibliotecas e ferramentas de monitoramento entendem como sucesso. Use o código de status do erro.
+  \item \textbf{Mandar a mensagem do erro inesperado para o cliente.} \texttt{erro.message} e a pilha de chamadas revelam detalhes internos. Registre-os no \textit{log} e responda uma mensagem genérica, com um identificador.
+  \item \textbf{Aceitar um 500 provocado por dados do cliente.} Se uma entrada inválida derruba a rota, faltou validação. Responda \texttt{400}.
+  \item \textbf{Usar 403 para o recurso de outra pessoa.} Ele confirma que o recurso existe. Responda \texttt{404}.
+  \item \textbf{Confundir 401 e 403.} 401: ``não sei quem é você''. 403: ``sei quem é você, e você não pode''.
+  \item \textbf{Um formato de erro por rota.} O cliente precisa de um único jeito de ler os erros. Centralize a montagem da resposta em uma função.
+  \item \textbf{Cliente que decide pelo texto do erro.} Mensagens mudam. Decida pelo \texttt{status} (e pelo \texttt{type}, se houver).
+  \item \textbf{Esperar que o \texttt{fetch} lance erro no 404.} Ele só lança quando não há resposta. Confira \texttt{resposta.ok}.
+  \item \textbf{Esquecer o \texttt{await} no \texttt{return} dentro do \texttt{try}.} A falha acontece depois que a função saiu, e o \texttt{catch} não a vê.
+\end{itemize}

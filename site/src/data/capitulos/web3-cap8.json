@@ -1,0 +1,431 @@
+{
+ "numero": 8,
+ "titulo": "Erros e códigos HTTP",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, cada parte da API do TaskFlow respondeu aos erros do seu jeito: a validação devolve <code>{erro, campos}</code>, as rotas devolvem <code>{erro}</code>, uma falha inesperada devolve um <code>500</code> sem corpo e um endereço inexistente devolve uma página HTML. Neste capítulo você vai aprender a escolher o código de status certo para cada situação, adotar um formato único para todos os erros, o <em>Problem Details</em> da RFC 9457, e criar um tratador central, que transforma qualquer erro lançado em qualquer parte do código em uma resposta bem formada. No final, o <code>500</code> passa a ser seguro e rastreável, e a API fica pronta para a autenticação do Capítulo 9."
+  },
+  {
+   "t": "h2",
+   "id": "8-1-o-erro-tambem-e-uma-resposta",
+   "texto": "8.1 O erro também é uma resposta"
+  },
+  {
+   "t": "p",
+   "html": "Uma resposta de erro tem dois leitores. O primeiro é um <strong>programa</strong>, o cliente da API, que precisa decidir o que fazer: mostrar as mensagens no formulário, pedir um novo <em>login</em>, tentar de novo mais tarde. O segundo é uma <strong>pessoa</strong>, quem desenvolve o cliente, que precisa entender o que deu errado e como corrigir. Um bom erro atende os dois: tem o <strong>código de status certo</strong>, para o programa; um <strong>formato previsível</strong>, para que o mesmo código leia qualquer erro da API; e uma <strong>mensagem útil</strong>, para a pessoa, sem revelar nada que não deva."
+  },
+  {
+   "t": "p",
+   "html": "O Capítulo 1 mostrou um exemplo que falha no primeiro ponto. O ViaCEP, consultado com um CEP que não existe, responde <code>200</code> com o corpo <code>{\"erro\": \"true\"}</code>. Para o HTTP, essa requisição deu certo, e quem olha só o status é enganado:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "o cliente não pode confiar no <code>resposta.ok</code> do <code>fetch</code>, que vale <code>true</code> para todo <code>2xx</code>: precisa conhecer e conferir o campo <code>erro</code>, uma regra particular dessa API;",
+    "bibliotecas como o Axios, que tratam os códigos <code>4xx</code> e <code>5xx</code> como falha automaticamente, tratam a resposta como sucesso;",
+    "ferramentas de monitoramento, que contam quantas respostas de erro a API dá por minuto, não enxergam o problema."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Com <code>404 Not Found</code>, o recurso “endereço do CEP 99999-999” simplesmente não existe, e todas as ferramentas entendem isso sem ler a documentação. É a ideia do nível 2 do modelo de maturidade (Capítulo 2): usar os códigos de status com o seu significado."
+  },
+  {
+   "t": "h2",
+   "id": "8-2-escolhendo-o-codigo-de-status",
+   "texto": "8.2 Escolhendo o código de status"
+  },
+  {
+   "t": "p",
+   "html": "A tabela do Capítulo 2 apresentou os códigos mais comuns. Esta é a versão completa para os erros, com um exemplo do TaskFlow para cada um:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Código",
+    "Quando usar",
+    "No TaskFlow"
+   ],
+   "linhas": [
+    [
+     "<code>400 Bad Request</code>",
+     "dados malformados ou inválidos",
+     "título vazio, JSON quebrado, <code>?page=0</code>"
+    ],
+    [
+     "<code>401 Unauthorized</code>",
+     "falta autenticação, ou ela é inválida",
+     "requisição sem <em>token</em> (Capítulo 9)"
+    ],
+    [
+     "<code>403 Forbidden</code>",
+     "a pessoa é conhecida, mas não tem permissão",
+     "uma área só para administradores"
+    ],
+    [
+     "<code>404 Not Found</code>",
+     "o recurso não existe, ou a pessoa não pode saber que ele existe",
+     "tarefa inexistente ou de outra pessoa"
+    ],
+    [
+     "<code>405 Method Not Allowed</code>",
+     "a URL existe, mas não aceita o método",
+     "<code>PUT /api/tasks</code>"
+    ],
+    [
+     "<code>409 Conflict</code>",
+     "conflito com o estado atual do recurso",
+     "e-mail já cadastrado (Capítulo 9)"
+    ],
+    [
+     "<code>415 Unsupported Media Type</code>",
+     "o corpo veio em um formato que a rota não aceita",
+     "XML onde só se aceita JSON"
+    ],
+    [
+     "<code>422 Unprocessable Content</code>",
+     "dados bem formados, mas que violam uma regra",
+     "alternativa ao <code>400</code>, discutida abaixo"
+    ],
+    [
+     "<code>429 Too Many Requests</code>",
+     "a pessoa passou do limite de requisições",
+     "limite de tentativas de <em>login</em> (Capítulo 12)"
+    ],
+    [
+     "<code>500 Internal Server Error</code>",
+     "falha inesperada no servidor",
+     "banco de dados fora do ar"
+    ],
+    [
+     "<code>503 Service Unavailable</code>",
+     "o serviço está fora do ar por um tempo",
+     "manutenção programada"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Quando mais de um código parece servir, a ordem em que a API faz as verificações resolve a dúvida. Uma sequência comum, e a que o TaskFlow segue, é esta:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. a URL e o método existem? Se não, <code>404</code> ou <code>405</code>;",
+    "2. quem está pedindo? Sem autenticação válida, <code>401</code>;",
+    "3. os dados estão no formato certo? Se não, <code>400</code>;",
+    "4. o recurso existe para essa pessoa? Se não, <code>404</code>;",
+    "5. ela pode fazer essa operação? Se não, <code>403</code>;",
+    "6. a operação conflita com o estado atual? Se sim, <code>409</code>;",
+    "7. deu tudo certo: <code>200</code>, <code>201</code> ou <code>204</code>."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "A autenticação vem antes de tudo por segurança: quem não se identificou não deve aprender nada sobre a API, nem as regras de validação, nem quais recursos existem. Alguns pares de códigos merecem atenção:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>400 ou 422?</strong> A RFC 9110, que define o HTTP, descreve o <code>422</code> para dados que estão no formato certo, mas violam uma regra, como uma data de vencimento no passado. Por isso, algumas APIs, como a do GitHub e as feitas com FastAPI, usam <code>400</code> para o JSON quebrado e <code>422</code> para a validação; outras usam <code>400</code> para tudo. As duas escolhas são aceitas. O TaskFlow usa <code>400</code> para todos os dados inválidos, como foi combinado no Capítulo 2. O que não pode é misturar: escolha uma regra e registre-a na documentação (Capítulo 10).",
+    "<strong>401 ou 403?</strong> Apesar do nome, <code>Unauthorized</code>, o <code>401</code> quer dizer “não autenticado”: a API não sabe quem é você. O <code>403</code> quer dizer “sei quem é você, e você não pode”. Repetir a requisição com outro <em>token</em> pode resolver um <code>401</code>; um <code>403</code>, não.",
+    "<strong>403 ou 404?</strong> Como combinado no Capítulo 2, a tarefa de outra pessoa recebe <code>404</code>, porque um <code>403</code> confirmaria que ela existe. O <code>403</code> fica para quando a existência do recurso não é segredo, mas a operação é proibida.",
+    "<strong>4xx ou 5xx?</strong> Um <code>5xx</code> diz “a culpa é do servidor”. Se um dado enviado pelo cliente provoca um <code>500</code>, a API tem um defeito: faltou validar esse dado e responder <code>400</code>. Todo <code>500</code> que aparece nos testes é um defeito a corrigir."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "8-3-um-formato-para-todos-os-erros",
+   "texto": "8.3 Um formato para todos os erros"
+  },
+  {
+   "t": "p",
+   "html": "Hoje, o cliente do TaskFlow precisaria de quatro formas de ler um erro: <code>{erro, campos}</code> da validação, <code>{erro}</code> das rotas, um corpo vazio no <code>500</code> e uma página HTML para os endereços que não existem. Além disso, os nomes <code>erro</code> e <code>campos</code> quebram a convenção do Capítulo 5, de campos em inglês. É hora de padronizar."
+  },
+  {
+   "t": "p",
+   "html": "Em vez de inventar um formato, a API pode adotar um padrão. A <strong>RFC 9457</strong>, <em>Problem Details for HTTP APIs</em>, publicada em 2023 para substituir a RFC 7807, define um formato de erro em JSON, com um tipo de mídia próprio, <code>application/problem+json</code>. Os campos previstos são estes:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Campo",
+    "Conteúdo"
+   ],
+   "linhas": [
+    [
+     "<code>type</code>",
+     "uma URI que identifica o tipo de problema; se faltar, vale <code>\"about:blank\"</code>, “nenhum tipo além do próprio status”"
+    ],
+    [
+     "<code>title</code>",
+     "um resumo curto do tipo de problema, que não muda de uma ocorrência para outra"
+    ],
+    [
+     "<code>status</code>",
+     "o código de status HTTP, repetido no corpo"
+    ],
+    [
+     "<code>detail</code>",
+     "a explicação desta ocorrência, escrita para pessoas"
+    ],
+    [
+     "<code>instance</code>",
+     "uma URI que identifica esta ocorrência específica"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Todos são opcionais, e a API pode acrescentar campos próprios, as <strong>extensões</strong>. A mais comum é uma lista de erros por campo, que o TaskFlow vai chamar de <code>errors</code>. Um erro de validação fica assim:"
+  },
+  {
+   "t": "codigo",
+   "texto": "HTTP/1.1 400 Bad Request\nContent-Type: application/problem+json\n\n{\n  \"title\": \"Requisição inválida\",\n  \"status\": 400,\n  \"detail\": \"Um ou mais campos estão inválidos.\",\n  \"errors\": {\n    \"title\": [\"O título é obrigatório.\"],\n    \"priority\": [\"priority deve ser LOW, MEDIUM ou HIGH.\"]\n  }\n}"
+  },
+  {
+   "t": "p",
+   "html": "O TaskFlow não usa o campo <code>type</code>. Nesse caso, a RFC pede que o <code>title</code> seja o nome do próprio status, e permite traduzi-lo: por isso o título é sempre o mesmo para cada código, como “Não encontrado” para o <code>404</code>, e a explicação específica vai no <code>detail</code>. APIs maiores usam o <code>type</code> para distinguir problemas diferentes com o mesmo status, como <code>https://api.exemplo.com/erros/saldo-insuficiente</code> e <code>.../cartao-recusado</code>, ambos <code>400</code>; a URI pode apontar para uma página que explica o problema."
+  },
+  {
+   "t": "p",
+   "html": "Uma regra vale para qualquer formato: o programa cliente decide pelo <code>status</code> (e pelo <code>type</code>, se houver), <strong>nunca</strong> pelo texto do <code>detail</code>. Mensagens mudam, são corrigidas e traduzidas; um cliente que compara textos quebra na primeira revisão."
+  },
+  {
+   "t": "h2",
+   "id": "8-4-o-modulo-de-erros",
+   "texto": "8.4 O módulo de erros"
+  },
+  {
+   "t": "p",
+   "html": "Tudo o que diz respeito a erros fica em um arquivo, <code>lib/erros.ts</code>. A primeira parte monta a resposta no formato da RFC 9457:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/erros.ts -- as respostas de erro da API, no formato\n// Problem Details (RFC 9457)\nimport type { NextRequest } from \"next/server\";\n\nconst titulos: Record<number, string> = {\n  400: \"Requisição inválida\",\n  401: \"Não autenticado\",\n  403: \"Acesso negado\",\n  404: \"Não encontrado\",\n  409: \"Conflito\",\n  500: \"Erro interno\",\n};\n\ntype Campos = Record<string, string[] | undefined>;\n\n// Monta a resposta de erro; os extras (errors, instance) são\n// acrescentados ao corpo quando existem\nexport function problema(\n  status: number,\n  detail: string,\n  extras: { errors?: Campos; instance?: string } = {},\n) {\n  return Response.json(\n    {\n      title: titulos[status] ?? \"Erro\",\n      status,\n      detail,\n      ...extras,\n    },\n    {\n      status,\n      headers: { \"Content-Type\": \"application/problem+json\" },\n    },\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>Response.json</code> só acrescenta o <code>Content-Type: application/json</code> quando ele não foi informado; aqui, o cabeçalho passado em <code>headers</code> prevalece, e a resposta sai como <code>application/problem+json</code>. O tipo <code>Record&lt;number, string&gt;</code> descreve um objeto cujas chaves são números e cujos valores são textos. Para um status fora da lista, o <code>??</code> usa o título genérico “Erro”. Com essa função, uma rota responde um erro em uma linha: <code>return problema(404, \"Tarefa não encontrada.\")</code>."
+  },
+  {
+   "t": "p",
+   "html": "Mas há erros que não nascem na rota. A validação, uma função auxiliar, descobre que os dados são inválidos; no Capítulo 9, a função <code>usuarioAtual</code> vai descobrir que o <em>token</em> é inválido. Fazer essas funções devolverem uma resposta, e cada rota conferir se recebeu uma, enche o código de <code>if</code>. A solução é <strong>lançar</strong> o erro, com <code>throw</code>, e tratá-lo em um único lugar. Para isso, um tipo de erro que já sabe qual resposta virar:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// Um erro que já sabe qual resposta virar. Qualquer parte do\n// código pode lançá-lo; o tratador central (abaixo) responde.\nexport class ErroApi extends Error {\n  status: number;\n  campos?: Campos;\n\n  constructor(status: number, mensagem: string, campos?: Campos) {\n    super(mensagem);\n    this.status = status;\n    this.campos = campos;\n  }\n}"
+  },
+  {
+   "t": "p",
+   "html": "A classe <code>ErroApi</code> herda de <code>Error</code> (<code>extends</code>), então tem tudo o que um erro comum tem, como a mensagem e o registro de onde foi lançado, e acrescenta o status e os erros por campo. O <code>super(mensagem)</code> chama o construtor de <code>Error</code>, que guarda a mensagem em <code>this.message</code>. Qualquer função pode agora fazer <code>throw new ErroApi(409, \"Este e-mail já está em uso.\")</code>, e o erro sobe pelas funções que a chamaram até que alguém o trate."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: erros de HTTP e camadas",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O <code>ErroApi</code> carrega um status HTTP, e o Capítulo 7 combinou que os serviços não sabem nada de HTTP. Em projetos maiores, os serviços lançam erros do próprio domínio, como <code>EmailEmUso</code> ou <code>SaldoInsuficiente</code>, e só o tratador central os traduz em status. No TaskFlow, que é pequeno, o <code>ErroApi</code> será usado pela validação e pela autenticação, que já são partes ligadas ao HTTP, e os serviços continuam devolvendo <code>null</code> ou <code>false</code>."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Por fim, o tratador. A função <code>respostaDeErro</code> recebe qualquer coisa que tenha sido lançada e escolhe a resposta; a <code>comErros</code> envolve uma função de rota, para que nada do que ela lançar escape sem tratamento:"
+  },
+  {
+   "t": "codigo",
+   "texto": "export function respostaDeErro(erro: unknown) {\n  if (erro instanceof ErroApi) {\n    return problema(erro.status, erro.message, {\n      errors: erro.campos,\n    });\n  }\n\n  // Erro inesperado: o detalhe fica só no log do servidor\n  const id = crypto.randomUUID();\n  console.error(`[erro ${id}]`, erro);\n  return problema(\n    500,\n    \"Algo deu errado no servidor. Tente de novo mais tarde.\",\n    { instance: `urn:uuid:${id}` },\n  );\n}\n\n// Envolve uma função de rota: o que ela lançar vira resposta\nexport function comErros<C>(\n  rota: (request: NextRequest, ctx: C) => Promise<Response>,\n) {\n  return async (request: NextRequest, ctx: C) => {\n    try {\n      return await rota(request, ctx);\n    } catch (erro) {\n      return respostaDeErro(erro);\n    }\n  };\n}"
+  },
+  {
+   "t": "p",
+   "html": "O parâmetro de <code>respostaDeErro</code> tem o tipo <code>unknown</code>, porque em JavaScript qualquer valor pode ser lançado, até um texto ou um número. O <code>instanceof</code> confere se o erro é um <code>ErroApi</code>: se for, ele é um erro <strong>esperado</strong>, e vira a resposta que ele mesmo descreve. Qualquer outra coisa é um erro <strong>inesperado</strong>, assunto da próxima seção."
+  },
+  {
+   "t": "p",
+   "html": "A <code>comErros</code> é uma função que recebe uma função e devolve outra, com o mesmo formato, mas protegida por um <code>try</code>/<code>catch</code>. O <code>&lt;C&gt;</code> a torna genérica: <code>C</code> é o tipo do contexto da rota, que muda de rota para rota, e o TypeScript o descobre sozinho a partir da função recebida. O <code>return await</code> dentro do <code>try</code> tem o mesmo motivo do Capítulo 7: sem o <code>await</code>, a <em>Promise</em> sairia da função antes de falhar, e o <code>catch</code> não a veria."
+  },
+  {
+   "t": "h2",
+   "id": "8-5-o-erro-inesperado",
+   "texto": "8.5 O erro inesperado"
+  },
+  {
+   "t": "p",
+   "html": "Erros inesperados acontecem em qualquer API: o banco sai do ar, um serviço externo demora demais, um caso que ninguém previu chega pela primeira vez. Antes deste capítulo, o TaskFlow deixava o Next.js cuidar deles. Estes resultados foram obtidos com a versão do Capítulo 7 e uma rota de teste que lança um erro:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Situação",
+    "Resposta do Next.js"
+   ],
+   "linhas": [
+    [
+     "erro lançado dentro da rota",
+     "<code>500</code>, com o corpo vazio"
+    ],
+    [
+     "<code>GET /api/naoexiste</code>",
+     "<code>404</code>, com uma página HTML de 7 KB"
+    ],
+    [
+     "<code>PUT /api/tasks</code>",
+     "<code>405</code>, com o corpo vazio"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O Next.js acerta no essencial: a mensagem do erro vai só para o terminal do servidor, e não para o cliente. Isso importa, porque a mensagem de um erro inesperado costuma conter o que ninguém de fora deve ver: o SQL que falhou, nomes de tabelas, caminhos de arquivos, versões de bibliotecas, às vezes até uma <em>connection string</em>. Essas informações ajudam um atacante a planejar o próximo passo, e por isso a regra é absoluta: <strong>a mensagem e a pilha de chamadas de um erro inesperado nunca vão para a resposta</strong>."
+  },
+  {
+   "t": "p",
+   "html": "Mas um corpo vazio também não ajuda. Quem usa a API não sabe o que aconteceu, e quem a mantém não tem como achar, entre milhares de linhas de <em>log</em>, o erro de que a pessoa está falando. A <code>respostaDeErro</code> resolve as duas coisas com um <strong>identificador de ocorrência</strong>. O <code>crypto.randomUUID()</code>, embutido no Node.js e nos navegadores, gera um código aleatório, praticamente impossível de repetir; o mesmo código vai para o <em>log</em>, junto com o erro completo, e para a resposta, no campo <code>instance</code>, no formato de URI <code>urn:uuid:...</code>. Para testar, o banco de dados foi desligado com o servidor no ar:"
+  },
+  {
+   "t": "codigo",
+   "texto": "GET /api/tasks           (com o banco desligado)\n500 Content-Type: application/problem+json\n    {\"title\":\"Erro interno\",\"status\":500,\n     \"detail\":\"Algo deu errado no servidor. Tente de novo\n               mais tarde.\",\n     \"instance\":\"urn:uuid:da4a7691-89c4-4506-bd99-2691e554e182\"}\n\nNo terminal do servidor:\n[erro da4a7691-89c4-4506-bd99-2691e554e182] Error\n  [PrismaClientKnownRequestError]:\nInvalid `prisma.user.findUniqueOrThrow()` invocation:\n  ...\n  code: 'ECONNREFUSED',"
+  },
+  {
+   "t": "p",
+   "html": "O cliente recebe uma resposta no formato de sempre, sem nenhum detalhe interno. Se a pessoa entrar em contato com o suporte e informar o código, quem mantém a API procura <code>da4a7691</code> no <em>log</em> e encontra a causa: o banco recusou a conexão (<code>ECONNREFUSED</code>). Quando o banco voltou, a API voltou a responder normalmente, sem reiniciar. Na Vercel (Capítulo 12), tudo o que o <code>console.error</code> escreve aparece no painel de <em>logs</em>; em projetos maiores, serviços como o Sentry recebem esses erros e avisam a equipe."
+  },
+  {
+   "t": "h2",
+   "id": "8-6-a-validacao-lanca-o-erro",
+   "texto": "8.6 A validação lança o erro"
+  },
+  {
+   "t": "p",
+   "html": "Com o tratador central, a função <code>validar</code> do Capítulo 6 fica mais simples. Em vez de devolver um objeto com <code>dados</code> ou <code>erro</code>, ela devolve os dados validados ou lança um <code>ErroApi</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/validar.ts -- confere dados com um esquema do Zod\nimport * as z from \"zod\";\nimport { ErroApi } from \"@/lib/erros\";\n\n// Devolve os dados validados ou lança um ErroApi com o 400\nexport function validar<E extends z.ZodType>(\n  esquema: E,\n  entrada: unknown,\n): z.output<E> {\n  const resultado = esquema.safeParse(entrada);\n  if (resultado.success) return resultado.data;\n\n  const { formErrors, fieldErrors } =\n    z.flattenError(resultado.error);\n  throw new ErroApi(\n    400,\n    formErrors[0] ?? \"Um ou mais campos estão inválidos.\",\n    fieldErrors,\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "O tipo <code>Resultado</code> do Capítulo 6 desapareceu: o tipo de retorno agora é simplesmente <code>z.output&lt;E&gt;</code>, os dados validados. Se a validação falha, a função não retorna; o <code>throw</code> interrompe a rota que a chamou, e o tratador responde o <code>400</code>. O <code>detail</code> é o erro do objeto como um todo, quando existe (“O corpo deve ser um objeto JSON.”, “Envie ao menos um campo para alterar.”), ou uma frase geral, quando os problemas estão nos campos. O <code>errors</code> está sempre presente nas respostas <code>400</code> da validação, mesmo que vazio; assim, o cliente pode lê-lo sem conferir antes se ele existe."
+  },
+  {
+   "t": "h2",
+   "id": "8-7-as-rotas-com-o-tratador",
+   "texto": "8.7 As rotas com o tratador"
+  },
+  {
+   "t": "p",
+   "html": "As rotas de tarefas passam a ser envolvidas pela <code>comErros</code>. A coleção:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/api/tasks/route.ts -- a coleção de tarefas\nimport type { NextRequest } from \"next/server\";\nimport { comErros } from \"@/lib/erros\";\nimport { usuarioAtual } from \"@/lib/usuario-atual\";\nimport { validar } from \"@/lib/validar\";\nimport {\n  esquemaFiltros,\n  esquemaNovaTarefa,\n} from \"@/lib/esquemas/tarefas\";\nimport {\n  criarTarefa,\n  listarTarefas,\n} from \"@/lib/servicos/tarefas\";\n\n// GET /api/tasks?status=&priority=&search=&sort=&page=&limit=\nexport const GET = comErros(async (request: NextRequest) => {\n  const usuario = await usuarioAtual();\n  const query = Object.fromEntries(request.nextUrl.searchParams);\n\n  const filtros = validar(esquemaFiltros, query);\n  return Response.json(await listarTarefas(usuario.id, filtros));\n});\n\n// POST /api/tasks\nexport const POST = comErros(async (request: NextRequest) => {\n  const usuario = await usuarioAtual();\n  const corpo = await request.json().catch(() => null);\n\n  const dados = validar(esquemaNovaTarefa, corpo);\n  const tarefa = await criarTarefa(usuario.id, dados);\n  return Response.json(tarefa, {\n    status: 201,\n    headers: { Location: `/api/tasks/${tarefa.id}` },\n  });\n});"
+  },
+  {
+   "t": "p",
+   "html": "As rotas deixaram de ser declaradas com <code>export async function GET</code> e passaram a ser constantes, <code>export const GET = comErros(...)</code>. Para o Next.js não há diferença: ele procura no arquivo algo exportado com o nome do método e que seja uma função, e o resultado de <code>comErros</code> é uma função. O <code>if (erro) return erro</code> do Capítulo 7 sumiu das duas rotas. Agora, uma tarefa:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/api/tasks/[id]/route.ts -- uma tarefa\nimport type { NextRequest } from \"next/server\";\nimport { comErros, problema } from \"@/lib/erros\";\nimport { usuarioAtual } from \"@/lib/usuario-atual\";\nimport { validar } from \"@/lib/validar\";\nimport { esquemaEdicaoTarefa } from \"@/lib/esquemas/tarefas\";\nimport {\n  buscarTarefa,\n  editarTarefa,\n  excluirTarefa,\n} from \"@/lib/servicos/tarefas\";\n\ntype Contexto = RouteContext<\"/api/tasks/[id]\">;\n\nconst naoEncontrada = () =>\n  problema(404, \"Tarefa não encontrada.\");\n\n// GET /api/tasks/:id\nexport const GET = comErros(\n  async (request: NextRequest, ctx: Contexto) => {\n    const { id } = await ctx.params;\n    const usuario = await usuarioAtual();\n\n    const tarefa = await buscarTarefa(usuario.id, id);\n    return tarefa ? Response.json(tarefa) : naoEncontrada();\n  },\n);\n\n// PATCH /api/tasks/:id\nexport const PATCH = comErros(\n  async (request: NextRequest, ctx: Contexto) => {\n    const { id } = await ctx.params;\n    const usuario = await usuarioAtual();\n    const corpo = await request.json().catch(() => null);\n\n    const dados = validar(esquemaEdicaoTarefa, corpo);\n    const tarefa = await editarTarefa(usuario.id, id, dados);\n    return tarefa ? Response.json(tarefa) : naoEncontrada();\n  },\n);\n\n// DELETE /api/tasks/:id\nexport const DELETE = comErros(\n  async (request: NextRequest, ctx: Contexto) => {\n    const { id } = await ctx.params;\n    const usuario = await usuarioAtual();\n\n    const excluiu = await excluirTarefa(usuario.id, id);\n    return excluiu\n      ? new Response(null, { status: 204 })\n      : naoEncontrada();\n  },\n);"
+  },
+  {
+   "t": "p",
+   "html": "Repare que a tarefa não encontrada continua sendo <strong>devolvida</strong> com <code>return</code>, e não lançada. A regra prática é esta: dentro da própria rota, onde a resposta está à mão, <code>return problema(...)</code> deixa o caminho do código visível; o <code>throw new ErroApi(...)</code> é para as funções auxiliares, que estão longe da resposta e não devem obrigar a rota a conferir o que elas devolveram."
+  },
+  {
+   "t": "p",
+   "html": "O tratador também prepara o próximo capítulo. A função <code>usuarioAtual</code>, hoje provisória, vai ler o <em>token</em> da requisição e, se ele faltar ou for inválido, lançar um <code>ErroApi</code> com o <code>401</code>. Como todas as rotas já passam pela <code>comErros</code>, esse <code>401</code> vira a resposta certa sem que nenhuma rota seja alterada."
+  },
+  {
+   "t": "h2",
+   "id": "8-8-enderecos-que-nao-existem",
+   "texto": "8.8 Endereços que não existem"
+  },
+  {
+   "t": "p",
+   "html": "Falta a página HTML do <code>404</code>. Um cliente que erra o endereço, como <code>/api/task</code> em vez de <code>/api/tasks</code>, recebe 7 KB de HTML, e o <code>resposta.json()</code> dele falha com um erro confuso. A solução usa uma convenção de pastas do Capítulo 4, o segmento <code>[...caminho]</code>, que atende a um ou mais segmentos quaisquer:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/api/[...rota]/route.ts -- endereços que não existem\nimport { problema } from \"@/lib/erros\";\n\nasync function naoExiste() {\n  return problema(404, \"Este endereço não existe na API.\");\n}\n\nexport const GET = naoExiste;\nexport const POST = naoExiste;\nexport const PUT = naoExiste;\nexport const PATCH = naoExiste;\nexport const DELETE = naoExiste;"
+  },
+  {
+   "t": "p",
+   "html": "A pasta <code>app/api/[...rota]</code> combina com qualquer endereço que comece com <code>/api/</code>. Como vence sempre a rota mais específica, <code>/api/tasks</code> e <code>/api/tasks/:id</code> continuam indo para as suas pastas, e só o que não combina com nenhuma outra cai aqui, como <code>/api/naoexiste</code> ou <code>/api/tasks/a/b</code>. As URLs fora de <code>/api</code>, que não fazem parte da API, continuam com o <code>404</code> padrão do Next.js."
+  },
+  {
+   "t": "p",
+   "html": "O <code>405</code> continua sendo respondido pelo Next.js, sem corpo. A RFC 9110 pede que ele traga o cabeçalho <code>Allow</code>, com os métodos aceitos; na versão testada, o Next.js não o envia no <code>405</code>, mas o envia na resposta a <code>OPTIONS</code>, onde o cliente pode consultá-lo. O projeto fica assim:"
+  },
+  {
+   "t": "codigo",
+   "texto": "app/api/\n  [...rota]/route.ts    404 em JSON para o que não existe\n  health/route.ts\n  tasks/route.ts        GET, POST (com comErros)\n  tasks/[id]/route.ts   GET, PATCH, DELETE (com comErros)\nlib/\n  erros.ts              problema, ErroApi, comErros\n  validar.ts            agora lança ErroApi"
+  },
+  {
+   "t": "h2",
+   "id": "8-9-testando-os-erros",
+   "texto": "8.9 Testando os erros"
+  },
+  {
+   "t": "p",
+   "html": "Estes são resultados reais da API com o código deste capítulo. Os cabeçalhos repetidos foram omitidos: todas as respostas de erro trazem <code>Content-Type: application/problem+json</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "GET /api/tasks?limit=500&sort=nome&page=0\n400 {\"title\":\"Requisição inválida\",\"status\":400,\n     \"detail\":\"Um ou mais campos estão inválidos.\",\n     \"errors\":{\"sort\":[\"sort deve ser createdAt, ...\"],\n               \"page\":[\"page começa em 1.\"],\n               \"limit\":[\"limit pode ser no máximo 100.\"]}}\n\nPOST /api/tasks  {title          (JSON quebrado)\n400 {\"title\":\"Requisição inválida\",\"status\":400,\n     \"detail\":\"O corpo deve ser um objeto JSON.\",\"errors\":{}}\n\nPATCH /api/tasks/<id>  {}\n400 {\"title\":\"Requisição inválida\",\"status\":400,\n     \"detail\":\"Envie ao menos um campo para alterar.\",\n     \"errors\":{}}\n\nGET, PATCH e DELETE em /api/tasks/naoexiste\n404 {\"title\":\"Não encontrado\",\"status\":404,\n     \"detail\":\"Tarefa não encontrada.\"}\n\nGET /api/naoexiste  e  POST /api/tasks/a/b\n404 {\"title\":\"Não encontrado\",\"status\":404,\n     \"detail\":\"Este endereço não existe na API.\"}\n\nPUT /api/tasks\n405 (sem corpo)\n\nOPTIONS /api/tasks\n204 allow: GET, HEAD, OPTIONS, POST"
+  },
+  {
+   "t": "p",
+   "html": "As respostas de sucesso não mudaram: a criação continua respondendo <code>201</code> com <code>Content-Type: application/json</code>, a tarefa e o <code>Location</code>. Agora, qualquer erro da API, de qualquer rota, pode ser lido pelo mesmo código."
+  },
+  {
+   "t": "h2",
+   "id": "8-10-do-lado-do-cliente",
+   "texto": "8.10 Do lado do cliente"
+  },
+  {
+   "t": "p",
+   "html": "Um detalhe do <code>fetch</code> pega muita gente: ele <strong>não</strong> lança um erro quando a resposta é <code>4xx</code> ou <code>5xx</code>. Para o <code>fetch</code>, receber um <code>404</code> é sucesso, porque o servidor respondeu; ele só lança um erro quando não há resposta nenhuma, como na falta de internet. Quem confere o resultado é o cliente, com a propriedade <code>ok</code>, que vale <code>true</code> para os status de 200 a 299:"
+  },
+  {
+   "t": "codigo",
+   "texto": "async function criarTarefa(dados) {\n  const resposta = await fetch(\"/api/tasks\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify(dados),\n  });\n\n  if (!resposta.ok) {\n    const problema = await resposta.json();\n    console.log(resposta.status, problema.detail);\n    console.log(problema.errors?.title);\n    return null;\n  }\n  return resposta.json();\n}\n\nawait criarTarefa({ title: \"\" });\n// 400 Um ou mais campos estão inválidos.\n// [ 'O título é obrigatório.' ]"
+  },
+  {
+   "t": "p",
+   "html": "Como todos os erros do TaskFlow têm o mesmo formato, esse único <code>if</code> serve para qualquer chamada. Uma interface pode mostrar o <code>detail</code> em um aviso e cada mensagem de <code>errors</code> embaixo do campo correspondente do formulário; e pode reagir ao <code>status</code>, levando à tela de <em>login</em> no <code>401</code>, por exemplo. Se a API estiver atrás de outros servidores, como um balanceador de carga, um erro pode chegar de um deles, em HTML; um cliente cuidadoso confere o cabeçalho <code>Content-Type</code> antes de chamar o <code>json()</code>."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Responder 200 com um erro no corpo.</strong> Clientes, bibliotecas e ferramentas de monitoramento entendem como sucesso. Use o código de status do erro.",
+    "<strong>Mandar a mensagem do erro inesperado para o cliente.</strong> <code>erro.message</code> e a pilha de chamadas revelam detalhes internos. Registre-os no <em>log</em> e responda uma mensagem genérica, com um identificador.",
+    "<strong>Aceitar um 500 provocado por dados do cliente.</strong> Se uma entrada inválida derruba a rota, faltou validação. Responda <code>400</code>.",
+    "<strong>Usar 403 para o recurso de outra pessoa.</strong> Ele confirma que o recurso existe. Responda <code>404</code>.",
+    "<strong>Confundir 401 e 403.</strong> 401: “não sei quem é você”. 403: “sei quem é você, e você não pode”.",
+    "<strong>Um formato de erro por rota.</strong> O cliente precisa de um único jeito de ler os erros. Centralize a montagem da resposta em uma função.",
+    "<strong>Cliente que decide pelo texto do erro.</strong> Mensagens mudam. Decida pelo <code>status</code> (e pelo <code>type</code>, se houver).",
+    "<strong>Esperar que o <code>fetch</code> lance erro no 404.</strong> Ele só lança quando não há resposta. Confira <code>resposta.ok</code>.",
+    "<strong>Esquecer o <code>await</code> no <code>return</code> dentro do <code>try</code>.</strong> A falha acontece depois que a função saiu, e o <code>catch</code> não a vê."
+   ]
+  }
+ ]
+}

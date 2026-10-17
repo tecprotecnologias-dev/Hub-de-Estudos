@@ -834,4 +834,13 @@ export const apostilas: Apostila[] = [
     descricao:
       'CRUD, métodos HTTP e funções do Prisma, a camada de serviço, edição com PATCH e o erro P2025, listagem com filtros, busca, ordenação e paginação, transações e controle de concorrência.',
   },
+  {
+    id: 'web3-cap8',
+    capitulo: 8,
+    titulo: 'Erros e códigos HTTP',
+    disciplinaId: 'programacao-e-design-para-web-iii',
+    unidades: ['Tratamento de Erros e Códigos de Resposta'],
+    descricao:
+      'Como escolher o código de status (400, 401, 403, 404, 405, 409, 422, 500), o formato Problem Details da RFC 9457, um tratador central de erros, o 500 seguro e rastreável, 404 em JSON e a leitura dos erros no cliente.',
+  },
 ]
