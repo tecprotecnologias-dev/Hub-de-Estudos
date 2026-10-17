@@ -1,0 +1,462 @@
+{
+ "numero": 10,
+ "titulo": "Documentação: OpenAPI, Swagger e Postman",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "O TaskFlow já tem cadastro, <em>login</em> e um CRUD completo de tarefas, mas só quem leu o código sabe usá-lo. Neste capítulo você vai descrever a API no formato OpenAPI, o padrão do mercado, gerando boa parte da descrição a partir dos esquemas do Zod que a própria API usa para validar; publicar uma documentação navegável com o Swagger UI, onde é possível testar cada <em>endpoint</em>; e levar a API para o Postman, onde as requisições ganham variáveis, <em>scripts</em> e testes automáticos, que também rodam no terminal com o Newman."
+  },
+  {
+   "t": "h2",
+   "id": "10-1-a-documentacao-faz-parte-da-api",
+   "texto": "10.1 A documentação faz parte da API"
+  },
+  {
+   "t": "p",
+   "html": "Uma API é usada por pessoas que não estavam na sala quando ela foi projetada: quem faz o aplicativo de celular, a equipe de outra empresa, você mesmo daqui a seis meses. Para elas, a API <strong>é</strong> a documentação. Um <em>endpoint</em> que ninguém sabe que existe, ou que ninguém sabe chamar, não serve para nada; um comportamento que não está escrito vira pergunta no suporte, ou um erro no cliente que só aparece em produção."
+  },
+  {
+   "t": "p",
+   "html": "Uma boa documentação de API responde, para cada operação, sem que seja preciso ler o código:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "qual é o método e o endereço, e o que a operação faz;",
+    "como se autenticar, e quais operações dispensam a autenticação;",
+    "quais parâmetros e qual corpo ela aceita, com os tipos, os campos obrigatórios e os limites, como “título de até 120 caracteres”;",
+    "o que ela devolve no sucesso, com o código de status e o formato do corpo;",
+    "quais erros podem acontecer, com o status e o formato de cada um, e não só o caminho feliz;",
+    "as regras gerais, como o formato das datas, a paginação e decisões como “dados inválidos recebem sempre <code>400</code>”, que o Capítulo 8 pediu para registrar."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Escrever tudo isso à mão, em um documento de texto, tem dois problemas: cada ferramenta precisaria de alguém para lê-lo, e ele se desatualiza na primeira mudança do código. A solução do mercado é descrever a API em um formato que <strong>programas</strong> entendem."
+  },
+  {
+   "t": "h2",
+   "id": "10-2-openapi-e-swagger",
+   "texto": "10.2 OpenAPI e Swagger"
+  },
+  {
+   "t": "p",
+   "html": "A <strong>Especificação OpenAPI</strong> define um formato, em JSON ou YAML, para descrever APIs HTTP: os endereços, os métodos, os parâmetros, os corpos, as respostas e a autenticação. Ela nasceu em 2011 com o nome de Swagger, criada para documentar a API de um dicionário <em>online</em>. Em 2015, a especificação foi doada à OpenAPI Initiative, mantida pela Linux Foundation, e passou a se chamar OpenAPI; a versão 3.0 saiu em 2017, a 3.1, que alinhou os esquemas ao padrão JSON Schema, em 2021, e a 3.2 em 2025. O nome Swagger ficou com as ferramentas criadas em torno do formato, como o <strong>Swagger UI</strong>, que transforma um documento OpenAPI em uma página navegável, e o Swagger Editor."
+  },
+  {
+   "t": "p",
+   "html": "Com um documento OpenAPI, uma única descrição alimenta várias ferramentas: páginas de documentação, como o Swagger UI, o Redoc e o Scalar; clientes de teste, como o Postman e o Insomnia, que importam todas as requisições de uma vez; geradores de código, que criam o cliente da API em TypeScript, Java, Kotlin ou Swift; validadores, que conferem se a API responde o que promete; e até assistentes de IA, que leem o documento para descobrir como chamar a API. É o “contrato” do Capítulo 1, que no SOAP era o WSDL, obrigatório, e no REST é opcional, mas é praticamente um padrão de fato."
+  },
+  {
+   "t": "p",
+   "html": "Há duas formas de trabalhar com o documento:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong><em>Design-first</em></strong> (primeiro o desenho): o documento é escrito antes do código, discutido entre as equipes, e o código é feito para cumpri-lo. Combina com APIs públicas e com equipes que trabalham em paralelo, como o Capítulo 2 sugeriu.",
+    "<strong><em>Code-first</em></strong> (primeiro o código): o documento é gerado, no todo ou em parte, a partir do código. Combina com projetos em que a mesma equipe faz a API e a mantém, e tem uma grande vantagem: o que vem do código não se desatualiza."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O TaskFlow já existe, então vai pelo segundo caminho, aproveitando os esquemas do Zod, que já descrevem exatamente o que a API aceita."
+  },
+  {
+   "t": "h2",
+   "id": "10-3-a-estrutura-de-um-documento-openapi",
+   "texto": "10.3 A estrutura de um documento OpenAPI"
+  },
+  {
+   "t": "p",
+   "html": "Antes de gerar o documento, vale ver como ele é. Este é um trecho, em YAML, que descreve uma única operação, a busca de uma tarefa:"
+  },
+  {
+   "t": "codigo",
+   "texto": "openapi: 3.1.0\ninfo:\n  title: TaskFlow API\n  version: 1.0.0\npaths:\n  /api/tasks/{id}:\n    get:\n      summary: Busca uma tarefa\n      parameters:\n        - name: id\n          in: path\n          required: true\n          schema:\n            type: string\n      responses:\n        \"200\":\n          description: A tarefa\n          content:\n            application/json:\n              schema:\n                $ref: \"#/components/schemas/Tarefa\"\n        \"404\":\n          description: A tarefa não existe ou não é sua\ncomponents:\n  schemas:\n    Tarefa:\n      type: object\n      properties:\n        id: { type: string }\n        title: { type: string }"
+  },
+  {
+   "t": "p",
+   "html": "O YAML representa os mesmos dados que um JSON, usando a indentação no lugar das chaves; a lista de parâmetros, com o <code>-</code>, é um vetor. As partes principais de um documento são estas:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Campo",
+    "Conteúdo"
+   ],
+   "linhas": [
+    [
+     "<code>openapi</code>",
+     "a versão da especificação usada no documento"
+    ],
+    [
+     "<code>info</code>",
+     "o nome, a versão da API e uma descrição geral"
+    ],
+    [
+     "<code>servers</code>",
+     "os endereços onde a API está no ar"
+    ],
+    [
+     "<code>paths</code>",
+     "cada endereço, com as operações (<code>get</code>, <code>post</code>...) e, em cada uma, os <code>parameters</code>, o <code>requestBody</code> e as <code>responses</code>"
+    ],
+    [
+     "<code>components</code>",
+     "as partes reaproveitáveis: <code>schemas</code>, <code>responses</code>, <code>securitySchemes</code>"
+    ],
+    [
+     "<code>security</code>",
+     "a autenticação exigida, para todas as operações ou para cada uma"
+    ],
+    [
+     "<code>tags</code>",
+     "grupos de operações, usados para organizar a página"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O <code>$ref</code> é uma referência: em vez de repetir a descrição da tarefa em todas as respostas que a devolvem, cada uma aponta para <code>#/components/schemas/Tarefa</code>, e a descrição fica em um lugar só. Os esquemas, dentro de <code>schema</code>, seguem o <strong>JSON Schema</strong>, um padrão para descrever o formato de dados JSON, com <code>type</code>, <code>properties</code>, <code>required</code>, <code>minLength</code>, <code>enum</code> e outras palavras-chave. Os códigos de status ficam entre aspas porque, em YAML e JSON, as chaves de um objeto são textos."
+  },
+  {
+   "t": "h2",
+   "id": "10-4-do-zod-para-o-json-schema",
+   "texto": "10.4 Do Zod para o JSON Schema"
+  },
+  {
+   "t": "p",
+   "html": "O Zod 4 converte um esquema em JSON Schema com a função <code>z.toJSONSchema</code>. Este é o resultado para o <code>esquemaNovaTarefa</code> do Capítulo 6, com a expressão regular da data abreviada:"
+  },
+  {
+   "t": "codigo",
+   "texto": "z.toJSONSchema(esquemaNovaTarefa, { io: \"input\" });\n// {\n//   \"type\": \"object\",\n//   \"properties\": {\n//     \"title\": { \"type\": \"string\",\n//                \"minLength\": 1, \"maxLength\": 120 },\n//     \"description\": { \"anyOf\": [\n//       { \"type\": \"string\", \"maxLength\": 2000 },\n//       { \"type\": \"null\" } ] },\n//     \"status\": { \"type\": \"string\",\n//                 \"enum\": [\"PENDING\", \"IN_PROGRESS\", \"DONE\"] },\n//     \"priority\": { \"type\": \"string\",\n//                   \"enum\": [\"LOW\", \"MEDIUM\", \"HIGH\"] },\n//     \"dueDate\": { \"anyOf\": [\n//       { \"type\": \"string\", \"format\": \"date\",\n//         \"pattern\": \"^(?:(?:\\\\d\\\\d[2468][048]|...\" },\n//       { \"type\": \"null\" } ] }\n//   },\n//   \"required\": [\"title\"]\n// }"
+  },
+  {
+   "t": "p",
+   "html": "Os limites, os valores aceitos pelos <code>enum</code>, o campo obrigatório e o <code>nullable</code>, que virou “texto ou <code>null</code>”, estão todos lá, sem nenhuma linha escrita à mão. A opção <code>io: \"input\"</code> pede a descrição da <strong>entrada</strong>, o que o cliente envia, e não da saída. A diferença aparece na data: o cliente envia o texto <code>\"2026-12-01\"</code>, e o <code>transform</code> só o converte em <code>Date</code> depois da validação. Sem essa opção, o Zod se recusa a converter esquemas com <code>transform</code>, porque um <code>Date</code> não tem representação em JSON."
+  },
+  {
+   "t": "p",
+   "html": "A conversão tem limites, e eles valem para qualquer gerador. Uma regra escrita como função, no <code>refine</code>, não pode ser traduzida, e por isso o limite de 72 bytes da senha (Capítulo 9) não aparece. No <code>pipe</code>, a descrição da entrada mostra só o primeiro esquema, e por isso o e-mail do cadastro aparece como um texto qualquer, sem o formato de e-mail. O que o gerador não alcança vai para o texto da descrição, como você verá a seguir."
+  },
+  {
+   "t": "h2",
+   "id": "10-5-o-documento-do-taskflow",
+   "texto": "10.5 O documento do TaskFlow"
+  },
+  {
+   "t": "p",
+   "html": "Todo o documento fica em um arquivo, <code>lib/openapi.ts</code>. A primeira parte importa os esquemas e define uma função que os converte:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/openapi.ts -- a documentação da API, no formato OpenAPI 3.1\nimport * as z from \"zod\";\nimport {\n  Priority,\n  TaskStatus,\n} from \"@/app/generated/prisma/client\";\nimport {\n  esquemaEdicaoTarefa,\n  esquemaFiltros,\n  esquemaNovaTarefa,\n} from \"@/lib/esquemas/tarefas\";\nimport {\n  esquemaCadastro,\n  esquemaLogin,\n} from \"@/lib/esquemas/auth\";\n\n// Converte um esquema do Zod em JSON Schema. O io: \"input\"\n// descreve o que o cliente envia, antes dos transform.\nfunction jsonSchema(esquema: z.ZodType) {\n  const resultado = z.toJSONSchema(esquema, { io: \"input\" });\n  delete resultado.$schema;\n  return resultado;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>delete</code> remove o campo <code>$schema</code>, que o <code>toJSONSchema</code> acrescenta para dizer qual versão do JSON Schema foi usada; dentro de um documento OpenAPI, ele é desnecessário. As respostas da API, ao contrário das entradas, não têm esquemas do Zod: elas são montadas pelo Prisma, com o <code>select</code> do Capítulo 5. Para documentá-las, o mais simples é descrevê-las com o próprio Zod, só para gerar o JSON Schema:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// O que a API devolve (não há esquema do Zod para isso: as\n// respostas são montadas pelo Prisma, com o select)\nconst tarefa = z.object({\n  id: z.string(),\n  title: z.string(),\n  description: z.string().nullable(),\n  status: z.enum(TaskStatus),\n  priority: z.enum(Priority),\n  dueDate: z.iso.datetime().nullable(),\n  createdAt: z.iso.datetime(),\n  updatedAt: z.iso.datetime(),\n});\n\nconst listaDeTarefas = z.object({\n  data: z.array(tarefa),\n  meta: z.object({\n    page: z.int(),\n    limit: z.int(),\n    total: z.int(),\n    totalPages: z.int(),\n  }),\n});\n\nconst usuario = z.object({\n  id: z.string(),\n  name: z.string(),\n  email: z.email(),\n  createdAt: z.iso.datetime(),\n});\n\nconst token = z.object({\n  token: z.string(),\n  tokenType: z.literal(\"Bearer\"),\n  expiresIn: z.int(),\n});\n\nconst problema = z.object({\n  title: z.string(),\n  status: z.int(),\n  detail: z.string(),\n  errors: z.record(z.string(), z.array(z.string())).optional(),\n  instance: z.string().optional(),\n});"
+  },
+  {
+   "t": "p",
+   "html": "O <code>z.int()</code> descreve um número inteiro; o <code>z.iso.datetime()</code>, uma data e hora no formato ISO 8601, como as que o JSON da API traz; o <code>z.literal(\"Bearer\")</code>, um campo que só pode ter aquele valor; e o <code>z.record</code>, um objeto com chaves quaisquer, como o <code>errors</code> do Capítulo 8, em que cada campo tem uma lista de mensagens. Estes esquemas nunca validam nada, só descrevem: se o <code>camposTarefa</code> ganhar um campo, este esquema precisa ser atualizado à mão, um ponto de atenção que volta na Seção 10.10."
+  },
+  {
+   "t": "p",
+   "html": "Como as mesmas estruturas aparecem em muitas operações, algumas funções curtas evitam a repetição:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// Atalhos para não repetir as mesmas estruturas\nconst ref = (nome: string) => ({\n  $ref: `#/components/schemas/${nome}`,\n});\nconst emJson = (nome: string) => ({\n  content: { \"application/json\": { schema: ref(nome) } },\n});\nconst erro = (descricao: string) => ({\n  description: descricao,\n  content: {\n    \"application/problem+json\": { schema: ref(\"Problema\") },\n  },\n});\nconst comum = (nome: string) => ({\n  $ref: `#/components/responses/${nome}`,\n});\n\n// Os filtros da listagem viram parâmetros da query string\nconst filtros = jsonSchema(esquemaFiltros);\nconst parametrosDaLista = Object.entries(\n  filtros.properties ?? {},\n).map(([name, schema]) => ({ name, in: \"query\", schema }));"
+  },
+  {
+   "t": "p",
+   "html": "A <code>ref</code> monta uma referência a um esquema; a <code>emJson</code> diz que o corpo é JSON e segue esse esquema; a <code>erro</code> descreve uma resposta de erro no formato <code>application/problem+json</code>; e a <code>comum</code> aponta para uma das respostas reaproveitáveis, definidas no fim do documento. No OpenAPI, os parâmetros da <em>query string</em> não são um objeto, como no Zod, mas uma lista, com um item por parâmetro. O <code>Object.entries</code> transforma cada propriedade do esquema dos filtros, do Capítulo 7, em um parâmetro <code>in: \"query\"</code>. Agora, o documento, começando pelas informações gerais e pela autenticação:"
+  },
+  {
+   "t": "codigo",
+   "texto": "export const documento = {\n  openapi: \"3.1.0\",\n  info: {\n    title: \"TaskFlow API\",\n    version: \"1.0.0\",\n    description:\n      \"API de tarefas. Faça login em POST /api/auth/login e \"\n      + \"envie o token no cabeçalho Authorization: Bearer. \"\n      + \"Os erros seguem a RFC 9457 (Problem Details); dados \"\n      + \"inválidos recebem sempre 400, nunca 422.\",\n  },\n  servers: [\n    {\n      url: \"http://localhost:3000\",\n      description: \"Desenvolvimento\",\n    },\n  ],\n  tags: [\n    { name: \"Autenticação\", description: \"Cadastro e login\" },\n    { name: \"Tarefas\", description: \"As tarefas de quem pede\" },\n  ],\n  // Vale para todas as operações, menos as que dizem o contrário\n  security: [{ bearer: [] }],\n  paths: {\n    \"/api/auth/register\": {\n      post: {\n        tags: [\"Autenticação\"],\n        operationId: \"cadastrar\",\n        summary: \"Cria uma conta\",\n        description: \"A senha precisa ter de 8 a 72 bytes.\",\n        security: [],\n        requestBody: { required: true, ...emJson(\"Cadastro\") },\n        responses: {\n          \"201\": {\n            description: \"Conta criada\",\n            ...emJson(\"Usuario\"),\n          },\n          \"400\": comum(\"Invalido\"),\n          \"409\": erro(\"O e-mail já está em uso\"),\n        },\n      },\n    },\n    \"/api/auth/login\": {\n      post: {\n        tags: [\"Autenticação\"],\n        operationId: \"entrar\",\n        summary: \"Troca e-mail e senha por um token\",\n        description: \"O token vale por 1 hora (expiresIn).\",\n        security: [],\n        requestBody: { required: true, ...emJson(\"Login\") },\n        responses: {\n          \"200\": {\n            description: \"Login feito\",\n            ...emJson(\"Token\"),\n          },\n          \"400\": comum(\"Invalido\"),\n          \"401\": erro(\"E-mail ou senha incorretos\"),\n        },\n      },\n    },"
+  },
+  {
+   "t": "p",
+   "html": "O <code>security</code> do nível de cima vale para todas as operações: todas exigem o esquema <code>bearer</code>, definido no fim do documento. O cadastro e o <em>login</em> dizem o contrário com <code>security: []</code>, uma lista vazia, “nenhuma autenticação”. O <code>operationId</code> é um nome único para cada operação, usado pelos geradores de código, que criam funções como <code>cadastrar()</code> e <code>entrar()</code>. A descrição do cadastro completa o que a conversão não alcançou, o limite de bytes da senha, e a descrição geral, em <code>info</code>, registra a regra do <code>400</code>, como o Capítulo 8 pediu. As tarefas:"
+  },
+  {
+   "t": "codigo",
+   "texto": "    \"/api/tasks\": {\n      get: {\n        tags: [\"Tarefas\"],\n        operationId: \"listarTarefas\",\n        summary: \"Lista as tarefas, com filtros e paginação\",\n        parameters: parametrosDaLista,\n        responses: {\n          \"200\": {\n            description: \"Uma página de tarefas\",\n            ...emJson(\"ListaDeTarefas\"),\n          },\n          \"400\": comum(\"Invalido\"),\n          \"401\": comum(\"NaoAutenticado\"),\n        },\n      },\n      post: {\n        tags: [\"Tarefas\"],\n        operationId: \"criarTarefa\",\n        summary: \"Cria uma tarefa\",\n        requestBody: { required: true, ...emJson(\"NovaTarefa\") },\n        responses: {\n          \"201\": {\n            description: \"Tarefa criada\",\n            headers: {\n              Location: {\n                description: \"O endereço da tarefa criada\",\n                schema: { type: \"string\" },\n              },\n            },\n            ...emJson(\"Tarefa\"),\n          },\n          \"400\": comum(\"Invalido\"),\n          \"401\": comum(\"NaoAutenticado\"),\n        },\n      },\n    },\n    \"/api/tasks/{id}\": {\n      parameters: [\n        {\n          name: \"id\",\n          in: \"path\",\n          required: true,\n          schema: { type: \"string\" },\n        },\n      ],\n      get: {\n        tags: [\"Tarefas\"],\n        operationId: \"buscarTarefa\",\n        summary: \"Busca uma tarefa\",\n        responses: {\n          \"200\": { description: \"A tarefa\", ...emJson(\"Tarefa\") },\n          \"401\": comum(\"NaoAutenticado\"),\n          \"404\": comum(\"NaoEncontrada\"),\n        },\n      },\n      patch: {\n        tags: [\"Tarefas\"],\n        operationId: \"editarTarefa\",\n        summary: \"Altera os campos enviados\",\n        requestBody: {\n          required: true,\n          ...emJson(\"EdicaoTarefa\"),\n        },\n        responses: {\n          \"200\": {\n            description: \"A tarefa atualizada\",\n            ...emJson(\"Tarefa\"),\n          },\n          \"400\": comum(\"Invalido\"),\n          \"401\": comum(\"NaoAutenticado\"),\n          \"404\": comum(\"NaoEncontrada\"),\n        },\n      },\n      delete: {\n        tags: [\"Tarefas\"],\n        operationId: \"excluirTarefa\",\n        summary: \"Exclui uma tarefa\",\n        responses: {\n          \"204\": { description: \"Excluída (sem corpo)\" },\n          \"401\": comum(\"NaoAutenticado\"),\n          \"404\": comum(\"NaoEncontrada\"),\n        },\n      },\n    },"
+  },
+  {
+   "t": "p",
+   "html": "O caminho <code>/api/tasks/{id}</code> usa chaves para a parte variável, onde o Next.js usa colchetes, e declara o parâmetro <code>id</code> uma única vez, para as três operações. A criação documenta também o cabeçalho <code>Location</code> da resposta. Cada operação lista só os erros que pode dar: a busca não tem corpo, então não responde <code>400</code>. Por fim, os componentes:"
+  },
+  {
+   "t": "codigo",
+   "texto": "  },\n\n  components: {\n    securitySchemes: {\n      bearer: {\n        type: \"http\",\n        scheme: \"bearer\",\n        bearerFormat: \"JWT\",\n      },\n    },\n    schemas: {\n      Cadastro: jsonSchema(esquemaCadastro),\n      Login: jsonSchema(esquemaLogin),\n      NovaTarefa: jsonSchema(esquemaNovaTarefa),\n      EdicaoTarefa: jsonSchema(esquemaEdicaoTarefa),\n      Tarefa: jsonSchema(tarefa),\n      ListaDeTarefas: jsonSchema(listaDeTarefas),\n      Usuario: jsonSchema(usuario),\n      Token: jsonSchema(token),\n      Problema: jsonSchema(problema),\n    },\n    responses: {\n      Invalido: erro(\"Dados inválidos; veja o campo errors\"),\n      NaoAutenticado: erro(\"Token ausente, inválido ou vencido\"),\n      NaoEncontrada: erro(\"A tarefa não existe ou não é sua\"),\n    },"
+  },
+  {
+   "t": "p",
+   "html": "O <code>securitySchemes</code> diz que a autenticação é HTTP do tipo <code>bearer</code>, com um JWT; é isso que faz as ferramentas mostrarem um campo para colar o <em>token</em>. Os esquemas de entrada vêm do Zod, os de saída, dos esquemas descritivos acima. As três respostas comuns são as que mais se repetem: o <code>400</code>, o <code>401</code> e o <code>404</code>."
+  },
+  {
+   "t": "h2",
+   "id": "10-6-publicando-o-documento-e-o-swagger-ui",
+   "texto": "10.6 Publicando o documento e o Swagger UI"
+  },
+  {
+   "t": "p",
+   "html": "O documento é servido por uma rota, no endereço que as ferramentas costumam procurar:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/api/openapi.json/route.ts -- o documento OpenAPI da API\nimport { documento } from \"@/lib/openapi\";\n\nexport function GET() {\n  return Response.json(documento);\n}"
+  },
+  {
+   "t": "p",
+   "html": "O nome da pasta, <code>openapi.json</code>, vira o endereço <code>/api/openapi.json</code>. A rota não usa a requisição, então o Next.js a gera uma vez, no <em>build</em>, e serve o resultado pronto. Para as pessoas, a documentação navegável fica em <code>/docs</code>, fora de <code>/api</code>, porque é uma página, e não parte da API:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/docs/route.ts -- a documentação navegável (Swagger UI)\nconst cdn = \"https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.33.1\";\n\nconst pagina = `<!doctype html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>TaskFlow API</title>\n  <link rel=\"stylesheet\" href=\"${cdn}/swagger-ui.css\">\n</head>\n<body>\n  <div id=\"swagger-ui\"></div>\n  <script src=\"${cdn}/swagger-ui-bundle.js\"></script>\n  <script>\n    SwaggerUIBundle({\n      url: \"/api/openapi.json\",\n      dom_id: \"#swagger-ui\",\n      persistAuthorization: true,\n    });\n  </script>\n</body>\n</html>`;\n\nexport function GET() {\n  return new Response(pagina, {\n    headers: { \"Content-Type\": \"text/html; charset=utf-8\" },\n  });\n}"
+  },
+  {
+   "t": "p",
+   "html": "A rota devolve uma página HTML que carrega o Swagger UI de uma CDN, o jsDelivr, com a versão fixada no endereço, e manda o Swagger UI ler o <code>/api/openapi.json</code>. A opção <code>persistAuthorization</code> guarda o <em>token</em> no navegador, para que ele não se perca ao recarregar a página. Com o servidor no ar, abra <code>http://localhost:3000/docs</code>:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web3/capitulo-10_swagger.png",
+   "alt": "capitulo 10 swagger"
+  },
+  {
+   "t": "p",
+   "html": "As operações aparecem agrupadas pelas <code>tags</code>, e as que exigem autenticação têm um cadeado. Clicando em uma operação, aparecem os parâmetros, o corpo, com um exemplo montado a partir do esquema, e as respostas possíveis, com os seus formatos. Para usar a API pela página, este roteiro foi seguido com o TaskFlow:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. Em <code>POST /api/auth/login</code>, clique em <strong>Try it out</strong>, troque o exemplo do corpo por <code>{\"email\": \"demo@taskflow.com\", \"password\": \"senha123\"}</code> e clique em <strong>Execute</strong>. A resposta, <code>200</code>, traz o <em>token</em>.",
+    "2. Copie o <em>token</em>, sem as aspas, clique em <strong>Authorize</strong>, no alto da página, cole-o no campo <code>Value</code> e confirme. Os cadeados se fecham.",
+    "3. Em <code>GET /api/tasks</code>, clique em <strong>Try it out</strong>, preencha <code>limit</code> com <code>2</code> e clique em <strong>Execute</strong>. A resposta foi <code>200</code>, com as duas primeiras tarefas da demo."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Abaixo de cada resposta, o Swagger UI mostra o comando <code>curl</code> equivalente, já com o cabeçalho <code>Authorization: Bearer ...</code>, útil para repetir a chamada no terminal. Repare que ele enviou também <code>sort=-createdAt&amp;page=1</code>: são os valores padrão do esquema dos filtros, que a página preenche sozinha."
+  },
+  {
+   "t": "p",
+   "html": "Também vale conferir se o documento segue a especificação. O Redocly CLI, um validador de linha de comando, lê o documento e aponta os problemas:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npx @redocly/cli lint http://localhost:3000/api/openapi.json\nwarning  info-license           Info object should contain\n                                `license` field.\nwarning  no-server-example.com  Server `url` should not point\n                                to example.com or localhost.\nWoohoo! Your API description is valid."
+  },
+  {
+   "t": "p",
+   "html": "O documento é válido. Os dois avisos são recomendações de estilo: uma licença, que faz sentido em APIs públicas, e um servidor de produção, que o TaskFlow ganha no Capítulo 12. Sem o <code>servers</code>, o validador acusaria um erro, e sem os <code>operationId</code>, sete avisos, um por operação; é por isso que eles estão no documento."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: a documentação em produção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A rota <code>/docs</code> mostra a todos os endereços e formatos da API. Para uma API pública, isso é desejável. Para uma API interna, avalie se a documentação deve ficar só no ambiente de desenvolvimento, ou atrás de um <em>login</em>. Esconder a documentação, porém, não protege nada: a segurança vem da autenticação e da autorização, e um atacante descobre os endereços observando o tráfego do próprio aplicativo. A página também carrega código de um servidor externo, a CDN; o Capítulo 12 mostra como limitar de onde uma página pode carregar código."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "10-7-a-api-no-postman",
+   "texto": "10.7 A API no Postman"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>Postman</strong> é o programa gráfico mais usado para trabalhar com APIs: monta requisições, guarda-as em coleções, gerencia variáveis e roda testes. Ele tem versão para Windows, macOS e Linux e uma versão <em>web</em>, que precisa de um pequeno agente instalado para chamar endereços como <code>localhost</code>. Em vez de criar as requisições uma a uma, importe o documento OpenAPI:"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "1. Com o servidor no ar, clique em <strong>Import</strong>, cole o endereço do documento, <code>/api/openapi.json</code> depois de <code>http://localhost:3000</code>, e confirme. O Postman lê o documento e cria uma <strong>coleção</strong> chamada <code>TaskFlow API</code>, com uma pasta para cada <em>tag</em> e uma requisição para cada operação, nomeada pelo <code>summary</code>.",
+    "2. Abra a coleção, na aba <strong>Variables</strong>: lá está a variável <code>baseUrl</code>, com o valor <code>http://localhost:3000</code>, tirado do <code>servers</code>. Todas as requisições usam <code>{{baseUrl}}/api/...</code>; para chamar outro servidor, basta mudar a variável.",
+    "3. Na aba <strong>Authorization</strong> da coleção, o tipo já é <strong>Bearer Token</strong>, com o valor <code>{{bearerToken}}</code>, tirado do <code>securitySchemes</code>. As requisições, com <strong>Inherit auth from parent</strong>, herdam essa configuração."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "As chaves duplas, <code>{{nome}}</code>, marcam uma variável, substituída pelo valor no momento do envio. Além das variáveis da coleção, o Postman tem <strong>ambientes</strong> (<em>environments</em>), conjuntos de variáveis que se trocam de uma vez, como “TaskFlow local” e “TaskFlow produção”, cada um com o seu <code>baseUrl</code>; quando a mesma variável existe nos dois lugares, vale a do ambiente selecionado."
+  },
+  {
+   "t": "p",
+   "html": "A importação monta tudo a partir dos esquemas, então algumas coisas precisam de ajuste, como aconteceu nos testes com o TaskFlow:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "os corpos vêm com marcadores, como <code>{\"email\": \"&lt;string&gt;\", \"password\": \"&lt;string&gt;\"}</code>, que precisam ser trocados por dados de verdade;",
+    "na listagem, todos os parâmetros da <em>query string</em> vêm marcados, com valores de exemplo: <code>status=PENDING</code>, <code>search=&lt;string&gt;</code>. Desmarque os que não for usar; esquecido, o <code>search</code> procura tarefas com o texto <code>&lt;string&gt;</code> no título, e a lista vem vazia;",
+    "o <code>:id</code> das requisições de uma tarefa vem vazio, na aba <strong>Params</strong>."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "10-8-scripts-e-testes-no-postman",
+   "texto": "10.8 Scripts e testes no Postman"
+  },
+  {
+   "t": "p",
+   "html": "Copiar o <em>token</em> do <em>login</em> para a coleção, à mão, a cada hora, cansa. No Postman, cada requisição tem uma aba <strong>Scripts</strong>, com duas partes: <strong>Pre-request</strong>, que roda antes do envio, e <strong>Post-response</strong>, que roda depois que a resposta chega. Os <em>scripts</em> são escritos em JavaScript, com o objeto <code>pm</code>, que dá acesso à resposta e às variáveis. No <em>login</em>, com o corpo <code>{\"email\": \"demo@taskflow.com\", \"password\": \"senha123\"}</code>, o <em>script</em> de Post-response é este:"
+  },
+  {
+   "t": "codigo",
+   "texto": "pm.test(\"login responde 200 com o token\", () => {\n  pm.response.to.have.status(200);\n  pm.expect(pm.response.json().token).to.be.a(\"string\");\n});\n// guarda o token: a coleção usa {{bearerToken}} no Bearer\nconst { token } = pm.response.json();\npm.collectionVariables.set(\"bearerToken\", token);"
+  },
+  {
+   "t": "p",
+   "html": "O <code>pm.test</code> registra um teste, com um nome e uma função; se a função lançar um erro, o teste falha. Dentro dela, as conferências usam o estilo da biblioteca Chai, que se lê quase como uma frase: “a resposta deve ter o status 200”, “o <em>token</em> deve ser um texto”. As duas últimas linhas guardam o <em>token</em> na variável que a coleção usa no Bearer. A partir daí, basta fazer o <em>login</em> uma vez, e todas as requisições de tarefas saem autenticadas."
+  },
+  {
+   "t": "p",
+   "html": "A mesma ideia encadeia as requisições de uma tarefa. Na criação, com o corpo <code>{\"title\": \"Testar no Postman\", \"priority\": \"HIGH\"}</code>, o <em>script</em> guarda o <code>id</code> da tarefa criada:"
+  },
+  {
+   "t": "codigo",
+   "texto": "pm.test(\"cria com 201 e Location\", () => {\n  pm.response.to.have.status(201);\n  pm.response.to.have.header(\"Location\");\n});\n// guarda o id para as próximas requisições\npm.collectionVariables.set(\"tarefaId\", pm.response.json().id);"
+  },
+  {
+   "t": "p",
+   "html": "Nas requisições de busca, edição e exclusão, o valor do <code>:id</code>, na aba Params, passa a ser <code>{{tarefaId}}</code>. Os <em>scripts</em> delas conferem o resultado:"
+  },
+  {
+   "t": "codigo",
+   "texto": "pm.test(\"busca a tarefa criada\", () => {\n  pm.response.to.have.status(200);\n  pm.expect(pm.response.json().title).to.eql(\"Testar no Postman\");\n});"
+  },
+  {
+   "t": "codigo",
+   "texto": "pm.test(\"marca a tarefa como DONE\", () => {\n  pm.response.to.have.status(200);\n  pm.expect(pm.response.json().status).to.eql(\"DONE\");\n});"
+  },
+  {
+   "t": "p",
+   "html": "O <em>script</em> da edição supõe o corpo <code>{\"status\": \"DONE\"}</code>, e a exclusão confere o <code>204</code>. Os testes de erro são tão importantes quanto os de sucesso. Uma cópia da listagem, com a autorização trocada para <strong>No Auth</strong>, confere se a API recusa quem não tem <em>token</em>, e no formato certo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "pm.test(\"sem token: 401 no formato Problem Details\", () => {\n  pm.response.to.have.status(401);\n  pm.response.to.have.header(\"WWW-Authenticate\", \"Bearer\");\n  pm.expect(pm.response.headers.get(\"Content-Type\"))\n    .to.include(\"application/problem+json\");\n});"
+  },
+  {
+   "t": "p",
+   "html": "O cadastro tem um problema: na segunda vez que roda, o e-mail já existe, e a resposta é <code>409</code>. O Postman resolve isso com as <strong>variáveis dinâmicas</strong>, que geram um valor novo a cada envio. Com o corpo abaixo, cada execução cria uma conta com um e-mail aleatório, e o teste confere que a senha não volta na resposta:"
+  },
+  {
+   "t": "codigo",
+   "texto": "{\n  \"name\": \"Teste do Postman\",\n  \"email\": \"{{$randomEmail}}\",\n  \"password\": \"senha12345\"\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "pm.test(\"cadastro responde 201, sem a senha\", () => {\n  pm.response.to.have.status(201);\n  pm.expect(pm.response.json()).to.not.have.property(\"password\");\n});"
+  },
+  {
+   "t": "p",
+   "html": "Por fim, um <em>script</em> na própria coleção, também na aba Scripts, roda depois de <strong>todas</strong> as requisições. É o lugar para regras que valem para a API inteira, como o tempo de resposta:"
+  },
+  {
+   "t": "codigo",
+   "texto": "pm.test(\"responde em menos de 1 segundo\", () => {\n  pm.expect(pm.response.responseTime).to.be.below(1000);\n});"
+  },
+  {
+   "t": "h2",
+   "id": "10-9-rodando-tudo-de-uma-vez",
+   "texto": "10.9 Rodando tudo de uma vez"
+  },
+  {
+   "t": "p",
+   "html": "Com os testes escritos, a coleção vira uma bateria de testes da API. No Postman, o botão <strong>Run</strong> da coleção abre o <strong>Collection Runner</strong>, que envia as requisições na ordem em que aparecem e mostra o resultado de cada teste. A ordem importa: o <em>login</em> precisa vir antes das tarefas, e a criação, antes da busca, da edição e da exclusão."
+  },
+  {
+   "t": "p",
+   "html": "Para rodar a mesma coleção fora do Postman, exporte-a, com <strong>Export</strong>, no menu da coleção, e use o <strong>Newman</strong>, o executor de coleções do Postman para o terminal. Este é o resultado real com o TaskFlow, com algumas linhas omitidas, o quadro final resumido e os símbolos do Newman trocados por <code>+</code> e <code>OK</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npx newman run taskflow.postman_collection.json\n\nAutenticação\n+ Cria uma conta\n  POST http://localhost:3000/api/auth/register\n       [201 Created, 391B, 182ms]\n  OK  responde em menos de 1 segundo\n  OK  cadastro responde 201, sem a senha\n+ Troca e-mail e senha por um token\n  POST http://localhost:3000/api/auth/login [200 OK, 171ms]\n  OK  responde em menos de 1 segundo\n  OK  login responde 200 com o token\n\nTarefas\n+ Lista as tarefas, com filtros e paginação\n  GET http://localhost:3000/api/tasks [200 OK, 80ms]\n  ...\n+ Lista sem token (espera 401)\n  GET http://localhost:3000/api/tasks [401 Unauthorized, 11ms]\n  OK  responde em menos de 1 segundo\n  OK  sem token: 401 no formato Problem Details\n\n  requests:    8 executadas, 0 falhas\n  assertions: 16 executadas, 0 falhas\n  total run duration: 1316ms"
+  },
+  {
+   "t": "p",
+   "html": "Oito requisições e dezesseis testes, todos aprovados, em pouco mais de um segundo. Para ver como aparece uma falha, o corpo da edição foi trocado por <code>{\"status\": \"FEITO\"}</code>, um valor inválido:"
+  },
+  {
+   "t": "codigo",
+   "texto": "+ Altera os campos enviados\n  PATCH http://localhost:3000/api/tasks/cmvcseqkh0005...\n       [400 Bad Request, 26ms]\n  OK  responde em menos de 1 segundo\n  1. marca a tarefa como DONE\n\n #  failure         detail\n 1. AssertionError  marca a tarefa como DONE\n                    expected response to have status code\n                    200 but got 400\n                    inside \"Tarefas / Altera os campos enviados\""
+  },
+  {
+   "t": "p",
+   "html": "Quando algum teste falha, o Newman termina com o código de saída 1, e não 0. É isso que permite colocá-lo em um <em>pipeline</em> de integração contínua: a cada envio de código ao GitHub, a coleção roda, e uma falha interrompe a publicação, assunto do Capítulo 12."
+  },
+  {
+   "t": "h2",
+   "id": "10-10-mantendo-a-documentacao-em-dia",
+   "texto": "10.10 Mantendo a documentação em dia"
+  },
+  {
+   "t": "p",
+   "html": "Uma documentação errada é pior que nenhuma: quem a segue perde horas antes de desconfiar dela. No TaskFlow, cada parte do documento tem um risco diferente de se desatualizar:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>as entradas</strong> vêm dos esquemas do Zod, os mesmos que validam as requisições. Se uma regra muda, a documentação muda junto, sem ninguém lembrar;",
+    "<strong>as saídas</strong> foram descritas à mão, em esquemas que não validam nada. Um campo novo no <code>camposTarefa</code> precisa ser acrescentado também ao esquema <code>tarefa</code> do documento. Os testes do Capítulo 11 podem conferir as respostas contra esse esquema e acusar a diferença;",
+    "<strong>os caminhos e os erros</strong> de cada operação também foram escritos à mão. Uma rota nova sem documentação é o esquecimento mais comum."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Quando a API muda de um jeito que quebra os clientes, como remover um campo ou tornar obrigatório um que era opcional, a mudança deve ser anunciada e acompanhada de uma nova versão, no <code>info.version</code> e, muitas vezes, no endereço, como <code>/api/v2/tasks</code>. Acrescentar campos e operações, por outro lado, não quebra quem já usa a API, desde que os clientes ignorem os campos que não conhecem."
+  },
+  {
+   "t": "p",
+   "html": "O projeto fica assim:"
+  },
+  {
+   "t": "codigo",
+   "texto": "app/\n  api/openapi.json/route.ts   GET: o documento OpenAPI\n  docs/route.ts               a página do Swagger UI\nlib/\n  openapi.ts                  o documento, com os esquemas\n                              gerados a partir do Zod"
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Documentar só o caminho feliz.</strong> Quem usa a API precisa saber quais erros esperar e em que formato. Liste os códigos de erro de cada operação.",
+    "<strong>Escrever à mão o que o código já sabe.</strong> Esquemas copiados se desatualizam. Gere o que puder a partir do código, como os esquemas do Zod.",
+    "<strong>Converter os esquemas sem o <code>io: \"input\"</code>.</strong> A descrição sai como a saída da validação, e esquemas com <code>transform</code> não são convertidos.",
+    "<strong>Confiar que o gerador viu tudo.</strong> Regras em <code>refine</code> e o segundo esquema de um <code>pipe</code> não aparecem. Complete com a <code>description</code>.",
+    "<strong>Esquecer o <code>security: []</code> nas operações públicas.</strong> A documentação diria que o <em>login</em> exige um <em>token</em>, que só se obtém com o <em>login</em>.",
+    "<strong>Deixar os parâmetros de exemplo marcados no Postman.</strong> Um <code>search=&lt;string&gt;</code> esquecido faz a lista vir vazia.",
+    "<strong>Colar o <em>token</em> à mão em cada requisição.</strong> Guarde-o em uma variável com um <em>script</em> e use a autorização herdada da coleção.",
+    "<strong>Testes que dependem de dados fixos.</strong> Um cadastro com e-mail fixo falha na segunda vez. Use variáveis dinâmicas, como <code>{{$randomEmail}}</code>.",
+    "<strong>Guardar <em>tokens</em> e senhas reais em coleções exportadas.</strong> O arquivo exportado leva os valores das variáveis. Limpe-os antes de compartilhar ou de enviar ao GitHub."
+   ]
+  }
+ ]
+}

@@ -852,4 +852,13 @@ export const apostilas: Apostila[] = [
     descricao:
       'Autenticação e autorização, senhas com bcrypt (hash, salt e custo), sessão ou token, a anatomia de um JWT, a chave secreta, cadastro e login com a biblioteca jose, o ataque de temporização, o cabeçalho Authorization: Bearer e o 401 com WWW-Authenticate.',
   },
+  {
+    id: 'web3-cap10',
+    capitulo: 10,
+    titulo: 'Documentação: OpenAPI, Swagger e Postman',
+    disciplinaId: 'programacao-e-design-para-web-iii',
+    unidades: ['Documentação de API', 'Testes de API'],
+    descricao:
+      'O que uma boa documentação precisa ter, a Especificação OpenAPI 3.1, design-first e code-first, esquemas gerados a partir do Zod, o Swagger UI com Try it out e Authorize, a validação com o Redocly e o Postman: importação, variáveis, scripts, testes, Collection Runner e Newman.',
+  },
 ]
