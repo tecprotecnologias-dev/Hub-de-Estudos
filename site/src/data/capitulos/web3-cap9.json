@@ -1,0 +1,528 @@
+{
+ "numero": 9,
+ "titulo": "Autenticação com JWT",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "Desde o Capítulo 4, toda requisição ao TaskFlow age como a usuária de teste, graças a uma função provisória. Neste capítulo a API passa a saber, de verdade, quem está pedindo. Você vai entender a diferença entre autenticação e autorização, aprender a guardar senhas com segurança usando o bcrypt, conhecer o JWT, o formato de <em>token</em> mais usado em APIs, e criar os <em>endpoints</em> de cadastro e de <em>login</em>. No final, a função <code>usuarioAtual</code> lê o <em>token</em> da requisição e, sem que nenhuma rota de tarefas seja alterada, cada pessoa passa a ver só as próprias tarefas."
+  },
+  {
+   "t": "h2",
+   "id": "9-1-autenticacao-e-autorizacao",
+   "texto": "9.1 Autenticação e autorização"
+  },
+  {
+   "t": "p",
+   "html": "Duas palavras parecidas descrevem duas perguntas diferentes, que toda API protegida precisa responder, nesta ordem:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Autenticação</strong>: <strong>quem é você?</strong> A pessoa prova a sua identidade, normalmente com algo que só ela sabe, como a senha. Se a prova falha ou falta, a resposta é <code>401 Unauthorized</code>, que, como visto no Capítulo 8, quer dizer “não autenticado”.",
+    "<strong>Autorização</strong>: <strong>o que você pode fazer?</strong> Já se sabe quem é a pessoa; falta decidir se ela pode fazer aquela operação naquele recurso. Se não pode, a resposta é <code>403 Forbidden</code> ou, quando nem a existência do recurso deve ser revelada, <code>404</code>."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "No TaskFlow, a autorização já existe desde o Capítulo 4: toda consulta filtra pelo <code>userId</code>, e a tarefa de outra pessoa recebe <code>404</code>. O que falta é a autenticação. Hoje, o <code>userId</code> vem de uma função que sempre devolve a mesma usuária; neste capítulo, ele passa a vir de uma prova de identidade enviada em cada requisição."
+  },
+  {
+   "t": "p",
+   "html": "Como o HTTP é sem estado (Capítulo 1), o servidor não se lembra de quem fez <em>login</em>. A solução usada pelas APIs é dividir o trabalho em dois momentos. No <strong><em>login</em></strong>, a pessoa envia e-mail e senha uma única vez e recebe um <em>token</em>, uma espécie de crachá. Nas <strong>demais requisições</strong>, ela mostra o crachá, e não a senha, no cabeçalho <code>Authorization</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "1. POST /api/auth/login  {\"email\": ..., \"password\": ...}\n   <- 200 {\"token\": \"eyJhbGciOi...\", ...}\n\n2. GET /api/tasks\n   Authorization: Bearer eyJhbGciOi...\n   <- 200 as tarefas de quem é dono do token"
+  },
+  {
+   "t": "p",
+   "html": "A palavra <code>Bearer</code> significa “portador”: quem porta o <em>token</em> é tratado como o dono dele. Isso torna o <em>token</em> tão valioso quanto a senha enquanto ele vale, e é por isso que ele só deve trafegar por HTTPS e ter prazo de validade, assuntos que voltam ao longo do capítulo."
+  },
+  {
+   "t": "h2",
+   "id": "9-2-nunca-guarde-a-senha",
+   "texto": "9.2 Nunca guarde a senha"
+  },
+  {
+   "t": "p",
+   "html": "Antes do <em>login</em>, vem o cadastro, e com ele a primeira decisão de segurança: como guardar a senha. A resposta é: <strong>não guarde</strong>. Bancos de dados vazam, por invasão, por um <em>backup</em> esquecido ou por um funcionário descuidado; se as senhas estiverem lá, quem obtiver a cópia entra na conta de todas as pessoas, e não só no seu sistema, porque muita gente repete a senha em vários serviços."
+  },
+  {
+   "t": "p",
+   "html": "O que se guarda é um <strong><em>hash</em></strong> da senha. Uma função de <em>hash</em> transforma um texto em outro, de tamanho fixo, de um jeito que não tem volta: a partir do <em>hash</em>, não há como calcular a senha. Para conferir um <em>login</em>, o servidor calcula o <em>hash</em> da senha digitada e compara com o guardado. Não é criptografia: algo criptografado pode ser decifrado com a chave certa; um <em>hash</em>, não."
+  },
+  {
+   "t": "p",
+   "html": "Mas não serve qualquer função de <em>hash</em>. As funções rápidas, como SHA-256, foram feitas para calcular milhões de <em>hashes</em> por segundo, e isso ajuda o atacante: com a cópia do banco, ele testa as senhas mais comuns, uma a uma, contra cada <em>hash</em>. Para senhas, existem funções feitas para ser <strong>lentas</strong>, como o <strong>bcrypt</strong>, o scrypt e o Argon2. O TaskFlow usa o bcrypt, pela biblioteca <code>bcryptjs</code>, instalada no Capítulo 3 para o <em>seed</em>. Veja o que ela faz com a mesma senha, duas vezes:"
+  },
+  {
+   "t": "codigo",
+   "texto": "import bcrypt from \"bcryptjs\";\n\nawait bcrypt.hash(\"senha123\", 10);\n// $2b$10$An2hg.fjDASVHkPrIKgAUuLT3q7EjIrD7MJFtAGnGBLcMMsnJNhh2\nawait bcrypt.hash(\"senha123\", 10);\n// $2b$10$t9ADoUij0L3VeLGHkJJtQ.hiyIgTEMcfmeYA2HtSzejTmCJdo4XbW\n\nconst guardado = \"$2b$10$An2hg.fjDASVHkPr...\";\nawait bcrypt.compare(\"senha123\", guardado);   // true\nawait bcrypt.compare(\"Senha123\", guardado);   // false"
+  },
+  {
+   "t": "p",
+   "html": "Os dois resultados são diferentes porque o bcrypt sorteia um <strong><em>salt</em></strong>, um valor aleatório que entra no cálculo junto com a senha. Sem o <em>salt</em>, duas pessoas com a mesma senha teriam o mesmo <em>hash</em>, e um atacante poderia usar tabelas prontas, com os <em>hashes</em> de milhões de senhas comuns, calculadas uma única vez. Com o <em>salt</em>, cada <em>hash</em> precisa ser atacado separadamente. O <em>hash</em> do bcrypt guarda tudo o que é preciso para conferi-lo depois:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$2b$ 10 $ An2hg.fjDASVHkPrIKgAUu LT3q7EjIrD7MJFtAGnGBLcMMsnJNhh2\n |    |   |                      |\n |    |   salt (22 caracteres)   hash (31 caracteres)\n |    custo\n versão do algoritmo"
+  },
+  {
+   "t": "p",
+   "html": "Por isso o <code>compare</code> não precisa receber o <em>salt</em>: ele o lê do próprio <em>hash</em> guardado. O <strong>custo</strong> controla a lentidão: cada ponto a mais dobra o tempo de cálculo. Estes tempos foram medidos com o <code>bcryptjs</code> em um computador comum:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Custo",
+    "Tempo por <em>hash</em>",
+    "Senhas testadas por segundo"
+   ],
+   "linhas": [
+    [
+     "8",
+     "33 ms",
+     "cerca de 30"
+    ],
+    [
+     "10",
+     "125 ms",
+     "cerca de 8"
+    ],
+    [
+     "12",
+     "463 ms",
+     "cerca de 2"
+    ],
+    [
+     "14",
+     "1544 ms",
+     "menos de 1"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Para quem faz <em>login</em>, um décimo de segundo passa despercebido; para quem tenta adivinhar senhas, é a diferença entre testar bilhões e testar algumas por segundo. O TaskFlow usa o custo 10, o mesmo do <em>seed</em>; muitos projetos usam 12. O certo é o maior custo que o servidor aguenta sem deixar o <em>login</em> lento, revisto de tempos em tempos, porque os computadores ficam mais rápidos."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: o limite de 72 bytes",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O bcrypt usa só os primeiros 72 bytes da senha e ignora o resto, sem avisar: no teste, um <em>hash</em> de 72 letras “a” seguidas de “X” aceitou 72 letras “a” seguidas de “Y”. Por isso o cadastro do TaskFlow recusa senhas maiores que 72 bytes. São bytes, e não letras: no UTF-8, uma letra acentuada ocupa 2 bytes, e um emoji, 4. O Argon2, vencedor de uma competição de funções de <em>hash</em> de senha em 2015, não tem esse limite e é a recomendação atual do OWASP para projetos novos; o bcrypt continua aceito e é o mais usado."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "9-3-sessao-ou-token",
+   "texto": "9.3 Sessão ou token?"
+  },
+  {
+   "t": "p",
+   "html": "Depois do <em>login</em>, há duas formas de lembrar quem a pessoa é. Na <strong>sessão</strong>, a forma tradicional dos sites, o servidor cria um registro (“a sessão 8f3a pertence à Bia”), guarda-o no banco ou na memória e entrega ao navegador só o número da sessão, em um <em>cookie</em>. A cada requisição, o servidor consulta o registro. No <strong><em>token</em> autocontido</strong>, o servidor não guarda nada: ele entrega um <em>token</em> que já diz quem é a pessoa e até quando vale, assinado para que ninguém possa alterá-lo. A cada requisição, basta conferir a assinatura."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    "Sessão",
+    "<em>Token</em> (JWT)"
+   ],
+   "linhas": [
+    [
+     "o servidor guarda",
+     "a sessão de cada pessoa",
+     "nada"
+    ],
+    [
+     "conferir",
+     "uma consulta ao registro",
+     "conferir a assinatura"
+    ],
+    [
+     "encerrar antes da hora",
+     "apagar o registro",
+     "difícil: ele vale até vencer"
+    ],
+    [
+     "uso mais comum",
+     "sites, com <em>cookies</em>",
+     "APIs, aplicativos e serviços"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O <em>token</em> combina com a ideia de API sem estado do Capítulo 2: qualquer servidor que conheça a chave confere o <em>token</em>, sem consultar um registro central, e o mesmo <em>token</em> serve para um aplicativo de celular, para um <em>site</em> e para outro programa. O preço está na terceira linha: um <em>token</em> roubado vale até vencer. Por isso, <em>tokens</em> de acesso têm vida curta; no TaskFlow, uma hora."
+  },
+  {
+   "t": "h2",
+   "id": "9-4-por-dentro-de-um-jwt",
+   "texto": "9.4 Por dentro de um JWT"
+  },
+  {
+   "t": "p",
+   "html": "O <strong>JWT</strong> (<em>JSON Web Token</em>, RFC 7519, pronuncia-se “jót”) é o formato de <em>token</em> mais usado. Este é um <em>token</em> real, emitido pelo TaskFlow durante os testes deste capítulo (ele é uma linha só; as quebras são da página):"
+  },
+  {
+   "t": "codigo",
+   "texto": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\n.eyJzdWIiOiJjbXZja3plYjYwMDAwcm92OXpjM3dxb2QxIiwiaWF0Ijox\n NzkyMjUyNzAxLCJleHAiOjE3OTIyNTYzMDF9\n.M-WrUp784di_l2karesKVIUyP3qxAu42iFfTv0V5pBE"
+  },
+  {
+   "t": "p",
+   "html": "São três partes, separadas por pontos: o <strong>cabeçalho</strong>, a <strong>carga</strong> (<em>payload</em>) e a <strong>assinatura</strong>. As duas primeiras são objetos JSON codificados em <strong>Base64URL</strong>, uma forma de escrever bytes só com letras, números, <code>-</code> e <code>_</code>, que podem ir em uma URL ou em um cabeçalho sem problemas. Base64URL não é criptografia: qualquer pessoa decodifica, sem chave nenhuma."
+  },
+  {
+   "t": "codigo",
+   "texto": "const [cabecalho, carga] = token.split(\".\");\nBuffer.from(cabecalho, \"base64url\").toString();\n// {\"alg\":\"HS256\",\"typ\":\"JWT\"}\nBuffer.from(carga, \"base64url\").toString();\n// {\"sub\":\"cmvckzeb60000rov9zc3wqod1\",\n//  \"iat\":1792252701,\"exp\":1792256301}"
+  },
+  {
+   "t": "p",
+   "html": "O cabeçalho diz que o <em>token</em> é um JWT assinado com o algoritmo HS256. A carga traz as <strong><em>claims</em></strong>, as afirmações do <em>token</em>. A RFC 7519 reserva alguns nomes curtos:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "<em>Claim</em>",
+    "Nome",
+    "Conteúdo"
+   ],
+   "linhas": [
+    [
+     "<code>sub</code>",
+     "<em>subject</em>",
+     "de quem é o <em>token</em>; no TaskFlow, o <code>id</code> do usuário"
+    ],
+    [
+     "<code>iat</code>",
+     "<em>issued at</em>",
+     "quando foi emitido"
+    ],
+    [
+     "<code>exp</code>",
+     "<em>expiration</em>",
+     "quando vence; depois disso, é recusado"
+    ],
+    [
+     "<code>iss</code>",
+     "<em>issuer</em>",
+     "quem emitiu, como <code>\"taskflow\"</code>"
+    ],
+    [
+     "<code>aud</code>",
+     "<em>audience</em>",
+     "a quem se destina, como <code>\"taskflow-api\"</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "As datas são contadas em segundos desde 1/1/1970, em UTC, e não em milissegundos, como no <code>Date.now()</code> do JavaScript. O <code>iat</code> 1792252701 é 17/10/2026, às 15h58 UTC; o <code>exp</code> é exatamente 3600 segundos, uma hora, depois."
+  },
+  {
+   "t": "p",
+   "html": "A terceira parte é a que dá segurança ao <em>token</em>. O servidor junta o cabeçalho e a carga e calcula um HMAC-SHA256 (o “HS256”) com uma <strong>chave secreta</strong>, que só ele conhece. Se alguém trocar o <code>sub</code> da carga para o de outra pessoa, a assinatura não confere mais, e calcular a assinatura certa exige a chave. Assim, o servidor confia na carga sem guardar nada: se a assinatura confere, foi ele mesmo quem emitiu o <em>token</em>, e ninguém o alterou depois."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: assinado não é secreto",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Qualquer pessoa que tenha o <em>token</em> lê a carga, como foi feito acima. Nunca coloque nela senhas, dados pessoais ou qualquer coisa que o portador não possa ver. O TaskFlow coloca só o <code>id</code>. Também evite dados que mudam, como o nome ou o papel da pessoa: o <em>token</em> continuaria afirmando o valor antigo até vencer."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "9-5-a-chave-secreta",
+   "texto": "9.5 A chave secreta"
+  },
+  {
+   "t": "p",
+   "html": "Com o HS256, a mesma chave assina e confere os <em>tokens</em>. Quem a tiver pode emitir <em>tokens</em> em nome de qualquer pessoa, então ela é tratada como a senha do banco: fica no <code>.env</code>, nunca no código nem no GitHub. Ela também precisa ser longa e aleatória, e não uma palavra, porque um atacante com um <em>token</em> na mão pode testar chaves fora do servidor, à vontade, até encontrar a que reproduz a assinatura. Gere uma com o próprio Node.js:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ node -e \"console.log(require('node:crypto')\n    .randomBytes(32).toString('base64url'))\"\nCLCKrqr-0uE-DTNmvKsoi-UFZVM6MncslTufAm217KY"
+  },
+  {
+   "t": "p",
+   "html": "O comando é uma linha só. São 32 bytes sorteados, 256 bits, o tamanho que a RFC 7518 exige para o HS256. Acrescente a chave ao <code>.env</code>, sem copiar a deste exemplo, que agora é pública:"
+  },
+  {
+   "t": "codigo",
+   "texto": "# .env -- NUNCA vai para o Git\nDATABASE_URL=\"postgresql://...\"\nDIRECT_URL=\"postgresql://...\"\nJWT_SECRET=\"cole-aqui-a-chave-gerada\""
+  },
+  {
+   "t": "p",
+   "html": "Trocar a chave invalida, de uma vez, todos os <em>tokens</em> emitidos: é o que se faz quando se suspeita de que ela vazou. Cada ambiente, o seu computador e a Vercel (Capítulo 12), deve ter a sua própria chave."
+  },
+  {
+   "t": "h2",
+   "id": "9-6-criando-e-conferindo-o-token",
+   "texto": "9.6 Criando e conferindo o token"
+  },
+  {
+   "t": "p",
+   "html": "Para criar e conferir os <em>tokens</em>, o TaskFlow usa a biblioteca <code>jose</code>, que segue as RFCs do JWT, não depende de outros pacotes e funciona tanto no Node.js quanto em ambientes mais restritos, como os servidores de borda (<em>edge</em>):"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install jose"
+  },
+  {
+   "t": "p",
+   "html": "Tudo o que diz respeito aos <em>tokens</em> fica em um arquivo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/token.ts -- cria e confere os tokens JWT da API\nimport { SignJWT, jwtVerify } from \"jose\";\n\nconst texto = process.env.JWT_SECRET;\nif (!texto || texto.length < 32) {\n  throw new Error(\"Defina no .env um JWT_SECRET de 32+ letras.\");\n}\nconst segredo = new TextEncoder().encode(texto);\n\nconst DURACAO = 60 * 60; // 1 hora, em segundos\n\nexport async function criarToken(userId: string) {\n  const token = await new SignJWT()\n    .setProtectedHeader({ alg: \"HS256\", typ: \"JWT\" })\n    .setSubject(userId)\n    .setIssuedAt()\n    .setExpirationTime(`${DURACAO}s`)\n    .sign(segredo);\n  return { token, tokenType: \"Bearer\", expiresIn: DURACAO };\n}\n\n// Devolve o id do usuário (o \"sub\"), ou null se o token tiver\n// sido alterado, estiver vencido ou não for um JWT\nexport async function conferirToken(token: string) {\n  try {\n    const { payload } = await jwtVerify(token, segredo, {\n      algorithms: [\"HS256\"],\n    });\n    return payload.sub ?? null;\n  } catch {\n    return null;\n  }\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>if</code> do começo é uma proteção contra um erro de configuração: sem ele, um <code>JWT_SECRET</code> esquecido viraria uma chave vazia, e a API assinaria <em>tokens</em> que qualquer um conseguiria falsificar. É melhor a aplicação não subir do que subir insegura. O <code>TextEncoder</code> transforma o texto da chave nos bytes que a <code>jose</code> espera."
+  },
+  {
+   "t": "p",
+   "html": "A <code>criarToken</code> monta o JWT peça por peça: o cabeçalho, o <code>sub</code>, o <code>iat</code> (a hora atual) e o <code>exp</code>. Ela devolve, além do <em>token</em>, o tipo e a validade em segundos, os mesmos nomes de campo que o OAuth 2.0 usa (em <em>snake_case</em>, <code>token_type</code> e <code>expires_in</code>); assim o cliente sabe quando vai precisar de um novo <em>token</em>, sem decodificá-lo."
+  },
+  {
+   "t": "p",
+   "html": "A <code>jwtVerify</code> confere a assinatura e o <code>exp</code> e lança um erro se algo estiver errado. A <code>conferirToken</code> transforma esse erro em <code>null</code>: para o TaskFlow, não importa <strong>por que</strong> o <em>token</em> é inválido, só que ele é. A opção <code>algorithms: [\"HS256\"]</code> fecha uma porta conhecida. O algoritmo vem escrito no cabeçalho do próprio <em>token</em>, e o padrão JWT prevê até o <code>\"alg\": \"none\"</code>, “sem assinatura”; algumas bibliotecas antigas obedeciam ao cabeçalho e aceitavam <em>tokens</em> sem assinatura nenhuma. Quem decide o algoritmo é o servidor, nunca o <em>token</em>. A <code>jose</code> já recusa o <code>none</code> por padrão, mas deixar a regra escrita documenta a decisão."
+  },
+  {
+   "t": "h2",
+   "id": "9-7-o-que-o-cadastro-e-o-login-aceitam",
+   "texto": "9.7 O que o cadastro e o login aceitam"
+  },
+  {
+   "t": "p",
+   "html": "O cadastro e o <em>login</em> recebem dados do cliente, então começam, como as tarefas no Capítulo 6, por um esquema do Zod:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/esquemas/auth.ts -- o que a API aceita no cadastro e no\n// login\nimport * as z from \"zod\";\n\n// O e-mail é guardado sem espaços e em minúsculas: assim,\n// \"Ana@Mail.com\" e \"ana@mail.com \" são a mesma conta\nconst email = z\n  .string({ error: \"O e-mail precisa ser um texto.\" })\n  .trim()\n  .toLowerCase()\n  .pipe(z.email({ error: \"Informe um e-mail válido.\" }));\n\nexport const esquemaCadastro = z.object({\n  name: z\n    .string({ error: \"O nome precisa ser um texto.\" })\n    .trim()\n    .min(1, { error: \"O nome é obrigatório.\" })\n    .max(100, { error: \"O nome pode ter até 100 caracteres.\" }),\n  email,\n  password: z\n    .string({ error: \"A senha precisa ser um texto.\" })\n    .min(8, {\n      error: \"A senha precisa ter ao menos 8 caracteres.\",\n    })\n    .refine((senha) => Buffer.byteLength(senha) <= 72, {\n      error: \"A senha é longa demais (máximo de 72 bytes).\",\n    }),\n}, { error: \"O corpo deve ser um objeto JSON.\" });\n\n// No login, a senha não passa pelas regras do cadastro: elas\n// podem mudar, e quem já tem conta precisa continuar entrando.\nexport const esquemaLogin = z.object({\n  email,\n  password: z\n    .string({ error: \"A senha precisa ser um texto.\" })\n    .min(1, { error: \"A senha é obrigatória.\" }),\n}, { error: \"O corpo deve ser um objeto JSON.\" });\n\nexport type Cadastro = z.infer<typeof esquemaCadastro>;\nexport type Login = z.infer<typeof esquemaLogin>;"
+  },
+  {
+   "t": "p",
+   "html": "O e-mail é usado nos dois esquemas, por isso fica em uma constante. O <code>pipe</code> encadeia dois esquemas: primeiro o texto é limpo e passado para minúsculas, depois o resultado é conferido como e-mail. Sem essa normalização, “Ana@Mail.com” e “ana@mail.com” seriam duas contas diferentes, e a pessoa que se cadastrou de um jeito não conseguiria entrar digitando do outro."
+  },
+  {
+   "t": "p",
+   "html": "A senha <strong>não</strong> recebe <code>trim</code>: espaços no começo ou no fim fazem parte dela, se a pessoa quis assim. O mínimo de 8 caracteres é o mais comum; o NIST, o órgão de padrões dos Estados Unidos, aceita 8 quando a conta tem um segundo fator de autenticação, como um código no celular, e recomenda ao menos 15 quando a senha é a única proteção. O máximo é o dos 72 bytes do bcrypt, conferido com o <code>Buffer.byteLength</code>, que conta bytes, e não letras. O NIST também desaconselha as regras de composição, como “uma maiúscula, um número e um símbolo”: elas levam a senhas previsíveis, como <code>Senha@123</code>; vale mais uma senha longa."
+  },
+  {
+   "t": "p",
+   "html": "O campo <code>name</code> do cadastro segue as regras do título de uma tarefa. Como no Capítulo 6, o <code>z.object</code> descarta os campos que não estão no esquema: um cliente que envie <code>\"id\"</code> ou <code>\"createdAt\"</code> no cadastro não consegue escolhê-los."
+  },
+  {
+   "t": "h2",
+   "id": "9-8-o-servico-de-usuarios",
+   "texto": "9.8 O serviço de usuários"
+  },
+  {
+   "t": "p",
+   "html": "As operações com o banco ficam na camada de serviço, como as das tarefas no Capítulo 7:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/servicos/usuarios.ts -- cadastro e conferência de senha\nimport bcrypt from \"bcryptjs\";\nimport { db } from \"@/lib/db\";\nimport { Prisma } from \"@/app/generated/prisma/client\";\nimport type { Cadastro, Login } from \"@/lib/esquemas/auth\";\n\nconst CUSTO = 10; // o mesmo do seed\n\n// Os campos públicos de um usuário: a senha nunca sai daqui\nconst camposUsuario = {\n  id: true,\n  name: true,\n  email: true,\n  createdAt: true,\n} satisfies Prisma.UserSelect;\n\n// Devolve o usuário criado, ou null se o e-mail já existir\nexport async function cadastrarUsuario(dados: Cadastro) {\n  const hash = await bcrypt.hash(dados.password, CUSTO);\n  try {\n    return await db.user.create({\n      data: { ...dados, password: hash },\n      select: camposUsuario,\n    });\n  } catch (erro) {\n    if (\n      erro instanceof Prisma.PrismaClientKnownRequestError &&\n      erro.code === \"P2002\"\n    ) {\n      return null;\n    }\n    throw erro;\n  }\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>camposUsuario</code> faz para o usuário o que o <code>camposTarefa</code> do Capítulo 5 faz para a tarefa: define os campos públicos. A senha, mesmo em forma de <em>hash</em>, nunca sai do banco por esta função."
+  },
+  {
+   "t": "p",
+   "html": "Para descobrir se o e-mail já existe, seria natural buscar o usuário antes de criar. Mas entre a busca e a criação há um intervalo, e duas requisições de cadastro com o mesmo e-mail, chegando ao mesmo tempo, passariam as duas pela busca. Quem garante que o e-mail é único é o banco, pelo <code>@unique</code> do <code>schema.prisma</code>: a segunda inserção falha com o código <code>P2002</code>, “violação de restrição única”. A função tenta criar e trata essa falha, a mesma técnica usada com o <code>P2025</code> no Capítulo 7. Agora, o <em>login</em>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// Um hash de uma senha que ninguém tem (veja o texto abaixo)\nconst HASH_FALSO = bcrypt.hashSync(\"ninguem-tem-esta\", CUSTO);\n\n// Devolve o id do usuário se e-mail e senha conferem, ou null\nexport async function autenticar(dados: Login) {\n  const usuario = await db.user.findUnique({\n    where: { email: dados.email },\n    select: { id: true, password: true },\n  });\n  const confere = await bcrypt.compare(\n    dados.password,\n    usuario?.password ?? HASH_FALSO,\n  );\n  return usuario && confere ? usuario.id : null;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Aqui, sim, a senha precisa sair do banco, para ser conferida, e por isso o <code>select</code> a pede. Ela não sai da função: o resultado é só o <code>id</code>, ou <code>null</code>."
+  },
+  {
+   "t": "p",
+   "html": "O <code>HASH_FALSO</code> parece estranho, mas resolve um problema real. Seria mais simples devolver <code>null</code> logo que o e-mail não fosse encontrado. Só que o <code>compare</code> leva um décimo de segundo, e a busca no banco, poucos milissegundos. Essa versão mais simples foi medida no TaskFlow, com 10 tentativas de <em>login</em> com a senha errada para cada caso: com um e-mail cadastrado, 334 ms em média; com um e-mail que não existe, 35 ms. Pelo tempo de resposta, qualquer pessoa descobriria quem tem conta, mesmo que a mensagem de erro fosse a mesma. Esse tipo de vazamento se chama <strong>ataque de temporização</strong> (<em>timing attack</em>). Com o <code>HASH_FALSO</code>, o <code>compare</code> roda nos dois casos, e as médias ficaram em 291 ms e 272 ms, indistinguíveis."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção: o cadastro também revela contas",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A mensagem “e-mail ou senha incorretos” e o <code>HASH_FALSO</code> escondem do <em>login</em> quem tem conta, mas o cadastro responde <code>409</code> quando o e-mail já existe, e isso também revela. Esconder de verdade exige mudar o fluxo: o cadastro sempre responde “enviamos um e-mail de confirmação”, e é o e-mail que diz à pessoa que ela já tem conta. O TaskFlow fica com o <code>409</code>, combinado no Capítulo 2, que é mais simples e é o que a maioria das APIs faz. Contra quem tenta milhares de e-mails ou senhas, a defesa é limitar as tentativas, com o <code>429 Too Many Requests</code> (Capítulo 12)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "9-9-as-rotas-de-cadastro-e-login",
+   "texto": "9.9 As rotas de cadastro e login"
+  },
+  {
+   "t": "p",
+   "html": "Com o esquema e o serviço prontos, as rotas ficam curtas. Elas seguem o padrão do Capítulo 8: envolvidas pela <code>comErros</code>, com a validação lançando o <code>400</code> e os outros erros devolvidos com <code>return problema(...)</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/api/auth/register/route.ts -- cria uma conta\nimport type { NextRequest } from \"next/server\";\nimport { comErros, problema } from \"@/lib/erros\";\nimport { validar } from \"@/lib/validar\";\nimport { esquemaCadastro } from \"@/lib/esquemas/auth\";\nimport { cadastrarUsuario } from \"@/lib/servicos/usuarios\";\n\n// POST /api/auth/register\nexport const POST = comErros(async (request: NextRequest) => {\n  const corpo = await request.json().catch(() => null);\n  const dados = validar(esquemaCadastro, corpo);\n\n  const usuario = await cadastrarUsuario(dados);\n  if (!usuario) {\n    return problema(409, \"Este e-mail já está em uso.\");\n  }\n  return Response.json(usuario, { status: 201 });\n});"
+  },
+  {
+   "t": "p",
+   "html": "O cadastro responde <code>201</code> com o usuário, sem a senha, como combinado no Capítulo 2. Diferente da criação de tarefas, não há cabeçalho <code>Location</code>, porque a API não tem um endereço como <code>/api/users/:id</code> para consultar a conta; o cadastro também não faz <em>login</em> automático, e a pessoa entra em seguida, pela rota de <em>login</em>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/api/auth/login/route.ts -- troca e-mail e senha por um\n// token\nimport type { NextRequest } from \"next/server\";\nimport { comErros, problema } from \"@/lib/erros\";\nimport { validar } from \"@/lib/validar\";\nimport { esquemaLogin } from \"@/lib/esquemas/auth\";\nimport { autenticar } from \"@/lib/servicos/usuarios\";\nimport { criarToken } from \"@/lib/token\";\n\n// POST /api/auth/login\nexport const POST = comErros(async (request: NextRequest) => {\n  const corpo = await request.json().catch(() => null);\n  const dados = validar(esquemaLogin, corpo);\n\n  const userId = await autenticar(dados);\n  if (!userId) {\n    return problema(401, \"E-mail ou senha incorretos.\");\n  }\n  // um token não deve ficar guardado em caches pelo caminho\n  return Response.json(await criarToken(userId), {\n    headers: { \"Cache-Control\": \"no-store\" },\n  });\n});"
+  },
+  {
+   "t": "p",
+   "html": "A mensagem de erro é a mesma para o e-mail que não existe e para a senha errada; dizer qual dos dois falhou entregaria, de novo, quem tem conta. O <code>login</code> é uma operação, e não a leitura de um recurso, por isso usa <code>POST</code>; e nunca <code>GET</code>, porque a senha iria na URL e ficaria registrada no histórico do navegador e nos <em>logs</em> dos servidores. O cabeçalho <code>Cache-Control: no-store</code>, exigido pelo OAuth 2.0 nas respostas com <em>token</em>, proíbe que a resposta seja guardada por qualquer <em>cache</em>, no navegador ou no caminho."
+  },
+  {
+   "t": "h2",
+   "id": "9-10-o-usuario-atual-agora-de-verdade",
+   "texto": "9.10 O usuário atual, agora de verdade"
+  },
+  {
+   "t": "p",
+   "html": "Chegou a hora de aposentar a função provisória do Capítulo 4. A nova <code>usuarioAtual</code> lê o cabeçalho <code>Authorization</code>, confere o <em>token</em> e devolve o usuário, com os mesmos campos de antes, <code>id</code> e <code>name</code>. Se algo falhar, ela lança o <code>401</code>, como o Capítulo 8 prometeu:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/usuario-atual.ts -- quem está fazendo a requisição,\n// descoberto pelo token JWT do cabeçalho Authorization\nimport { headers } from \"next/headers\";\nimport { db } from \"@/lib/db\";\nimport { ErroApi } from \"@/lib/erros\";\nimport { conferirToken } from \"@/lib/token\";\n\nexport async function usuarioAtual() {\n  // \"Authorization: Bearer eyJhbGciOi...\"\n  const autorizacao = (await headers()).get(\"authorization\");\n  const [tipo, token] = autorizacao?.split(\" \") ?? [];\n  if (tipo?.toLowerCase() !== \"bearer\" || !token) {\n    throw new ErroApi(401, \"Envie o token no cabeçalho \"\n      + \"Authorization: Bearer <token>.\");\n  }\n\n  const userId = await conferirToken(token);\n  if (!userId) {\n    throw new ErroApi(401, \"Token inválido ou expirado.\");\n  }\n\n  // a conta pode ter sido excluída depois que o token foi criado\n  const usuario = await db.user.findUnique({\n    where: { id: userId },\n    select: { id: true, name: true },\n  });\n  if (!usuario) {\n    throw new ErroApi(401, \"Token inválido ou expirado.\");\n  }\n  return usuario;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A função não recebe a requisição, e mesmo assim lê os cabeçalhos dela. Quem permite isso é a <code>headers()</code>, do pacote <code>next/headers</code>: chamada dentro de uma rota, ela devolve os cabeçalhos da requisição que está sendo atendida. É o que mantém a promessa do Capítulo 4: as rotas continuam chamando <code>usuarioAtual()</code>, sem argumentos, e nenhuma delas precisa mudar."
+  },
+  {
+   "t": "p",
+   "html": "O <code>split(\" \")</code> separa <code>\"Bearer eyJ...\"</code> em duas partes. O nome do esquema é comparado em minúsculas, porque o HTTP não diferencia maiúsculas de minúsculas nele: <code>bearer</code> também vale. A busca no banco, no fim, tem um motivo: o <em>token</em> continua válido por até uma hora, mesmo que a conta seja excluída nesse meio-tempo, e só o banco sabe disso. A versão provisória já fazia uma consulta por requisição, então o custo não mudou."
+  },
+  {
+   "t": "p",
+   "html": "As três falhas recebem o <code>401</code>, mas com mensagens diferentes para dois casos: a falta do <em>token</em>, que é um erro de quem programa o cliente, e o <em>token</em> recusado, que normalmente só pede um novo <em>login</em>. Não há como saber por que o <em>token</em> foi recusado, e isso é proposital: vencido, adulterado ou de uma conta excluída, a resposta é a mesma."
+  },
+  {
+   "t": "p",
+   "html": "Falta um detalhe do <code>401</code>. A RFC 9110 diz que essa resposta deve trazer o cabeçalho <code>WWW-Authenticate</code>, que informa ao cliente qual esquema de autenticação usar. Como todos os erros passam pela <code>problema</code> do Capítulo 8, basta acrescentá-lo lá, para todo <code>401</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// Monta a resposta de erro; os extras (errors, instance) são\n// acrescentados ao corpo quando existem\nexport function problema(\n  status: number,\n  detail: string,\n  extras: { errors?: Campos; instance?: string } = {},\n) {\n  const headers = new Headers({\n    \"Content-Type\": \"application/problem+json\",\n  });\n  // RFC 9110: o 401 diz qual esquema de autenticação usar\n  if (status === 401) headers.set(\"WWW-Authenticate\", \"Bearer\");\n\n  return Response.json(\n    {\n      title: titulos[status] ?? \"Erro\",\n      status,\n      detail,\n      ...extras,\n    },\n    { status, headers },\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>Headers</code> é a classe padrão do <code>fetch</code> para um conjunto de cabeçalhos; com ela, um cabeçalho pode ser acrescentado depois de o objeto ser criado, com o <code>set</code>. O resto da função não mudou."
+  },
+  {
+   "t": "p",
+   "html": "Repare também na ordem das verificações combinada no Capítulo 8: a autenticação vem antes da validação. Como as rotas de tarefas chamam <code>usuarioAtual()</code> na primeira linha, quem não tem <em>token</em> recebe <code>401</code> mesmo enviando dados inválidos, e não aprende nada sobre as regras da API. O projeto fica assim:"
+  },
+  {
+   "t": "codigo",
+   "texto": "app/api/\n  [...rota]/route.ts\n  auth/register/route.ts  POST (cadastro)\n  auth/login/route.ts     POST (login, devolve o token)\n  health/route.ts\n  tasks/route.ts          sem mudanças\n  tasks/[id]/route.ts     sem mudanças\nlib/\n  erros.ts                o 401 com WWW-Authenticate\n  esquemas/auth.ts        cadastro e login\n  servicos/usuarios.ts    cadastrarUsuario, autenticar\n  token.ts                criarToken, conferirToken\n  usuario-atual.ts        agora lê o token"
+  },
+  {
+   "t": "h2",
+   "id": "9-11-testando-a-autenticacao",
+   "texto": "9.11 Testando a autenticação"
+  },
+  {
+   "t": "p",
+   "html": "Estes são resultados reais da API com o código deste capítulo. Todas as respostas de erro trazem <code>Content-Type: application/problem+json</code>, e todas as respostas <code>401</code>, também <code>WWW-Authenticate: Bearer</code>. Primeiro, o cadastro e o <em>login</em>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "POST /api/auth/register\n     {\"name\":\"Bia Souza\",\"email\":\" Bia@Mail.com \",\n      \"password\":\"minhasenha\"}\n201 {\"id\":\"cmvckzeb60000rov9zc3wqod1\",\"name\":\"Bia Souza\",\n     \"email\":\"bia@mail.com\",\n     \"createdAt\":\"2026-10-17T15:58:20.466Z\"}\n\nPOST /api/auth/register  (o mesmo e-mail de novo)\n409 {\"title\":\"Conflito\",\"status\":409,\n     \"detail\":\"Este e-mail já está em uso.\"}\n\nPOST /api/auth/register\n     {\"name\":\"\",\"email\":\"bia\",\"password\":\"123\"}\n400 {\"title\":\"Requisição inválida\",\"status\":400,\n     \"detail\":\"Um ou mais campos estão inválidos.\",\n     \"errors\":{\"name\":[\"O nome é obrigatório.\"],\n               \"email\":[\"Informe um e-mail válido.\"],\n               \"password\":[\"A senha precisa ter ao menos\n                            8 caracteres.\"]}}\n\nPOST /api/auth/login\n     {\"email\":\"bia@mail.com\",\"password\":\"errada123\"}\n401 {\"title\":\"Não autenticado\",\"status\":401,\n     \"detail\":\"E-mail ou senha incorretos.\"}\n\nPOST /api/auth/login\n     {\"email\":\"BIA@mail.com\",\"password\":\"minhasenha\"}\n200 Cache-Control: no-store\n    {\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n     \"tokenType\":\"Bearer\",\"expiresIn\":3600}"
+  },
+  {
+   "t": "p",
+   "html": "O e-mail foi guardado limpo e em minúsculas, e o <em>login</em> com <code>BIA@mail.com</code> funcionou. A mesma resposta <code>401</code> veio para a senha errada e para um e-mail inexistente. Agora, as tarefas:"
+  },
+  {
+   "t": "codigo",
+   "texto": "GET /api/tasks           (sem o cabeçalho Authorization)\n401 {\"title\":\"Não autenticado\",\"status\":401,\n     \"detail\":\"Envie o token no cabeçalho Authorization:\n               Bearer <token>.\"}\n\nGET /api/tasks           (com o token da Bia)\n200 {\"data\":[],\"meta\":{\"page\":1,\"limit\":20,\"total\":0,\n     \"totalPages\":0}}\n\nPOST /api/tasks  {\"title\":\"Tarefa da Bia\"}   (token da Bia)\n201 a tarefa, com Location: /api/tasks/cmvckzfnv0002...\n\nGET /api/tasks?limit=2   (com o token da demo)\n200 as tarefas do seed; meta: {\"total\":5, ...}\n\nGET /api/tasks/cmvckzfnv0002...   (a tarefa da Bia, token da demo)\n404 {\"title\":\"Não encontrado\",\"status\":404,\n     \"detail\":\"Tarefa não encontrada.\"}\n\nGET /api/tasks?limit=500  e  POST /api/tasks {\"title\":\"\"}\n(sem token)\n401 ... \"Envie o token no cabeçalho Authorization: ...\""
+  },
+  {
+   "t": "p",
+   "html": "A Bia começou sem nenhuma tarefa, as cinco do <em>seed</em> continuam sendo só da demo, e cada uma recebe <code>404</code> na tarefa da outra. Os dois últimos pedidos, com dados inválidos e sem <em>token</em>, receberam <code>401</code>, e não <code>400</code>. Por fim, os <em>tokens</em> que não deveriam passar:"
+  },
+  {
+   "t": "codigo",
+   "texto": "Authorization: Bearer abc.def.ghi           (não é um JWT)\nToken da Bia, com o \"sub\" trocado pelo da demo\nToken com {\"alg\":\"none\"} e sem assinatura\nToken vencido (o \"exp\" de uma hora atrás)\nToken assinado com outra chave\n401 {\"title\":\"Não autenticado\",\"status\":401,\n     \"detail\":\"Token inválido ou expirado.\"}\n\nAuthorization: bearer eyJ...   (com b minúsculo)\n200 as tarefas"
+  },
+  {
+   "t": "p",
+   "html": "Os cinco <em>tokens</em> falsos receberam a mesma resposta. O teste mais importante é o segundo: trocar o <code>sub</code> é exatamente o que um atacante tentaria para ver as tarefas de outra pessoa, e a assinatura o impediu."
+  },
+  {
+   "t": "h2",
+   "id": "9-12-do-lado-do-cliente",
+   "texto": "9.12 Do lado do cliente"
+  },
+  {
+   "t": "p",
+   "html": "No REST Client do Capítulo 4, uma requisição pode receber um nome, e as seguintes podem usar campos da resposta dela. Assim, o <em>token</em> não precisa ser copiado à mão:"
+  },
+  {
+   "t": "codigo",
+   "texto": "### Entrar com a usuária de teste do seed\n# @name login\nPOST http://localhost:3000/api/auth/login\nContent-Type: application/json\n\n{\"email\": \"demo@taskflow.com\", \"password\": \"senha123\"}\n\n### Listar as tarefas, com o token do login acima\nGET http://localhost:3000/api/tasks\nAuthorization: Bearer {{login.response.body.token}}"
+  },
+  {
+   "t": "p",
+   "html": "Rode primeiro o <em>login</em>; enquanto o <em>token</em> valer, as outras requisições do arquivo o usam. Em um programa, a ideia é a mesma: guardar o <em>token</em> recebido e enviá-lo em todas as chamadas. Uma função que faz isso, e trata o <code>401</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "let token = null;\n\nasync function entrar(email, password) {\n  const resposta = await fetch(\"/api/auth/login\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify({ email, password }),\n  });\n  if (!resposta.ok) return false;\n  token = (await resposta.json()).token;\n  return true;\n}\n\nasync function api(caminho, opcoes = {}) {\n  const resposta = await fetch(caminho, {\n    ...opcoes,\n    headers: {\n      ...opcoes.headers,\n      Authorization: `Bearer ${token}`,\n    },\n  });\n  if (resposta.status === 401) {\n    token = null;   // vencido ou inválido: pedir novo login\n  }\n  return resposta;\n}"
+  },
+  {
+   "t": "p",
+   "html": "A pergunta seguinte é <strong>onde guardar</strong> o <em>token</em>. Em um aplicativo de celular, no armazenamento seguro do sistema (Keychain, no iOS, e Keystore, no Android). Em um navegador, não há resposta perfeita. No <code>localStorage</code>, ele sobrevive a recarregar a página, mas qualquer <em>script</em> da página consegue lê-lo, inclusive um <em>script</em> malicioso injetado por uma falha de XSS. Em uma variável, como acima, o risco é menor, mas o <em>token</em> se perde ao recarregar a página. Muitos sistemas web preferem não expor o <em>token</em> ao JavaScript e o guardam em um <em>cookie</em> <code>HttpOnly</code>, que os <em>scripts</em> não leem; essa escolha traz outros cuidados, como a proteção contra CSRF, que voltam no Capítulo 12."
+  },
+  {
+   "t": "p",
+   "html": "E o <em>logout</em>? Com <em>tokens</em> autocontidos, o servidor não tem o que apagar: o <em>logout</em> é o cliente descartar o <em>token</em>. Um <em>token</em> copiado antes disso continua valendo até o <code>exp</code>, e é por isso que a validade é curta. Sistemas que precisam de sessões longas costumam combinar um <em>token</em> de acesso curto, como o do TaskFlow, com um <strong><em>refresh token</em></strong> de longa duração, guardado no banco, que serve só para pedir novos <em>tokens</em> de acesso e pode ser revogado a qualquer momento. Esse é o modelo do OAuth 2.0, o protocolo por trás dos botões “Entrar com Google”."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Guardar a senha, ou um <em>hash</em> rápido dela.</strong> Use uma função feita para senhas, como bcrypt ou Argon2, com <em>salt</em> e custo adequado. MD5 e SHA-256 não servem.",
+    "<strong>Colocar dados sensíveis na carga do JWT.</strong> Ela é só codificada, e qualquer pessoa a lê. Guarde nela só o identificador.",
+    "<strong>Uma chave secreta fraca ou no código.</strong> Com a chave, qualquer um emite <em>tokens</em>. Gere 32 bytes aleatórios e guarde-os no <code>.env</code>.",
+    "<strong>Aceitar o algoritmo que o <em>token</em> informa.</strong> Fixe o algoritmo no servidor, com a opção <code>algorithms</code>.",
+    "<strong>Usar <code>decodeJwt</code> no lugar de <code>jwtVerify</code>.</strong> Decodificar só lê a carga; quem confere a assinatura e a validade é o <code>jwtVerify</code>.",
+    "<strong><em>Token</em> sem validade.</strong> Um <em>token</em> roubado valeria para sempre. Defina sempre o <code>exp</code>, e curto.",
+    "<strong>Mensagens de <em>login</em> diferentes para e-mail e senha.</strong> “E-mail não cadastrado” revela quem tem conta. Use uma única mensagem, e o mesmo tempo de resposta.",
+    "<strong>Conferir o e-mail repetido antes de criar a conta.</strong> Duas requisições simultâneas passam pela conferência. Deixe o <code>@unique</code> do banco decidir e trate o <code>P2002</code>.",
+    "<strong>Enviar a senha por <code>GET</code> ou sem HTTPS.</strong> Ela fica na URL, nos <em>logs</em> e no histórico, ou trafega aberta. <em>Login</em> é <code>POST</code>, e sempre por HTTPS.",
+    "<strong>Confundir 401 e 403.</strong> <em>Token</em> ausente, vencido ou inválido: <code>401</code>. <em>Token</em> válido, mas sem permissão: <code>403</code>."
+   ]
+  }
+ ]
+}

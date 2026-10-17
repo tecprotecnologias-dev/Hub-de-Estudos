@@ -843,4 +843,13 @@ export const apostilas: Apostila[] = [
     descricao:
       'Como escolher o código de status (400, 401, 403, 404, 405, 409, 422, 500), o formato Problem Details da RFC 9457, um tratador central de erros, o 500 seguro e rastreável, 404 em JSON e a leitura dos erros no cliente.',
   },
+  {
+    id: 'web3-cap9',
+    capitulo: 9,
+    titulo: 'Autenticação com JWT',
+    disciplinaId: 'programacao-e-design-para-web-iii',
+    unidades: ['Autenticação e Autorização', 'Segurança em APIs'],
+    descricao:
+      'Autenticação e autorização, senhas com bcrypt (hash, salt e custo), sessão ou token, a anatomia de um JWT, a chave secreta, cadastro e login com a biblioteca jose, o ataque de temporização, o cabeçalho Authorization: Bearer e o 401 com WWW-Authenticate.',
+  },
 ]

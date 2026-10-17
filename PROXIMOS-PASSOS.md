@@ -39,14 +39,14 @@ O navegador precisa baixar o código do site para mostrá-lo, então **não exis
 ## Publicação
 - [x] Site no ar no Netlify: https://hubdeestudos.netlify.app (16/10/2026), ligado ao Supabase.
 - [x] No Supabase, Site URL e Redirect URLs com o endereço do Netlify.
-- [ ] **Arrastar a pasta `site\dist` para o Netlify** para publicar o que foi feito depois (design novo já publicado; faltam os simulados da Web II e os capítulos 1 a 7 da Web III). Antes de arrastar, rodar `npm run build` dentro de `site`.
+- [ ] **Arrastar a pasta `site\dist` para o Netlify** para publicar o que foi feito depois (design novo já publicado; faltam os simulados da Web II e os capítulos 1 a 9 da Web III). Antes de arrastar, rodar `npm run build` dentro de `site`.
 - [ ] (Opcional) Ligar o Netlify ao GitHub, para publicar sozinho a cada envio, sem arrastar pasta.
 - [ ] Revisar a Política de Privacidade.
 - [ ] Testar o fluxo de aprovação de professor.
 
 ## Conteúdo
 - [x] Web II: 50 questões objetivas no estilo de concurso (10 por módulo).
-- [ ] **Web III — apostila "Desenvolvimento de APIs para a Web" (PAUSADA em 16/10/2026)**
+- [ ] **Web III — apostila "Desenvolvimento de APIs para a Web" (caps. 1 a 9 prontos em 17/10/2026)**
   - [x] Cap. 1 APIs e Web Services
   - [x] Cap. 2 Design RESTful e métodos HTTP
   - [x] Cap. 3 Preparando o projeto
@@ -54,9 +54,9 @@ O navegador precisa baixar o código do site para mostrá-lo, então **não exis
   - [x] Cap. 5 JSON, XML e serialização
   - [x] Cap. 6 Validação com Zod
   - [x] Cap. 7 CRUD
-  - [ ] **Cap. 8 Tratamento de erros e códigos HTTP ← retomar aqui**
-  - [ ] Cap. 9 Autenticação com JWT
-  - [ ] Cap. 10 Documentação: Swagger/OpenAPI e Postman
+  - [x] Cap. 8 Tratamento de erros e códigos HTTP
+  - [x] Cap. 9 Autenticação com JWT
+  - [ ] **Cap. 10 Documentação: Swagger/OpenAPI e Postman ← retomar aqui**
   - [ ] Cap. 11 Testes de API
   - [ ] Cap. 12 Segurança e deploy
   - [ ] Depois da apostila: exercícios práticos e simulados da Web III

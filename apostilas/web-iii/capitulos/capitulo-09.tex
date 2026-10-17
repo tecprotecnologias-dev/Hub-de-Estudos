@@ -1,0 +1,683 @@
+\section{Capítulo 9 -- Autenticação com JWT}
+
+Desde o Capítulo 4, toda requisição ao TaskFlow age como a usuária de teste, graças a uma função provisória. Neste capítulo a API passa a saber, de verdade, quem está pedindo. Você vai entender a diferença entre autenticação e autorização, aprender a guardar senhas com segurança usando o bcrypt, conhecer o JWT, o formato de \textit{token} mais usado em APIs, e criar os \textit{endpoints} de cadastro e de \textit{login}. No final, a função \texttt{usuarioAtual} lê o \textit{token} da requisição e, sem que nenhuma rota de tarefas seja alterada, cada pessoa passa a ver só as próprias tarefas.
+
+\subsection{9.1 Autenticação e autorização}
+
+Duas palavras parecidas descrevem duas perguntas diferentes, que toda API protegida precisa responder, nesta ordem:
+
+\begin{itemize}
+  \item \textbf{Autenticação}: \textbf{quem é você?} A pessoa prova a sua identidade, normalmente com algo que só ela sabe, como a senha. Se a prova falha ou falta, a resposta é \texttt{401 Unauthorized}, que, como visto no Capítulo 8, quer dizer ``não autenticado''.
+  \item \textbf{Autorização}: \textbf{o que você pode fazer?} Já se sabe quem é a pessoa; falta decidir se ela pode fazer aquela operação naquele recurso. Se não pode, a resposta é \texttt{403 Forbidden} ou, quando nem a existência do recurso deve ser revelada, \texttt{404}.
+\end{itemize}
+
+No TaskFlow, a autorização já existe desde o Capítulo 4: toda consulta filtra pelo \texttt{userId}, e a tarefa de outra pessoa recebe \texttt{404}. O que falta é a autenticação. Hoje, o \texttt{userId} vem de uma função que sempre devolve a mesma usuária; neste capítulo, ele passa a vir de uma prova de identidade enviada em cada requisição.
+
+Como o HTTP é sem estado (Capítulo 1), o servidor não se lembra de quem fez \textit{login}. A solução usada pelas APIs é dividir o trabalho em dois momentos. No \textbf{\textit{login}}, a pessoa envia e-mail e senha uma única vez e recebe um \textit{token}, uma espécie de crachá. Nas \textbf{demais requisições}, ela mostra o crachá, e não a senha, no cabeçalho \texttt{Authorization}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+1. POST /api/auth/login  {"email": ..., "password": ...}
+   <- 200 {"token": "eyJhbGciOi...", ...}
+
+2. GET /api/tasks
+   Authorization: Bearer eyJhbGciOi...
+   <- 200 as tarefas de quem é dono do token
+\end{Verbatim}
+\end{codigo}
+
+A palavra \texttt{Bearer} significa ``portador'': quem porta o \textit{token} é tratado como o dono dele. Isso torna o \textit{token} tão valioso quanto a senha enquanto ele vale, e é por isso que ele só deve trafegar por HTTPS e ter prazo de validade, assuntos que voltam ao longo do capítulo.
+
+\subsection{9.2 Nunca guarde a senha}
+
+Antes do \textit{login}, vem o cadastro, e com ele a primeira decisão de segurança: como guardar a senha. A resposta é: \textbf{não guarde}. Bancos de dados vazam, por invasão, por um \textit{backup} esquecido ou por um funcionário descuidado; se as senhas estiverem lá, quem obtiver a cópia entra na conta de todas as pessoas, e não só no seu sistema, porque muita gente repete a senha em vários serviços.
+
+O que se guarda é um \textbf{\textit{hash}} da senha. Uma função de \textit{hash} transforma um texto em outro, de tamanho fixo, de um jeito que não tem volta: a partir do \textit{hash}, não há como calcular a senha. Para conferir um \textit{login}, o servidor calcula o \textit{hash} da senha digitada e compara com o guardado. Não é criptografia: algo criptografado pode ser decifrado com a chave certa; um \textit{hash}, não.
+
+Mas não serve qualquer função de \textit{hash}. As funções rápidas, como SHA-256, foram feitas para calcular milhões de \textit{hashes} por segundo, e isso ajuda o atacante: com a cópia do banco, ele testa as senhas mais comuns, uma a uma, contra cada \textit{hash}. Para senhas, existem funções feitas para ser \textbf{lentas}, como o \textbf{bcrypt}, o scrypt e o Argon2. O TaskFlow usa o bcrypt, pela biblioteca \texttt{bcryptjs}, instalada no Capítulo 3 para o \textit{seed}. Veja o que ela faz com a mesma senha, duas vezes:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+import bcrypt from "bcryptjs";
+
+await bcrypt.hash("senha123", 10);
+// $2b$10$An2hg.fjDASVHkPrIKgAUuLT3q7EjIrD7MJFtAGnGBLcMMsnJNhh2
+await bcrypt.hash("senha123", 10);
+// $2b$10$t9ADoUij0L3VeLGHkJJtQ.hiyIgTEMcfmeYA2HtSzejTmCJdo4XbW
+
+const guardado = "$2b$10$An2hg.fjDASVHkPr...";
+await bcrypt.compare("senha123", guardado);   // true
+await bcrypt.compare("Senha123", guardado);   // false
+\end{Verbatim}
+\end{codigo}
+
+Os dois resultados são diferentes porque o bcrypt sorteia um \textbf{\textit{salt}}, um valor aleatório que entra no cálculo junto com a senha. Sem o \textit{salt}, duas pessoas com a mesma senha teriam o mesmo \textit{hash}, e um atacante poderia usar tabelas prontas, com os \textit{hashes} de milhões de senhas comuns, calculadas uma única vez. Com o \textit{salt}, cada \textit{hash} precisa ser atacado separadamente. O \textit{hash} do bcrypt guarda tudo o que é preciso para conferi-lo depois:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$2b$ 10 $ An2hg.fjDASVHkPrIKgAUu LT3q7EjIrD7MJFtAGnGBLcMMsnJNhh2
+ |    |   |                      |
+ |    |   salt (22 caracteres)   hash (31 caracteres)
+ |    custo
+ versão do algoritmo
+\end{Verbatim}
+\end{codigo}
+
+Por isso o \texttt{compare} não precisa receber o \textit{salt}: ele o lê do próprio \textit{hash} guardado. O \textbf{custo} controla a lentidão: cada ponto a mais dobra o tempo de cálculo. Estes tempos foram medidos com o \texttt{bcryptjs} em um computador comum:
+
+\begin{center}
+\begin{tabular}{@{}P{0.2\linewidth}P{0.3\linewidth}P{0.4\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{Custo} & \tblheader{Tempo por \textit{hash}} & \tblheader{Senhas testadas por segundo} \\
+\midrule
+8 & 33 ms & cerca de 30 \\
+\rowcolor{rowgray} 10 & 125 ms & cerca de 8 \\
+12 & 463 ms & cerca de 2 \\
+\rowcolor{rowgray} 14 & 1544 ms & menos de 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Para quem faz \textit{login}, um décimo de segundo passa despercebido; para quem tenta adivinhar senhas, é a diferença entre testar bilhões e testar algumas por segundo. O TaskFlow usa o custo 10, o mesmo do \textit{seed}; muitos projetos usam 12. O certo é o maior custo que o servidor aguenta sem deixar o \textit{login} lento, revisto de tempos em tempos, porque os computadores ficam mais rápidos.
+
+\begin{destaque}{Atenção: o limite de 72 bytes}
+O bcrypt usa só os primeiros 72 bytes da senha e ignora o resto, sem avisar: no teste, um \textit{hash} de 72 letras ``a'' seguidas de ``X'' aceitou 72 letras ``a'' seguidas de ``Y''. Por isso o cadastro do TaskFlow recusa senhas maiores que 72 bytes. São bytes, e não letras: no UTF-8, uma letra acentuada ocupa 2 bytes, e um emoji, 4. O Argon2, vencedor de uma competição de funções de \textit{hash} de senha em 2015, não tem esse limite e é a recomendação atual do OWASP para projetos novos; o bcrypt continua aceito e é o mais usado.
+\end{destaque}
+
+\subsection{9.3 Sessão ou token?}
+
+Depois do \textit{login}, há duas formas de lembrar quem a pessoa é. Na \textbf{sessão}, a forma tradicional dos sites, o servidor cria um registro (``a sessão 8f3a pertence à Bia''), guarda-o no banco ou na memória e entrega ao navegador só o número da sessão, em um \textit{cookie}. A cada requisição, o servidor consulta o registro. No \textbf{\textit{token} autocontido}, o servidor não guarda nada: ele entrega um \textit{token} que já diz quem é a pessoa e até quando vale, assinado para que ninguém possa alterá-lo. A cada requisição, basta conferir a assinatura.
+
+\begin{center}
+\begin{tabular}{@{}P{0.22\linewidth}P{0.34\linewidth}P{0.34\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{} & \tblheader{Sessão} & \tblheader{\textit{Token} (JWT)} \\
+\midrule
+o servidor guarda & a sessão de cada pessoa & nada \\
+\rowcolor{rowgray} conferir & uma consulta ao registro & conferir a assinatura \\
+encerrar antes da hora & apagar o registro & difícil: ele vale até vencer \\
+\rowcolor{rowgray} uso mais comum & sites, com \textit{cookies} & APIs, aplicativos e serviços \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+O \textit{token} combina com a ideia de API sem estado do Capítulo 2: qualquer servidor que conheça a chave confere o \textit{token}, sem consultar um registro central, e o mesmo \textit{token} serve para um aplicativo de celular, para um \textit{site} e para outro programa. O preço está na terceira linha: um \textit{token} roubado vale até vencer. Por isso, \textit{tokens} de acesso têm vida curta; no TaskFlow, uma hora.
+
+\subsection{9.4 Por dentro de um JWT}
+
+O \textbf{JWT} (\textit{JSON Web Token}, RFC 7519, pronuncia-se ``jót'') é o formato de \textit{token} mais usado. Este é um \textit{token} real, emitido pelo TaskFlow durante os testes deste capítulo (ele é uma linha só; as quebras são da página):
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+.eyJzdWIiOiJjbXZja3plYjYwMDAwcm92OXpjM3dxb2QxIiwiaWF0Ijox
+ NzkyMjUyNzAxLCJleHAiOjE3OTIyNTYzMDF9
+.M-WrUp784di_l2karesKVIUyP3qxAu42iFfTv0V5pBE
+\end{Verbatim}
+\end{codigo}
+
+São três partes, separadas por pontos: o \textbf{cabeçalho}, a \textbf{carga} (\textit{payload}) e a \textbf{assinatura}. As duas primeiras são objetos JSON codificados em \textbf{Base64URL}, uma forma de escrever bytes só com letras, números, \texttt{-} e \texttt{\_}, que podem ir em uma URL ou em um cabeçalho sem problemas. Base64URL não é criptografia: qualquer pessoa decodifica, sem chave nenhuma.
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+const [cabecalho, carga] = token.split(".");
+Buffer.from(cabecalho, "base64url").toString();
+// {"alg":"HS256","typ":"JWT"}
+Buffer.from(carga, "base64url").toString();
+// {"sub":"cmvckzeb60000rov9zc3wqod1",
+//  "iat":1792252701,"exp":1792256301}
+\end{Verbatim}
+\end{codigo}
+
+O cabeçalho diz que o \textit{token} é um JWT assinado com o algoritmo HS256. A carga traz as \textbf{\textit{claims}}, as afirmações do \textit{token}. A RFC 7519 reserva alguns nomes curtos:
+
+\begin{center}
+\begin{tabular}{@{}P{0.12\linewidth}P{0.26\linewidth}P{0.52\linewidth}@{}}
+\toprule
+\rowcolor{headergray}
+\tblheader{\textit{Claim}} & \tblheader{Nome} & \tblheader{Conteúdo} \\
+\midrule
+\texttt{sub} & \textit{subject} & de quem é o \textit{token}; no TaskFlow, o \texttt{id} do usuário \\
+\rowcolor{rowgray} \texttt{iat} & \textit{issued at} & quando foi emitido \\
+\texttt{exp} & \textit{expiration} & quando vence; depois disso, é recusado \\
+\rowcolor{rowgray} \texttt{iss} & \textit{issuer} & quem emitiu, como \texttt{"taskflow"} \\
+\texttt{aud} & \textit{audience} & a quem se destina, como \texttt{"taskflow-api"} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+As datas são contadas em segundos desde 1/1/1970, em UTC, e não em milissegundos, como no \texttt{Date.now()} do JavaScript. O \texttt{iat} 1792252701 é 17/10/2026, às 15h58 UTC; o \texttt{exp} é exatamente 3600 segundos, uma hora, depois.
+
+A terceira parte é a que dá segurança ao \textit{token}. O servidor junta o cabeçalho e a carga e calcula um HMAC-SHA256 (o ``HS256'') com uma \textbf{chave secreta}, que só ele conhece. Se alguém trocar o \texttt{sub} da carga para o de outra pessoa, a assinatura não confere mais, e calcular a assinatura certa exige a chave. Assim, o servidor confia na carga sem guardar nada: se a assinatura confere, foi ele mesmo quem emitiu o \textit{token}, e ninguém o alterou depois.
+
+\begin{destaque}{Atenção: assinado não é secreto}
+Qualquer pessoa que tenha o \textit{token} lê a carga, como foi feito acima. Nunca coloque nela senhas, dados pessoais ou qualquer coisa que o portador não possa ver. O TaskFlow coloca só o \texttt{id}. Também evite dados que mudam, como o nome ou o papel da pessoa: o \textit{token} continuaria afirmando o valor antigo até vencer.
+\end{destaque}
+
+\subsection{9.5 A chave secreta}
+
+Com o HS256, a mesma chave assina e confere os \textit{tokens}. Quem a tiver pode emitir \textit{tokens} em nome de qualquer pessoa, então ela é tratada como a senha do banco: fica no \texttt{.env}, nunca no código nem no GitHub. Ela também precisa ser longa e aleatória, e não uma palavra, porque um atacante com um \textit{token} na mão pode testar chaves fora do servidor, à vontade, até encontrar a que reproduz a assinatura. Gere uma com o próprio Node.js:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$ node -e "console.log(require('node:crypto')
+    .randomBytes(32).toString('base64url'))"
+CLCKrqr-0uE-DTNmvKsoi-UFZVM6MncslTufAm217KY
+\end{Verbatim}
+\end{codigo}
+
+O comando é uma linha só. São 32 bytes sorteados, 256 bits, o tamanho que a RFC 7518 exige para o HS256. Acrescente a chave ao \texttt{.env}, sem copiar a deste exemplo, que agora é pública:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+# .env -- NUNCA vai para o Git
+DATABASE_URL="postgresql://..."
+DIRECT_URL="postgresql://..."
+JWT_SECRET="cole-aqui-a-chave-gerada"
+\end{Verbatim}
+\end{codigo}
+
+Trocar a chave invalida, de uma vez, todos os \textit{tokens} emitidos: é o que se faz quando se suspeita de que ela vazou. Cada ambiente, o seu computador e a Vercel (Capítulo 12), deve ter a sua própria chave.
+
+\subsection{9.6 Criando e conferindo o token}
+
+Para criar e conferir os \textit{tokens}, o TaskFlow usa a biblioteca \texttt{jose}, que segue as RFCs do JWT, não depende de outros pacotes e funciona tanto no Node.js quanto em ambientes mais restritos, como os servidores de borda (\textit{edge}):
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+$ npm install jose
+\end{Verbatim}
+\end{codigo}
+
+Tudo o que diz respeito aos \textit{tokens} fica em um arquivo:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// lib/token.ts -- cria e confere os tokens JWT da API
+import { SignJWT, jwtVerify } from "jose";
+
+const texto = process.env.JWT_SECRET;
+if (!texto || texto.length < 32) {
+  throw new Error("Defina no .env um JWT_SECRET de 32+ letras.");
+}
+const segredo = new TextEncoder().encode(texto);
+
+const DURACAO = 60 * 60; // 1 hora, em segundos
+
+export async function criarToken(userId: string) {
+  const token = await new SignJWT()
+    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+    .setSubject(userId)
+    .setIssuedAt()
+    .setExpirationTime(`${DURACAO}s`)
+    .sign(segredo);
+  return { token, tokenType: "Bearer", expiresIn: DURACAO };
+}
+
+// Devolve o id do usuário (o "sub"), ou null se o token tiver
+// sido alterado, estiver vencido ou não for um JWT
+export async function conferirToken(token: string) {
+  try {
+    const { payload } = await jwtVerify(token, segredo, {
+      algorithms: ["HS256"],
+    });
+    return payload.sub ?? null;
+  } catch {
+    return null;
+  }
+}
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{if} do começo é uma proteção contra um erro de configuração: sem ele, um \texttt{JWT\_SECRET} esquecido viraria uma chave vazia, e a API assinaria \textit{tokens} que qualquer um conseguiria falsificar. É melhor a aplicação não subir do que subir insegura. O \texttt{TextEncoder} transforma o texto da chave nos bytes que a \texttt{jose} espera.
+
+A \texttt{criarToken} monta o JWT peça por peça: o cabeçalho, o \texttt{sub}, o \texttt{iat} (a hora atual) e o \texttt{exp}. Ela devolve, além do \textit{token}, o tipo e a validade em segundos, os mesmos nomes de campo que o OAuth 2.0 usa (em \textit{snake\_case}, \texttt{token\_type} e \texttt{expires\_in}); assim o cliente sabe quando vai precisar de um novo \textit{token}, sem decodificá-lo.
+
+A \texttt{jwtVerify} confere a assinatura e o \texttt{exp} e lança um erro se algo estiver errado. A \texttt{conferirToken} transforma esse erro em \texttt{null}: para o TaskFlow, não importa \textbf{por que} o \textit{token} é inválido, só que ele é. A opção \texttt{algorithms: ["HS256"]} fecha uma porta conhecida. O algoritmo vem escrito no cabeçalho do próprio \textit{token}, e o padrão JWT prevê até o \texttt{"alg": "none"}, ``sem assinatura''; algumas bibliotecas antigas obedeciam ao cabeçalho e aceitavam \textit{tokens} sem assinatura nenhuma. Quem decide o algoritmo é o servidor, nunca o \textit{token}. A \texttt{jose} já recusa o \texttt{none} por padrão, mas deixar a regra escrita documenta a decisão.
+
+\subsection{9.7 O que o cadastro e o login aceitam}
+
+O cadastro e o \textit{login} recebem dados do cliente, então começam, como as tarefas no Capítulo 6, por um esquema do Zod:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// lib/esquemas/auth.ts -- o que a API aceita no cadastro e no
+// login
+import * as z from "zod";
+
+// O e-mail é guardado sem espaços e em minúsculas: assim,
+// "Ana@Mail.com" e "ana@mail.com " são a mesma conta
+const email = z
+  .string({ error: "O e-mail precisa ser um texto." })
+  .trim()
+  .toLowerCase()
+  .pipe(z.email({ error: "Informe um e-mail válido." }));
+
+export const esquemaCadastro = z.object({
+  name: z
+    .string({ error: "O nome precisa ser um texto." })
+    .trim()
+    .min(1, { error: "O nome é obrigatório." })
+    .max(100, { error: "O nome pode ter até 100 caracteres." }),
+  email,
+  password: z
+    .string({ error: "A senha precisa ser um texto." })
+    .min(8, {
+      error: "A senha precisa ter ao menos 8 caracteres.",
+    })
+    .refine((senha) => Buffer.byteLength(senha) <= 72, {
+      error: "A senha é longa demais (máximo de 72 bytes).",
+    }),
+}, { error: "O corpo deve ser um objeto JSON." });
+
+// No login, a senha não passa pelas regras do cadastro: elas
+// podem mudar, e quem já tem conta precisa continuar entrando.
+export const esquemaLogin = z.object({
+  email,
+  password: z
+    .string({ error: "A senha precisa ser um texto." })
+    .min(1, { error: "A senha é obrigatória." }),
+}, { error: "O corpo deve ser um objeto JSON." });
+
+export type Cadastro = z.infer<typeof esquemaCadastro>;
+export type Login = z.infer<typeof esquemaLogin>;
+\end{Verbatim}
+\end{codigo}
+
+O e-mail é usado nos dois esquemas, por isso fica em uma constante. O \texttt{pipe} encadeia dois esquemas: primeiro o texto é limpo e passado para minúsculas, depois o resultado é conferido como e-mail. Sem essa normalização, ``Ana@Mail.com'' e ``ana@mail.com'' seriam duas contas diferentes, e a pessoa que se cadastrou de um jeito não conseguiria entrar digitando do outro.
+
+A senha \textbf{não} recebe \texttt{trim}: espaços no começo ou no fim fazem parte dela, se a pessoa quis assim. O mínimo de 8 caracteres é o mais comum; o NIST, o órgão de padrões dos Estados Unidos, aceita 8 quando a conta tem um segundo fator de autenticação, como um código no celular, e recomenda ao menos 15 quando a senha é a única proteção. O máximo é o dos 72 bytes do bcrypt, conferido com o \texttt{Buffer.byteLength}, que conta bytes, e não letras. O NIST também desaconselha as regras de composição, como ``uma maiúscula, um número e um símbolo'': elas levam a senhas previsíveis, como \texttt{Senha@123}; vale mais uma senha longa.
+
+O campo \texttt{name} do cadastro segue as regras do título de uma tarefa. Como no Capítulo 6, o \texttt{z.object} descarta os campos que não estão no esquema: um cliente que envie \texttt{"id"} ou \texttt{"createdAt"} no cadastro não consegue escolhê-los.
+
+\subsection{9.8 O serviço de usuários}
+
+As operações com o banco ficam na camada de serviço, como as das tarefas no Capítulo 7:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// lib/servicos/usuarios.ts -- cadastro e conferência de senha
+import bcrypt from "bcryptjs";
+import { db } from "@/lib/db";
+import { Prisma } from "@/app/generated/prisma/client";
+import type { Cadastro, Login } from "@/lib/esquemas/auth";
+
+const CUSTO = 10; // o mesmo do seed
+
+// Os campos públicos de um usuário: a senha nunca sai daqui
+const camposUsuario = {
+  id: true,
+  name: true,
+  email: true,
+  createdAt: true,
+} satisfies Prisma.UserSelect;
+
+// Devolve o usuário criado, ou null se o e-mail já existir
+export async function cadastrarUsuario(dados: Cadastro) {
+  const hash = await bcrypt.hash(dados.password, CUSTO);
+  try {
+    return await db.user.create({
+      data: { ...dados, password: hash },
+      select: camposUsuario,
+    });
+  } catch (erro) {
+    if (
+      erro instanceof Prisma.PrismaClientKnownRequestError &&
+      erro.code === "P2002"
+    ) {
+      return null;
+    }
+    throw erro;
+  }
+}
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{camposUsuario} faz para o usuário o que o \texttt{camposTarefa} do Capítulo 5 faz para a tarefa: define os campos públicos. A senha, mesmo em forma de \textit{hash}, nunca sai do banco por esta função.
+
+Para descobrir se o e-mail já existe, seria natural buscar o usuário antes de criar. Mas entre a busca e a criação há um intervalo, e duas requisições de cadastro com o mesmo e-mail, chegando ao mesmo tempo, passariam as duas pela busca. Quem garante que o e-mail é único é o banco, pelo \texttt{@unique} do \texttt{schema.prisma}: a segunda inserção falha com o código \texttt{P2002}, ``violação de restrição única''. A função tenta criar e trata essa falha, a mesma técnica usada com o \texttt{P2025} no Capítulo 7. Agora, o \textit{login}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// Um hash de uma senha que ninguém tem (veja o texto abaixo)
+const HASH_FALSO = bcrypt.hashSync("ninguem-tem-esta", CUSTO);
+
+// Devolve o id do usuário se e-mail e senha conferem, ou null
+export async function autenticar(dados: Login) {
+  const usuario = await db.user.findUnique({
+    where: { email: dados.email },
+    select: { id: true, password: true },
+  });
+  const confere = await bcrypt.compare(
+    dados.password,
+    usuario?.password ?? HASH_FALSO,
+  );
+  return usuario && confere ? usuario.id : null;
+}
+\end{Verbatim}
+\end{codigo}
+
+Aqui, sim, a senha precisa sair do banco, para ser conferida, e por isso o \texttt{select} a pede. Ela não sai da função: o resultado é só o \texttt{id}, ou \texttt{null}.
+
+O \texttt{HASH\_FALSO} parece estranho, mas resolve um problema real. Seria mais simples devolver \texttt{null} logo que o e-mail não fosse encontrado. Só que o \texttt{compare} leva um décimo de segundo, e a busca no banco, poucos milissegundos. Essa versão mais simples foi medida no TaskFlow, com 10 tentativas de \textit{login} com a senha errada para cada caso: com um e-mail cadastrado, 334 ms em média; com um e-mail que não existe, 35 ms. Pelo tempo de resposta, qualquer pessoa descobriria quem tem conta, mesmo que a mensagem de erro fosse a mesma. Esse tipo de vazamento se chama \textbf{ataque de temporização} (\textit{timing attack}). Com o \texttt{HASH\_FALSO}, o \texttt{compare} roda nos dois casos, e as médias ficaram em 291 ms e 272 ms, indistinguíveis.
+
+\begin{destaque}{Atenção: o cadastro também revela contas}
+A mensagem ``e-mail ou senha incorretos'' e o \texttt{HASH\_FALSO} escondem do \textit{login} quem tem conta, mas o cadastro responde \texttt{409} quando o e-mail já existe, e isso também revela. Esconder de verdade exige mudar o fluxo: o cadastro sempre responde ``enviamos um e-mail de confirmação'', e é o e-mail que diz à pessoa que ela já tem conta. O TaskFlow fica com o \texttt{409}, combinado no Capítulo 2, que é mais simples e é o que a maioria das APIs faz. Contra quem tenta milhares de e-mails ou senhas, a defesa é limitar as tentativas, com o \texttt{429 Too Many Requests} (Capítulo 12).
+\end{destaque}
+
+\subsection{9.9 As rotas de cadastro e login}
+
+Com o esquema e o serviço prontos, as rotas ficam curtas. Elas seguem o padrão do Capítulo 8: envolvidas pela \texttt{comErros}, com a validação lançando o \texttt{400} e os outros erros devolvidos com \texttt{return problema(...)}.
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// app/api/auth/register/route.ts -- cria uma conta
+import type { NextRequest } from "next/server";
+import { comErros, problema } from "@/lib/erros";
+import { validar } from "@/lib/validar";
+import { esquemaCadastro } from "@/lib/esquemas/auth";
+import { cadastrarUsuario } from "@/lib/servicos/usuarios";
+
+// POST /api/auth/register
+export const POST = comErros(async (request: NextRequest) => {
+  const corpo = await request.json().catch(() => null);
+  const dados = validar(esquemaCadastro, corpo);
+
+  const usuario = await cadastrarUsuario(dados);
+  if (!usuario) {
+    return problema(409, "Este e-mail já está em uso.");
+  }
+  return Response.json(usuario, { status: 201 });
+});
+\end{Verbatim}
+\end{codigo}
+
+O cadastro responde \texttt{201} com o usuário, sem a senha, como combinado no Capítulo 2. Diferente da criação de tarefas, não há cabeçalho \texttt{Location}, porque a API não tem um endereço como \texttt{/api/users/:id} para consultar a conta; o cadastro também não faz \textit{login} automático, e a pessoa entra em seguida, pela rota de \textit{login}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// app/api/auth/login/route.ts -- troca e-mail e senha por um
+// token
+import type { NextRequest } from "next/server";
+import { comErros, problema } from "@/lib/erros";
+import { validar } from "@/lib/validar";
+import { esquemaLogin } from "@/lib/esquemas/auth";
+import { autenticar } from "@/lib/servicos/usuarios";
+import { criarToken } from "@/lib/token";
+
+// POST /api/auth/login
+export const POST = comErros(async (request: NextRequest) => {
+  const corpo = await request.json().catch(() => null);
+  const dados = validar(esquemaLogin, corpo);
+
+  const userId = await autenticar(dados);
+  if (!userId) {
+    return problema(401, "E-mail ou senha incorretos.");
+  }
+  // um token não deve ficar guardado em caches pelo caminho
+  return Response.json(await criarToken(userId), {
+    headers: { "Cache-Control": "no-store" },
+  });
+});
+\end{Verbatim}
+\end{codigo}
+
+A mensagem de erro é a mesma para o e-mail que não existe e para a senha errada; dizer qual dos dois falhou entregaria, de novo, quem tem conta. O \texttt{login} é uma operação, e não a leitura de um recurso, por isso usa \texttt{POST}; e nunca \texttt{GET}, porque a senha iria na URL e ficaria registrada no histórico do navegador e nos \textit{logs} dos servidores. O cabeçalho \texttt{Cache-Control: no-store}, exigido pelo OAuth 2.0 nas respostas com \textit{token}, proíbe que a resposta seja guardada por qualquer \textit{cache}, no navegador ou no caminho.
+
+\subsection{9.10 O usuário atual, agora de verdade}
+
+Chegou a hora de aposentar a função provisória do Capítulo 4. A nova \texttt{usuarioAtual} lê o cabeçalho \texttt{Authorization}, confere o \textit{token} e devolve o usuário, com os mesmos campos de antes, \texttt{id} e \texttt{name}. Se algo falhar, ela lança o \texttt{401}, como o Capítulo 8 prometeu:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// lib/usuario-atual.ts -- quem está fazendo a requisição,
+// descoberto pelo token JWT do cabeçalho Authorization
+import { headers } from "next/headers";
+import { db } from "@/lib/db";
+import { ErroApi } from "@/lib/erros";
+import { conferirToken } from "@/lib/token";
+
+export async function usuarioAtual() {
+  // "Authorization: Bearer eyJhbGciOi..."
+  const autorizacao = (await headers()).get("authorization");
+  const [tipo, token] = autorizacao?.split(" ") ?? [];
+  if (tipo?.toLowerCase() !== "bearer" || !token) {
+    throw new ErroApi(401, "Envie o token no cabeçalho "
+      + "Authorization: Bearer <token>.");
+  }
+
+  const userId = await conferirToken(token);
+  if (!userId) {
+    throw new ErroApi(401, "Token inválido ou expirado.");
+  }
+
+  // a conta pode ter sido excluída depois que o token foi criado
+  const usuario = await db.user.findUnique({
+    where: { id: userId },
+    select: { id: true, name: true },
+  });
+  if (!usuario) {
+    throw new ErroApi(401, "Token inválido ou expirado.");
+  }
+  return usuario;
+}
+\end{Verbatim}
+\end{codigo}
+
+A função não recebe a requisição, e mesmo assim lê os cabeçalhos dela. Quem permite isso é a \texttt{headers()}, do pacote \texttt{next/headers}: chamada dentro de uma rota, ela devolve os cabeçalhos da requisição que está sendo atendida. É o que mantém a promessa do Capítulo 4: as rotas continuam chamando \texttt{usuarioAtual()}, sem argumentos, e nenhuma delas precisa mudar.
+
+O \texttt{split(" ")} separa \texttt{"Bearer eyJ..."} em duas partes. O nome do esquema é comparado em minúsculas, porque o HTTP não diferencia maiúsculas de minúsculas nele: \texttt{bearer} também vale. A busca no banco, no fim, tem um motivo: o \textit{token} continua válido por até uma hora, mesmo que a conta seja excluída nesse meio-tempo, e só o banco sabe disso. A versão provisória já fazia uma consulta por requisição, então o custo não mudou.
+
+As três falhas recebem o \texttt{401}, mas com mensagens diferentes para dois casos: a falta do \textit{token}, que é um erro de quem programa o cliente, e o \textit{token} recusado, que normalmente só pede um novo \textit{login}. Não há como saber por que o \textit{token} foi recusado, e isso é proposital: vencido, adulterado ou de uma conta excluída, a resposta é a mesma.
+
+Falta um detalhe do \texttt{401}. A RFC 9110 diz que essa resposta deve trazer o cabeçalho \texttt{WWW-Authenticate}, que informa ao cliente qual esquema de autenticação usar. Como todos os erros passam pela \texttt{problema} do Capítulo 8, basta acrescentá-lo lá, para todo \texttt{401}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+// Monta a resposta de erro; os extras (errors, instance) são
+// acrescentados ao corpo quando existem
+export function problema(
+  status: number,
+  detail: string,
+  extras: { errors?: Campos; instance?: string } = {},
+) {
+  const headers = new Headers({
+    "Content-Type": "application/problem+json",
+  });
+  // RFC 9110: o 401 diz qual esquema de autenticação usar
+  if (status === 401) headers.set("WWW-Authenticate", "Bearer");
+
+  return Response.json(
+    {
+      title: titulos[status] ?? "Erro",
+      status,
+      detail,
+      ...extras,
+    },
+    { status, headers },
+  );
+}
+\end{Verbatim}
+\end{codigo}
+
+O \texttt{Headers} é a classe padrão do \texttt{fetch} para um conjunto de cabeçalhos; com ela, um cabeçalho pode ser acrescentado depois de o objeto ser criado, com o \texttt{set}. O resto da função não mudou.
+
+Repare também na ordem das verificações combinada no Capítulo 8: a autenticação vem antes da validação. Como as rotas de tarefas chamam \texttt{usuarioAtual()} na primeira linha, quem não tem \textit{token} recebe \texttt{401} mesmo enviando dados inválidos, e não aprende nada sobre as regras da API. O projeto fica assim:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+app/api/
+  [...rota]/route.ts
+  auth/register/route.ts  POST (cadastro)
+  auth/login/route.ts     POST (login, devolve o token)
+  health/route.ts
+  tasks/route.ts          sem mudanças
+  tasks/[id]/route.ts     sem mudanças
+lib/
+  erros.ts                o 401 com WWW-Authenticate
+  esquemas/auth.ts        cadastro e login
+  servicos/usuarios.ts    cadastrarUsuario, autenticar
+  token.ts                criarToken, conferirToken
+  usuario-atual.ts        agora lê o token
+\end{Verbatim}
+\end{codigo}
+
+\subsection{9.11 Testando a autenticação}
+
+Estes são resultados reais da API com o código deste capítulo. Todas as respostas de erro trazem \texttt{Content-Type: application/problem+json}, e todas as respostas \texttt{401}, também \texttt{WWW-Authenticate: Bearer}. Primeiro, o cadastro e o \textit{login}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+POST /api/auth/register
+     {"name":"Bia Souza","email":" Bia@Mail.com ",
+      "password":"minhasenha"}
+201 {"id":"cmvckzeb60000rov9zc3wqod1","name":"Bia Souza",
+     "email":"bia@mail.com",
+     "createdAt":"2026-10-17T15:58:20.466Z"}
+
+POST /api/auth/register  (o mesmo e-mail de novo)
+409 {"title":"Conflito","status":409,
+     "detail":"Este e-mail já está em uso."}
+
+POST /api/auth/register
+     {"name":"","email":"bia","password":"123"}
+400 {"title":"Requisição inválida","status":400,
+     "detail":"Um ou mais campos estão inválidos.",
+     "errors":{"name":["O nome é obrigatório."],
+               "email":["Informe um e-mail válido."],
+               "password":["A senha precisa ter ao menos
+                            8 caracteres."]}}
+
+POST /api/auth/login
+     {"email":"bia@mail.com","password":"errada123"}
+401 {"title":"Não autenticado","status":401,
+     "detail":"E-mail ou senha incorretos."}
+
+POST /api/auth/login
+     {"email":"BIA@mail.com","password":"minhasenha"}
+200 Cache-Control: no-store
+    {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+     "tokenType":"Bearer","expiresIn":3600}
+\end{Verbatim}
+\end{codigo}
+
+O e-mail foi guardado limpo e em minúsculas, e o \textit{login} com \texttt{BIA@mail.com} funcionou. A mesma resposta \texttt{401} veio para a senha errada e para um e-mail inexistente. Agora, as tarefas:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+GET /api/tasks           (sem o cabeçalho Authorization)
+401 {"title":"Não autenticado","status":401,
+     "detail":"Envie o token no cabeçalho Authorization:
+               Bearer <token>."}
+
+GET /api/tasks           (com o token da Bia)
+200 {"data":[],"meta":{"page":1,"limit":20,"total":0,
+     "totalPages":0}}
+
+POST /api/tasks  {"title":"Tarefa da Bia"}   (token da Bia)
+201 a tarefa, com Location: /api/tasks/cmvckzfnv0002...
+
+GET /api/tasks?limit=2   (com o token da demo)
+200 as tarefas do seed; meta: {"total":5, ...}
+
+GET /api/tasks/cmvckzfnv0002...   (a tarefa da Bia, token da demo)
+404 {"title":"Não encontrado","status":404,
+     "detail":"Tarefa não encontrada."}
+
+GET /api/tasks?limit=500  e  POST /api/tasks {"title":""}
+(sem token)
+401 ... "Envie o token no cabeçalho Authorization: ..."
+\end{Verbatim}
+\end{codigo}
+
+A Bia começou sem nenhuma tarefa, as cinco do \textit{seed} continuam sendo só da demo, e cada uma recebe \texttt{404} na tarefa da outra. Os dois últimos pedidos, com dados inválidos e sem \textit{token}, receberam \texttt{401}, e não \texttt{400}. Por fim, os \textit{tokens} que não deveriam passar:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+Authorization: Bearer abc.def.ghi           (não é um JWT)
+Token da Bia, com o "sub" trocado pelo da demo
+Token com {"alg":"none"} e sem assinatura
+Token vencido (o "exp" de uma hora atrás)
+Token assinado com outra chave
+401 {"title":"Não autenticado","status":401,
+     "detail":"Token inválido ou expirado."}
+
+Authorization: bearer eyJ...   (com b minúsculo)
+200 as tarefas
+\end{Verbatim}
+\end{codigo}
+
+Os cinco \textit{tokens} falsos receberam a mesma resposta. O teste mais importante é o segundo: trocar o \texttt{sub} é exatamente o que um atacante tentaria para ver as tarefas de outra pessoa, e a assinatura o impediu.
+
+\subsection{9.12 Do lado do cliente}
+
+No REST Client do Capítulo 4, uma requisição pode receber um nome, e as seguintes podem usar campos da resposta dela. Assim, o \textit{token} não precisa ser copiado à mão:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+### Entrar com a usuária de teste do seed
+# @name login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{"email": "demo@taskflow.com", "password": "senha123"}
+
+### Listar as tarefas, com o token do login acima
+GET http://localhost:3000/api/tasks
+Authorization: Bearer {{login.response.body.token}}
+\end{Verbatim}
+\end{codigo}
+
+Rode primeiro o \textit{login}; enquanto o \textit{token} valer, as outras requisições do arquivo o usam. Em um programa, a ideia é a mesma: guardar o \textit{token} recebido e enviá-lo em todas as chamadas. Uma função que faz isso, e trata o \texttt{401}:
+
+\begin{codigo}
+\begin{Verbatim}[breaklines=true, breaksymbolleft={}, fontsize=\footnotesize]
+let token = null;
+
+async function entrar(email, password) {
+  const resposta = await fetch("/api/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+  if (!resposta.ok) return false;
+  token = (await resposta.json()).token;
+  return true;
+}
+
+async function api(caminho, opcoes = {}) {
+  const resposta = await fetch(caminho, {
+    ...opcoes,
+    headers: {
+      ...opcoes.headers,
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (resposta.status === 401) {
+    token = null;   // vencido ou inválido: pedir novo login
+  }
+  return resposta;
+}
+\end{Verbatim}
+\end{codigo}
+
+A pergunta seguinte é \textbf{onde guardar} o \textit{token}. Em um aplicativo de celular, no armazenamento seguro do sistema (Keychain, no iOS, e Keystore, no Android). Em um navegador, não há resposta perfeita. No \texttt{localStorage}, ele sobrevive a recarregar a página, mas qualquer \textit{script} da página consegue lê-lo, inclusive um \textit{script} malicioso injetado por uma falha de XSS. Em uma variável, como acima, o risco é menor, mas o \textit{token} se perde ao recarregar a página. Muitos sistemas web preferem não expor o \textit{token} ao JavaScript e o guardam em um \textit{cookie} \texttt{HttpOnly}, que os \textit{scripts} não leem; essa escolha traz outros cuidados, como a proteção contra CSRF, que voltam no Capítulo 12.
+
+E o \textit{logout}? Com \textit{tokens} autocontidos, o servidor não tem o que apagar: o \textit{logout} é o cliente descartar o \textit{token}. Um \textit{token} copiado antes disso continua valendo até o \texttt{exp}, e é por isso que a validade é curta. Sistemas que precisam de sessões longas costumam combinar um \textit{token} de acesso curto, como o do TaskFlow, com um \textbf{\textit{refresh token}} de longa duração, guardado no banco, que serve só para pedir novos \textit{tokens} de acesso e pode ser revogado a qualquer momento. Esse é o modelo do OAuth 2.0, o protocolo por trás dos botões ``Entrar com Google''.
+
+\subsection{Erros Comuns}
+
+\begin{itemize}
+  \item \textbf{Guardar a senha, ou um \textit{hash} rápido dela.} Use uma função feita para senhas, como bcrypt ou Argon2, com \textit{salt} e custo adequado. MD5 e SHA-256 não servem.
+  \item \textbf{Colocar dados sensíveis na carga do JWT.} Ela é só codificada, e qualquer pessoa a lê. Guarde nela só o identificador.
+  \item \textbf{Uma chave secreta fraca ou no código.} Com a chave, qualquer um emite \textit{tokens}. Gere 32 bytes aleatórios e guarde-os no \texttt{.env}.
+  \item \textbf{Aceitar o algoritmo que o \textit{token} informa.} Fixe o algoritmo no servidor, com a opção \texttt{algorithms}.
+  \item \textbf{Usar \texttt{decodeJwt} no lugar de \texttt{jwtVerify}.} Decodificar só lê a carga; quem confere a assinatura e a validade é o \texttt{jwtVerify}.
+  \item \textbf{\textit{Token} sem validade.} Um \textit{token} roubado valeria para sempre. Defina sempre o \texttt{exp}, e curto.
+  \item \textbf{Mensagens de \textit{login} diferentes para e-mail e senha.} ``E-mail não cadastrado'' revela quem tem conta. Use uma única mensagem, e o mesmo tempo de resposta.
+  \item \textbf{Conferir o e-mail repetido antes de criar a conta.} Duas requisições simultâneas passam pela conferência. Deixe o \texttt{@unique} do banco decidir e trate o \texttt{P2002}.
+  \item \textbf{Enviar a senha por \texttt{GET} ou sem HTTPS.} Ela fica na URL, nos \textit{logs} e no histórico, ou trafega aberta. \textit{Login} é \texttt{POST}, e sempre por HTTPS.
+  \item \textbf{Confundir 401 e 403.} \textit{Token} ausente, vencido ou inválido: \texttt{401}. \textit{Token} válido, mas sem permissão: \texttt{403}.
+\end{itemize}
