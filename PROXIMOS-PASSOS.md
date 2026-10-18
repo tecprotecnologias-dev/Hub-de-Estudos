@@ -61,4 +61,19 @@ O navegador precisa baixar o código do site para mostrá-lo, então **não exis
   - [x] Cap. 12 Segurança e deploy
   - [ ] **← retomar aqui.** Depois do cap. 12 (decidido em 17/10/2026): uma seção de exercícios no fim de cada um dos 12 capítulos da apostila e o simulado da Web III no site com **os mesmos exercícios, no mesmo capítulo**, mais as objetivas no estilo de concurso. Regra geral: todo exercício da apostila também está no simulado.
   - Arquivos: `apostilas/web-iii` (LaTeX e PDF). Para retomar, basta dizer ao Claude "vamos continuar a apostila da Web III": o passo a passo técnico está guardado na memória dele.
-- [ ] Apostilas seguintes: Estrutura de Dados, Análise e Projeto de Sistemas, Cliente-Servidor, Dispositivos Móveis, Gestão de Banco de Dados, Web I.
+- [ ] **Web I — apostila "Desenvolvimento Web Front-End: HTML, CSS, JavaScript e TypeScript" (começada em 17/10/2026)**. Só a base do front-end, sem repetir a Web II (Node, React, Next) nem a Web III (APIs). Sem projeto acompanhando; exercícios e simulado depois dos 12 capítulos, como na Web III.
+  - [x] Cap. 1 Como a Web funciona: navegador, servidor e HTTP
+  - [ ] Cap. 2 HTML: estrutura, semântica e acessibilidade
+  - [ ] Cap. 3 Formulários e validação nativa
+  - [ ] Cap. 4 CSS: cascata, seletores, box model e tipografia
+  - [ ] Cap. 5 Layout com Flexbox e Grid
+  - [ ] Cap. 6 Design responsivo e animações
+  - [ ] Cap. 7 Bootstrap e Tailwind
+  - [ ] Cap. 8 JavaScript: a linguagem
+  - [ ] Cap. 9 JavaScript no navegador: DOM, eventos e armazenamento (com jQuery)
+  - [ ] Cap. 10 Consumindo APIs no navegador: fetch, JSON e serviços externos
+  - [ ] Cap. 11 TypeScript básico
+  - [ ] Cap. 12 Git, GitHub e publicação no GitHub Pages
+  - Arquivos: `apostilas/web-i`. Roteiro da faculdade: `C:\Users\Neia\Downloads\Material_Didatico_Web_I.pdf`.
+- [ ] **Criar no site um módulo Projetos** (decidido em 17/10/2026, para depois): um módulo próprio, separado das apostilas, exercícios e simulados, com os projetos de todas as disciplinas, organizados por período. Os projetos dos materiais da faculdade (como o portfólio da Web I) ficam guardados para esse módulo, e não entram nas apostilas.
+- [ ] Apostilas seguintes: Estrutura de Dados, Análise e Projeto de Sistemas, Cliente-Servidor, Dispositivos Móveis, Gestão de Banco de Dados.

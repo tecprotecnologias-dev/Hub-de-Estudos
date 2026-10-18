@@ -879,4 +879,18 @@ export const apostilas: Apostila[] = [
     descricao:
       'Defesa em profundidade, o OWASP API Security Top 10, CORS e preflight, limite de tentativas com o 429, cabeçalhos de segurança e CSP, cookies HttpOnly e CSRF, ambientes e segredos, deploy na Vercel, migrações em produção, CI/CD com GitHub Actions e domínio próprio.',
   },
+  // Programação e Design para Web I — "Desenvolvimento Web Front-End: HTML, CSS, JavaScript e
+  // TypeScript" (TecPro). Texto próprio; o material da faculdade serviu só de roteiro. Só a base do
+  // front-end: o back-end e os frameworks ficam para a Web II e a Web III.
+  // Fonte: apostilas/web-i/capitulos/capitulo-NN.tex (raiz do repositório), convertida com
+  //   ferramentas/converter_latex.py <tex> src/data/capitulos/web1-capN.json --imagens public/apostilas/web1 apostilas/web1
+  {
+    id: 'web1-cap1',
+    capitulo: 1,
+    titulo: 'Como a Web funciona',
+    disciplinaId: 'programacao-e-design-para-web-i',
+    unidades: ['Desenvolvimento Web Front-End'],
+    descricao:
+      'Internet e Web, cliente e servidor, sites estáticos e dinâmicos, as partes de uma URL, o DNS, pedidos e respostas HTTP, front-end e back-end, como o navegador monta a página, as ferramentas de desenvolvedor e a primeira página.',
+  },
 ]

@@ -1,0 +1,33 @@
+% Capítulo 1: as etapas que o navegador percorre para desenhar a página.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-fluxo}
+\tikzset{
+  arq/.style={base, rectangle, fill=white, font=\ttfamily\small, minimum width=18mm, minimum height=8mm},
+  arv/.style={processo, minimum width=20mm},
+  etapa/.style={processo, fill=azul, minimum width=19mm},
+  nota/.style={legenda, align=center},
+}
+\begin{document}
+\begin{tikzpicture}[node distance=6mm and 7mm]
+  \node[arq] (html) {HTML};
+  \node[arq, below=of html] (css) {CSS};
+  \node[arv, right=of html] (dom) {DOM};
+  \node[arv, right=of css] (cssom) {CSSOM};
+  \node[etapa, right=12mm of $(dom)!0.5!(cssom)$] (render) {Árvore de\\renderização};
+  \node[etapa, right=of render] (layout) {Layout};
+  \node[etapa, right=of layout] (pintura) {Pintura};
+
+  \draw[fluxo] (html) -- (dom);
+  \draw[fluxo] (css) -- (cssom);
+  \draw[fluxo] (dom.east) -- (render.west);
+  \draw[fluxo] (cssom.east) -- (render.west);
+  \draw[fluxo] (render) -- (layout);
+  \draw[fluxo] (layout) -- (pintura);
+
+  \node[nota, below=1mm of layout] {onde fica cada\\elemento e seu tamanho};
+  \node[nota, below=1mm of pintura] {os pixels\\na tela};
+  \node[legenda, above=1mm of dom] {a árvore dos elementos};
+\end{tikzpicture}
+\end{document}

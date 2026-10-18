@@ -1,0 +1,28 @@
+% Capítulo 1: o navegador pede a página e o servidor responde.
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\input{estilo-fluxo}
+\tikzset{
+  caixa/.style={base, rectangle, rounded corners=3pt, fill=laranja!12, minimum width=30mm, minimum height=22mm},
+  msg/.style={base, rectangle, fill=white, font=\ttfamily\scriptsize, align=left, text width=50mm},
+  nota/.style={font=\sffamily\scriptsize, text=cinzalogo, align=center},
+}
+\begin{document}
+\begin{tikzpicture}
+  \node[caixa] (cli) at (0, 0) {\textbf{Navegador}\\[2pt]\scriptsize o cliente};
+  \node[caixa, fill=azul] (srv) at (9.6, 0) {\textbf{Servidor}\\[2pt]\scriptsize guarda os arquivos\\\scriptsize do site};
+
+  \node[msg] (req) at (4.8, 1.25) {GET /index.html HTTP/1.1\\Host: www.loja.com.br\\Accept: text/html};
+  \node[msg] (res) at (4.8, -1.25) {HTTP/1.1 200 OK\\Content-Type: text/html\\<!DOCTYPE html> ...};
+
+  \draw[fluxo] (cli.north east) to[out=30, in=180] (req.west);
+  \draw[fluxo] (req.east) to[out=0, in=150] (srv.north west);
+  \draw[fluxo] (srv.south west) to[out=210, in=0] (res.east);
+  \draw[fluxo] (res.west) to[out=180, in=-30] (cli.south east);
+
+  \node[rotulo] at (4.8, 2.25) {1. pedido (requisição)};
+  \node[rotulo] at (4.8, -2.25) {2. resposta};
+  \node[nota] at (4.8, -3.0) {depois, um novo pedido para cada arquivo citado no HTML: CSS, JavaScript, imagens};
+\end{tikzpicture}
+\end{document}

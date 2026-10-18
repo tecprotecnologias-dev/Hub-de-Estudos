@@ -1,0 +1,204 @@
+\documentclass[a5paper, 10pt]{article}
+
+% ============================================================
+% Desenvolvimento Web Front-End: HTML, CSS, JavaScript e TypeScript (TecPro Tecnologias)
+% Mesmo modelo do livro "Node.js, Express e MySQL": cada capítulo fica em
+% capitulos/capitulo-NN.tex e vira página do site com
+% site/ferramentas/converter_latex.py (modelo "livro").
+% ============================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, calc}
+\usepackage[table]{xcolor}
+
+% Cores da apostila (navy, laranja, cinza) e do logo do Hub de Estudos (roxo)
+\definecolor{navy}{RGB}{23,45,80}
+\definecolor{laranja}{RGB}{250,110,29}
+\definecolor{cinzalogo}{RGB}{107,114,126}
+\definecolor{roxo}{RGB}{130,87,229}
+\definecolor{roxoescuro}{RGB}{36,18,79}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+\usepackage{parskip}
+\usepackage{fvextra}
+\usepackage{upquote}  % aspas retas no código: 'A', e não ’A’
+\AtBeginDocument{\shorthandoff{"}}  % "a" < "b" no texto sem virar «
+\usepackage{array}
+% colunas de tabela alinhadas à esquerda (sem esticar o texto)
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{amsmath}
+% sem isto, << e >> no texto viram aspas francesas na fonte de código
+\usepackage[protrusion=false,expansion=false]{microtype}
+\DisableLigatures[<,>]{encoding = T1, family = tt*}
+
+\setlength{\emergencystretch}{2.5em}
+\AtBeginDocument{\renewcommand{\contentsname}{Sumário}}
+
+\geometry{
+  a5paper,
+  twoside,
+  bindingoffset=8mm,
+  inner=16mm,
+  outer=12mm,
+  top=15mm,
+  bottom=18mm
+}
+
+% os títulos já trazem a numeração ("Capítulo 1 -- ...", "1.1 ...")
+\setcounter{secnumdepth}{0}
+
+\definecolor{headergray}{HTML}{1F2937}
+\definecolor{rowgray}{HTML}{E5E7EB}
+\definecolor{boxgray}{HTML}{F3F4F6}
+\definecolor{borderblack}{HTML}{111111}
+
+\newcommand{\tblheader}[1]{\textcolor{white}{\textbf{#1}}}
+
+\newenvironment{destaque}[1]
+  {\par\noindent\textbf{#1}\par\vspace{2pt}\hrule\vspace{6pt}}
+  {\par\vspace{6pt}\hrule\vspace{10pt}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{codigo}{
+  colback=boxgray,
+  colframe=borderblack,
+  boxrule=0.4pt,
+  arc=1.5mm,
+  left=6pt, right=6pt, top=5pt, bottom=5pt,
+  fontupper=\ttfamily\footnotesize,
+  breakable
+}
+
+\begin{document}
+
+% ============================================================
+% CAPA
+% ============================================================
+\begin{titlepage}
+\centering
+
+\vspace*{1.1cm}
+
+\includegraphics[width=2.4cm]{hub_logo.png}
+
+\vspace{0.3cm}
+
+{\Large \textbf{\textcolor{navy}{Hub de} \textcolor{roxo}{Estudos}}}
+
+\vspace{0.2cm}
+
+{\footnotesize \textcolor{cinzalogo}{Apostilas, exercícios e simulados}}
+
+\vspace{1cm}
+
+% ícones genéricos dos temas da apostila
+\begin{tikzpicture}[baseline]
+
+  % --- HTML ---
+  \begin{scope}[shift={(0,0)}]
+    \node[font=\Large\ttfamily\bfseries, text=navy] at (0,0.15) {</>};
+    \node[font=\tiny, text=cinzalogo] at (0,-0.55) {HTML};
+  \end{scope}
+
+  % --- CSS ---
+  \begin{scope}[shift={(2.5,0)}]
+    \node[font=\Large\ttfamily\bfseries, text=navy] at (0,0.15) {\{ ; \}};
+    \node[font=\tiny, text=cinzalogo] at (0,-0.55) {CSS};
+  \end{scope}
+
+  % --- JavaScript ---
+  \begin{scope}[shift={(5.0,0)}]
+    \draw[navy, line width=1pt, fill=laranja!12] (-0.3,-0.15) rectangle (0.3,0.45);
+    \node[font=\small\ttfamily\bfseries, text=navy] at (0,0.15) {JS};
+    \node[font=\tiny, text=cinzalogo] at (0,-0.55) {JavaScript};
+  \end{scope}
+
+  % --- Git: um ramo saindo da linha principal ---
+  \begin{scope}[shift={(7.5,0)}]
+    \draw[navy, line width=1pt] (-0.35,0) -- (0.35,0);
+    \draw[navy, line width=1pt] (-0.1,0) to[out=60, in=180] (0.25,0.35);
+    \fill[laranja] (-0.35,0) circle (0.07) (0.35,0) circle (0.07) (0.25,0.35) circle (0.07);
+    \node[font=\tiny, text=cinzalogo] at (0,-0.55) {Git};
+  \end{scope}
+
+\end{tikzpicture}
+
+\vspace{1.3cm}
+
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[roxoescuro] (current page.south west) rectangle
+    ($(current page.south east)!0.32!(current page.north east)$);
+  \draw[laranja, line width=3.2pt]
+    ($(current page.south west)!0.32!(current page.north west)$) --
+    ($(current page.south east)!0.32!(current page.north east)$);
+  % capelo discreto, o símbolo do logo do Hub de Estudos
+  \begin{scope}[shift={($(current page.south east)+(-16mm,17mm)$)}, opacity=0.18]
+    \fill[white] (0,4mm) -- (9mm,0.5mm) -- (0,-3mm) -- (-9mm,0.5mm) -- cycle;
+    \fill[white] (-4.5mm,-1.2mm) -- (-4.5mm,-4.5mm) arc[start angle=180, end angle=360,
+      x radius=4.5mm, y radius=1.6mm] -- (4.5mm,-1.2mm) -- (0,-3mm) -- cycle;
+    \draw[laranja, line width=0.7mm, line cap=round] (7.5mm,0) -- (7.5mm,-5mm);
+  \end{scope}
+  \node[align=center, text width=0.84\paperwidth] at
+    ($(current page.south west)!0.20!(current page.north west)+(0.5\paperwidth,0)$)
+    {\color{white}\LARGE\bfseries Desenvolvimento Web Front-End};
+  \node[align=center, text width=0.78\paperwidth] at
+    ($(current page.south west)!0.08!(current page.north west)+(0.5\paperwidth,0)$)
+    {\color{laranja}\normalsize HTML, CSS, JavaScript e TypeScript};
+\end{tikzpicture}
+
+\vfill
+
+\end{titlepage}
+
+% ============================================================
+% FICHA TÉCNICA
+% ============================================================
+\thispagestyle{empty}
+\vspace*{\fill}
+
+\begin{center}
+{\large \textbf{Desenvolvimento Web Front-End}}\\[2pt]
+{\small HTML, CSS, JavaScript e TypeScript}
+
+\vspace{1cm}
+
+\rule{3cm}{0.4pt}
+
+\vspace{0.4cm}
+
+\textbf{Hub de Estudos}\\
+{\footnotesize Apostilas, exercícios e simulados}
+
+\vspace{0.5cm}
+
+{\footnotesize 2026}
+\end{center}
+
+\vspace*{\fill}
+
+\noindent\footnotesize Todos os direitos reservados. Nenhuma parte desta publicação pode ser reproduzida, armazenada ou transmitida de qualquer forma, ou por qualquer meio, sem autorização prévia.
+
+\medskip
+\noindent Desenvolvido por TecPro Tecnologias.
+
+\newpage
+
+\tableofcontents
+\newpage
+
+% ============================================================
+% CAPÍTULOS
+% ============================================================
+
+\input{capitulos/capitulo-01}
+
+\end{document}
