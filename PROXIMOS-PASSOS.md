@@ -40,7 +40,9 @@ O navegador precisa baixar o código do site para mostrá-lo, então **não exis
 - [x] Site no ar no Netlify: https://hubdeestudos.netlify.app (16/10/2026), ligado ao Supabase.
 - [x] No Supabase, Site URL e Redirect URLs com o endereço do Netlify.
 - [x] ~~Arrastar a pasta `site\dist` para o Netlify~~ — feito em 17/10/2026 às 22h48 (última publicação). **Os créditos do Netlify acabaram nessa noite:** o site continua no ar com essa versão, mas novas publicações estão pausadas. O que for feito depois (caps. da Web I em diante) só chega ao site com a mudança para o Cloudflare Pages (abaixo).
-- [ ] **Mudar a hospedagem do Netlify para o Cloudflare Pages** (decidido em 17/10/2026, para depois da Web III): o Netlify gasta créditos a cada publicação. O plano gratuito do Cloudflare aceita uso comercial, até 100 sites por conta e 500 publicações por mês (somadas entre os sites), e publica sozinho a partir do GitHub. Na mudança: configurar o build (pasta `site`, `npm run build`, saída `site/dist`), cadastrar `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` e atualizar a Site URL e as Redirect URLs no Supabase. Os outros sites de venda usam checkout externo (Mercado Pago, Stripe, Hotmart): no plano gratuito, o site não pode receber dados de cartão.
+- [x] **Hospedagem trocada do Netlify para o Cloudflare** (18/10/2026): site no ar em https://estudos.tecprotecnologias.com.br, conta Cloudflare da TecPro, Worker `hubdeestudos`, publica sozinho a cada envio para o GitHub (repositório novo: https://github.com/tecprotecnologias-dev/Hub-de-Estudos). Build com Path `/site` e as variáveis `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`. No Supabase (que continua em outra conta de e-mail), Site URL e Redirect URLs trocadas para o endereço novo. Os sites de venda usam checkout externo (Mercado Pago, Stripe, Hotmart): o site não recebe dados de cartão.
+- [ ] Opcional: transferir o projeto do Supabase para a organização da TecPro (o endereço e a chave não mudam).
+- [ ] Opcional: desligar o site antigo no Netlify.
 - [ ] Revisar a Política de Privacidade.
 - [ ] Testar o fluxo de aprovação de professor.
 
