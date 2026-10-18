@@ -39,7 +39,7 @@ O navegador precisa baixar o código do site para mostrá-lo, então **não exis
 ## Publicação
 - [x] Site no ar no Netlify: https://hubdeestudos.netlify.app (16/10/2026), ligado ao Supabase.
 - [x] No Supabase, Site URL e Redirect URLs com o endereço do Netlify.
-- [ ] **Arrastar a pasta `site\dist` para o Netlify** para publicar o que foi feito depois (design novo já publicado; faltam os simulados da Web II e os 12 capítulos da Web III). Antes de arrastar, rodar `npm run build` dentro de `site`.
+- [x] ~~Arrastar a pasta `site\dist` para o Netlify~~ — feito em 17/10/2026 às 22h48 (última publicação). **Os créditos do Netlify acabaram nessa noite:** o site continua no ar com essa versão, mas novas publicações estão pausadas. O que for feito depois (caps. da Web I em diante) só chega ao site com a mudança para o Cloudflare Pages (abaixo).
 - [ ] **Mudar a hospedagem do Netlify para o Cloudflare Pages** (decidido em 17/10/2026, para depois da Web III): o Netlify gasta créditos a cada publicação. O plano gratuito do Cloudflare aceita uso comercial, até 100 sites por conta e 500 publicações por mês (somadas entre os sites), e publica sozinho a partir do GitHub. Na mudança: configurar o build (pasta `site`, `npm run build`, saída `site/dist`), cadastrar `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` e atualizar a Site URL e as Redirect URLs no Supabase. Os outros sites de venda usam checkout externo (Mercado Pago, Stripe, Hotmart): no plano gratuito, o site não pode receber dados de cartão.
 - [ ] Revisar a Política de Privacidade.
 - [ ] Testar o fluxo de aprovação de professor.
