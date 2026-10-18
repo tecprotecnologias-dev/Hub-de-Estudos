@@ -63,7 +63,7 @@ O navegador precisa baixar o código do site para mostrá-lo, então **não exis
   - Arquivos: `apostilas/web-iii` (LaTeX e PDF). Para retomar, basta dizer ao Claude "vamos continuar a apostila da Web III": o passo a passo técnico está guardado na memória dele.
 - [ ] **Web I — apostila "Desenvolvimento Web Front-End: HTML, CSS, JavaScript e TypeScript" (começada em 17/10/2026)**. Só a base do front-end, sem repetir a Web II (Node, React, Next) nem a Web III (APIs). Sem projeto acompanhando; exercícios e simulado depois dos 12 capítulos, como na Web III.
   - [x] Cap. 1 Como a Web funciona: navegador, servidor e HTTP
-  - [ ] Cap. 2 HTML: estrutura, semântica e acessibilidade
+  - [x] Cap. 2 HTML: estrutura, semântica e acessibilidade
   - [ ] Cap. 3 Formulários e validação nativa
   - [ ] Cap. 4 CSS: cascata, seletores, box model e tipografia
   - [ ] Cap. 5 Layout com Flexbox e Grid

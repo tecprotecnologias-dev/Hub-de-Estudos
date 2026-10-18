@@ -893,4 +893,13 @@ export const apostilas: Apostila[] = [
     descricao:
       'Internet e Web, cliente e servidor, sites estáticos e dinâmicos, as partes de uma URL, o DNS, pedidos e respostas HTTP, front-end e back-end, como o navegador monta a página, as ferramentas de desenvolvedor e a primeira página.',
   },
+  {
+    id: 'web1-cap2',
+    capitulo: 2,
+    titulo: 'HTML: estrutura, semântica e acessibilidade',
+    disciplinaId: 'programacao-e-design-para-web-i',
+    unidades: ['Desenvolvimento Web Front-End'],
+    descricao:
+      'Elementos, tags e atributos, o cabeçalho do documento e o favicon, títulos, texto com significado, links e caminhos, imagens, áudio e vídeo, listas, tabelas, HTML semântico, acessibilidade (leitor de tela, teclado, WCAG e a Lei Brasileira de Inclusão) e entidades.',
+  },
 ]

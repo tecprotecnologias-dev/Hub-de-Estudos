@@ -1,0 +1,603 @@
+{
+ "numero": 2,
+ "titulo": "HTML: estrutura, semântica e acessibilidade",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "introducao",
+   "texto": "Introdução"
+  },
+  {
+   "t": "p",
+   "html": "O HTML é a base de toda página: é ele que diz o que cada pedaço do conteúdo <strong>é</strong>. Um título, um parágrafo, uma lista de ingredientes, um menu, uma tabela. Neste capítulo você vai conhecer os elementos do HTML, montar o cabeçalho completo de um documento, marcar textos, links, imagens, vídeos, listas e tabelas, e organizar a página com os elementos semânticos. No caminho, vai entender por que um HTML bem escrito é a primeira condição para que pessoas com deficiência consigam usar um site. No final, uma página de receita reúne tudo, conferida por validadores e por um verificador de acessibilidade."
+  },
+  {
+   "t": "h2",
+   "id": "2-1-elementos-tags-e-atributos",
+   "texto": "2.1 Elementos, tags e atributos"
+  },
+  {
+   "t": "p",
+   "html": "Um documento HTML é feito de <strong>elementos</strong>. A maioria tem uma <strong>tag</strong> de abertura, um conteúdo e uma <strong>tag</strong> de fechamento, que repete o nome com uma barra. A tag de abertura pode trazer <strong>atributos</strong>, informações extras no formato <code>nome=\"valor\"</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<a href=\"bolos.html\" title=\"Ver todas as receitas\">Bolos</a>\n\\_________________________________________________/\\___/\\__/\n                         |                           |    |\n        tag de abertura, com dois atributos        texto\n                                                      fechamento"
+  },
+  {
+   "t": "p",
+   "html": "Alguns elementos não têm conteúdo nem tag de fechamento: são os <strong>elementos vazios</strong>, como a imagem, a quebra de linha (<code>&lt;br&gt;</code>) e os do cabeçalho (<code>&lt;meta&gt;</code>, <code>&lt;link&gt;</code>). E há os <strong>comentários</strong>, que o navegador ignora, úteis para deixar notas no código:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<a href=\"bolos.html\" title=\"Ver todas as receitas\">Bolos</a>\n<img src=\"img/bolo.svg\" alt=\"Bolo de cenoura\">\n<!-- Um comentário: o navegador ignora, e a página não mostra -->"
+  },
+  {
+   "t": "p",
+   "html": "Algumas regras valem para todo o HTML:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>os elementos se aninham</strong>, um dentro do outro, como caixas: o que abre por último fecha primeiro. <code>&lt;p&gt;&lt;strong&gt;Olá&lt;/strong&gt;&lt;/p&gt;</code> está certo; <code>&lt;p&gt;&lt;strong&gt;Olá&lt;/p&gt;&lt;/strong&gt;</code> está errado;",
+    "<strong>espaços e quebras de linha seguidos viram um espaço só</strong>. Apertar <code>Enter</code> várias vezes no código não cria linhas em branco na página; quem cuida do espaçamento é o CSS;",
+    "os nomes de tags e atributos não diferenciam maiúsculas de minúsculas, mas a convenção é escrever tudo em minúsculas;",
+    "os valores dos atributos ficam entre aspas duplas."
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-2-o-cabecalho-do-documento",
+   "texto": "2.2 O cabeçalho do documento"
+  },
+  {
+   "t": "p",
+   "html": "Todo documento HTML tem a mesma estrutura de base: a declaração do tipo, o elemento <code>&lt;html&gt;</code>, que envolve tudo, e, dentro dele, o <code>&lt;head&gt;</code>, com informações sobre a página, e o <code>&lt;body&gt;</code>, com o conteúdo visível. Este é o cabeçalho da página de receita que fecha este capítulo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\"\n        content=\"width=device-width, initial-scale=1\">\n  <title>Bolo de cenoura | Receitas da Casa</title>\n  <meta name=\"description\"\n        content=\"Bolo de cenoura com cobertura de chocolate.\">\n  <link rel=\"icon\" href=\"favicon.svg\" type=\"image/svg+xml\">\n</head>"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Linha",
+    "Para que serve"
+   ],
+   "linhas": [
+    [
+     "<code>&lt;!DOCTYPE html&gt;</code>",
+     "diz que o documento segue o HTML atual. Sem ela, o navegador entra no “modo de compatibilidade” (<em>quirks mode</em>) e imita defeitos de navegadores dos anos 1990"
+    ],
+    [
+     "<code>&lt;html lang=\"pt-BR\"&gt;</code>",
+     "o idioma da página: o leitor de tela pronuncia o texto em português, e o tradutor do navegador sabe de que língua partir"
+    ],
+    [
+     "<code>&lt;meta charset&gt;</code>",
+     "a codificação dos caracteres; o UTF-8 representa qualquer letra de qualquer idioma, inclusive ç, ã e emojis"
+    ],
+    [
+     "<code>&lt;meta name=\"viewport\"&gt;</code>",
+     "em celulares, usa a largura real da tela; sem ela, a página é desenhada com cerca de 980 pixels de largura e encolhida (Capítulo 6)"
+    ],
+    [
+     "<code>&lt;title&gt;</code>",
+     "o texto da aba e do título nos resultados dos buscadores"
+    ],
+    [
+     "<code>&lt;meta name=\"description\"&gt;</code>",
+     "um resumo da página, que os buscadores costumam mostrar abaixo do título"
+    ],
+    [
+     "<code>&lt;link rel=\"icon\"&gt;</code>",
+     "o ícone da aba, o <em>favicon</em>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O <em>favicon</em> resolve o erro que apareceu no Console no Capítulo 1: sem um ícone declarado, o navegador procura sozinho o arquivo <code>/favicon.ico</code>. Aqui ele é um SVG, uma imagem vetorial, que os navegadores atuais aceitam e que fica nítida em qualquer tamanho. O <code>&lt;link rel=\"stylesheet\"&gt;</code> e o <code>&lt;script defer&gt;</code>, que você viu no Capítulo 1, também ficam no <code>&lt;head&gt;</code>; esta página ainda não tem CSS nem JavaScript."
+  },
+  {
+   "t": "h2",
+   "id": "2-3-titulos-e-paragrafos",
+   "texto": "2.3 Títulos e parágrafos"
+  },
+  {
+   "t": "p",
+   "html": "O HTML tem seis níveis de título, de <code>&lt;h1&gt;</code> a <code>&lt;h6&gt;</code>. Eles formam um <strong>sumário</strong> da página, e é assim que leitores de tela e buscadores a entendem: o <code>&lt;h1&gt;</code> é o assunto da página, cada <code>&lt;h2&gt;</code> é uma seção dele, cada <code>&lt;h3&gt;</code> é uma subdivisão do <code>&lt;h2&gt;</code> anterior, e assim por diante. Três regras:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "use um único <code>&lt;h1&gt;</code> por página, com o assunto principal. O padrão não proíbe mais de um, mas um só deixa o sumário claro;",
+    "não pule níveis: depois de um <code>&lt;h2&gt;</code> vem um <code>&lt;h3&gt;</code>, e não um <code>&lt;h4&gt;</code>;",
+    "escolha o nível pela <strong>hierarquia</strong>, e nunca pelo tamanho da letra. Se o título ficou grande demais, quem muda isso é o CSS."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O <code>&lt;p&gt;</code> marca um parágrafo. O <code>&lt;br&gt;</code> força uma quebra de linha dentro dele, útil em endereços e poemas, mas não deve ser usado para criar espaço entre blocos. O <code>&lt;hr&gt;</code> marca uma mudança de assunto entre parágrafos e aparece como uma linha horizontal."
+  },
+  {
+   "t": "h2",
+   "id": "2-4-texto-com-significado",
+   "texto": "2.4 Texto com significado"
+  },
+  {
+   "t": "p",
+   "html": "Dentro de um parágrafo, alguns elementos dizem algo sobre um trecho do texto:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<p>O forno deve estar <strong>preaquecido</strong>.</p>\n<p>A massa fica <em>muito</em> mais fofa peneirada.</p>\n<p>Use <mark>fermento químico</mark>, e não biológico.</p>\n<p>O <abbr title=\"Instituto Nacional de Metrologia\">Inmetro</abbr>\n  aprova a forma.</p>\n<p>Salve com <kbd>Ctrl</kbd> + <kbd>S</kbd>.</p>\n<p>A função <code>alert()</code> mostra um aviso.</p>\n<p>Água é H<sub>2</sub>O; a área é 10 m<sup>2</sup>.</p>\n<p>Pronto às <time datetime=\"15:30\">três e meia</time>.</p>\n<blockquote cite=\"https://pt.wikipedia.org/wiki/Bolo\">\n  <p>Bolo é uma massa assada, geralmente doce.</p>\n</blockquote>\n<p>Como diz o ditado, <q>quem espera sempre alcança</q>.</p>"
+  },
+  {
+   "t": "p",
+   "html": "O <code>&lt;strong&gt;</code> marca algo <strong>importante</strong>, e o <code>&lt;em&gt;</code>, uma <strong>ênfase</strong>, que muda o sentido da frase, como a palavra “muito”. O <code>&lt;mark&gt;</code> destaca um trecho, o <code>&lt;abbr&gt;</code> explica uma sigla no atributo <code>title</code>, o <code>&lt;kbd&gt;</code> representa teclas, o <code>&lt;code&gt;</code>, um trecho de código, e o <code>&lt;sub&gt;</code> e o <code>&lt;sup&gt;</code>, índices e expoentes. O <code>&lt;time&gt;</code> traz, no atributo <code>datetime</code>, a data ou a hora em um formato que programas entendem, enquanto o texto fica livre para as pessoas. O <code>&lt;blockquote&gt;</code> é uma citação longa, em bloco, e o <code>&lt;q&gt;</code>, uma citação curta, no meio da frase."
+  },
+  {
+   "t": "p",
+   "html": "Existem também o <code>&lt;b&gt;</code> e o <code>&lt;i&gt;</code>, que, por padrão, também deixam o texto em negrito e em itálico. A diferença é o significado:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Elemento",
+    "Quando usar"
+   ],
+   "linhas": [
+    [
+     "<code>&lt;strong&gt;</code>",
+     "o trecho é importante, sério ou urgente"
+    ],
+    [
+     "<code>&lt;b&gt;</code>",
+     "destaque só visual, sem importância especial, como uma palavra-chave em um resumo"
+    ],
+    [
+     "<code>&lt;em&gt;</code>",
+     "ênfase, que muda o sentido da frase"
+    ],
+    [
+     "<code>&lt;i&gt;</code>",
+     "uma voz diferente do texto: termos estrangeiros, nomes científicos, títulos de obras"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Na dúvida, prefira os que carregam significado, o <code>&lt;strong&gt;</code> e o <code>&lt;em&gt;</code>. E, para deixar um texto em negrito só porque “fica bonito”, não use nenhum dos quatro: use o CSS."
+  },
+  {
+   "t": "h2",
+   "id": "2-5-links-e-caminhos",
+   "texto": "2.5 Links e caminhos"
+  },
+  {
+   "t": "p",
+   "html": "O link é o elemento que fez a Web: o <code>&lt;a&gt;</code>, de <em>anchor</em> (âncora), com o destino no atributo <code>href</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<a href=\"https://developer.mozilla.org\">MDN Web Docs</a>\n<a href=\"bolos.html\">Bolos</a>\n<a href=\"receitas/salgados.html\">Salgados</a>\n<a href=\"../index.html\">Início</a>\n<a href=\"#ingredientes\">Ir para os ingredientes</a>\n<a href=\"mailto:contato@receitas.com.br\">Escreva para nós</a>\n<a href=\"tel:+5521999990000\">(21)&nbsp;99999&#8209;0000</a>\n<a href=\"cardapio.pdf\" download>Baixar o cardápio</a>\n<a href=\"https://www.w3.org\" target=\"_blank\">W3C (nova aba)</a>"
+  },
+  {
+   "t": "p",
+   "html": "O destino pode ser escrito de dois jeitos. Um <strong>endereço absoluto</strong> é completo, com protocolo e domínio, e é usado para outros sites. Um <strong>endereço relativo</strong> é escrito a partir da página atual e é usado dentro do próprio site. Imagine esta estrutura de pastas:"
+  },
+  {
+   "t": "codigo",
+   "texto": "site/\n  index.html\n  receitas/\n    bolo.html          <- a página atual\n    bolos.html\n    salgados.html\n  img/\n    bolo.svg"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Em <code>receitas/bolo.html</code>",
+    "Aponta para"
+   ],
+   "linhas": [
+    [
+     "<code>bolos.html</code>",
+     "um arquivo na mesma pasta"
+    ],
+    [
+     "<code>../index.html</code>",
+     "um arquivo na pasta de cima: <code>..</code> sobe um nível"
+    ],
+    [
+     "<code>../img/bolo.svg</code>",
+     "sobe um nível e entra na pasta <code>img</code>"
+    ],
+    [
+     "<code>/index.html</code>",
+     "começa pela raiz do site, de qualquer página"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Os endereços relativos continuam funcionando quando o site muda de domínio ou é copiado para outra pasta, por isso são a regra dentro do site. O <code>#ingredientes</code> leva a um ponto da própria página: o elemento que tem <code>id=\"ingredientes\"</code>. O <code>mailto:</code> abre o programa de e-mail, e o <code>tel:</code> oferece a ligação no celular. O atributo <code>download</code> pede que o arquivo seja baixado, em vez de aberto."
+  },
+  {
+   "t": "p",
+   "html": "O <code>target=\"_blank\"</code> abre o link em uma nova aba. Até 2020, era preciso acrescentar <code>rel=\"noopener\"</code> por segurança, porque a página aberta conseguia controlar a aba de origem; os navegadores atuais já aplicam essa proteção sozinhos, e o atributo só é necessário para quem precisa atender navegadores muito antigos. Use o <code>_blank</code> com moderação: abrir abas sem pedir confunde muita gente, principalmente quem usa leitor de tela."
+  },
+  {
+   "t": "p",
+   "html": "O texto do link deve dizer para onde ele leva, mesmo lido fora do contexto. Leitores de tela oferecem uma lista com todos os links da página, e uma lista com dez “clique aqui” não ajuda ninguém. Prefira “Baixar o cardápio” a “Para baixar o cardápio, clique aqui”."
+  },
+  {
+   "t": "h2",
+   "id": "2-6-imagens",
+   "texto": "2.6 Imagens"
+  },
+  {
+   "t": "p",
+   "html": "A imagem é um elemento vazio, <code>&lt;img&gt;</code>, com o arquivo no atributo <code>src</code>. Na página de receita:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<figure>\n  <img src=\"img/bolo.svg\" width=\"320\" height=\"200\"\n       alt=\"Bolo retangular com cobertura de chocolate\">\n  <figcaption>O bolo pronto, ainda na forma.</figcaption>\n</figure>"
+  },
+  {
+   "t": "p",
+   "html": "O <strong><code>alt</code></strong> é o texto alternativo: é o que o leitor de tela lê no lugar da imagem, o que aparece se ela não carregar e o que os buscadores usam para entendê-la. Ele é obrigatório, e o validador do W3C acusa a falta dele. Escreva o que a imagem <strong>mostra</strong> e que importa para o conteúdo: “Bolo retangular com cobertura de chocolate”, e não “imagem” ou “bolo.svg”. Se a imagem é só decorativa, como um enfeite, use <code>alt=\"\"</code>, vazio: assim o leitor de tela sabe que pode pulá-la."
+  },
+  {
+   "t": "p",
+   "html": "A <code>width</code> e a <code>height</code> dão o tamanho original da imagem. Com elas, o navegador reserva o espaço antes de baixá-la, e o texto não “pula” quando ela chega. O atributo <code>loading=\"lazy\"</code> adia o carregamento das imagens que estão longe da área visível, até a pessoa rolar a página até elas, o que economiza dados no celular. O <code>&lt;figure&gt;</code> agrupa a imagem com uma legenda, o <code>&lt;figcaption&gt;</code>. Os formatos mais usados:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Formato",
+    "Melhor para"
+   ],
+   "linhas": [
+    [
+     "JPEG",
+     "fotografias"
+    ],
+    [
+     "PNG",
+     "ilustrações, capturas de tela e imagens com transparência"
+    ],
+    [
+     "SVG",
+     "ícones, logotipos e desenhos: é vetorial, fica nítido em qualquer tamanho e é escrito em texto"
+    ],
+    [
+     "WebP e AVIF",
+     "os formatos modernos: a mesma qualidade do JPEG e do PNG, com arquivos bem menores"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "2-7-audio-e-video",
+   "texto": "2.7 Áudio e vídeo"
+  },
+  {
+   "t": "p",
+   "html": "O HTML toca áudio e vídeo sem nenhum programa extra:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<video controls width=\"640\" height=\"360\" preload=\"metadata\"\n       poster=\"img/capa-video.jpg\">\n  <source src=\"video/preparo.webm\" type=\"video/webm\">\n  <source src=\"video/preparo.mp4\" type=\"video/mp4\">\n  <track kind=\"captions\" src=\"video/preparo.vtt\"\n         srclang=\"pt\" label=\"Português\" default>\n  <a href=\"video/preparo.mp4\">Baixe o vídeo do preparo</a>.\n</video>\n\n<audio controls src=\"audio/dica.mp3\">\n  <a href=\"audio/dica.mp3\">Ouça a dica</a>.\n</audio>"
+  },
+  {
+   "t": "p",
+   "html": "O <code>controls</code> mostra os botões de tocar, pausar e volume. Cada <code>&lt;source&gt;</code> oferece o mesmo vídeo em um formato, e o navegador usa o primeiro que conseguir tocar. O <code>poster</code> é a imagem exibida antes de o vídeo começar, e o <code>preload=\"metadata\"</code> baixa só as informações do vídeo, como a duração, até a pessoa dar o <em>play</em>. O <code>&lt;track&gt;</code> acrescenta legendas, em um arquivo de texto no formato WebVTT: elas são indispensáveis para pessoas surdas e úteis para quem assiste sem som. O conteúdo que sobra dentro do <code>&lt;video&gt;</code>, o link, só aparece em navegadores que não tocam vídeo. Evite o <code>autoplay</code>: um som que começa sozinho atrapalha qualquer pessoa, e atrapalha muito quem usa leitor de tela."
+  },
+  {
+   "t": "h2",
+   "id": "2-8-listas",
+   "texto": "2.8 Listas"
+  },
+  {
+   "t": "p",
+   "html": "O HTML tem três tipos de lista. A <strong>não ordenada</strong>, <code>&lt;ul&gt;</code>, é para itens em que a ordem não importa, como os ingredientes; a <strong>ordenada</strong>, <code>&lt;ol&gt;</code>, para passos em sequência, como o modo de preparo. Cada item é um <code>&lt;li&gt;</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<section>\n  <h2>Ingredientes</h2>\n  <ul>\n    <li>3 cenouras médias</li>\n    <li>3 ovos</li>\n    <li>1 xícara de óleo</li>\n    <li>2 xícaras de açúcar</li>\n    <li>2 xícaras de farinha de trigo</li>\n    <li>1 colher (sopa) de fermento em pó</li>\n  </ul>\n</section>\n\n<section>\n  <h2>Modo de preparo</h2>\n  <ol>\n    <li>Bata no liquidificador as cenouras, os ovos\n      e o óleo.</li>\n    <li>Misture o açúcar e a farinha, e por último\n      o fermento.</li>\n    <li>Asse em forno médio, a 180 °C, por cerca\n      de 40 minutos.</li>\n  </ol>\n  <p><em>Não</em> abra o forno nos primeiros 25 minutos.</p>\n</section>"
+  },
+  {
+   "t": "p",
+   "html": "Uma lista pode ficar dentro de um item de outra, formando sublistas. Os menus de navegação também são listas: uma lista de links, como no cabeçalho da página de receita (Seção 2.10). O leitor de tela anuncia “lista com 6 itens” antes de lê-los, o que ajuda a pessoa a saber o que vem pela frente. O terceiro tipo, a <strong>lista de definições</strong>, <code>&lt;dl&gt;</code>, reúne pares de termo (<code>&lt;dt&gt;</code>) e descrição (<code>&lt;dd&gt;</code>), como em um glossário:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<dl>\n  <dt>Banho-maria</dt>\n  <dd>Cozinhar dentro de um recipiente com água quente.</dd>\n  <dt>Untar</dt>\n  <dd>Passar gordura na forma para a massa não grudar.</dd>\n</dl>"
+  },
+  {
+   "t": "h2",
+   "id": "2-9-tabelas",
+   "texto": "2.9 Tabelas"
+  },
+  {
+   "t": "p",
+   "html": "Tabelas são para <strong>dados em linhas e colunas</strong>, em que cada célula se relaciona com o título da sua linha e o da sua coluna: notas, horários, preços, comparações. A tabela de informação nutricional da receita:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<section>\n  <h2>Informação nutricional</h2>\n  <table>\n    <caption>Valores aproximados por fatia</caption>\n    <thead>\n      <tr>\n        <th scope=\"col\">Item</th>\n        <th scope=\"col\">Quantidade</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <th scope=\"row\">Calorias</th>\n        <td>310 kcal</td>\n      </tr>\n      <tr>\n        <th scope=\"row\">Carboidratos</th>\n        <td>45 g</td>\n      </tr>\n    </tbody>\n  </table>\n</section>"
+  },
+  {
+   "t": "p",
+   "html": "O <code>&lt;caption&gt;</code> é o título da tabela. O <code>&lt;thead&gt;</code> e o <code>&lt;tbody&gt;</code> separam o cabeçalho do corpo; existe também o <code>&lt;tfoot&gt;</code>, para totais. Cada <code>&lt;tr&gt;</code> é uma linha. As células de dados são <code>&lt;td&gt;</code>, e as de título, <code>&lt;th&gt;</code>, com o atributo <code>scope</code>, que diz se o título é da coluna (<code>col</code>) ou da linha (<code>row</code>). Com isso, ao chegar à célula “310 kcal”, o leitor de tela consegue anunciar “Calorias, Quantidade: 310 kcal”. Uma célula pode ocupar mais de uma coluna, com o <code>colspan</code>, ou mais de uma linha, com o <code>rowspan</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<table>\n  <caption>Horário das aulas</caption>\n  <thead>\n    <tr>\n      <th scope=\"col\">Horário</th>\n      <th scope=\"col\">Segunda</th>\n      <th scope=\"col\">Terça</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th scope=\"row\">19h</th>\n      <td rowspan=\"2\">Confeitaria</td>\n      <td>Massas</td>\n    </tr>\n    <tr>\n      <th scope=\"row\">20h</th>\n      <td>Molhos</td>\n    </tr>\n    <tr>\n      <th scope=\"row\">21h</th>\n      <td colspan=\"2\">Prática livre</td>\n    </tr>\n  </tbody>\n</table>"
+  },
+  {
+   "t": "p",
+   "html": "A “Confeitaria” ocupa as linhas das 19h e das 20h na segunda-feira, por isso a linha das 20h tem uma célula a menos; a “Prática livre” ocupa as duas colunas da linha das 21h. Nunca use tabelas para posicionar o conteúdo da página, um costume dos anos 1990: elas se comportam mal em telas pequenas e confundem os leitores de tela, que anunciam linhas e colunas que não existem. Para o layout existem o Flexbox e o Grid (Capítulo 5)."
+  },
+  {
+   "t": "h2",
+   "id": "2-10-html-semantico",
+   "texto": "2.10 HTML semântico"
+  },
+  {
+   "t": "p",
+   "html": "Um HTML é <strong>semântico</strong> quando cada elemento foi escolhido pelo que o conteúdo <strong>é</strong>, e não pela aparência. Para agrupar conteúdo sem nenhum significado especial, existem o <code>&lt;div&gt;</code>, para blocos, e o <code>&lt;span&gt;</code>, para trechos dentro de uma linha, quase sempre com uma <code>class</code>, que o CSS vai usar:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<div class=\"cartao\">\n  <p>Promoção: <span class=\"preco\">R$ 15</span> a fatia.</p>\n</div>"
+  },
+  {
+   "t": "p",
+   "html": "Eles são úteis, mas, para as grandes regiões da página, o HTML tem elementos próprios, que dizem o papel de cada uma:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Elemento",
+    "O que representa"
+   ],
+   "linhas": [
+    [
+     "<code>&lt;header&gt;</code>",
+     "o cabeçalho: o nome do site, o logotipo, a busca"
+    ],
+    [
+     "<code>&lt;nav&gt;</code>",
+     "um bloco de links de navegação"
+    ],
+    [
+     "<code>&lt;main&gt;</code>",
+     "o conteúdo principal da página; só um por página"
+    ],
+    [
+     "<code>&lt;article&gt;</code>",
+     "um conteúdo completo em si, que faria sentido sozinho: uma receita, uma notícia, um comentário"
+    ],
+    [
+     "<code>&lt;section&gt;</code>",
+     "uma seção temática, quase sempre com um título"
+    ],
+    [
+     "<code>&lt;aside&gt;</code>",
+     "um conteúdo relacionado, mas à parte: dicas, anúncios, links relacionados"
+    ],
+    [
+     "<code>&lt;footer&gt;</code>",
+     "o rodapé: direitos, contatos, links institucionais"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O começo e o fim da página de receita usam esses elementos:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<header>\n  <p><a href=\"index.html\">Receitas da Casa</a></p>\n  <nav aria-label=\"Principal\">\n    <ul>\n      <li><a href=\"bolos.html\">Bolos</a></li>\n      <li><a href=\"salgados.html\">Salgados</a></li>\n      <li><a href=\"contato.html\">Contato</a></li>\n    </ul>\n  </nav>\n</header>"
+  },
+  {
+   "t": "p",
+   "html": "O <code>aria-label</code> dá um nome ao menu: se a página tiver mais de um <code>&lt;nav&gt;</code>, o leitor de tela consegue distinguir o “Principal” de outros. O conteúdo vem em seguida, dentro do <code>&lt;main&gt;</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<main>\n  <article>\n    <h1>Bolo de cenoura com cobertura de chocolate</h1>\n    <p>Publicada em <time datetime=\"2026-10-12\">12 de outubro\n      de 2026</time>. Rende <strong>12 fatias</strong>.</p>"
+  },
+  {
+   "t": "p",
+   "html": "E, depois do artigo, a dica e o rodapé:"
+  },
+  {
+   "t": "codigo",
+   "texto": "    </article>\n\n    <aside>\n      <h2>Dica</h2>\n      <p>Para a cobertura, veja a receita de\n        <a href=\"calda.html\">calda de chocolate</a>.</p>\n    </aside>\n  </main>\n\n  <footer>\n    <p><small>&copy; 2026 Receitas da Casa.</small></p>\n  </footer>\n</body>\n</html>"
+  },
+  {
+   "t": "p",
+   "html": "Para ver a diferença que isso faz, a mesma página foi escrita do jeito errado, só com <code>&lt;div&gt;</code>, como ainda se encontra em sites antigos. Este é o conteúdo dela:"
+  },
+  {
+   "t": "codigo",
+   "texto": "  <div class=\"topo\">\n    <div class=\"logo\">Receitas da Casa</div>\n    <div class=\"menu\">\n      <div onclick=\"location.href='bolos.html'\">Bolos</div>\n      <div onclick=\"location.href='salgados.html'\">Salgados</div>\n    </div>\n  </div>\n  <div class=\"conteudo\">\n    <div class=\"titulo\">Bolo de cenoura</div>\n    <img src=\"img/bolo.svg\" width=\"320\" height=\"200\">\n    <div class=\"subtitulo\">Ingredientes</div>\n    <div>3 cenouras médias</div>\n    <div>3 ovos</div>\n  </div>"
+  },
+  {
+   "t": "p",
+   "html": "Na tela, com algum CSS, as duas versões poderiam ficar idênticas. Por baixo, não. As duas foram conferidas da mesma forma:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Conferência",
+    "Página semântica",
+    "Só com <code>&lt;div&gt;</code>"
+   ],
+   "linhas": [
+    [
+     "validador do W3C",
+     "sem erros",
+     "erro: <code>&lt;img&gt;</code> sem <code>alt</code>"
+    ],
+    [
+     "verificador de acessibilidade (axe)",
+     "nenhuma violação",
+     "4 violações"
+    ],
+    [
+     "navegar com a tecla <code>Tab</code>",
+     "passa pelos 5 links",
+     "não chega a nenhum item do menu"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O último resultado é o mais grave. Quem não usa mouse navega com a tecla <code>Tab</code>, que salta de um elemento interativo para o próximo: links, botões, campos. O <code>&lt;a&gt;</code> é interativo por natureza; um <code>&lt;div&gt;</code> com <code>onclick</code> não é, e o menu simplesmente não existe para essas pessoas. As quatro violações do axe foram a imagem sem texto alternativo, a falta de um <code>&lt;main&gt;</code>, a falta de um <code>&lt;h1&gt;</code> e conteúdo fora de qualquer região da página."
+  },
+  {
+   "t": "h2",
+   "id": "2-11-acessibilidade",
+   "texto": "2.11 Acessibilidade"
+  },
+  {
+   "t": "p",
+   "html": "<strong>Acessibilidade</strong> é a possibilidade de qualquer pessoa usar o site, inclusive pessoas cegas, que ouvem a página por um <strong>leitor de tela</strong>, como o NVDA, gratuito, ou o leitor que vem no celular; pessoas com baixa visão, que ampliam a tela; pessoas com deficiência motora, que usam só o teclado ou comandos de voz; pessoas surdas, que dependem de legendas; e pessoas com deficiência cognitiva, que precisam de um conteúdo claro. Segundo o Censo de 2022 do IBGE, são cerca de 14 milhões de brasileiros com algum tipo de deficiência, sem contar quem tem uma limitação temporária, como um braço quebrado, ou circunstancial, como o sol forte na tela do celular."
+  },
+  {
+   "t": "p",
+   "html": "No Brasil, a acessibilidade dos sites é também obrigação legal: a Lei Brasileira de Inclusão (Lei n.º 13.146/2015), no artigo 63, exige sites acessíveis de empresas com sede ou representação no país e de órgãos de governo. A referência técnica internacional são as <strong>WCAG</strong> (<em>Web Content Accessibility Guidelines</em>) do W3C, hoje na versão 2.2, e o nível que costuma ser exigido é o AA."
+  },
+  {
+   "t": "p",
+   "html": "A boa notícia é que a maior parte da acessibilidade vem de graça com o HTML semântico. O leitor de tela não “vê” a página: ele percorre uma <strong>árvore de acessibilidade</strong>, que o navegador monta a partir do HTML, com o papel e o nome de cada elemento. Este é o começo dessa árvore para a página de receita, obtido do navegador com o Playwright, uma ferramenta que controla navegadores por código:"
+  },
+  {
+   "t": "codigo",
+   "texto": "- banner:\n  - paragraph:\n    - link \"Receitas da Casa\"\n  - navigation \"Principal\":\n    - list:\n      - listitem:\n        - link \"Bolos\"\n      ...\n- main:\n  - article:\n    - heading \"Bolo de cenoura com cobertura de chocolate\"\n      [level=1]\n    - figure \"O bolo pronto, ainda na forma.\":\n      - img \"Bolo retangular com cobertura de chocolate\"\n    - heading \"Ingredientes\" [level=2]\n    - list:\n      - listitem: 3 cenouras médias\n      ..."
+  },
+  {
+   "t": "p",
+   "html": "Cada elemento semântico virou um ponto de referência com nome: <code>banner</code> é o <code>&lt;header&gt;</code>, <code>navigation</code> é o <code>&lt;nav&gt;</code>, <code>main</code>, os títulos com o seu nível, a imagem com o seu <code>alt</code>. Com isso, a pessoa pode pular direto para o conteúdo principal, ouvir a lista de títulos ou a lista de links. Para a versão só com <code>&lt;div&gt;</code>, a árvore inteira foi esta:"
+  },
+  {
+   "t": "codigo",
+   "texto": "- text: Receitas da Casa Bolos Salgados Bolo de cenoura\n- img\n- text: Ingredientes 3 cenouras médias 3 ovos"
+  },
+  {
+   "t": "p",
+   "html": "Um texto corrido, sem títulos, sem menu e com uma imagem sem nome. Uma lista do que conferir em toda página:"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "o idioma no <code>&lt;html lang&gt;</code>;",
+    "um <code>&lt;h1&gt;</code> e títulos em ordem, sem pular níveis;",
+    "as regiões marcadas: <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>;",
+    "texto alternativo em todas as imagens, vazio nas decorativas;",
+    "links com texto que diz o destino;",
+    "tudo o que é clicável feito com <code>&lt;a&gt;</code> ou <code>&lt;button&gt;</code>, e alcançável pelo teclado;",
+    "legendas nos vídeos;",
+    "contraste suficiente entre texto e fundo (Capítulo 4)."
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Existem também os atributos <strong>ARIA</strong>, como o <code>aria-label</code> do menu, que acrescentam informações à árvore de acessibilidade. A primeira regra para usá-los, escrita pelo próprio W3C, é: se existe um elemento HTML que faz o que você precisa, use o elemento, e não o ARIA. Um <code>&lt;button&gt;</code> já é um botão para todos; um <code>&lt;div role=\"button\"&gt;</code> precisa de muito trabalho extra para chegar perto disso. Para conferir uma página, a extensão <strong>axe DevTools</strong>, gratuita, e a aba <strong>Lighthouse</strong> das ferramentas de desenvolvedor do Chrome apontam os problemas mais comuns. Elas encontram parte dos problemas, mas não todos: vale também navegar pela página só com o teclado."
+  },
+  {
+   "t": "h2",
+   "id": "2-12-caracteres-especiais",
+   "texto": "2.12 Caracteres especiais"
+  },
+  {
+   "t": "p",
+   "html": "Alguns caracteres têm significado no HTML, como o <code>&lt;</code>, que abre uma tag. Para mostrá-los no texto, usam-se as <strong>entidades</strong>, que começam com <code>&amp;</code> e terminam com <code>;</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<p>Use &lt;p&gt; para parágrafos.</p>\n<p>Arroz &amp; feijão custam R$&nbsp;20.</p>\n<p>&copy; 2026 &mdash; todos os direitos reservados.</p>"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Entidade",
+    "Mostra",
+    "Uso"
+   ],
+   "linhas": [
+    [
+     "<code>&amp;lt;</code> e <code>&amp;gt;</code>",
+     "<code>&lt;</code> e <code>&gt;</code>",
+     "mostrar código HTML no texto"
+    ],
+    [
+     "<code>&amp;amp;</code>",
+     "<code>&amp;</code>",
+     "o “e comercial”"
+    ],
+    [
+     "<code>&amp;nbsp;</code>",
+     "(espaço)",
+     "um espaço que não quebra a linha, como entre “R$” e o valor"
+    ],
+    [
+     "<code>&amp;copy;</code>",
+     "©",
+     "o símbolo de direitos autorais"
+    ],
+    [
+     "<code>&amp;mdash;</code>",
+     "—",
+     "o travessão"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Com o UTF-8, letras acentuadas e símbolos como © podem ser digitados diretamente; as entidades são necessárias mesmo só para o <code>&lt;</code>, o <code>&gt;</code>, o <code>&amp;</code> e os caracteres invisíveis, como o espaço que não quebra. Também existem entidades numéricas, pelo código do caractere: o <code>&amp;#8209;</code> é um hífen que não quebra a linha. O html-validate pediu os dois no link de telefone da Seção 2.5, <code>(21)&amp;nbsp;99999&amp;#8209;0000</code>, para que o número nunca seja partido entre duas linhas."
+  },
+  {
+   "t": "h2",
+   "id": "2-13-a-pagina-completa",
+   "texto": "2.13 A página completa"
+  },
+  {
+   "t": "p",
+   "html": "Juntando os blocos das seções anteriores, a página de receita fica assim no navegador, ainda sem nenhum CSS, só com o estilo padrão:"
+  },
+  {
+   "t": "imagem",
+   "src": "apostilas/web1/capitulo-02_receita.png",
+   "alt": "capitulo 02 receita"
+  },
+  {
+   "t": "p",
+   "html": "O navegador já dá alguma forma à página: títulos maiores, marcadores nas listas, números no modo de preparo, links sublinhados. Isso é o estilo padrão, que cada navegador aplica, e que o CSS vai substituir a partir do Capítulo 4. A página foi conferida pelos dois validadores, o do W3C e o html-validate, sem nenhum erro; pelo axe, sem nenhuma violação; e pela navegação com o teclado. O navegador baixou o HTML, a imagem do bolo e o <em>favicon</em>, todos com o status <code>200</code>."
+  },
+  {
+   "t": "h2",
+   "id": "erros-comuns",
+   "texto": "Erros Comuns"
+  },
+  {
+   "t": "lista",
+   "numerada": false,
+   "itens": [
+    "<strong>Esquecer o <code>alt</code> das imagens.</strong> A imagem some para quem usa leitor de tela. Descreva o que ela mostra, ou use <code>alt=\"\"</code> se for decorativa.",
+    "<strong>Escolher o título pelo tamanho da letra.</strong> Os níveis de título formam o sumário da página. Escolha pela hierarquia e ajuste o tamanho com o CSS.",
+    "<strong>Fazer botões e menus com <code>&lt;div&gt;</code>.</strong> Eles não recebem o foco do teclado nem são anunciados como clicáveis. Use <code>&lt;a&gt;</code> e <code>&lt;button&gt;</code>.",
+    "<strong>Fechar os elementos fora de ordem.</strong> <code>&lt;p&gt;&lt;strong&gt;...&lt;/p&gt;&lt;/strong&gt;</code> confunde o navegador. Feche primeiro o que abriu por último.",
+    "<strong>Usar <code>&lt;br&gt;</code> para dar espaço.</strong> O espaçamento é trabalho do CSS.",
+    "<strong>Usar tabelas para posicionar a página.</strong> Tabelas são para dados; o layout é feito com Flexbox e Grid.",
+    "<strong>Links com “clique aqui”.</strong> Fora de contexto, o texto não diz nada. Escreva o destino.",
+    "<strong>Esquecer o <code>lang</code> e o <code>charset</code>.</strong> O leitor de tela lê com o sotaque errado, e os acentos podem virar símbolos estranhos.",
+    "<strong>Confiar só no que aparece na tela.</strong> Uma página pode parecer certa e ter erros. Passe pelo validador e pelo verificador de acessibilidade."
+   ]
+  }
+ ]
+}
