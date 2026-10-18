@@ -1,0 +1,9 @@
+// Publicação no Cloudflare: serve a pasta "dist" gerada pelo npm run build.
+// As rotas usam HashRouter, então toda página é o próprio index.html.
+{
+  "name": "hubdeestudos",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}
