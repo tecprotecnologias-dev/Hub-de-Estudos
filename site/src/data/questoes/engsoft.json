@@ -28,14 +28,13 @@
     "capituloId": "engsoft-cap1",
     "tipo": "objetiva",
     "texto": {
-      "citacao": "\"The primary purpose of the software life cycle processes is to define the fundamental activities and tasks that must be carried out throughout a software system's life, from conception through deployment to operation, maintenance, and eventual retirement.\"",
-      "traducao": "(Tradução livre: \"O propósito principal dos processos de ciclo de vida de software é definir as atividades e tarefas fundamentais que devem ser realizadas durante toda a vida de um sistema de software, desde sua concepção até a implantação, operação, manutenção e eventual descontinuação.\")",
-      "fonte": "ISO/IEC/IEEE 12207:2017 — Systems and software engineering — Software life cycle processes. Padrão internacional de processos de ciclo de vida de software."
+      "citacao": "A norma internacional ISO/IEC/IEEE 12207 define os processos do ciclo de vida do software, da concepção à descontinuação, como um conjunto comum de atividades que pode ser organizado de formas diferentes por cada modelo de desenvolvimento.",
+      "fonte": "Texto elaborado com base na ISO/IEC/IEEE 12207:2017 — Systems and software engineering — Software life cycle processes."
     },
     "caso": [
       "Um gerente de projetos de uma agência de desenvolvimento argumenta que o Modelo Cascata, o Ágil e o Espiral são práticas completamente independentes e não possuem denominador comum. Ele afirma: \"Cada modelo faz o seu trabalho do início ao fim, e não existe nenhum padrão internacional que considere os dois como parte de uma mesma estrutura de processos.\""
     ],
-    "enunciado": "Com base no propósito da norma ISO/IEC/IEEE 12207 citada acima, qual é a avaliação correta dessa afirmação?",
+    "enunciado": "Com base na norma ISO/IEC/IEEE 12207 e na Seção 1.1, qual é a avaliação correta dessa afirmação?",
     "alternativas": [
       "O gerente está totalmente correto: modelos diferentes não podem ser comparados ou regulados por um único padrão internacional",
       "O gerente está equivocado: a norma define processos de ciclo de vida comuns a qualquer modelo, seja Cascata, Ágil ou Espiral",
@@ -44,7 +43,8 @@
       "A norma citada trata apenas de hardware, não tendo relação com processos de desenvolvimento de software"
     ],
     "correta": 1,
-    "resolucao": "a apostila (Seção 1.1) mostra que todos os modelos de ciclo de vida compartilham as mesmas atividades essenciais (requisitos, análise, design, implementação, testes, implantação e manutenção); o que muda é a ordem no tempo, a intensidade e a flexibilidade. A ISO/IEC/IEEE 12207 formaliza esse conjunto comum, então existe sim um denominador comum, e o gerente está equivocado. {{A}} contraria essa base comum, que é justamente o que permite comparar os modelos; {{C}} está errada porque nada restringe a norma ao Cascata; {{D}} nega a existência da própria norma citada no enunciado; {{E}} confunde: a 12207 trata de software, e sistemas com hardware são tema da ISO/IEC/IEEE 15288."
+    "resolucao": "a apostila (Seção 1.1) mostra que todos os modelos de ciclo de vida compartilham as mesmas atividades essenciais (requisitos, análise, design, implementação, testes, implantação e manutenção); o que muda é a ordem no tempo, a intensidade e a flexibilidade. A ISO/IEC/IEEE 12207 formaliza esse conjunto comum, então existe sim um denominador comum, e o gerente está equivocado. {{A}} contraria essa base comum, que é justamente o que permite comparar os modelos; {{C}} está errada porque nada restringe a norma ao Cascata; {{D}} nega a existência da própria norma citada no enunciado; {{E}} confunde: a 12207 trata de software, e sistemas com hardware são tema da ISO/IEC/IEEE 15288.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap1-q3",
@@ -68,7 +68,8 @@
       "RAD, pela prototipagem rápida com usuários"
     ],
     "correta": 3,
-    "resolucao": "o caso descreve a definição do Cascata na Seção 1.1: requisitos concluídos e aprovados, depois design, código, testes do sistema inteiro e implantação, cada etapa encerrada antes da próxima, com uma única passagem por fase e uma única entrega no fim. {{A}} não serve porque não há iterações; {{B}} não serve porque não há voltas nem análise de riscos; {{C}} não serve porque o sistema é entregue inteiro, e não em partes; {{E}} não serve porque não há protótipos nem participação do usuário durante a construção."
+    "resolucao": "o caso descreve a definição do Cascata na Seção 1.1: requisitos concluídos e aprovados, depois design, código, testes do sistema inteiro e implantação, cada etapa encerrada antes da próxima, com uma única passagem por fase e uma única entrega no fim. {{A}} não serve porque não há iterações; {{B}} não serve porque não há voltas nem análise de riscos; {{C}} não serve porque o sistema é entregue inteiro, e não em partes; {{E}} não serve porque não há protótipos nem participação do usuário durante a construção.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap1-q4",
@@ -76,8 +77,8 @@
     "capituloId": "engsoft-cap1",
     "tipo": "objetiva",
     "texto": {
-      "citacao": "\"The spiral model of the software process is oriented toward minimizing risk by emphasizing systematic risk analysis and risk-reduction strategies throughout the software development process.\"",
-      "traducao": "(Tradução livre: \"O modelo espiral do processo de software está orientado para minimizar riscos enfatizando análise sistemática de riscos e estratégias de redução de riscos durante todo o processo de desenvolvimento de software.\")",
+      "citacao": "\"The major distinguishing feature of the spiral model is that it creates a risk-driven approach to the software process rather than a primarily document-driven or code-driven process.\"",
+      "traducao": "(Tradução livre: \"A principal característica que distingue o modelo espiral é que ele cria uma abordagem do processo de software guiada por riscos, em vez de um processo guiado principalmente por documentos ou por código.\")",
       "fonte": "BOEHM, B. W. A Spiral Model of Software Development and Enhancement. IEEE Computer, v. 21, n. 5, p. 61-72, 1988."
     },
     "caso": [
@@ -92,7 +93,8 @@
       "RAD, pois a prototipagem rápida reduz custos"
     ],
     "correta": 3,
-    "resolucao": "Boehm descreve o Modelo Espiral como centrado em ciclos que começam pela identificação e análise de riscos, seguida de ações para mitigá-los. Essa característica torna o modelo ideal para projetos grandes, complexos e de alto risco, como sistemas financeiros críticos."
+    "resolucao": "Boehm descreve o Modelo Espiral como centrado em ciclos que começam pela identificação e análise de riscos, seguida de ações para mitigá-los. Essa característica torna o modelo ideal para projetos grandes, complexos e de alto risco, como sistemas financeiros críticos.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap1-q5",
@@ -115,31 +117,28 @@
       "Equivocada: o Manifesto Ágil não menciona planejamento nem mudanças, tratando apenas da colaboração com o cliente"
     ],
     "correta": 2,
-    "resolucao": "O Manifesto Ágil é explícito em sua frase final: embora valorizem os itens à esquerda (indivíduos, software funcionando, colaboração, mudanças), os ágeis ainda reconhecem valor nos itens à direita (processos, documentação, contratos, planos). Isso significa planejamento adaptativo, não ausência de planejamento."
+    "resolucao": "O Manifesto Ágil é explícito em sua frase final: embora valorizem os itens à esquerda (indivíduos, software funcionando, colaboração, mudanças), os ágeis ainda reconhecem valor nos itens à direita (processos, documentação, contratos, planos). Isso significa planejamento adaptativo, não ausência de planejamento.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap1-q6",
     "disciplinaId": "engenharia-de-software-e-da-usabilidade",
     "capituloId": "engsoft-cap1",
     "tipo": "objetiva",
-    "texto": {
-      "citacao": "\"From a study of 8,380 IT projects across the United States, only 16.2% of the projects were completed within the initially estimated budget and schedule, while 31.1% were canceled before completion.\"",
-      "traducao": "(Tradução livre: \"A partir de um estudo de 8.380 projetos de TI nos Estados Unidos, apenas 16,2% dos projetos foram concluídos dentro do orçamento e prazo estimados inicialmente, enquanto 31,1% foram cancelados antes da conclusão.\")",
-      "fonte": "THE STANDISH GROUP INTERNATIONAL. CHAOS Report, 1994. Pesquisa com 8.380 projetos de TI em empresas norte-americanas."
-    },
+    "nivel": "medio",
     "caso": [
-      "Uma empresa de consultoria de software argumenta que as falhas em requisitos são relativamente raras na prática e que a maioria dos projetos alcança sucesso sem necessidade de cuidados especiais na fase inicial. Usa esse argumento para justificar uma abordagem de desenvolvimento que inicia a codificação rapidamente, com requisitos ainda pouco refinados."
+      "Uma rede de clínicas precisa de um sistema de agendamento on-line em três meses, antes da abertura de novas unidades. O sistema é de médio porte e tem muitas telas, pois o principal desafio é tornar o agendamento simples para pacientes e recepcionistas. A coordenadora das recepcionistas se ofereceu para participar de reuniões semanais com a equipe, testando cada tela à medida que ela fica pronta."
     ],
-    "enunciado": "Avaliando essa argumentação à luz dos dados do CHAOS Report, é correto afirmar que:",
+    "enunciado": "Considerando as características do projeto, o modelo de desenvolvimento mais adequado e o principal cuidado ao adotá-lo são:",
     "alternativas": [
-      "A empresa está correta: a maioria dos projetos de TI é concluída com sucesso sem necessidade de rigor na fase de Requisitos, já que os ajustes são feitos nos testes",
-      "A empresa está equivocada: o relatório mostra alta taxa de insucesso, e requisitos mal definidos estão entre as causas principais",
-      "O CHAOS Report trata apenas de projetos de hardware, não sendo aplicável a software",
-      "Os dados do CHAOS Report indicam que mais de 90% dos projetos de TI são bem-sucedidos, independentemente da qualidade dos requisitos",
-      "O CHAOS Report não tem nenhuma relação com a fase de Requisitos"
+      "RAD, pela prototipagem rápida com o usuário presente; o cuidado é planejar bem a arquitetura desde o início, para o sistema não ficar pouco escalável",
+      "Cascata, pelo prazo curto e fixo; o cuidado é aprovar todas as telas com a coordenadora antes de começar a programar",
+      "Espiral, pela quantidade de telas; o cuidado é fazer uma análise de riscos completa e formal no início de cada ciclo",
+      "RAD, pelo prazo curto; o cuidado é limitar a participação da coordenadora, que pode atrasar as entregas semanais",
+      "Incremental, pela quantidade de telas; o cuidado é entregar o sistema inteiro, de uma só vez, no fim dos três meses"
     ],
-    "correta": 1,
-    "resolucao": "O CHAOS Report é um dos estudos mais citados sobre insucesso de projetos de TI. A taxa de insucesso e cancelamento é extremamente alta, e a pesquisa identifica problemas de requisitos e comunicação como causas raízes recorrentes — exatamente o que o Capítulo 1 enfatiza sobre a criticidade dessa fase."
+    "correta": 0,
+    "resolucao": "O RAD é indicado para sistemas de médio porte, com prazo curto, interface intensiva e usuário disponível para participar ativamente, exatamente o caso. Os módulos são prototipados e revisados em ciclos curtos com o usuário presente. Em troca, o RAD exige usuários muito engajados e pode gerar sistemas pouco escaláveis se a arquitetura não for cuidada desde o início. O Cascata não lida bem com o ajuste das telas, o Espiral é pesado e caro para um projeto desse porte, a participação do usuário é a base do RAD, e o Incremental entrega por partes, e não tudo no fim."
   },
   {
     "id": "engsoft-cap1-q7",
@@ -147,9 +146,9 @@
     "capituloId": "engsoft-cap1",
     "tipo": "objetiva",
     "texto": {
-      "citacao": "\"Architecture represents the set of structures needed to reason about the system, which comprise software elements, relations among them, and properties of both elements and relations. It provides a level of abstraction at the highest levels of design.\"",
-      "traducao": "(Tradução livre: \"A arquitetura representa o conjunto de estruturas necessárias para raciocinar sobre o sistema, que compreende elementos de software, relações entre eles e propriedades de ambos. Fornece um nível de abstração nos níveis mais altos de design.\")",
-      "fonte": "ISO/IEC/IEEE 42010:2011 — Systems and software engineering — Architecture description. Padrão internacional de descrição de arquitetura de software."
+      "citacao": "\"Architecture: fundamental concepts or properties of a system in its environment embodied in its elements, relationships, and in the principles of its design and evolution.\"",
+      "traducao": "(Tradução livre: \"Arquitetura: conceitos ou propriedades fundamentais de um sistema em seu ambiente, incorporados em seus elementos, em suas relações e nos princípios de seu projeto e evolução.\")",
+      "fonte": "ISO/IEC/IEEE 42010:2011 — Systems and software engineering — Architecture description."
     },
     "caso": [
       "Uma equipe de desenvolvimento de um sistema de e-commerce, antes de escrever a primeira linha de código, define: quais tecnologias serão usadas (banco de dados relacional, backend em Node.js, frontend em React); como os componentes (Carrinho, Pagamento, Inventário) se comunicarão; qual será a estrutura das tabelas; e quais decisões devem ser mantidas estáveis conforme o sistema cresce. Essas decisões são documentadas e servem como referência para guiar o desenvolvimento."
@@ -163,55 +162,48 @@
       "Testes, pois envolve validação das decisões tomadas"
     ],
     "correta": 2,
-    "resolucao": "A ISO/IEC/IEEE 42010 define arquitetura como as estruturas (elementos de software, relações, tecnologias, princípios de design) que guiam o sistema. Esta é exatamente a atividade da fase de Design (Projeto) descrita no Capítulo 1, onde a organização estrutural do sistema é definida antes da implementação."
+    "resolucao": "A ISO/IEC/IEEE 42010 define a arquitetura pelos elementos do sistema, suas relações e os princípios de seu projeto. Definir tecnologias, a comunicação entre os componentes e a estrutura das tabelas é exatamente a atividade da fase de Design (Projeto) descrita no Capítulo 1, em que a organização do sistema é definida antes da implementação.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap1-q8",
     "disciplinaId": "engenharia-de-software-e-da-usabilidade",
     "capituloId": "engsoft-cap1",
     "tipo": "objetiva",
-    "texto": {
-      "citacao": "\"Software testing comprises static and dynamic techniques that are applied throughout the software development process. Testing is performed at different levels of granularity, from unit testing of individual components to system testing of the complete product.\"",
-      "traducao": "(Tradução livre: \"Os testes de software compreendem técnicas estáticas e dinâmicas aplicadas durante todo o processo de desenvolvimento. Os testes são realizados em diferentes níveis de granularidade, desde testes unitários de componentes individuais até testes de sistema do produto completo.\")",
-      "fonte": "ISO/IEC/IEEE 29119 — Software and systems engineering — Software testing. Série de normas internacionais sobre teste de software."
-    },
+    "nivel": "medio",
     "caso": [
-      "Uma equipe de desenvolvimento de um aplicativo de gestão de vendas realiza a seguinte sequência de testes: primeiro, testa a função que calcula o desconto aplicado a cada venda de forma isolada; depois, testa se essa função se comunica corretamente com a função que atualiza o estoque; em seguida, testa o aplicativo completo de ponta a ponta em um ambiente que simula produção; e, por fim, entrega para um grupo de usuários reais usarem antes do lançamento oficial."
+      "Uma prefeitura vai substituir os sistemas de arrecadação. A secretaria quer começar a usar o quanto antes o módulo do IPTU, que concentra a maior parte da receita; depois virão os módulos do ISS e das taxas. Cada módulo pode funcionar de forma independente, mas todos compartilham o cadastro de contribuintes."
     ],
-    "enunciado": "Na ordem descrita, os tipos de teste realizados pela equipe são, respectivamente:",
+    "enunciado": "O modelo de desenvolvimento mais adequado e o principal cuidado ao adotá-lo são:",
     "alternativas": [
-      "Teste de sistema, teste de aceitação, teste unitário, teste de integração",
-      "Teste unitário, teste de integração, teste de sistema, teste de aceitação",
-      "Teste de aceitação, teste de sistema, teste de integração, teste unitário",
-      "Todos são testes de sistema, apenas em diferentes ambientes",
-      "Teste de integração, teste unitário, teste de aceitação, teste de sistema"
+      "Cascata, que entrega todos os módulos juntos no fim; o cuidado é congelar os requisitos dos três módulos logo no início do projeto",
+      "Incremental, que coloca em uso um módulo por vez; o cuidado é planejar a arquitetura geral, pois integrar os incrementos pode gerar inconsistências",
+      "Espiral, por ser um sistema de alto risco; o cuidado é repetir a análise de riscos de todo o sistema a cada novo módulo entregue",
+      "Incremental, que entrega um módulo por vez; o cuidado é deixar o cadastro de contribuintes para o último incremento do projeto",
+      "RAD, que entrega um módulo por vez; o cuidado é garantir que os usuários da secretaria estejam presentes em todas as reuniões"
     ],
     "correta": 1,
-    "resolucao": "A sequência descreve exatamente a ordem de níveis de testes definida pela apostila e formalizada pela ISO/IEC/IEEE 29119: teste unitário (componente isolado) → teste de integração (comunicação entre componentes) → teste de sistema (produto completo) → teste de aceitação (usuários finais)."
+    "resolucao": "No Modelo Incremental, o sistema é entregue em partes, e o cliente começa a usar as funcionalidades prioritárias mais cedo, como o IPTU. Ele funciona bem quando as partes podem ser entregues de forma independente. Mas exige bom planejamento inicial da arquitetura geral, já que a integração dos incrementos pode gerar inconsistências, como no cadastro de contribuintes, que os três módulos compartilham e que, por isso, não pode ficar para o fim. O Cascata entregaria tudo só no final, e nada no caso indica alto risco nem prototipagem intensiva."
   },
   {
     "id": "engsoft-cap1-q9",
     "disciplinaId": "engenharia-de-software-e-da-usabilidade",
     "capituloId": "engsoft-cap1",
     "tipo": "objetiva",
-    "texto": {
-      "citacao": "\"Software maintenance is broadly defined as the modification of a software product after delivery to correct faults, to improve performance or other attributes, or to adapt the product to a changed environment. The standard classifies software maintenance into four categories: corrective, adaptive, perfective, and preventive.\"",
-      "traducao": "(Tradução livre: \"Manutenção de software é amplamente definida como a modificação de um produto de software após entrega para corrigir defeitos, melhorar desempenho ou outros atributos, ou adaptar o produto a um ambiente alterado. A norma classifica a manutenção em quatro categorias: corretiva, adaptativa, perfectiva e preventiva.\")",
-      "fonte": "ISO/IEC 14764:1999/2006 — Software Engineering — Software Maintenance. Padrão internacional de classificação de manutenção de software."
-    },
+    "nivel": "medio",
     "caso": [
-      "Um sistema de gerenciamento de biblioteca está em produção há cinco anos. A Lei Geral de Proteção de Dados (LGPD) publicou uma nova resolução que obriga o sistema a alterar como coleta, armazena e autoriza o uso de dados dos usuários. A equipe de manutenção faz as alterações necessárias. Nenhum bug foi corrigido, e nenhuma nova funcionalidade foi solicitada pelo cliente."
+      "Em um projeto de sistema de folha de pagamento, foram registradas quatro atividades: (1) entrevistas com o RH e o setor financeiro para levantar o que o sistema deve fazer e as restrições que deve respeitar; (2) exame desses requisitos para verificar consistência e viabilidade, quando se percebeu que o RH e o financeiro pediam regras diferentes para o fechamento do mês; (3) definição da arquitetura, do banco de dados e do desenho das telas; (4) migração dos dados do sistema antigo, treinamento dos usuários e preparação de um plano para voltar à versão anterior caso algo dê errado."
     ],
-    "enunciado": "Segundo a classificação da ISO/IEC 14764, esse tipo de manutenção é:",
+    "enunciado": "As atividades 1, 2, 3 e 4 pertencem, respectivamente, às fases do ciclo de vida:",
     "alternativas": [
-      "Corretiva, pois qualquer alteração em um sistema já implantado é uma correção",
-      "Perfectiva, pois toda mudança após implantação é uma melhoria",
-      "Adaptativa, pois adequa o sistema a uma mudança no ambiente externo, no caso a legislação",
-      "Preventiva, pois busca reduzir débito técnico",
-      "Nenhuma das anteriores, pois mudanças legais estão fora do escopo da manutenção e devem ser tratadas como um novo projeto"
+      "Análise, Requisitos, Design e Implantação",
+      "Requisitos, Análise, Implementação e Manutenção",
+      "Requisitos, Análise, Design e Implantação",
+      "Requisitos, Design, Análise e Testes",
+      "Requisitos, Análise, Design e Manutenção"
     ],
     "correta": 2,
-    "resolucao": "A manutenção Adaptativa é definida pela ISO/IEC 14764 como a adequação do sistema a mudanças no ambiente externo (legislação, novos SO, APIs de terceiros, etc.). O gatilho não foi um defeito (Corretiva), nem solicitação do cliente (Perfectiva), nem refatoração interna (Preventiva)."
+    "resolucao": "Levantar e documentar o que o sistema deve fazer, com entrevistas, é a fase de Requisitos (1). Examinar os requisitos quanto a consistência, completude e viabilidade, e negociar conflitos entre stakeholders, é a Análise (2). Definir arquitetura, banco de dados e interface é o Design (3). Instalar, migrar dados, treinar usuários e ter um plano de rollback é a Implantação (4). A Manutenção só começa depois que o sistema está em produção."
   },
   {
     "id": "engsoft-cap1-q10",
@@ -235,7 +227,8 @@
       "Brooks não trata dessa questão de escolha de modelos"
     ],
     "correta": 1,
-    "resolucao": "O argumento central de Brooks em \"No Silver Bullet\" é que nenhuma tecnologia ou metodologia isolada resolve, por si só, os desafios essenciais da engenharia de software. Isso sustenta a prática de combinar elementos de diferentes modelos conforme o contexto, em vez de seguir um único método de forma dogmática — exatamente o que o Capítulo 1 enfatiza ao apresentar vários modelos."
+    "resolucao": "O argumento central de Brooks em \"No Silver Bullet\" é que nenhuma tecnologia ou metodologia isolada resolve, por si só, os desafios essenciais da engenharia de software. Isso sustenta a prática de combinar elementos de diferentes modelos conforme o contexto, em vez de seguir um único método de forma dogmática — exatamente o que o Capítulo 1 enfatiza ao apresentar vários modelos.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap2-q1",
@@ -243,9 +236,9 @@
     "capituloId": "engsoft-cap2",
     "tipo": "discursiva",
     "texto": {
-      "citacao": "\"A software requirements specification (SRS) is a complete description of the behavior of the system to be developed. It includes a set of use cases that describe all the interactions the users will have with the software. Non-functional requirements such as performance, interface, operations, and so on should also be specified.\"",
-      "traducao": "(Tradução livre: \"Uma especificação de requisitos de software (SRS) é uma descrição completa do comportamento do sistema a ser desenvolvido. Inclui um conjunto de casos de uso que descrevem todas as interações que os usuários terão com o software. Requisitos não funcionais como desempenho, interface, operações, e assim por diante, também devem ser especificados.\")",
-      "fonte": "IEEE 830-1998 — IEEE Recommended Practice for Software Requirements Specifications. Padrão internacional para especificação de requisitos de software."
+      "citacao": "\"An SRS is unambiguous if, and only if, every requirement stated therein has only one interpretation.\"",
+      "traducao": "(Tradução livre: \"Uma SRS é não ambígua se, e somente se, cada requisito nela descrito tiver apenas uma interpretação.\")",
+      "fonte": "IEEE Std 830-1998 — IEEE Recommended Practice for Software Requirements Specifications, Seção 4.3.2."
     },
     "caso": [
       "Uma equipe de desenvolvimento está especificando os requisitos para um sistema de gerenciamento de vendas. Um dos requisitos coletados foi escrito assim: \"O sistema deve ser rápido e fácil de usar.\" Outro requisito diz: \"O sistema deve processar pedidos em no máximo 2 segundos para até 500 usuários simultâneos.\" Um terceiro requisito menciona: \"Requisito de desempenho TBD [a ser definido].\""
@@ -257,18 +250,14 @@
       "c) A norma IEEE 830 enfatiza a inclusão de requisitos funcionais E não funcionais. No contexto do sistema de vendas, cite dois exemplos de requisitos funcionais e dois de requisitos não funcionais que deveriam constar na SRS.",
       "d) Segundo o Capítulo 2, especificações de requisitos bem feitas reduzem custos durante todo o projeto. Explique por que um requisito mal definido no início (como \"O sistema deve ser rápido\") pode se tornar caro de corrigir durante a Implementação e Testes."
     ],
-    "linhas": 12
+    "linhas": 12,
+    "respostaEsperada": "a) O segundo requisito é o que melhor atende aos critérios: é verificável (dá para medir 2 segundos com 500 usuários), não ambíguo e viável de testar. O primeiro, \"rápido e fácil de usar\", é ambíguo, pois cada leitor entende uma coisa, e não é verificável, pois não há como testar \"rápido\" nem \"fácil\". O terceiro, \"TBD\", não é completo: deixa uma lacuna e não pode ser verificado nem rastreado enquanto não for definido.\nb) Ele mistura duas coisas vagas e deve virar requisitos não funcionais mensuráveis, por exemplo: \"O sistema deve exibir o resultado de qualquer consulta em até 2 segundos para até 500 usuários simultâneos\" (desempenho) e \"Um vendedor sem treinamento deve conseguir registrar um pedido em até 3 minutos\" (usabilidade). Cada um tem uma única interpretação e um critério de teste.\nc) Funcionais: \"O sistema deve registrar pedidos com cliente, produtos e quantidades\" e \"O sistema deve gerar relatórios de vendas por período e por vendedor\". Não funcionais: \"O sistema deve ter disponibilidade de 99,9% ao mês\" (confiabilidade) e \"As senhas devem ser armazenadas com hash bcrypt\" (segurança); também servem desempenho e conformidade com a LGPD.\nd) Um requisito vago passa por todas as fases sem que ninguém perceba o problema: o design e o código são feitos com a interpretação de cada desenvolvedor. Quando o cliente testa e diz que não está \"rápido\", é preciso refazer arquitetura, código e testes. A fase de Requisitos é onde os erros são mais baratos de encontrar; deixados para a Implementação ou os Testes, custam muito mais."
   },
   {
     "id": "engsoft-cap2-q2",
     "disciplinaId": "engenharia-de-software-e-da-usabilidade",
     "capituloId": "engsoft-cap2",
     "tipo": "objetiva",
-    "texto": {
-      "citacao": "\"Joint Application Development (JAD) is a structured workshop technique used to gather requirements from multiple stakeholders in a collaborative environment. Multiple participants representing different views and interests meet in a facilitated session to identify, discuss, and resolve conflicting requirements quickly.\"",
-      "traducao": "(Tradução livre: \"Joint Application Development (JAD) é uma técnica de workshop estruturada usada para coletar requisitos de múltiplos stakeholders em um ambiente colaborativo. Múltiplos participantes representando diferentes visões e interesses se reúnem em uma sessão facilitada para identificar, discutir e resolver rapidamente requisitos conflitantes.\")",
-      "fonte": "LIND, M. R. Joint Application Development (JAD). Técnica de elicitação colaborativa de requisitos. Contemporary approaches to requirements gathering and analysis in software development."
-    },
     "caso": [
       "Uma empresa de fintech está desenvolvendo um novo aplicativo de investimentos. O CEO quer apenas funcionalidades essenciais (login e visualização de carteira), os analistas de risco exigem sistemas de segurança robustos, e os clientes-teste pedem relatórios detalhados de desempenho. A equipe poderia gastar meses em entrevistas individuais tentando alinhar essas visões, mas decide usar uma abordagem diferente."
     ],
@@ -281,7 +270,8 @@
       "Prototipagem de interfaces para coletar feedback isoladamente"
     ],
     "correta": 3,
-    "resolucao": "o caso reproduz o \"ideal quando\" dos workshops na Seção 2.1: vários stakeholders com visões conflitantes (CEO, analistas de risco e clientes) e necessidade de consenso rápido. O JAD reúne todos numa sessão facilitada para negociar e resolver os conflitos. {{A}}: questionários servem para muitos usuários dispersos, e respostas isoladas não resolvem conflito; {{B}}: entrevistas levantam necessidades individuais, não negociam visões, e o próprio enunciado descarta meses de entrevistas; {{C}}: a observação ajuda quando o usuário não sabe explicar o que precisa, e aqui cada grupo sabe bem o que quer; {{E}}: protótipos servem a requisitos de interface, e feitos \"isoladamente\" não produzem consenso."
+    "resolucao": "o caso reproduz o \"ideal quando\" dos workshops na Seção 2.1: vários stakeholders com visões conflitantes (CEO, analistas de risco e clientes) e necessidade de consenso rápido. O JAD reúne todos numa sessão facilitada para negociar e resolver os conflitos. {{A}}: questionários servem para muitos usuários dispersos, e respostas isoladas não resolvem conflito; {{B}}: entrevistas levantam necessidades individuais, não negociam visões, e o próprio enunciado descarta meses de entrevistas; {{C}}: a observação ajuda quando o usuário não sabe explicar o que precisa, e aqui cada grupo sabe bem o que quer; {{E}}: protótipos servem a requisitos de interface, e feitos \"isoladamente\" não produzem consenso.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap2-q3",
@@ -289,9 +279,9 @@
     "capituloId": "engsoft-cap2",
     "tipo": "objetiva",
     "texto": {
-      "citacao": "\"A User Story is a short, simple description of a feature told from the perspective of the person who desires the new capability, usually a user or customer of the system. User Stories follow the pattern: As a [type of user], I want [an action], so that [a benefit/a value].\"",
-      "traducao": "(Tradução livre: \"Uma História de Usuário é uma descrição curta e simples de uma funcionalidade contada pela perspectiva da pessoa que deseja a nova capacidade, geralmente um usuário ou cliente do sistema. Histórias de Usuário seguem o padrão: Como [tipo de usuário], quero [uma ação], para que [um benefício/valor].\")",
-      "fonte": "JEFFRIES, R. (Connextra/XP Community). User Stories. Técnica ágil para especificação de requisitos centrada no usuário."
+      "citacao": "\"User stories have three critical aspects. We can call these Card, Conversation, and Confirmation.\"",
+      "traducao": "(Tradução livre: \"As histórias de usuário têm três aspectos fundamentais. Podemos chamá-los de Cartão, Conversa e Confirmação.\")",
+      "fonte": "JEFFRIES, R. Essential XP: Card, Conversation, Confirmation. XProgramming.com, 2001."
     },
     "caso": [
       "Um Product Owner de um aplicativo de delivery escreve a seguinte história: \"Como cliente, quero poder finalizar meu pedido rápido, para economizar tempo.\" Depois de algum tempo, a equipe percebe que essa história é vaga — \"rápido\" pode significar coisas diferentes para cada um. O PO adiciona critérios: (1) o pedido deve ser confirmado em no máximo 5 toques; (2) a tela de pagamento deve carregar em menos de 2 segundos."
@@ -305,22 +295,18 @@
       "Context — o contexto do negócio onde a história se aplica"
     ],
     "correta": 2,
-    "resolucao": "Os \"Três Cs\" de Ron Jeffries são: Card (formato), Conversation (discussão), e Confirmation (critérios de aceitação que confirmam quando a história está pronta). Os critérios específicos e mensuráveis adicionados pelo PO (5 toques, 2 segundos) são exemplos de Confirmation."
+    "resolucao": "Os \"Três Cs\" de Ron Jeffries são: Card (formato), Conversation (discussão), e Confirmation (critérios de aceitação que confirmam quando a história está pronta). Os critérios específicos e mensuráveis adicionados pelo PO (5 toques, 2 segundos) são exemplos de Confirmation.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap2-q4",
     "disciplinaId": "engenharia-de-software-e-da-usabilidade",
     "capituloId": "engsoft-cap2",
     "tipo": "objetiva",
-    "texto": {
-      "citacao": "\"The MoSCoW method (Must, Should, Could, Won't) is a prioritization framework that helps product teams decide which features and requirements to implement in a given release. Must Have represents mandatory features without which the system cannot be delivered. Should Have are important but not critical. Could Have are desirable but low priority. Won't Have are explicitly out of scope for the current iteration.\"",
-      "traducao": "(Tradução livre: \"O método MoSCoW (Must, Should, Could, Won't) é um framework de priorização que ajuda as equipes de produto a decidir quais funcionalidades e requisitos implementar em um determinado lançamento. Must Have representa funcionalidades obrigatórias sem as quais o sistema não pode ser entregue. Should Have são importantes mas não críticas. Could Have são desejáveis mas de baixa prioridade. Won't Have estão explicitamente fora do escopo para a iteração atual.\")",
-      "fonte": "CLEGG, D. et al. A Practical Guide to Dynamic Systems Development Method. Técnica MoSCoW de priorização de requisitos em DSDM/Agile."
-    },
     "caso": [
       "Uma startup de e-commerce tem dois meses para lançar um MVP (Mínimo Produto Viável). A lista de requisitos inclui: (1) catálogo de produtos; (2) carrinho de compras; (3) sistema de pagamento; (4) histórico de pedidos do cliente; (5) programa de fidelidade com pontos; (6) recomendações personalizadas baseadas em IA. A equipe tem capacidade técnica limitada e precisa priorizar."
     ],
-    "enunciado": "Usando a técnica MoSCoW descrita acima, qual seria a classificação MAIS apropriada para o programa de fidelidade com pontos?",
+    "enunciado": "Usando a técnica MoSCoW, qual seria a classificação MAIS apropriada para o programa de fidelidade com pontos?",
     "alternativas": [
       "Must Have, pois toda loja online tem esse sistema",
       "Should Have, pois é importante mas pode ser implementado em futuro próximo",
@@ -329,7 +315,8 @@
       "Não se enquadra em nenhuma categoria MoSCoW"
     ],
     "correta": 2,
-    "resolucao": "pela tabela da Seção 2.2, Could Have é o desejável de menor impacto, que entra só se sobrar tempo e orçamento; num MVP de dois meses, o cliente compra sem o programa de fidelidade. {{A}}: Must Have é aquilo sem o qual o sistema não pode ser entregue (catálogo, carrinho, pagamento), e \"toda loja tem\" não é critério; {{B}}: é a distratora mais forte, mas Should Have é importante e tem um contorno, e a fidelidade nem faz parte do fluxo de compra; {{D}}: Won't Have é algo adiado e documentado para o futuro, não algo \"desnecessário\"; {{E}}: as quatro categorias do MoSCoW cobrem todos os requisitos."
+    "resolucao": "pela tabela da Seção 2.2, Could Have é o desejável de menor impacto, que entra só se sobrar tempo e orçamento; num MVP de dois meses, o cliente compra sem o programa de fidelidade. {{A}}: Must Have é aquilo sem o qual o sistema não pode ser entregue (catálogo, carrinho, pagamento), e \"toda loja tem\" não é critério; {{B}}: é a distratora mais forte, mas Should Have é importante e tem um contorno, e a fidelidade nem faz parte do fluxo de compra; {{D}}: Won't Have é algo adiado e documentado para o futuro, não algo \"desnecessário\"; {{E}}: as quatro categorias do MoSCoW cobrem todos os requisitos.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap2-q5",
@@ -337,9 +324,8 @@
     "capituloId": "engsoft-cap2",
     "tipo": "objetiva",
     "texto": {
-      "citacao": "\"According to the Standish Group CHAOS Report, the leading causes of software project failure are incomplete requirements (13.1%), lack of user input (12.4%), and unclear requirements (11.8%). Together, requirements-related issues account for approximately 37% of project failures.\"",
-      "traducao": "(Tradução livre: \"De acordo com o Relatório CHAOS do Standish Group, as principais causas de falha de projetos de software são requisitos incompletos (13,1%), falta de envolvimento do usuário (12,4%) e requisitos pouco claros (11,8%). Juntos, problemas relacionados a requisitos representam aproximadamente 37% das falhas de projetos.\")",
-      "fonte": "THE STANDISH GROUP INTERNATIONAL. CHAOS Report (análise de 8.380 projetos). Estatísticas sobre causas de insucesso em projetos de TI."
+      "citacao": "No relatório CHAOS, os fatores mais apontados nos projetos com problemas foram requisitos incompletos (13,1%), falta de envolvimento do usuário (12,4%) e falta de recursos (10,6%); mudanças de requisitos e especificações aparecem logo depois (8,7%).",
+      "fonte": "Dados de: THE STANDISH GROUP INTERNATIONAL. CHAOS Report, 1995."
     },
     "caso": [
       "Uma agência de publicidade está desenvolvendo um site para um grande cliente multinacional. Os requisitos foram coletados em teleconferências rápidas com um único responsável do cliente, sem validação direta com os usuários finais. Os requisitos foram documentados de forma vaga em um email de uma página."
@@ -353,31 +339,31 @@
       "A abordagem seria boa apenas para projetos muito pequenos"
     ],
     "correta": 2,
-    "resolucao": "O CHAOS Report identifica requisitos incompletos, pouco claros e falta de envolvimento do usuário como causas principais de falha. A abordagem descrita (teleconferências rápidas, documentação vaga, sem validação de usuários finais) reproduz exatamente os problemas que causam 37% das falhas de projeto."
+    "resolucao": "O relatório CHAOS aponta requisitos incompletos e falta de envolvimento do usuário como os fatores mais frequentes nos projetos com problemas. A abordagem da agência reproduz exatamente esses problemas: requisitos coletados com uma única pessoa, sem validação com os usuários finais, e documentados de forma vaga em um e-mail.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap2-q6",
     "disciplinaId": "engenharia-de-software-e-da-usabilidade",
     "capituloId": "engsoft-cap2",
     "tipo": "objetiva",
-    "texto": {
-      "citacao": "\"Functional requirements specify what the system must do — the actions, functions, and services it provides. Non-functional requirements specify how the system must behave — the qualities, constraints, and attributes that affect the entire system. Non-functional requirements are often critical to the success of the project, yet are frequently overlooked or treated as secondary.\"",
-      "traducao": "(Tradução livre: \"Requisitos Funcionais especificam o que o sistema deve fazer — as ações, funções e serviços que fornece. Requisitos Não Funcionais especificam como o sistema deve se comportar — as qualidades, restrições e atributos que afetam o sistema todo. Requisitos Não Funcionais são frequentemente críticos para o sucesso do projeto, mas frequentemente negligenciados ou tratados como secundários.\")",
-      "fonte": "ISO/IEC/IEEE 29148:2018 — Systems and software engineering — Life cycle processes — Requirements engineering."
-    },
+    "nivel": "medio",
     "caso": [
-      "Um desenvolvedor junior apresenta à equipe uma proposta de requisitos para um aplicativo de banking: RF01: \"O sistema deve permitir transferência bancária entre contas\"; RF02: \"O sistema deve exibir o saldo da conta\"; RNF01: \"O sistema deve responder em menos de 1 segundo\"; RNF02: \"Os dados devem estar em conformidade com a LGPD\". A seguir, diz: \"Os RNFs não são tão importantes — vamos focar nos FRs primeiro e adicionar os RNFs depois.\""
+      "Avalie as afirmativas a seguir sobre os requisitos de uma loja virtual.",
+      "I. \"O sistema deve enviar um e-mail ao cliente após a confirmação do pedido\" é um requisito funcional.",
+      "II. \"As senhas devem ser armazenadas com hash bcrypt com salt\" é um requisito não funcional de segurança.",
+      "III. \"O sistema deve ter disponibilidade de 99,9% ao mês\" é um requisito não funcional de desempenho."
     ],
-    "enunciado": "Essa afirmação do desenvolvedor é:",
+    "enunciado": "É correto o que se afirma em",
     "alternativas": [
-      "Correta: requisitos não funcionais são opcionais e podem ser adicionados depois",
-      "Totalmente equivocada: em um banco, segurança, conformidade com a LGPD e desempenho são tão críticos quanto as funcionalidades",
-      "Correta apenas para projetos de pequeno porte",
-      "O desenvolvedor está certo sobre performance, mas errado sobre conformidade",
-      "Requisitos funcionais e não funcionais têm igual importância, mas os funcionais devem sempre vir primeiro, e os não funcionais entram só na fase de testes"
+      "I e II, apenas.",
+      "I, apenas.",
+      "II, apenas.",
+      "I e III, apenas.",
+      "I, II e III."
     ],
-    "correta": 1,
-    "resolucao": "Para sistemas críticos como banking, RNFs (segurança, conformidade, desempenho, confiabilidade) são absolutamente essenciais e não podem ser \"adicionados depois\". Um aplicativo rápido mas inseguro ou não conforme com a LGPD é inaceitável. O Capítulo 2 enfatiza que negligenciar RNFs causa sistemas que \"funcionam\" mas são lentos, inseguros ou ilegais."
+    "correta": 0,
+    "resolucao": "I é verdadeira: enviar o e-mail é uma ação que o sistema executa em resposta a um evento, o que define um requisito funcional. II é verdadeira: a forma de guardar as senhas é uma qualidade do sistema todo, da categoria Segurança. III é falsa: disponibilidade é da categoria Confiabilidade (disponibilidade, tolerância a falhas e recuperação); Desempenho trata de tempo de resposta, throughput e uso de recursos."
   },
   {
     "id": "engsoft-cap2-q7",
@@ -401,7 +387,8 @@
       "Conformidade, pois violaria a LGPD"
     ],
     "correta": 2,
-    "resolucao": "o requisito funcional foi atendido (dá para agendar), mas 12 cliques, ícones confusos e 20 minutos de tentativa e erro atingem a Usabilidade, que a Seção 2.4 define como facilidade de aprendizado, eficiência e satisfação; compare com o exemplo da apostila, de uma compra em até 5 minutos sem treinamento. {{A}}: desempenho é tempo de resposta e uso de recursos, e quem demora é o usuário, não o sistema; {{B}}: segurança trata de acesso, criptografia e autenticação, ausentes no caso; {{D}}: confiabilidade é disponibilidade e tolerância a falhas, e o sistema não falha; {{E}}: conformidade é aderência a leis, e o caso não envolve exigência legal."
+    "resolucao": "o requisito funcional foi atendido (dá para agendar), mas 12 cliques, ícones confusos e 20 minutos de tentativa e erro atingem a Usabilidade, que a Seção 2.4 define como facilidade de aprendizado, eficiência e satisfação; compare com o exemplo da apostila, de uma compra em até 5 minutos sem treinamento. {{A}}: desempenho é tempo de resposta e uso de recursos, e quem demora é o usuário, não o sistema; {{B}}: segurança trata de acesso, criptografia e autenticação, ausentes no caso; {{D}}: confiabilidade é disponibilidade e tolerância a falhas, e o sistema não falha; {{E}}: conformidade é aderência a leis, e o caso não envolve exigência legal.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap2-q8",
@@ -409,9 +396,9 @@
     "capituloId": "engsoft-cap2",
     "tipo": "objetiva",
     "texto": {
-      "citacao": "\"High-quality requirements must be: complete (no gaps), consistent (no contradictions), feasible (implementable within constraints), verifiable (testable), traceable (linked to origin), and unambiguous (single interpretation). A single poorly-written requirement can propagate defects through all downstream phases.\"",
-      "traducao": "(Tradução livre: \"Requisitos de alta qualidade devem ser: completos (sem lacunas), consistentes (sem contradições), viáveis (implementáveis dentro de restrições), verificáveis (testáveis), rastreáveis (vinculados à origem) e não ambíguos (interpretação única). Um único requisito mal escrito pode propagar defeitos por todas as fases seguintes.\")",
-      "fonte": "IEEE 830-1998 — IEEE Recommended Practice for Software Requirements Specifications. Critérios de qualidade para especificação de requisitos."
+      "citacao": "\"An SRS should be a) Correct; b) Unambiguous; c) Complete; d) Consistent; e) Ranked for importance and/or stability; f) Verifiable; g) Modifiable; h) Traceable.\"",
+      "traducao": "(Tradução livre: \"Uma SRS deve ser a) correta; b) não ambígua; c) completa; d) consistente; e) classificada por importância e/ou estabilidade; f) verificável; g) modificável; h) rastreável.\")",
+      "fonte": "IEEE Std 830-1998 — IEEE Recommended Practice for Software Requirements Specifications, Seção 4.3."
     },
     "caso": [
       "Analise este requisito: \"O sistema deve permitir que o cliente realize compras de forma segura.\" Um segundo requisito diz: \"O sistema deve permitir que o cliente realize compras rapidamente.\" Uma semana depois, testes de performance mostram que adicionar camadas de segurança (criptografia, validação dupla) torna o processo lento — mais de 30 segundos por transação."
@@ -425,31 +412,28 @@
       "Apenas viabilidade"
     ],
     "correta": 2,
-    "resolucao": "Os requisitos violam ambos os critérios: (1) Verificabilidade — \"seguro\" e \"rápido\" são vaguos e não mensuráveis (deveriam ser \"criptografia AES-256\" e \"transação em menos de 5 segundos\"); (2) Consistência — os requisitos entram em conflito direto (segurança geralmente exige mais validações, que consomem tempo). A análise deveria ter identificado esse conflito e negociado qual tem prioridade."
+    "resolucao": "Os requisitos violam os dois critérios: verificabilidade, pois \"seguro\" e \"rápido\" são vagos e não mensuráveis (deveriam dizer, por exemplo, \"criptografia AES-256\" e \"transação em menos de 5 segundos\"), e consistência, pois os dois requisitos entram em conflito direto, já que mais camadas de segurança consomem tempo. A análise deveria ter identificado esse conflito e negociado a prioridade de cada um.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap2-q9",
     "disciplinaId": "engenharia-de-software-e-da-usabilidade",
     "capituloId": "engsoft-cap2",
     "tipo": "objetiva",
-    "texto": {
-      "citacao": "\"In traditional approaches, requirements are documented in a Software Requirements Specification (SRS) — a formal, comprehensive document following IEEE 830. In agile approaches, requirements are maintained in a Product Backlog — a dynamic, continuously evolving list of user stories prioritized by the Product Owner.\"",
-      "traducao": "(Tradução livre: \"Em abordagens tradicionais, requisitos são documentados em uma Especificação de Requisitos de Software (SRS) — um documento formal e abrangente seguindo IEEE 830. Em abordagens ágeis, requisitos são mantidos em um Backlog do Produto — uma lista dinâmica e continuamente evoluindo de histórias de usuário priorizada pelo Product Owner.\")",
-      "fonte": "Scrum Guide (2020). Software Requirements Specification vs Agile Backlog — Abordagens complementares de documentação de requisitos."
-    },
+    "nivel": "medio",
     "caso": [
-      "Uma empresa escolheu a metodologia Cascata para um projeto governamental com requisitos bem definidos, contrato rígido de cinco anos, e entrega única no final. A equipe está decidindo como documentar requisitos."
+      "Uma empresa vai criar uma plataforma de cursos on-line e precisa de quatro registros de requisitos: (1) um documento para apresentar a diretores e investidores o problema a resolver, os envolvidos e a proposta de valor, em linguagem acessível a quem não é da área técnica; (2) o contrato técnico detalhado com o fornecedor, com todos os requisitos funcionais e não funcionais; (3) a lista priorizada de histórias que a equipe ágil vai desenvolver, atualizada continuamente pelo Product Owner; (4) a descrição, em UML, das interações entre o aluno, o professor e o sistema."
     ],
-    "enunciado": "Para esse contexto, qual forma de documentação de requisitos seria mais apropriada?",
+    "enunciado": "Os artefatos mais adequados para os registros 1, 2, 3 e 4 são, respectivamente:",
     "alternativas": [
-      "Product Backlog, pois é mais moderno e ágil e permite repriorizar os requisitos a cada sprint, mesmo com contrato fixo",
-      "Uma combinação 50/50 de SRS e Backlog",
-      "SRS formal (IEEE 830), pois o projeto é governamental, com requisitos estáveis e contrato fixo",
-      "Apenas prototipagem, sem documentação formal",
-      "Casos de Uso em UML, sem SRS"
+      "SRS, Documento de Visão, Backlog do Produto e Casos de Uso",
+      "Documento de Visão, SRS, Casos de Uso e Backlog do Produto",
+      "Documento de Visão, SRS, Backlog do Produto e Casos de Uso",
+      "Protótipos, SRS, Backlog do Produto e Documento de Visão",
+      "Documento de Visão, Backlog do Produto, SRS e Casos de Uso"
     ],
     "correta": 2,
-    "resolucao": "Projetos Cascata com requisitos estáveis, contratos rígidos e escopo fixo beneficiam-se de uma SRS formal (IEEE 830) que serve como referência durante todo o projeto. O Backlog é mais apropriado para contextos ágeis onde requisitos evoluem continuamente. Projetos governamentais particularmente exigem documentação formal."
+    "resolucao": "O Documento de Visão descreve o problema, os stakeholders e a proposta de valor de forma acessível a todos (1). A SRS é o artefato mais completo e formal, um contrato técnico com todos os requisitos funcionais e não funcionais (2). O Backlog do Produto é a lista priorizada e viva de histórias, gerenciada pelo PO (3). Os Casos de Uso descrevem as interações entre atores e o sistema, com UML (4). Os protótipos documentam e validam requisitos de interface."
   },
   {
     "id": "engsoft-cap2-q10",
@@ -457,9 +441,8 @@
     "capituloId": "engsoft-cap2",
     "tipo": "objetiva",
     "texto": {
-      "citacao": "\"Regulatory compliance requirements, such as LGPD (Lei Geral de Proteção de Dados — Brazil's General Data Protection Law), mandate specific constraints on how software handles personal data. Compliance is not optional — violations result in severe penalties, loss of trust, and legal liability. These compliance requirements are classified as non-functional requirements.\"",
-      "traducao": "(Tradução livre: \"Requisitos de conformidade regulatória, como LGPD (Lei Geral de Proteção de Dados), determinam restrições específicas sobre como o software trata dados pessoais. Conformidade não é opcional — violações resultam em penalidades severas, perda de confiança e responsabilidade legal. Esses requisitos de conformidade são classificados como requisitos não funcionais.\")",
-      "fonte": "BRASIL. Lei nº 13.709, de 14 de agosto de 2018. Lei Geral de Proteção de Dados Pessoais (LGPD). Legislação brasileira sobre proteção de dados e privacidade."
+      "citacao": "\"Os agentes de tratamento devem adotar medidas de segurança, técnicas e administrativas aptas a proteger os dados pessoais de acessos não autorizados e de situações acidentais ou ilícitas de destruição, perda, alteração, comunicação ou qualquer forma de tratamento inadequado ou ilícito.\"",
+      "fonte": "BRASIL. Lei nº 13.709, de 14 de agosto de 2018. Lei Geral de Proteção de Dados Pessoais (LGPD). Art. 46."
     },
     "caso": [
       "Uma startup de marketplace de serviços domésticos coleta dados pessoais de clientes (nome, telefone, endereço, CPF, histórico de transações). Dois anos após o lançamento, auditorias descobrem que: (1) os dados não eram criptografados em repouso; (2) não havia registro de consentimento explícito; (3) não havia mecanismo para usuários solicitarem exclusão de dados."
@@ -473,7 +456,8 @@
       "Problemas que só aparecem em sistemas muito grandes e com muitos usuários, não sendo aplicáveis a startups em fase inicial"
     ],
     "correta": 1,
-    "resolucao": "criptografia, registro de consentimento e mecanismo de exclusão são exigências da LGPD, e a Seção 2.4 classifica a aderência à lei como requisito não funcional de Conformidade; ignorar RNFs gera sistemas que funcionam, mas são ilegais, por isso deveriam estar especificados desde os requisitos. {{A}}: não são requisitos funcionais, e corrigi-los tarde é caro, não rotineiro; {{C}}: RNFs nascem na engenharia de requisitos, com a lei como stakeholder, não no projeto do banco; {{D}}: a criptografia é Segurança, mas quem a exige aqui é a LGPD, e as duas categorias estão ligadas; {{E}}: a LGPD vale para qualquer organização que trate dados pessoais, de qualquer porte."
+    "resolucao": "criptografia, registro de consentimento e mecanismo de exclusão são exigências da LGPD, e a Seção 2.4 classifica a aderência à lei como requisito não funcional de Conformidade; ignorar RNFs gera sistemas que funcionam, mas são ilegais, por isso deveriam estar especificados desde os requisitos. {{A}}: não são requisitos funcionais, e corrigi-los tarde é caro, não rotineiro; {{C}}: RNFs nascem na engenharia de requisitos, com a lei como stakeholder, não no projeto do banco; {{D}}: a criptografia é Segurança, mas quem a exige aqui é a LGPD, e as duas categorias estão ligadas; {{E}}: a LGPD vale para qualquer organização que trate dados pessoais, de qualquer porte.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap3-q1",
@@ -520,7 +504,8 @@
       "Decisão V"
     ],
     "correta": 2,
-    "resolucao": "O design de sistemas trata das decisões de alto nível: decomposição em módulos (I), definição de interfaces entre componentes (II), escolha de tecnologias (IV) e estratégias de escalabilidade e disponibilidade (V). A decisão III trata de como uma classe é estruturada internamente — suas responsabilidades e dependências —, que é o nível de design de componentes, onde os princípios SOLID se tornam mais relevantes."
+    "resolucao": "O design de sistemas trata das decisões de alto nível: decomposição em módulos (I), definição de interfaces entre componentes (II), escolha de tecnologias (IV) e estratégias de escalabilidade e disponibilidade (V). A decisão III trata de como uma classe é estruturada internamente — suas responsabilidades e dependências —, que é o nível de design de componentes, onde os princípios SOLID se tornam mais relevantes.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap3-q3",
@@ -544,7 +529,8 @@
       "O problema foi apenas a falta de testes; a estrutura da classe está adequada"
     ],
     "correta": 0,
-    "resolucao": "Quando uma classe acumula responsabilidades, uma mudança em uma delas arrisca quebrar as outras — exatamente o que ocorreu. Separando em CalculadoraImpostos, GeradorXmlNota, NotaFiscalRepository e EnvioNotaEmail, uma alteração de alíquota fica isolada. Testes ajudariam a detectar a quebra, mas não eliminam a causa, que é de design."
+    "resolucao": "Quando uma classe acumula responsabilidades, uma mudança em uma delas arrisca quebrar as outras — exatamente o que ocorreu. Separando em CalculadoraImpostos, GeradorXmlNota, NotaFiscalRepository e EnvioNotaEmail, uma alteração de alíquota fica isolada. Testes ajudariam a detectar a quebra, mas não eliminam a causa, que é de design.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap3-q4",
@@ -568,7 +554,8 @@
       "Um problema típico da arquitetura orientada a eventos, causado pelo barramento de mensagens"
     ],
     "correta": 3,
-    "resolucao": "a Seção 3.3 aponta como limitação da arquitetura em camadas o risco de camadas que só repassam chamadas, sem agregar valor, gerando latência: é o antipadrão que Richards chama de \"architecture sinkhole\". {{A}} inverte o conceito, pois a vantagem das camadas é cada uma ter um papel próprio; {{B}} fala de MVC, outro padrão, e o problema não é falta de Controller; {{C}} trata de microsserviços, que não existem no caso; {{E}} trata de arquitetura orientada a eventos, e não há barramento nem fila de mensagens."
+    "resolucao": "a Seção 3.3 aponta como limitação da arquitetura em camadas o risco de camadas que só repassam chamadas, sem agregar valor, gerando latência: é o antipadrão que Richards chama de \"architecture sinkhole\". {{A}} inverte o conceito, pois a vantagem das camadas é cada uma ter um papel próprio; {{B}} fala de MVC, outro padrão, e o problema não é falta de Controller; {{C}} trata de microsserviços, que não existem no caso; {{E}} trata de arquitetura orientada a eventos, e não há barramento nem fila de mensagens.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap3-q5",
@@ -592,7 +579,8 @@
       "Adequada, desde que os doze serviços compartilhem um único banco com as mesmas tabelas, evitando problemas de consistência"
     ],
     "correta": 1,
-    "resolucao": "a Seção 3.3 lista a complexidade operacional dos microsserviços (monitoramento distribuído, consistência entre bancos, infraestrutura), e o estudo de caso do capítulo conclui que, com equipe pequena, a arquitetura em camadas é a mais adequada; a escola também não precisa escalar partes separadamente. {{A}}: nenhum padrão é sempre o melhor, pois depende do contexto; {{C}}: é o contrário, pois microsserviços exigem mais infraestrutura; {{D}}: chega ao veredito certo pelo motivo errado, pois o próprio texto de Lewis e Fowler cita a comunicação por API HTTP; {{E}}: um banco único compartilhado acaba com a independência que define o estilo."
+    "resolucao": "a Seção 3.3 lista a complexidade operacional dos microsserviços (monitoramento distribuído, consistência de dados entre serviços e maior esforço de infraestrutura), que uma equipe de quatro pessoas, sem ninguém dedicado à infraestrutura, dificilmente sustenta; e a escola não precisa escalar partes do sistema separadamente. Uma arquitetura em camadas atenderia melhor. {{A}}: nenhum padrão é sempre o melhor, pois depende do contexto; {{C}}: é o contrário, pois microsserviços exigem mais infraestrutura; {{D}}: chega ao veredito certo pelo motivo errado, pois o próprio texto de Lewis e Fowler cita a comunicação por API HTTP; {{E}}: um banco único compartilhado acaba com a independência que define o estilo.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap3-q6",
@@ -616,7 +604,8 @@
       "O caso ilustra uma limitação da arquitetura orientada a eventos: o fluxo de dados fica difícil de rastrear e depurar"
     ],
     "correta": 4,
-    "resolucao": "Na arquitetura orientada a eventos, os componentes não se chamam diretamente — por isso o acoplamento é baixo, e não alto —, mas o fluxo completo não aparece em nenhum trecho de código. A apostila indica essa limitação e a necessidade de ferramentas de observabilidade, como logs correlacionados e rastreamento distribuído. Trocar tudo por chamadas diretas do serviço de Pedidos aumentaria o acoplamento."
+    "resolucao": "Na arquitetura orientada a eventos, os componentes não se chamam diretamente — por isso o acoplamento é baixo, e não alto —, mas o fluxo completo não aparece em nenhum trecho de código. A apostila indica essa limitação e a necessidade de ferramentas de observabilidade, como logs correlacionados e rastreamento distribuído. Trocar tudo por chamadas diretas do serviço de Pedidos aumentaria o acoplamento.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap3-q7",
@@ -640,7 +629,8 @@
       "Transferir as regras para gatilhos (triggers) do banco de dados e eliminar o Model"
     ],
     "correta": 2,
-    "resolucao": "No MVC, o Model concentra dados e regras de negócio, independentemente de como serão exibidos; a View apenas apresenta; o Controller recebe as ações do usuário e orquestra o fluxo. Com as regras no Model, a web e o aplicativo reutilizam a mesma lógica, e mudanças de interface não afetam as regras."
+    "resolucao": "No MVC, o Model concentra dados e regras de negócio, independentemente de como serão exibidos; a View apenas apresenta; o Controller recebe as ações do usuário e orquestra o fluxo. Com as regras no Model, a web e o aplicativo reutilizam a mesma lógica, e mudanças de interface não afetam as regras.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap3-q8",
@@ -664,7 +654,8 @@
       "Preventiva, adaptativa, perfectiva e corretiva"
     ],
     "correta": 3,
-    "resolucao": "pela tabela da apostila (Seções 1.2 e 3.4), I é corretiva (defeito encontrado após a implantação), II é adaptativa (mudança no ambiente externo, como um novo sistema operacional), III é perfectiva (funcionalidade pedida pelos usuários) e IV é preventiva (refatoração sem mudar o comportamento, reduzindo o débito técnico). {{A}} acerta I, mas troca II e III; {{B}} inverte I e II; {{C}} acerta I e II, mas troca III e IV; {{E}} inverte as pontas, chamando a correção de preventiva e a refatoração de corretiva."
+    "resolucao": "pela tabela da apostila (Seções 1.2 e 3.4), I é corretiva (defeito encontrado após a implantação), II é adaptativa (mudança no ambiente externo, como um novo sistema operacional), III é perfectiva (funcionalidade pedida pelos usuários) e IV é preventiva (refatoração sem mudar o comportamento, reduzindo o débito técnico). {{A}} acerta I, mas troca II e III; {{B}} inverte I e II; {{C}} acerta I e II, mas troca III e IV; {{E}} inverte as pontas, chamando a correção de preventiva e a refatoração de corretiva.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap3-q9",
@@ -688,7 +679,8 @@
       "Equivocado, pois refatorar significa reescrever o sistema inteiro do zero"
     ],
     "correta": 1,
-    "resolucao": "A apostila define refatoração como reestruturar o código interno sem alterar seu comportamento externo, melhorando a qualidade de forma gradual. A mudança da regra e a nova opção de entrega são alterações de comportamento (manutenção perfectiva). Misturá-las à refatoração dificulta identificar a causa de um eventual defeito. Ter testes automatizados é recomendado, mas não muda o conceito."
+    "resolucao": "A apostila define refatoração como reestruturar o código interno sem alterar seu comportamento externo, melhorando a qualidade de forma gradual. A mudança da regra e a nova opção de entrega são alterações de comportamento (manutenção perfectiva). Misturá-las à refatoração dificulta identificar a causa de um eventual defeito. Ter testes automatizados é recomendado, mas não muda o conceito.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap3-q10",
@@ -712,7 +704,8 @@
       "Encapsulamento (wrapping): criar uma API moderna em torno do legado, que continua fazendo os cálculos"
     ],
     "correta": 4,
-    "resolucao": "O sistema ainda entrega valor e funciona corretamente — o problema é apenas o acesso a partir de tecnologias novas. O encapsulamento resolve isso com baixo risco. Reescrever todo o legado, prática criticada por Spolsky, é reservado para quando a modernização já não é viável. Copiar as regras para o aplicativo duplicaria a lógica e criaria duas versões a manter."
+    "resolucao": "O sistema ainda entrega valor e funciona corretamente — o problema é apenas o acesso a partir de tecnologias novas. O encapsulamento resolve isso com baixo risco. Reescrever todo o legado, prática criticada por Spolsky, é reservado para quando a modernização já não é viável. Copiar as regras para o aplicativo duplicaria a lógica e criaria duas versões a manter.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap4-q1",
@@ -759,7 +752,8 @@
       "Equivocada: exemplares físicos devem ser representados como métodos da classe Biblioteca, e não como objetos"
     ],
     "correta": 1,
-    "resolucao": "Classe é o molde que define atributos e métodos; objeto é a instância concreta, com estado e identidade próprios. Os três exemplares compartilham a mesma estrutura (classe Livro) e diferem apenas nos valores dos atributos — portanto são três objetos da mesma classe, como Booch define: objetos semelhantes têm estrutura e comportamento definidos na classe comum."
+    "resolucao": "Classe é o molde que define atributos e métodos; objeto é a instância concreta, com estado e identidade próprios. Os três exemplares compartilham a mesma estrutura (classe Livro) e diferem apenas nos valores dos atributos — portanto são três objetos da mesma classe, como Booch define: objetos semelhantes têm estrutura e comportamento definidos na classe comum.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap4-q3",
@@ -783,7 +777,8 @@
       "Está incorreta, porque classes que representam pessoas não podem possuir atributos físicos"
     ],
     "correta": 3,
-    "resolucao": "A abstração foca no que é relevante para o domínio e ignora detalhes desnecessários. O trecho de Booch destaca que as características essenciais dependem da \"perspectiva do observador\": para a loja, importam dados de identificação, contato e entrega. Atributos irrelevantes aumentam a complexidade sem agregar valor — exatamente o exemplo usado na apostila."
+    "resolucao": "A abstração foca no que é relevante para o domínio e ignora detalhes desnecessários. O trecho de Booch destaca que as características essenciais dependem da \"perspectiva do observador\": para a loja, importam dados de identificação, contato e entrega. Atributos irrelevantes aumentam a complexidade sem agregar valor — exatamente o exemplo usado na apostila.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap4-q4",
@@ -807,7 +802,8 @@
       "Mover a validação para a tela do sistema, verificando o saldo antes de o usuário clicar em \"Sacar\""
     ],
     "correta": 0,
-    "resolucao": "Encapsular é proteger o estado interno e permitir alterações apenas pelos métodos do próprio objeto, que aplicam as regras de negócio. Documentar no código não impede o acesso; um atributo estático mistura o saldo de todas as contas; herdar um atributo público mantém o problema; e validar só na tela deixa outros módulos — como o de tarifas — livres para burlar a regra."
+    "resolucao": "Encapsular é proteger o estado interno e permitir alterações apenas pelos métodos do próprio objeto, que aplicam as regras de negócio. Documentar no código não impede o acesso; um atributo estático mistura o saldo de todas as contas; herdar um atributo público mantém o problema; e validar só na tela deixa outros módulos — como o de tarifas — livres para burlar a regra.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap4-q5",
@@ -831,7 +827,8 @@
       "Sobrescrita nos dois casos"
     ],
     "correta": 2,
-    "resolucao": "Na sobrescrita, a subclasse redefine um método herdado mantendo a mesma assinatura — é o caso de calcularSalario() em Gerente e Vendedor. Na sobrecarga, a mesma classe define métodos com o mesmo nome e parâmetros diferentes — é o caso das três versões de gerar(...). São as duas formas de polimorfismo descritas na apostila."
+    "resolucao": "Na sobrescrita, a subclasse redefine um método herdado mantendo a mesma assinatura — é o caso de calcularSalario() em Gerente e Vendedor. Na sobrecarga, a mesma classe define métodos com o mesmo nome e parâmetros diferentes — é o caso das três versões de gerar(...). São as duas formas de polimorfismo descritas na apostila.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap4-q6",
@@ -855,7 +852,8 @@
       "Herança e composição são equivalentes, e a escolha entre elas é apenas uma questão de estilo"
     ],
     "correta": 1,
-    "resolucao": "A herança deve expressar uma relação genuína \"é um\". Desconto, frete grátis e garantia são características que o produto \"tem\" — relação típica de composição, mais flexível e com baixo acoplamento, pois os componentes podem ser trocados e combinados sem criar novas classes. A hierarquia atual é rígida e cresce de forma combinatória."
+    "resolucao": "A herança deve expressar uma relação genuína \"é um\". Desconto, frete grátis e garantia são características que o produto \"tem\" — relação típica de composição, mais flexível e com baixo acoplamento, pois os componentes podem ser trocados e combinados sem criar novas classes. A hierarquia atual é rígida e cresce de forma combinatória.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap4-q7",
@@ -879,7 +877,8 @@
       "Criar uma abstração ModalidadeFrete com uma classe por modalidade; o drone vira só uma nova classe"
     ],
     "correta": 4,
-    "resolucao": "O indicador clássico de violação do Aberto/Fechado, segundo a apostila, é o if/else crescente a cada novo tipo. Com uma abstração e implementações polimórficas, novos comportamentos são adicionados por extensão (nova classe), sem modificar código já testado — evitando as regressões relatadas. Trocar o if/else por switch/case continua exigindo modificação."
+    "resolucao": "O indicador clássico de violação do Aberto/Fechado, segundo a apostila, é o if/else crescente a cada novo tipo. Com uma abstração e implementações polimórficas, novos comportamentos são adicionados por extensão (nova classe), sem modificar código já testado — evitando as regressões relatadas. Trocar o if/else por switch/case continua exigindo modificação.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap4-q8",
@@ -903,7 +902,8 @@
       "Um exemplo de sobrecarga de métodos entre Conta e ContaInvestimentoBloqueada"
     ],
     "correta": 0,
-    "resolucao": "Pela propriedade de Liskov, um programa escrito em termos de Conta deve continuar funcionando com qualquer subtipo. \"Subclasse lança exceção em método herdado\" é exatamente o indicador de violação listado na apostila. A solução é rever a hierarquia (por exemplo, separar contas que permitem saque das que não permitem) em vez de forçar uma herança que não é um \"é um\" verdadeiro."
+    "resolucao": "Pela propriedade de Liskov, um programa escrito em termos de Conta deve continuar funcionando com qualquer subtipo. \"Subclasse lança exceção em método herdado\" é exatamente o indicador de violação listado na apostila. A solução é rever a hierarquia (por exemplo, separar contas que permitem saque das que não permitem) em vez de forçar uma herança que não é um \"é um\" verdadeiro.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap4-q9",
@@ -927,7 +927,8 @@
       "Dividir DispositivoEscritorio em interfaces menores, e cada classe implementa só as que utiliza"
     ],
     "correta": 4,
-    "resolucao": "\"Classe implementa método com corpo vazio\" é o indicador de violação da Segregação de Interfaces apresentado na apostila. Interfaces pequenas e específicas evitam dependências desnecessárias: a ImpressoraSimples implementa só Impressora, e uma multifuncional pode implementar várias. A classe abstrata com implementação vazia e a herança que lança exceção apenas escondem o problema, e a herança ainda introduz uma violação de Liskov."
+    "resolucao": "\"Classe implementa método com corpo vazio\" é o indicador de violação da Segregação de Interfaces apresentado na apostila. Interfaces pequenas e específicas evitam dependências desnecessárias: a ImpressoraSimples implementa só Impressora, e uma multifuncional pode implementar várias. A classe abstrata com implementação vazia e a herança que lança exceção apenas escondem o problema, e a herança ainda introduz uma violação de Liskov.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap4-q10",
@@ -951,7 +952,8 @@
       "Unir PedidoService, repositório e notificador em uma única classe para eliminar as dependências e simplificar os testes do sistema"
     ],
     "correta": 3,
-    "resolucao": "O indicador de violação apontado na apostila é justamente \"new ConcreteClass() dentro de classe de alto nível\". Ao depender de interfaces e receber as implementações de fora, a regra de negócio fica desacoplada dos detalhes (banco, canal de envio): trocar MySQL por PostgreSQL ou incluir WhatsApp não altera PedidoService, e os testes unitários podem usar mocks."
+    "resolucao": "O indicador de violação apontado na apostila é justamente \"new ConcreteClass() dentro de classe de alto nível\". Ao depender de interfaces e receber as implementações de fora, a regra de negócio fica desacoplada dos detalhes (banco, canal de envio): trocar MySQL por PostgreSQL ou incluir WhatsApp não altera PedidoService, e os testes unitários podem usar mocks.",
+    "nivel": "medio"
   },
   {
     "id": "engsoft-cap5-q1",
