@@ -85,7 +85,7 @@
   },
   {
    "t": "p",
-   "html": "2023 — Estratégia Nacional de Segurança Cibernética (E-Ciber 2.0)."
+   "html": "2023 — Política Nacional de Cibersegurança (PNCiber, Decreto 11.856/2023)."
   },
   {
    "t": "h2",
@@ -135,8 +135,8 @@
     ],
     [
      "Provedor de Aplicação (geral)",
-     "Não responde civilmente pelo conteúdo de terceiros",
-     "Somente se descumprir ordem judicial (art. 19)"
+     "Responde se não remover conteúdo ilícito após notificação (STF, 2025)",
+     "Nos crimes contra a honra, só se descumprir ordem judicial (art. 19)"
     ],
     [
      "Provedor (nudez/sexo sem consentimento)",
@@ -148,11 +148,11 @@
   {
    "t": "quadro",
    "tipo": "atencao",
-   "titulo": "Atenção: O Debate sobre o Art. 19 do Marco Civil",
+   "titulo": "Atenção: O STF e o Art. 19 do Marco Civil",
    "blocos": [
     {
      "t": "p",
-     "html": "O art. 19 do MCI — que exige ordem judicial para responsabilizar plataformas pela remoção de conteúdo — está sob intensa discussão no Brasil. O STF, ao julgar os Temas 987 e 533, debateu a constitucionalidade desse modelo, questionando se ele protege adequadamente vítimas de desinformação, discurso de ódio e conteúdo ilegal. Em 2023, o PL 2.630 (PL das Fake News) tentou alterar esse regime, mas enfrentou forte resistência."
+     "html": "O art. 19 do MCI exigia ordem judicial para responsabilizar plataformas por conteúdo de terceiros. Em junho de 2025, ao julgar os Temas 987 e 533, o STF declarou o artigo parcialmente inconstitucional. Para a maior parte dos conteúdos ilícitos, incluindo crimes, a plataforma passa a responder se não remover o conteúdo depois de uma notificação extrajudicial, como já ocorria no art. 21. A ordem judicial continua necessária nos crimes contra a honra. Em casos graves, como terrorismo, ataques à democracia e pornografia infantil, a plataforma tem dever de cuidado e responde se houver falha sistêmica, mesmo sem notificação; anúncios pagos e impulsionamentos também geram responsabilidade sem notificação. Antes disso, em 2023, o PL 2.630 (PL das Fake News) tentou alterar esse regime, mas enfrentou forte resistência."
     }
    ]
   },
@@ -175,7 +175,7 @@
   },
   {
    "t": "p",
-   "html": "Art. 154-A — Invasão de Dispositivo: invadir dispositivo alheio violando mecanismo de segurança. Pena: detenção 1-4 anos + multa."
+   "html": "Art. 154-A — Invasão de Dispositivo: invadir dispositivo informático de uso alheio para obter, adulterar ou destruir dados sem autorização do usuário, ou para instalar vulnerabilidades. Pena: reclusão de 1 a 4 anos e multa (redação da Lei 14.155/2021; até então, o tipo exigia a violação de mecanismo de segurança e a pena era de detenção de 3 meses a 1 ano)."
   },
   {
    "t": "p",
@@ -183,7 +183,7 @@
   },
   {
    "t": "p",
-   "html": "Art. 298, § Único — Falsificação de Cartão: falsificar cartão de crédito/débito. Pena: reclusão 2-8 anos + multa."
+   "html": "Art. 298, § Único — Falsificação de Cartão: falsificar cartão de crédito/débito. Pena: reclusão de 1 a 5 anos e multa."
   },
   {
    "t": "h3",
@@ -213,14 +213,14 @@
     [
      "Invasão de dispositivo",
      "Detenção 3m-1 ano",
-     "Detenção 1-4 anos + multa",
-     "Vantagem econômica: +1/6 a 2/3"
+     "Reclusão 1-4 anos + multa",
+     "Prejuízo econômico: +1/3 a 2/3"
     ],
     [
-     "Organização criminosa digital",
+     "Fraude com servidor no exterior",
      "—",
-     "Aumento de 1/3",
-     "Grupo usa meios eletrônicos"
+     "Aumento de 1/3 a 2/3",
+     "Estelionato digital com servidor fora do Brasil (art. 171, § 2º-B)"
     ]
    ]
   },
@@ -244,7 +244,7 @@
     [
      "Injúria, calúnia e difamação online",
      "CP, arts. 138-140",
-     "Detenção 3 meses-2 anos; injúria racial: 2-5 anos"
+     "Detenção de 1 mês a 2 anos, conforme o crime, triplicada se cometido ou divulgado em redes sociais; injúria racial: reclusão de 2 a 5 anos (Lei 7.716/1989)"
     ],
     [
      "Stalking digital",
@@ -253,13 +253,13 @@
     ],
     [
      "Pornografia de vingança (NCII)",
-     "Lei 13.718/2018, art. 218-C",
+     "CP, art. 218-C (Lei 13.718/2018)",
      "Reclusão 1-5 anos"
     ],
     [
-     "Crimes contra crianças (ECA digital)",
-     "ECA, arts. 241-A a 241-E",
-     "Reclusão 3-8 anos + multa"
+     "Crimes contra crianças",
+     "ECA, arts. 240 a 241-E",
+     "Reclusão de 1 a 8 anos e multa, conforme o crime"
     ],
     [
      "Phishing e fraude bancária online",
@@ -340,13 +340,13 @@
    "linhas": [
     [
      "Conteúdo ilícito denunciado sem ordem judicial",
-     "Não responde, salvo nudez/sexo sem consentimento",
-     "MCI, art. 19 e 21"
+     "Responde se não remover após a notificação; nos crimes contra a honra, só após ordem judicial",
+     "MCI, arts. 19 e 21; STF, Temas 987 e 533 (2025)"
     ],
     [
      "Descumprimento de ordem judicial de remoção",
      "Responde solidariamente pelos danos",
-     "MCI, art. 19, §1º"
+     "MCI, art. 19"
     ],
     [
      "Conteúdo de abuso sexual infantil (CSAM)",
@@ -375,8 +375,8 @@
    "itens": [
     "<strong>Provedores de Conexão (Art. 13):</strong> registros de IP, data, hora e duração devem ser guardados por 1 ano, sob sigilo.",
     "<strong>Provedores de Aplicação (Art. 15):</strong> registros de acesso a aplicações devem ser guardados por 6 meses.",
-    "<strong>Guarda Cautelar (Art. 13, §2º):</strong> autoridades podem requisitar guarda por prazo superior a 60 dias, mediante requerimento judicial.",
-    "<strong>Quebra de Sigilo (Art. 22):</strong> exige ordem judicial, salvo investigação de crimes graves com autorização legal específica."
+    "<strong>Guarda Cautelar (Art. 13, §2º):</strong> a autoridade policial ou administrativa e o Ministério Público podem pedir que os registros sejam guardados por prazo maior e, em 60 dias, devem pedir à Justiça a autorização para acessá-los (art. 13, §§ 2º e 3º).",
+    "<strong>Quebra de Sigilo (Art. 22):</strong> o acesso aos registros exige ordem judicial; sem ela, as autoridades só podem requisitar dados cadastrais, como nome, filiação e endereço (art. 10, § 3º)."
    ]
   },
   {
@@ -422,19 +422,19 @@
    ],
    "linhas": [
     [
-     "Min. da Saúde (Coronavac)",
-     "2021",
-     "223 mi de CPFs e dados de saúde",
-     "Maior vazamento do Brasil"
+     "Ministério da Saúde",
+     "2020",
+     "Senha exposta deu acesso a dados de 243 mi de pessoas",
+     "Dados cadastrais de usuários do SUS"
     ],
     [
-     "Serasa Experian",
+     "Megavazamento (atribuído à Serasa, que negou)",
      "2021",
-     "220 mi de CPFs e dados biométricos",
-     "Circulou em fóruns da dark web"
+     "223 mi de CPFs, com nome, endereço, renda e score",
+     "Maior vazamento do Brasil; circulou em fóruns"
     ],
     [
-     "LinkedIn Brasil",
+     "LinkedIn (raspagem de dados)",
      "2021",
      "500 mi de perfis globais",
      "Usado para spear phishing"
@@ -463,11 +463,11 @@
   },
   {
    "t": "p",
-   "html": "Civil: ações individuais ou coletivas por danos. STJ reconhece dano moral in re ipsa em dados sensíveis."
+   "html": "Civil: ações individuais ou coletivas por danos. Para o STJ, o vazamento de dados pessoais comuns não gera dano moral presumido, e o titular precisa provar o dano; com dados sensíveis, a análise tende a ser mais rigorosa."
   },
   {
    "t": "p",
-   "html": "Penal: dirigentes podem responder por violação de sigilo ou omissão dolosa em negligência grave."
+   "html": "Penal: quem invade, divulga ou vende os dados pode responder por crimes como o do art. 154-A do CP; a LGPD, em si, não prevê crimes."
   },
   {
    "t": "p",
@@ -492,7 +492,7 @@
    "linhas": [
     [
      "Notificação à Autoridade",
-     "Prazo razoável (ANPD orienta: até 3 dias úteis, alto risco)",
+     "Até 3 dias úteis, se houver risco ou dano relevante (Resolução CD/ANPD nº 15/2024)",
      "Obrigatório em até 72 horas"
     ],
     [
@@ -507,14 +507,14 @@
     ],
     [
      "Registro Interno",
-     "Manter registros de todos os incidentes",
+     "Manter registros de todos os incidentes por pelo menos 5 anos",
      "Registro obrigatório (accountability)"
     ]
    ]
   },
   {
    "t": "h3",
-   "texto": "Plano de Resposta a Incidentes (PRI) — NIST SP 800-61"
+   "texto": "Plano de Resposta a Incidentes (PRI) — NIST SP 800-61 (fases da revisão 2)"
   },
   {
    "t": "lista",
@@ -544,11 +544,11 @@
   },
   {
    "t": "p",
-   "html": "Até 3 dias úteis (alto risco): notificar a ANPD conforme o art. 48 da LGPD."
+   "html": "Até 3 dias úteis: notificar a ANPD, se houver risco ou dano relevante (art. 48 da LGPD e Resolução CD/ANPD nº 15/2024)."
   },
   {
    "t": "p",
-   "html": "Sempre: notificar os titulares afetados e preservar todas as evidências — logs, e-mails e registros do incidente."
+   "html": "Sempre: preservar todas as evidências — logs, e-mails e registros do incidente — e avisar os titulares quando houver risco ou dano relevante."
   },
   {
    "t": "h2",
@@ -565,7 +565,7 @@
   },
   {
    "t": "p",
-   "html": "Convenção de Budapeste (2001): principal tratado internacional sobre cibercrime. O Brasil iniciou a adesão em 2023."
+   "html": "Convenção de Budapeste (2001): principal tratado internacional sobre cibercrime. O Brasil aderiu em 2022, e a convenção vale no país desde 2023 (Decreto nº 11.491/2023)."
   },
   {
    "t": "p",

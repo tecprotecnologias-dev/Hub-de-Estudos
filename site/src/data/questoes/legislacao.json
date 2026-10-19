@@ -1130,8 +1130,8 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“Invadir dispositivo informático alheio, conectado ou não à rede de computadores, mediante violação indevida de mecanismo de segurança e com o fim de obter, adulterar ou destruir dados ou informações sem autorização expressa ou tácita do titular do dispositivo ou instalar vulnerabilidades para obter vantagem ilícita: Pena - detenção, de 1 (um) a 4 (quatro) anos, e multa.”",
-        "fonte": "BRASIL. Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), art. 154-A, com redação dada pela Lei nº 12.737, de 30 de novembro de 2012 (“Lei Carolina Dieckmann”)."
+        "texto": "“Invadir dispositivo informático de uso alheio, conectado ou não à rede de computadores, com o fim de obter, adulterar ou destruir dados ou informações sem autorização expressa ou tácita do usuário do dispositivo ou de instalar vulnerabilidades para obter vantagem ilícita: Pena – reclusão, de 1 (um) a 4 (quatro) anos, e multa.”",
+        "fonte": "BRASIL. Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), art. 154-A, incluído pela Lei nº 12.737, de 30 de novembro de 2012 (“Lei Carolina Dieckmann”), com redação dada pela Lei nº 14.155, de 27 de maio de 2021."
       },
       {
         "t": "p",
@@ -1144,12 +1144,13 @@
     ],
     "enunciado": "Com base no texto e no caso apresentado, responda:",
     "itens": [
-      "a) A conduta de Marcos se enquadra no art. 154-A do Código Penal? Identifique, no relato, os elementos que caracterizam a “violação indevida de mecanismo de segurança” e a ausência de autorização, mesmo ele tendo uma credencial tecnicamente válida.",
-      "b) O fato de Marcos ter usado uma senha legítima (que ainda funcionava) afasta a caracterização do crime? Explique por que a autorização, e não a validade técnica da senha, é o elemento central do tipo penal.",
+      "a) A conduta de Marcos se enquadra no art. 154-A do Código Penal? Identifique, no relato, os elementos do tipo: o dispositivo de uso alheio, a finalidade de obter dados e a ausência de autorização do usuário.",
+      "b) O fato de Marcos ter usado uma senha legítima, que ainda funcionava, afasta o crime? Explique por que a autorização, e não a validade técnica da senha, é o elemento central do tipo penal, e por que a mudança feita pela Lei nº 14.155/2021, que retirou a exigência de “violação indevida de mecanismo de segurança”, reforça essa leitura.",
       "c) Por que o pentest contratado pela LogTech, mesmo envolvendo técnicas de invasão de sistemas, não se enquadra no art. 154-A? Que elemento do tipo penal está ausente nesse segundo cenário?",
       "d) Além da eventual responsabilidade penal de Marcos, discuta se a LogTech também pode ter alguma responsabilidade (não penal) decorrente de sua própria falha em revogar as credenciais após o desligamento do funcionário."
     ],
-    "linhas": 12
+    "linhas": 12,
+    "respostaEsperada": "a) Sim. O servidor é um dispositivo informático de uso alheio, da LogTech; Marcos o acessou com o fim de obter dados (a base de clientes) e não tinha autorização expressa nem tácita, pois a permissão de acesso terminou com o desligamento. b) Não afasta. O tipo exige a falta de autorização do usuário do dispositivo, e uma senha que continua funcionando por falha da empresa não equivale a permissão. Até 2021, o artigo exigia “violação indevida de mecanismo de segurança”, o que gerava discussão sobre o uso de senhas válidas; a Lei nº 14.155/2021 retirou essa exigência, e hoje basta invadir sem autorização com o fim de obter dados. A pena é de reclusão de 1 a 4 anos e multa, e o uso dos dados pela concorrente também pode configurar concorrência desleal. c) Porque o pentest tem autorização expressa do titular, com escopo e prazo definidos em contrato. Falta o elemento “sem autorização expressa ou tácita”, e a finalidade é encontrar falhas para corrigi-las. d) Sim. Como controladora, a LogTech tem o dever de adotar medidas de segurança (art. 46 da LGPD), e não revogar as credenciais de um ex-funcionário é falha na gestão de acessos. Ela pode ter de comunicar o incidente à ANPD e aos titulares (art. 48), sofrer sanções administrativas (art. 52) e responder civilmente pelos danos aos clientes (arts. 42 e 44), podendo depois cobrar de Marcos o prejuízo."
   },
   {
     "id": "legislacao-cap4-q2",
@@ -1170,13 +1171,14 @@
     "enunciado": "Com base no art. 19 do Marco Civil, avalie a tese da ConstruBem contra a rede social:",
     "alternativas": [
       "A tese é sólida: qualquer notificação extrajudicial direta à plataforma já gera o dever de remoção, sob pena de responsabilidade civil imediata",
-      "É frágil: em regra (art. 19), a plataforma só responde por conteúdo de terceiros se descumprir ordem judicial específica de remoção",
+      "É frágil: em ofensas à honra, a plataforma só responde por conteúdo de terceiros se descumprir ordem judicial específica (art. 19)",
       "A tese é frágil, mas apenas porque a ConstruBem deveria ter processado o autor do conteúdo, e não a rede social, sendo essa a única falha do caso, já que a notificação extrajudicial foi correta",
       "A tese é sólida, pois o Marco Civil exige remoção imediata de qualquer conteúdo que uma empresa considere prejudicial à sua imagem",
       "O Marco Civil não trata de responsabilidade de plataformas por conteúdo de terceiros, apenas de neutralidade de rede"
     ],
     "correta": 1,
-    "resolucao": "o modelo do art. 19 exige ordem judicial específica como regra geral, precisamente para evitar que plataformas se tornem árbitros privados de conteúdo apenas com base em notificações extrajudiciais — o que poderia incentivar remoções excessivas por receio de responsabilização. As exceções (como nudez não consentida, art. 21) são específicas e não se aplicam ao caso de alegações difamatórias genéricas."
+    "resolucao": "o modelo do art. 19 exige ordem judicial específica como regra geral, precisamente para evitar que plataformas se tornem árbitros privados de conteúdo apenas com base em notificações extrajudiciais — o que poderia incentivar remoções excessivas por receio de responsabilização. As exceções (como nudez não consentida, art. 21) são específicas e não se aplicam ao caso de alegações difamatórias genéricas. Em 2025, ao julgar os Temas 987 e 533, o STF declarou o art. 19 parcialmente inconstitucional e passou a admitir a responsabilização após notificação extrajudicial para a maioria dos conteúdos ilícitos; a ordem judicial, porém, continua exigida nos crimes contra a honra, como as acusações falsas do caso.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap4-q3",
@@ -1203,7 +1205,8 @@
       "A responsabilidade da plataforma, nesse caso, é sempre principal (não subsidiária), equivalente à de quem publicou o conteúdo originalmente, desde o momento da publicação e mesmo sem notificação"
     ],
     "correta": 1,
-    "resolucao": "o art. 21 cria uma exceção deliberada ao regime do art. 19 exatamente para casos de nudez e conteúdo sexual não consentido, reconhecendo a urgência e a gravidade desse tipo de violação: a notificação direta da vítima já basta para acionar o dever de remoção diligente da plataforma, sem exigir ordem judicial prévia."
+    "resolucao": "o art. 21 cria uma exceção deliberada ao regime do art. 19 exatamente para casos de nudez e conteúdo sexual não consentido, reconhecendo a urgência e a gravidade desse tipo de violação: a notificação direta da vítima já basta para acionar o dever de remoção diligente da plataforma, sem exigir ordem judicial prévia.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap4-q4",
@@ -1213,24 +1216,25 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“Obter, para si ou para outrem, vantagem ilícita, em prejuízo alheio, induzindo ou mantendo alguém em erro, mediante o uso de artifício, ardil ou qualquer outro meio fraudulento, por meio de redes sociais, contatos telefônicos ou envio de correio eletrônico fraudulento, ou por qualquer outro meio fraudulento análogo: Pena - reclusão, de 4 (quatro) a 8 (oito) anos, e multa.”",
+        "texto": "“A pena é de reclusão, de 4 (quatro) a 8 (oito) anos, e multa, se a fraude é cometida com a utilização de informações fornecidas pela vítima ou por terceiro induzido a erro por meio de redes sociais, contatos telefônicos ou envio de correio eletrônico fraudulento, ou por qualquer outro meio fraudulento análogo.”",
         "fonte": "BRASIL. Código Penal, art. 171, § 2º-A, incluído pela Lei nº 14.155, de 27 de maio de 2021."
       },
       {
         "t": "p",
-        "texto": "Um golpista enviou, para centenas de números de WhatsApp, uma mensagem se passando pela central de atendimento de um grande banco, alertando sobre uma suposta “transação suspeita” e solicitando que a vítima informasse o código de segurança recebido por SMS para “cancelar a operação”. Uma vítima, acreditando ser realmente o banco, informou o código, o que permitiu ao golpista realizar uma transferência de R$ 18 mil da conta da vítima."
+        "texto": "Um golpista enviou, para centenas de números de WhatsApp, uma mensagem se passando pela central de atendimento de um grande banco, alertando sobre uma suposta “transação suspeita” e orientando a vítima a transferir o saldo, por Pix, para uma “conta de segurança” indicada na mensagem. Uma vítima, acreditando ser realmente o banco, fez ela mesma a transferência de R$ 18 mil para a conta do golpista."
       }
     ],
     "enunciado": "Considerando a qualificadora do art. 171, § 2º-A, do Código Penal, avalie a conduta do golpista:",
     "alternativas": [
       "A conduta se enquadra no estelionato comum (art. 171, caput), com pena de reclusão de 1 a 5 anos, pois o uso de aplicativo de mensagens não altera a natureza do crime nem justifica pena maior",
       "Fraude eletrônica qualificada (art. 171, § 2º-A), com reclusão de 4 a 8 anos, por usar aplicativo de mensagens para enganar a vítima",
-      "Não há crime algum, pois a vítima forneceu o código voluntariamente, o que caracteriza consentimento válido",
+      "Não há crime algum, pois a própria vítima fez a transferência, o que caracteriza consentimento válido",
       "A conduta só seria crime se o golpista tivesse acesso físico ao celular da vítima",
       "A pena é sempre a mesma, independentemente do meio utilizado, pois o Código Penal não distingue estelionato tradicional de fraude eletrônica"
     ],
     "correta": 1,
-    "resolucao": "a Lei nº 14.155/2021 criou uma qualificadora específica, com pena mais severa, para o estelionato praticado por meios eletrônicos como o descrito (mensagens fraudulentas se passando por instituição legítima), justamente em resposta ao crescimento desse tipo de golpe. O consentimento da vítima, induzido por engano, não descaracteriza o crime — é, na verdade, elemento central do tipo (induzir ou manter alguém em erro)."
+    "resolucao": "a Lei nº 14.155/2021 criou uma qualificadora específica, com pena mais severa, para o estelionato praticado por meios eletrônicos como o descrito (mensagens fraudulentas se passando por instituição legítima), justamente em resposta ao crescimento desse tipo de golpe. O consentimento da vítima, induzido por engano, não descaracteriza o crime — é, na verdade, elemento central do tipo (induzir ou manter alguém em erro). Como foi a própria vítima, enganada, quem entregou o dinheiro, o caso é de estelionato; se o golpista usasse as informações para ele mesmo tirar o dinheiro da conta, poderia ser furto mediante fraude por meio eletrônico (art. 155, § 4º-B).",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap4-q5",
@@ -1257,7 +1261,8 @@
       "O armazenamento de senhas em texto puro é expressamente autorizado pela LGPD, desde que o banco de dados tenha firewall"
     ],
     "correta": 1,
-    "resolucao": "o dever de segurança do art. 46 é autônomo em relação à eventual conduta criminosa de um terceiro invasor: a empresa responde pela adequação (ou inadequação) de suas próprias medidas técnicas, independentemente de o incidente ter sido provocado por um ataque externo. Armazenar senhas sem qualquer proteção criptográfica é considerado, no mercado e na doutrina, uma falha grave de segurança."
+    "resolucao": "o dever de segurança do art. 46 é autônomo em relação à eventual conduta criminosa de um terceiro invasor: a empresa responde pela adequação (ou inadequação) de suas próprias medidas técnicas, independentemente de o incidente ter sido provocado por um ataque externo. Armazenar senhas sem qualquer proteção criptográfica é considerado, no mercado e na doutrina, uma falha grave de segurança.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap4-q6",
@@ -1284,7 +1289,8 @@
       "A ameaça de divulgação de dados sigilosos é irrelevante juridicamente, pois a LGPD não prevê qualquer consequência para vazamentos causados por terceiros criminosos, e o Código Penal só pune a invasão"
     ],
     "correta": 1,
-    "resolucao": "ataques de ransomware com dupla extorsão (criptografar e ainda ameaçar vazar dados) tipicamente reúnem mais de uma conduta criminosa: a invasão do sistema (art. 154-A) e a exigência de vantagem econômica mediante grave ameaça, que se aproxima da extorsão (art. 158). A análise penal exata depende dos detalhes do caso concreto, mas a combinação de condutas é central para entender por que esse tipo de ataque é tratado com tanta gravidade."
+    "resolucao": "ataques de ransomware com dupla extorsão (criptografar e ainda ameaçar vazar dados) tipicamente reúnem mais de uma conduta criminosa: a invasão do sistema (art. 154-A) e a exigência de vantagem econômica mediante grave ameaça, que se aproxima da extorsão (art. 158). A análise penal exata depende dos detalhes do caso concreto, mas a combinação de condutas é central para entender por que esse tipo de ataque é tratado com tanta gravidade.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap4-q7",
@@ -1311,7 +1317,8 @@
       "A guarda de registros de conexão é proibida pela LGPD, o que tornaria a conduta do provedor, paradoxalmente, a única legalmente correta, já que os registros contêm dados pessoais dos usuários"
     ],
     "correta": 1,
-    "resolucao": "o Marco Civil estabelece o prazo mínimo de guarda de registros de conexão em 1 ano para provedores de conexão (art. 13) — distinto do prazo de 6 meses para registros de acesso a aplicações (art. 15). Descartar os registros antes desse prazo mínimo descumpre a lei e pode prejudicar investigações legítimas."
+    "resolucao": "o Marco Civil estabelece o prazo mínimo de guarda de registros de conexão em 1 ano para provedores de conexão (art. 13) — distinto do prazo de 6 meses para registros de acesso a aplicações (art. 15). Descartar os registros antes desse prazo mínimo descumpre a lei e pode prejudicar investigações legítimas.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap4-q8",
@@ -1320,9 +1327,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“As Partes prestarão assistência mútua, em conformidade com as disposições do presente Acordo, em investigações, ações penais e processos relativos à prevenção do crime.”",
-        "fonte": "BRASIL. Decreto nº 3.810, de 2 de maio de 2001 (promulga o Acordo de Assistência Judiciária em Matéria Penal entre o Governo da República Federativa do Brasil e o Governo dos Estados Unidos da América — MLAT), art. I, item 1 (tradução livre)."
+        "t": "p",
+        "texto": "O acordo de assistência judiciária em matéria penal entre Brasil e Estados Unidos (MLAT) obriga os dois países a prestar assistência mútua em investigações, inquéritos, ações penais e na prevenção de crimes, por meio das autoridades centrais de cada um."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em BRASIL. Decreto nº 3.810, de 2 de maio de 2001 (promulga o Acordo de Assistência Judiciária em Matéria Penal entre o Brasil e os Estados Unidos), art. I."
       },
       {
         "t": "p",
@@ -1338,7 +1348,8 @@
       "A cooperação só seria possível se o crime tivesse sido cometido exclusivamente em território americano"
     ],
     "correta": 1,
-    "resolucao": "tratados de assistência jurídica mútua (MLATs), como o existente entre Brasil e Estados Unidos, criam justamente o canal formal para que autoridades de um país solicitem evidências e cooperação de autoridades de outro país em investigações criminais, incluindo casos de cibercrime com servidores no exterior."
+    "resolucao": "tratados de assistência jurídica mútua (MLATs), como o existente entre Brasil e Estados Unidos, criam justamente o canal formal para que autoridades de um país solicitem evidências e cooperação de autoridades de outro país em investigações criminais, incluindo casos de cibercrime com servidores no exterior.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap4-f3",
@@ -1348,12 +1359,13 @@
     "nivel": "facil",
     "enunciado": "Um funcionário do setor de TI de uma empresa de saúde acessa e vende dados de prontuários médicos de 50 mil pacientes a uma corretora de planos de saúde. Quais são as responsabilidades jurídicas do funcionário e da empresa?",
     "alternativas": [
-      "Apenas o funcionário responde penalmente por violação de sigilo; a empresa está isenta de responsabilidade civil e administrativa, pois o ato foi praticado por iniciativa exclusiva do colaborador, sem conhecimento ou autorização dos dirigentes da empresa.",
-      "O funcionário responde penalmente e a empresa responde apenas administrativamente perante a ANPD, sem qualquer responsabilidade civil direta aos titulares, pois o CDC não se aplica a relações entre prestadores de serviço de saúde e pacientes.",
       "O funcionário responde penalmente; a empresa responde perante a ANPD, civilmente aos titulares e aos reguladores de saúde.",
-      "Ambos respondem só na esfera civil, sem crime previsto para o caso."
+      "Só o funcionário responde, pois agiu por conta própria, e a empresa fica isenta nas esferas civil e administrativa.",
+      "O funcionário responde penalmente, e a empresa só perante a ANPD, pois o CDC não vale entre clínica e paciente.",
+      "Os dois respondem só na esfera civil, pois a lei brasileira não prevê crime para quem vende dados de pacientes.",
+      "Só a empresa responde, pois o funcionário agiu no horário de trabalho e com o computador da própria empresa."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "o funcionário responde criminalmente, por exemplo por violação de sigilo e outros crimes ligados ao acesso e à venda dos dados. A empresa, como controladora, responde perante a ANPD (art. 52 da LGPD) e civilmente pelos danos aos titulares (arts. 42 a 44), porque é dela o dever de garantir a segurança dos dados (art. 46). O ato do funcionário não a isenta, e os órgãos de saúde também podem aplicar sanções."
   },
   {
@@ -1364,12 +1376,13 @@
     "nivel": "facil",
     "enunciado": "Uma empresa de e-commerce sofre vazamento que expõe CPF, e-mail e histórico de compras de 800 mil clientes. O DPO avalia se há obrigação de notificação à ANPD. Qual é o critério correto sob a LGPD?",
     "alternativas": [
-      "A notificação à ANPD é obrigatória apenas se o vazamento envolver dados sensíveis — CPF, e-mail e histórico de compras são dados comuns, dispensando qualquer comunicação à autoridade reguladora.",
-      "Só é obrigatória acima de 1 milhão de titulares afetados.",
-      "É obrigatória quando há risco ou dano relevante, como em 800 mil CPFs expostos, e deve ser feita à ANPD em até 3 dias úteis.",
-      "A notificação à ANPD é sempre facultativa sob a LGPD — a lei apenas recomenda a comunicação como boa prática, cabendo ao DPO avaliar discricionariamente a conveniência e oportunidade da notificação em cada caso concreto, sem prazo definido."
+      "É obrigatória quando há risco ou dano relevante, como em 800 mil CPFs expostos, em até 3 dias úteis.",
+      "Só é obrigatória se o vazamento envolver dados sensíveis, e CPF, e-mail e compras são dados comuns.",
+      "Só é obrigatória acima de 1 milhão de titulares afetados, conforme o regulamento de incidentes da ANPD.",
+      "É sempre facultativa, pois a LGPD apenas recomenda a comunicação, que fica a critério do encarregado.",
+      "É obrigatória, mas só depois que a empresa concluir a perícia completa, qualquer que seja o tempo gasto."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "o art. 48 da LGPD não depende de os dados serem sensíveis nem de um número mínimo de afetados: a comunicação é obrigatória sempre que o incidente puder causar risco ou dano relevante aos titulares. CPFs e e-mails de 800 mil clientes expostos geram risco concreto de fraude. A Resolução CD/ANPD nº 15/2024 fixa o prazo de 3 dias úteis para comunicar a ANPD."
   },
   {
@@ -1378,15 +1391,16 @@
     "capituloId": "legislacao-cap4",
     "tipo": "objetiva",
     "nivel": "facil",
-    "enunciado": "Um criminoso se passa por funcionário do banco por telefone e convence uma idosa a instalar aplicativo de acesso remoto, obtendo assim suas credenciais bancárias e transferindo R$ 80 mil via Pix. Qual crime foi praticado e qual lei agravou a pena para esse tipo de conduta?",
+    "enunciado": "Um criminoso se passa por funcionário do banco por telefone e convence uma idosa de que a conta dela foi invadida. Seguindo as orientações dele, ela mesma faz um Pix de R$ 80 mil para uma “conta segura”, que na verdade é do criminoso. Qual crime foi praticado e qual lei agravou a pena para esse tipo de conduta?",
     "alternativas": [
-      "Furto qualificado mediante fraude (art. 155, § 4º do CP).",
-      "Estelionato simples (art. 171 do CP) com pena de 1 a 5 anos, pois a engenharia social por telefone não se enquadra nas qualificadoras digitais criadas pela Lei nº 14.155/2021, que exige uso direto de dispositivo eletrônico pelo agente criminoso.",
-      "Estelionato qualificado (art. 171, § 2º-A do CP), com pena de 4 a 8 anos e multa, incluído pela Lei nº 14.155/2021.",
-      "Invasão de dispositivo informático (art. 154-A do CP) combinado com estelionato, mas sem qualificadora específica, pois a Lei nº 14.155/2021 agravou apenas crimes praticados por hackers com conhecimento técnico, não golpes de engenharia social por telefone."
+      "Fraude eletrônica (art. 171, § 2º-A, do CP), com reclusão de 4 a 8 anos, criada pela Lei nº 14.155/2021.",
+      "Furto mediante fraude (art. 155, § 4º-B), pois o criminoso tirou o dinheiro da conta sem que a vítima agisse.",
+      "Estelionato simples (art. 171, caput), de 1 a 5 anos, pois golpes por telefone não entram na Lei nº 14.155/2021.",
+      "Invasão de dispositivo (art. 154-A), pois o criminoso acessou o aplicativo do banco no celular da vítima.",
+      "Não há crime, pois a própria vítima fez a transferência, o que mostra que ela consentiu com a operação."
     ],
-    "correta": 2,
-    "resolucao": "enganar a vítima por telefone para obter as credenciais e transferir o dinheiro é estelionato. A Lei nº 14.155/2021 criou a fraude eletrônica (art. 171, § 2º-A, do CP), com pena de 4 a 8 anos e multa, para golpes cometidos com uso de informações dadas pela vítima induzida a erro por meios eletrônicos, como telefone e redes sociais. Como a vítima é idosa, a pena ainda aumenta (art. 171, § 4º)."
+    "correta": 0,
+    "resolucao": "Enganar a vítima por telefone para que ela mesma transfira o dinheiro é estelionato. A Lei nº 14.155/2021 criou a fraude eletrônica (art. 171, § 2º-A, do CP), com pena de 4 a 8 anos e multa, para golpes cometidos com informações dadas pela vítima induzida a erro por redes sociais, contatos telefônicos ou meios semelhantes. Como a vítima é idosa, a pena ainda aumenta de 1/3 ao dobro (art. 171, § 4º). Seria furto mediante fraude se o criminoso usasse os dados para ele mesmo tirar o dinheiro da conta."
   },
   {
     "id": "legislacao-cap4-f6",
@@ -1396,12 +1410,13 @@
     "nivel": "facil",
     "enunciado": "Uma plataforma de streaming armazena dados de 10 milhões de usuários brasileiros. Um ataque externo expõe dados de pagamento e geolocalização. A empresa leva 15 dias para notificar a ANPD e nunca notifica os titulares. Quais são as consequências jurídicas específicas dessa omissão?",
     "alternativas": [
-      "A demora na notificação é irrelevante juridicamente, pois a LGPD não estabelece prazo fixo para comunicação à ANPD — a expressão \"prazo razoável\" confere discricionariedade ampla ao controlador para avaliar o momento adequado da notificação.",
-      "As omissões agravam a responsabilidade: 15 dias superam os 3 dias úteis orientados pela ANPD, e não avisar os titulares é outra infração.",
-      "A empresa só responde pela não notificação aos titulares, pois a ANPD tem acesso autônomo aos sistemas de monitoramento de incidentes e não depende de comunicação voluntária das empresas para tomar ciência dos vazamentos.",
-      "As omissões geram apenas responsabilidade administrativa perante a ANPD, sem qualquer reflexo na responsabilidade civil aos titulares afetados, pois o dever de notificação é obrigação exclusivamente regulatória sem relação com o dano sofrido pelos usuários da plataforma."
+      "As omissões agravam a responsabilidade: 15 dias superam os 3 dias úteis fixados, e não avisar os titulares é outra infração.",
+      "A demora é irrelevante, pois a LGPD não fixa prazo e a expressão \"prazo razoável\" deixa tudo a critério da empresa.",
+      "A empresa só responde por não avisar os titulares, pois a ANPD descobre os incidentes sozinha, sem depender de aviso.",
+      "As omissões geram só responsabilidade administrativa, sem nenhum reflexo no dever de indenizar os usuários afetados.",
+      "Não há infração, pois o aviso aos titulares só é exigido quando o incidente envolve dados de crianças e adolescentes."
     ],
-    "correta": 1,
+    "correta": 0,
     "resolucao": "a Resolução CD/ANPD nº 15/2024 fixa 3 dias úteis para comunicar a ANPD, e o art. 48 da LGPD também exige comunicar os titulares quando houver risco relevante. Atrasar a comunicação à ANPD e nunca avisar os titulares são descumprimentos distintos, que pesam na sanção administrativa e não afastam a responsabilidade civil pelos danos aos usuários."
   },
   {
@@ -1412,12 +1427,13 @@
     "nivel": "facil",
     "enunciado": "Um provedor de conexão à internet recebe ofício policial solicitando os registros de conexão de um suspeito de crimes cibernéticos sem apresentação de ordem judicial. O provedor entrega os dados imediatamente. Qual é o problema jurídico dessa conduta?",
     "alternativas": [
-      "Não há problema: basta requisição policial, sem ordem judicial.",
-      "O problema é exclusivamente contratual: o provedor viola os termos de serviço firmados com o usuário ao entregar dados sem consentimento, mas não há infração legal específica pois a legislação brasileira não regulamenta o acesso policial a registros de conexão.",
-      "A entrega viola o Marco Civil, que exige ordem judicial para fornecer os registros de conexão, e pode gerar responsabilidade ao provedor.",
-      "O provedor agiu corretamente: a Lei nº 14.155/2021 criou exceção expressa ao sigilo de registros de conexão para investigações de crimes digitais, autorizando autoridades policiais a requisitar dados de provedores sem necessidade de prévia autorização judicial ou de qualquer outra formalidade."
+      "A entrega viola o Marco Civil, que exige ordem judicial para fornecer registros de conexão, e gera responsabilidade.",
+      "Não há problema, pois basta a requisição da autoridade policial para que o provedor entregue os registros.",
+      "O problema é só contratual, pois a lei brasileira não regula o acesso da polícia aos registros de conexão.",
+      "O provedor agiu bem, pois a Lei nº 14.155/2021 dispensa ordem judicial em investigações de crimes digitais.",
+      "O provedor agiu bem, desde que avise o usuário em até 30 dias de que seus registros foram entregues à polícia."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "os registros de conexão são sigilosos, e o Marco Civil da Internet (arts. 10, § 1º, e 22) só permite entregá-los mediante ordem judicial. A autoridade policial pode requisitar sem ordem apenas dados cadastrais, como nome e endereço (art. 10, § 3º). Ao entregar os registros sem ordem, o provedor viola o sigilo e pode responder perante o usuário."
   },
   {
@@ -1428,12 +1444,13 @@
     "nivel": "facil",
     "enunciado": "Uma multinacional com operações no Brasil sofre ataque cibernético coordenado por grupo criminoso localizado na Rússia. As evidências estão em servidores na Alemanha. Quais são os principais instrumentos jurídicos disponíveis para a investigação transnacional?",
     "alternativas": [
-      "É inviável: a soberania impede obter provas em servidores estrangeiros.",
-      "O único instrumento disponível é a carta rogatória, mecanismo lento e burocrático que exige homologação pelo STJ antes de ser enviada ao país estrangeiro, tornando a investigação de crimes cibernéticos praticamente ineficaz na prática.",
-      "MLATs para obter as provas na Alemanha, INTERPOL para identificar o grupo russo e a Convenção de Budapeste, promulgada pelo Decreto nº 11.491/2023.",
-      "O Brasil pode acionar unilateralmente o CLOUD Act americano para obter as evidências nos servidores alemães, pois esse instrumento tem aplicação global para investigações de crimes cibernéticos que afetam empresas com operações nos EUA ou em países aliados."
+      "MLATs para as provas na Alemanha, a INTERPOL para identificar o grupo e a Convenção de Budapeste.",
+      "Nenhum: a soberania dos outros países impede obter provas guardadas em servidores no exterior.",
+      "Só a carta rogatória, que precisa ser homologada pelo STJ antes de seguir para o país estrangeiro.",
+      "O CLOUD Act americano, que o Brasil pode acionar sozinho para obter dados de servidores na Alemanha.",
+      "Só a INTERPOL, que pode apreender os servidores na Alemanha sem pedido das autoridades daquele país."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "a investigação depende de cooperação internacional: os acordos de assistência jurídica mútua (MLATs) e a cooperação policial via INTERPOL ajudam a obter provas e identificar autores no exterior. A Convenção de Budapeste sobre crimes cibernéticos também é instrumento central, e o Brasil já a incorporou ao seu direito pelo Decreto nº 11.491/2023. A soberania de outros países não torna a investigação impossível, só exige esses canais formais."
   },
   {
@@ -1444,12 +1461,13 @@
     "nivel": "facil",
     "enunciado": "Uma empresa implementa Plano de Resposta a Incidentes (PRI) e, ao sofrer ataque de ransomware, executa as fases do NIST SP 800-61. Na fase de contenção, a equipe de TI deleta imediatamente todos os logs do servidor comprometido para acelerar a recuperação. Qual é o problema jurídico dessa decisão?",
     "alternativas": [
-      "Não há problema: o NIST e a LGPD autorizam apagar logs na contenção.",
-      "O problema é apenas técnico, sem consequências jurídicas: a exclusão de logs prejudica a análise forense interna, mas não gera responsabilidades legais adicionais, pois a LGPD não impõe obrigação específica de preservação de evidências após incidentes.",
-      "Apagar os logs destrói evidências necessárias à perícia, à notificação à ANPD (art. 48) e à defesa, podendo agravar a responsabilidade.",
-      "O problema ocorre apenas se o incidente envolver dados de titulares europeus sujeitos ao GDPR, que exige preservação obrigatória de evidências por 72 horas após o incidente — para incidentes que envolvam exclusivamente dados de brasileiros sob a LGPD, a exclusão de logs é juridicamente irrelevante."
+      "Apagar os logs destrói evidências necessárias à perícia, à comunicação à ANPD e à defesa, e pode agravar a responsabilidade.",
+      "Não há problema, pois o NIST e a LGPD autorizam apagar os logs na fase de contenção para acelerar a recuperação.",
+      "O problema é só técnico, pois a LGPD não traz nenhuma exigência ligada à preservação de evidências do incidente.",
+      "Só há problema se houver dados de europeus, pois o GDPR exige guardar as evidências por 72 horas após o ataque.",
+      "Só há problema se a empresa tiver seguro cibernético, pois a seguradora exige os logs para pagar a indenização."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "os logs são a principal prova do incidente: mostram o que aconteceu, quais dados foram afetados e quem foi atingido, informações que a comunicação à ANPD precisa trazer (art. 48, § 1º, da LGPD). Apagá-los atrapalha a análise forense e a defesa da empresa, e pode ser visto como falta de cooperação. A contenção deve isolar os sistemas, preservando as evidências."
   },
   {

@@ -817,7 +817,7 @@
   "B": "Sim, pois a Lei de Arbitragem permite a cláusula em qualquer contrato, desde que a câmara seja registrada no CNJ."
  },
  "legislacao-cap4-q2": {
-  "B": "É frágil: em regra (art. 19), a plataforma só responde por conteúdo de terceiros se descumprir ordem judicial específica de remoção",
+  "B": "É frágil: em ofensas à honra, a plataforma só responde por conteúdo de terceiros se descumprir ordem judicial específica (art. 19)",
   "C": "A tese é frágil, mas apenas porque a ConstruBem deveria ter processado o autor do conteúdo, e não a rede social, sendo essa a única falha do caso, já que a notificação extrajudicial foi correta"
  },
  "legislacao-cap4-q3": {
@@ -846,38 +846,38 @@
   "D": "Apenas o provedor de nuvem pode decidir, por vontade própria, se coopera ou não, sem qualquer instrumento formal de cooperação entre os dois países, pois os dados estão fora do Brasil"
  },
  "legislacao-cap4-f3": {
-  "C": "O funcionário responde penalmente; a empresa responde perante a ANPD, civilmente aos titulares e aos reguladores de saúde.",
-  "A": "Apenas o funcionário responde penalmente por violação de sigilo; a empresa está isenta de responsabilidade civil e administrativa, pois o ato foi praticado por iniciativa exclusiva do colaborador, sem conhecimento ou autorização dos dirigentes da empresa.",
-  "D": "Ambos respondem só na esfera civil, sem crime previsto para o caso."
+  "C": "O funcionário responde penalmente, e a empresa só perante a ANPD, pois o CDC não vale entre clínica e paciente.",
+  "A": "O funcionário responde penalmente; a empresa responde perante a ANPD, civilmente aos titulares e aos reguladores de saúde.",
+  "D": "Os dois respondem só na esfera civil, pois a lei brasileira não prevê crime para quem vende dados de pacientes."
  },
  "legislacao-cap4-f4": {
-  "C": "É obrigatória quando há risco ou dano relevante, como em 800 mil CPFs expostos, e deve ser feita à ANPD em até 3 dias úteis.",
-  "D": "A notificação à ANPD é sempre facultativa sob a LGPD — a lei apenas recomenda a comunicação como boa prática, cabendo ao DPO avaliar discricionariamente a conveniência e oportunidade da notificação em cada caso concreto, sem prazo definido.",
-  "B": "Só é obrigatória acima de 1 milhão de titulares afetados."
+  "C": "Só é obrigatória acima de 1 milhão de titulares afetados, conforme o regulamento de incidentes da ANPD.",
+  "D": "É sempre facultativa, pois a LGPD apenas recomenda a comunicação, que fica a critério do encarregado.",
+  "B": "Só é obrigatória se o vazamento envolver dados sensíveis, e CPF, e-mail e compras são dados comuns."
  },
  "legislacao-cap4-f5": {
-  "C": "Estelionato qualificado (art. 171, § 2º-A do CP), com pena de 4 a 8 anos e multa, incluído pela Lei nº 14.155/2021.",
-  "D": "Invasão de dispositivo informático (art. 154-A do CP) combinado com estelionato, mas sem qualificadora específica, pois a Lei nº 14.155/2021 agravou apenas crimes praticados por hackers com conhecimento técnico, não golpes de engenharia social por telefone.",
-  "A": "Furto qualificado mediante fraude (art. 155, § 4º do CP)."
+  "C": "Estelionato simples (art. 171, caput), de 1 a 5 anos, pois golpes por telefone não entram na Lei nº 14.155/2021.",
+  "D": "Invasão de dispositivo (art. 154-A), pois o criminoso acessou o aplicativo do banco no celular da vítima.",
+  "A": "Fraude eletrônica (art. 171, § 2º-A, do CP), com reclusão de 4 a 8 anos, criada pela Lei nº 14.155/2021."
  },
  "legislacao-cap4-f6": {
-  "B": "As omissões agravam a responsabilidade: 15 dias superam os 3 dias úteis orientados pela ANPD, e não avisar os titulares é outra infração.",
-  "D": "As omissões geram apenas responsabilidade administrativa perante a ANPD, sem qualquer reflexo na responsabilidade civil aos titulares afetados, pois o dever de notificação é obrigação exclusivamente regulatória sem relação com o dano sofrido pelos usuários da plataforma."
+  "B": "A demora é irrelevante, pois a LGPD não fixa prazo e a expressão \"prazo razoável\" deixa tudo a critério da empresa.",
+  "D": "As omissões geram só responsabilidade administrativa, sem nenhum reflexo no dever de indenizar os usuários afetados."
  },
  "legislacao-cap4-f7": {
-  "C": "A entrega viola o Marco Civil, que exige ordem judicial para fornecer os registros de conexão, e pode gerar responsabilidade ao provedor.",
-  "D": "O provedor agiu corretamente: a Lei nº 14.155/2021 criou exceção expressa ao sigilo de registros de conexão para investigações de crimes digitais, autorizando autoridades policiais a requisitar dados de provedores sem necessidade de prévia autorização judicial ou de qualquer outra formalidade.",
-  "A": "Não há problema: basta requisição policial, sem ordem judicial."
+  "C": "O problema é só contratual, pois a lei brasileira não regula o acesso da polícia aos registros de conexão.",
+  "D": "O provedor agiu bem, pois a Lei nº 14.155/2021 dispensa ordem judicial em investigações de crimes digitais.",
+  "A": "A entrega viola o Marco Civil, que exige ordem judicial para fornecer registros de conexão, e gera responsabilidade."
  },
  "legislacao-cap4-f9": {
-  "C": "MLATs para obter as provas na Alemanha, INTERPOL para identificar o grupo russo e a Convenção de Budapeste, promulgada pelo Decreto nº 11.491/2023.",
-  "D": "O Brasil pode acionar unilateralmente o CLOUD Act americano para obter as evidências nos servidores alemães, pois esse instrumento tem aplicação global para investigações de crimes cibernéticos que afetam empresas com operações nos EUA ou em países aliados.",
-  "A": "É inviável: a soberania impede obter provas em servidores estrangeiros."
+  "C": "Só a carta rogatória, que precisa ser homologada pelo STJ antes de seguir para o país estrangeiro.",
+  "D": "O CLOUD Act americano, que o Brasil pode acionar sozinho para obter dados de servidores na Alemanha.",
+  "A": "MLATs para as provas na Alemanha, a INTERPOL para identificar o grupo e a Convenção de Budapeste."
  },
  "legislacao-cap4-f10": {
-  "C": "Apagar os logs destrói evidências necessárias à perícia, à notificação à ANPD (art. 48) e à defesa, podendo agravar a responsabilidade.",
-  "D": "O problema ocorre apenas se o incidente envolver dados de titulares europeus sujeitos ao GDPR, que exige preservação obrigatória de evidências por 72 horas após o incidente — para incidentes que envolvam exclusivamente dados de brasileiros sob a LGPD, a exclusão de logs é juridicamente irrelevante.",
-  "A": "Não há problema: o NIST e a LGPD autorizam apagar logs na contenção."
+  "C": "O problema é só técnico, pois a LGPD não traz nenhuma exigência ligada à preservação de evidências do incidente.",
+  "D": "Só há problema se houver dados de europeus, pois o GDPR exige guardar as evidências por 72 horas após o ataque.",
+  "A": "Apagar os logs destrói evidências necessárias à perícia, à comunicação à ANPD e à defesa, e pode agravar a responsabilidade."
  },
  "legislacao-cap5-q2": {
   "C": "Está incorreta: receber produtos em troca de divulgação também é relação comercial, e o conteúdo deve ser identificado como publicidade",
