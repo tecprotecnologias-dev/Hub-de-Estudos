@@ -751,6 +751,293 @@
     "nivel": "medio"
   },
   {
+    "id": "engsoft-cap2-d1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "texto": {
+      "citacao": "\"A user story describes functionality that will be valuable to either a user or purchaser of a system or software.\"",
+      "traducao": "(Tradução livre: \"Uma história de usuário descreve uma funcionalidade que terá valor para um usuário ou para quem compra um sistema ou software.\")",
+      "fonte": "COHN, M. User Stories Applied: For Agile Software Development. Boston: Addison-Wesley, 2004."
+    },
+    "caso": [
+      "O backlog de um aplicativo de agendamento para salões de beleza tem itens como: \"Criar a tabela de clientes no banco de dados\", \"Tela bonita\", \"Agenda\" e \"Como usuário, quero que tudo funcione\". A equipe não sabe por onde começar, e a Product Owner não consegue dizer quando cada item estaria pronto."
+    ],
+    "enunciado": "Com base no texto de Cohn e no caso apresentado, analise os itens desse backlog e explique como eles deveriam ser reescritos.",
+    "linhas": 10,
+    "respostaEsperada": "Nenhum dos itens descreve uma funcionalidade com valor para o usuário. \"Criar a tabela de clientes\" é uma tarefa técnica, e não algo que o cliente do salão perceba. \"Tela bonita\" e \"Agenda\" são vagos: não dizem quem usa, o que quer fazer nem para quê. \"Quero que tudo funcione\" segue o formato, mas não descreve nenhuma funcionalidade. Os itens deveriam seguir o formato \"Como [tipo de usuário], quero [ação], para [benefício]\", que deixa claro quem ganha e qual é o valor. Por exemplo: \"Como cliente do salão, quero agendar um horário pelo celular, para não precisar telefonar\" e \"Como cabeleireira, quero ver os agendamentos do dia, para organizar meu trabalho\". Cada história deve vir com critérios de aceitação, que dizem quando ela está pronta; para a primeira: o cliente vê só os horários livres, escolhe o serviço e o profissional, e recebe uma confirmação. Assim a equipe sabe o que construir, e a PO consegue priorizar pelo valor e dizer quando cada item está concluído."
+  },
+  {
+    "id": "engsoft-cap2-d2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma empresa desenvolveu uma plataforma de venda de ingressos. Todos os requisitos funcionais foram implementados: buscar eventos, escolher o assento, pagar e receber o ingresso por e-mail. No dia da venda de um grande show, 200 mil pessoas acessaram o site ao mesmo tempo. As páginas passaram a levar mais de 40 segundos para abrir, o site saiu do ar duas vezes, e algumas compras foram cobradas, mas os ingressos não foram emitidos. O documento de requisitos dizia apenas que \"o sistema deve ser rápido e estável\"."
+    ],
+    "enunciado": "Analise o caso e explique quais requisitos não funcionais deveriam ter sido especificados, e de que forma, para evitar esses problemas.",
+    "linhas": 10,
+    "respostaEsperada": "O sistema fazia tudo o que devia, mas falhou em como devia se comportar, o que mostra que os requisitos não funcionais são tão críticos quanto os funcionais. \"Rápido e estável\" é vago e não verificável. Deveriam ter sido especificados, de forma mensurável: desempenho, como \"as páginas de compra devem abrir em até 3 segundos para até 200 mil usuários simultâneos\"; escalabilidade, como \"o sistema deve suportar picos de 10 vezes o acesso normal sem degradação\"; confiabilidade, como \"disponibilidade de 99,9% durante as vendas\" e \"nenhuma compra paga pode ficar sem ingresso emitido; em caso de falha, a operação deve ser desfeita ou concluída\"; e segurança, já que há pagamentos e dados pessoais, com conformidade com a LGPD. Escritos assim, cada requisito tem uma única interpretação e pode ser verificado com testes de performance, de carga e de recuperação antes do lançamento, e não descoberto no dia do show."
+  },
+  {
+    "id": "engsoft-cap2-o1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa tem quatro projetos e precisa escolher como levantar os requisitos de cada um: (1) um aplicativo para os 3 mil agentes de saúde de cinco estados, que precisam indicar quais funções são mais urgentes; (2) um sistema de cálculo atuarial, que só três especialistas da seguradora entendem a fundo; (3) o novo painel de um aplicativo de investimentos, em que os clientes dizem que \"só vão saber se gostam quando virem a tela\"; (4) um aplicativo desenvolvido com Scrum, em que a equipe prefere conversar a produzir documentos formais."
+      }
+    ],
+    "enunciado": "As técnicas de elicitação mais adequadas às situações 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "questionários, entrevistas, prototipagem e histórias de usuário.",
+      "entrevistas, questionários, prototipagem e histórias de usuário.",
+      "questionários, entrevistas, histórias de usuário e prototipagem.",
+      "prototipagem, entrevistas, questionários e histórias de usuário.",
+      "questionários, prototipagem, entrevistas e histórias de usuário."
+    ],
+    "correta": 0,
+    "resolucao": "Muitos usuários espalhados geograficamente, para validar prioridades, pedem questionários (1). Poucos stakeholders com conhecimento profundo, quando é preciso entender contexto e motivações, pedem entrevistas (2). Quando o usuário não consegue definir o que quer sem ver algo concreto, a prototipagem é a mais eficaz (3). Em um contexto ágil, que prioriza a comunicação, as histórias de usuário são a técnica natural (4)."
+  },
+  {
+    "id": "engsoft-cap2-o2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "O backlog de um banco digital tem três itens: (1) \"Como gerente, quero relatórios de vendas por período e por vendedor\"; (2) \"O sistema deve usar o banco de dados PostgreSQL\"; (3) \"Como cliente do banco, quero visualizar meu extrato dos últimos 90 dias, para controlar minhas despesas mensais\"."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. A história 1 está incompleta, pois não informa o benefício que o gerente quer obter.",
+      "II. A história 2 é uma boa história de usuário, pois descreve uma necessidade do cliente.",
+      "III. A história 3 dispensa critérios de aceitação, pois o formato \"Como, quero, para\" já descreve o seu valor.",
+      "IV. Para a história 3, \"o usuário deve poder filtrar por período personalizado\" pode ser um critério de aceitação."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e IV, apenas.",
+      "I, apenas.",
+      "IV, apenas.",
+      "I, II e IV, apenas.",
+      "I, III e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: falta a parte \"para [alcançar um objetivo]\", que mostra o valor da história. II é falsa: escolher o banco de dados é uma decisão técnica, e não uma funcionalidade descrita do ponto de vista do usuário. III é falsa: toda história de usuário deve vir acompanhada de critérios de aceitação, que dizem quando ela está pronta. IV é verdadeira: é um dos critérios de aceitação que a própria apostila dá para a história do extrato."
+  },
+  {
+    "id": "engsoft-cap2-o3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Para substituir o sistema de uma transportadora, a equipe decidiu economizar tempo: em vez de falar com gerentes, motoristas e atendentes, levantou os requisitos lendo apenas os manuais do sistema antigo, escritos há quinze anos."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Uma equipe que levanta os requisitos apenas lendo os manuais do sistema antigo, sem conversar com os stakeholders, corre o risco de chegar a requisitos incompletos.",
+      "PORQUE",
+      "II. A elicitação é um processo humano e comunicativo, pois as pessoas nem sempre sabem exatamente o que querem ou têm dificuldade de expressar as suas necessidades."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II explica a I. Elicitar é descobrir as necessidades dos stakeholders. Como essas necessidades nem sempre estão claras nem escritas em algum lugar, elas precisam ser descobertas com as pessoas, por meio de entrevistas, workshops, observação e protótipos. Os manuais mostram como o sistema antigo funciona, mas não o que os usuários precisam hoje."
+  },
+  {
+    "id": "engsoft-cap2-o4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "O documento de requisitos de um sistema de matrículas traz quatro requisitos não funcionais: (1) \"O sistema deve suportar um crescimento de 10 vezes no volume de dados sem refatoração da arquitetura\"; (2) \"Alterações nas regras de matrícula não devem exigir mudanças em mais de 3 classes\"; (3) \"O sistema deve responder a qualquer consulta em até 2 segundos para até 1.000 usuários simultâneos\"; (4) \"Se um servidor falhar, outro deve assumir o atendimento sem perda de dados\"."
+      }
+    ],
+    "enunciado": "Os requisitos não funcionais 1, 2, 3 e 4 pertencem, respectivamente, às categorias",
+    "alternativas": [
+      "escalabilidade, manutenibilidade, desempenho e confiabilidade.",
+      "desempenho, manutenibilidade, escalabilidade e confiabilidade.",
+      "escalabilidade, usabilidade, desempenho e segurança.",
+      "confiabilidade, manutenibilidade, desempenho e escalabilidade.",
+      "escalabilidade, manutenibilidade, confiabilidade e desempenho."
+    ],
+    "correta": 0,
+    "resolucao": "Crescer dez vezes sem refazer a arquitetura é escalabilidade, a capacidade de crescer sem degradação (1). Mudar uma regra de negócio alterando poucas classes é manutenibilidade, a facilidade de modificar e evoluir (2). Responder em 2 segundos com mil usuários é desempenho, que trata de tempo de resposta e throughput (3). Continuar funcionando, sem perder dados, quando um servidor cai é confiabilidade, que envolve disponibilidade, tolerância a falhas e recuperação (4)."
+  },
+  {
+    "id": "engsoft-cap2-o5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe vai planejar os testes de dois requisitos de um sistema de declaração de imposto: (1) \"O sistema deve calcular o IRPF devido a partir dos rendimentos e deduções informados\"; (2) \"O cálculo deve ser concluído em menos de 1 segundo\"."
+      }
+    ],
+    "enunciado": "A forma mais adequada de verificar os requisitos 1 e 2 é, respectivamente:",
+    "alternativas": [
+      "um teste funcional (caixa preta), comparando os valores calculados, e um teste de performance, medindo o tempo.",
+      "um teste de performance, medindo o tempo do cálculo, e um teste funcional, comparando os valores calculados.",
+      "um teste funcional para os dois, pois ambos tratam do mesmo cálculo e podem ser conferidos pelo resultado.",
+      "uma revisão do código para os dois, pois requisitos de cálculo não podem ser verificados com testes.",
+      "um teste de usabilidade com contribuintes, para o primeiro, e um teste de segurança, para o segundo."
+    ],
+    "correta": 0,
+    "resolucao": "O requisito 1 diz o que o sistema faz: é funcional e é verificado por testes funcionais (caixa preta), que conferem se o resultado está certo. O requisito 2 diz como o sistema se comporta: é não funcional, da categoria desempenho, e é verificado por um teste de performance, que mede o tempo. Conferir só o resultado não mostra se o cálculo levou menos de 1 segundo."
+  },
+  {
+    "id": "engsoft-cap2-o6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Na primeira reunião de um projeto, a equipe discutiu quais artefatos usaria para registrar os requisitos e qual o papel de cada um."
+      }
+    ],
+    "enunciado": "Sobre os artefatos de documentação de requisitos, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "O Backlog do Produto é aprovado uma única vez, no início, e não deve mudar, pois é o contrato técnico entre o cliente e a equipe.",
+      "O Documento de Visão descreve o problema, os stakeholders e a proposta de valor, de forma acessível a públicos técnicos e não técnicos.",
+      "No contexto ágil, o Backlog do Produto substitui o SRS formal e é gerenciado continuamente pelo Product Owner.",
+      "Os protótipos servem para documentar e validar requisitos de interface e de comportamento antes do desenvolvimento.",
+      "O SRS é o artefato mais completo e formal, baseado na IEEE 830, com requisitos funcionais e não funcionais."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a do Backlog do Produto: ele é vivo, cresce e se reorganiza ao longo do projeto, gerenciado continuamente pelo PO. O artefato que funciona como contrato técnico entre cliente e equipe é o SRS. As demais alternativas descrevem corretamente o Documento de Visão, o papel do backlog no ágil, os protótipos e o SRS."
+  },
+  {
+    "id": "engsoft-cap2-o7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma rede de supermercados, com 40 mil clientes cadastrados no país inteiro, vai criar um aplicativo de compras. Os gerentes de marketing dizem que \"só vão saber como querem a tela de ofertas quando virem uma\". A equipe pretende usar protótipos."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Os protótipos são muito eficazes para refinar requisitos de interface e de interação.",
+      "II. Além de ajudar a levantar requisitos, os protótipos podem servir para documentá-los e validá-los com o usuário antes do desenvolvimento.",
+      "III. A prototipagem é a técnica mais adequada para conhecer as prioridades dos 40 mil clientes da rede, espalhados pelo país.",
+      "IV. Por mostrar algo concreto, o protótipo ajuda quando o usuário não consegue definir o que quer sem ver a tela."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e IV, apenas.",
+      "I e II, apenas.",
+      "I e IV, apenas.",
+      "II e IV, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: os protótipos, de baixa ou alta fidelidade, permitem que o usuário reaja a algo concreto, o que refina os requisitos de interface. II é verdadeira: a apostila os cita também como artefato de documentação e validação. III é falsa: para muitos usuários dispersos geograficamente, a técnica indicada é o questionário. IV é verdadeira: é justamente o caso em que a prototipagem é a mais indicada."
+  },
+  {
+    "id": "engsoft-cap2-o8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Todas as funcionalidades de um aplicativo de delivery foram implementadas e passaram nos testes. Mesmo assim, depois do lançamento, as avaliações despencaram: cada tela leva dez segundos para abrir, e o aplicativo fica fora do ar nos horários de almoço e jantar."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Como os requisitos não funcionais não descrevem funcionalidades isoladas, a violação deles não chega a afetar os usuários do aplicativo.",
+      "PORQUE",
+      "II. Os requisitos não funcionais definem propriedades sistêmicas: qualidades, restrições e atributos que permeiam todo o sistema."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A II é a definição correta, e é justamente por ela que a I é falsa. Por serem propriedades do sistema todo, os requisitos não funcionais afetam todas as funcionalidades ao mesmo tempo. Quando são violados, o sistema fica lento, inseguro, inacessível ou ilegal, como mostra o caso. Eles são tão críticos quanto os funcionais."
+  },
+  {
+    "id": "engsoft-cap2-o9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Na lista do MVP de um aplicativo de academia, estão: (1) login com e-mail e senha, sem o qual ninguém consegue usar o aplicativo; (2) exportar o treino em PDF, que é importante, mas pode ser substituído por enquanto pela impressão da tela; (3) tema escuro, que \"seria legal ter\"; (4) integração com relógios inteligentes, que ficou para uma versão futura e foi registrada no backlog."
+      }
+    ],
+    "enunciado": "Na priorização do MVP pela técnica MoSCoW, os itens 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "Must Have, Should Have, Could Have e Won't Have.",
+      "Must Have, Must Have, Should Have e Could Have.",
+      "Should Have, Must Have, Could Have e Won't Have.",
+      "Must Have, Could Have, Should Have e Won't Have.",
+      "Must Have, Should Have, Won't Have e Could Have."
+    ],
+    "correta": 0,
+    "resolucao": "Sem login, o aplicativo não pode ser entregue: Must Have (1). A exportação em PDF é importante, mas existe um contorno, a impressão da tela: Should Have (2). O tema escuro é desejável, de menor impacto, e entra só se sobrar tempo: Could Have (3). A integração com o relógio está fora desta versão, mas fica documentada para o futuro: Won't Have (4), que significa \"não agora\", e não \"nunca\"."
+  },
+  {
+    "id": "engsoft-cap2-o10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Para criar o aplicativo de comunicação entre uma escola e as famílias, o analista fez todas as reuniões apenas com o diretor, que é quem está contratando o sistema. Os 600 pais, os 40 professores e a pequena equipe de TI da escola não foram consultados."
+      }
+    ],
+    "enunciado": "A análise correta da situação é:",
+    "alternativas": [
+      "Os requisitos tendem a ficar incompletos, pois elicitar é levantar as necessidades de todos os stakeholders, e não só de quem contrata.",
+      "O procedimento está correto, pois quem paga pelo sistema é o único stakeholder que pode definir os requisitos do aplicativo.",
+      "O procedimento está correto, desde que o diretor aprove o SRS, pois a aprovação garante que os requisitos estão completos.",
+      "O problema é só de priorização, que se resolve classificando os pedidos do diretor com a técnica MoSCoW antes do desenvolvimento.",
+      "Pais e professores devem ser ouvidos apenas depois da implantação, na fase de manutenção, por meio de chamados de suporte."
+    ],
+    "correta": 0,
+    "resolucao": "Stakeholders são todas as partes interessadas: clientes, usuários, gestores e equipe técnica. Ouvir apenas o diretor deixa de fora quem vai usar o aplicativo todos os dias, e os requisitos ficam incompletos. Os pais, que são muitos, poderiam responder a questionários; os professores, a entrevistas; e a equipe de TI traria as restrições técnicas. Aprovar o documento ou priorizar não corrige o que nunca foi levantado, e deixar para a manutenção sai muito mais caro."
+  },
+  {
     "id": "engsoft-cap3-q1",
     "disciplinaId": "engenharia-de-software-e-da-usabilidade",
     "capituloId": "engsoft-cap3",
@@ -997,6 +1284,297 @@
     "correta": 4,
     "resolucao": "O sistema ainda entrega valor e funciona corretamente — o problema é apenas o acesso a partir de tecnologias novas. O encapsulamento resolve isso com baixo risco. Reescrever todo o legado, prática criticada por Spolsky, é reservado para quando a modernização já não é viável. Copiar as regras para o aplicativo duplicaria a lógica e criaria duas versões a manter.",
     "nivel": "medio"
+  },
+  {
+    "id": "engsoft-cap3-d1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "texto": {
+      "citacao": "\"Organizations which design systems (in the broad sense used here) are constrained to produce designs which are copies of the communication structures of these organizations.\"",
+      "traducao": "(Tradução livre: \"Organizações que projetam sistemas (no sentido amplo usado aqui) são levadas a produzir projetos que são cópias das estruturas de comunicação dessas organizações.\")",
+      "fonte": "CONWAY, M. E. How Do Committees Invent? Datamation, v. 14, n. 4, p. 28-31, 1968. (Conhecida como Lei de Conway.)"
+    },
+    "caso": [
+      "Uma empresa de logística decidiu migrar o seu sistema para microsserviços. Os 30 desenvolvedores, porém, continuam divididos em três grandes equipes por especialidade técnica: uma só de telas, uma só de regras de negócio e uma só de banco de dados. Seis meses depois, qualquer mudança em um \"microsserviço\" exige reuniões entre as três equipes, os serviços não podem ser implantados separadamente, e o sistema ficou mais difícil de monitorar do que o antigo."
+    ],
+    "enunciado": "Com base no texto de Conway e no caso apresentado, analise por que a migração não trouxe as vantagens esperadas e proponha um caminho para a empresa.",
+    "linhas": 10,
+    "respostaEsperada": "Pela Lei de Conway, o sistema acaba copiando a forma como as pessoas se comunicam. A empresa trocou o nome da arquitetura, mas manteve equipes por camada técnica, e por isso o sistema continuou organizado em camadas: cada mudança atravessa as três equipes, e os serviços não podem ser implantados separadamente. As vantagens dos microsserviços, escalabilidade independente e times autônomos, dependem de que cada serviço corresponda a uma capacidade de negócio e tenha uma equipe que o desenvolva e implante sozinha. Ao mesmo tempo, a empresa já paga o preço dos microsserviços: monitoramento distribuído, consistência de dados entre serviços e mais infraestrutura. Há dois caminhos coerentes. O primeiro é reorganizar as equipes por capacidade de negócio (por exemplo, rastreamento, faturamento e roteirização), cada uma multifuncional e responsável pelo seu serviço, com o seu banco. O segundo, se a empresa não puder mudar a organização, é voltar a um sistema bem organizado em camadas, mais simples de operar, e só separar em serviço o que realmente precisar escalar de forma independente."
+  },
+  {
+    "id": "engsoft-cap3-d2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma loja virtual roda em um único sistema, em que todas as funções se chamam diretamente. Na última Black Friday, o volume de acessos chegou a vinte vezes o normal. O servidor de envio de e-mails ficou lento e, como a finalização da compra esperava o envio do e-mail de confirmação, o checkout passou a travar. Para piorar, para aguentar o pico da vitrine de produtos, foi preciso aumentar a capacidade do sistema inteiro, inclusive de partes quase sem uso, como o painel administrativo."
+    ],
+    "enunciado": "Analise o caso e explique quais decisões de design de sistemas e quais padrões arquiteturais poderiam evitar esses problemas na próxima Black Friday.",
+    "linhas": 10,
+    "respostaEsperada": "Os dois problemas são de design de sistemas. O primeiro está na definição de interfaces: o checkout chama o envio de e-mail diretamente e espera a resposta, e por isso a lentidão de uma parte secundária derrubou a mais importante. Com uma comunicação por fila de mensagens ou por eventos, o checkout publicaria um evento como \"PedidoConfirmado\" e seguiria em frente, e o e-mail seria enviado quando possível; esse baixo acoplamento é a principal vantagem da arquitetura orientada a eventos, que exige, em troca, ferramentas de observabilidade para rastrear o fluxo. O segundo está na decomposição e na estratégia de escalabilidade: com tudo em um bloco só, não dá para escalar apenas a vitrine. Separar em serviços as partes com picos muito diferentes, como vitrine e checkout, permitiria escalá-las de forma independente, como nos microsserviços. Essa separação deve ser feita com cuidado, só onde compensa, porque os microsserviços trazem complexidade operacional: monitoramento distribuído, consistência de dados entre serviços e mais infraestrutura. Por fim, a estratégia de disponibilidade deve prever como o sistema se comporta quando um componente falha, para que a falha do e-mail não pare as vendas."
+  },
+  {
+    "id": "engsoft-cap3-o1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em uma entrevista de emprego, um candidato afirmou que \"camadas, MVC e os padrões do livro Gang of Four são a mesma coisa, só com nomes diferentes\". O entrevistador pediu que ele revisse a afirmação."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. A arquitetura em camadas e o MVC são padrões arquiteturais, diferentes dos padrões de projeto apresentados no livro Gang of Four.",
+      "PORQUE",
+      "II. Os padrões arquiteturais operam em um nível mais alto, o da estrutura geral do sistema, e não no da estrutura interna de uma classe."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II explica a I. Padrões arquiteturais, como camadas, microsserviços, eventos e MVC, são soluções consolidadas para organizar sistemas em larga escala. Os padrões de projeto do Gang of Four tratam de problemas menores, dentro da estrutura das classes. A diferença está justamente no nível em que cada um atua."
+  },
+  {
+    "id": "engsoft-cap3-o2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em um sistema de biblioteca organizado em três camadas (apresentação, lógica de negócio e acesso a dados), um desenvolvedor fez a tela de empréstimos executar comandos SQL diretamente no banco de dados, \"para ganhar tempo\"."
+      }
+    ],
+    "enunciado": "A decisão do desenvolvedor:",
+    "alternativas": [
+      "fere a arquitetura em camadas, em que cada camada só se comunica com a camada imediatamente adjacente.",
+      "está correta, pois na arquitetura em camadas qualquer camada pode chamar qualquer outra quando for mais rápido.",
+      "fere o padrão MVC, pois a tela deveria acessar o banco de dados por meio do Model e da View ao mesmo tempo.",
+      "está correta, pois a camada de lógica de negócio é opcional quando a consulta é simples e não tem regras.",
+      "fere a arquitetura de microsserviços, pois cada tela deveria ter o seu próprio banco de dados separado."
+    ],
+    "correta": 0,
+    "resolucao": "Na arquitetura em camadas, cada camada tem uma responsabilidade e só conversa com a vizinha: a apresentação fala com a lógica de negócio, que fala com o acesso a dados. Pular a camada de negócio espalha regras e consultas pela interface e destrói a separação de responsabilidades, que é a principal vantagem do padrão. Se a camada só repassasse chamadas, o problema seria outro, o das camadas que não agregam valor."
+  },
+  {
+    "id": "engsoft-cap3-o3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma plataforma de streaming com 15 equipes de desenvolvimento dividiu o seu sistema em microsserviços, como catálogo, pagamentos, recomendações e reprodução, cada um com o seu próprio banco de dados."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. O serviço de recomendações pode ganhar mais servidores sem que os demais serviços precisem ser escalados.",
+      "II. Cada equipe pode desenvolver e implantar o seu serviço com autonomia, sem depender das outras.",
+      "III. Como cada serviço é pequeno, o monitoramento do sistema como um todo fica mais simples do que em um monólito.",
+      "IV. A consistência dos dados entre os serviços, cada um com o seu banco, passa a exigir atenção especial."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e IV, apenas.",
+      "I e II, apenas.",
+      "I e IV, apenas.",
+      "II e IV, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: cada microsserviço pode ser escalado de forma independente. II é verdadeira: times autônomos desenvolvem e implantam o seu serviço separadamente. III é falsa: os microsserviços trazem complexidade operacional, e o monitoramento passa a ser distribuído, o que é mais difícil. IV é verdadeira: manter os dados consistentes entre serviços é uma das limitações citadas na apostila."
+  },
+  {
+    "id": "engsoft-cap3-o4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma loja virtual tem um sistema antigo e difícil de manter. A equipe construiu um novo módulo de busca de produtos, separado do sistema antigo, e configurou um roteador para enviar a ele as buscas, enquanto o carrinho, o pagamento e o resto continuam no sistema antigo. O plano é repetir isso com cada módulo até que o sistema antigo possa ser desligado."
+      }
+    ],
+    "enunciado": "A estratégia adotada pela equipe é:",
+    "alternativas": [
+      "a migração incremental (Strangler Fig), que substitui o legado aos poucos até que ele possa ser desligado.",
+      "o encapsulamento (wrapping), que cria uma API moderna em torno do legado, que continua fazendo todo o trabalho.",
+      "a refatoração, que reestrutura o código interno do legado sem alterar o seu comportamento externo.",
+      "a substituição completa, que troca todo o sistema de uma só vez, em uma única data de virada.",
+      "a manutenção corretiva, que corrige os defeitos encontrados no legado depois da sua implantação."
+    ],
+    "correta": 0,
+    "resolucao": "A equipe construiu um módulo novo à parte, desviou para ele as requisições daquela funcionalidade e vai repetir isso módulo a módulo até desligar o sistema antigo: é a migração incremental (Strangler Fig), que reduz o risco em comparação com uma reescrita total. No wrapping, o legado continua fazendo o trabalho por trás de uma API; na refatoração, o próprio código antigo é melhorado; e na substituição completa, a troca é de uma só vez."
+  },
+  {
+    "id": "engsoft-cap3-o5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma rede de hospitais usa um sistema de prontuários escrito em uma tecnologia que não recebe mais atualizações, roda em servidores que já não são fabricados, e cuja manutenção passou a custar mais do que construir um sistema novo. A diretoria decidiu substituí-lo."
+      }
+    ],
+    "enunciado": "Ao planejar a substituição, a equipe deve considerar principalmente:",
+    "alternativas": [
+      "o risco de interromper as operações do negócio, o treinamento dos usuários e a migração dos dados históricos.",
+      "apenas o custo da nova tecnologia, pois os dados antigos podem ser descartados com o sistema que sai de uso.",
+      "apenas a escolha da linguagem de programação, pois os usuários se adaptam sozinhos ao sistema novo depois.",
+      "a refatoração completa do sistema antigo antes da troca, para que ele possa ser mantido em paralelo para sempre.",
+      "o encapsulamento do sistema antigo em uma API, já que a substituição dispensa qualquer migração de dados."
+    ],
+    "correta": 0,
+    "resolucao": "A substituição completa é necessária quando a modernização já não é viável, como no caso: tecnologia sem suporte e manutenção mais cara que uma reescrita. A apostila lista o que essa decisão deve considerar: o risco de interromper operações críticas, o custo de treinar os usuários no sistema novo e a migração dos dados históricos. Descartar os dados ou ignorar os usuários tornaria a troca muito arriscada."
+  },
+  {
+    "id": "engsoft-cap3-o6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Na primeira reunião de arquitetura de um sistema de reservas de hotéis, a equipe discutiu o impacto das decisões de design."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. A escolha das tecnologias afeta a produtividade da equipe e a capacidade de encontrar profissionais no mercado.",
+      "II. Um sistema bem arquitetado no nível de sistema continua fácil de manter, mesmo que os seus componentes sejam mal projetados.",
+      "III. Decidir que os módulos vão se comunicar por uma fila de mensagens é uma decisão de definição de interfaces.",
+      "IV. As decisões arquiteturais são baratas de reverter, pois cada uma afeta apenas uma funcionalidade do sistema."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e III, apenas.",
+      "I, apenas.",
+      "III, apenas.",
+      "I, II e III, apenas.",
+      "I, III e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: é o que a apostila destaca sobre a escolha de tecnologias. II é falsa: um sistema bem arquitetado no nível macro, mas mal projetado no nível de componentes, ainda pode ficar difícil de manter; os dois níveis precisam andar juntos. III é verdadeira: definir como os componentes se comunicam (APIs REST, filas, eventos) é definição de interfaces. IV é falsa: as decisões arquiteturais afetam o sistema inteiro e são muito mais caras de reverter depois que o desenvolvimento avança."
+  },
+  {
+    "id": "engsoft-cap3-o7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Observe o código abaixo, escrito em Python."
+      },
+      {
+        "t": "codigo",
+        "texto": "class Retangulo:\n    def definir_largura(self, largura):\n        self.largura = largura\n\n    def definir_altura(self, altura):\n        self.altura = altura\n\n    def area(self):\n        return self.largura * self.altura\n\nclass Quadrado(Retangulo):\n    def definir_largura(self, largura):\n        self.largura = largura\n        self.altura = largura\n\n    def definir_altura(self, altura):\n        self.largura = altura\n        self.altura = altura\n\ndef testar(r):\n    r.definir_largura(5)\n    r.definir_altura(4)\n    assert r.area() == 20"
+      }
+    ],
+    "enunciado": "Ao executar o teste com um objeto Quadrado, o que acontece e qual princípio o código viola?",
+    "alternativas": [
+      "A área calculada é 16, e não 20, e o teste falha; o código viola o Princípio da Substituição de Liskov.",
+      "A área calculada é 20, e o teste passa; o código está correto, pois Quadrado é um tipo de Retangulo.",
+      "A área calculada é 16, e não 20, e o teste falha; o código viola o Princípio da Responsabilidade Única.",
+      "O teste nem chega a ser executado, pois Python não permite sobrescrever métodos herdados de uma superclasse.",
+      "A área calculada é 25, e não 20, e o teste falha; o código viola o Princípio da Segregação de Interfaces."
+    ],
+    "correta": 0,
+    "resolucao": "Em Quadrado, definir_largura(5) faz largura e altura valerem 5; depois, definir_altura(4) faz as duas valerem 4. A área fica 4 × 4 = 16, e o teste, escrito para um Retangulo, falha. Um objeto da subclasse não pode substituir o da superclasse sem quebrar o comportamento esperado: é a violação do Princípio da Substituição de Liskov, o exemplo clássico da apostila. A solução é que os dois herdem de uma classe mais genérica, em vez de um herdar do outro."
+  },
+  {
+    "id": "engsoft-cap3-o8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em uma loja virtual, o serviço de Pedidos publica o evento \"PedidoPago\" em um barramento de mensagens. Os serviços de Estoque, Nota Fiscal e Entrega reagem a esse evento. A empresa quer incluir um serviço de pontos de fidelidade, que também vai reagir ao pagamento."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Na arquitetura orientada a eventos, o serviço de Pedidos não precisa conhecer os serviços que consomem o evento que ele publica.",
+      "PORQUE",
+      "II. Na arquitetura orientada a eventos, o fluxo de dados fica explícito no código, o que facilita rastrear e depurar o sistema."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A I é verdadeira: o serviço de Pedidos só publica o evento no barramento, e os outros o consomem de forma independente; por isso o acoplamento é baixo, e um novo consumidor pode entrar sem mudar o serviço de Pedidos. A II é falsa: essa mesma independência faz o fluxo ficar espalhado, difícil de rastrear e depurar, o que exige ferramentas específicas de observabilidade."
+  },
+  {
+    "id": "engsoft-cap3-o9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em um sistema de biblioteca, a classe Emprestimo (o Model) guarda os dados, calcula as multas, recebe diretamente os cliques nos botões da tela e decide qual página deve ser mostrada em seguida. Qualquer mudança no visual das telas obriga a equipe a mexer nessa classe."
+      }
+    ],
+    "enunciado": "A reorganização correta, segundo o padrão MVC, é:",
+    "alternativas": [
+      "o Controller recebe as ações do usuário, aciona o Model e decide qual View exibir; o Model fica só com dados e regras.",
+      "manter o Model como está, pois no MVC é ele quem recebe os cliques e decide qual tela deve ser exibida.",
+      "passar para a View o tratamento dos cliques e as regras de negócio, deixando o Model apenas com os dados.",
+      "eliminar o Controller, pois o Model e a View já conseguem se comunicar sozinhos, sem um intermediário.",
+      "criar um Controller para cada regra de negócio do sistema, com o cálculo das multas feito dentro dele."
+    ],
+    "correta": 0,
+    "resolucao": "No MVC, o Controller recebe as ações do usuário, interpreta essas ações, aciona o Model e determina qual View deve ser exibida. O Model representa os dados e as regras de negócio, independentemente de como serão exibidos, e não deve conhecer as telas. Com essa separação, mudanças na interface não afetam as regras, e as equipes podem trabalhar em paralelo em cada parte. Levar as regras para a View ou para o Controller repete o erro com outro nome."
+  },
+  {
+    "id": "engsoft-cap3-o10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma cooperativa avalia como lidar com um sistema de vinte anos que ainda funciona bem, mas que não se integra aos aplicativos novos. A equipe reuniu algumas afirmações sobre as opções disponíveis."
+      }
+    ],
+    "enunciado": "Sobre manutenção e modernização de software, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "Para encapsular um sistema legado (wrapping), é preciso antes reescrever a sua lógica interna na nova linguagem.",
+      "A refatoração reestrutura o código interno sem alterar o comportamento externo, melhorando a qualidade aos poucos.",
+      "A migração incremental (Strangler Fig) reduz o risco em comparação com a reescrita total do sistema.",
+      "A manutenção preventiva busca reduzir a probabilidade de falhas futuras ou facilitar as manutenções futuras.",
+      "A maior parte do ciclo de vida de um sistema é gasta na sua manutenção, e não no desenvolvimento inicial."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a do encapsulamento: o wrapping cria uma API moderna em torno do legado justamente para que os sistemas novos o usem sem entender nem reescrever a sua implementação interna. As demais estão corretas: refatorar não muda o comportamento, o Strangler Fig reduz o risco da reescrita total, a manutenção preventiva previne falhas e facilita manutenções futuras, e a manutenção ocupa a maior parte do ciclo de vida."
   },
   {
     "id": "engsoft-cap4-q1",

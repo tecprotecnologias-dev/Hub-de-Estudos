@@ -99,19 +99,19 @@ class Banco:
         self.objetivas.append(q)
 
     def discursiva(self, nivel, texto, caso, enunciado, resposta):
-        """Discursiva com um único comando (sem itens a, b, c...) e a resposta esperada."""
-        self.discursivas.append({
+        """Discursiva com um único comando (sem itens a, b, c...) e a resposta esperada.
+        texto=None quando não há citação real que sirva (nunca inventar uma)."""
+        q = {
             'id': f'{self.capitulo}-d{len(self.discursivas) + 1}',
             'disciplinaId': DISCIPLINA,
             'capituloId': self.capitulo,
             'tipo': 'discursiva',
             'nivel': nivel,
-            'texto': texto,
-            'caso': caso,
-            'enunciado': enunciado,
-            'linhas': 10,
-            'respostaEsperada': resposta,
-        })
+        }
+        if texto:
+            q['texto'] = texto
+        q.update({'caso': caso, 'enunciado': enunciado, 'linhas': 10, 'respostaEsperada': resposta})
+        self.discursivas.append(q)
 
     def validar(self, objetivas=10, discursivas=2):
         erros = []
