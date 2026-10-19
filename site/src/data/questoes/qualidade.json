@@ -1039,6 +1039,294 @@
     "resolucao": "A ideia de Crosby é que o dinheiro investido em prevenção é recuperado com folga, porque evita os custos de falha: retrabalho, suporte, recalls, penalidades e clientes perdidos. A falta de qualidade é que eleva os custos. Pelo capítulo, cada real investido em prevenção pode economizar de 5 a 100 reais em correções posteriores. Qualidade \"gratuita\" não significa que prevenção e avaliação não custam nada."
   },
   {
+    "id": "qualidade-cap1-d1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma empresa foi contratada para desenvolver o sistema de controle de uma linha de produção industrial. Os requisitos chegaram em um documento curto e cheio de termos vagos, e o cliente muda as prioridades quase toda semana. A equipe é experiente em sites, mas nunca trabalhou com automação industrial. O sistema depende da API de um fornecedor de sensores, que costuma ficar instável, e o prazo foi reduzido em um terço depois da assinatura do contrato."
+    ],
+    "enunciado": "Identifique os fatores internos e externos que ameaçam a qualidade desse projeto e proponha uma ação para cada um deles.",
+    "linhas": 10,
+    "respostaEsperada": "Fatores internos: a qualidade dos requisitos, pois requisitos vagos são a principal fonte de defeitos (ação: elicitação cuidadosa e validação com o cliente antes de desenvolver); e a competência da equipe, que não conhece o domínio industrial (ação: capacitação, apoio de especialistas e revisões técnicas). Também conta a adoção de boas práticas e ferramentas, como revisão de código, integração contínua e testes automatizados, e a gestão de configuração, para controlar versões e mudanças. Fatores externos: a complexidade do domínio, pois um sistema de controle industrial exige confiabilidade e precisão muito maiores (ação: estratégia de testes mais rigorosa); as mudanças de requisitos (ação: gestão formal de mudanças e rastreabilidade); as dependências externas, com a API instável dos sensores (ação: tratar falhas da API, simulá-la nos testes e acompanhar o fornecedor); e a pressão de prazo, que tende a levar ao corte de testes e revisões (ação: renegociar escopo ou prazo e deixar explícito, para o cliente, o risco de cortar atividades de qualidade)."
+  },
+  {
+    "id": "qualidade-cap1-d2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Um banco vai contratar o desenvolvimento de um novo aplicativo para os seus clientes. A diretoria pediu ao gerente de projeto que defina, antes do início, \"o que vai significar qualidade\" para esse aplicativo, para poder cobrar do fornecedor."
+    ],
+    "enunciado": "Com base no Modelo de McCall e na ISO/IEC 25010, explique quais características de qualidade deveriam ser priorizadas nesse aplicativo e por quê.",
+    "linhas": 10,
+    "respostaEsperada": "Por ser um aplicativo bancário, algumas características pesam mais. Pela ISO/IEC 25010: a segurança (no McCall, a integridade), porque o aplicativo lida com dinheiro e dados pessoais e precisa garantir confidencialidade e integridade; a adequação funcional (no McCall, a correção), porque cálculos de saldo, juros e transferências não podem ter erro; a confiabilidade, porque os clientes precisam do aplicativo a qualquer hora e ele deve se recuperar bem de falhas; a usabilidade, porque o público é amplo, inclusive idosos, e um aplicativo correto, mas difícil de usar, não atende às expectativas; a eficiência de desempenho, por causa dos picos de uso, como no dia do salário; a compatibilidade, para trocar dados com os sistemas do banco e do Pix; e a manutenibilidade (no McCall, a Revisão do Produto), porque as regras do Banco Central mudam e o aplicativo precisará ser alterado e testado com frequência. A portabilidade também conta, para funcionar nos diferentes celulares. Para poder cobrar do fornecedor, cada característica deve virar um requisito com medida, como tempo de resposta, disponibilidade e tempo para concluir uma transferência."
+  },
+  {
+    "id": "qualidade-cap1-o1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em uma prova, foram apresentadas três definições de qualidade: (1) \"qualidade é a conformidade com os requisitos\"; (2) \"qualidade é a adequação ao uso\"; (3) \"qualidade de software é o grau em que um sistema, componente ou processo atende aos requisitos especificados e às necessidades e expectativas do cliente ou usuário\"."
+      }
+    ],
+    "enunciado": "As definições 1, 2 e 3 são, respectivamente, de",
+    "alternativas": [
+      "Philip Crosby, Joseph Juran e IEEE Std 610.12.",
+      "Joseph Juran, Philip Crosby e IEEE Std 610.12.",
+      "Philip Crosby, IEEE Std 610.12 e Joseph Juran.",
+      "IEEE Std 610.12, Joseph Juran e Philip Crosby.",
+      "Philip Crosby, Joseph Juran e ISO/IEC 25010."
+    ],
+    "correta": 0,
+    "resolucao": "Pelo quadro de definições clássicas da apostila, \"conformidade com os requisitos\" é de Crosby (1979) (1); \"adequação ao uso\" é de Juran (1988) (2); e o grau em que o sistema atende aos requisitos especificados e às necessidades e expectativas do cliente ou usuário é a definição do IEEE Std 610.12 (3). A ISO/IEC 25010 fala em necessidades explícitas e implícitas dos usuários."
+  },
+  {
+    "id": "qualidade-cap1-o2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Ao estudar o Modelo de Fatores de McCall, de 1977, um aluno anotou quais fatores pertencem a cada uma das três perspectivas."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Na perspectiva de Revisão do Produto estão a manutenibilidade, a flexibilidade e a testabilidade.",
+      "II. Na perspectiva de Transição do Produto estão a portabilidade, a reusabilidade e a interoperabilidade.",
+      "III. Na perspectiva de Operação do Produto estão a correção, a confiabilidade, a eficiência, a integridade e a usabilidade.",
+      "IV. A testabilidade pertence à Operação do Produto, pois os testes são feitos com o sistema em execução."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e III, apenas.",
+      "I e II, apenas.",
+      "I e III, apenas.",
+      "II e III, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I, II e III reproduzem a tabela do Modelo de McCall da apostila: a Revisão trata da capacidade de mudança; a Transição, da adaptação a novos ambientes; e a Operação, das características de execução. IV é falsa: a testabilidade é um fator da Revisão do Produto, pois mede a facilidade de verificar o software depois de uma mudança."
+  },
+  {
+    "id": "qualidade-cap1-o3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em um projeto de sistema contábil, a equipe identificou quatro problemas: (1) os desenvolvedores nunca trabalharam com contabilidade e não entendem as regras do negócio; (2) não há revisão de código nem integração contínua; (3) ninguém sabe qual versão do código está em produção nem qual requisito cada mudança atende; (4) não existe ambiente de testes nem ferramenta de análise estática."
+      }
+    ],
+    "enunciado": "Os problemas 1, 2, 3 e 4 correspondem, respectivamente, aos fatores internos",
+    "alternativas": [
+      "competência da equipe, adoção de boas práticas, gestão de configuração e ferramentas e infraestrutura.",
+      "adoção de boas práticas, competência da equipe, gestão de configuração e ferramentas e infraestrutura.",
+      "competência da equipe, gestão de configuração, adoção de boas práticas e ferramentas e infraestrutura.",
+      "qualidade dos requisitos, adoção de boas práticas, gestão de configuração e ferramentas e infraestrutura.",
+      "competência da equipe, adoção de boas práticas, ferramentas e infraestrutura e gestão de configuração."
+    ],
+    "correta": 0,
+    "resolucao": "O conhecimento do domínio e a experiência dos desenvolvedores são a competência da equipe (1). Padrões de codificação, revisão por pares, integração contínua e testes automatizados são a adoção de boas práticas (2). Controle de versões, gerenciamento de mudanças e rastreabilidade são a gestão de configuração (3). Ambientes adequados, análise estática e plataformas de teste automatizado são as ferramentas e a infraestrutura (4)."
+  },
+  {
+    "id": "qualidade-cap1-o4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em uma revisão de requisitos, uma analista percebeu que a regra \"o desconto vale para clientes antigos\" não dizia o que é um cliente antigo, e a equipe definiu o critério antes de começar a programar."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Uma ambiguidade encontrada na revisão dos requisitos custa muito menos para ser corrigida do que o mesmo problema descoberto pelos usuários em produção.",
+      "PORQUE",
+      "II. O custo de corrigir um defeito encontrado em produção pode ser até 100 vezes maior do que se ele fosse detectado na análise de requisitos."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II explica a I. Na revisão de requisitos, corrigir a ambiguidade é reescrever uma frase; em produção, é preciso refazer código, testes e documentação, além de lidar com os usuários afetados. É o primeiro exemplo que a apostila usa para mostrar a importância da qualidade."
+  },
+  {
+    "id": "qualidade-cap1-o5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Para lançar uma loja virtual antes do Natal, a diretoria reduziu o prazo do projeto de seis para três meses. A equipe deixou de fazer as revisões de código e testou só as telas principais. Depois do lançamento, os defeitos se multiplicaram, e cada nova correção ficou mais demorada."
+      }
+    ],
+    "enunciado": "Qual fator que afeta a qualidade explica esse resultado?",
+    "alternativas": [
+      "A pressão de prazo, um fator externo: o cronograma agressivo levou ao corte de testes e revisões e gerou débito técnico.",
+      "A complexidade do domínio, pois sistemas de comércio eletrônico exigem mais precisão que os de outras áreas.",
+      "A competência da equipe, pois uma equipe experiente nunca deixaria de fazer os testes antes do lançamento.",
+      "O ambiente de execução, pois os defeitos só aparecem nos servidores de produção, e não nos de teste.",
+      "As dependências externas, pois as bibliotecas de terceiros foram as responsáveis pelos defeitos."
+    ],
+    "correta": 0,
+    "resolucao": "Na apostila, a pressão de prazo é um fator externo ao processo: cronogramas agressivos frequentemente levam ao corte das atividades de teste e de revisão, o que gera débito técnico e aumenta os defeitos. É exatamente o caso: a equipe trocou testes e revisões por velocidade, e o resultado veio depois do lançamento."
+  },
+  {
+    "id": "qualidade-cap1-o6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa entregou um sistema de agendamento que cumpre todos os itens do contrato, mas os pacientes reclamam que não conseguem remarcar consultas pelo celular, algo que ninguém escreveu no contrato porque parecia óbvio."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Um sistema que atende a 100% dos requisitos escritos no contrato pode, ainda assim, ter baixa qualidade.",
+      "PORQUE",
+      "II. Pela ISO/IEC 25010, qualidade é apenas a conformidade com os requisitos explícitos que aparecem no contrato."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A I é verdadeira: os requisitos escritos raramente cobrem tudo o que os usuários precisam, e um sistema conforme ao contrato pode ser difícil de usar ou inadequado ao uso real. A II é falsa: a ISO/IEC 25010 define a qualidade como a capacidade de satisfazer as necessidades explícitas e também as implícitas dos usuários. A definição apenas pela conformidade é a de Crosby, e a apostila mostra que ela não basta sozinha."
+  },
+  {
+    "id": "qualidade-cap1-o7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Para convencer a diretoria a investir em qualidade, uma gerente reuniu argumentos sobre a importância da qualidade de software."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. O caso do Therac-25 mostra que falhas de software em medicina podem custar vidas humanas.",
+      "II. O NIST estimou que os defeitos de software custam à economia americana mais de 60 bilhões de dólares por ano.",
+      "III. Corrigir um defeito em produção pode custar até 100 vezes mais do que corrigi-lo na análise de requisitos.",
+      "IV. A qualidade de software é uma questão puramente técnica, sem impacto na reputação nem nas vendas da empresa."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e III, apenas.",
+      "I e II, apenas.",
+      "I e III, apenas.",
+      "II e III, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I, II e III são os exemplos que a apostila usa para mostrar a importância da qualidade: a segurança crítica, o impacto financeiro e o custo da correção tardia. IV é falsa: a apostila diz que a importância da qualidade vai além do aspecto técnico, e produtos de baixa qualidade comprometem a imagem da empresa e levam à perda de clientes e de oportunidades."
+  },
+  {
+    "id": "qualidade-cap1-o8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "A equipe de um sistema fiscal levantou quatro necessidades: (1) os impostos devem ser calculados sem erros; (2) apenas os contadores autorizados podem acessar as declarações; (3) o módulo de cálculo de impostos deve ser reaproveitado em um novo sistema de folha de pagamento; (4) depois de cada mudança na legislação, o sistema deve ser fácil de testar de novo."
+      }
+    ],
+    "enunciado": "No Modelo de McCall, as necessidades 1, 2, 3 e 4 pertencem, respectivamente, às perspectivas",
+    "alternativas": [
+      "Operação do Produto, Operação do Produto, Transição do Produto e Revisão do Produto.",
+      "Operação do Produto, Revisão do Produto, Transição do Produto e Revisão do Produto.",
+      "Revisão do Produto, Operação do Produto, Transição do Produto e Operação do Produto.",
+      "Operação do Produto, Operação do Produto, Revisão do Produto e Transição do Produto.",
+      "Transição do Produto, Operação do Produto, Transição do Produto e Revisão do Produto."
+    ],
+    "correta": 0,
+    "resolucao": "Calcular os impostos corretamente é o fator correção, e proteger o acesso aos dados é o fator integridade: os dois são características de execução, da Operação do Produto (1 e 2). Reaproveitar um módulo em outro sistema é a reusabilidade, da Transição do Produto, que trata da adaptação a novos ambientes (3). Verificar o sistema com facilidade depois de cada mudança é a testabilidade, da Revisão do Produto, que trata da capacidade de mudança (4)."
+  },
+  {
+    "id": "qualidade-cap1-o9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um aplicativo de banco passou em todos os testes funcionais, mas os clientes mais velhos desistem de usá-lo porque não encontram as opções nas telas."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Um software tecnicamente correto, mas difícil de usar, não atende plenamente às expectativas dos usuários.",
+      "PORQUE",
+      "II. O Modelo de McCall, proposto em 1977, organiza os fatores de qualidade em três perspectivas."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, mas a II não explica a I. A I é a ideia de que a qualidade deve ser pensada nas dimensões técnica, funcional e de experiência, ligada à satisfação do usuário. A II é um fato sobre o Modelo de McCall (que inclui a usabilidade entre os fatores de Operação), mas a existência das três perspectivas não é o motivo pelo qual um sistema difícil de usar decepciona os usuários."
+  },
+  {
+    "id": "qualidade-cap1-o10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap1",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em uma aula sobre os fatores que afetam a qualidade, a turma classificou vários fatores como internos ou externos ao processo de desenvolvimento."
+      }
+    ],
+    "enunciado": "Sobre os fatores que afetam a qualidade do software, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "As dependências externas, como APIs de terceiros, ficam totalmente sob o controle da equipe e, por isso, são um fator interno.",
+      "Requisitos ambíguos, incompletos ou inconsistentes são a principal fonte de defeitos de software.",
+      "Variações de hardware, redes e configurações dos usuários fazem parte do ambiente de execução, um fator externo.",
+      "Mudanças frequentes de escopo são um fator externo, que pode comprometer a integridade arquitetural do sistema.",
+      "Ambientes de desenvolvimento, análise estática e plataformas de teste são fatores internos, de ferramentas e infraestrutura."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a das dependências externas: pela apostila, bibliotecas, APIs e serviços de terceiros introduzem riscos que estão parcialmente fora do controle da equipe, e são um fator externo ao processo. As demais alternativas classificam corretamente os fatores internos e externos apresentados no capítulo."
+  },
+  {
     "id": "qualidade-cap3-q1",
     "disciplinaId": "qualidade-e-testes-de-software",
     "capituloId": "qualidade-cap3",
@@ -1608,6 +1896,288 @@
     "resolucao": "A afirmação incorreta é a da ISO: o CMM foi desenvolvido pelo SEI, da Universidade Carnegie Mellon, nos Estados Unidos, a partir de uma demanda do Departamento de Defesa americano, que precisava avaliar os seus fornecedores de software, e foi publicado em 1991. As demais alternativas trazem a origem correta e os benefícios citados no capítulo: previsibilidade, redução de riscos e competitividade."
   },
   {
+    "id": "qualidade-cap3-d1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma software house brasileira, com 40 funcionários, quer participar de licitações de TI do governo federal e, em dois anos, começar a atender clientes nos Estados Unidos. Hoje, cada projeto é conduzido de um jeito, os requisitos mudam sem controle e o sucesso depende de três desenvolvedores muito experientes."
+    ],
+    "enunciado": "Com base no capítulo, proponha uma estratégia de evolução da maturidade de processos para essa empresa, indicando o modelo ou os modelos mais adequados e por onde começar.",
+    "linhas": 10,
+    "respostaEsperada": "A empresa está hoje no nível 1 (Inicial): processos imprevisíveis e sucesso dependente de pessoas-chave. Como é uma empresa brasileira de pequeno a médio porte que quer participar de licitações federais, o caminho mais adequado é começar pelo MPS.BR, que é mais barato (cerca de 5 a 10 vezes menos que o CMMI), está em português, é reconhecido nas licitações de TI do governo federal e permite evoluir em degraus menores. O primeiro passo seria o nível G, com gerência de requisitos, que resolve as mudanças sem controle, e gerência de projetos; depois, o nível F, com gerência de configuração, medição e garantia da qualidade. Com isso, a empresa passa a ter processos que não dependem só dos três desenvolvedores. Como os níveis G e F equivalem ao nível 2 do CMMI e o MPS.BR é compatível com ele, a empresa poderá migrar com menor esforço quando for atender os clientes dos Estados Unidos, combinando os dois modelos. A evolução deve ser gradual, sem pular níveis, consolidando cada etapa antes da seguinte."
+  },
+  {
+    "id": "qualidade-cap3-d2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Em uma reunião, o líder de uma equipe que usa Scrum afirmou: \"Modelos de maturidade como o CMMI são burocracia de empresa grande. Somos ágeis, e agilidade não combina com níveis de maturidade.\""
+    ],
+    "enunciado": "Com base no capítulo, avalie a afirmação do líder da equipe.",
+    "linhas": 10,
+    "respostaEsperada": "A afirmação parte de uma visão antiga dos modelos de maturidade. O CMMI v2.0, de 2018, passou a integrar de forma explícita práticas ágeis como Scrum, Kanban e SAFe, simplificou a linguagem e a estrutura do modelo e deu mais ênfase ao desempenho de negócio, e não à documentação pela documentação. Maturidade e agilidade não se opõem: as práticas ágeis podem ser a forma de implementar o que o modelo pede, como planejar, monitorar, gerenciar requisitos e medir. Os benefícios da maturidade também valem para equipes ágeis: previsibilidade de prazos e custos, consistência entre equipes, melhoria contínua com base em dados, redução de riscos e competitividade em licitações e contratos. O MPS.BR, por sua vez, foi pensado justamente para empresas pequenas e médias, com um caminho gradual e de custo menor. O que a equipe deve evitar é aplicar o modelo de forma burocrática; o modelo em si não exige isso."
+  },
+  {
+    "id": "qualidade-cap3-o1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Ao comparar os dois modelos do SEI, uma aluna percebeu que alguns níveis mudaram de nome do CMM para o CMMI."
+      }
+    ],
+    "enunciado": "Qual alternativa relaciona corretamente os nomes dos níveis 2 e 5 no CMM e no CMMI (representação por estágios)?",
+    "alternativas": [
+      "Nível 2: Repetível (CMM) e Gerenciado (CMMI); nível 5: Otimizado (CMM) e Em Otimização (CMMI).",
+      "Nível 2: Gerenciado (CMM) e Repetível (CMMI); nível 5: Em Otimização (CMM) e Otimizado (CMMI).",
+      "Nível 2: Definido (CMM) e Gerenciado (CMMI); nível 5: Otimizado (CMM) e Em Otimização (CMMI).",
+      "Nível 2: Repetível nos dois; nível 5: Gerenciado Quantitativamente (CMM) e Em Otimização (CMMI).",
+      "Nível 2: Repetível (CMM) e Gerenciado (CMMI); nível 5: Inicial (CMM) e Em Otimização (CMMI)."
+    ],
+    "correta": 0,
+    "resolucao": "Pelas tabelas da apostila, os níveis do CMM são Inicial, Repetível, Definido, Gerenciado e Otimizado; os do CMMI, Inicial, Gerenciado, Definido, Gerenciado Quantitativamente e Em Otimização. O nível 2 se chama Repetível no CMM e Gerenciado no CMMI, e o nível 5, Otimizado no CMM e Em Otimização no CMMI. Atenção: \"Gerenciado\" é o nível 4 do CMM, mas o nível 2 do CMMI."
+  },
+  {
+    "id": "qualidade-cap3-o2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Para um seminário, um grupo preparou uma tabela comparando o CMM, o CMMI e o MPS.BR."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. O CMM foi descontinuado e substituído pelo CMMI.",
+      "II. O MPS.BR tem sete níveis, do G, o mais alto, ao A, o mais baixo.",
+      "III. O CMMI tem como escopo apenas os processos de software.",
+      "IV. O custo de avaliação do MPS.BR é classificado como médio ou baixo, enquanto o do CMMI é alto."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e IV, apenas.",
+      "I, apenas.",
+      "IV, apenas.",
+      "I, II e IV, apenas.",
+      "I, III e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: pela tabela comparativa, a situação atual do CMM é \"descontinuado (substituído pelo CMMI)\". II é falsa: os níveis vão do G, o mais baixo, ao A, o mais alto. III é falsa: o escopo do CMMI inclui software, sistemas, serviços e aquisição; apenas software era o escopo do CMM. IV é verdadeira: é um dos motivos pelos quais o MPS.BR é voltado às micro, pequenas e médias empresas."
+  },
+  {
+    "id": "qualidade-cap3-o3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma consultora explicou o foco de quatro níveis do MPS.BR: (1) gerência básica de projetos e de requisitos; (2) gerência de configuração, aquisição e medição; (3) gerência de riscos e de decisões; (4) inovação e análise das causas de problemas."
+      }
+    ],
+    "enunciado": "Os focos 1, 2, 3 e 4 correspondem, respectivamente, aos níveis do MPS.BR",
+    "alternativas": [
+      "G, F, C e A.",
+      "G, F, B e A.",
+      "F, G, C e A.",
+      "G, E, C e A.",
+      "G, F, C e B."
+    ],
+    "correta": 0,
+    "resolucao": "Pela tabela da apostila: o nível G (Parcialmente Gerenciado) trata da gerência de projetos e de requisitos (1); o F (Gerenciado), da gerência de configuração, da aquisição e da medição (2); o C (Definido), da gerência de riscos e das decisões (3); e o A (Em Otimização), da inovação e da análise de causas de problemas (4). O B trata do desempenho quantitativo dos processos."
+  },
+  {
+    "id": "qualidade-cap3-o4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Depois de uma avaliação pela representação contínua do CMMI, uma empresa recebeu o seu resultado e estranhou não ter um \"nível do CMMI\" único para mostrar aos clientes."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Na representação contínua do CMMI, a organização recebe um nível de capacidade para cada área de processo, em uma escala de 0 a 3.",
+      "PORQUE",
+      "II. A representação contínua avalia a capacidade de cada área de processo individualmente."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II explica a I. Como cada área de processo é avaliada separadamente, o resultado não é um único número para a organização, mas um nível de capacidade (CL 0 a 3) para cada área. Na representação por estágios, a organização recebe um nível de maturidade geral (ML 1 a 5)."
+  },
+  {
+    "id": "qualidade-cap3-o5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa avaliada no CMMI 1.3 quer entender o que mudou na versão 2.0 antes de renovar a avaliação."
+      }
+    ],
+    "enunciado": "Qual alternativa descreve corretamente mudanças trazidas pelo CMMI v2.0, de 2018?",
+    "alternativas": [
+      "Linguagem mais simples, ênfase no desempenho de negócio, integração com o ágil e foco em segurança cibernética.",
+      "Retirada da representação por estágios, que deixou de existir, e volta ao foco exclusivo em processos de software.",
+      "Aumento do número de níveis de maturidade de cinco para sete, para ficar compatível com o modelo brasileiro MPS.BR.",
+      "Passagem da administração do modelo do ISACA para o SEI, que voltou a ser o responsável pelo CMMI.",
+      "Proibição de práticas ágeis, como Scrum e Kanban, nas organizações que buscam os níveis 4 e 5 do modelo."
+    ],
+    "correta": 0,
+    "resolucao": "Pela apostila, o CMMI v2.0 simplificou a linguagem e a estrutura, deu mais ênfase ao desempenho de negócio, e não só à maturidade do processo, integrou de forma explícita práticas ágeis como Scrum, Kanban e SAFe, trouxe um novo foco em segurança cibernética e gestão de fornecedores e passou a administração do SEI para o ISACA, e não o contrário. Os cinco níveis foram mantidos."
+  },
+  {
+    "id": "qualidade-cap3-o6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa brasileira de software com 120 funcionários participa de licitações do governo federal e acabou de fechar os primeiros contratos com clientes dos Estados Unidos e da Europa, que pedem uma certificação de maturidade de prestígio global."
+      }
+    ],
+    "enunciado": "Pelas orientações da apostila, qual é a estratégia mais adequada para essa empresa?",
+    "alternativas": [
+      "Combinar os dois: o MPS.BR para as licitações brasileiras e o CMMI para os clientes internacionais.",
+      "Adotar só o MPS.BR, pois ele é aceito também nos contratos internacionais como substituto direto do CMMI.",
+      "Adotar só o CMMI, pois ele é o único modelo aceito nas licitações do governo federal brasileiro.",
+      "Adotar só o CMM, pois ele é o modelo original e o mais reconhecido nos dois mercados.",
+      "Não adotar nenhum modelo, pois os de maturidade só fazem sentido para empresas com mais de mil pessoas."
+    ],
+    "correta": 0,
+    "resolucao": "A apostila indica o CMMI para quem atua em mercados internacionais ou busca prestígio global, o MPS.BR para quem participa de licitações do governo brasileiro ou busca um caminho gradual e mais barato, e a combinação dos dois para quem atua no mercado nacional e no internacional ao mesmo tempo, como essa empresa. A equivalência entre os níveis facilita usar os dois, e o CMM foi descontinuado."
+  },
+  {
+    "id": "qualidade-cap3-o7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma pequena empresa de Belo Horizonte avalia as vantagens de começar pelo MPS.BR."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. A avaliação e a implementação do MPS.BR custam cerca de 5 a 10 vezes menos que as do CMMI.",
+      "II. O MPS.BR é compatível com as normas ISO/IEC 12207 e ISO/IEC 15504 (SPICE).",
+      "III. Uma empresa certificada no MPS.BR precisa recomeçar do zero se quiser obter o CMMI.",
+      "IV. O MPS.BR é reconhecido pelo governo federal nos processos de licitação de TI."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e IV, apenas.",
+      "I e II, apenas.",
+      "I e IV, apenas.",
+      "II e IV, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I, II e IV estão entre as vantagens do MPS.BR listadas na apostila, junto com o material em português e a progressão mais gradual em sete níveis. III é falsa: a apostila afirma o contrário, que as empresas certificadas no MPS.BR podem migrar para o CMMI com menor esforço adicional, e a equivalência entre os níveis facilita essa migração."
+  },
+  {
+    "id": "qualidade-cap3-o8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa que acabou de chegar ao nível 3 do CMMI percebeu que as suas estimativas ficaram muito mais precisas e que os projetos passaram a ter resultados parecidos, qualquer que seja a equipe."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Organizações com processos maduros tendem a ter prazos e custos mais previsíveis.",
+      "PORQUE",
+      "II. Em processos maduros, os resultados dependem do esforço heroico de algumas pessoas-chave."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A I é verdadeira: a previsibilidade, com estimativas de prazo e custo mais precisas, é o primeiro benefício da maturidade citado na apostila, ao lado da consistência entre projetos. A II é falsa: depender de pessoas-chave é a marca do nível 1 (Inicial); nos processos maduros, a capacidade está na organização, e não em indivíduos."
+  },
+  {
+    "id": "qualidade-cap3-o9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em uma empresa, todos os projetos seguem um processo padrão da organização, documentado e ensinado em treinamentos, e cada projeto o adapta às suas necessidades. A empresa coleta algumas métricas, mas ainda não usa dados estatísticos para controlar o desempenho dos processos."
+      }
+    ],
+    "enunciado": "Em que nível de maturidade do CMMI (representação por estágios) essa organização se encontra?",
+    "alternativas": [
+      "Nível 3, Definido: os processos são padronizados para toda a organização, mas ainda não são controlados estatisticamente.",
+      "Nível 2, Gerenciado: cada projeto define os seus processos, planejados e controlados de forma básica.",
+      "Nível 4, Gerenciado Quantitativamente: ter um conjunto padrão de processos já basta para chegar a esse nível.",
+      "Nível 5, Em Otimização: os projetos adaptam o processo padrão, o que demonstra uma melhoria contínua.",
+      "Nível 1, Inicial: a ausência de controle estatístico mostra que os processos ainda são caóticos."
+    ],
+    "correta": 0,
+    "resolucao": "No nível 3 (Definido), os processos são caracterizados para toda a organização e padronizados, e os projetos os adaptam de um conjunto padrão, exatamente o caso. Para o nível 4, seria preciso usar dados quantitativos e estatísticos para gerenciar os processos, o que ainda não acontece. No nível 2, os processos são definidos por projeto, e não pela organização."
+  },
+  {
+    "id": "qualidade-cap3-o10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa certificada no MPS.BR quer entender como os seus níveis se relacionam com os do CMMI."
+      }
+    ],
+    "enunciado": "Sobre o MPS.BR e a sua equivalência com o CMMI, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "O nível B do MPS.BR equivale ao nível 5 do CMMI, e o nível A equivale ao nível 4.",
+      "Os níveis G e F do MPS.BR equivalem, juntos, ao nível 2 do CMMI.",
+      "Os níveis E, D e C do MPS.BR equivalem ao nível 3 do CMMI.",
+      "O MPS.BR foi criado em 2003 pela SOFTEX, com apoio do Ministério da Ciência e Tecnologia e do BNDES.",
+      "O nível D do MPS.BR inclui os processos de verificação e de validação do software."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta inverte a equivalência dos níveis mais altos: o nível B do MPS.BR (Gerenciado Quantitativamente) corresponde ao nível 4 do CMMI, e o nível A (Em Otimização), ao nível 5. As demais alternativas estão corretas, de acordo com as tabelas de equivalência e de processos da apostila."
+  },
+  {
     "id": "qualidade-cap4-q1",
     "disciplinaId": "qualidade-e-testes-de-software",
     "capituloId": "qualidade-cap4",
@@ -2143,6 +2713,286 @@
     ],
     "correta": 0,
     "resolucao": "I é verdadeira: é a ideia de Pareto aplicada a testes, com 80% dos defeitos em 20% do código. II é verdadeira: por isso os casos de teste devem ser revisados e atualizados. III é falsa: o princípio diz justamente o contrário, que a abordagem de um sistema de pagamento é diferente da de um site informativo, e o contexto define a estratégia. IV é verdadeira: é o sétimo princípio."
+  },
+  {
+    "id": "qualidade-cap4-d1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma loja virtual tem a seguinte regra de frete: pedidos de R$ 0,01 até R$ 99,99 pagam frete cheio; de R$ 100,00 até R$ 499,99 têm frete grátis; e a partir de R$ 500,00 têm frete grátis e um brinde. Valores iguais ou menores que zero devem ser rejeitados. Um testador escreveu só três casos: R$ 50,00, R$ 300,00 e R$ 800,00."
+    ],
+    "enunciado": "Com base nas técnicas de particionamento de equivalência e de análise do valor limite, avalie os casos do testador e proponha um conjunto de casos de teste adequado para essa regra.",
+    "linhas": 10,
+    "respostaEsperada": "Os três casos cobrem uma representante de cada faixa válida, mas deixam de fora a partição inválida (zero ou negativo) e as fronteiras, onde os defeitos são mais frequentes, como trocar um >= por um >. Pelo particionamento, há quatro partições: inválida (valor menor ou igual a 0), frete cheio (0,01 a 99,99), frete grátis (100,00 a 499,99) e frete grátis com brinde (500,00 ou mais); um representante de cada, por exemplo -10,00, 50,00, 300,00 e 800,00. Pela análise do valor limite, testam-se o valor no limite, o imediatamente abaixo e o imediatamente acima de cada fronteira: 0,00 (rejeitado), 0,01 e 0,02 (frete cheio); 99,99 (frete cheio), 100,00 e 100,01 (frete grátis); 499,99 (frete grátis), 500,00 e 500,01 (frete grátis com brinde). Para cada caso, o resultado esperado deve estar definido de forma clara."
+  },
+  {
+    "id": "qualidade-cap4-d2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma startup vai lançar um aplicativo de pagamentos por celular. Até agora, os desenvolvedores só testaram as telas manualmente, ao fim de cada funcionalidade. O sistema tem um módulo de cálculo de tarifas, já pronto e estável, um módulo de integração com os bancos, ainda em desenvolvimento, e a interface do aplicativo. O lançamento para o público está previsto para daqui a quatro meses."
+    ],
+    "enunciado": "Proponha um plano de testes para esse aplicativo, organizado pelos níveis de teste estudados no capítulo.",
+    "linhas": 10,
+    "respostaEsperada": "No nível unitário, os desenvolvedores testariam as funções isoladas, como o cálculo de tarifas, com JUnit, PyTest ou Jest, de preferência com TDD, cobrindo casos válidos, limites e valores inválidos; esses testes formam a base da pirâmide. Na integração, como o módulo de tarifas está pronto e estável e a integração com os bancos ainda não, a estratégia bottom-up faz sentido, começando pelos módulos de base, e o módulo bancário pode ser simulado até ficar pronto. No teste de sistema, em ambiente parecido com o de produção, entrariam os testes funcionais, de desempenho (muitos pagamentos ao mesmo tempo), de segurança (por se tratar de dinheiro), de usabilidade, de recuperação e de compatibilidade com os diferentes celulares. Na aceitação, o UAT com usuários e o teste de regulamentação, se o serviço exigir; depois, um teste alfa com usuários internos e, por fim, um teste beta, fechado e depois aberto, antes do lançamento oficial. A distribuição deve seguir a pirâmide, com muitos unitários e poucos testes de interface, combinando caixa branca e caixa preta."
+  },
+  {
+    "id": "qualidade-cap4-o1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Na avaliação de um sistema de cálculo de impostos: (1) um testador confere se o imposto é calculado exatamente conforme a fórmula definida nos requisitos; (2) um grupo de contadores usa o sistema por uma semana para dizer se ele é útil no trabalho do dia a dia; (3) um revisor confere se o código segue o padrão de codificação da empresa."
+      }
+    ],
+    "enunciado": "As atividades 1, 2 e 3 são, respectivamente, de",
+    "alternativas": [
+      "verificação, validação e verificação.",
+      "validação, verificação e verificação.",
+      "verificação, verificação e validação.",
+      "validação, validação e verificação.",
+      "verificação, validação e validação."
+    ],
+    "correta": 0,
+    "resolucao": "A verificação responde \"estamos construindo o produto corretamente?\", conferindo o software com as especificações: checar se o imposto segue a fórmula dos requisitos (1) e se o código segue o padrão definido (3). A validação responde \"estamos construindo o produto correto?\", conferindo se ele atende às necessidades reais: perguntar se o sistema é útil para o contador no dia a dia (2). O exemplo do imposto e do contador é o da própria apostila."
+  },
+  {
+    "id": "qualidade-cap4-o2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um requisito ambíguo foi identificado em uma revisão e corrigido ao custo de R$ 500. A equipe quer mostrar à diretoria quanto o mesmo problema custaria se tivesse sido descoberto mais tarde."
+      }
+    ],
+    "enunciado": "Pela tabela de custo relativo de correção da apostila, quanto custaria, aproximadamente, corrigir o mesmo defeito se ele fosse encontrado nos testes internos?",
+    "alternativas": [
+      "Entre R$ 10.000 e R$ 20.000, pois nos testes internos o custo é de 20 a 40 vezes o da fase de requisitos.",
+      "Entre R$ 1.500 e R$ 3.000, pois nos testes internos o custo é de 3 a 6 vezes o da fase de requisitos.",
+      "Cerca de R$ 5.000, pois nos testes internos o custo é de 10 vezes o da fase de requisitos.",
+      "Entre R$ 20.000 e R$ 50.000, pois nos testes internos o custo é de 40 a 100 vezes o da fase de requisitos.",
+      "Os mesmos R$ 500, pois o custo de corrigir um defeito não depende da fase em que ele é encontrado."
+    ],
+    "correta": 0,
+    "resolucao": "Pela tabela da apostila, com o custo nos requisitos valendo 1x: design custa de 3x a 6x; codificação, 10x; testes internos, de 20x a 40x; e produção, de 40x a 100x. Com R$ 500 nos requisitos, os testes internos custariam de R$ 10.000 a R$ 20.000. Por isso os testes devem deslocar a detecção para as fases mais baratas."
+  },
+  {
+    "id": "qualidade-cap4-o3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "No teste de sistema de um portal de matrículas, a equipe planejou quatro verificações: (1) desligar o banco de dados por alguns minutos e ver se o portal volta a funcionar sozinho; (2) acessar o portal no Chrome, no Firefox, no Safari e em celulares; (3) tentar injetar comandos SQL e scripts nos campos dos formulários; (4) medir o tempo de resposta com 2.000 alunos acessando ao mesmo tempo."
+      }
+    ],
+    "enunciado": "No teste de sistema, as verificações 1, 2, 3 e 4 correspondem, respectivamente, aos testes de",
+    "alternativas": [
+      "recuperação, compatibilidade, segurança e desempenho.",
+      "desempenho, compatibilidade, segurança e recuperação.",
+      "recuperação, usabilidade, segurança e desempenho.",
+      "recuperação, compatibilidade, funcionais e desempenho.",
+      "segurança, compatibilidade, recuperação e desempenho."
+    ],
+    "correta": 0,
+    "resolucao": "Ver como o sistema se comporta e se recupera depois de uma falha é o teste de recuperação (1). Garantir que funcione em diferentes navegadores e dispositivos é o de compatibilidade (2). Procurar vulnerabilidades, como injeção de SQL e XSS, é o de segurança (3). Avaliar o tempo de resposta e o consumo de recursos sob carga é o de desempenho (4)."
+  },
+  {
+    "id": "qualidade-cap4-o4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Antes de colocar em produção um sistema para uma operadora de saúde, a equipe planejou as diferentes modalidades de teste de aceitação."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. No UAT, os usuários finais validam se o sistema atende às necessidades reais do negócio.",
+      "II. No teste de contrato, a equipe técnica e o cliente verificam se o sistema cumpre os termos do contrato.",
+      "III. O teste de regulamentação é feito apenas pela equipe de desenvolvimento, sem a participação de órgãos externos.",
+      "IV. No teste beta, usuários externos selecionados usam o sistema para dar feedback antes do lançamento oficial."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e IV, apenas.",
+      "I e II, apenas.",
+      "I e IV, apenas.",
+      "II e IV, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I, II e IV estão de acordo com a tabela de modalidades do teste de aceitação da apostila. III é falsa: o teste de regulamentação é conduzido por um órgão regulador ou auditor, para verificar a conformidade com leis, normas e regulamentos, e o seu resultado é uma certificação ou homologação."
+  },
+  {
+    "id": "qualidade-cap4-o5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa de jogos vai lançar um novo título e discute se abre a versão beta para qualquer pessoa ou só para jogadores convidados."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Um beta aberto tende a gerar um volume maior de feedback e a testar a escalabilidade em condições reais.",
+      "PORQUE",
+      "II. No beta aberto, somente os usuários convidados pela empresa têm acesso ao software."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A I é verdadeira: no beta aberto, qualquer usuário pode participar, o que gera mais feedback e expõe o sistema a uma carga real. A II é falsa: o acesso restrito a convidados é o beta fechado, comum em jogos e aplicativos que querem controlar a experiência inicial."
+  },
+  {
+    "id": "qualidade-cap4-o6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Observe a função abaixo, escrita em Python, e os dois testes executados."
+      },
+      {
+        "t": "codigo",
+        "texto": "def aprovar(renda, score):\n    if renda > 3000 and score > 700:\n        return \"aprovado\"\n    return \"negado\"\n\nassert aprovar(5000, 800) == \"aprovado\"\nassert aprovar(1000, 800) == \"negado\""
+      }
+    ],
+    "enunciado": "Com os dois testes abaixo, qual cobertura a função atinge?",
+    "alternativas": [
+      "100% de declarações e de desvios, mas não de condições, pois a condição score > 700 nunca foi falsa.",
+      "100% de declarações, de desvios e de condições, pois o if foi verdadeiro em um teste e falso no outro.",
+      "Apenas 50% de declarações, pois cada teste executa só um dos dois return da função.",
+      "100% de condições, mas não de desvios, pois a decisão do if foi avaliada só uma vez como falsa.",
+      "100% de caminhos, pois a função tem apenas dois caminhos e os dois foram percorridos pelos testes."
+    ],
+    "correta": 0,
+    "resolucao": "O primeiro teste entra no if e executa o \"aprovado\"; o segundo não entra e executa o \"negado\": todas as linhas rodaram (declarações) e a decisão foi verdadeira e falsa (desvios). A cobertura de condições exige que cada condição booleana seja avaliada como verdadeira e como falsa: renda > 3000 foi verdadeira e falsa, mas score > 700 só foi verdadeira. Faltaria um teste como aprovar(5000, 500)."
+  },
+  {
+    "id": "qualidade-cap4-o7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Ao comparar as técnicas de caixa branca e de caixa preta, uma equipe reuniu algumas afirmações sobre as métricas e as limitações de cada uma."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. A caixa branca não detecta funcionalidades ausentes, pois o que não foi implementado não pode ser testado.",
+      "II. A principal métrica da caixa preta é a cobertura de código, como a cobertura de desvios.",
+      "III. A cobertura de caminhos é o critério mais simples e menos rigoroso da caixa branca.",
+      "IV. No mercado, uma cobertura de desvios acima de 80% costuma ser considerada uma boa prática."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e IV, apenas.",
+      "I, apenas.",
+      "IV, apenas.",
+      "I, II e IV, apenas.",
+      "I, III e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: é a limitação chave da caixa branca na apostila. II é falsa: a principal métrica da caixa preta é a cobertura de requisitos, o percentual de requisitos cobertos por casos de teste; a cobertura de código é a da caixa branca. III é falsa: a cobertura de caminhos é a mais completa e pode ser inviável em códigos complexos; a mais simples é a de declarações. IV é verdadeira: é o padrão de mercado citado."
+  },
+  {
+    "id": "qualidade-cap4-o8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em um sistema de reservas, a interface e o módulo que controla o fluxo das reservas já estão prontos e estáveis. Os módulos de nível mais baixo, de pagamento e de envio de e-mails, ainda estão em desenvolvimento, mas a equipe quer começar a testar a integração agora."
+      }
+    ],
+    "enunciado": "Qual estratégia de integração é a mais adequada e como lidar com os módulos que ainda não estão prontos?",
+    "alternativas": [
+      "A top-down: começa pelos módulos de nível mais alto, já prontos, e usa stubs no lugar dos módulos de base que faltam.",
+      "A bottom-up: começa pelos módulos de base, mesmo que não estejam prontos, e deixa a interface para o fim.",
+      "O Big Bang: espera todos os módulos ficarem prontos e integra tudo de uma vez, pois é a opção mais rápida.",
+      "A top-down: começa pelos módulos de base e usa drivers no lugar da interface e do fluxo, ainda incompletos.",
+      "Nenhuma: a integração só pode começar quando todos os módulos tiverem passado nos testes de sistema."
+    ],
+    "correta": 0,
+    "resolucao": "A integração top-down começa pelos módulos de nível mais alto, como a interface, e desce, e é indicada quando o design de alto nível está consolidado. Os módulos de nível mais baixo que ainda não existem são substituídos por stubs, que simulam as suas respostas. A bottom-up começa pela base e é indicada quando os módulos de base estão prontos e estáveis, o oposto do caso."
+  },
+  {
+    "id": "qualidade-cap4-o9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma desenvolvedora vai escrever os testes unitários da função calcularDesconto(preco, percentual), que aplica um percentual de desconto a um preço."
+      }
+    ],
+    "enunciado": "Qual conjunto de casos de teste está de acordo com o exemplo de teste unitário da apostila?",
+    "alternativas": [
+      "(100, 10) retorna 90; (200, 50) retorna 100; (100, 0) retorna 100; e (100, -5) lança uma exceção de valor inválido.",
+      "(100, 10) retorna 90; (200, 10) retorna 180; (300, 10) retorna 270; e (400, 10) retorna 360.",
+      "(100, 10) retorna 90, pois um único caso que passa já mostra que a função está correta para qualquer valor.",
+      "(100, 10) retorna 90; (200, 50) retorna 100; e (100, -5) retorna 105, pois um desconto negativo vira acréscimo.",
+      "(100, 10) retorna 90 e (100, -5) lança uma exceção, testados com a função integrada ao carrinho e ao banco de dados."
+    ],
+    "correta": 0,
+    "resolucao": "O exemplo da apostila combina casos válidos com percentuais diferentes, o caso sem desconto (percentual 0) e um valor inválido, que deve lançar exceção. Repetir o mesmo percentual não acrescenta cobertura, um caso só não basta, e aceitar um desconto negativo como acréscimo seria um defeito. O teste unitário verifica a função isolada, sem depender de outros módulos nem de banco de dados."
+  },
+  {
+    "id": "qualidade-cap4-o10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap4",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe nova de QA está escrevendo o seu guia de boas práticas de teste."
+      }
+    ],
+    "enunciado": "Sobre as boas práticas de testes de software, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "Os casos de teste não precisam ser documentados, pois a rastreabilidade entre requisitos e testes é dispensável.",
+      "Os testes unitários e de regressão devem ser automatizados e integrados ao pipeline de CI/CD.",
+      "O planejamento dos testes deve fazer parte do planejamento do projeto, e não ficar para o fim do ciclo.",
+      "Os dados de teste devem refletir a diversidade dos dados reais, incluindo casos extremos e valores inválidos.",
+      "Os casos de teste devem ser revisados periodicamente, para evitar o paradoxo do pesticida."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a da documentação: a apostila recomenda documentar os casos de teste, pois isso permite a rastreabilidade entre requisitos e testes e facilita a manutenção. As demais alternativas estão na lista de boas práticas do capítulo, junto com a de combinar as técnicas de caixa branca e caixa preta."
   },
   {
     "id": "qualidade-cap5-q12",
@@ -3224,6 +4074,283 @@
     "resolucao": "O JMeter, da Apache, simula muitos usuários acessando o sistema ao mesmo tempo, em testes de carga e desempenho (1). O Postman testa APIs, e o Newman executa as coleções do Postman em linha de comando, dentro do pipeline (2). O OWASP ZAP é uma ferramenta de testes de segurança (3). O SonarQube faz análise estática, encontra bugs, vulnerabilidades e code smells, mede a cobertura e define quality gates (4)."
   },
   {
+    "id": "qualidade-cap6-d1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma rede de farmácias tem 1.200 casos de teste manuais no seu sistema de vendas, executados a cada release quinzenal. Entre eles estão: login e finalização de compra, cálculo de descontos de convênios, consultas à API de estoque, avaliação da facilidade de uso da nova tela do caixa, uma conferência da migração de dados que será feita uma única vez e testes de um módulo de promoções cujas telas mudam quase toda semana. A diretoria quer \"automatizar tudo\" para acabar com os testes manuais."
+    ],
+    "enunciado": "Avalie a proposta da diretoria e proponha quais testes devem ser automatizados e quais devem continuar manuais, justificando com base nos critérios estudados no capítulo.",
+    "linhas": 10,
+    "respostaEsperada": "Automatizar tudo não é adequado: a automação complementa o teste manual, e automatizar o que não deveria gera desperdício. Devem ser automatizados os testes repetitivos, determinísticos e de alto valor: login e finalização de compra (caminho crítico, funções críticas, executados a cada release), o cálculo de descontos de convênios (lógica de negócio, em testes unitários na base da pirâmide) e as consultas à API de estoque (testes de API rápidos e reutilizáveis), integrados ao pipeline de CI/CD, além dos smoke tests e da regressão. Devem continuar manuais a avaliação da facilidade de uso da tela do caixa (usabilidade exige julgamento humano), os testes exploratórios, a conferência da migração única (ROI negativo, pois o esforço não se paga) e o módulo de promoções enquanto as telas mudarem toda semana (a manutenção dos scripts superaria o benefício). Com releases quinzenais e muitos casos, o retorno do investimento tende a ser positivo, mas a equipe deve prever o custo inicial e a manutenção dos scripts."
+  },
+  {
+    "id": "qualidade-cap6-d2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "A suíte de testes de interface de um portal de notícias, feita com Selenium, demora três horas e falha de forma intermitente. Uma análise mostrou que: os testes usam Thread.sleep(3000) para esperar o carregamento das páginas; os localizadores dos elementos estão repetidos em dezenas de testes; o teste de publicar uma notícia depende do teste de login ter rodado antes; os usuários e senhas estão escritos diretamente no código; e 70% dos testes da suíte são de interface."
+    ],
+    "enunciado": "Analise os problemas encontrados nessa suíte e proponha as melhorias, com base nas boas práticas de automação estudadas no capítulo.",
+    "linhas": 10,
+    "respostaEsperada": "O Thread.sleep fixo deixa os testes lentos quando a página é rápida e faz falharem quando ela demora mais que o previsto; a melhoria é usar esperas explícitas, como o WebDriverWait, que aguardam o elemento ficar disponível. Os localizadores repetidos fazem cada mudança na interface exigir alterações em muitos testes; a melhoria é adotar o Page Object Model, centralizando os localizadores em uma classe por página. A dependência entre os testes de login e de publicação contraria o princípio FIRST (Independent); cada teste deve preparar o próprio estado e rodar isolado. Os dados escritos no código tornam os testes frágeis; devem ser usados dados gerenciados, com factories, fixtures ou um banco de teste dedicado. Por fim, 70% de testes de interface formam um cone de sorvete; a suíte deve seguir a pirâmide, com 60% a 70% de unitários, 20% a 25% de integração e 5% a 15% de UI, deixando a interface só para os fluxos críticos. Também vale executar os testes em paralelo, com o Selenium Grid, e refatorar a suíte regularmente."
+  },
+  {
+    "id": "qualidade-cap6-o1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Na automação dos testes de uma loja virtual, a equipe usa: (1) arquivos CSV com os valores de entrada e os resultados esperados de cada caso; (2) contêineres Docker com o Selenium Grid, onde os testes rodam; (3) um relatório HTML do Allure com os resultados e as métricas de cada execução; (4) um fluxo do GitHub Actions que dispara a suíte a cada build."
+      }
+    ],
+    "enunciado": "Os elementos 1, 2, 3 e 4 correspondem, respectivamente, aos componentes de um sistema de automação chamados",
+    "alternativas": [
+      "dados de teste, ambiente de execução, relatórios e integração CI/CD.",
+      "scripts de teste, ambiente de execução, relatórios e integração CI/CD.",
+      "dados de teste, framework de teste, relatórios e ambiente de execução.",
+      "dados de teste, ambiente de execução, integração CI/CD e relatórios.",
+      "framework de teste, integração CI/CD, scripts de teste e relatórios."
+    ],
+    "correta": 0,
+    "resolucao": "Pela tabela de componentes da apostila: arquivos com entradas e saídas esperadas são os dados de teste (1); a infraestrutura onde os testes rodam, como contêineres Docker e o Selenium Grid, é o ambiente de execução (2); a saída com resultados e métricas, como o relatório HTML do Allure, são os relatórios (3); e o pipeline que dispara os testes a cada build, como o GitHub Actions, é a integração CI/CD (4)."
+  },
+  {
+    "id": "qualidade-cap6-o2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe de QA tem quatro candidatos à automação: (1) avaliar se o novo layout da página inicial ficou bonito; (2) finalizar a compra com cartão de crédito, executado a cada sprint, com dados de teste fixos e resultado esperado bem definido; (3) testar um recurso experimental cujas telas mudam toda semana; (4) conferir a migração de dados que será feita uma única vez."
+      }
+    ],
+    "enunciado": "Pelos critérios de priorização da apostila, qual teste deve ser automatizado primeiro?",
+    "alternativas": [
+      "O teste 2, pois é frequente, determinístico, cobre uma função crítica do negócio e tem dados estáveis.",
+      "O teste 1, pois a avaliação da beleza do novo layout é a parte que mais demora no teste manual.",
+      "O teste 3, pois uma funcionalidade nova e instável precisa de mais testes do que uma já estável.",
+      "O teste 4, pois um teste que roda uma vez só ganha muito com a rapidez dos scripts automatizados.",
+      "Nenhum deles, pois a automação só compensa depois que todos os testes manuais foram executados."
+    ],
+    "correta": 0,
+    "resolucao": "Os critérios da apostila priorizam testes executados com frequência, com resultado determinístico, que cobrem funções críticas, como o pagamento, que estão no caminho crítico do usuário e que têm dados estáveis: é o teste 2. Avaliar se um layout é bonito exige julgamento humano; uma funcionalidade que muda toda semana faria a manutenção superar o benefício; e um teste executado uma única vez tem retorno negativo."
+  },
+  {
+    "id": "qualidade-cap6-o3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Os testes de uma equipe quebram sempre que alguém altera um cliente cadastrado no banco de dados de homologação, pois o código dos testes usa o CPF e o nome desse cliente escritos diretamente nos scripts."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Testes que usam dados fixos escritos diretamente no código (hardcoded) tendem a ficar frágeis.",
+      "PORQUE",
+      "II. O pytest tem plugins para medir a cobertura (pytest-cov) e para executar os testes em paralelo (pytest-xdist)."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras. A I é uma das boas práticas da apostila: dados hardcoded tornam os testes frágeis, e a recomendação é usar factories, fixtures ou bancos de teste dedicados. A II descreve corretamente plugins do pytest, mas cobertura e execução paralela não explicam por que os dados fixos deixam os testes frágeis."
+  },
+  {
+    "id": "qualidade-cap6-o4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em uma reunião de planejamento, a equipe discutia se ainda valia a pena manter testadores fazendo testes manuais depois da automação da suíte de regressão."
+      }
+    ],
+    "enunciado": "Sobre o teste manual e o teste automatizado, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "O teste automatizado detecta problemas visuais subjetivos e de usabilidade melhor que uma pessoa.",
+      "O teste manual é excelente para testes exploratórios, de usabilidade e para análises subjetivas.",
+      "O teste automatizado é rápido, consistente e repetível, mas exige investimento em scripts.",
+      "O teste manual é lento e caro para a regressão de um sistema com muitos casos de teste.",
+      "Um ambiente instável pode fazer a suíte automatizada falhar sem que haja defeito no código."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a dos problemas visuais: entre as limitações da automação, a apostila lista justamente que ela não detecta problemas visuais subjetivos ou de usabilidade e não avalia a experiência do usuário de forma holística. A automação complementa o teste manual, não o substitui. As demais alternativas estão de acordo com a comparação e com a tabela de vantagens e limitações do capítulo."
+  },
+  {
+    "id": "qualidade-cap6-o5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma consultoria atende quatro clientes: (1) uma equipe de frontend em React, com JavaScript, que quer rodar os testes dentro do navegador, com depuração visual; (2) uma equipe de Node.js que precisa controlar o Chrome pelo protocolo DevTools; (3) uma equipe de Python que quer testar no Chrome, no Firefox e no Safari com uma única API e interceptar as requisições; (4) uma equipe que precisa automatizar um aplicativo nativo de Android e de iOS."
+      }
+    ],
+    "enunciado": "As ferramentas mais adequadas às necessidades 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "Cypress, Puppeteer, Playwright e Appium.",
+      "Puppeteer, Cypress, Playwright e Appium.",
+      "Cypress, Puppeteer, Appium e Playwright.",
+      "Playwright, Puppeteer, Cypress e JMeter.",
+      "Cypress, Playwright, Puppeteer e Appium."
+    ],
+    "correta": 0,
+    "resolucao": "O Cypress executa os testes dentro do navegador, com acesso ao DOM, e é excelente para frontends em React com JavaScript (1). O Puppeteer, do Google, controla o Chrome e o Chromium pelo protocolo DevTools e é ideal para Node.js (2). O Playwright, da Microsoft, testa Chrome, Firefox e Safari com uma única API, inclusive em Python, e intercepta requisições (3). O Appium automatiza aplicativos iOS e Android (4)."
+  },
+  {
+    "id": "qualidade-cap6-o6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe executa manualmente 300 casos de teste, de 6 minutos cada, a um custo de R$ 40 por hora, em 24 releases por ano. Automatizar a suíte custará R$ 12.000 de desenvolvimento e R$ 2.400 por ano de manutenção. Considere que a automação elimina todo o esforço manual dessa suíte."
+      }
+    ],
+    "enunciado": "Pela fórmula de ROI da apostila, qual é o retorno da automação ao fim do primeiro ano?",
+    "alternativas": [
+      "100%.",
+      "140%.",
+      "50%.",
+      "200%.",
+      "240%."
+    ],
+    "correta": 0,
+    "resolucao": "Cada ciclo manual custa 300 x 6 min = 1.800 min = 30 h; 30 h x R$ 40 = R$ 1.200. Com 24 releases, são R$ 28.800 economizados no ano. O custo da automação no primeiro ano é R$ 12.000 + R$ 2.400 = R$ 14.400. ROI = (28.800 - 14.400) / 14.400 x 100% = 100%. Esquecer a manutenção levaria a 140%; dividir só a economia pelo custo, a 200%; e dividir a economia pelo desenvolvimento, a 240%."
+  },
+  {
+    "id": "qualidade-cap6-o7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "A suíte automatizada de um sistema tem 1.000 testes: 300 unitários, 200 de integração e 500 de interface (UI), feitos com Selenium. A execução completa leva duas horas, e vários testes falham de forma intermitente."
+      }
+    ],
+    "enunciado": "Comparando com a distribuição ideal da pirâmide de automação, é correto afirmar que a suíte",
+    "alternativas": [
+      "forma um cone de sorvete, com 50% de testes de UI, bem acima dos 5% a 15% ideais, e por isso é lenta e frágil.",
+      "segue a pirâmide, pois tem mais testes de UI, que são os que validam os fluxos críticos de ponta a ponta.",
+      "forma um cone de sorvete só porque tem poucos testes de integração, já que os unitários estão na faixa ideal.",
+      "está equilibrada, pois a pirâmide define apenas a quantidade total de testes, e não a distribuição.",
+      "forma um cone de sorvete, que deve ser corrigido trocando os testes unitários por mais testes de integração."
+    ],
+    "correta": 0,
+    "resolucao": "A pirâmide recomenda de 60% a 70% de unitários, de 20% a 25% de integração e de 5% a 15% de UI. A suíte tem 30% de unitários, 20% de integração e 50% de UI: o excesso de UI e a falta de unitários formam o cone de sorvete, que gera suítes lentas, frágeis e caras de manter. A correção é escrever mais testes unitários e reduzir os de UI aos fluxos críticos, e não trocar unitários por integração."
+  },
+  {
+    "id": "qualidade-cap6-o8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Observe a classe de teste abaixo, escrita em Java com TestNG."
+      },
+      {
+        "t": "codigo",
+        "texto": "public class PedidoTest {\n    @Test\n    public void login() { /* ... */ }\n\n    @Test(dependsOnMethods = \"login\")\n    public void criarPedido() { /* ... */ }\n\n    @Test(dependsOnMethods = \"criarPedido\")\n    public void pagarPedido() { /* ... */ }\n}"
+      }
+    ],
+    "enunciado": "Se o teste login falhar, o que acontece com os demais e como avaliar esse uso de dependências?",
+    "alternativas": [
+      "criarPedido e pagarPedido são pulados, sem executar; isso facilita o diagnóstico, mas contraria a independência do FIRST.",
+      "criarPedido e pagarPedido são executados mesmo assim, pois o TestNG ignora o atributo quando um teste falha.",
+      "Toda a suíte é interrompida com erro, pois um dependsOnMethods que falha impede a classe de compilar.",
+      "criarPedido e pagarPedido são pulados, e esse recurso existe também no JUnit 5 com a anotação @Nested.",
+      "criarPedido e pagarPedido falham com a mesma mensagem de erro, o que segue o princípio FIRST."
+    ],
+    "correta": 0,
+    "resolucao": "No TestNG, dependsOnMethods faz o teste depender de outro: se login falha, os dependentes não são executados e aparecem como pulados (skipped), e não como falhos, o que evita uma cascata de falhas enganosas. Pela tabela da apostila, o JUnit 5 não suporta dependência entre testes nativamente; @Nested só agrupa testes. Mas as boas práticas pedem que cada teste rode de forma isolada, como diz o I (Independent) do FIRST."
+  },
+  {
+    "id": "qualidade-cap6-o9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Observe os testes abaixo, escritos em Python com pytest."
+      },
+      {
+        "t": "codigo",
+        "texto": "import pytest\n\n@pytest.fixture\ndef carrinho():\n    return Carrinho()\n\ndef test_carrinho_vazio(carrinho):\n    assert carrinho.total() == 0\n\ndef test_adiciona_item(carrinho):\n    carrinho.adicionar(\"livro\", 50)\n    assert carrinho.total() == 50"
+      }
+    ],
+    "enunciado": "Sobre a execução desses testes com o pytest, é correto afirmar que",
+    "alternativas": [
+      "cada teste recebe um carrinho novo, criado pela fixture, e por isso a ordem de execução não muda os resultados.",
+      "os dois testes recebem o mesmo carrinho, e test_carrinho_vazio falha se rodar depois de test_adiciona_item.",
+      "os testes falham, pois a fixture precisaria ser chamada como carrinho() dentro de cada um dos testes.",
+      "os testes não são encontrados, pois o pytest só executa testes escritos em classes que herdam de TestCase.",
+      "test_adiciona_item falha, pois o pytest passa o nome da fixture como texto, e não o objeto que ela retorna."
+    ],
+    "correta": 0,
+    "resolucao": "O pytest encontra as funções que começam com test_ e injeta a fixture pelo nome do parâmetro, passando o objeto que ela retorna. Por padrão, a fixture é executada de novo para cada teste que a usa, então cada um recebe um carrinho novo. Assim, os testes são independentes e repetíveis, como pede o FIRST, e os dados de teste ficam gerenciados pela fixture, e não espalhados pelos testes."
+  },
+  {
+    "id": "qualidade-cap6-o10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe Java vai escolher entre o JUnit 5 e o TestNG para a nova suíte de testes e precisa migrar testes antigos, escritos em JUnit 4."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. O JUnit Vintage permite executar, no JUnit 5, testes escritos em JUnit 3 e 4.",
+      "II. O JUnit Platform é a API para escrever os testes, e o JUnit Jupiter é o módulo que os executa.",
+      "III. O TestNG gera relatório HTML nativo, enquanto o JUnit 5 depende de terceiros, como Allure e Surefire.",
+      "IV. No TestNG, a execução paralela exige um plugin do Maven ou do Gradle, pois não é suportada nativamente."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e III, apenas.",
+      "I, apenas.",
+      "III, apenas.",
+      "I, II e III, apenas.",
+      "I, III e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: o JUnit Vintage é o módulo de compatibilidade com o JUnit 3 e 4. II é falsa: os papéis estão trocados; o JUnit Platform cuida da execução, e o JUnit Jupiter é a API de testes. III é verdadeira, pela tabela comparativa da apostila. IV é falsa: no TestNG a execução paralela é nativa, configurada no testng.xml; quem depende de plugin do Maven ou do Gradle é o JUnit 5."
+  },
+  {
     "id": "qualidade-cap7-q1",
     "disciplinaId": "qualidade-e-testes-de-software",
     "capituloId": "qualidade-cap7",
@@ -3798,6 +4925,279 @@
     ],
     "correta": 0,
     "resolucao": "Os testes em produção dão a verificação mais realista possível: os smoke tests pós-deploy confirmam que o sistema está operando, e o monitoramento sintético simula continuamente ações de usuários, alertando quando um fluxo crítico falha. Para fazer isso com segurança, usam-se dados e contas de teste, evitam-se ações irreversíveis (como pagamentos reais), limita-se o escopo aos fluxos críticos e mantém-se o rollback disponível. Eles complementam, e não substituem, a regressão antes do deploy."
+  },
+  {
+    "id": "qualidade-cap7-d1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Um banco digital entrega uma nova versão do aplicativo a cada duas semanas, com um time Scrum e um pipeline de CI/CD. A regressão ainda é manual: 3.000 casos de teste, que três testadores levam quatro dias para executar, sempre na última semana antes do release. Mesmo assim, no último trimestre, quatro defeitos de regressão chegaram à produção, e um deles obrigou a equipe a reverter o deploy."
+    ],
+    "enunciado": "Proponha uma estratégia de testes de regressão para esse banco, considerando a automação, a seleção dos casos e a integração ao pipeline de CI/CD.",
+    "linhas": 10,
+    "respostaEsperada": "A regressão manual de 3.000 casos não acompanha releases quinzenais e deixa escapar defeitos, com custo alto, rollback e perda de confiança. O primeiro passo é automatizar a regressão, começando pelos fluxos críticos, como login, transferências e pagamentos. A suíte deve seguir a arquitetura em camadas: unitários a cada commit, em menos de 5 minutos; integração e contratos de API a cada merge na branch de desenvolvimento; testes de sistema e UI a cada release candidate; e a regressão completa, em paralelo, com Selenium Grid ou serviços em nuvem, antes de cada release. A seleção pode combinar camadas (smoke a cada build, sanity após cada correção e regressão completa antes do release) com a regressão baseada em risco, priorizando as funções críticas, e a progressiva, adicionando os novos casos a cada sprint, como parte da Definition of Done. Depois do deploy, entram os smoke tests em produção e o monitoramento sintético. Os testadores, liberados da execução repetitiva, passam a fazer testes exploratórios."
+  },
+  {
+    "id": "qualidade-cap7-d2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "A suíte de regressão de um sistema de logística tem 4.500 testes automatizados. Nos últimos meses, a equipe percebeu que: cerca de 8% dos testes passam e falham sem que o código mude; muitos testes verificam telas que já foram removidas; vários cenários são verificados por mais de um teste; quando o teste de cadastro falha, dezenas de outros falham junto; e, quando um requisito muda, ninguém sabe quais testes precisam ser atualizados. Os desenvolvedores já ignoram as falhas da suíte, dizendo que \"é sempre o teste que está errado\"."
+    ],
+    "enunciado": "Analise os problemas dessa suíte e proponha um plano de gestão e manutenção para recuperar a confiança da equipe nos resultados.",
+    "linhas": 10,
+    "respostaEsperada": "A suíte virou um passivo. Os 8% de testes instáveis (flaky), muito acima da meta de menos de 2%, devem ir para uma quarentena, para não bloquear o pipeline, e ser corrigidos e reintegrados depois de estabilizados. Os testes obsoletos, que verificam telas removidas, geram falhas falsas e devem ser removidos; os duplicados aumentam o tempo sem acrescentar cobertura e devem ser eliminados. As falhas em cascata mostram acoplamento excessivo: cada teste deve preparar o próprio estado e rodar de forma isolada. Falta rastreabilidade bidirecional: cada teste deve estar ligado ao requisito que verifica, para que os testes afetados sejam identificados quando ele mudar. O plano deve incluir a revisão periódica da suíte em cada sprint, tratada como código de produção, nomes descritivos e o monitoramento das métricas: taxa de aprovação acima de 95%, flakiness abaixo de 2%, tempo de execução, defeitos escapados e custo de manutenção abaixo de 20% do esforço de testes."
+  },
+  {
+    "id": "qualidade-cap7-o1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Durante uma sprint, a equipe registrou várias ocorrências no sistema de controle de defeitos e quer saber quais devem ser classificadas como regressões."
+      }
+    ],
+    "enunciado": "Qual das situações descreve um defeito de regressão?",
+    "alternativas": [
+      "Depois da atualização de uma biblioteca, o cálculo de juros, que estava correto, passou a arredondar errado.",
+      "Na primeira execução do teste de uma funcionalidade recém-criada, o botão de exportar não gerou o arquivo.",
+      "O cliente pediu que o relatório mostrasse o saldo por mês, mas a equipe entendeu que era por semana.",
+      "Um requisito novo, ainda não implementado, aparece como pendente na matriz de rastreabilidade do projeto.",
+      "Um teste exploratório encontrou um defeito em uma tela que foi criada nesta sprint e nunca tinha sido testada."
+    ],
+    "correta": 0,
+    "resolucao": "Um defeito de regressão ocorre quando uma funcionalidade que funcionava corretamente deixa de funcionar depois de uma modificação, e a atualização de uma biblioteca de terceiros é um dos exemplos da apostila. Defeitos em funcionalidades novas, ainda não aprovadas, são encontrados pelos testes de desenvolvimento, e não pela regressão; um requisito mal entendido e um requisito pendente também não são regressões."
+  },
+  {
+    "id": "qualidade-cap7-o2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe está escrevendo a política que define quando os testes de regressão devem ser executados."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Uma mudança apenas em variáveis de ambiente dispensa a regressão, pois nenhuma linha de código foi alterada.",
+      "II. Quando uma API de terceiros é atualizada, os pontos de integração com ela devem ser verificados de novo.",
+      "III. Uma refatoração que não muda a lógica interna pode introduzir mudanças sutis de comportamento.",
+      "IV. A regressão completa antes do deploy em produção só é necessária em projetos com releases pouco frequentes."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "II e III, apenas.",
+      "II, apenas.",
+      "III, apenas.",
+      "I, II e III, apenas.",
+      "II, III e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é falsa: mudanças de configuração ou de infraestrutura, como variáveis de ambiente, estão entre os gatilhos da regressão, pois podem afetar o comportamento da aplicação. II e III são verdadeiras: são os gatilhos de integração com sistemas externos e de refatoração. IV é falsa: independentemente da frequência de desenvolvimento, a regressão completa deve ser executada antes de qualquer deploy em produção."
+  },
+  {
+    "id": "qualidade-cap7-o3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "No pipeline de uma empresa, a regressão é acionada por quatro eventos: (1) cada commit em uma branch; (2) cada merge na branch de desenvolvimento; (3) cada release candidate ou merge na branch principal; (4) a véspera de cada release para produção."
+      }
+    ],
+    "enunciado": "Pela arquitetura em camadas da regressão automatizada, os gatilhos 1, 2, 3 e 4 disparam, respectivamente, a regressão",
+    "alternativas": [
+      "unitária, de integração e API, de sistema e UI, e completa.",
+      "unitária, de sistema e UI, de integração e API, e completa.",
+      "de integração e API, unitária, de sistema e UI, e completa.",
+      "unitária, de integração e API, completa, e de sistema e UI.",
+      "completa, de integração e API, de sistema e UI, e unitária."
+    ],
+    "correta": 0,
+    "resolucao": "Na arquitetura da apostila, a regressão unitária roda a cada commit, em menos de 5 minutos (1); a de integração e API, a cada merge na branch de desenvolvimento, de 5 a 20 minutos (2); a de sistema e UI, a cada release candidate ou merge na branch principal, de 20 a 90 minutos (3); e a completa, com execução paralela, antes de cada release para produção, de 2 a 8 horas (4)."
+  },
+  {
+    "id": "qualidade-cap7-o4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe quer melhorar a sua suíte de regressão e listou quatro necessidades: (1) relatórios com o histórico das execuções e as tendências de falhas; (2) validar em Java os contratos das APIs REST; (3) executar em paralelo os testes unitários escritos em Python; (4) disparar a suíte automaticamente a cada evento do repositório."
+      }
+    ],
+    "enunciado": "As ferramentas mais adequadas às necessidades 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "Allure, RestAssured, pytest-xdist e GitHub Actions.",
+      "RestAssured, Allure, pytest-xdist e GitHub Actions.",
+      "Allure, RestAssured, GitHub Actions e pytest-xdist.",
+      "Allure, pytest-xdist, RestAssured e GitHub Actions.",
+      "GitHub Actions, RestAssured, pytest-xdist e Allure."
+    ],
+    "correta": 0,
+    "resolucao": "Pela tabela de ferramentas para a regressão: o Allure gera relatórios visuais com histórico de execuções, tendências e falhas por categoria (1); o RestAssured valida contratos de APIs REST em Java, com sintaxe fluente (2); o pytest com o pytest-xdist executa os testes em paralelo (3); e o Jenkins ou o GitHub Actions orquestram o CI/CD, disparando a suíte a cada evento do repositório (4)."
+  },
+  {
+    "id": "qualidade-cap7-o5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em uma reunião, um gerente sugeriu juntar todos os testes da sprint, os das funcionalidades novas e os das antigas, em uma única atividade chamada \"regressão\"."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. O teste de regressão verifica se funcionalidades já testadas e aprovadas continuam funcionando depois de uma mudança.",
+      "PORQUE",
+      "II. Testar as funcionalidades novas, criadas na sprint, faz parte do escopo principal do teste de regressão."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A I é verdadeira: é a definição do teste de regressão na apostila. A II é falsa: pela tabela de definição e escopo, testar novas funcionalidades não é regressão, e sim responsabilidade dos testes de desenvolvimento (unitário, integração e sistema). Depois de aprovados, esses novos testes podem passar a fazer parte da suíte de regressão."
+  },
+  {
+    "id": "qualidade-cap7-o6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um estagiário anotou, fora de ordem, as etapas do pipeline de uma empresa: (1) regressão completa, em paralelo, em vários ambientes; (2) análise estática e testes unitários; (3) testes de aceitação automatizados e exploratórios manuais, com aprovação humana; (4) testes de integração e de contrato de API; (5) build completo e testes de sistema pela interface; (6) monitoramento e smoke tests depois do deploy."
+      }
+    ],
+    "enunciado": "Qual é a ordem correta dessas etapas no fluxo de regressão do pipeline CI/CD?",
+    "alternativas": [
+      "2, 4, 5, 1, 3 e 6.",
+      "2, 5, 4, 1, 3 e 6.",
+      "2, 4, 5, 3, 1 e 6.",
+      "4, 2, 5, 1, 3 e 6.",
+      "2, 4, 1, 5, 6 e 3."
+    ],
+    "correta": 0,
+    "resolucao": "No fluxo da apostila, a profundidade cresce conforme o código avança: no commit, a análise estática e os unitários (2); no pull request, a integração e os contratos de API (4); no merge, os testes de sistema pela interface (5); no release candidate, a regressão completa em paralelo (1); em staging, a aceitação automatizada e os exploratórios, com aprovação humana (3); e, em produção, os smoke tests pós-deploy (6)."
+  },
+  {
+    "id": "qualidade-cap7-o7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe tem 4.000 casos de regressão automatizados. Um analista propôs um \"smoke test\" com 1.200 desses casos, que leva 50 minutos para rodar, a ser executado a cada novo build."
+      }
+    ],
+    "enunciado": "Pelos parâmetros de smoke test da apostila, como avaliar a proposta?",
+    "alternativas": [
+      "Não é um smoke test: 1.200 casos são 30% da suíte e levam 50 minutos; o certo seriam de 200 a 400 casos críticos.",
+      "É um bom smoke test: quanto mais casos ele tiver, maior a chance de rejeitar um build com problemas.",
+      "É um sanity test, pois a duração de 50 minutos fica entre 15 minutos e 1 hora, a faixa do sanity.",
+      "Não é um smoke test: o certo seria rodar a suíte completa, com os 4.000 casos, a cada build gerado.",
+      "Não é um smoke test: ele deveria ter de 400 a 800 casos, que são de 10% a 20% da suíte de regressão."
+    ],
+    "correta": 0,
+    "resolucao": "O smoke test cobre de 5% a 10% dos casos, só os fluxos mais críticos, e dura de 5 a 15 minutos, pois roda a cada build. Com 4.000 casos, isso dá de 200 a 400 casos; 1.200 casos são 30%. Classificar como sanity também está errado, pois o sanity é definido pelo escopo, a área modificada por uma correção, e não só pela duração. Rodar a suíte completa a cada build seria inviável."
+  },
+  {
+    "id": "qualidade-cap7-o8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe vai escolher a estratégia de seleção de casos de regressão do seu projeto e reuniu as características de cada uma."
+      }
+    ],
+    "enunciado": "Sobre as estratégias de seleção de casos de regressão, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "A regressão progressiva dispensa disciplina da equipe, pois os novos casos entram na suíte sozinhos a cada entrega.",
+      "A regressão total garante a cobertura máxima, mas é inviável em pipelines que rodam a cada commit.",
+      "A seletiva por impacto exige boa rastreabilidade e pode perder defeitos em áreas indiretamente afetadas.",
+      "A baseada em risco equilibra cobertura e tempo, mas defeitos em funções de baixo risco podem escapar.",
+      "A regressão por camadas exige planejar com cuidado a organização e a categorização dos casos de teste."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a da regressão progressiva: a limitação apontada pela apostila é justamente que ela exige disciplina para adicionar novos testes à suíte a cada entrega. As demais alternativas descrevem corretamente as vantagens e as limitações das regressões total, seletiva por impacto, baseada em risco e por camadas."
+  },
+  {
+    "id": "qualidade-cap7-o9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma suíte de regressão tem 2.500 testes, dos quais 60 passam e falham de forma intermitente. A taxa de aprovação nas execuções estáveis é de 96%, e a suíte completa, com paralelismo, roda em 1 hora e 40 minutos. No último mês, a equipe gastou 45 das suas 180 horas de testes mantendo a suíte."
+      }
+    ],
+    "enunciado": "Comparando com as metas saudáveis da apostila, quais métricas estão fora da meta?",
+    "alternativas": [
+      "Apenas a taxa de flakiness, de 2,4%, e o custo de manutenção, de 25% do esforço de testes.",
+      "Apenas a taxa de aprovação, de 96%, pois a meta saudável é de 100% dos testes passando sempre.",
+      "Apenas o tempo da suíte completa, de 1 hora e 40 minutos, pois a meta é de menos de 1 hora.",
+      "A taxa de flakiness, de 2,4%, o custo de manutenção, de 25%, e a taxa de aprovação, de 96%.",
+      "Nenhuma delas, pois todas as métricas da equipe estão dentro das metas saudáveis da apostila."
+    ],
+    "correta": 0,
+    "resolucao": "A flakiness é 60 / 2.500 = 2,4%, acima da meta de menos de 2%. O custo de manutenção é 45 / 180 = 25% do esforço de testes, acima da meta de menos de 20%. A taxa de aprovação, de 96%, está acima da meta de 95%, e a suíte completa, de 1 hora e 40 minutos com paralelismo, está abaixo da meta de 2 horas."
+  },
+  {
+    "id": "qualidade-cap7-o10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap7",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Observe as duas versões de uma função, escrita em Python, e o teste de regressão que a acompanha."
+      },
+      {
+        "t": "codigo",
+        "texto": "# Versão 1\ndef media(notas):\n    return sum(notas) / len(notas)\n\n# Versão 2, depois de uma refatoração\ndef media(notas):\n    total = 0\n    for i in range(1, len(notas)):\n        total += notas[i]\n    return total / len(notas)\n\nassert media([6, 8, 10]) == 8"
+      }
+    ],
+    "enunciado": "Ao executar o teste de regressão abaixo sobre a versão 2, o que acontece e como classificar o problema?",
+    "alternativas": [
+      "O teste falha, pois a versão 2 pula a primeira nota e retorna 6; é um defeito de regressão da refatoração.",
+      "O teste passa, pois a versão 2 percorre as notas com um laço e chega ao mesmo resultado 8 da versão 1.",
+      "O teste falha com divisão por zero, pois o laço da versão 2 zera o tamanho da lista antes da divisão.",
+      "O teste falha, mas não é regressão, pois refatorações não estão entre os gatilhos dos testes de regressão.",
+      "O teste falha, mas não é regressão, pois a função media foi alterada e passou a ser uma nova funcionalidade."
+    ],
+    "correta": 0,
+    "resolucao": "Na versão 2, o laço começa em 1 e ignora notas[0]: soma 8 + 10 = 18 e divide por 3, retornando 6, e não 8. A função funcionava e deixou de funcionar depois de uma modificação: é um defeito de regressão. A apostila lista a refatoração entre os gatilhos, pois mesmo sem mudar a lógica pretendida ela pode introduzir mudanças sutis de comportamento."
   },
   {
     "id": "qualidade-cap10-m1",
