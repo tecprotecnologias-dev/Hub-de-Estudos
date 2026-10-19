@@ -1974,79 +1974,79 @@
   "C": "O único benefício é de marketing, pois o ambiente de staging verifica exatamente as mesmas coisas que a produção."
  },
  "qualidade-cap10-m1": {
-  "B": "Erro: o desenvolvedor usar < em vez de <=; defeito: a condição errada que ficou no código; falha: aprovar em produção empréstimos no valor exato do limite.",
-  "C": "São sinônimos aqui, e a distinção é só acadêmica."
+  "B": "Erro: o empréstimo aprovado em produção; defeito: o desenvolvedor usar <; falha: o código errado no repositório.",
+  "C": "Os três termos são sinônimos nesse caso, e a distinção entre eles é só acadêmica, sem efeito no trabalho da equipe."
  },
  "qualidade-cap10-m2": {
-  "C": "Severidade crítica (S1), pois expõe dados financeiros, com impacto legal e regulatório; prioridade alta, pois, mesmo rara, a condição de corrida pode ser forçada por um atacante.",
-  "B": "Média e média: a raridade já funciona como contorno natural."
+  "C": "Severidade média e prioridade média, pois a raridade da condição funciona como um contorno natural para o banco.",
+  "B": "Severidade baixa e prioridade baixa, pois a condição é tão rara que o impacto real é mínimo e o defeito pode esperar."
  },
  "qualidade-cap10-m3": {
-  "C": "Título vago, sem passos numerados, resultado obtido impreciso, sem resultado esperado, sem ambiente (SO, navegador, versão) e sem evidências; a reescrita preenche cada campo com precisão."
+  "C": "Nenhum, pois \"não funciona direito\" é um termo técnico aceito, e o desenvolvedor deveria ter investigado."
  },
  "qualidade-cap10-m4": {
-  "B": "Só o QA deve fechar um defeito, depois de verificar a correção; ele deveria ir para \"Em verificação\"; isso distorce o DDE, esconde reaberturas e quebra a rastreabilidade.",
-  "C": "Faltou o template: o desenvolvedor não documentou como corrigiu."
+  "B": "A integração com o controle de versão, pois o desenvolvedor não citou o número do defeito na mensagem de commit.",
+  "C": "A padronização do template, pois o desenvolvedor não descreveu no registro como fez a correção do defeito."
  },
  "qualidade-cap10-m5": {
-  "C": "DDE = 150/170 = 88,2%, abaixo de 90%; reabertura de 12%, acima de 10%; e 5 críticos abertos, quando o critério é zero: não está pronto, por três motivos.",
-  "B": "DDE = 150/20 = 750%, acima de 100%, então está pronto."
+  "C": "DDE de 750% (150 ÷ 20), bem acima de 100%, o que mostra que o produto já está pronto para o release.",
+  "B": "DDE de 88,2%, quase 90%; a diferença é pequena, e o release pode sair, desde que a equipe acompanhe de perto."
  },
  "qualidade-cap10-m6": {
-  "C": "É correto: severidade (impacto técnico) e prioridade (urgência de negócio) são eixos independentes; o erro de grafia na home antes do lançamento é urgente, e o crash raro, não.",
-  "B": "Só o segundo caso está errado: severidade alta exige prioridade alta."
+  "C": "Só o segundo caso está errado, pois um defeito de severidade alta sempre precisa receber prioridade alta.",
+  "B": "Não está, pois severidade e prioridade devem ter sempre o mesmo nível, já que a prioridade vem da severidade."
  },
  "qualidade-cap10-m7": {
-  "C": "Status só por labels, sem transições condicionais; sem campos obrigatórios; relatórios básicos (sem burn down ou aging); e sem dependências, SLA por severidade ou automações complexas, como no Jira."
+  "C": "A única limitação é o custo, pois o Jira faz exatamente o mesmo de graça para os projetos de código aberto."
  },
  "qualidade-cap10-m8": {
-  "C": "Um defeito por ticket: cada problema pode ter causa diferente (formatação, fuso horário, limite de memória); juntos, uma correção fecha tudo, distorce as métricas e impede verificar cada uma.",
-  "B": "Só é errado se as severidades forem diferentes."
+  "C": "Só fere se os três tiverem severidades diferentes; com a mesma severidade, é melhor juntar todos em um só registro.",
+  "B": "Não fere: defeitos do mesmo módulo têm sempre a mesma causa e devem ser corrigidos juntos, em uma única intervenção."
  },
  "qualidade-cap10-m9": {
-  "B": "Reaberturas por correções incompletas, regressões criadas pelas próprias correções ou novos defeitos de integração; veja reabertura, defeitos novos por dia, correção versus detecção e distribuição por módulo.",
-  "C": "Os 25 a mais já existiam e só foram registrados depois."
+  "B": "É só uma flutuação normal, e a equipe deve esperar o fim da sprint para analisar, sem tirar conclusões antes.",
+  "C": "Os 25 defeitos a mais já existiam e só foram registrados depois, e por isso não há nada a investigar."
  },
  "qualidade-cap10-m10": {
-  "C": "Uma ação por causa: requisitos ambíguos pedem refinamento com critérios testáveis e revisão do QA; integração, testes de contrato e ambientes realistas; regressão, cobertura unitária mínima na DoD.",
-  "B": "Atacar só os 40% de integração, e o resto se resolve depois."
+  "C": "Atacar só os 40% de integração, que são a maior parte, e deixar as outras causas para a próxima versão do produto.",
+  "B": "Só aumentar a cobertura de testes automatizados, pois mais testes resolvem qualquer origem de defeito no sistema."
  },
  "qualidade-cap11-m1": {
-  "B": "Há só QC (reativo, no produto) e nenhum QA (preventivo, no processo): os testadores acham defeitos já criados; faltam revisão de requisitos, critérios de aceitação, code review e automação."
+  "B": "Faltam testadores: com mais 10 pessoas e ferramentas melhores de teste manual, os defeitos seriam eliminados antes do release."
  },
  "qualidade-cap11-m2": {
-  "C": "O Princípio 1: testes mostram a presença, não a ausência de defeitos; e, pelo Princípio 7, um software sem defeitos ainda pode falhar se não atender ao usuário.",
-  "B": "O Princípio 2; basta dobrar para 6.000 casos."
+  "C": "Parte 1, Parte 3, Parte 2 e Parte 4.",
+  "B": "Parte 2, Parte 1, Parte 3 e Parte 4."
  },
  "qualidade-cap11-m3": {
-  "C": "É o \"cone de sorvete\": E2E lentos, frágeis e caros; a pirâmide pede a maioria unitária, uma parte de integração e poucos E2E para fluxos críticos.",
-  "A": "É a ferramenta; o Playwright resolveria sem mudar a distribuição."
+  "C": "Integração Contínua nas duas, pois em ambas o código é integrado e testado a cada push no repositório.",
+  "A": "Entrega Contínua, pois o deploy depende de uma decisão humana, e Implantação Contínua, pois ele é automático."
  },
  "qualidade-cap11-m4": {
-  "C": "Para o DORA, velocidade e qualidade andam juntas: deploys diários, lead time curto, falhas abaixo de 5% e MTTR abaixo de uma hora são o perfil de elite, com CI/CD e automação.",
-  "B": "45 minutos de lead time provam que a equipe pula testes."
+  "C": "O lead time de 45 minutos prova que a equipe pula testes, pois nenhum pipeline completo roda nesse tempo.",
+  "B": "O diretor tem razão: muitos deploys não deixam tempo para testar, e a taxa de falha de 3% comprova o problema."
  },
  "qualidade-cap11-m5": {
-  "C": "Qualidade é de todos: desenvolvedores fazem testes unitários (TDD), critérios vêm antes (BDD), teste acontece junto do desenvolvimento, o QA orienta e automatiza, e a DoD exige cobertura mínima."
+  "C": "Aumentar as sprints de 2 para 4 semanas, para que o QA tenha tempo de testar todas as histórias no fim de cada uma."
  },
  "qualidade-cap11-m6": {
-  "C": "O PDCA leva ao Act: o resultado contrariou a hipótese; deve-se investigar a causa (flakiness, falsos positivos?), ajustar e recomeçar com nova hipótese, registrando o aprendizado.",
-  "B": "Confirma o sucesso, pois agora mais defeitos aparecem."
+  "C": "Considerar a mudança um sucesso, pois o aumento de defeitos em produção mostra que agora se encontra mais.",
+  "B": "Reverter a mudança e encerrar o ciclo, pois o aumento prova que a automação de testes atrapalha a qualidade."
  },
  "qualidade-cap11-m7": {
-  "C": "Post-mortems são sem culpa: a pergunta não é quem errou, mas por que o processo deixou o prazo pular o code review; corrige-se o sistema para que o atalho não seja possível.",
-  "B": "É errada só por risco legal de assédio moral."
+  "C": "A proposta só é errada pelo risco jurídico de assédio moral, e por isso o registro deve ficar fora da avaliação formal.",
+  "B": "A proposta está certa, pois punir quem desvia do processo é a forma mais eficaz de evitar novos incidentes."
  },
  "qualidade-cap11-m8": {
-  "C": "Atuam em níveis diferentes: TDD é design de código no nível unitário (Red-Green-Refactor), feito pelo desenvolvedor; BDD alinha o comportamento no nível de aceitação, escrito por dev, QA e PO.",
-  "D": "A diferença é só de ferramenta: JUnit contra Cucumber."
+  "C": "I, II, III e IV.",
+  "D": "II e IV, apenas."
  },
  "qualidade-cap11-m9": {
-  "C": "São complementares: o Shift-Left evita que defeitos cheguem à produção, o que é mais barato; o Shift-Right aprende com o uso real e pega o que escapou; um programa maduro usa os dois."
+  "C": "O Shift-Right substitui só os testes de sistema e de aceitação, e bastam os testes unitários e de integração antes da produção."
  },
  "qualidade-cap11-m10": {
-  "C": "Cobertura de 85% já é boa; preocupam o change failure rate de 18% (elite fica abaixo de 5%) e 28% de builds falhando, sinal de testes que não verificam o que importa.",
-  "B": "É errada só porque 95% é irreal; o certo seria 87 ou 88%."
+  "C": "A prioridade só está errada porque 95% é irreal; uma meta de 87% ou 88% de cobertura seria a correta para a equipe.",
+  "B": "A prioridade está certa, pois mais cobertura melhora automaticamente todas as outras métricas de qualidade da equipe."
  },
  "qualidade-cap8-m1": {
   "B": "A conclusão só é equivocada em sistemas financeiros; no comércio eletrônico, a média é a métrica padrão para os contratos de SLA.",

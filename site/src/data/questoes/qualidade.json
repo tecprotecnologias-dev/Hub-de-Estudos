@@ -3231,14 +3231,16 @@
     "capituloId": "qualidade-cap10",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um desenvolvedor comete um erro ao usar o operador < em vez de <= na validação de limite de crédito. O código é commitado e, em produção, clientes conseguem aprovar empréstimos exatamente no valor do limite sem a devida verificação. Mapeando os três conceitos fundamentais, qual é a distinção correta entre erro, defeito e falha nesse cenário?",
+    "enunciado": "Um desenvolvedor usa o operador < em vez de <= na validação do limite de crédito. O código vai para o repositório e, em produção, empréstimos no valor exato do limite passam sem a verificação devida. Qual é a distinção correta entre erro, defeito e falha nesse cenário?",
     "alternativas": [
-      "O erro é o comportamento incorreto observado em produção (clientes aprovando empréstimos indevidos); o defeito é a ação equivocada do desenvolvedor ao digitar <; e a falha é o código resultante presente no repositório aguardando execução no ambiente de produção.",
-      "Erro: o desenvolvedor usar < em vez de <=; defeito: a condição errada que ficou no código; falha: aprovar em produção empréstimos no valor exato do limite.",
-      "São sinônimos aqui, e a distinção é só acadêmica.",
-      "O erro é a aprovação indevida de empréstimos pelo sistema; o defeito é a ausência de testes unitários que deveriam ter detectado a condição incorreta; e a falha é a decisão de negócio de colocar o código em produção sem revisão adequada da lógica de validação de crédito."
+      "Erro: o desenvolvedor usar < em vez de <=; defeito: a condição errada que ficou no código; falha: o empréstimo aprovado em produção.",
+      "Erro: o empréstimo aprovado em produção; defeito: o desenvolvedor usar <; falha: o código errado no repositório.",
+      "Os três termos são sinônimos nesse caso, e a distinção entre eles é só acadêmica, sem efeito no trabalho da equipe.",
+      "Erro: a aprovação indevida; defeito: a falta de testes unitários; falha: a decisão de publicar sem revisão.",
+      "Erro: a condição errada no código; defeito: o empréstimo aprovado; falha: o desenvolvedor usar < em vez de <=."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "Pela terminologia da apostila, o erro é a ação humana que produz um resultado incorreto (escolher o operador errado); o defeito é a imperfeição que fica no produto de trabalho, no caso o código no repositório; e a falha é o comportamento incorreto observável, que acontece quando o defeito é executado. O exemplo da apostila é justamente o operador < no lugar de <=."
   },
   {
     "id": "qualidade-cap10-m2",
@@ -3246,14 +3248,16 @@
     "capituloId": "qualidade-cap10",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um defeito em sistema bancário permite que usuários visualizem o saldo de outras contas, mas apenas quando dois usuários fazem login simultâneo no mesmo milissegundo — condição extremamente rara e difícil de reproduzir. Como classificar severidade e prioridade?",
+    "enunciado": "Um defeito em um sistema bancário permite que um usuário veja o saldo de outras contas, mas só quando dois usuários entram no mesmo milissegundo, uma condição muito rara e difícil de reproduzir. Como classificar a severidade e a prioridade?",
     "alternativas": [
-      "Severidade Baixa e Prioridade Baixa: como a condição de reprodução é extremamente rara e difícil de ocorrer naturalmente, o impacto real é mínimo e o defeito pode aguardar ciclos futuros de manutenção sem risco significativo para o negócio ou para os clientes do banco.",
-      "Média e média: a raridade já funciona como contorno natural.",
-      "Severidade crítica (S1), pois expõe dados financeiros, com impacto legal e regulatório; prioridade alta, pois, mesmo rara, a condição de corrida pode ser forçada por um atacante.",
-      "Severidade Alta e Prioridade Baixa: o impacto técnico é alto pois viola a confidencialidade dos dados, mas a raridade da condição de reprodução reduz a urgência de negócio — o defeito deve ser incluído no backlog para correção no próximo sprint regular, sem necessidade de hotfix."
+      "Severidade alta, pois expõe dados financeiros de outros clientes; prioridade alta, pois um atacante pode forçar a condição.",
+      "Severidade baixa e prioridade baixa, pois a condição é tão rara que o impacto real é mínimo e o defeito pode esperar.",
+      "Severidade média e prioridade média, pois a raridade da condição funciona como um contorno natural para o banco.",
+      "Severidade alta e prioridade baixa, pois a raridade reduz a urgência, e o defeito pode ir para a próxima sprint.",
+      "Severidade baixa e prioridade alta, pois o problema é só de exibição, mas o cliente é um banco importante."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A severidade mede o impacto técnico: um usuário ver dados financeiros de outros fere a confidencialidade e é grave. A prioridade mede a urgência para o negócio, e aqui ela também é alta: vazamento de dados bancários tem consequências legais e de reputação, e uma condição de corrida rara para um usuário comum pode ser provocada de propósito por um atacante. A raridade não serve de contorno para um problema de segurança."
   },
   {
     "id": "qualidade-cap10-m3",
@@ -3261,14 +3265,16 @@
     "capituloId": "qualidade-cap10",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um testador escreve o seguinte bug report: \"Sistema com erro no PDF. Quando exporto não funciona direito. Já tentei várias vezes.\" O desenvolvedor marca como \"Não Reproduzível\". Quais antipadrões estão presentes e como reescrever o relatório adequadamente?",
+    "enunciado": "Um testador registra o defeito: \"Sistema com erro no PDF. Quando exporto não funciona direito. Já tentei várias vezes.\" O desenvolvedor o marca como \"Não Reproduzível\". Quais problemas o registro tem?",
     "alternativas": [
-      "O único antipadrão é a ausência de prints: bug reports de problemas de exportação são auto-explicativos para desenvolvedores experientes — bastaria anexar o arquivo PDF gerado incorretamente para tornar o defeito completamente reproduzível sem necessidade de mais informações.",
-      "O bug report está adequado para problemas de exportação: a descrição \"não funciona direito\" é terminologia técnica padrão aceita pela indústria para problemas de renderização de documentos, e \"já tentei várias vezes\" confirma que o defeito é reproduzível — o desenvolvedor deveria ter investigado em vez de marcar como não reproduzível.",
-      "Título vago, sem passos numerados, resultado obtido impreciso, sem resultado esperado, sem ambiente (SO, navegador, versão) e sem evidências; a reescrita preenche cada campo com precisão.",
-      "O principal antipadrão é misturar múltiplos defeitos em um único report: \"exporto não funciona direito\" sugere problemas em várias etapas do processo de exportação — o testador deveria ter criado um ticket separado para cada etapa do fluxo de exportação onde identificou comportamento incorreto, mesmo sem descrever detalhadamente cada problema."
+      "Título vago, sem passos numerados, sem resultado obtido preciso, sem resultado esperado, sem ambiente e sem evidências.",
+      "Só a falta de prints; bastaria anexar o PDF gerado para o defeito se tornar totalmente reproduzível.",
+      "Nenhum, pois \"não funciona direito\" é um termo técnico aceito, e o desenvolvedor deveria ter investigado.",
+      "Só o fato de juntar vários defeitos; seria preciso abrir um registro para cada etapa da exportação.",
+      "Só a falta de severidade e prioridade, que são os únicos campos obrigatórios de um bom bug report."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Pela anatomia do bug report da apostila, faltam: um título que diga o quê, onde e quando acontece; os passos numerados para reproduzir; o resultado obtido, com mensagens de erro e valores; o resultado esperado; o ambiente (sistema, navegador, versão); e as evidências. Títulos vagos como \"Não funciona\" e passos incompletos são antipadrões que levam ao \"Não Reproduzível\"."
   },
   {
     "id": "qualidade-cap10-m4",
@@ -3276,14 +3282,16 @@
     "capituloId": "qualidade-cap10",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um defeito crítico S1 é reportado na sexta-feira à tarde. O desenvolvedor corrige, commita e muda o status para \"Fechado\" sem notificar o testador. Na segunda-feira, o release é feito para produção e o defeito reaparece. Qual boa prática foi violada e quais são as consequências para as métricas?",
+    "enunciado": "Um defeito crítico (S1) é registrado na sexta-feira à tarde. O desenvolvedor corrige, faz o commit e muda o status para \"Fechado\", sem avisar o testador. Na segunda-feira, a versão vai para produção, e o defeito reaparece. Qual boa prática foi violada?",
     "alternativas": [
-      "A boa prática violada é a integração com controle de versão: o desenvolvedor deveria ter referenciado o ID do defeito no commit, criando rastreabilidade bidirecional — sem essa referência, é impossível determinar qual commit contém a correção, impedindo a verificação adequada pelo testador.",
-      "Só o QA deve fechar um defeito, depois de verificar a correção; ele deveria ir para \"Em verificação\"; isso distorce o DDE, esconde reaberturas e quebra a rastreabilidade.",
-      "Faltou o template: o desenvolvedor não documentou como corrigiu.",
-      "A boa prática violada é a triagem regular: o defeito S1 reportado na sexta não passou por sessão de triagem com QA Lead e Tech Lead antes de ser corrigido — sem triagem, a prioridade pode ter sido mal avaliada e a abordagem de correção pode ter sido inadequada, causando o reaparecimento em produção."
+      "Só o QA deve fechar um defeito, depois de verificar a correção; o certo era ir para \"Resolvido\" e então para \"Em Verificação\".",
+      "A integração com o controle de versão, pois o desenvolvedor não citou o número do defeito na mensagem de commit.",
+      "A padronização do template, pois o desenvolvedor não descreveu no registro como fez a correção do defeito.",
+      "A triagem regular, pois o defeito S1 não passou por uma reunião de triagem antes de ser corrigido na sexta.",
+      "Nenhuma, pois o desenvolvedor é o responsável por fechar o defeito assim que a correção estiver no repositório."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "Pela boa prática \"nunca feche sem verificar\", apenas o testador que registrou o defeito, ou outro membro do QA, deve fechá-lo, depois de confirmar a correção; desenvolvedores não fecham os próprios defeitos. No ciclo de vida, quem corrige leva o defeito a \"Resolvido\", indicando o build ou o commit, e o testador o verifica em \"Em Verificação\", inclusive procurando regressões. Pulando essa etapa, o defeito voltou na produção."
   },
   {
     "id": "qualidade-cap10-m5",
@@ -3291,14 +3299,16 @@
     "capituloId": "qualidade-cap10",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Ao final de uma sprint, a equipe registra: 150 defeitos detectados internamente, 20 defeitos reportados por usuários em produção, 12 defeitos reabertos de 100 correções verificadas e 5 defeitos críticos ainda abertos. Calcule o DDE e avalie se o produto está pronto para release segundo os critérios padrão.",
+    "enunciado": "No fim de uma sprint, a equipe registra: 150 defeitos encontrados internamente, 20 relatados por usuários em produção, 12 reabertos de 100 correções verificadas e 5 defeitos críticos ainda abertos. Qual é o DDE e o produto está pronto para o release?",
     "alternativas": [
-      "DDE = 150/170 × 100 = 88,2%; o produto está pronto para release pois DDE de 88% está próximo do critério de 90% e a diferença é marginal — a equipe deve documentar o gap e monitorar mais de perto na próxima sprint sem bloquear o release por 1,8%.",
-      "DDE = 150/20 = 750%, acima de 100%, então está pronto.",
-      "DDE = 150/170 = 88,2%, abaixo de 90%; reabertura de 12%, acima de 10%; e 5 críticos abertos, quando o critério é zero: não está pronto, por três motivos.",
-      "DDE = 20/150 × 100 = 13,3%; o produto não está pronto pois DDE abaixo de 90% indica que 86,7% dos defeitos estão chegando aos usuários — a equipe deve triplicar os esforços de teste antes de qualquer novo release para reduzir drasticamente o volume de defeitos que chegam à produção."
+      "DDE de 88,2%, abaixo de 90%; reabertura de 12%, acima de 10%; e 5 críticos abertos: não está pronto, por três motivos.",
+      "DDE de 88,2%, quase 90%; a diferença é pequena, e o release pode sair, desde que a equipe acompanhe de perto.",
+      "DDE de 750% (150 ÷ 20), bem acima de 100%, o que mostra que o produto já está pronto para o release.",
+      "DDE de 13,3% (20 ÷ 150), o que indica que 86,7% dos defeitos chegam aos usuários e o release deve esperar.",
+      "DDE de 88,2%; o produto está pronto, pois a taxa de reabertura e os críticos abertos não entram nos critérios."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "DDE = defeitos internos ÷ (internos + produção) × 100 = 150 ÷ 170 × 100 ≈ 88,2%, abaixo da meta de 90%. A taxa de reabertura é 12 ÷ 100 = 12%, acima do limite de 10%. E o primeiro critério de prontidão é ter zero defeitos críticos (S1) abertos, mas há 5. Os três indicadores impedem o release."
   },
   {
     "id": "qualidade-cap10-m6",
@@ -3306,14 +3316,16 @@
     "capituloId": "qualidade-cap10",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um defeito de severidade \"Baixa\" (erro de ortografia no título da página principal) recebe prioridade \"Alta\" porque o cliente é uma grande varejista e o lançamento é amanhã. Um defeito de severidade \"Alta\" (crash em condição de importação de arquivo raramente usada) recebe prioridade \"Baixa\". Esse cenário é correto segundo os conceitos estudados?",
+    "enunciado": "Um defeito de severidade baixa (erro de grafia no título da página principal) recebe prioridade alta, porque o cliente é uma grande varejista e o lançamento é amanhã. Um defeito de severidade alta (travamento ao importar um tipo de arquivo raramente usado) recebe prioridade baixa. Esse cenário está correto?",
     "alternativas": [
-      "Não é correto: severidade e prioridade devem sempre ter o mesmo nível — um defeito de baixa severidade jamais pode ter alta prioridade, pois a prioridade é derivada diretamente do impacto técnico mensurado pela severidade; a decisão descrita configura gerenciamento incorreto do backlog de defeitos.",
-      "Só o segundo caso está errado: severidade alta exige prioridade alta.",
-      "É correto: severidade (impacto técnico) e prioridade (urgência de negócio) são eixos independentes; o erro de grafia na home antes do lançamento é urgente, e o crash raro, não.",
-      "É correto apenas para o segundo caso: crash de severidade Alta com prioridade Baixa é aceitável quando o cenário tem baixo volume de uso; porém, erro de ortografia com prioridade Alta é incorreto pois problemas cosméticos não podem receber prioridade Alta independentemente do contexto de negócio ou da proximidade do lançamento."
+      "Está: severidade (impacto técnico) e prioridade (urgência do negócio) são independentes; o erro na página principal é urgente.",
+      "Não está, pois severidade e prioridade devem ter sempre o mesmo nível, já que a prioridade vem da severidade.",
+      "Só o segundo caso está errado, pois um defeito de severidade alta sempre precisa receber prioridade alta.",
+      "Só o primeiro caso está errado, pois problemas cosméticos nunca podem receber prioridade alta, em nenhum contexto.",
+      "Não está, pois severidade e prioridade são o mesmo conceito, e os dois defeitos deveriam ter a mesma classificação."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A severidade descreve o impacto técnico do defeito; a prioridade, a urgência da correção do ponto de vista do negócio. A apostila traz exatamente esses dois exemplos: o logo errado na página inicial antes do lançamento (severidade baixa, prioridade alta) e o travamento ao importar um formato raríssimo (severidade alta, prioridade baixa)."
   },
   {
     "id": "qualidade-cap10-m7",
@@ -3321,14 +3333,16 @@
     "capituloId": "qualidade-cap10",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe usa GitHub Issues para gerenciamento de defeitos em um projeto open source com 50 contribuidores. O QA Lead questiona se a ferramenta é suficiente para as necessidades de um projeto de médio porte. Quais são as limitações do GitHub Issues em comparação com o Jira?",
+    "enunciado": "Uma equipe usa o GitHub Issues para gerenciar os defeitos de um projeto de código aberto com 50 colaboradores. O QA Lead pergunta quais são as limitações dessa ferramenta em comparação com o Jira. Qual é a resposta correta?",
     "alternativas": [
-      "GitHub Issues não tem limitações relevantes em relação ao Jira para projetos de qualquer porte: a simplicidade é uma vantagem para times ágeis — ferramentas mais complexas como Jira criam burocracia desnecessária que reduz a velocidade de desenvolvimento sem agregar valor proporcional ao gerenciamento de defeitos.",
-      "A única limitação do GitHub Issues é o custo: o Jira oferece funcionalidades idênticas gratuitamente para projetos open source, tornando o GitHub Issues economicamente desvantajoso para a maioria dos projetos sem benefício técnico que justifique o investimento adicional.",
-      "Status só por labels, sem transições condicionais; sem campos obrigatórios; relatórios básicos (sem burn down ou aging); e sem dependências, SLA por severidade ou automações complexas, como no Jira.",
-      "O GitHub Issues é tecnicamente superior ao Jira para projetos open source: integração nativa com o repositório, pull requests e GitHub Actions cria rastreabilidade automática que o Jira só consegue via plugins pagos — a única desvantagem é a interface menos customizável, que pode ser compensada com o uso de GitHub Projects como camada de visualização."
+      "O fluxo é pouco personalizável, baseado em labels, e os relatórios nativos são básicos; o Jira é mais completo nisso.",
+      "Não há limitação nenhuma, e ferramentas mais completas, como o Jira, só criam burocracia para a equipe do projeto.",
+      "A única limitação é o custo, pois o Jira faz exatamente o mesmo de graça para os projetos de código aberto.",
+      "A integração com o código é fraca, e por isso o Jira é superior na ligação entre o defeito e o commit da correção.",
+      "O GitHub Issues não aceita templates, e por isso cada colaborador registra os defeitos de um jeito diferente do outro."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Pelo quadro comparativo da apostila, o GitHub Issues tem integração nativa e excelente com o código, curva de aprendizado baixa e templates de issues, mas a customização do fluxo é limitada (basicamente por labels) e os relatórios nativos são básicos. O Jira tem fluxos totalmente customizáveis, com condições e validações, e relatórios muito bons, como burn down e defect aging."
   },
   {
     "id": "qualidade-cap10-m8",
@@ -3336,14 +3350,16 @@
     "capituloId": "qualidade-cap10",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Durante a triagem de defeitos, o QA Lead encontra três tickets distintos reportando comportamentos diferentes do mesmo módulo de exportação: um sobre truncamento de nomes, outro sobre formatação incorreta de datas e outro sobre falha ao exportar mais de 1.000 registros. O dev sugere unificar os três em um único ticket. Por que essa decisão viola boas práticas?",
+    "enunciado": "Na triagem, o QA Lead encontra três registros sobre o mesmo módulo de exportação: nomes cortados, datas mal formatadas e falha ao exportar mais de 1.000 registros. O desenvolvedor sugere juntar os três em um único registro. Por que isso fere as boas práticas?",
     "alternativas": [
-      "A unificação é correta e recomendada: múltiplos defeitos no mesmo módulo compartilham a mesma causa raiz e devem ser agrupados para que o desenvolvedor corrija o componente integralmente em uma única intervenção — separar defeitos do mesmo módulo fragmenta o esforço de correção desnecessariamente.",
-      "Só é errado se as severidades forem diferentes.",
-      "Um defeito por ticket: cada problema pode ter causa diferente (formatação, fuso horário, limite de memória); juntos, uma correção fecha tudo, distorce as métricas e impede verificar cada uma.",
-      "A unificação só é incorreta do ponto de vista de métricas: ao criar um único ticket, a densidade de defeitos do módulo de exportação será artificialmente reduzida de 3 para 1, mascarando a real fragilidade do componente nas análises de qualidade — tecnicamente, a correção de todos os problemas em uma única intervenção é mais eficiente do que três ciclos separados de correção e verificação."
+      "Um defeito por registro: cada problema pode ter outra causa e outra prioridade, e juntar atrapalha a verificação e as métricas.",
+      "Não fere: defeitos do mesmo módulo têm sempre a mesma causa e devem ser corrigidos juntos, em uma única intervenção.",
+      "Só fere se os três tiverem severidades diferentes; com a mesma severidade, é melhor juntar todos em um só registro.",
+      "Só fere as métricas, pois a densidade cai de 3 para 1; tecnicamente, corrigir tudo de uma vez é mais eficiente.",
+      "Não fere, desde que o título do registro único cite os três problemas e o módulo de exportação que foi afetado."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Entre as boas práticas da apostila está \"um defeito por registro\": juntar vários defeitos em um ticket dificulta o rastreamento, a priorização e as métricas. Cada problema pode ter uma causa diferente, uma severidade diferente e precisa ser verificado separadamente; com um ticket só, ele pode ser fechado com apenas parte dos problemas corrigida."
   },
   {
     "id": "qualidade-cap10-m9",
@@ -3351,14 +3367,16 @@
     "capituloId": "qualidade-cap10",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "O Defect Burn Down de uma sprint mostra que nas primeiras duas semanas a curva caiu de 80 para 40 defeitos abertos (progresso saudável), mas na terceira semana voltou para 65 defeitos abertos. Quais hipóteses explicam esse comportamento e quais métricas complementares deveriam ser analisadas?",
+    "enunciado": "O Defect Burn Down de uma sprint mostra que, nas duas primeiras semanas, os defeitos abertos caíram de 80 para 40, mas na terceira semana subiram para 65. Quais hipóteses explicam o comportamento e o que mais analisar?",
     "alternativas": [
-      "O comportamento indica apenas flutuação estatística normal em sprints de três semanas: variações de até 30% no burn down são esperadas e não requerem análise adicional — a equipe deve aguardar o final da sprint para avaliar o resultado final sem interpretações precipitadas de dados intermediários.",
-      "Reaberturas por correções incompletas, regressões criadas pelas próprias correções ou novos defeitos de integração; veja reabertura, defeitos novos por dia, correção versus detecção e distribuição por módulo.",
-      "Os 25 a mais já existiam e só foram registrados depois.",
-      "O comportamento indica que a equipe está alocando recursos insuficientes para testes na terceira semana: a curva ascendente é sempre causada por redução da taxa de detecção, não por aumento na criação de defeitos — a solução é aumentar o número de testadores ativos na terceira semana para retomar a inclinação descendente do burn down."
+      "Reaberturas, regressões das próprias correções ou defeitos novos de integração; ver reabertura e detecção versus correção.",
+      "É só uma flutuação normal, e a equipe deve esperar o fim da sprint para analisar, sem tirar conclusões antes.",
+      "Os 25 defeitos a mais já existiam e só foram registrados depois, e por isso não há nada a investigar.",
+      "A curva sobe sempre que a equipe reduz os testes, e a solução é aumentar o número de testadores na terceira semana.",
+      "O burn down só mede os defeitos corrigidos, e a curva subiu porque a equipe parou de corrigir na terceira semana."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "Pela apostila, uma curva descendente indica progresso saudável, e uma curva estagnada ou crescente sinaliza risco para o release. A alta pode vir de correções reabertas, de regressões introduzidas pelas próprias correções ou de defeitos novos encontrados em integração. Para descobrir, comparam-se a taxa de detecção e a de correção, a taxa de reabertura e a distribuição dos defeitos por módulo e por severidade."
   },
   {
     "id": "qualidade-cap10-m10",
@@ -3366,14 +3384,16 @@
     "capituloId": "qualidade-cap10",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma retrospectiva analisa os defeitos da última release e identifica: 35% dos defeitos S1 e S2 originaram-se de requisitos ambíguos, 40% de erros de integração entre microserviços e 25% de regressões por ausência de testes unitários. Como o Root Cause Analysis deve transformar esses dados em melhorias de processo?",
+    "enunciado": "Na retrospectiva da última versão, a equipe vê que, dos defeitos S1 e S2, 35% vieram de requisitos ambíguos, 40% de erros de integração entre microsserviços e 25% de regressões por falta de testes unitários. Como a análise de causa raiz deve virar melhoria de processo?",
     "alternativas": [
-      "O RCA deve resultar em exclusivamente mais testes: a solução para qualquer distribuição de causa de defeitos é sempre aumentar a cobertura de testes automatizados — independentemente da origem dos defeitos, mais testes detectariam os problemas antes da produção, tornando desnecessária qualquer mudança em outros processos.",
-      "Atacar só os 40% de integração, e o resto se resolve depois.",
-      "Uma ação por causa: requisitos ambíguos pedem refinamento com critérios testáveis e revisão do QA; integração, testes de contrato e ambientes realistas; regressão, cobertura unitária mínima na DoD.",
-      "O RCA deve resultar em realocação de responsabilidades: 35% de requisitos indicam falha do PO, 40% de integração indicam falha dos desenvolvedores de backend e 25% de regressão indicam falha dos desenvolvedores que não escrevem testes — identificar os responsáveis individuais e criar KPIs de performance por pessoa é a ação correta para reduzir defeitos nas próximas sprints."
+      "Uma ação por causa: requisitos com critérios testáveis, testes de contrato e de integração e testes unitários na DoD.",
+      "Só aumentar a cobertura de testes automatizados, pois mais testes resolvem qualquer origem de defeito no sistema.",
+      "Atacar só os 40% de integração, que são a maior parte, e deixar as outras causas para a próxima versão do produto.",
+      "Identificar os culpados de cada grupo e criar indicadores de desempenho individuais para cada pessoa da equipe.",
+      "Contratar mais testadores para a fase final, pois os defeitos de todas as origens aparecem nos testes de sistema."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A análise de causa raiz busca padrões nos defeitos para mudar o processo e prevenir defeitos semelhantes. Cada origem pede uma ação própria: requisitos ambíguos se combatem no refinamento, com critérios de aceitação testáveis; erros de integração, com testes de contrato e de integração; e regressões, com testes unitários na Definition of Done. Buscar culpados contraria a ideia de melhorar o processo."
   },
   {
     "id": "qualidade-cap11-m1",
@@ -3381,14 +3401,16 @@
     "capituloId": "qualidade-cap11",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa contrata 10 testadores dedicados exclusivamente a encontrar defeitos no produto final antes do release, mas não investe em revisão de requisitos, code review nem automação. Os defeitos continuam chegando em alta quantidade a cada release. Qual é o diagnóstico correto e o que está faltando na abordagem?",
+    "enunciado": "Uma empresa contrata 10 testadores dedicados só a encontrar defeitos no produto final antes do release, mas não investe em revisão de requisitos, revisão de código nem automação. Os defeitos continuam chegando em grande quantidade a cada release. Qual é o diagnóstico?",
     "alternativas": [
-      "O diagnóstico é de quantidade insuficiente de testadores: com mais 10 testadores adicionais e ferramentas de teste manual mais sofisticadas, a equipe conseguiria inspecionar o produto com a profundidade necessária para eliminar os defeitos antes de cada release sem necessidade de mudanças processuais.",
-      "Há só QC (reativo, no produto) e nenhum QA (preventivo, no processo): os testadores acham defeitos já criados; faltam revisão de requisitos, critérios de aceitação, code review e automação.",
-      "O diagnóstico é correto e a abordagem é adequada: QC com testadores dedicados é o modelo recomendado pelo ISTQB para projetos de alta qualidade — o problema descrito é transitório e será resolvido naturalmente conforme a equipe de QC acumula conhecimento do sistema ao longo dos releases.",
-      "O problema é de ferramentas: testadores manuais sem ferramentas de automação têm eficiência reduzida — basta investir em Selenium e JMeter para automatizar o trabalho dos 10 testadores existentes, eliminando os defeitos que chegam ao release sem necessidade de mudanças na estratégia ou na cultura da equipe."
+      "Há só QC, reativo e voltado ao produto, e nenhum QA, preventivo e voltado ao processo; faltam revisões, critérios e automação.",
+      "Faltam testadores: com mais 10 pessoas e ferramentas melhores de teste manual, os defeitos seriam eliminados antes do release.",
+      "A abordagem está certa: o ISTQB recomenda testadores dedicados, e o problema passa sozinho com o tempo de casa da equipe.",
+      "Faltam ferramentas: automatizar o trabalho dos 10 testadores com Selenium resolveria, sem mudar mais nada no processo.",
+      "Há só QA, voltado ao processo, e nenhum QC, voltado ao produto; faltam testadores para inspecionar o que foi feito."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "O QC é reativo e procura defeitos no produto já construído; o QA é proativo e melhora o processo para que os defeitos não sejam criados. A empresa só tem QC: os testadores encontram defeitos que já existem, mas nada impede que novos sejam introduzidos. Faltam práticas de QA, como revisão de requisitos, critérios de aceitação definidos antes, revisão de código e automação no pipeline."
   },
   {
     "id": "qualidade-cap11-m2",
@@ -3396,14 +3418,19 @@
     "capituloId": "qualidade-cap11",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um gerente de projeto afirma que, após 3.000 casos de teste executados sem nenhuma falha, o software está \"comprovadamente livre de defeitos\" e pode ser lançado com total confiança. Qual princípio do ISTQB ele está violando e quais são as implicações dessa conclusão?",
-    "alternativas": [
-      "Ele está violando o Princípio 5 (Paradoxo do Pesticida): os 3.000 testes foram executados repetidamente e pararam de encontrar defeitos — a solução é criar 3.000 novos casos de teste diferentes para confirmar a ausência de defeitos antes de autorizar o lançamento com confiança.",
-      "O Princípio 2; basta dobrar para 6.000 casos.",
-      "O Princípio 1: testes mostram a presença, não a ausência de defeitos; e, pelo Princípio 7, um software sem defeitos ainda pode falhar se não atender ao usuário.",
-      "Ele está violando o Princípio 6 (Teste Depende do Contexto): 3.000 casos de teste podem ser suficientes para um aplicativo simples mas insuficientes para um sistema crítico — a conclusão de \"livre de defeitos\" é válida apenas se o contexto do sistema justificar esse volume de testes como cobertura completa dos requisitos."
+    "caso": [
+      "Uma empresa vai organizar a sua área de testes com base na ISO/IEC 29119 e precisa: (1) padronizar os termos e conceitos usados pela equipe; (2) definir a política, a estratégia, o planejamento, o monitoramento e a execução dos testes; (3) definir os documentos de teste que serão produzidos; (4) escolher as técnicas de projeto de casos de teste."
     ],
-    "correta": 2
+    "enunciado": "As necessidades 1, 2, 3 e 4 são tratadas, respectivamente, pelas partes da ISO/IEC 29119",
+    "alternativas": [
+      "Parte 1, Parte 2, Parte 3 e Parte 4.",
+      "Parte 2, Parte 1, Parte 3 e Parte 4.",
+      "Parte 1, Parte 3, Parte 2 e Parte 4.",
+      "Parte 4, Parte 2, Parte 3 e Parte 1.",
+      "Parte 1, Parte 2, Parte 4 e Parte 5."
+    ],
+    "correta": 0,
+    "resolucao": "A ISO/IEC 29119 tem cinco partes: a Parte 1 trata de conceitos e vocabulário (1); a Parte 2, do processo de teste, com os processos organizacionais, de gerenciamento e dinâmicos (2); a Parte 3, da documentação de teste (3); a Parte 4, das técnicas de teste (4); e a Parte 5, do teste baseado em palavras-chave."
   },
   {
     "id": "qualidade-cap11-m3",
@@ -3411,14 +3438,19 @@
     "capituloId": "qualidade-cap11",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe tem 2.000 testes automatizados distribuídos assim: 200 unitários (10%), 400 de integração (20%) e 1.400 E2E via Selenium (70%). A suíte leva 4 horas para executar e quebra frequentemente. Qual é o problema e como a Pirâmide de Testes orienta a solução?",
-    "alternativas": [
-      "É a ferramenta; o Playwright resolveria sem mudar a distribuição.",
-      "O problema é de paralelização: executar os 1.400 testes E2E em paralelo no Selenium Grid resolveria o tempo de execução sem necessidade de alterar a estratégia — a distribuição atual é correta pois testes E2E validam fluxos reais de usuário que unitários e integração não conseguem cobrir.",
-      "É o \"cone de sorvete\": E2E lentos, frágeis e caros; a pirâmide pede a maioria unitária, uma parte de integração e poucos E2E para fluxos críticos.",
-      "O problema é exclusivamente a ausência de Quality Gates: sem critérios mínimos definidos no pipeline, todos os 2.000 testes executam desnecessariamente a cada commit — implementar quality gates que executam apenas os testes relevantes para cada mudança reduziria o tempo de 4 horas para menos de 15 minutos sem alterar a distribuição atual."
+    "caso": [
+      "Duas empresas têm pipelines com build e testes automatizados. Na empresa 1, toda versão aprovada fica pronta para produção, e a gerente de produto escolhe quando publicá-la. Na empresa 2, toda alteração que passa no pipeline vai para produção automaticamente, sem que ninguém precise aprovar."
     ],
-    "correta": 2
+    "enunciado": "As práticas das empresas 1 e 2 são, respectivamente,",
+    "alternativas": [
+      "Entrega Contínua, pois o deploy depende de uma decisão humana, e Implantação Contínua, pois ele é automático.",
+      "Implantação Contínua, pois o pipeline é automatizado, e Entrega Contínua, pois a produção recebe cada mudança.",
+      "Integração Contínua nas duas, pois em ambas o código é integrado e testado a cada push no repositório.",
+      "Entrega Contínua nas duas, pois em ambas o software fica sempre pronto para ser colocado em produção.",
+      "Implantação Contínua nas duas, pois em ambas os testes automatizados aprovam a mudança no pipeline."
+    ],
+    "correta": 0,
+    "resolucao": "A Entrega Contínua garante que o software esteja sempre pronto para ser entregue em produção, mas o deploy é acionado por uma decisão humana, como na empresa 1. A Implantação Contínua vai um passo além: cada alteração aprovada no pipeline vai automaticamente para produção, sem intervenção humana, como na empresa 2. A Integração Contínua, base das duas, é integrar e testar o código várias vezes ao dia."
   },
   {
     "id": "qualidade-cap11-m4",
@@ -3426,14 +3458,16 @@
     "capituloId": "qualidade-cap11",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe de alto desempenho apresenta as seguintes métricas DORA: Deployment Frequency = múltiplos deploys por dia, Lead Time = 45 minutos, Change Failure Rate = 3% e MTTR = 25 minutos. Um diretor questiona se \"tanto deploy\" não compromete a qualidade. Como responder com base nas pesquisas DORA?",
+    "enunciado": "Uma equipe tem as seguintes métricas DORA: vários deploys por dia, lead time de 45 minutos, taxa de falha de mudança de 3% e MTTR de 25 minutos. Um diretor pergunta se \"tanto deploy\" não compromete a qualidade. Qual é a resposta com base nas pesquisas DORA?",
     "alternativas": [
-      "O diretor tem razão: alta frequência de deploy é inversamente proporcional à qualidade — equipes que fazem múltiplos deploys por dia não têm tempo suficiente para executar testes completos, e o Change Failure Rate de 3% confirma que 3 em cada 100 deploys causam incidentes, evidenciando problemas de qualidade.",
-      "45 minutos de lead time provam que a equipe pula testes.",
-      "Para o DORA, velocidade e qualidade andam juntas: deploys diários, lead time curto, falhas abaixo de 5% e MTTR abaixo de uma hora são o perfil de elite, com CI/CD e automação.",
-      "O diretor tem razão parcialmente: alta frequência de deploy é aceitável apenas para sistemas não críticos — para sistemas financeiros, médicos ou de infraestrutura, o padrão DORA de elite recomenda no máximo um deploy por dia para garantir tempo suficiente de teste manual entre cada release em produção."
+      "Para o DORA, velocidade e qualidade andam juntas: esses números (falhas abaixo de 5%, MTTR abaixo de 1 hora) são o perfil de elite.",
+      "O diretor tem razão: muitos deploys não deixam tempo para testar, e a taxa de falha de 3% comprova o problema.",
+      "O lead time de 45 minutos prova que a equipe pula testes, pois nenhum pipeline completo roda nesse tempo.",
+      "O diretor tem razão em parte: em sistemas críticos, o DORA recomenda no máximo um deploy por dia, com teste manual.",
+      "As métricas não dizem nada sobre qualidade, pois o DORA mede só a velocidade de entrega das equipes."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "As pesquisas DORA mostram que as equipes de elite fazem deploy várias vezes por dia, têm lead time de menos de uma hora, taxa de falha de mudança abaixo de 5% e MTTR abaixo de uma hora, exatamente o caso. Duas dessas métricas medem qualidade e estabilidade (taxa de falha e MTTR), e não só velocidade. Nas equipes de elite, qualidade e velocidade não são opostas: andam juntas, apoiadas em CI/CD e automação."
   },
   {
     "id": "qualidade-cap11-m5",
@@ -3441,14 +3475,16 @@
     "capituloId": "qualidade-cap11",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um time Scrum decide que qualidade é \"responsabilidade do QA\" e os desenvolvedores não escrevem testes unitários. O QA realiza todos os testes ao final da sprint, causando gargalo e atrasos constantes nas entregas. Como resolver essa situação segundo as práticas ágeis de qualidade?",
+    "enunciado": "Um time Scrum decide que a qualidade é \"responsabilidade do QA\", e os desenvolvedores não escrevem testes unitários. O QA faz todos os testes no fim da sprint, o que gera gargalo e atrasos constantes. Como resolver, segundo as práticas ágeis de qualidade?",
     "alternativas": [
-      "A solução é contratar mais QAs: o gargalo existe porque o volume de trabalho de teste supera a capacidade individual do QA existente — com dois ou três QAs adicionais, o time conseguiria executar todos os testes ao final da sprint dentro do prazo sem necessidade de mudanças culturais ou de processo.",
-      "A solução é aumentar a duração das sprints de 2 para 4 semanas: o gargalo existe porque o tempo de sprint é insuficiente para desenvolvimento E teste completo — sprints mais longas dariam ao QA tempo adequado para testar todas as histórias sem comprometer a qualidade das verificações realizadas.",
-      "Qualidade é de todos: desenvolvedores fazem testes unitários (TDD), critérios vêm antes (BDD), teste acontece junto do desenvolvimento, o QA orienta e automatiza, e a DoD exige cobertura mínima.",
-      "A solução é eliminar o papel de QA dedicado: times ágeis maduros não têm QAs separados — cada desenvolvedor é responsável pela qualidade de seu próprio código, e a ausência de papel dedicado força naturalmente a cultura de qualidade distribuída que o time precisa cultivar para eliminar o gargalo identificado."
+      "A qualidade é de todos: desenvolvedores fazem testes unitários, os critérios vêm antes, o teste corre junto do desenvolvimento.",
+      "Contratar mais QAs, pois o gargalo vem só do volume de trabalho, e não da forma como o time divide a qualidade.",
+      "Aumentar as sprints de 2 para 4 semanas, para que o QA tenha tempo de testar todas as histórias no fim de cada uma.",
+      "Eliminar o papel de QA, pois em times maduros cada desenvolvedor cuida sozinho da qualidade do próprio código.",
+      "Manter o QA testando no fim, mas tirar da sprint as histórias que não forem testadas a tempo de cada entrega."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Em culturas de alta qualidade, desenvolvedores escrevem e mantêm testes automatizados, o PO define critérios de aceitação claros, e o QA atua como facilitador, especialista e coach, e não como único responsável. No Scrum, os testes começam assim que as primeiras histórias ficam prontas, em paralelo ao desenvolvimento, e a Definition of Done exige testes. Eliminar o QA perde um papel valioso; mais gente ou sprints maiores só escondem o problema."
   },
   {
     "id": "qualidade-cap11-m6",
@@ -3456,14 +3492,16 @@
     "capituloId": "qualidade-cap11",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma organização implementa o ciclo PDCA para melhorar seu processo de qualidade. Na fase Check, os dados mostram que a taxa de defeitos críticos em produção aumentou de 2% para 5% após a mudança implementada na fase Do (adição de testes de integração automatizados). Como o PDCA orienta a resposta a esse resultado inesperado?",
+    "enunciado": "Uma organização aplica o ciclo PDCA para melhorar a qualidade. Na fase Check, os dados mostram que a taxa de defeitos críticos em produção subiu de 2% para 5% depois da mudança feita na fase Do, a adição de testes de integração automatizados. Como o PDCA orienta a resposta?",
     "alternativas": [
-      "O resultado indica que a mudança deve ser imediatamente revertida e o ciclo encerrado: aumento de defeitos críticos após implementação de testes de integração prova que a automação de testes é contraproducente — a organização deve retornar às práticas manuais anteriores e não reiniciar o ciclo PDCA para evitar mais regressões no processo.",
-      "Confirma o sucesso, pois agora mais defeitos aparecem.",
-      "O PDCA leva ao Act: o resultado contrariou a hipótese; deve-se investigar a causa (flakiness, falsos positivos?), ajustar e recomeçar com nova hipótese, registrando o aprendizado.",
-      "O resultado deve ser ignorado pois 3 sprints são insuficientes para avaliar o impacto de mudanças de processo: métricas de qualidade têm latência natural de 6 a 12 meses antes de refletir melhorias de processo — a fase Check deve ser adiada para o próximo semestre, e a mudança deve ser mantida e expandida durante esse período de maturação."
+      "Na fase Act: o resultado contrariou a hipótese; investigar a causa, ajustar a mudança, repetir o ciclo e registrar tudo.",
+      "Reverter a mudança e encerrar o ciclo, pois o aumento prova que a automação de testes atrapalha a qualidade.",
+      "Considerar a mudança um sucesso, pois o aumento de defeitos em produção mostra que agora se encontra mais.",
+      "Ignorar o resultado e esperar seis meses, pois métricas de qualidade só refletem mudanças de processo depois disso.",
+      "Padronizar e expandir a mudança para todas as equipes, pois a fase Check sempre confirma o que foi planejado."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "No PDCA, a fase Check mede os resultados e confere se os dados confirmam a hipótese; na fase Act, se o resultado é positivo, a melhoria é padronizada e expandida; se não, a abordagem é ajustada e o ciclo se repete, documentando o aprendizado em qualquer caso. Aqui, o resultado foi o contrário do esperado: é preciso entender o porquê antes de decidir, sem abandonar o ciclo nem expandir uma mudança que piorou os números."
   },
   {
     "id": "qualidade-cap11-m7",
@@ -3471,14 +3509,16 @@
     "capituloId": "qualidade-cap11",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um post-mortem após incidente crítico em produção identifica que o desenvolvedor responsável pela mudança não seguiu o processo de code review por pressão de prazo. O gerente propõe registrar formalmente a falha do desenvolvedor e incluir isso em sua avaliação de desempenho. Por que essa abordagem é contrária às boas práticas e qual alternativa é recomendada?",
+    "enunciado": "O post-mortem de um incidente crítico mostra que o desenvolvedor responsável pela mudança pulou a revisão de código por pressão de prazo. O gerente propõe registrar a falha do desenvolvedor na avaliação de desempenho dele. Por que isso contraria as boas práticas?",
     "alternativas": [
-      "A abordagem do gerente é correta: responsabilização individual é o mecanismo mais eficaz para prevenir incidentes futuros — quando desenvolvedores sabem que desvios de processo têm consequências na avaliação de desempenho, a adesão ao processo aumenta naturalmente e incidentes similares são prevenidos de forma sustentável.",
-      "É errada só por risco legal de assédio moral.",
-      "Post-mortems são sem culpa: a pergunta não é quem errou, mas por que o processo deixou o prazo pular o code review; corrige-se o sistema para que o atalho não seja possível.",
-      "A abordagem é parcialmente correta: o desenvolvedor deve ser responsabilizado, mas o gerente também deve ser incluído na avaliação formal por ter criado pressão de prazo que levou ao desvio — a culpabilização deve ser distribuída proporcionalmente entre todos os envolvidos na cadeia de decisão que resultou no incidente crítico."
+      "O post-mortem é sem culpa: a pergunta não é quem errou, mas por que o processo deixou o prazo pular a revisão.",
+      "A proposta está certa, pois punir quem desvia do processo é a forma mais eficaz de evitar novos incidentes.",
+      "A proposta só é errada pelo risco jurídico de assédio moral, e por isso o registro deve ficar fora da avaliação formal.",
+      "A proposta está certa em parte: o gerente também deve ser punido, por ter criado a pressão de prazo na equipe.",
+      "A proposta está certa, desde que o desenvolvedor seja ouvido antes de a falha entrar na avaliação dele."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Os post-mortems sem culpa (blameless) analisam o incidente com foco no aprendizado do sistema, e não na culpabilização de pessoas. A pergunta útil é por que o processo permitiu que a pressão de prazo eliminasse a revisão de código, por exemplo tornando a revisão obrigatória no pipeline. A cultura de qualidade da apostila trata os defeitos como oportunidades de aprendizado e exige que atalhos de qualidade sejam decididos de forma explícita, e nunca tácita."
   },
   {
     "id": "qualidade-cap11-m8",
@@ -3486,14 +3526,23 @@
     "capituloId": "qualidade-cap11",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe adota BDD com Gherkin, escrevendo cenários Given-When-Then colaborativamente entre dev, QA e Product Owner. Um desenvolvedor questiona se BDD e TDD são redundantes, sugerindo manter apenas o TDD. Qual é a diferença fundamental entre as duas práticas?",
-    "alternativas": [
-      "São redundantes: BDD é simplesmente TDD com sintaxe diferente — ambos resultam nos mesmos testes automatizados com a mesma cobertura; equipes com TDD bem implementado não precisam de BDD, e manter as duas práticas simultaneamente dobra o esforço de escrita de testes sem benefício adicional.",
-      "TDD é superior ao BDD em todos os aspectos: TDD produz testes mais precisos e tecnicamente robustos pois é escrito por desenvolvedores com conhecimento do código interno — BDD sacrifica precisão técnica por legibilidade para não-técnicos, um trade-off que raramente justifica o overhead de manutenção dos cenários Gherkin.",
-      "Atuam em níveis diferentes: TDD é design de código no nível unitário (Red-Green-Refactor), feito pelo desenvolvedor; BDD alinha o comportamento no nível de aceitação, escrito por dev, QA e PO.",
-      "A diferença é só de ferramenta: JUnit contra Cucumber."
+    "caso": [
+      "Sobre a Definition of Ready (DoR) e a Definition of Done (DoD) com foco em qualidade, avalie as afirmativas a seguir.",
+      "I. Ter os critérios de aceitação definidos e revisados pelo QA é um critério da DoR, antes de a história entrar em desenvolvimento.",
+      "II. Ter os dados de teste identificados e as dependências mapeadas também são critérios da DoR.",
+      "III. Não ter nenhum defeito de alta severidade aberto é um critério da DoR, verificado antes do início do desenvolvimento.",
+      "IV. Ter o código revisado e os testes de aceitação executados e aprovados são critérios da DoD."
     ],
-    "correta": 2
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e IV, apenas.",
+      "I e II, apenas.",
+      "I, II, III e IV.",
+      "II e IV, apenas.",
+      "I, III e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "A DoR reúne o que uma história precisa ter antes de entrar em desenvolvimento: critérios de aceitação definidos e revisados pelo QA, dados de teste identificados, dependências mapeadas e wireframes aprovados (I e II, verdadeiras). A DoD reúne o que ela precisa para ser considerada concluída: código revisado, testes unitários com cobertura mínima, testes de aceitação aprovados, nenhum defeito de alta severidade aberto e documentação atualizada. Por isso IV é verdadeira e III é falsa: os defeitos abertos são verificados na DoD, e não na DoR."
   },
   {
     "id": "qualidade-cap11-m9",
@@ -3501,14 +3550,16 @@
     "capituloId": "qualidade-cap11",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma startup implementa Shift-Right testing com feature flags, canary releases e monitoramento com Sentry em produção. Um arquiteto questiona se isso não torna desnecessários os testes pré-produção (Shift-Left). Como as duas abordagens se relacionam estrategicamente?",
+    "enunciado": "Uma startup adota o Shift-Right, com feature flags, canary releases e monitoramento de erros em produção. Um arquiteto pergunta se isso não torna desnecessários os testes antes da produção (Shift-Left). Como as duas abordagens se relacionam?",
     "alternativas": [
-      "O arquiteto tem razão: Shift-Right com canary releases e monitoramento em produção é suficiente para sistemas modernos — os canary releases expõem o software a usuários reais em escala controlada, tornando testes pré-produção redundantes e economicamente injustificáveis para startups com recursos limitados.",
-      "Shift-Right substitui apenas os testes de aceitação e sistema: com monitoramento avançado em produção, a startup pode eliminar as camadas superiores da pirâmide de testes (E2E e aceitação), mantendo apenas testes unitários e de integração como proteção contra regressões de lógica de negócio.",
-      "São complementares: o Shift-Left evita que defeitos cheguem à produção, o que é mais barato; o Shift-Right aprende com o uso real e pega o que escapou; um programa maduro usa os dois.",
-      "Shift-Right é superior ao Shift-Left para startups porque a velocidade de iteração é mais importante que a prevenção de defeitos: usuários de startups toleram bugs em troca de funcionalidades frequentes, e monitoramento em produção com rollback rápido via feature flags é mais eficiente que investimento em testes extensivos pré-produção que atrasariam o time-to-market."
+      "São complementares: o Shift-Left impede que defeitos cheguem à produção, o que é mais barato; o Shift-Right aprende com o uso real.",
+      "O arquiteto tem razão: os canary releases expõem o software a usuários reais e tornam os testes anteriores redundantes.",
+      "O Shift-Right substitui só os testes de sistema e de aceitação, e bastam os testes unitários e de integração antes da produção.",
+      "O Shift-Right é superior em startups, pois os usuários toleram defeitos em troca de novidades frequentes e rápidas.",
+      "O Shift-Left substitui o Shift-Right, pois um sistema bem testado antes da produção dispensa qualquer monitoramento."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "O Shift-Left leva a qualidade para o início do ciclo, com revisão de requisitos, TDD e SAST, para prevenir defeitos ou detectá-los quando custam menos. O Shift-Right complementa com monitoramento e testes em produção, como feature flags, testes A/B, canary releases e observabilidade, para aprender com o comportamento real dos usuários. A apostila apresenta as duas como abordagens complementares de um programa de qualidade maduro."
   },
   {
     "id": "qualidade-cap11-m10",
@@ -3516,14 +3567,16 @@
     "capituloId": "qualidade-cap11",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe analisa suas métricas do último trimestre: cobertura de testes = 85%, taxa de build bem-sucedido = 72%, Change Failure Rate = 18% e MTTR = 6 horas. O gerente foca exclusivamente em aumentar a cobertura para 95%. Por que essa priorização é equivocada e qual métrica deveria receber atenção prioritária?",
+    "enunciado": "Uma equipe tem, no último trimestre: cobertura de testes de 85%, 72% de builds bem-sucedidos, taxa de falha de mudança de 18% e MTTR de 6 horas. O gerente foca só em aumentar a cobertura para 95%. Por que essa prioridade é equivocada?",
     "alternativas": [
-      "A priorização é correta: cobertura de testes é a métrica mais fundamental de qualidade — aumentar de 85% para 95% automaticamente melhorará todas as outras métricas, pois mais testes detectam mais defeitos antes do deploy, reduzindo naturalmente o Change Failure Rate e o MTTR nas sprints subsequentes.",
-      "É errada só porque 95% é irreal; o certo seria 87 ou 88%.",
-      "Cobertura de 85% já é boa; preocupam o change failure rate de 18% (elite fica abaixo de 5%) e 28% de builds falhando, sinal de testes que não verificam o que importa.",
-      "Todas as quatro métricas estão dentro dos parâmetros aceitáveis para equipes de desenvolvimento de médio porte: taxa de build de 72% e Change Failure Rate de 18% são normais para times em crescimento — o foco em cobertura é correto pois é a única métrica com gap mensurável em relação ao benchmark de 90% recomendado pelo ISTQB para sistemas de médio porte."
+      "A cobertura de 85% já é boa; preocupam a falha de mudança de 18% (a elite fica abaixo de 5%), o MTTR e os builds quebrados.",
+      "A prioridade está certa, pois mais cobertura melhora automaticamente todas as outras métricas de qualidade da equipe.",
+      "A prioridade só está errada porque 95% é irreal; uma meta de 87% ou 88% de cobertura seria a correta para a equipe.",
+      "As quatro métricas estão dentro do normal para uma equipe de médio porte, e o foco na cobertura é correto.",
+      "A prioridade deveria ser só o MTTR, pois a taxa de falha de mudança e a de builds não medem a qualidade."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A apostila lembra que a cobertura é um indicador, e não um objetivo: 85% com testes superficiais pode valer menos que 60% com testes bem pensados. Os números preocupantes são outros: a taxa de falha de mudança de 18% (as equipes de elite ficam abaixo de 5%), o MTTR de 6 horas (a elite fica abaixo de uma hora) e 28% de builds falhando, sinal de um processo instável. Equipes de alto desempenho acompanham um conjunto equilibrado de métricas, sem otimizar uma só."
   },
   {
     "id": "qualidade-cap8-m1",
