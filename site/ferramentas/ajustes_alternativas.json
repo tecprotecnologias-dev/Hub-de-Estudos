@@ -678,9 +678,9 @@
   "B": "O titular tem razão em tudo: a revogação do consentimento é absoluta e vale até sobre as obrigações fiscais."
  },
  "legislacao-cap2-q2": {
-  "B": "Está equivocada: a titularidade automática do art. 4º vale para empregados e servidores, não para autônomos sem contrato de cessão",
-  "A": "A RotaCerta está correta: qualquer software desenvolvido a pedido de uma empresa pertence automaticamente a ela, independentemente do tipo de vínculo com quem o desenvolveu ou de existir contrato escrito",
-  "E": "Sem contrato escrito, o código cai em domínio público"
+  "B": "Está equivocada: o art. 4º só vale para empregados com carteira e servidores, nunca para prestadores autônomos.",
+  "A": "Neste caso, tem razão: o art. 4º inclui o contratante de serviços quando o software é o próprio objeto do contrato.",
+  "E": "Está equivocada: a Lei do Software só trata de patentes, e a disputa deve ser resolvida pelo Código Civil."
  },
  "legislacao-cap2-q3": {
   "B": "O art. 10, V, veda patentear o programa em si, já protegido por direito autoral; o INPI admite invenções implementadas por software com efeito técnico",
@@ -708,46 +708,46 @@
   "resolucao": "a licença CC BY-SA permite uso comercial (diferente do que afirma a alternativa que fala em proibição de uso comercial), mas a condição “Share-Alike” exige que qualquer adaptação seja distribuída sob a mesma licença. Ao vender os ícones derivados sob “todos os direitos reservados”, o designer cumpriu a exigência de crédito (BY), mas violou a exigência de compartilhamento (SA)."
  },
  "legislacao-cap2-f1": {
-  "C": "Pertence ao desenvolvedor: sem cessão escrita, os direitos ficam com o autor do software (Lei nº 9.609/1998).",
-  "A": "A titularidade pertence à startup, pois o pagamento pelo serviço transfere automaticamente todos os direitos patrimoniais ao contratante, independentemente de contrato escrito ou de vínculo de emprego.",
-  "B": "A titularidade é dividida: 50% para cada parte, por equidade."
+  "C": "Os dois são do desenvolvedor, pois o art. 4º só transfere direitos de empregados com carteira assinada.",
+  "A": "O aplicativo tende a ser da startup, por ser o objeto do contrato; o jogo é do desenvolvedor (art. 4º, § 2º).",
+  "B": "Os dois são da startup, pois tudo o que o desenvolvedor cria durante o contrato pertence a quem o contratou."
  },
  "legislacao-cap2-f2": {
-  "C": "A GPL é copyleft forte e pode obrigar a startup a liberar todo o código do produto sob a mesma licença.",
-  "B": "O uso de biblioteca GPL em software comercial é expressamente proibido pela Free Software Foundation, sujeitando a empresa a ação por violação de direitos autorais sem possibilidade de defesa ou acordo.",
-  "A": "A startup terá de pagar royalties ao criador da biblioteca GPL."
+  "C": "A GPL proíbe qualquer uso comercial do código, e a startup responderá por violação sem chance de acordo.",
+  "B": "A startup terá de pagar royalties ao criador da biblioteca GPL por cada cópia vendida do produto proprietário.",
+  "A": "A GPL é copyleft forte e, ao distribuir o produto, pode obrigar a startup a liberar todo o código sob a mesma licença."
  },
  "legislacao-cap2-f3": {
-  "C": "Os quatro fatores do fair use (propósito, natureza da obra, quantidade usada e efeito no mercado) são analisados juntos, sem resultado automático.",
-  "D": "O fair use não se aplica a obras musicais em nenhuma hipótese, pois a indústria fonográfica obteve decisão judicial vinculante que exclui músicas comerciais do alcance da Seção 107 do Copyright Act americano."
+  "C": "Só a duração do trecho, pois usos de menos de 30 segundos são sempre protegidos pelo fair use americano.",
+  "D": "Nenhum, pois o fair use não se aplica a músicas, por decisão judicial vinculante obtida pela indústria."
  },
  "legislacao-cap2-f5": {
-  "C": "Duas infrações: falta de crédito ao autor (módulo BY) e uso comercial em vídeo patrocinado (módulo NC).",
-  "B": "Uma infração: a ausência de crédito ao autor viola o módulo BY da licença, mas o uso comercial em vídeo patrocinado é permitido por qualquer licença Creative Commons que não contenha explicitamente o módulo ND.",
-  "A": "Nenhuma infração: Creative Commons é domínio público, de uso livre."
+  "C": "Uma: a falta de crédito, pois o uso comercial é permitido em toda licença que não tenha o módulo ND.",
+  "B": "Nenhuma, pois uma obra sob licença Creative Commons está em domínio público e pode ser usada livremente.",
+  "A": "Duas: a falta de crédito ao autor (módulo BY) e o uso comercial em vídeo patrocinado (módulo NC)."
  },
  "legislacao-cap2-f6": {
-  "C": "Nos EUA, o 1-Click foi protegido como método de negócio com resultado útil; no Brasil, a Lei nº 9.279/1996 veda o software em si e exige efeito técnico.",
-  "D": "A patente 1-Click foi concedida exclusivamente com base no direito autoral americano sobre interfaces de usuário, instrumento que a lei brasileira também prevê, tornando a proteção equivalente nos dois países via LDA e Lei de Software, com o mesmo prazo."
+  "C": "O critério é idêntico nos dois países, e a mesma patente poderia ser obtida no INPI sem nenhuma diferença real.",
+  "D": "Ela foi protegida pelo direito autoral americano sobre interfaces, que no Brasil vale pela Lei de Software."
  },
  "legislacao-cap2-f7": {
-  "C": "O argumento mais sólido é que copiar e armazenar as obras para treinar a IA é reprodução não autorizada, sem enquadramento em uso livre.",
-  "A": "Os autores não têm fundamento jurídico sólido, pois o treinamento de IA utiliza as obras apenas como referência estatística — processo equivalente à aprendizagem humana, que não configura reprodução protegida pela LDA ou pelo Copyright Act.",
-  "D": "O mais sólido é a violação da paternidade, por falta de crédito aos autores."
+  "C": "O mais sólido é o direito moral de integridade, pois a IA pode distorcer o estilo dos autores originais.",
+  "A": "Copiar e armazenar as obras para treinar a IA é reprodução não autorizada, sem enquadramento nos usos livres.",
+  "D": "O mais sólido é a violação da paternidade, pois os textos gerados pela IA não dão crédito aos autores."
  },
  "legislacao-cap2-f8": {
-  "C": "Para domínios \".br\", cabe ação judicial ou o SACI-Adm do CGI.br, por cybersquatting e violação de marca.",
-  "D": "A Nike não tem legitimidade para cancelar domínios registrados por terceiros no Brasil, pois o CGI.br adota o princípio da anterioridade do registro, que protege o primeiro registrante independentemente de eventual conflito com marcas preexistentes.",
-  "B": "A Nike deve acionar a UDRP da ICANN, com decisão em até 60 dias."
+  "C": "Só a Justiça Federal pode cancelar domínios .br, por meio de ação de busca e apreensão do registro.",
+  "D": "Não há mecanismo: o Registro.br protege sempre o primeiro registrante, mesmo contra marcas anteriores.",
+  "B": "A Nike deve acionar a UDRP da ICANN, que é o procedimento usado para todos os domínios, inclusive os .br."
  },
  "legislacao-cap2-f9": {
-  "C": "Não necessariamente: a LDA permite usar trechos na medida justificada para a aula, e a reprodução integral vai além disso.",
-  "D": "Sim, desde que a apostila seja distribuída apenas fisicamente e não em formato digital — a LDA distingue expressamente reprodução física, permitida para fins educacionais, de reprodução digital, que exige autorização do titular em qualquer caso."
+  "C": "Sim, pois artigos científicos financiados com dinheiro público ficam em domínio público assim que publicados.",
+  "D": "Sim, desde que a apostila seja impressa, pois a LDA só exige autorização para cópias em formato digital."
  },
  "legislacao-cap2-f10": {
-  "D": "Em outra classe, só há proteção se a marca for de alto renome ou houver risco de confusão. No Instagram, cabe pedir a remoção comprovando a titularidade.",
-  "A": "Em ambos os casos, o registro de marca na classe de vestuário confere proteção absoluta — a empresa pode exigir judicialmente o encerramento imediato das atividades do concorrente e a remoção do perfil sem necessidade de qualquer prova adicional de confusão.",
-  "C": "Nos dois casos, só resta registrar a marca nas classes afetadas antes de agir."
+  "D": "Nos dois casos, a empresa só pode agir depois de registrar a marca em todas as classes de produtos e serviços.",
+  "A": "Em outra classe, só há proteção se a marca for de alto renome ou houver risco de confusão; no Instagram, cabe pedir a remoção.",
+  "C": "Não há ação possível entre classes diferentes, e a plataforma nunca precisa remover perfis com nomes de marcas."
  },
  "legislacao-cap3-q2": {
   "B": "Está incorreta: o dever de exibir CNPJ e endereço vale para qualquer meio eletrônico de oferta, inclusive a página dentro de um marketplace",

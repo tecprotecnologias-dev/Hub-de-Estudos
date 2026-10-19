@@ -388,7 +388,8 @@
       "c) A alteração das cores e proporções da estampa, sem consulta prévia e associada ao nome da ilustradora de forma que a constrangeu, viola qual direito moral específico do art. 24?",
       "d) O contrato poderia ter incluído uma cláusula de renúncia aos direitos morais da ilustradora, junto com a cessão dos direitos patrimoniais? Fundamente sua resposta no princípio da inalienabilidade e irrenunciabilidade dos direitos morais (art. 27 da LDA)."
     ],
-    "linhas": 12
+    "linhas": 12,
+    "respostaEsperada": "a) Não. A cessão transfere só os direitos patrimoniais, que permitem explorar a obra economicamente: reproduzir, distribuir e vender as estampas. Os direitos morais, ligados à pessoa da autora, continuam com ela mesmo depois da cessão. b) O direito de ter o nome indicado como autora na utilização da obra (art. 24, II), junto com o de reivindicar a autoria (art. 24, I). c) O direito de assegurar a integridade da obra, opondo-se a modificações que a prejudiquem ou atinjam a autora em sua reputação ou honra (art. 24, IV). d) Não. Pelo art. 27 da LDA, os direitos morais são inalienáveis e irrenunciáveis, e uma cláusula de renúncia não teria validade. O contrato poderia, no máximo, autorizar adaptações específicas e definir a forma de dar o crédito, sem afastar esses direitos."
   },
   {
     "id": "legislacao-cap2-q2",
@@ -408,14 +409,15 @@
     ],
     "enunciado": "Com base no art. 4º da Lei do Software, avalie a afirmação da RotaCerta:",
     "alternativas": [
-      "A RotaCerta está correta: qualquer software desenvolvido a pedido de uma empresa pertence automaticamente a ela, independentemente do tipo de vínculo com quem o desenvolveu ou de existir contrato escrito",
-      "Está equivocada: a titularidade automática do art. 4º vale para empregados e servidores, não para autônomos sem contrato de cessão",
-      "A titularidade é sempre do desenvolvedor, mesmo em vínculo empregatício, salvo se o empregador pagar um valor adicional específico para adquiri-la",
-      "A Lei do Software não trata de titularidade, apenas de patentes de software, portanto a disputa deve ser resolvida exclusivamente pelo Código Civil",
-      "Sem contrato escrito, o código cai em domínio público"
+      "Neste caso, tem razão: o art. 4º inclui o contratante de serviços quando o software é o próprio objeto do contrato.",
+      "Está equivocada: o art. 4º só vale para empregados com carteira e servidores, nunca para prestadores autônomos.",
+      "Está equivocada: sem contrato escrito, o código cai em domínio público e pode ser usado por qualquer pessoa.",
+      "Tem razão, mas por outro motivo: todo software pago por uma empresa é dela, mesmo se criado fora do contrato.",
+      "Está equivocada: a Lei do Software só trata de patentes, e a disputa deve ser resolvida pelo Código Civil."
     ],
-    "correta": 1,
-    "resolucao": "o art. 4º fala em empregador, contratante de serviços ou órgão público em relação a vínculo de emprego ou estatutário; para autônomos sem esse vínculo, a titularidade só se transfere por cessão contratual expressa. Sem esse contrato, a presunção legal favorece a desenvolvedora, não a empresa contratante — o oposto do que normalmente se assume na prática."
+    "correta": 0,
+    "resolucao": "O art. 4º atribui os direitos ao empregador, ao contratante de serviços ou ao órgão público quando o programa é desenvolvido durante o contrato e essa atividade estava prevista nele, salvo estipulação em contrário. A freelancer foi contratada justamente para criar o algoritmo, então os direitos sobre o código tendem a ser da RotaCerta. A frase da empresa, porém, é ampla demais: pelo art. 4º, § 2º, o que for criado sem relação com o contrato e sem recursos do contratante fica com o desenvolvedor. Como o acordo foi só verbal, provar o que foi contratado pode ser difícil, e por isso o contrato escrito com cláusula de cessão é a prática mais segura.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap2-q3",
@@ -442,7 +444,8 @@
       "O art. 10, V, se aplica apenas a jogos eletrônicos, não a algoritmos de logística"
     ],
     "correta": 1,
-    "resolucao": "a vedação da LPI mira o programa “em si” (o código-fonte, já protegido por direito autoral); quando o software é parte inseparável de uma solução técnica com efeito mensurável — como a otimização de rotas descrita —, o INPI pode admitir o pedido de patente. Isso não garante a concessão, mas torna a tentativa tecnicamente fundamentada, ao contrário do que sugere a afirmação categórica do primeiro advogado."
+    "resolucao": "a vedação da LPI mira o programa “em si” (o código-fonte, já protegido por direito autoral); quando o software é parte inseparável de uma solução técnica com efeito mensurável — como a otimização de rotas descrita —, o INPI pode admitir o pedido de patente. Isso não garante a concessão, mas torna a tentativa tecnicamente fundamentada, ao contrário do que sugere a afirmação categórica do primeiro advogado.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap2-q4",
@@ -457,7 +460,7 @@
       },
       {
         "t": "p",
-        "texto": "Duas empresas de tecnologia, sem qualquer relação entre si, criaram — de forma totalmente independente e coincidente — o mesmo nome de marca, “NuvemPay”, para produtos digitais distintos, ambas em 2022. A empresa A começou a usar o nome publicamente em janeiro de 2022, mas só depositou o pedido de registro no INPI em 2024. A empresa B começou a usar o nome em março de 2022, dois meses depois da empresa A, mas depositou o pedido de registro em agosto de 2022 — muito antes da empresa A."
+        "texto": "Duas empresas de tecnologia, sem qualquer relação entre si, criaram — de forma independente e coincidente — o mesmo nome de marca, “NuvemPay”, para aplicativos de pagamento digital. A empresa A começou a usar o nome publicamente em maio de 2022, mas só depositou o pedido de registro no INPI em 2024. A empresa B começou a usar o nome em junho de 2022, um mês depois da empresa A, e depositou o pedido de registro em agosto de 2022 — muito antes da empresa A."
       }
     ],
     "enunciado": "Considerando o art. 129 da LPI e o sistema brasileiro de registro de marcas, quem tende a ter prioridade no direito ao uso exclusivo da marca “NuvemPay”?",
@@ -469,7 +472,8 @@
       "A prioridade será decidida por sorteio realizado pelo INPI em casos de nomes coincidentes"
     ],
     "correta": 1,
-    "resolucao": "diferentemente de sistemas baseados no uso (first to use), o Brasil adota o first to file: a data de depósito do pedido no INPI é o critério de prioridade, não a data em que a marca começou a ser usada no mercado. Por isso, registrar a marca antes do lançamento é uma recomendação prática recorrente para startups."
+    "resolucao": "diferentemente de sistemas baseados no uso (first to use), o Brasil adota o first to file: a data de depósito do pedido no INPI é o critério de prioridade, não a data em que a marca começou a ser usada no mercado. Por isso, registrar a marca antes do lançamento é uma recomendação prática recorrente para startups. A exceção é o direito de precedência (art. 129, § 1º), que exige uso de boa-fé por pelo menos 6 meses antes do depósito do outro interessado; quando a empresa B depositou o pedido, a empresa A usava a marca havia só 3 meses.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap2-q5",
@@ -496,7 +500,8 @@
       "A citação da fonte é irrelevante para a análise; o que importa exclusivamente é a extensão do texto reproduzido"
     ],
     "correta": 1,
-    "resolucao": "o art. 46, III, protege a citação “na medida justificada” para um fim específico (estudo, crítica, polêmica), não a reprodução integral ou substancial de uma obra. Indicar a fonte é uma condição necessária, mas não suficiente: sem a proporcionalidade entre o trecho usado e a finalidade, a hipótese de uso livre deixa de se aplicar."
+    "resolucao": "o art. 46, III, protege a citação “na medida justificada” para um fim específico (estudo, crítica, polêmica), não a reprodução integral ou substancial de uma obra. Indicar a fonte é uma condição necessária, mas não suficiente: sem a proporcionalidade entre o trecho usado e a finalidade, a hipótese de uso livre deixa de se aplicar.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap2-q6",
@@ -523,7 +528,8 @@
       "Por ser um software comercial pago, o produto da NuvemApp está automaticamente isento das obrigações de qualquer licença open source incorporada"
     ],
     "correta": 1,
-    "resolucao": "diferentemente de licenças permissivas (MIT, Apache), a GPL é copyleft forte: ao distribuir um produto que incorpora código GPL, a empresa é obrigada a licenciar o conjunto sob a mesma licença, disponibilizando o código-fonte. {{C}} inventa uma distinção (modificar vs. incorporar) que a cláusula reproduzida não sustenta — a obrigação nasce da distribuição da obra “completa, como um todo”."
+    "resolucao": "diferentemente de licenças permissivas (MIT, Apache), a GPL é copyleft forte: ao distribuir um produto que incorpora código GPL, a empresa é obrigada a licenciar o conjunto sob a mesma licença, disponibilizando o código-fonte. {{C}} inventa uma distinção (modificar vs. incorporar) que a cláusula reproduzida não sustenta — a obrigação nasce da distribuição da obra “completa, como um todo”.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap2-q7",
@@ -533,8 +539,8 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“Mediante notificação de alegada infração [...] o provedor de serviços deve agir de forma expedita para remover, ou desabilitar o acesso a, o material que é alegado como infrator.”",
-        "fonte": "ESTADOS UNIDOS. Digital Millennium Copyright Act (DMCA), 17 U.S.C. § 512(c), 1998 (tradução livre)."
+        "texto": "“[...] ao ser notificado de alegada infração, conforme descrito no parágrafo (3), age de forma expedita para remover, ou desabilitar o acesso a, o material que se alega ser infrator [...].”",
+        "fonte": "ESTADOS UNIDOS. Digital Millennium Copyright Act (DMCA), 17 U.S.C. § 512(c)(1)(C), 1998 (tradução livre)."
       },
       {
         "t": "p",
@@ -550,7 +556,8 @@
       "Solicitar à gravadora que doe os direitos da música para a VoaTech, sendo essa a única forma prevista no DMCA de resolver a notificação sem que o canal seja encerrado"
     ],
     "correta": 1,
-    "resolucao": "como a VoaTech de fato não tinha licença para a música, a resposta mais segura é aceitar a remoção e regularizar a trilha sonora. O mecanismo de counter-notice existe para contestações legítimas (ex.: uso amparado por fair use), o que não é o cenário aqui — contestar sem fundamento reabre a exposição da empresa a uma ação judicial da gravadora."
+    "resolucao": "como a VoaTech de fato não tinha licença para a música, a resposta mais segura é aceitar a remoção e regularizar a trilha sonora. O mecanismo de counter-notice existe para contestações legítimas (ex.: uso amparado por fair use), o que não é o cenário aqui — contestar sem fundamento reabre a exposição da empresa a uma ação judicial da gravadora.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap2-q8",
@@ -559,16 +566,19 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Sob a licença CC BY-SA, o Licenciante concede autorização para copiar, redistribuir e adaptar a obra, inclusive para fins comerciais, desde que seja dado crédito apropriado e que qualquer obra derivada seja distribuída sob a mesma licença.”",
-        "fonte": "CREATIVE COMMONS. Atribuição-CompartilhaIgual 4.0 Internacional (CC BY-SA 4.0), súmula da licença."
+        "t": "p",
+        "texto": "Pela licença CC BY-SA (Atribuição-CompartilhaIgual), qualquer pessoa pode copiar, redistribuir e adaptar a obra, para qualquer fim, inclusive comercial, desde que dê o crédito apropriado ao autor e distribua as adaptações sob a mesma licença da obra original."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em CREATIVE COMMONS. Atribuição-CompartilhaIgual 4.0 Internacional (CC BY-SA 4.0)."
       },
       {
         "t": "p",
         "texto": "Um designer gráfico encontrou, em um banco de imagens, uma ilustração vetorial licenciada sob CC BY-SA. Ele a utilizou como base para criar um conjunto de ícones personalizados para o cliente TechStore, dando crédito correto ao autor original da ilustração no rodapé do site, conforme exigido pela licença. Em seguida, vendeu o conjunto de ícones derivados à TechStore sob a licença “todos os direitos reservados”, impedindo qualquer reuso posterior por terceiros."
       }
     ],
-    "enunciado": "Considerando os termos da licença CC BY-SA reproduzidos, avalie a conduta do designer:",
+    "enunciado": "Considerando os termos da licença CC BY-SA, avalie a conduta do designer:",
     "alternativas": [
       "A conduta é integralmente lícita, pois o crédito ao autor original foi dado corretamente, o que basta para cumprir qualquer licença Creative Commons",
       "Viola a licença: além do crédito (BY), a cláusula SA exige que a obra derivada seja distribuída sob a mesma licença CC BY-SA",
@@ -577,7 +587,8 @@
       "A cláusula “SA” se aplica apenas a obras literárias, não a ilustrações ou ícones gráficos"
     ],
     "correta": 1,
-    "resolucao": "a licença CC BY-SA permite uso comercial (diferente do que afirma a alternativa que fala em proibição de uso comercial), mas a condição “Share-Alike” exige que qualquer adaptação seja distribuída sob a mesma licença. Ao vender os ícones derivados sob “todos os direitos reservados”, o designer cumpriu a exigência de crédito (BY), mas violou a exigência de compartilhamento (SA)."
+    "resolucao": "a licença CC BY-SA permite uso comercial (diferente do que afirma a alternativa que fala em proibição de uso comercial), mas a condição “Share-Alike” exige que qualquer adaptação seja distribuída sob a mesma licença. Ao vender os ícones derivados sob “todos os direitos reservados”, o designer cumpriu a exigência de crédito (BY), mas violou a exigência de compartilhamento (SA).",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap2-f1",
@@ -585,15 +596,16 @@
     "capituloId": "legislacao-cap2",
     "tipo": "objetiva",
     "nivel": "facil",
-    "enunciado": "Um desenvolvedor freelancer cria um algoritmo inovador para uma startup durante um projeto contratado verbalmente. Após o encerramento do contrato, ele reivindica a titularidade do código. Com base na Lei nº 9.609/1998, qual é a situação jurídica correta?",
+    "enunciado": "Uma startup contratou verbalmente um desenvolvedor freelancer para criar o seu aplicativo de agendamento. Nas horas vagas, com o próprio computador e sem relação com o projeto, ele criou também um jogo para celular. Com base na Lei nº 9.609/1998, de quem são os direitos sobre cada programa?",
     "alternativas": [
-      "A titularidade pertence à startup, pois o pagamento pelo serviço transfere automaticamente todos os direitos patrimoniais ao contratante, independentemente de contrato escrito ou de vínculo de emprego.",
-      "A titularidade é dividida: 50% para cada parte, por equidade.",
-      "Pertence ao desenvolvedor: sem cessão escrita, os direitos ficam com o autor do software (Lei nº 9.609/1998).",
-      "A titularidade pertence à startup por força do princípio da finalidade econômica: qualquer obra criada mediante remuneração pertence automaticamente ao contratante, conforme interpretação consolidada da LDA."
+      "O aplicativo tende a ser da startup, por ser o objeto do contrato; o jogo é do desenvolvedor (art. 4º, § 2º).",
+      "Os dois são da startup, pois tudo o que o desenvolvedor cria durante o contrato pertence a quem o contratou.",
+      "Os dois são do desenvolvedor, pois o art. 4º só transfere direitos de empregados com carteira assinada.",
+      "Os dois caem em domínio público, pois o contrato foi verbal e não houve registro do software no INPI.",
+      "O jogo é da startup, e o aplicativo é dividido em partes iguais, pois os dois foram feitos no mesmo período."
     ],
-    "correta": 2,
-    "resolucao": "pelo art. 4º da Lei nº 9.609/1998, a titularidade presumida do contratante vale para empregados e servidores com vínculo voltado ao desenvolvimento. Para o autônomo sem vínculo, a transferência dos direitos patrimoniais exige contrato expresso de cessão. Sem cessão escrita, os direitos ficam com o desenvolvedor, e pagar pelo serviço não transfere a titularidade."
+    "correta": 0,
+    "resolucao": "Pelo art. 4º da Lei nº 9.609/1998, pertencem ao empregador ou ao contratante de serviços os direitos sobre o programa desenvolvido durante o contrato quando essa atividade estava prevista nele, salvo estipulação em contrário. O aplicativo de agendamento era o objeto do contrato. Já o § 2º garante ao desenvolvedor o programa criado sem relação com o contrato e sem recursos do contratante, como o jogo. O registro no INPI é facultativo, e o contrato verbal vale, embora seja mais difícil de provar."
   },
   {
     "id": "legislacao-cap2-f2",
@@ -603,12 +615,13 @@
     "nivel": "facil",
     "enunciado": "Uma startup deseja incorporar uma biblioteca open source com licença GPL em seu software proprietário para lançamento comercial. O jurídico alerta sobre os riscos. Qual é a consequência jurídica mais grave dessa decisão?",
     "alternativas": [
-      "A startup terá de pagar royalties ao criador da biblioteca GPL.",
-      "O uso de biblioteca GPL em software comercial é expressamente proibido pela Free Software Foundation, sujeitando a empresa a ação por violação de direitos autorais sem possibilidade de defesa ou acordo.",
-      "A GPL é copyleft forte e pode obrigar a startup a liberar todo o código do produto sob a mesma licença.",
-      "A startup perde automaticamente o registro de software no INPI ao incorporar código de terceiros sem autorização expressa do autor original da biblioteca, invalidando a proteção autoral do produto."
+      "A GPL é copyleft forte e, ao distribuir o produto, pode obrigar a startup a liberar todo o código sob a mesma licença.",
+      "A startup terá de pagar royalties ao criador da biblioteca GPL por cada cópia vendida do produto proprietário.",
+      "A GPL proíbe qualquer uso comercial do código, e a startup responderá por violação sem chance de acordo.",
+      "A startup perde o registro do software no INPI e, com isso, a proteção autoral sobre todo o seu produto.",
+      "Nenhuma, pois licenças open source só criam obrigações para quem modifica os arquivos originais da biblioteca."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "a GPL é uma licença copyleft forte: quem distribui um programa derivado de código GPL deve distribuí-lo sob a mesma licença, com acesso ao código-fonte. Embutir a biblioteca no produto proprietário pode obrigar a abrir todo o código. A GPL não cobra royalties nem proíbe uso comercial: o risco está na obrigação de abrir o código."
   },
   {
@@ -619,12 +632,13 @@
     "nivel": "facil",
     "enunciado": "Um canal do YouTube usa trecho de 30 segundos de uma música famosa como trilha sonora de um vídeo educacional sem autorização. O criador alega fair use. Quais fatores determinam se o uso é legalmente protegido nos EUA?",
     "alternativas": [
-      "O uso educacional é automaticamente protegido pelo fair use americano, independentemente de qualquer análise adicional, desde que o vídeo não seja monetizado diretamente pelo criador.",
-      "O único fator relevante é a duração do trecho utilizado — usos inferiores a 30 segundos são universalmente protegidos pelo fair use, conforme entendimento consolidado do Copyright Office americano.",
-      "Os quatro fatores do fair use (propósito, natureza da obra, quantidade usada e efeito no mercado) são analisados juntos, sem resultado automático.",
-      "O fair use não se aplica a obras musicais em nenhuma hipótese, pois a indústria fonográfica obteve decisão judicial vinculante que exclui músicas comerciais do alcance da Seção 107 do Copyright Act americano."
+      "Os quatro fatores do fair use (propósito, natureza da obra, quantidade e efeito no mercado), pesados juntos.",
+      "Só a finalidade educacional, que protege automaticamente o uso desde que o vídeo não seja monetizado.",
+      "Só a duração do trecho, pois usos de menos de 30 segundos são sempre protegidos pelo fair use americano.",
+      "Nenhum, pois o fair use não se aplica a músicas, por decisão judicial vinculante obtida pela indústria.",
+      "Só o crédito ao autor e à gravadora na descrição do vídeo, que torna lícito qualquer uso da música."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "o fair use americano (Seção 107 do Copyright Act) não tem regra automática. O juiz pesa em conjunto quatro fatores: finalidade e caráter do uso, natureza da obra, quantidade usada em relação ao todo e efeito sobre o mercado da obra original. Uso educacional ajuda, mas não basta, e não existe limite de segundos que garanta proteção."
   },
   {
@@ -635,12 +649,13 @@
     "nivel": "facil",
     "enunciado": "Um tiktoker usa uma foto de banco de imagens com licença CC BY-NC para criar um vídeo patrocinado por uma marca, sem creditar o autor. Quantas infrações distintas foram cometidas?",
     "alternativas": [
-      "Nenhuma infração: Creative Commons é domínio público, de uso livre.",
-      "Uma infração: a ausência de crédito ao autor viola o módulo BY da licença, mas o uso comercial em vídeo patrocinado é permitido por qualquer licença Creative Commons que não contenha explicitamente o módulo ND.",
-      "Duas infrações: falta de crédito ao autor (módulo BY) e uso comercial em vídeo patrocinado (módulo NC).",
-      "Uma infração apenas pelo uso comercial, pois a obrigação de crédito nas licenças Creative Commons é recomendação ética sem consequência jurídica, não configurando violação legalmente acionável pelo autor."
+      "Duas: a falta de crédito ao autor (módulo BY) e o uso comercial em vídeo patrocinado (módulo NC).",
+      "Nenhuma, pois uma obra sob licença Creative Commons está em domínio público e pode ser usada livremente.",
+      "Uma: a falta de crédito, pois o uso comercial é permitido em toda licença que não tenha o módulo ND.",
+      "Uma: o uso comercial, pois o crédito ao autor é só uma recomendação ética, sem efeito jurídico.",
+      "Três: falta de crédito, uso comercial e obra derivada, pois o vídeo modifica a foto original."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "a licença CC BY-NC tem duas condições: dar crédito ao autor (BY) e não usar a obra para fins comerciais (NC). Um vídeo patrocinado por marca é uso comercial, e a falta de crédito descumpre a atribuição. São, portanto, duas violações independentes. Creative Commons não é domínio público, e o crédito é condição jurídica da licença."
   },
   {
@@ -649,15 +664,16 @@
     "capituloId": "legislacao-cap2",
     "tipo": "objetiva",
     "nivel": "facil",
-    "enunciado": "A Amazon patenteou o processo de compra com um clique (1-Click) e licenciou a patente para concorrentes durante 18 anos. Qual é o fundamento jurídico que permitiu essa patente nos EUA e por que o mesmo mecanismo encontra limitações no Brasil?",
+    "enunciado": "A Amazon obteve nos EUA, em 1999, a patente do processo de compra com um clique (1-Click), que vigorou até 2017. Qual é o fundamento jurídico que permitiu essa patente nos EUA e por que o mesmo mecanismo encontra limitações no Brasil?",
     "alternativas": [
-      "Nos EUA, patentes de software são vedadas pelo USPTO assim como no Brasil — a patente 1-Click foi concedida por erro administrativo e gerou jurisprudência contrária que impede novos registros similares.",
-      "Nos EUA e no Brasil, o critério é idêntico: qualquer processo que produza efeito técnico pode ser patenteado, independentemente de ser implementado por software, tornando a patente 1-Click plenamente replicável no INPI.",
-      "Nos EUA, o 1-Click foi protegido como método de negócio com resultado útil; no Brasil, a Lei nº 9.279/1996 veda o software em si e exige efeito técnico.",
-      "A patente 1-Click foi concedida exclusivamente com base no direito autoral americano sobre interfaces de usuário, instrumento que a lei brasileira também prevê, tornando a proteção equivalente nos dois países via LDA e Lei de Software, com o mesmo prazo."
+      "Nos EUA, valeu como método de negócio com resultado útil; no Brasil, a lei exclui métodos comerciais e software.",
+      "Nos EUA e no Brasil, patentes de software são vedadas, e a 1-Click só foi concedida por erro administrativo.",
+      "O critério é idêntico nos dois países, e a mesma patente poderia ser obtida no INPI sem nenhuma diferença real.",
+      "Ela foi protegida pelo direito autoral americano sobre interfaces, que no Brasil vale pela Lei de Software.",
+      "Nos EUA, foi protegida como segredo industrial; no Brasil, a Lei nº 9.279/1996 exige o registro de marca."
     ],
-    "correta": 2,
-    "resolucao": "nos EUA, métodos implementados por software podem ser patenteados quando produzem resultado útil e concreto, e foi assim que o 1-Click foi protegido. No Brasil, o art. 10, V, da Lei nº 9.279/1996 diz que programa de computador em si e métodos comerciais não são invenção. Só se patenteia a solução com efeito técnico, o que torna esse tipo de patente bem mais difícil aqui."
+    "correta": 0,
+    "resolucao": "Na época, os EUA aceitavam patentes de métodos de negócio implementados por software que produzissem um resultado útil, concreto e tangível (caso State Street, 1998); esse entendimento foi restringido pela Suprema Corte nos casos Bilski (2010) e Alice (2014). No Brasil, o art. 10 da Lei nº 9.279/1996 diz que não são invenção os métodos comerciais (inciso III) nem o programa de computador em si (inciso V). Só se patenteia a solução com efeito técnico, o que torna esse tipo de patente bem mais difícil aqui."
   },
   {
     "id": "legislacao-cap2-f7",
@@ -667,12 +683,13 @@
     "nivel": "facil",
     "enunciado": "Um modelo de inteligência artificial generativa foi treinado com milhões de obras protegidas por direitos autorais sem autorização dos autores. Os criadores das obras processam a empresa desenvolvedora. Qual é o argumento jurídico mais sólido dos autores?",
     "alternativas": [
-      "Os autores não têm fundamento jurídico sólido, pois o treinamento de IA utiliza as obras apenas como referência estatística — processo equivalente à aprendizagem humana, que não configura reprodução protegida pela LDA ou pelo Copyright Act.",
-      "O argumento mais sólido é a violação ao direito moral de integridade da obra, pois o treinamento de IA pode distorcer o estilo dos autores ao gerar obras derivadas sem preservar as características originais das criações.",
-      "O argumento mais sólido é que copiar e armazenar as obras para treinar a IA é reprodução não autorizada, sem enquadramento em uso livre.",
-      "O mais sólido é a violação da paternidade, por falta de crédito aos autores."
+      "Copiar e armazenar as obras para treinar a IA é reprodução não autorizada, sem enquadramento nos usos livres.",
+      "Não há argumento sólido, pois o treino usa as obras só como estatística, como na aprendizagem humana.",
+      "O mais sólido é o direito moral de integridade, pois a IA pode distorcer o estilo dos autores originais.",
+      "O mais sólido é a violação da paternidade, pois os textos gerados pela IA não dão crédito aos autores.",
+      "O mais sólido é a concorrência desleal, pois a IA vende obras mais baratas que as dos autores humanos."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "copiar e armazenar obras em massa para treinar o modelo é reprodução, direito exclusivo do autor (art. 29 da LDA e direitos equivalentes no Copyright Act). O argumento mais forte dos autores está nos direitos patrimoniais, já que esse uso não se encaixa nas limitações do art. 46 da LDA. A discussão sobre fair use para treinamento de IA ainda está em aberto nos tribunais americanos."
   },
   {
@@ -683,12 +700,13 @@
     "nivel": "facil",
     "enunciado": "Uma startup registra o domínio \"nike-outlet-brasil.com.br\" para vender produtos falsificados da marca Nike. A Nike deseja recuperar o domínio. Qual é o mecanismo correto e o fundamento jurídico aplicável no Brasil?",
     "alternativas": [
-      "A Nike deve ingressar com ação de busca e apreensão perante a Justiça Federal, que tem competência exclusiva para cancelar registros de domínio \".br\" em casos de violação de marca registrada estrangeira.",
-      "A Nike deve acionar a UDRP da ICANN, com decisão em até 60 dias.",
-      "Para domínios \".br\", cabe ação judicial ou o SACI-Adm do CGI.br, por cybersquatting e violação de marca.",
-      "A Nike não tem legitimidade para cancelar domínios registrados por terceiros no Brasil, pois o CGI.br adota o princípio da anterioridade do registro, que protege o primeiro registrante independentemente de eventual conflito com marcas preexistentes."
+      "Para domínios .br, cabe ação judicial ou o SACI-Adm do CGI.br, por cybersquatting e violação de marca.",
+      "A Nike deve acionar a UDRP da ICANN, que é o procedimento usado para todos os domínios, inclusive os .br.",
+      "Só a Justiça Federal pode cancelar domínios .br, por meio de ação de busca e apreensão do registro.",
+      "Não há mecanismo: o Registro.br protege sempre o primeiro registrante, mesmo contra marcas anteriores.",
+      "A Nike deve registrar a marca de novo no INPI, pois o registro antigo não alcança nomes de domínio."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "domínios '.br' são administrados pelo NIC.br/CGI.br, e as disputas sobre eles vão para o SACI-Adm (Sistema Administrativo de Conflitos de Internet) ou para a Justiça. A UDRP da ICANN vale para domínios genéricos como '.com', não para '.br'. A venda de produtos falsificados também configura crime contra a marca (Lei nº 9.279/1996) e infração ao CDC."
   },
   {
@@ -699,12 +717,13 @@
     "nivel": "facil",
     "enunciado": "Um professor universitário reproduz integralmente um artigo científico protegido em apostila distribuída gratuitamente aos alunos, sem autorização do autor. A conduta está amparada pelas limitações ao direito autoral previstas na LDA?",
     "alternativas": [
-      "Sim, pois o uso educacional sem fins lucrativos é hipótese de uso livre ampla e irrestrita prevista no art. 46 da LDA, que autoriza qualquer reprodução de obras para fins pedagógicos em instituições de ensino.",
-      "Sim, pois artigos científicos financiados com recursos públicos são automaticamente de domínio público no Brasil, podendo ser reproduzidos livremente por qualquer pessoa independentemente de autorização.",
-      "Não necessariamente: a LDA permite usar trechos na medida justificada para a aula, e a reprodução integral vai além disso.",
-      "Sim, desde que a apostila seja distribuída apenas fisicamente e não em formato digital — a LDA distingue expressamente reprodução física, permitida para fins educacionais, de reprodução digital, que exige autorização do titular em qualquer caso."
+      "Não: a LDA permite usar trechos na medida justificada para o fim, e a reprodução integral vai além disso.",
+      "Sim, pois o uso educacional sem lucro é hipótese ampla do art. 46, que autoriza qualquer reprodução em aula.",
+      "Sim, pois artigos científicos financiados com dinheiro público ficam em domínio público assim que publicados.",
+      "Sim, desde que a apostila seja impressa, pois a LDA só exige autorização para cópias em formato digital.",
+      "Sim, desde que o nome do autor apareça na apostila, pois a citação da fonte basta para qualquer reprodução."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "o art. 46 da LDA permite usar obras em sala de aula e reproduzir pequenos trechos, na medida justificada para o fim e sem prejudicar a exploração normal da obra. Reproduzir o artigo inteiro numa apostila vai além dessas limitações, ainda que a distribuição seja gratuita. Ser para uso educacional não autoriza qualquer reprodução."
   },
   {
@@ -715,12 +734,13 @@
     "nivel": "facil",
     "enunciado": "Uma empresa registra sua marca no INPI na classe de vestuário. Dois anos depois, descobre que um concorrente usa o mesmo nome para serviços de tecnologia, classe diferente. Simultaneamente, um perfil no Instagram com o mesmo nome da marca foi criado por terceiro. Quais são as medidas jurídicas disponíveis para cada situação?",
     "alternativas": [
-      "Em ambos os casos, o registro de marca na classe de vestuário confere proteção absoluta — a empresa pode exigir judicialmente o encerramento imediato das atividades do concorrente e a remoção do perfil sem necessidade de qualquer prova adicional de confusão.",
-      "Para o concorrente em classe diferente, não há violação possível pois o princípio da especialidade impede qualquer ação entre classes distintas. Para o Instagram, a plataforma não tem obrigação de remover perfis com nomes de marcas registradas em outros segmentos.",
-      "Nos dois casos, só resta registrar a marca nas classes afetadas antes de agir.",
-      "Em outra classe, só há proteção se a marca for de alto renome ou houver risco de confusão. No Instagram, cabe pedir a remoção comprovando a titularidade."
+      "Em outra classe, só há proteção se a marca for de alto renome ou houver risco de confusão; no Instagram, cabe pedir a remoção.",
+      "Nos dois casos, o registro na classe de vestuário dá proteção absoluta e permite encerrar tudo sem provar confusão.",
+      "Não há ação possível entre classes diferentes, e a plataforma nunca precisa remover perfis com nomes de marcas.",
+      "Nos dois casos, a empresa só pode agir depois de registrar a marca em todas as classes de produtos e serviços.",
+      "Só o perfil do Instagram viola a marca, pois o uso em redes sociais tem proteção maior do que o uso comercial."
     ],
-    "correta": 3,
+    "correta": 0,
     "resolucao": "pelo princípio da especialidade, a marca registrada é protegida no seu ramo de atividade. Fora dele, a proteção só existe se a marca for de alto renome (art. 125 da Lei nº 9.279/1996, proteção em todos os ramos) ou se houver risco de confusão para o consumidor. No caso do perfil no Instagram, a empresa pode pedir a remoção à plataforma, comprovando ser titular da marca."
   },
   {

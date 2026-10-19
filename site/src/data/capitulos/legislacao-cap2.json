@@ -41,7 +41,7 @@
    "itens": [
     "<strong>Direito Autoral:</strong> protege obras literárias, artísticas, científicas, musicais, audiovisuais e programas de computador. Proteção automática, sem necessidade de registro. Leis 9.610/1998 e 9.609/1998.",
     "<strong>Propriedade Industrial:</strong> protege invenções (patentes), modelos de utilidade, desenhos industriais, marcas e indicações geográficas. Exige registro formal no INPI. Lei 9.279/1996.",
-    "<strong>Proteção Sui Generis:</strong> categorias especiais como topografias de circuitos integrados, cultivares e bases de dados, com proteção legal específica."
+    "<strong>Proteção Sui Generis:</strong> categorias especiais como topografias de circuitos integrados (Lei 11.484/2007) e cultivares (Lei 9.456/1997), com proteção legal específica. No Brasil, as bases de dados são protegidas pelo direito autoral, como compilações (Lei 9.610/1998, art. 7º, XIII)."
    ]
   },
   {
@@ -80,13 +80,13 @@
     [
      "Desenho Industrial",
      "Forma ornamental de objeto ou conjunto de linhas/cores",
-     "25 anos do depósito",
+     "10 anos do depósito, prorrogável até 25",
      "Sim (INPI)"
     ],
     [
      "Software (Lei 9.609)",
      "Programas de computador como obra intelectual",
-     "50 anos da criação",
+     "50 anos da publicação ou criação",
      "Não (facultativo)"
     ]
    ]
@@ -167,8 +167,8 @@
      "Prazo de proteção expirado (70 anos após a morte do autor)"
     ],
     [
-     "Obras de autoria do Governo",
-     "Leis, decisões judiciais e atos normativos, salvo exceção"
+     "Textos oficiais",
+     "Leis, decretos, regulamentos, decisões judiciais e demais atos oficiais (art. 8º, IV)"
     ]
    ]
   },
@@ -185,9 +185,9 @@
    "numerada": false,
    "itens": [
     "<strong>Proteção do Código:</strong> código-fonte e código objeto são igualmente protegidos, mesmo que o código-fonte não seja público.",
-    "<strong>Software Corporativo:</strong> o empregador é titular dos direitos sobre software desenvolvido por funcionários no exercício de suas funções, salvo contrato em contrário.",
+    "<strong>Software Corporativo:</strong> o empregador, o contratante de serviços ou o órgão público é titular dos direitos sobre o software desenvolvido por empregados, prestadores de serviço ou servidores contratados para essa atividade, salvo estipulação em contrário (art. 4º).",
     "<strong>Licença de Uso (EULA):</strong> regula as condições de uso pelo usuário final, sem transferir a propriedade do programa.",
-    "<strong>Engenharia Reversa:</strong> permitida apenas para garantir interoperabilidade com outros programas, nos termos da lei."
+    "<strong>Integração:</strong> não ofende os direitos do titular integrar um programa a um sistema aplicativo ou operacional, quando isso for tecnicamente indispensável ao usuário e para uso exclusivo de quem a promoveu (art. 6º, IV)."
    ]
   },
   {
@@ -197,7 +197,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "Um desenvolvedor autônomo (freelancer), sem vínculo empregatício, que cria um software sob encomenda mantém a titularidade dos direitos sobre o código, salvo se houver contrato expresso de cessão. Isso surpreende muitos contratantes: diferentemente do empregado CLT (cuja titularidade é presumida do empregador), o freelancer só transfere seus direitos se isso estiver escrito no contrato."
+     "html": "Um desenvolvedor autônomo (freelancer) contratado justamente para criar um software não fica, em regra, com os direitos sobre ele: o art. 4º da Lei 9.609/1998 inclui o \"contratante de serviços\", salvo estipulação em contrário. A situação muda quando o programa é criado sem relação com o contrato e sem recursos do contratante (art. 4º, § 2º): aí os direitos ficam com o desenvolvedor. Como pode ser difícil provar o que foi contratado, o mais seguro é ter sempre um contrato escrito, com cláusula expressa de cessão."
     }
    ]
   },
@@ -231,7 +231,7 @@
   },
   {
    "t": "p",
-   "html": "Nos Estados Unidos e na Europa, o regime é distinto do brasileiro. O USPTO aceita patentes de software com maior amplitude, desde que a invenção produza um resultado útil, concreto e tangível. O EPO admite patentes de programas que produzam \"efeito técnico adicional\" além da simples interação software-hardware. Grandes empresas de tecnologia acumulam portfólios de patentes como estratégia competitiva — prática conhecida como patent thicket."
+   "html": "Nos Estados Unidos e na Europa, o regime é distinto do brasileiro. Nos EUA, o critério do \"resultado útil, concreto e tangível\" (caso State Street, 1998) permitiu muitas patentes de software e de métodos de negócio, mas a Suprema Corte o restringiu nos casos Bilski (2010) e Alice (2014): hoje, uma ideia abstrata implementada em computador só é patenteável se acrescentar algo significativamente inventivo. O EPO admite patentes de programas que produzam \"efeito técnico adicional\" além da simples interação software-hardware. Grandes empresas de tecnologia acumulam portfólios de patentes como estratégia competitiva — prática conhecida como patent thicket."
   },
   {
    "t": "h3",
@@ -243,15 +243,15 @@
   },
   {
    "t": "p",
-   "html": "Apple — Slide to Unlock (2013): gesto de deslizar para desbloquear, gerou disputas bilionárias com a Samsung."
+   "html": "Apple — Slide to Unlock (concedida em 2011): gesto de deslizar para desbloquear, gerou disputas bilionárias com a Samsung."
   },
   {
    "t": "p",
-   "html": "Google — PageRank (1998–2018): algoritmo central do buscador, patenteado por Larry Page em Stanford."
+   "html": "Google — PageRank (1998–2018): algoritmo central do buscador, inventado por Larry Page; a patente pertencia à Universidade Stanford."
   },
   {
    "t": "p",
-   "html": "Qualcomm — CDMA/5G: centenas de patentes essenciais, licenciadas obrigatoriamente a fabricantes de smartphones."
+   "html": "Qualcomm — CDMA/5G: centenas de patentes essenciais a padrões, licenciadas a fabricantes de smartphones em condições FRAND (justas, razoáveis e não discriminatórias)."
   },
   {
    "t": "h2",
@@ -260,7 +260,7 @@
   },
   {
    "t": "p",
-   "html": "A marca é um sinal distintivo que identifica produtos ou serviços de uma empresa no mercado. No ambiente digital, a proteção de marcas ganhou novos contornos com o surgimento de domínios de internet, nomes de usuário em redes sociais e identidades digitais. O registro de marca no INPI confere ao titular o direito exclusivo de uso em todo o território nacional, no segmento de mercado correspondente. O Brasil adota o sistema de first to file: entre dois interessados na mesma marca, tem prioridade quem depositar o pedido primeiro — não quem passou a usar a marca primeiro."
+   "html": "A marca é um sinal distintivo que identifica produtos ou serviços de uma empresa no mercado. No ambiente digital, a proteção de marcas ganhou novos contornos com o surgimento de domínios de internet, nomes de usuário em redes sociais e identidades digitais. O registro de marca no INPI confere ao titular o direito exclusivo de uso em todo o território nacional, no segmento de mercado correspondente. O Brasil adota o sistema de first to file: entre dois interessados na mesma marca, tem prioridade quem depositar o pedido primeiro — não quem passou a usar a marca primeiro. A exceção é o direito de precedência (art. 129, § 1º): quem, de boa-fé, já usava no país havia pelo menos 6 meses marca idêntica ou semelhante, para produto ou serviço idêntico, semelhante ou afim, pode reivindicar o registro."
   },
   {
    "t": "quadro",
@@ -289,7 +289,7 @@
     [
      "Typosquatting",
      "Domínios com erros ortográficos intencionais de marcas famosas",
-     "Procedimento UDRP na ICANN"
+     "UDRP da ICANN (domínios genéricos) ou SACI-Adm (domínios .br)"
     ],
     [
      "Username Squatting",
@@ -315,7 +315,7 @@
   },
   {
    "t": "p",
-   "html": "A Lei de Direitos Autorais prevê exceções que permitem determinados usos sem necessidade de autorização ou pagamento — as chamadas hipóteses de uso livre ou fair use (arts. 46 a 48 da LDA)."
+   "html": "A Lei de Direitos Autorais prevê exceções que permitem determinados usos sem necessidade de autorização ou pagamento — as chamadas limitações aos direitos autorais (arts. 46 a 48 da LDA), mais restritas que o fair use americano."
   },
   {
    "t": "tabela",
@@ -333,11 +333,11 @@
      "Notícias de atualidade, salvo proibição expressa"
     ],
     [
-     "Uso para fins educacionais",
-     "Sem intuito de lucro, com identificação da obra"
+     "Representação e execução em aulas",
+     "Para fins exclusivamente didáticos, em estabelecimentos de ensino, sem intuito de lucro"
     ],
     [
-     "Representação teatral e musical em família",
+     "Representação teatral e musical no recesso familiar",
      "Sem cobrança de ingresso ou intenção de lucro"
     ],
     [
@@ -345,8 +345,8 @@
      "Sem descrédito à obra original"
     ],
     [
-     "Reprodução para deficientes sensoriais",
-     "Sem fins comerciais"
+     "Reprodução para deficientes visuais",
+     "Em Braille ou procedimento semelhante, sem fins comerciais"
     ]
    ]
   },
@@ -365,7 +365,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "Um professor que reproduz um trecho de dois parágrafos de um livro em slides de aula, sem fins lucrativos e com crédito ao autor, está amparado tanto pela hipótese de uso educacional da LDA brasileira quanto, caso o material fosse usado nos EUA, pelo fair use (uso pequeno, não comercial, transformativo). Já reproduzir o livro inteiro digitalizado para a turma baixar já não se encaixa em nenhuma dessas proteções."
+     "html": "Um professor que reproduz um trecho de dois parágrafos de um livro em slides de aula, sem fins lucrativos e com crédito ao autor, está amparado tanto pela citação para fins de estudo da LDA brasileira (art. 46, III) quanto, caso o material fosse usado nos EUA, pelo fair use (uso pequeno, não comercial, transformativo). Já reproduzir o livro inteiro digitalizado para a turma baixar já não se encaixa em nenhuma dessas proteções."
     }
    ]
   },
@@ -406,7 +406,7 @@
   },
   {
    "t": "p",
-   "html": "Criadas em 2001 pelo jurista Lawrence Lessig como alternativa ao modelo \"todos os direitos reservados\", as licenças CC permitem que o autor defina com precisão quais usos de sua obra são permitidos, sem exigir negociação individual. Mais de 2 bilhões de obras já estão sob licenças CC no mundo."
+   "html": "Criadas pela organização fundada em 2001 pelo jurista Lawrence Lessig (as primeiras licenças saíram em 2002), como alternativa ao modelo \"todos os direitos reservados\", as licenças CC permitem que o autor defina com precisão quais usos de sua obra são permitidos, sem exigir negociação individual. Mais de 2 bilhões de obras já estão sob licenças CC no mundo."
   },
   {
    "t": "tabela",
@@ -523,7 +523,7 @@
     [
      "Indenização civil",
      "LDA arts. 102-103; CC art. 186",
-     "Perdas e danos, podendo chegar ao valor de 3.000 exemplares da obra"
+     "Perdas e danos; se não se souber quantos exemplares foram vendidos, o valor de 3.000 exemplares"
     ],
     [
      "Crime de violação autoral",
@@ -537,7 +537,7 @@
     ],
     [
      "Remoção de conteúdo (DMCA)",
-     "DMCA (EUA) / Marco Civil (BR)",
+     "DMCA (EUA); no Brasil, LDA e ordem judicial (MCI, art. 19, § 2º)",
      "Takedown notice: remoção mediante notificação do titular"
     ],
     [
@@ -567,7 +567,7 @@
     "2. Notificação — envia notificação formal identificando a obra e declarando boa-fé.",
     "3. Remoção — a plataforma remove o conteúdo e notifica o usuário.",
     "4. Counter-notice — o usuário pode contestar, caso o uso seja legítimo (fair use).",
-    "5. Restauração — se o titular não agir judicialmente em 14 dias, o conteúdo pode ser restaurado."
+    "5. Restauração — se o titular não agir judicialmente em 10 a 14 dias úteis, o conteúdo pode ser restaurado."
    ]
   },
   {
