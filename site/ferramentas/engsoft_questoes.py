@@ -6,7 +6,9 @@ sempre com 5 alternativas) e discursivas com um único comando.
 
 A primeira alternativa de cada objetiva é a certa; o site embaralha a ordem, por isso a
 resolução nunca cita letras. Cada script grava só as suas questões (ids <capítulo>-o* e
-<capítulo>-d*) em src/data/questoes/engsoft.json; as demais ficam como estão.
+<capítulo>-d*) no JSON da disciplina; as demais ficam como estão.
+
+Também serve a outras disciplinas, ex.: Banco('qualidade-cap2', QUALIDADE) grava em qualidade.json.
 """
 
 import json
@@ -14,8 +16,10 @@ import sys
 from itertools import combinations
 from pathlib import Path
 
-DISCIPLINA = 'engenharia-de-software-e-da-usabilidade'
-ARQUIVO = Path(__file__).resolve().parent.parent / 'src' / 'data' / 'questoes' / 'engsoft.json'
+PASTA_QUESTOES = Path(__file__).resolve().parent.parent / 'src' / 'data' / 'questoes'
+# (id da disciplina, arquivo de questões)
+ENGSOFT = ('engenharia-de-software-e-da-usabilidade', PASTA_QUESTOES / 'engsoft.json')
+QUALIDADE = ('qualidade-e-testes-de-software', PASTA_QUESTOES / 'qualidade.json')
 PROIBIDAS = ['faeterj', 'faetec', 'enade', 'barra mansa']
 ROMANOS = ['I', 'II', 'III', 'IV']
 
@@ -45,17 +49,18 @@ def _rotulo(chave, total):
 
 
 class Banco:
-    """Questões de um capítulo, ex.: Banco('engsoft-cap6')."""
+    """Questões de um capítulo, ex.: Banco('engsoft-cap6') ou Banco('qualidade-cap2', QUALIDADE)."""
 
-    def __init__(self, capitulo):
+    def __init__(self, capitulo, disciplina=ENGSOFT):
         self.capitulo = capitulo
+        self.disciplina, self.arquivo = disciplina
         self.objetivas = []
         self.discursivas = []
 
     def _base(self, nivel, enunciado, contexto=None, caso=None):
         q = {
             'id': f'{self.capitulo}-o{len(self.objetivas) + 1}',
-            'disciplinaId': DISCIPLINA,
+            'disciplinaId': self.disciplina,
             'capituloId': self.capitulo,
             'tipo': 'objetiva',
             'nivel': nivel,
@@ -103,7 +108,7 @@ class Banco:
         texto=None quando não há citação real que sirva (nunca inventar uma)."""
         q = {
             'id': f'{self.capitulo}-d{len(self.discursivas) + 1}',
-            'disciplinaId': DISCIPLINA,
+            'disciplinaId': self.disciplina,
             'capituloId': self.capitulo,
             'tipo': 'discursiva',
             'nivel': nivel,
@@ -151,14 +156,14 @@ class Banco:
         if erros:
             print('\n'.join(erros))
             sys.exit(1)
-        existentes = json.loads(ARQUIVO.read_text(encoding='utf-8'))
+        existentes = json.loads(self.arquivo.read_text(encoding='utf-8'))
         manter = [q for q in existentes
                   if not q['id'].startswith((f'{self.capitulo}-o', f'{self.capitulo}-d'))]
         # as novas entram logo depois das demais questões do capítulo
         ultimo = max(i for i, q in enumerate(manter) if q['capituloId'] == self.capitulo)
         final = manter[:ultimo + 1] + self.discursivas + self.objetivas + manter[ultimo + 1:]
-        ARQUIVO.write_text(json.dumps(final, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        self.arquivo.write_text(json.dumps(final, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         niveis = [q['nivel'] for q in self.objetivas]
         print(self.capitulo, {n: niveis.count(n) for n in ('medio', 'dificil')})
         print(f'{len(self.objetivas)} objetivas e {len(self.discursivas)} discursivas gravadas; '
-              f'{len(final)} questões no total em {ARQUIVO.name}')
+              f'{len(final)} questões no total em {self.arquivo.name}')

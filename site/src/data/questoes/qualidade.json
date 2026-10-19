@@ -341,6 +341,298 @@
     "resolucao": "O modelo de qualidade (2501n, onde está a 25010) diz quais características existem; com ele, a empresa define os requisitos de qualidade do sistema (2503n); para verificar esses requisitos, precisa de medidas (2502n); e, com as medidas, faz a avaliação formal (2504n). A divisão 2500n trata do gerenciamento da qualidade e não substitui as demais. Começar pela avaliação ou dispensar o modelo inverte a lógica do processo."
   },
   {
+    "id": "qualidade-cap2-d1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "texto": {
+      "citacao": "“Modelo de qualidade: conjunto definido de características, e das relações entre elas, que fornece uma estrutura para especificar requisitos de qualidade e avaliar a qualidade.” (tradução nossa)",
+      "fonte": "ISO/IEC 25010:2011. Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models. Genebra: ISO, 2011."
+    },
+    "caso": [
+      "Uma rede de clínicas vai escolher entre dois fornecedores de sistema de prontuário. Os dois afirmam que o seu software \"tem muita qualidade\": o primeiro cita a quantidade de funções; o segundo, a beleza das telas. A diretoria não sabe como compará-los e está decidindo pela impressão causada nas apresentações."
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, explique como a rede de clínicas poderia usar um modelo de qualidade para comparar os dois sistemas de forma objetiva.",
+    "linhas": 10,
+    "respostaEsperada": "Sem um modelo de referência, a avaliação fica subjetiva: cada fornecedor escolhe o critério que lhe favorece, e quantidade de funções e beleza das telas não dizem se o sistema atende às necessidades. Um modelo como a ISO/IEC 25010 oferece uma linguagem comum e critérios mensuráveis. Primeiro, a rede escolheria as características mais importantes para um prontuário: adequação funcional, segurança (os dados de saúde são sensíveis e precisam de confidencialidade), confiabilidade (o sistema não pode cair no atendimento), usabilidade (para médicos e recepcionistas) e compatibilidade (para trocar dados com laboratórios). Depois, transformaria cada uma em requisitos de qualidade com medidas, como tempo de resposta, disponibilidade e tempo para um usuário novo concluir um cadastro, seguindo as divisões da família SQuaRE: requisitos (2503n), medição (2502n) e avaliação (2504n). Por fim, avaliaria os dois sistemas pelos mesmos critérios, com testes e demonstrações práticas, e compararia os resultados. A escolha passaria a se apoiar em dados, e não na impressão causada."
+  },
+  {
+    "id": "qualidade-cap2-d2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma empresa contratou um sistema de estoque para os seus armazéns. O código foi avaliado como excelente: baixa complexidade, pouco acoplamento e 90% de cobertura de testes. Nos testes de sistema, todas as funções deram o resultado esperado, e o tempo de resposta ficou dentro da meta. Três meses depois da implantação, porém, os operadores dos armazéns levam o dobro do tempo para registrar uma entrada de mercadoria e voltaram a usar planilhas para algumas tarefas."
+    ],
+    "enunciado": "Analise o caso considerando as três perspectivas de qualidade da ISO/IEC 9126 e explique por que os bons resultados medidos não garantiram o sucesso do sistema.",
+    "linhas": 10,
+    "respostaEsperada": "A ISO/IEC 9126 separa três perspectivas. A qualidade interna, avaliada pelo código e pela estrutura antes da execução, foi boa: baixa complexidade, pouco acoplamento e alta cobertura de testes. A qualidade externa, observada durante a execução, também foi boa: as funções deram os resultados certos e o tempo de resposta cumpriu a meta. Mas a qualidade em uso, que é o resultado do uso no contexto real de trabalho, foi ruim: os operadores levam o dobro do tempo (baixa produtividade), não completam algumas tarefas no sistema (baixa efetividade) e o trocaram por planilhas (baixa satisfação). As perspectivas se complementam, mas uma não garante a outra: o sistema faz o que foi especificado, mas não do jeito que o trabalho real nos armazéns exige. A empresa deveria ter avaliado também a qualidade em uso, com testes de usabilidade e observação dos operadores no ambiente real antes da implantação, e acompanhado os atributos de qualidade em uso depois dela."
+  },
+  {
+    "id": "qualidade-cap2-o1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa adotou um modelo de qualidade e observou quatro efeitos: (1) clientes, desenvolvedores e testadores passaram a usar os mesmos termos para falar de qualidade; (2) a afirmação \"o sistema é confiável\" foi trocada por medidas, como o tempo médio entre falhas; (3) a comparação entre as versões mostrou os pontos fracos e orientou o que melhorar primeiro; (4) a auditoria exigida por um órgão regulador ficou mais simples de preparar."
+      }
+    ],
+    "enunciado": "As situações 1, 2, 3 e 4 ilustram, respectivamente, os benefícios de usar um modelo de qualidade ligados a",
+    "alternativas": [
+      "padronização, mensurabilidade, melhoria contínua e conformidade.",
+      "mensurabilidade, padronização, conformidade e melhoria contínua.",
+      "padronização, melhoria contínua, mensurabilidade e conformidade.",
+      "conformidade, mensurabilidade, melhoria contínua e padronização.",
+      "padronização, mensurabilidade, conformidade e melhoria contínua."
+    ],
+    "correta": 0,
+    "resolucao": "Ter uma linguagem comum entre clientes, desenvolvedores e testadores é a padronização (1). Transformar \"o sistema é confiável\" em um número, como o tempo médio entre falhas, é a mensurabilidade (2). Comparar versões para descobrir os pontos fracos e decidir o que melhorar é a melhoria contínua (3). Facilitar auditorias e certificações exigidas por órgãos reguladores é a conformidade (4)."
+  },
+  {
+    "id": "qualidade-cap2-o2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Para uma apresentação sobre a história dos modelos de qualidade de software, um aluno reuniu informações sobre os principais modelos propostos desde a década de 1970."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. O modelo de McCall, de 1977, foi o primeiro modelo estruturado em perspectivas.",
+      "II. O modelo FURPS, da Hewlett-Packard, organiza a qualidade em seis grupos principais.",
+      "III. A ISO/IEC 9126, de 1991, organiza a qualidade de produto em oito características.",
+      "IV. O modelo de Dromey, de 1995, busca ligar as propriedades do produto à qualidade."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e IV, apenas.",
+      "I, apenas.",
+      "IV, apenas.",
+      "I, II e IV, apenas.",
+      "I, III e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: é a contribuição principal de McCall na tabela da apostila. II é falsa: o FURPS classifica a qualidade em cinco grupos. III é falsa: a ISO/IEC 9126 tem seis características; as oito são da ISO/IEC 25010, de 2011. IV é verdadeira: é a contribuição atribuída a Dromey."
+  },
+  {
+    "id": "qualidade-cap2-o3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "A avaliação da funcionalidade de um sistema financeiro encontrou quatro problemas: (1) o cálculo de juros tem erros de arredondamento; (2) o sistema não consegue trocar dados com o sistema legado de cobrança; (3) usuários comuns conseguem abrir o painel de administração; (4) o tratamento dos dados pessoais dos clientes não segue a LGPD."
+      }
+    ],
+    "enunciado": "Na ISO/IEC 9126, os problemas 1, 2, 3 e 4 afetam, respectivamente, as subcaracterísticas da funcionalidade",
+    "alternativas": [
+      "acurácia, interoperabilidade, segurança de acesso e conformidade.",
+      "adequação, interoperabilidade, segurança de acesso e conformidade.",
+      "acurácia, conformidade, segurança de acesso e interoperabilidade.",
+      "acurácia, interoperabilidade, conformidade e segurança de acesso.",
+      "adequação, acurácia, interoperabilidade e segurança de acesso."
+    ],
+    "correta": 0,
+    "resolucao": "Resultados com erro de arredondamento ferem a acurácia, que é produzir resultados corretos com a precisão necessária (1). Não conseguir trocar dados com o sistema legado fere a interoperabilidade (2). Um usuário comum entrar no painel de administração fere a segurança de acesso, que é impedir o acesso não autorizado (3). Descumprir a LGPD fere a conformidade, que é atender a normas e regulamentos (4). A adequação trata de as funções cobrirem as necessidades."
+  },
+  {
+    "id": "qualidade-cap2-o4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Seis meses depois de implantar um novo sistema de vendas, uma empresa passou a medir quanto tempo os vendedores levam para fechar um pedido, quantos erros cometem nas telas e quão satisfeitos estão com o sistema."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Medir se os vendedores, no dia a dia, concluem os pedidos mais rápido, com menos erros e mais satisfeitos é avaliar a qualidade em uso do sistema.",
+      "PORQUE",
+      "II. Na ISO/IEC 9126, a qualidade em uso é avaliada pelo resultado do uso no contexto real de trabalho, com atributos próprios: efetividade, produtividade, segurança e satisfação."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II explica a I. A qualidade em uso olha a experiência do usuário no contexto real de trabalho, e não o código (qualidade interna) nem o comportamento em execução nos testes (qualidade externa). Ela tem atributos próprios: concluir o pedido é efetividade, fazer mais rápido é produtividade, e a opinião dos vendedores é satisfação."
+  },
+  {
+    "id": "qualidade-cap2-o5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em um sistema de reservas: (1) defeitos no código fazem o sistema falhar, em média, a cada três dias; (2) quando um dos servidores cai, o sistema continua atendendo normalmente pelos outros; (3) depois de uma queda geral, os dados e o funcionamento normal são restaurados em dez minutos."
+      }
+    ],
+    "enunciado": "Na ISO/IEC 9126, as situações 1, 2 e 3 estão ligadas, respectivamente, às subcaracterísticas da confiabilidade",
+    "alternativas": [
+      "maturidade, tolerância a falhas e recuperabilidade.",
+      "tolerância a falhas, maturidade e recuperabilidade.",
+      "maturidade, recuperabilidade e tolerância a falhas.",
+      "recuperabilidade, tolerância a falhas e maturidade.",
+      "maturidade, tolerância a falhas e conformidade."
+    ],
+    "correta": 0,
+    "resolucao": "A frequência de falhas causadas por defeitos é a maturidade, medida pelo MTBF (1). Manter o desempenho quando um componente falha é a tolerância a falhas (2). Restaurar os dados e o desempenho depois de uma falha é a recuperabilidade, medida pelo MTTR (3). A conformidade trata da aderência a normas de confiabilidade."
+  },
+  {
+    "id": "qualidade-cap2-o6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa que avaliava os seus produtos pela ISO/IEC 9126 vai passar a usar a ISO/IEC 25010 e preparou um resumo das mudanças entre as duas normas."
+      }
+    ],
+    "enunciado": "Sobre a evolução da ISO/IEC 9126 para a ISO/IEC 25010, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "Na ISO/IEC 25010, a Portabilidade deixou de existir e foi substituída pela nova característica Compatibilidade.",
+      "A Funcionalidade da 9126 passou a se chamar Adequação Funcional, com o foco na adequação às necessidades.",
+      "A Eficiência da 9126 passou a se chamar Eficiência de Desempenho, um nome considerado mais preciso.",
+      "A Manutenibilidade foi mantida e ganhou as subcaracterísticas modularidade e reusabilidade.",
+      "A Segurança passou a ser uma característica própria, com confidencialidade, integridade e autenticidade."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a da Portabilidade: ela foi mantida na ISO/IEC 25010, com ajustes. A Compatibilidade é uma característica nova, que reúne coexistência e interoperabilidade, e não substitui nenhuma outra. As demais alternativas descrevem corretamente o comparativo da apostila: as renomeações, a expansão da manutenibilidade e a segurança como característica independente."
+  },
+  {
+    "id": "qualidade-cap2-o7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Na avaliação de um sistema de folha de pagamento pela ISO/IEC 9126, a equipe usou três medições: a análise da complexidade e do acoplamento do código; o tempo de resposta medido nos testes de sistema; e uma pesquisa com os funcionários do RH sobre a produtividade deles no trabalho do dia a dia."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. A análise da complexidade e do acoplamento do código, sem executar o sistema, avalia a qualidade interna.",
+      "II. A medição do tempo de resposta durante os testes de sistema avalia a qualidade externa.",
+      "III. As seis características da ISO/IEC 9126 são usadas para avaliar a qualidade em uso.",
+      "IV. A pesquisa com os funcionários sobre a produtividade no trabalho real avalia a qualidade em uso."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e IV, apenas.",
+      "I e II, apenas.",
+      "I e IV, apenas.",
+      "II e IV, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: a qualidade interna olha o código e a estrutura, antes da execução. II é verdadeira: a qualidade externa olha as propriedades observáveis durante a execução. III é falsa: as seis características valem para a qualidade interna e para a externa; a qualidade em uso tem quatro atributos próprios (efetividade, produtividade, segurança e satisfação). IV é verdadeira: a produtividade no trabalho real é um desses atributos."
+  },
+  {
+    "id": "qualidade-cap2-o8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "A análise do código de um sistema hospitalar mostrou baixa complexidade, pouco acoplamento e boa cobertura de testes. Mesmo assim, os enfermeiros reclamam que registrar uma medicação leva sete telas e que, nos plantões, eles preferem anotar no papel."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Um sistema pode ter ótima qualidade interna e, ainda assim, baixa qualidade em uso.",
+      "PORQUE",
+      "II. A qualidade interna é medida com o sistema em execução, observando o seu comportamento diante dos usuários."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A I é verdadeira: código simples, bem estruturado e testado não garante que o sistema resolva a tarefa do usuário de forma eficiente e satisfatória no trabalho real; são perspectivas diferentes da ISO/IEC 9126. A II é falsa: a qualidade interna avalia as propriedades do software antes da execução, como o código e a estrutura. O comportamento em execução é a qualidade externa."
+  },
+  {
+    "id": "qualidade-cap2-o9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "A avaliação de um aplicativo de vendas pela ISO/IEC 25010 encontrou quatro problemas: (1) ele deixou de funcionar na nova versão do sistema operacional dos celulares; (2) os pedidos enviados ao ERP da empresa chegam com campos trocados; (3) os números de cartão dos clientes ficam visíveis em um arquivo de log; (4) qualquer alteração na tela de pagamento quebra outras partes do aplicativo."
+      }
+    ],
+    "enunciado": "Na ISO/IEC 25010, os problemas 1, 2, 3 e 4 afetam, respectivamente, as características",
+    "alternativas": [
+      "Portabilidade, Compatibilidade, Segurança e Manutenibilidade.",
+      "Compatibilidade, Portabilidade, Segurança e Manutenibilidade.",
+      "Portabilidade, Compatibilidade, Confiabilidade e Manutenibilidade.",
+      "Portabilidade, Adequação Funcional, Segurança e Manutenibilidade.",
+      "Manutenibilidade, Compatibilidade, Segurança e Portabilidade."
+    ],
+    "correta": 0,
+    "resolucao": "Não funcionar em uma nova versão do sistema operacional fere a Portabilidade, a capacidade de ser transferido de um ambiente para outro (1). Trocar dados errados com o ERP fere a Compatibilidade, que inclui a interoperabilidade (2). Expor dados de cartão fere a Segurança, que inclui a confidencialidade (3). Não conseguir alterar o código sem quebrar outras partes fere a Manutenibilidade, que inclui a modificabilidade (4)."
+  },
+  {
+    "id": "qualidade-cap2-o10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa tem a avaliação de qualidade de um produto feita há alguns anos pela ISO/IEC 9126. Um novo diretor quer descartá-la por completo, \"já que a norma foi substituída\"."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Como a ISO/IEC 25010 substituiu a ISO/IEC 9126, uma avaliação feita pela 9126 não diz nada sobre a qualidade do produto.",
+      "PORQUE",
+      "II. A ISO/IEC 25010 é a evolução da 9126: manteve as seis características, renomeando algumas, e acrescentou Compatibilidade e Segurança."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A II é verdadeira, e é justamente por ela que a I é falsa. A 25010 evoluiu a partir da 9126, com lições aprendidas na aplicação da norma anterior: Funcionalidade virou Adequação Funcional, Eficiência virou Eficiência de Desempenho, e as demais foram mantidas, com ajustes. Uma avaliação pela 9126 continua informando sobre essas características; o que ela não cobre por completo é o que a 25010 acrescentou, como a Segurança como característica própria."
+  },
+  {
     "id": "qualidade-cap1-q6",
     "disciplinaId": "qualidade-e-testes-de-software",
     "capituloId": "qualidade-cap1",
@@ -2065,6 +2357,288 @@
     ],
     "correta": 0,
     "resolucao": "Na visão integrada da apostila, o TDD está na base da pirâmide: o desenvolvedor escreve o teste unitário antes do código, garantindo cobertura de caixa branca e design testável. O BDD está no topo: critérios de aceitação em linguagem natural viram testes automatizados de caixa preta, que verificam o comportamento esperado pelo negócio. Uma prática verifica se cada função está certa; a outra, se o sistema faz o que o cliente precisa."
+  },
+  {
+    "id": "qualidade-cap5-d1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Um banco digital vai lançar, em três meses, um aplicativo com abertura de conta, transferências por Pix, pagamento de boletos e um painel com o histórico de gastos. A equipe de qualidade tem só dois testadores, e o desenvolvimento é feito em sprints de duas semanas. Nos projetos anteriores, os testes eram feitos todos no fim, sem um planejamento formal, e muitos defeitos chegaram aos clientes."
+    ],
+    "enunciado": "Proponha, em linhas gerais, uma estratégia de teste para esse projeto, justificando as principais escolhas com base no capítulo.",
+    "linhas": 10,
+    "respostaEsperada": "A estratégia deveria começar pela análise de requisitos e escopo, deixando claro o que está dentro e fora dos testes e as exigências regulatórias, como a LGPD. Depois, a análise de riscos, com a Matriz de Priorização: transferências por Pix, pagamentos e abertura de conta têm probabilidade e impacto altos e recebem teste prioritário e exaustivo; o painel de gastos, teste normal. Com poucos testadores, a priorização por risco é essencial. Os níveis seriam unitário, integração, sistema e aceitação, com testes de segurança e de desempenho. Nas técnicas, caixa branca nos unitários, com cobertura de desvios alta nos módulos críticos (cobertura progressiva); caixa cinza na integração e nas APIs; e caixa preta no sistema e na aceitação, com particionamento de equivalência e valor limite nos valores das transferências e tabela de decisão nas regras de tarifa. Em contexto ágil, o teste deixa de ficar para o fim: Shift-Left, com critérios de aceitação em BDD antes do código, TDD nos desenvolvedores, testes de cada história dentro da Definition of Done e automação no pipeline, com quality gates. Por fim, critérios de entrada, saída e suspensão definidos no plano, e um cronograma alinhado às sprints, com tempo para a regressão antes do lançamento."
+  },
+  {
+    "id": "qualidade-cap5-d2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "O plano de teste de um sistema de folha de pagamento tem apenas duas frases: \"Testar todas as funcionalidades do sistema\" e \"Os testes serão feitos pela equipe de QA\". Durante o projeto, a equipe não sabia se o módulo antigo de relatórios devia ser testado, discutiu por dias se o sistema estava pronto para o lançamento e, quando o ambiente de testes caiu por uma semana, ninguém tinha previsto o que fazer."
+    ],
+    "enunciado": "Com base nos componentes do plano de teste definidos pela IEEE 829, explique quais elementos faltam nesse plano e como eles teriam evitado os problemas relatados.",
+    "linhas": 10,
+    "respostaEsperada": "Faltam vários componentes da IEEE 829. \"Testar todas as funcionalidades\" não define os itens a serem testados nem as funcionalidades excluídas; com essas duas seções, o módulo antigo de relatórios estaria explicitamente dentro ou fora do escopo, com a justificativa. A discussão sobre o lançamento vem da falta de critérios de aprovação, como \"nenhum defeito crítico aberto e cobertura de desvios de pelo menos 80%\", que dariam uma resposta objetiva para a pergunta \"está pronto?\". A queda do ambiente mostra a falta de riscos e contingências (por exemplo, testar em um ambiente local com integrações simuladas) e de critérios de suspensão e retomada. \"A equipe de QA\" não define as responsabilidades de cada pessoa. Também faltam o identificador do plano, a introdução e os objetivos, a abordagem de teste (técnicas, níveis e tipos), os entregáveis, a descrição do ambiente de teste e a estimativa e o cronograma. Com esses elementos, as decisões teriam sido tomadas antes, e não no meio dos problemas."
+  },
+  {
+    "id": "qualidade-cap5-o1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "O plano de teste de um sistema de matrículas traz três condições: (1) os testes só começam com um build estável e o ambiente de homologação configurado; (2) os testes terminam quando a cobertura combinada for atingida e não houver nenhum defeito crítico aberto; (3) os testes param se a taxa de defeitos ficar muito alta ou se o ambiente ficar instável."
+      }
+    ],
+    "enunciado": "As condições 1, 2 e 3 do plano são, respectivamente, critérios de",
+    "alternativas": [
+      "entrada, saída e suspensão.",
+      "saída, entrada e suspensão.",
+      "entrada, suspensão e saída.",
+      "suspensão, saída e entrada.",
+      "entrada, saída e aprovação."
+    ],
+    "correta": 0,
+    "resolucao": "Os critérios de entrada são as pré-condições para começar os testes, como um build estável e o ambiente configurado (1). Os de saída são as condições para encerrá-los, como a cobertura atingida e nenhum defeito crítico aberto (2). Os de suspensão dizem quando pausar, como uma taxa de defeitos muito alta ou um ambiente instável (3)."
+  },
+  {
+    "id": "qualidade-cap5-o2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Ao planejar os testes da nova versão de um sistema de vendas, a equipe decidiu não testar o antigo módulo de exportação em CSV, porque ele será retirado do sistema na versão seguinte."
+      }
+    ],
+    "enunciado": "Em qual componente do plano de teste a equipe deve registrar essa decisão?",
+    "alternativas": [
+      "Em \"Funcionalidades excluídas\", deixando explícito o que não será testado e a justificativa.",
+      "Em \"Riscos e contingências\", pois todo módulo sem teste é um risco que precisa de um plano B.",
+      "Em \"Critérios de suspensão\", pois o módulo será desligado e os testes dele ficam suspensos.",
+      "Em lugar nenhum, pois o plano só registra o que será testado, e não o que fica de fora dele.",
+      "Em \"Itens a serem testados\", com a observação de que o módulo será testado só se sobrar tempo."
+    ],
+    "correta": 0,
+    "resolucao": "Pela IEEE 829, o plano de teste tem um componente para as funcionalidades excluídas: a explicitação do que não será testado e por quê. O exemplo da própria apostila é um módulo legado de exportação CSV que será descontinuado na próxima versão. Deixar a exclusão por escrito evita mal-entendidos sobre o escopo, e o critério de suspensão trata de pausar os testes em andamento, e não de excluir um módulo."
+  },
+  {
+    "id": "qualidade-cap5-o3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe vai organizar a documentação dos testes de acordo com a IEEE 829."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. O Relatório de Log de Teste (Test Log) registra, em ordem, o que aconteceu durante a execução dos testes.",
+      "II. O Relatório de Incidente de Teste (Test Incident Report) registra os eventos que exigem investigação.",
+      "III. O Relatório de Resumo de Teste (Test Summary Report) é escrito antes da execução, para planejar os testes.",
+      "IV. O Plano de Teste (Test Plan) também é um dos documentos definidos pela norma."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e IV, apenas.",
+      "I e II, apenas.",
+      "I e IV, apenas.",
+      "II e IV, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "A IEEE 829 (atualizada pela IEEE 29119) define o plano de teste, as especificações de design, de caso e de procedimento de teste, e três relatórios: o log, que registra a execução (I, verdadeira); o relatório de incidente, que registra o que precisa ser investigado (II, verdadeira); e o relatório de resumo, que consolida os resultados ao final, e não antes da execução (III, falsa). O plano de teste é um desses documentos (IV, verdadeira)."
+  },
+  {
+    "id": "qualidade-cap5-o4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe tem quatro alvos de teste: (1) um sistema novo, quase sem documentação; (2) uma API REST usada por outros sistemas; (3) o fluxo completo de um cliente, da busca ao pagamento; (4) um site que precisa funcionar bem em vários navegadores e celulares."
+      }
+    ],
+    "enunciado": "As técnicas de caixa preta mais adequadas aos contextos 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "teste exploratório, teste de contrato de interface, teste de caso de uso e testes de compatibilidade e usabilidade.",
+      "teste de contrato de interface, teste exploratório, teste de caso de uso e testes de compatibilidade e usabilidade.",
+      "teste exploratório, teste de caso de uso, teste de contrato de interface e testes de compatibilidade e usabilidade.",
+      "tabela de decisão, teste de contrato de interface, teste de caso de uso e testes de compatibilidade e usabilidade.",
+      "teste exploratório, teste de contrato de interface, tabela de decisão e particionamento de equivalência."
+    ],
+    "correta": 0,
+    "resolucao": "Pela tabela de escolha guiada por contexto da apostila: em sistemas novos sem documentação completa, o teste exploratório usa intuição e experiência (1); em APIs, o teste de contrato de interface valida respostas, códigos de status e payloads (2); em fluxos de trabalho do usuário, o teste de caso de uso valida o sistema do ponto de vista de quem o usa (3); e em interfaces web e mobile, os testes de compatibilidade e usabilidade verificam navegadores e dispositivos (4)."
+  },
+  {
+    "id": "qualidade-cap5-o5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe atingiu 90% de cobertura de desvios, mas os defeitos continuam chegando à produção. Um consultor sugeriu usar a análise de mutação, com ferramentas como Pitest ou mutmut."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Uma suíte com 90% de cobertura de desvios pode, mesmo assim, ter pouca capacidade de detectar defeitos.",
+      "PORQUE",
+      "II. A análise de mutação avalia a qualidade dos testes introduzindo pequenas mudanças no código e verificando se os testes percebem essas mudanças."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, mas a II não explica a I. A I é verdadeira porque a cobertura mostra quais trechos foram executados, e não se os testes verificam o resultado: testes sem boas asserções passam por tudo sem detectar nada. A II também é verdadeira e descreve uma ferramenta para medir esse problema (o mutation score), mas não é a causa dele."
+  },
+  {
+    "id": "qualidade-cap5-o6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Na análise de risco de um sistema, a equipe atribuiu probabilidade de falha e impacto no negócio (de 1 a 3) a quatro funcionalidades: (1) pagamento: probabilidade 3 e impacto 3; (2) busca de produtos: probabilidade 2 e impacto 2; (3) emissão de nota fiscal: probabilidade 1 e impacto 3; (4) troca do tema de cores: probabilidade 1 e impacto 2."
+      }
+    ],
+    "enunciado": "Pela Matriz de Priorização da apostila, as funcionalidades 1, 2, 3 e 4 devem receber, respectivamente,",
+    "alternativas": [
+      "teste prioritário e exaustivo, teste normal, teste normal e teste superficial ou omitido.",
+      "teste prioritário e exaustivo, teste normal, teste superficial ou omitido e teste superficial ou omitido.",
+      "teste prioritário e exaustivo, teste prioritário e exaustivo, teste normal e teste superficial ou omitido.",
+      "teste normal, teste normal, teste superficial ou omitido e teste superficial ou omitido.",
+      "teste prioritário e exaustivo, teste normal, teste prioritário e exaustivo e teste superficial ou omitido."
+    ],
+    "correta": 0,
+    "resolucao": "A prioridade é a probabilidade vezes o impacto: 3 × 3 = 9 (1); 2 × 2 = 4 (2); 1 × 3 = 3 (3); e 1 × 2 = 2 (4). Pontuação de 6 a 9 pede teste prioritário e exaustivo; de 3 a 4, teste normal; e de 1 a 2, teste superficial ou omitido. A funcionalidade 3 tem impacto alto, mas a probabilidade baixa leva a pontuação para 3, o que a mantém na faixa do teste normal."
+  },
+  {
+    "id": "qualidade-cap5-o7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Ao montar a estratégia de testes de um sistema de logística, a equipe discutiu onde usar caixa branca, caixa preta e caixa cinza."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Na caixa cinza, o testador tem conhecimento parcial da estrutura interna, o que é comum nos testes de integração e de API.",
+      "II. Na estratégia, a caixa branca é aplicada principalmente nos testes de aceitação, por quem conhece o negócio.",
+      "III. A caixa preta não pode ser usada em testes de desempenho, pois esses testes exigem acesso ao código-fonte.",
+      "IV. No nível de integração, a cobertura de caminhos nos pontos de integração é o critério recomendado para a caixa branca."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e IV, apenas.",
+      "I, apenas.",
+      "IV, apenas.",
+      "I, II e IV, apenas.",
+      "I, III e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: é a definição de caixa cinza da apostila. II é falsa: a caixa branca é aplicada prioritariamente nos níveis mais baixos da pirâmide, como o unitário, em que há acesso direto ao código; a aceitação usa caixa preta. III é falsa: os testes de desempenho (carga, estresse e volume) aparecem como aplicação da caixa preta, feitos sem acesso ao código. IV é verdadeira: é o critério da tabela de caixa branca por nível."
+  },
+  {
+    "id": "qualidade-cap5-o8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe ágil quer que o entendimento sobre o que o cliente espera de cada história esteja claro antes de qualquer linha de código, e decidiu adotar o ATDD."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. No ATDD, os testes de aceitação são definidos antes do desenvolvimento e guiam tanto a implementação quanto os testes unitários.",
+      "PORQUE",
+      "II. No ATDD, os testes de aceitação são escritos apenas pelo testador, depois que o código já está pronto."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A I é verdadeira: é a definição de ATDD da apostila, que combina BDD e TDD. A II é falsa por dois motivos: os testes de aceitação vêm antes do código, e não depois; e eles são definidos em conjunto, aproximando o negócio, quem desenvolve e quem testa. Escrever os testes depois do código é o que essas práticas procuram evitar."
+  },
+  {
+    "id": "qualidade-cap5-o9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma test lead vai planejar a estratégia de testes de um novo sistema e precisa organizar as etapas do trabalho na ordem proposta pela apostila."
+      }
+    ],
+    "enunciado": "A ordem correta das etapas do planejamento estratégico de testes é:",
+    "alternativas": [
+      "análise de requisitos e escopo; análise de riscos; níveis e tipos de teste; técnicas; critérios de qualidade; recursos e ferramentas; cronograma.",
+      "cronograma; recursos e ferramentas; análise de requisitos e escopo; análise de riscos; níveis e tipos de teste; técnicas; critérios.",
+      "análise de riscos; análise de requisitos e escopo; técnicas; níveis e tipos de teste; cronograma; critérios; recursos e ferramentas.",
+      "análise de requisitos e escopo; níveis e tipos de teste; técnicas; cronograma; análise de riscos; critérios; recursos e ferramentas.",
+      "recursos e ferramentas; técnicas; análise de requisitos e escopo; análise de riscos; critérios; níveis e tipos; cronograma."
+    ],
+    "correta": 0,
+    "resolucao": "A apostila organiza o planejamento em sete passos: primeiro entender o que deve ser testado (requisitos e escopo); depois, onde estão os maiores riscos; com isso, definir os níveis e tipos de teste e escolher as técnicas; estabelecer os critérios de entrada, saída e suspensão; planejar os recursos e as ferramentas; e, por fim, montar o cronograma, alinhado ao do desenvolvimento. Começar pelo cronograma ou pelos recursos, sem conhecer o escopo e os riscos, inverte a lógica."
+  },
+  {
+    "id": "qualidade-cap5-o10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa que testava tudo no fim do projeto vai adotar Scrum, e a equipe reuniu algumas afirmações sobre como os testes passam a funcionar."
+      }
+    ],
+    "enunciado": "Sobre as estratégias de teste em contextos ágeis, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "No teste em sprints, a história é considerada pronta quando o código termina, e os testes dela ficam para a sprint seguinte.",
+      "No Shift-Left, os testadores participam do refinamento das histórias e escrevem os critérios de aceitação antes do código.",
+      "O TDD, com o teste unitário escrito antes do código, garante cobertura de caixa branca e um design fácil de testar.",
+      "No BDD, os critérios de aceitação escritos com Dado/Quando/Então servem de base para os testes de caixa preta.",
+      "Um quality gate no pipeline bloqueia o merge quando o código novo não atinge a cobertura mínima definida."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a do teste em sprints: pela apostila, cada história só é considerada pronta (Definition of Done) quando todos os testes planejados, unitários, de integração e de aceitação, estão passando. Deixar os testes para depois é o que o modelo ágil procura evitar. As demais alternativas descrevem corretamente o Shift-Left, o TDD, o BDD e o quality gate."
   },
   {
     "id": "qualidade-cap6-q1",
