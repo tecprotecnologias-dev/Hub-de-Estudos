@@ -27,6 +27,10 @@ except ImportError:
 # Letras de alternativas citadas nas resoluções ("B e E são...", "A ignora...") viram {{B}}, {{E}}, {{A}}:
 # o site troca a marca pela letra que a alternativa recebe depois de embaralhada (src/lib/util.ts).
 LETRA_SOLTA = re.compile(r'(?<![\w.#\-/§º{])([A-E])(?![\w#+\-/{}])')
+# Questões geradas pelos scripts engsoft_capN_objetivas.py (ids ...-o1, ...-d1): a resolução já é
+# escrita sem citar letras, e um "A" ou "B" no texto é conteúdo (nível A da WCAG, tarefa B de um
+# cronograma), não uma alternativa; por isso a marcação automática não é aplicada a elas.
+GERADA_POR_SCRIPT = re.compile(r'-[od]\d+$')
 VERBOS = {'aceita', 'afirma', 'apenas', 'assume', 'atribui', 'atribuem', 'cai', 'caem', 'comete', 'cometem',
           'confunde', 'contradizem', 'contraria', 'descarta', 'descreve', 'descrevem', 'dilui', 'distorce',
           'distorcem', 'é', 'erra', 'erram', 'está', 'exagera', 'exige', 'explora', 'fabrica', 'fazem',
@@ -84,7 +88,7 @@ def main():
                 if q['alternativas'][i] != texto:
                     q['alternativas'][i] = texto
                     mudou = True
-            if isinstance(q.get('resolucao'), str):
+            if isinstance(q.get('resolucao'), str) and not GERADA_POR_SCRIPT.search(q['id']):
                 marcada = marcar_letras(q['resolucao'])
                 if marcada != q['resolucao']:
                     q['resolucao'] = marcada

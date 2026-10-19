@@ -7,21 +7,20 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“A qualidade é a conformidade com os requisitos. [...] O sistema, então, deve prevenir defeitos. [...] O padrão de desempenho deve ser Zero Defeitos, e não algo como 'isso já está bom o suficiente'.” (tradução nossa)",
-        "fonte": "CROSBY, Philip B. Quality Is Free: The Art of Making Quality Certain. New York: McGraw-Hill, 1979."
-      },
-      {
-        "t": "citacao",
-        "texto": "“A aptidão para o uso é determinada pelas características do produto que o usuário reconhece como benéficas para si. [...] Um produto é apto para o uso se desempenha a função para a qual foi destinado, nas condições que o usuário efetivamente encontra.” (tradução nossa)",
-        "fonte": "JURAN, J. M.; GODFREY, A. B. (Ed.). Juran's Quality Handbook. 5. ed. New York: McGraw-Hill, 1999."
+        "texto": "“A qualidade é definida como conformidade com os requisitos, e não como excelência ou elegância. [...] O sistema para produzir qualidade é a prevenção, e não a avaliação. [...] O padrão de desempenho deve ser Zero Defeitos, e não ‘isso já está bom o suficiente’.” (tradução nossa)",
+        "fonte": "CROSBY, Philip B. Quality Without Tears: The Art of Hassle-Free Management. New York: McGraw-Hill, 1984."
       },
       {
         "t": "p",
-        "texto": "A MedFácil é uma plataforma de agendamento de consultas de telemedicina lançada em 2023. O contrato assinado com a clínica-cliente especificava, entre outros requisitos: (1) o paciente deve conseguir agendar uma consulta escolhendo especialidade médica; (2) o sistema deve permitir pagamento on-line; (3) o paciente deve receber confirmação por e-mail. A equipe de desenvolvimento implementou rigorosamente os três requisitos, e a clínica assinou o termo de aceite formal declarando que"
+        "texto": "Para Juran, qualidade é adequação ao uso (fitness for use): um produto tem qualidade quando atende às necessidades de quem o usa, nas condições reais em que é usado."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em JURAN, J. M.; GODFREY, A. B. (Ed.). Juran’s Quality Handbook. 5. ed. New York: McGraw-Hill, 1999."
       },
       {
         "t": "p",
-        "texto": "100% dos critérios do contrato haviam sido cumpridos. Para atender ao requisito (1), a equipe construiu um fluxo de sete telas sequenciais (login → especialidade → cidade → convênio → médico → horário → confirmação), sem consultar usuários finais durante o desenvolvimento."
+        "texto": "A MedFácil é uma plataforma de agendamento de consultas de telemedicina lançada em 2023. O contrato assinado com a clínica-cliente especificava, entre outros requisitos: (1) o paciente deve conseguir agendar uma consulta escolhendo especialidade médica; (2) o sistema deve permitir pagamento on-line; (3) o paciente deve receber confirmação por e-mail. A equipe de desenvolvimento implementou rigorosamente os três requisitos, e a clínica assinou o termo de aceite formal declarando que 100% dos critérios do contrato haviam sido cumpridos. Para atender ao requisito (1), a equipe construiu um fluxo de sete telas sequenciais (login → especialidade → cidade → convênio → médico → horário → confirmação), sem consultar usuários finais durante o desenvolvimento."
       },
       {
         "t": "p",
@@ -39,7 +38,8 @@
       "c) Usando as quatro categorias do Custo da Qualidade (Prevenção, Avaliação, Falha Interna, Falha Externa), classifique: (i) o custo gerado pelos 42% de abandono e pelo aumento de 15% nas ligações telefônicas nos primeiros três meses; (ii) o investimento contratado na consultoria de UX. Justifique cada classificação com base no momento em que cada custo ocorreu em relação ao usuário final.",
       "d) Um desenvolvedor da equipe original alega, em uma reunião de retrospectiva: “O sistema estava certo, porque cumpriu 100% do que foi escrito no contrato — o problema foi dos usuários, que não souberam usá-lo”. Avalie criticamente essa afirmação, relacionando sua resposta à distinção entre Verificação e Validação apresentada no capítulo."
     ],
-    "linhas": 12
+    "linhas": 12,
+    "respostaEsperada": "a) Para Crosby, qualidade é conformidade com os requisitos, e o termo de aceite comprova exatamente isso: os três requisitos do contrato foram cumpridos. Para Juran, qualidade é adequação ao uso, nas condições reais de quem usa; os 42% de abandono, concentrados nos pacientes acima de 60 anos, mostram que o sistema não era adequado a esse público. O sistema cumpriu o que foi escrito, mas não o que os usuários precisavam: as duas visões se completam.\nb) Foi negligenciada a Usabilidade. A Adequação Funcional garante que o sistema faz o que deveria fazer (dá para agendar), mas não que as pessoas conseguem fazer isso com facilidade: sete telas seguidas tornaram a tarefa longa e confusa. Uma função pode existir e, mesmo assim, ser difícil de usar.\nc) (i) É custo de Falha Externa: o problema foi percebido pelos usuários, depois da entrega, na forma de abandono, de mais ligações e de desgaste com a clínica. (ii) A consultoria de UX, contratada depois do lançamento para corrigir esse problema, também entra como custo de Falha Externa, pois é o retrabalho causado por um defeito que chegou ao usuário. Se a mesma avaliação de UX tivesse sido feita antes do lançamento, seria Prevenção (ou Avaliação), muito mais barata.\nd) A afirmação confunde verificação com validação. O sistema foi verificado: foi construído de acordo com a especificação do contrato. Mas não foi validado: ninguém conferiu com usuários reais se ele atendia à necessidade deles, e a equipe nem consultou os usuários finais. Culpar os usuários ignora que a qualidade inclui a adequação ao uso e a qualidade em uso; o próprio redesenho, que reduziu o abandono de 42% para 8%, mostra que o problema estava no sistema."
   },
   {
     "id": "qualidade-cap2-q2",
@@ -314,9 +314,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“O custo da qualidade tem dois grandes componentes: o custo de alcançá-la, e o custo de não alcançá-la — o preço da não conformidade. [...] Minha experiência mostra que o custo da qualidade [em uma empresa típica] gira entre 20 e 25 por cento das vendas — dinheiro gasto fazendo as coisas erradas.” (tradução nossa)",
-        "fonte": "CROSBY, Philip B. Quality Is Free: The Art of Making Quality Certain. New York: McGraw-Hill, 1979."
+        "t": "p",
+        "texto": "Para Crosby, o custo da qualidade tem duas partes: o custo de fazer as coisas certas e o preço da não conformidade, isto é, tudo o que se gasta por fazer as coisas erradas."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em CROSBY, Philip B. Quality Is Free: The Art of Making Quality Certain. New York: McGraw-Hill, 1979."
       },
       {
         "t": "p",
@@ -332,7 +335,8 @@
       "Não é possível classificar os valores em categorias de Custo da Qualidade sem saber o faturamento total da LogiTrack no trimestre"
     ],
     "correta": 2,
-    "resolucao": "os R$ 640.000 (suporte emergencial, indenizações, perda de clientes) foram gerados por um defeito percebido pelo cliente em produção, a definição exata de Falha Externa; e a proporção com os R$ 18.000 de Prevenção é de fato compatível, em ordem de grandeza, com a regra geral apresentada no capítulo. {{A}} confunde Falha Interna com Externa — o critério que separa as duas categorias é justamente quem percebe o defeito primeiro, e neste caso foi o cliente. {{B}} comete o mesmo erro na direção oposta: retrabalho antes do lançamento é Falha Interna, não Externa. {{D}} erra a categoria: testes de QA medem qualidade (Avaliação), não evitam que o defeito exista em primeiro lugar (isso é Prevenção, categoria dos R$ 18.000). {{E}} é um distrator que introduz uma exigência (faturamento total) desnecessária para a classificação pedida, que depende apenas da natureza de cada gasto."
+    "resolucao": "os R$ 640.000 (suporte emergencial, indenizações, perda de clientes) foram gerados por um defeito percebido pelo cliente em produção, a definição exata de Falha Externa; e a proporção com os R$ 18.000 de Prevenção é de fato compatível, em ordem de grandeza, com a regra geral apresentada no capítulo. {{A}} confunde Falha Interna com Externa — o critério que separa as duas categorias é justamente quem percebe o defeito primeiro, e neste caso foi o cliente. {{B}} comete o mesmo erro na direção oposta: retrabalho antes do lançamento é Falha Interna, não Externa. {{D}} erra a categoria: testes de QA medem qualidade (Avaliação), não evitam que o defeito exista em primeiro lugar (isso é Prevenção, categoria dos R$ 18.000). {{E}} é um distrator que introduz uma exigência (faturamento total) desnecessária para a classificação pedida, que depende apenas da natureza de cada gasto.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap1-q7",
@@ -341,9 +345,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“O custo da qualidade tem dois grandes componentes: o custo de alcançá-la, e o custo de não alcançá-la — o preço da não conformidade. [...] Minha experiência mostra que o custo da qualidade [em uma empresa típica] gira entre 20 e 25 por cento das vendas — dinheiro gasto fazendo as coisas erradas.” (tradução nossa)",
-        "fonte": "CROSBY, Philip B. Quality Is Free: The Art of Making Quality Certain. New York: McGraw-Hill, 1979."
+        "t": "p",
+        "texto": "Para Crosby, o custo da qualidade tem duas partes: o custo de fazer as coisas certas e o preço da não conformidade, isto é, tudo o que se gasta por fazer as coisas erradas."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em CROSBY, Philip B. Quality Is Free: The Art of Making Quality Certain. New York: McGraw-Hill, 1979."
       },
       {
         "t": "p",
@@ -363,7 +370,8 @@
       "É impossível avaliar a decisão sem primeiro eliminar completamente os custos de Falha Interna e Externa"
     ],
     "correta": 1,
-    "resolucao": "Avaliação (testes, auditorias) e Prevenção (treinamento, revisão de código) atuam em momentos diferentes: a primeira encontra defeitos que já existem; a segunda reduz a chance de o defeito ser introduzido. Aumentar só a Avaliação melhora a taxa de detecção, mas não ataca a causa dos defeitos. {{A}} e {{C}} tratam as duas categorias como intercambiáveis, contrariando a distinção central do capítulo. {{D}} é logicamente impossível: não se investe diretamente ‘em’ Falha Externa, que é uma consequência a ser evitada, não uma categoria de investimento. {{E}} propõe uma condição irreal — o objetivo do COQ é justamente reduzir, não eliminar por completo, os custos de falha."
+    "resolucao": "Avaliação (testes, auditorias) e Prevenção (treinamento, revisão de código) atuam em momentos diferentes: a primeira encontra defeitos que já existem; a segunda reduz a chance de o defeito ser introduzido. Aumentar só a Avaliação melhora a taxa de detecção, mas não ataca a causa dos defeitos. {{A}} e {{C}} tratam as duas categorias como intercambiáveis, contrariando a distinção central do capítulo. {{D}} é logicamente impossível: não se investe diretamente ‘em’ Falha Externa, que é uma consequência a ser evitada, não uma categoria de investimento. {{E}} propõe uma condição irreal — o objetivo do COQ é justamente reduzir, não eliminar por completo, os custos de falha.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap1-q8",
@@ -372,9 +380,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Um erro de software que permitiu que os acidentes ocorressem foi rastreado a um sutil problema de temporização [uma condição de corrida] no software, que permitia ao operador contornar as travas de segurança da máquina. [...] O software do Therac-25 só permitia que a máquina entrasse nesse estado perigoso se um operador experiente fizesse entradas específicas e rápidas no teclado, possíveis apenas quando o operador trabalhava com rapidez.” (tradução nossa)",
-        "fonte": "LEVESON, Nancy G.; TURNER, Clark S. An Investigation of the Therac-25 Accidents. IEEE Computer, v. 26, n. 7, p. 18-41, jul. 1993."
+        "t": "p",
+        "texto": "Leveson e Turner mostraram que os acidentes do Therac-25 foram causados por defeitos de software, entre eles uma condição de corrida: com certas sequências rápidas de comandos no teclado, feitas por operadores experientes, a máquina podia entrar em um estado perigoso sem que as proteções impedissem a irradiação."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em LEVESON, Nancy G.; TURNER, Clark S. An Investigation of the Therac-25 Accidents. IEEE Computer, v. 26, n. 7, p. 18-41, jul. 1993."
       },
       {
         "t": "p",
@@ -390,7 +401,8 @@
       "Compatibilidade, pois o defeito surgia da interação entre o software e o teclado usado pelo operador"
     ],
     "correta": 1,
-    "resolucao": "o defeito é um caso clássico de falha de Confiabilidade sob uma condição de uso não coberta pelos testes: a máquina funcionava corretamente na grande maioria dos cenários, mas falhava sob uma sequência específica de eventos (digitação rápida), caracterizando uma condição de corrida não testada. {{A}} confunde causa técnica (bug de sincronização) com treinamento do usuário — o problema era do software, não do operador. {{C}} e {{E}} distorcem o cenário: não há relação com portabilidade de hardware nem com compatibilidade de dispositivos, mas com uma condição de tempo (timing) interna ao próprio software. {{D}} erra ao reduzir o problema a velocidade de processamento, quando o texto descreve uma falha de sincronização entre eventos (race condition), não de performance."
+    "resolucao": "o defeito é um caso clássico de falha de Confiabilidade sob uma condição de uso não coberta pelos testes: a máquina funcionava corretamente na grande maioria dos cenários, mas falhava sob uma sequência específica de eventos (digitação rápida), caracterizando uma condição de corrida não testada. {{A}} confunde causa técnica (bug de sincronização) com treinamento do usuário — o problema era do software, não do operador. {{C}} e {{E}} distorcem o cenário: não há relação com portabilidade de hardware nem com compatibilidade de dispositivos, mas com uma condição de tempo (timing) interna ao próprio software. {{D}} erra ao reduzir o problema a velocidade de processamento, quando o texto descreve uma falha de sincronização entre eventos (race condition), não de performance.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap1-q9",
@@ -399,9 +411,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Um erro de software que permitiu que os acidentes ocorressem foi rastreado a um sutil problema de temporização [uma condição de corrida] no software, que permitia ao operador contornar as travas de segurança da máquina. [...] O software do Therac-25 só permitia que a máquina entrasse nesse estado perigoso se um operador experiente fizesse entradas específicas e rápidas no teclado, possíveis apenas quando o operador trabalhava com rapidez.” (tradução nossa)",
-        "fonte": "LEVESON, Nancy G.; TURNER, Clark S. An Investigation of the Therac-25 Accidents. IEEE Computer, v. 26, n. 7, p. 18-41, jul. 1993."
+        "t": "p",
+        "texto": "Leveson e Turner mostraram que os acidentes do Therac-25 foram causados por defeitos de software, entre eles uma condição de corrida: com certas sequências rápidas de comandos no teclado, feitas por operadores experientes, a máquina podia entrar em um estado perigoso sem que as proteções impedissem a irradiação."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em LEVESON, Nancy G.; TURNER, Clark S. An Investigation of the Therac-25 Accidents. IEEE Computer, v. 26, n. 7, p. 18-41, jul. 1993."
       },
       {
         "t": "p",
@@ -421,7 +436,8 @@
       "Nenhuma das quatro categorias se aplica a acidentes que envolvem risco à vida humana, que estariam fora do escopo do modelo de Custo da Qualidade e seriam tratados só na esfera judicial"
     ],
     "correta": 2,
-    "resolucao": "por definição, Falha Externa é o defeito percebido pelo cliente (ou, neste caso extremo, pelo paciente) já em uso real — exatamente o que ocorreu. O caso Therac-25 é o exemplo mais grave possível dessa categoria, ilustrando por que a literatura de qualidade trata prevenção como investimento, não como custo. {{A}} erra a categoria (o defeito existir antes não é o critério — o critério é quem o percebeu primeiro). {{B}} e {{D}} distorcem as definições: avaliação e prevenção são categorias de investimento antes do defeito se manifestar, não descrições do próprio acidente. {{E}} é falso: o modelo de Custo da Qualidade se aplica a qualquer tipo de falha, e o Therac-25 é, na literatura de engenharia de software, citado exatamente como o exemplo-limite de Falha Externa."
+    "resolucao": "por definição, Falha Externa é o defeito percebido pelo cliente (ou, neste caso extremo, pelo paciente) já em uso real — exatamente o que ocorreu. O caso Therac-25 é o exemplo mais grave possível dessa categoria, ilustrando por que a literatura de qualidade trata prevenção como investimento, não como custo. {{A}} erra a categoria (o defeito existir antes não é o critério — o critério é quem o percebeu primeiro). {{B}} e {{D}} distorcem as definições: avaliação e prevenção são categorias de investimento antes do defeito se manifestar, não descrições do próprio acidente. {{E}} é falso: o modelo de Custo da Qualidade se aplica a qualquer tipo de falha, e o Therac-25 é, na literatura de engenharia de software, citado exatamente como o exemplo-limite de Falha Externa.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap1-q10",
@@ -448,7 +464,8 @@
       "A reutilização de código entre foguetes distintos é, segundo o relatório, uma prática tecnicamente correta que não teve nenhuma relação causal com o acidente"
     ],
     "correta": 1,
-    "resolucao": "o próprio relatório de Lions (1996) descreve um código que funcionava corretamente havia anos (bem verificado para seu contexto original), mas cuja adequação nunca foi revalidada para as condições específicas de voo do novo foguete — o resumo mais preciso da distinção entre um software conforme ao especificado (verificado) e apto ao uso no novo contexto real (validado). {{A}} está errado porque o código de fato funcionava conforme especificado no Ariane 4 havia anos, isto é, era verificado nesse contexto. {{C}} introduz uma causa (falha de hardware) não mencionada no relatório, que atribui o problema a software. {{D}} é falso: o software passou por testes, mas não nas condições reais do Ariane 5. {{E}} ignora que o próprio relatório aponta exatamente a reutilização sem revalidação como fator causal central do acidente."
+    "resolucao": "o próprio relatório de Lions (1996) descreve um código que funcionava corretamente havia anos (bem verificado para seu contexto original), mas cuja adequação nunca foi revalidada para as condições específicas de voo do novo foguete — o resumo mais preciso da distinção entre um software conforme ao especificado (verificado) e apto ao uso no novo contexto real (validado). {{A}} está errado porque o código de fato funcionava conforme especificado no Ariane 4 havia anos, isto é, era verificado nesse contexto. {{C}} introduz uma causa (falha de hardware) não mencionada no relatório, que atribui o problema a software. {{D}} é falso: o software passou por testes, mas não nas condições reais do Ariane 5. {{E}} ignora que o próprio relatório aponta exatamente a reutilização sem revalidação como fator causal central do acidente.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap1-q11",
@@ -479,7 +496,8 @@
       "Design inadequado, pois a arquitetura de software do Ariane 5 nunca chegou a ser definida formalmente pela equipe de engenharia"
     ],
     "correta": 2,
-    "resolucao": "manter, sem necessidade real e sem revalidação, um código legado “por uniformidade” entre dois programas distintos é o retrato exato do débito técnico descrito no capítulo: um atalho que funciona até que o contexto que o sustentava deixa de ser válido. {{A}} tenta encaixar o cenário em pressão de prazo, mas o texto não menciona urgência como motivador da decisão, e sim conveniência de uniformidade. {{B}} é factualmente incorreto: o código foi de fato testado (no contexto do Ariane 4), o problema foi a ausência de revalidação para o novo contexto, questão distinta de ‘não saber testar’. {{D}} inverte a causa: o problema não foi um requisito mal definido da missão, mas a manutenção desnecessária de um código legado. {{E}} não é sustentado pelo relatório, que não aponta ausência de arquitetura formal como causa."
+    "resolucao": "manter, sem necessidade real e sem revalidação, um código legado “por uniformidade” entre dois programas distintos é o retrato exato do débito técnico descrito no capítulo: um atalho que funciona até que o contexto que o sustentava deixa de ser válido. {{A}} tenta encaixar o cenário em pressão de prazo, mas o texto não menciona urgência como motivador da decisão, e sim conveniência de uniformidade. {{B}} é factualmente incorreto: o código foi de fato testado (no contexto do Ariane 4), o problema foi a ausência de revalidação para o novo contexto, questão distinta de ‘não saber testar’. {{D}} inverte a causa: o problema não foi um requisito mal definido da missão, mas a manutenção desnecessária de um código legado. {{E}} não é sustentado pelo relatório, que não aponta ausência de arquitetura formal como causa.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap1-q12",
@@ -488,9 +506,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Os custos nacionais anuais de uma infraestrutura inadequada para testes de software são estimados entre US$ 22,2 e US$ 59,5 bilhões. [...] Mais da metade desses custos é arcada pelos usuários de software, em atividades de prevenção e mitigação de erros. O restante é arcado pelos desenvolvedores de software [...] Os desenvolvedores de software poderiam eliminar mais da metade desses custos [...] adotando técnicas de teste aprimoradas mais cedo no ciclo de vida do software.” (tradução nossa)",
-        "fonte": "RTI International. The Economic Impacts of Inadequate Infrastructure for Software Testing. NIST Planning Report 02-3. Gaithersburg: National Institute of Standards and Technology, 2002."
+        "t": "p",
+        "texto": "Um estudo feito para o NIST estimou que a infraestrutura inadequada para testes de software custava à economia dos Estados Unidos cerca de US$ 59,5 bilhões por ano. Segundo o mesmo estudo, melhorias que permitissem encontrar os defeitos mais cedo e de forma mais eficaz poderiam reduzir esse custo em cerca de US$ 22,2 bilhões."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em RTI International. The Economic Impacts of Inadequate Infrastructure for Software Testing. NIST Planning Report 02-3. Gaithersburg: National Institute of Standards and Technology, 2002."
       },
       {
         "t": "p",
@@ -500,13 +521,14 @@
     "enunciado": "Considerando o relatório do NIST (2002) e o conceito do Custo da Qualidade apresentados no capítulo, assinale a alternativa que melhor fundamenta uma resposta técnica a essa diretoria:",
     "alternativas": [
       "A diretoria está correta: testar no final é sempre mais eficiente",
-      "Segundo o NIST, mais da metade dos custos de testes inadequados cairia com testes mais cedo no ciclo, o que apoia o pedido da equipe",
+      "Segundo o NIST, cerca de um terço desse custo poderia ser evitado encontrando os defeitos mais cedo, o que apoia o pedido da equipe",
       "O relatório do NIST (2002) não faz nenhuma recomendação sobre o momento ideal de testar um sistema, apenas quantifica custos totais, sem relação com o pedido da equipe de engenharia",
       "Concentrar testes no fim do projeto é preferível porque reduz o número total de vezes que a equipe precisa interromper o desenvolvimento para corrigir problemas",
       "A quantidade de horas dedicadas a testes é irrelevante para o orçamento total, desde que o sistema eventualmente funcione antes do lançamento"
     ],
     "correta": 1,
-    "resolucao": "o próprio texto motivador afirma que desenvolvedores poderiam eliminar mais da metade dos custos associados a testes inadequados adotando técnicas de teste mais cedo no ciclo de vida — exatamente o argumento técnico que sustenta o pedido da equipe de engenharia, e que se conecta diretamente à regra geral do Custo da Qualidade (prevenir é mais barato que corrigir depois). {{A}} e {{D}} repetem a intuição da diretoria, mas contrariam tanto o texto motivador quanto o princípio de custo crescente por fase, apresentado no capítulo. {{C}} é factualmente incorreto: o relatório explicitamente recomenda testes mais cedo no ciclo de vida. {{E}} ignora todo o raciocínio econômico apresentado no capítulo sobre custo da qualidade."
+    "resolucao": "o estudo do NIST estima que, dos cerca de US$ 59,5 bilhões perdidos por ano, cerca de US$ 22,2 bilhões poderiam ser evitados com uma infraestrutura de testes que encontrasse os defeitos mais cedo e de forma mais eficaz. É o argumento que sustenta o pedido da equipe, e ele se liga ao Custo da Qualidade: prevenir e avaliar cedo sai mais barato que corrigir depois. {{A}} e {{D}} repetem a intuição da diretoria, mas contrariam o estudo e o custo crescente por fase visto no capítulo. {{C}} é incorreta: o estudo liga a redução de custos justamente a encontrar defeitos mais cedo. {{E}} ignora todo o raciocínio econômico do Custo da Qualidade.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap1-m1",
@@ -514,14 +536,19 @@
     "capituloId": "qualidade-cap1",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa lança um software que atende 100% dos requisitos especificados no contrato, mas os usuários o consideram difícil de usar e frequentemente abandonam as tarefas. Com base nas definições clássicas de qualidade, qual é a análise correta?",
-    "alternativas": [
-      "O software tem qualidade plena, pois a definição do IEEE determina que qualidade é exclusivamente a conformidade com os requisitos especificados — a dificuldade de uso é responsabilidade dos usuários, não da equipe de desenvolvimento.",
-      "Só falha para Juran, cuja adequação ao uso é critério secundário.",
-      "Atende à definição de Crosby (conformidade), mas não à de Juran (adequação ao uso) nem à qualidade em uso da 25010; conformidade e satisfação se complementam.",
-      "O software não tem qualidade sob nenhuma definição, pois a ISO/IEC 25010 determina que usabilidade é o fator primário de qualidade, sobrepondo-se a todos os demais requisitos funcionais especificados em contrato."
+    "caso": [
+      "Uma empresa de software lançou três iniciativas: (1) revisões de código obrigatórias e acompanhamento de métricas de defeitos; (2) avaliação no modelo MPS.BR, com padronização dos processos de desenvolvimento; (3) pesquisa NPS com os clientes e testes de usabilidade com usuários reais."
     ],
-    "correta": 2
+    "enunciado": "As iniciativas 1, 2 e 3 estão ligadas, respectivamente, às dimensões",
+    "alternativas": [
+      "Qualidade de Produto, Qualidade de Processo e Qualidade em Uso.",
+      "Qualidade de Processo, Qualidade de Produto e Qualidade em Uso.",
+      "Qualidade de Produto, Qualidade em Uso e Qualidade de Processo.",
+      "Qualidade em Uso, Qualidade de Processo e Qualidade de Produto.",
+      "Qualidade de Processo nas três, pois todas são práticas da empresa."
+    ],
+    "correta": 0,
+    "resolucao": "Revisões de código e métricas de defeitos olham as características do software entregue: Qualidade de Produto (1). A avaliação MPS.BR e a padronização dos processos tratam da metodologia usada para desenvolver: Qualidade de Processo (2). A pesquisa NPS e os testes de usabilidade medem a experiência real do usuário final: Qualidade em Uso (3). As três dimensões são complementares, e um bom processo não garante sozinho um bom produto."
   },
   {
     "id": "qualidade-cap1-m2",
@@ -529,14 +556,23 @@
     "capituloId": "qualidade-cap1",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um defeito crítico é descoberto em produção em um sistema bancário, exigindo intervenção de emergência, rollback e notificação de 500 mil clientes. Se o mesmo defeito tivesse sido detectado na fase de análise de requisitos, o custo seria 80 vezes menor. Qual conceito explica essa diferença e o que ela implica para a estratégia de qualidade?",
-    "alternativas": [
-      "O conceito de débito técnico explica a diferença — acumular problemas não resolvidos nas fases iniciais gera juros crescentes que só podem ser quitados com refatoração completa do sistema em produção.",
-      "Qualidade de processo: com CMMI 5, defeitos nunca chegam à produção.",
-      "O Custo da Qualidade: falhas externas, achadas depois da entrega, custam muito mais do que as evitadas no início, o que justifica investir em prevenção e avaliação.",
-      "O conceito de qualidade em uso explica a diferença — sistemas bancários têm requisitos de usabilidade tão elevados que qualquer defeito descoberto pelo usuário final gera automaticamente custos 80 vezes maiores do que os detectados internamente."
+    "caso": [
+      "Em um projeto de aplicativo bancário, foram registrados quatro problemas: (1) requisitos ambíguos sobre o cálculo de tarifas; (2) um cronograma agressivo, que levou a equipe a cortar testes; (3) mudanças frequentes de escopo pedidas pelo cliente; (4) ausência de controle de versões do código. Avalie as afirmativas a seguir.",
+      "I. Os requisitos ambíguos são um fator interno ao processo e estão entre as principais fontes de defeitos.",
+      "II. A pressão de prazo é um fator interno ao processo, pois o cronograma é definido pela própria equipe.",
+      "III. As mudanças frequentes de escopo são um fator externo, que pode comprometer a integridade arquitetural.",
+      "IV. A falta de controle de versões é uma falha de gestão de configuração, um fator interno ao processo."
     ],
-    "correta": 2
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, III e IV, apenas.",
+      "I e III, apenas.",
+      "I, II, III e IV.",
+      "III e IV, apenas.",
+      "I e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: a qualidade dos requisitos é um fator interno, e requisitos ambíguos, incompletos ou inconsistentes são a principal fonte de defeitos. II é falsa: no capítulo, a pressão de prazo aparece entre os fatores externos ao processo, e leva ao corte de testes e revisões. III é verdadeira: mudanças de requisitos são um fator externo, que pode introduzir inconsistências. IV é verdadeira: controle de versões é parte da gestão de configuração, um fator interno."
   },
   {
     "id": "qualidade-cap1-m3",
@@ -546,12 +582,14 @@
     "nivel": "medio",
     "enunciado": "Uma startup de healthtech desenvolve software para monitoramento cardíaco em UTIs. A equipe argumenta que, por ser ágil e ter ciclos curtos, pode reduzir os testes para entregar mais rápido. Com base nos fatores que afetam a qualidade, qual é o risco central dessa decisão?",
     "alternativas": [
-      "O risco central é a perda de competitividade no mercado, pois ciclos mais longos de entrega permitem que concorrentes lancem produtos similares antes, comprometendo a participação de mercado da startup independentemente da qualidade técnica do software.",
-      "O domínio médico exige confiabilidade muito maior: cortar testes num monitor cardíaco de UTI põe vidas em risco, como no caso Therac-25.",
-      "O risco central é regulatório: a ANVISA exige certificação ISO 9001 para qualquer software médico, e a redução de testes invalida automaticamente o processo de certificação, impedindo a comercialização do produto.",
-      "O risco central é financeiro: o NIST estima que defeitos em software médico custam em média 200 vezes mais para corrigir do que defeitos em software comercial, tornando a economia de prazo financeiramente inviável a longo prazo."
+      "O domínio médico exige confiabilidade muito maior: cortar testes em um monitor cardíaco de UTI põe vidas em risco, como mostrou o caso Therac-25.",
+      "O risco é comercial: os concorrentes podem lançar antes, e por isso a velocidade deve ser a prioridade, mesmo em software médico.",
+      "O risco é burocrático: cortar testes atrasa a certificação ISO 9001, que é a única exigência para vender software médico.",
+      "Não há risco relevante, pois os ciclos curtos substituem os testes, já que os defeitos são corrigidos na sprint seguinte.",
+      "O risco é de usabilidade: com menos testes, as telas ficam mais difíceis de usar, mas a segurança dos pacientes não muda."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "A complexidade do domínio é um fator externo: sistemas médicos, financeiros ou de controle industrial exigem precisão e confiabilidade muito maiores, e falhas podem custar vidas, como no Therac-25. A pressão por entregar rápido leva justamente ao corte de testes. Corrigir na sprint seguinte não serve quando o defeito já atingiu um paciente na UTI."
   },
   {
     "id": "qualidade-cap1-m4",
@@ -559,14 +597,16 @@
     "capituloId": "qualidade-cap1",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Segundo o Modelo de McCall, um sistema precisa ser modificado para rodar em novo sistema operacional, integrar-se a uma API de terceiros e ter seu código compreendido por novos desenvolvedores. Em qual perspectiva cada necessidade se enquadra?",
+    "enunciado": "Segundo o Modelo de McCall, um sistema precisa ser modificado para rodar em um novo sistema operacional, integrar-se a uma API de terceiros e ter o seu código compreendido por novos desenvolvedores. Em qual perspectiva cada necessidade se enquadra?",
     "alternativas": [
-      "As três são Revisão do Produto, pois todas mudam o código.",
-      "Migração para novo SO enquadra-se em Operação do Produto; integração com API em Transição do Produto; e compreensão do código em Revisão do Produto — pois operação trata de execução, transição de adaptação e revisão de mudança.",
-      "Novo SO e API de terceiros são Transição do Produto (portabilidade e interoperabilidade); entender o código é Revisão do Produto (manutenibilidade).",
-      "Migração para novo SO enquadra-se em Revisão do Produto (flexibilidade); integração com API em Operação do Produto (eficiência); e compreensão do código em Transição do Produto (reusabilidade) — pois o modelo de McCall classifica mudanças técnicas pela sua origem, não pelo seu impacto."
+      "Novo sistema e API são Transição do Produto (portabilidade e interoperabilidade); entender o código é Revisão do Produto (manutenibilidade).",
+      "As três são Revisão do Produto, pois todas exigem mudar o código e, por isso, tratam da capacidade de mudança do sistema.",
+      "Novo sistema operacional é Operação do Produto; a API é Transição do Produto; e entender o código é Revisão do Produto, pois a operação trata da execução.",
+      "Novo sistema operacional é Revisão do Produto (flexibilidade); a API é Operação do Produto (eficiência); e o código é Transição.",
+      "As três são Transição do Produto, pois todas envolvem adaptar o sistema a pessoas ou a ambientes novos, como pede a portabilidade."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "No Modelo de McCall, a Transição do Produto trata da adaptação a novos ambientes: rodar em outro sistema operacional é portabilidade, e integrar-se a uma API de terceiros é interoperabilidade. A Revisão do Produto trata da capacidade de mudança: um código fácil de entender para quem chega é manutenibilidade. A Operação do Produto reúne as características de execução, como correção, confiabilidade, eficiência, integridade e usabilidade."
   },
   {
     "id": "qualidade-cap1-m5",
@@ -574,14 +614,16 @@
     "capituloId": "qualidade-cap1",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe adota processo rigoroso com CMMI nível 3, code reviews obrigatórios e CI/CD, mas os requisitos foram levantados superficialmente com stakeholders. O produto entregue não resolve os problemas reais dos usuários. Qual princípio de qualidade essa situação ilustra?",
+    "enunciado": "Uma equipe adota um processo rigoroso, com CMMI nível 3, revisões de código obrigatórias e CI/CD, mas os requisitos foram levantados superficialmente com os stakeholders. O produto entregue não resolve os problemas reais dos usuários. Qual princípio de qualidade essa situação ilustra?",
     "alternativas": [
-      "Ilustra que qualidade de processo garante automaticamente qualidade de produto — o problema descrito é exceção estatística que ocorre em menos de 5% dos projetos com CMMI nível 3, sendo irrelevante para a teoria geral de qualidade.",
-      "Bom processo não garante bom produto: qualidade de processo e de produto se complementam, e requisitos mal levantados comprometem o resultado.",
-      "Que só a qualidade em uso importa, e processos são burocracia.",
-      "Ilustra que a ISO/IEC 25010 é superior ao CMMI como modelo de qualidade — organizações que adotam a norma ISO para produto em vez de modelos de processo evitam sistematicamente o problema de produtos tecnicamente corretos mas funcionalmente inadequados."
+      "Um bom processo não garante um bom produto: as qualidades de processo e de produto se complementam, e requisitos ruins comprometem tudo.",
+      "A qualidade de processo garante a de produto, e o caso é uma exceção estatística, que não muda a teoria geral da qualidade.",
+      "Só a qualidade em uso importa, e processos como CMMI, revisões e CI/CD são burocracias que não melhoram o produto.",
+      "A ISO/IEC 25010 substitui o CMMI: quem adota a norma de produto, em vez de um modelo de processo, evita esse problema.",
+      "O problema está na integração contínua, que acelerou demais as entregas e impediu a equipe de testar o produto final."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "O capítulo afirma que um processo de qualidade tende a produzir produtos de qualidade, mas não garante isso automaticamente. Aqui, a qualidade dos requisitos, que é a principal fonte de defeitos, foi descuidada, e nenhum processo compensa isso. Qualidade de processo, de produto e em uso são dimensões complementares, e uma não substitui a outra."
   },
   {
     "id": "qualidade-cap1-m6",
@@ -589,14 +631,19 @@
     "capituloId": "qualidade-cap1",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um gerente de projeto argumenta que investir em testes automatizados e revisões de código aumenta o custo do projeto em 30% e propõe cortar essas atividades para cumprir o orçamento. Com base no conceito de CoQ, qual é o contra-argumento mais sólido?",
-    "alternativas": [
-      "O contra-argumento mais sólido é que testes automatizados são exigência obrigatória da ISO/IEC 25010, e sua ausência invalida legalmente qualquer certificação de qualidade, expondo a empresa a sanções regulatórias superiores aos 30% de economia projetada.",
-      "Sem testes, o código sai 50% mais lento, anulando a economia.",
-      "Testes e revisões são prevenção e avaliação, a parte mais barata do Custo da Qualidade; cortá-los faz crescer as falhas internas e externas, muito mais caras.",
-      "O contra-argumento é reputacional: a ausência de testes automatizados sinaliza ao mercado que a empresa não adota boas práticas, reduzindo a percepção de valor do produto e comprometendo futuras vendas independentemente do impacto financeiro direto no projeto atual."
+    "caso": [
+      "Uma equipe vai avaliar a qualidade de um sistema de gestão empresarial usando a norma ISO/IEC 25010 e revisou o que a norma define."
     ],
-    "correta": 2
+    "enunciado": "Sobre a norma ISO/IEC 25010, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "Entre as oito características de qualidade de produto da norma estão o custo de desenvolvimento e o prazo de entrega.",
+      "A ISO/IEC 25010 é a sucessora da ISO/IEC 9126 como modelo de qualidade de produto de software.",
+      "A norma relaciona a qualidade à capacidade de satisfazer necessidades explícitas e implícitas dos usuários.",
+      "Usabilidade, confiabilidade, segurança e manutenibilidade estão entre as características da norma.",
+      "Compatibilidade e portabilidade também fazem parte das oito características de qualidade de produto."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a do custo e do prazo: as oito características da ISO/IEC 25010 são adequação funcional, eficiência de desempenho, compatibilidade, usabilidade, confiabilidade, segurança, manutenibilidade e portabilidade. Custo e prazo são restrições do projeto, e não características do produto. As demais alternativas estão corretas."
   },
   {
     "id": "qualidade-cap1-m7",
@@ -604,14 +651,16 @@
     "capituloId": "qualidade-cap1",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "A equipe de desenvolvimento usa bibliotecas de terceiros desatualizadas com vulnerabilidades conhecidas e depende de uma API externa que apresenta instabilidade recorrente. Qual categoria de fatores que afetam a qualidade está sendo negligenciada?",
+    "enunciado": "A equipe de desenvolvimento usa bibliotecas de terceiros desatualizadas, com vulnerabilidades conhecidas, e depende de uma API externa que apresenta instabilidade recorrente. Qual categoria de fatores que afetam a qualidade está sendo negligenciada?",
     "alternativas": [
-      "Fatores internos ao processo — especificamente a competência da equipe, que deveria ter conhecimento técnico suficiente para identificar e substituir bibliotecas vulneráveis sem necessidade de orientação externa ou processo formal.",
-      "Fatores internos ao processo — especificamente a gestão de configuração, que deveria rastrear todas as versões de dependências e garantir que apenas bibliotecas aprovadas e auditadas sejam utilizadas no projeto.",
-      "Fatores externos, como dependências que a equipe não controla totalmente, somados a uma falha interna: ninguém verifica vulnerabilidades no pipeline.",
-      "Fatores externos ao processo — especificamente complexidade do domínio, pois sistemas que dependem de APIs externas são inerentemente mais complexos e essa complexidade justifica a aceitação de riscos adicionais de qualidade como trade-off necessário de desenvolvimento."
+      "Fatores externos (dependências de terceiros, fora do controle total da equipe) e uma falha interna: ninguém acompanha as vulnerabilidades.",
+      "Só fatores internos, pois a competência da equipe deveria bastar para trocar as bibliotecas, sem precisar de processo formal.",
+      "Só a complexidade do domínio, pois sistemas que dependem de APIs externas são complexos, e esse risco deve ser aceito.",
+      "Só a pressão de prazo, pois bibliotecas desatualizadas só aparecem em projetos com cronogramas agressivos e sem testes.",
+      "Nenhum fator de qualidade, pois a responsabilidade por falhas de bibliotecas e APIs de terceiros é toda de quem as fornece."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Bibliotecas, APIs e serviços externos são dependências externas, que introduzem riscos parcialmente fora do controle da equipe. Mas parte do problema é interna: usar bibliotecas com vulnerabilidades conhecidas mostra que faltam boas práticas e ferramentas para acompanhar as dependências. A equipe não controla o fornecedor, mas responde pela escolha e pelo acompanhamento do que usa."
   },
   {
     "id": "qualidade-cap1-m8",
@@ -619,14 +668,16 @@
     "capituloId": "qualidade-cap1",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um software de gestão hospitalar funciona perfeitamente no ambiente de desenvolvimento, mas apresenta falhas intermitentes em produção devido a diferenças de configuração de rede e variações de hardware nos hospitais clientes. Qual fator externo de qualidade explica esse cenário?",
+    "enunciado": "Um software de gestão hospitalar funciona perfeitamente no ambiente de desenvolvimento, mas apresenta falhas intermitentes em produção, devido a diferenças de configuração de rede e a variações de hardware nos hospitais clientes. Qual fator externo de qualidade explica esse cenário?",
     "alternativas": [
-      "Pressão de prazo, que é um fator interno do processo.",
-      "Complexidade do domínio hospitalar — sistemas médicos são inerentemente mais complexos que outros domínios, e falhas intermitentes em produção são esperadas e aceitas como comportamento normal nesse tipo de aplicação crítica.",
-      "O ambiente de execução: hardware, redes e configurações diferentes revelam falhas não vistas no teste, e a solução é testar em ambientes variados.",
-      "Mudanças de requisitos — os hospitais clientes alteraram suas configurações de rede após a entrega do software, caracterizando mudança de escopo pós-contratual que transfere a responsabilidade pelas falhas ao cliente, não à equipe de desenvolvimento."
+      "O ambiente de execução: hardware, redes e configurações diferentes revelam falhas que o teste não pegou; é preciso testar em ambientes variados.",
+      "A pressão de prazo, pois a equipe não teve tempo de instalar o sistema nos hospitais antes da data combinada para a entrega.",
+      "A complexidade do domínio hospitalar, pois, em sistemas médicos, falhas intermitentes em produção são esperadas e aceitas.",
+      "Mudanças de requisitos, pois os hospitais mudaram as redes depois da entrega, o que passa ao cliente a responsabilidade.",
+      "A qualidade dos requisitos, pois eles estavam ambíguos e, por isso, o sistema se comporta de forma diferente em cada hospital."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Variações em hardware, sistemas operacionais, redes e configurações podem expor comportamentos não detectados no ambiente de teste: é o fator externo ambiente de execução. A resposta é testar em ambientes que representem a variedade real dos clientes. Falhas intermitentes nunca são \"normais\" em um sistema médico, e o caso não fala em requisitos ambíguos nem em mudança de escopo."
   },
   {
     "id": "qualidade-cap1-m9",
@@ -634,14 +685,16 @@
     "capituloId": "qualidade-cap1",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "A norma ISO/IEC 25010 define oito características de qualidade de produto. Um sistema de pagamentos online apresenta excelente funcionalidade e desempenho, mas falha em segurança e manutenibilidade. Como isso impacta a avaliação de qualidade do produto?",
+    "enunciado": "A norma ISO/IEC 25010 define oito características de qualidade de produto. Um sistema de pagamentos on-line apresenta excelente funcionalidade e desempenho, mas falha em segurança e manutenibilidade. Como isso impacta a avaliação de qualidade do produto?",
     "alternativas": [
-      "O sistema tem qualidade aceitável: a ISO/IEC 25010 define que funcionalidade e desempenho são características primárias com peso dobrado na avaliação, compensando matematicamente as deficiências em segurança e manutenibilidade.",
-      "É qualidade parcial, pois a empresa pode tornar segurança opcional.",
-      "Qualidade é multidimensional: falha de segurança num sistema de pagamentos é risco grave, e pouca manutenibilidade trava a evolução; excelência em uma área não compensa outra.",
-      "O sistema tem qualidade plena sob a perspectiva da ISO/IEC 25010, pois a norma avalia cada característica independentemente e o resultado final é a média aritmética das oito dimensões — com excelência em funcionalidade e desempenho, o sistema atinge nota mínima aprovada mesmo com falhas em segurança."
+      "A qualidade é multidimensional: falhar em segurança num sistema de pagamentos é grave, e a excelência em uma característica não compensa outra.",
+      "O sistema tem qualidade aceitável, pois a norma dá peso dobrado à funcionalidade e ao desempenho, o que compensa as deficiências.",
+      "É uma qualidade parcial, mas aceitável, pois a empresa pode declarar segurança e manutenibilidade como características opcionais.",
+      "O sistema tem qualidade plena, pois a nota final da norma é a média das oito características, e a média fica acima do mínimo.",
+      "Só a manutenibilidade preocupa, pois a segurança dos pagamentos é responsabilidade da operadora de cartão, e não do sistema."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A ISO/IEC 25010 organiza a qualidade em oito características, e nenhuma delas compensa a falta de outra; a norma não atribui pesos nem calcula uma média. Em um sistema de pagamentos, a falha de segurança expõe dados e dinheiro dos clientes, e a baixa manutenibilidade dificulta corrigir e evoluir o sistema."
   },
   {
     "id": "qualidade-cap1-m10",
@@ -649,14 +702,16 @@
     "capituloId": "qualidade-cap1",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Philip Crosby afirma que \"qualidade é gratuita\" (Quality is Free). Qual é o raciocínio por trás dessa afirmação e como ela se relaciona com o conceito de Custo da Qualidade?",
+    "enunciado": "Philip Crosby afirma que \"a qualidade é gratuita\" (Quality is Free). Qual é o raciocínio por trás dessa afirmação e como ela se relaciona com o Custo da Qualidade?",
     "alternativas": [
-      "Crosby afirma que qualidade é gratuita porque processos ágeis modernos, como Scrum e Kanban, eliminam o custo das atividades de verificação ao integrar qualidade naturalmente ao fluxo de trabalho, sem necessidade de investimento adicional em testes ou revisões formais.",
-      "Porque a ISO 9001 subsidia a certificação de pequenas empresas.",
-      "Para Crosby, prevenir sai \"de graça\" porque elimina custos de falhas maiores que o investimento; o que custa é a não qualidade: retrabalho, suporte, clientes perdidos.",
-      "Crosby afirma que qualidade é gratuita porque defeitos de software são inevitáveis e seu custo já está precificado nos contratos de desenvolvimento — a qualidade portanto não representa custo adicional, mas sim parte do custo padrão de qualquer projeto de software bem gerenciado."
+      "Para Crosby, prevenir sai \"de graça\" porque evita custos de falha maiores que o investimento; o que custa caro é a não qualidade.",
+      "Porque processos ágeis, como Scrum e Kanban, eliminam o custo das atividades de verificação, sem investimento em testes.",
+      "Porque a ISO 9001 subsidia a certificação de pequenas empresas, e os custos de avaliação deixam de existir para elas.",
+      "Porque os defeitos são inevitáveis e o seu custo já está previsto nos contratos, sem representar um custo adicional.",
+      "Porque a qualidade depende só do talento da equipe, e por isso não exige gastos com treinamento, revisões ou testes."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A ideia de Crosby é que o dinheiro investido em prevenção é recuperado com folga, porque evita os custos de falha: retrabalho, suporte, recalls, penalidades e clientes perdidos. A falta de qualidade é que eleva os custos. Pelo capítulo, cada real investido em prevenção pode economizar de 5 a 100 reais em correções posteriores. Qualidade \"gratuita\" não significa que prevenção e avaliação não custam nada."
   },
   {
     "id": "qualidade-cap3-q1",

@@ -22,9 +22,9 @@
   "E": "Equivocada: o Manifesto Ágil não menciona planejamento nem mudanças, tratando apenas da colaboração com o cliente"
  },
  "engsoft-cap1-q6": {
-  "A": "A empresa está correta: a maioria dos projetos de TI é concluída com sucesso sem necessidade de rigor na fase de Requisitos, já que os ajustes são feitos nos testes",
-  "B": "A empresa está equivocada: o relatório mostra alta taxa de insucesso, e requisitos mal definidos estão entre as causas principais",
-  "D": "Os dados do CHAOS Report indicam que mais de 90% dos projetos de TI são bem-sucedidos, independentemente da qualidade dos requisitos"
+  "A": "RAD, pela prototipagem rápida com o usuário presente; o cuidado é planejar bem a arquitetura desde o início, para o sistema não ficar pouco escalável",
+  "B": "Cascata, pelo prazo curto e fixo; o cuidado é aprovar todas as telas com a coordenadora antes de começar a programar",
+  "D": "RAD, pelo prazo curto; o cuidado é limitar a participação da coordenadora, que pode atrasar as entregas semanais"
  },
  "engsoft-cap1-q7": {
   "A": "Requisitos, pois envolve levantar o que o sistema deve fazer e quais tecnologias o cliente exige",
@@ -32,8 +32,8 @@
   "D": "Implementação, pois envolve decisões técnicas sobre as linguagens, os frameworks e a forma de organizar o código"
  },
  "engsoft-cap1-q9": {
-  "C": "Adaptativa, pois adequa o sistema a uma mudança no ambiente externo, no caso a legislação",
-  "E": "Nenhuma das anteriores, pois mudanças legais estão fora do escopo da manutenção e devem ser tratadas como um novo projeto"
+  "C": "Requisitos, Análise, Design e Implantação",
+  "E": "Requisitos, Análise, Design e Manutenção"
  },
  "engsoft-cap1-q10": {
   "A": "A do gerente: existe um único modelo ou técnica capaz de resolver todos os desafios de qualquer projeto, desde que aplicado com disciplina",
@@ -58,9 +58,9 @@
   "D": "O CHAOS Report não trata especificamente de engenharia de requisitos, e sim apenas de orçamento e cronograma dos projetos de TI"
  },
  "engsoft-cap2-q6": {
-  "B": "Totalmente equivocada: em um banco, segurança, conformidade com a LGPD e desempenho são tão críticos quanto as funcionalidades",
-  "C": "Correta apenas para projetos de pequeno porte",
-  "E": "Requisitos funcionais e não funcionais têm igual importância, mas os funcionais devem sempre vir primeiro, e os não funcionais entram só na fase de testes"
+  "B": "I, apenas.",
+  "C": "II, apenas.",
+  "E": "I, II e III."
  },
  "engsoft-cap2-q7": {
   "A": "Desempenho, pois o sistema está lento e os usuários levam muito tempo para completar a tarefa",
@@ -74,9 +74,9 @@
   "C": "Ambos: \"seguro\" e \"rápido\" são vagos e não mensuráveis, e os dois requisitos entram em conflito"
  },
  "engsoft-cap2-q9": {
-  "A": "Product Backlog, pois é mais moderno e ágil e permite repriorizar os requisitos a cada sprint, mesmo com contrato fixo",
-  "C": "SRS formal (IEEE 830), pois o projeto é governamental, com requisitos estáveis e contrato fixo",
-  "E": "Casos de Uso em UML, sem SRS"
+  "A": "SRS, Documento de Visão, Backlog do Produto e Casos de Uso",
+  "C": "Documento de Visão, SRS, Backlog do Produto e Casos de Uso",
+  "E": "Documento de Visão, Backlog do Produto, SRS e Casos de Uso"
  },
  "engsoft-cap2-q10": {
   "B": "Violações de requisitos não funcionais de conformidade (LGPD), que deveriam ter sido especificados desde o início",
@@ -97,7 +97,7 @@
  "engsoft-cap3-q5": {
   "B": "Pouco adequada: a complexidade operacional dos microsserviços não é comportada por uma equipe de quatro pessoas",
   "E": "Adequada, desde que os doze serviços compartilhem um único banco com as mesmas tabelas, evitando problemas de consistência",
-  "resolucao": "a Seção 3.3 lista a complexidade operacional dos microsserviços (monitoramento distribuído, consistência entre bancos, infraestrutura), e o estudo de caso do capítulo conclui que, com equipe pequena, a arquitetura em camadas é a mais adequada; a escola também não precisa escalar partes separadamente. {{A}}: nenhum padrão é sempre o melhor, pois depende do contexto; {{C}}: é o contrário, pois microsserviços exigem mais infraestrutura; {{D}}: chega ao veredito certo pelo motivo errado, pois o próprio texto de Lewis e Fowler cita a comunicação por API HTTP; {{E}}: um banco único compartilhado acaba com a independência que define o estilo."
+  "resolucao": "a Seção 3.3 lista a complexidade operacional dos microsserviços (monitoramento distribuído, consistência de dados entre serviços e maior esforço de infraestrutura), que uma equipe de quatro pessoas, sem ninguém dedicado à infraestrutura, dificilmente sustenta; e a escola não precisa escalar partes do sistema separadamente. Uma arquitetura em camadas atenderia melhor. {{A}}: nenhum padrão é sempre o melhor, pois depende do contexto; {{C}}: é o contrário, pois microsserviços exigem mais infraestrutura; {{D}}: chega ao veredito certo pelo motivo errado, pois o próprio texto de Lewis e Fowler cita a comunicação por API HTTP; {{E}}: um banco único compartilhado acaba com a independência que define o estilo."
  },
  "engsoft-cap3-q6": {
   "E": "O caso ilustra uma limitação da arquitetura orientada a eventos: o fluxo de dados fica difícil de rastrear e depurar",
@@ -273,7 +273,7 @@
  "gestaoweb-cap3-q2": {
   "B": "O site institucional (1) pode ser estático, pois muda pouco; o portal do cliente (2) precisa ser dinâmico, com login e dados por usuário",
   "E": "A escolha entre site estático e aplicação dinâmica depende exclusivamente do orçamento disponível, sem qualquer relação com a natureza do conteúdo exibido aos visitantes e clientes",
-  "resolucao": "a distinção correta segue a natureza do conteúdo: informação institucional pouco variável e igual para todos os visitantes é o caso ideal para conteúdo estático; dados de processos judiciais, específicos de cada cliente autenticado e atualizados em tempo real, exigem necessariamente uma aplicação dinâmica com backend e banco de dados. C descreve uma contradição: dados 'em tempo real' não podem depender de atualização manual diária."
+  "resolucao": "a distinção correta segue a natureza do conteúdo: informação institucional pouco variável e igual para todos os visitantes é o caso ideal para conteúdo estático; dados de processos judiciais, específicos de cada cliente autenticado e atualizados em tempo real, exigem necessariamente uma aplicação dinâmica com backend e banco de dados. {{C}} descreve uma contradição: dados 'em tempo real' não podem depender de atualização manual diária."
  },
  "gestaoweb-cap3-q3": {
   "B": "O TypeScript permite declarar tipos, e o editor e o compilador apontam incompatibilidades antes da execução, e não em produção",
@@ -412,7 +412,7 @@
   "D": "Requisitos mal definidos, pois a especificação da missão do Ariane 5 não mencionava a necessidade de reinicialização da plataforma inercial nem os novos limites de velocidade do foguete"
  },
  "qualidade-cap1-q12": {
-  "B": "Segundo o NIST, mais da metade dos custos de testes inadequados cairia com testes mais cedo no ciclo, o que apoia o pedido da equipe",
+  "B": "Segundo o NIST, cerca de um terço desse custo poderia ser evitado encontrando os defeitos mais cedo, o que apoia o pedido da equipe",
   "C": "O relatório do NIST (2002) não faz nenhuma recomendação sobre o momento ideal de testar um sistema, apenas quantifica custos totais, sem relação com o pedido da equipe de engenharia",
   "A": "A diretoria está correta: testar no final é sempre mais eficiente"
  },
@@ -1748,42 +1748,42 @@
   "C": "Só a de Gerenciamento (2500n), que reúne tudo num único documento."
  },
  "qualidade-cap1-m1": {
-  "C": "Atende à definição de Crosby (conformidade), mas não à de Juran (adequação ao uso) nem à qualidade em uso da 25010; conformidade e satisfação se complementam.",
-  "B": "Só falha para Juran, cuja adequação ao uso é critério secundário."
+  "C": "Qualidade de Produto, Qualidade em Uso e Qualidade de Processo.",
+  "B": "Qualidade de Processo, Qualidade de Produto e Qualidade em Uso."
  },
  "qualidade-cap1-m2": {
-  "C": "O Custo da Qualidade: falhas externas, achadas depois da entrega, custam muito mais do que as evitadas no início, o que justifica investir em prevenção e avaliação.",
-  "B": "Qualidade de processo: com CMMI 5, defeitos nunca chegam à produção."
+  "C": "I, II, III e IV.",
+  "B": "I e III, apenas."
  },
  "qualidade-cap1-m3": {
-  "B": "O domínio médico exige confiabilidade muito maior: cortar testes num monitor cardíaco de UTI põe vidas em risco, como no caso Therac-25."
+  "B": "O risco é comercial: os concorrentes podem lançar antes, e por isso a velocidade deve ser a prioridade, mesmo em software médico."
  },
  "qualidade-cap1-m4": {
-  "C": "Novo SO e API de terceiros são Transição do Produto (portabilidade e interoperabilidade); entender o código é Revisão do Produto (manutenibilidade).",
-  "A": "As três são Revisão do Produto, pois todas mudam o código."
+  "C": "Novo sistema operacional é Operação do Produto; a API é Transição do Produto; e entender o código é Revisão do Produto, pois a operação trata da execução.",
+  "A": "Novo sistema e API são Transição do Produto (portabilidade e interoperabilidade); entender o código é Revisão do Produto (manutenibilidade)."
  },
  "qualidade-cap1-m5": {
-  "B": "Bom processo não garante bom produto: qualidade de processo e de produto se complementam, e requisitos mal levantados comprometem o resultado.",
-  "C": "Que só a qualidade em uso importa, e processos são burocracia."
+  "B": "A qualidade de processo garante a de produto, e o caso é uma exceção estatística, que não muda a teoria geral da qualidade.",
+  "C": "Só a qualidade em uso importa, e processos como CMMI, revisões e CI/CD são burocracias que não melhoram o produto."
  },
  "qualidade-cap1-m6": {
-  "C": "Testes e revisões são prevenção e avaliação, a parte mais barata do Custo da Qualidade; cortá-los faz crescer as falhas internas e externas, muito mais caras.",
-  "B": "Sem testes, o código sai 50% mais lento, anulando a economia."
+  "C": "A norma relaciona a qualidade à capacidade de satisfazer necessidades explícitas e implícitas dos usuários.",
+  "B": "A ISO/IEC 25010 é a sucessora da ISO/IEC 9126 como modelo de qualidade de produto de software."
  },
  "qualidade-cap1-m7": {
-  "C": "Fatores externos, como dependências que a equipe não controla totalmente, somados a uma falha interna: ninguém verifica vulnerabilidades no pipeline."
+  "C": "Só a complexidade do domínio, pois sistemas que dependem de APIs externas são complexos, e esse risco deve ser aceito."
  },
  "qualidade-cap1-m8": {
-  "C": "O ambiente de execução: hardware, redes e configurações diferentes revelam falhas não vistas no teste, e a solução é testar em ambientes variados.",
-  "A": "Pressão de prazo, que é um fator interno do processo."
+  "C": "A complexidade do domínio hospitalar, pois, em sistemas médicos, falhas intermitentes em produção são esperadas e aceitas.",
+  "A": "O ambiente de execução: hardware, redes e configurações diferentes revelam falhas que o teste não pegou; é preciso testar em ambientes variados."
  },
  "qualidade-cap1-m9": {
-  "C": "Qualidade é multidimensional: falha de segurança num sistema de pagamentos é risco grave, e pouca manutenibilidade trava a evolução; excelência em uma área não compensa outra.",
-  "B": "É qualidade parcial, pois a empresa pode tornar segurança opcional."
+  "C": "É uma qualidade parcial, mas aceitável, pois a empresa pode declarar segurança e manutenibilidade como características opcionais.",
+  "B": "O sistema tem qualidade aceitável, pois a norma dá peso dobrado à funcionalidade e ao desempenho, o que compensa as deficiências."
  },
  "qualidade-cap1-m10": {
-  "C": "Para Crosby, prevenir sai \"de graça\" porque elimina custos de falhas maiores que o investimento; o que custa é a não qualidade: retrabalho, suporte, clientes perdidos.",
-  "B": "Porque a ISO 9001 subsidia a certificação de pequenas empresas."
+  "C": "Porque a ISO 9001 subsidia a certificação de pequenas empresas, e os custos de avaliação deixam de existir para elas.",
+  "B": "Porque processos ágeis, como Scrum e Kanban, eliminam o custo das atividades de verificação, sem investimento em testes."
  },
  "qualidade-cap3-m1": {
   "B": "Nível 1, Inicial: o sucesso depende de talentos individuais, e os resultados variam; o risco é a saída de pessoas-chave derrubar a capacidade de entrega."
