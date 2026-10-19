@@ -2074,12 +2074,12 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“Mocks são [...] objetos pré-programados com expectativas que formam uma especificação das chamadas que se espera que recebam. [...] A principal distinção é que, com mocks, você verifica o comportamento: em vez de verificar os resultados de uma ação, você verifica se as ações corretas foram disparadas durante a execução do teste.” (tradução nossa)",
+        "texto": "“Mocks são [...] objetos pré-programados com expectativas que formam uma especificação das chamadas que se espera que eles recebam.” (tradução nossa)",
         "fonte": "FOWLER, Martin. Mocks Aren't Stubs. martinfowler.com, 2007."
       },
       {
         "t": "citacao",
-        "texto": "“Testes devem ser Rápidos (Fast). [...] Testes devem ser Independentes (Independent) — eles não devem depender uns dos outros. [...] Testes devem ser Repetíveis (Repeatable) em qualquer ambiente. [...] Testes devem ser Autovalidáveis (Self-Validating), com uma saída booleana: passou ou falhou.” (tradução nossa)",
+        "texto": "“Os testes devem ser rápidos (Fast). [...] Os testes não devem depender uns dos outros (Independent). [...] Os testes devem ser repetíveis em qualquer ambiente (Repeatable). [...] Os testes devem ter uma saída booleana: ou passam ou falham (Self-Validating).” (tradução nossa)",
         "fonte": "MARTIN, Robert C. Clean Code: A Handbook of Agile Software Craftsmanship. Upper Saddle River: Prentice Hall, 2008."
       },
       {
@@ -2097,12 +2097,13 @@
     ],
     "enunciado": "Com base no texto e no caso apresentado, responda:",
     "itens": [
-      "a) Com base na citação de Fowler (2007), explique a diferença entre mockar uma dependência para isolar a lógica testada e mockar uma dependência de forma que o teste deixe de verificar seu comportamento real. Relacione sua resposta ao mock de “saldo suficiente = true” fixo, independentemente do cenário.",
+      "a) Com base na definição de Fowler (2007), explique a diferença entre mockar uma dependência para isolar a lógica testada e mockar uma dependência de forma que o teste deixe de verificar seu comportamento real. Relacione sua resposta ao mock de “saldo suficiente = true” fixo, independentemente do cenário.",
       "b) A citação de Martin (2008) descreve as propriedades Fast, Independent, Repeatable e Self-Validating. Os 180 testes do BankFlow cumpriam essas quatro propriedades. Isso significa que eram, de fato, bons testes? Justifique sua resposta considerando também o propósito de um teste, além de suas propriedades técnicas.",
       "c) Qual camada da suíte de testes (unitária, integração ou E2E) deveria ter capturado esse defeito, mesmo com o mock presente nos testes unitários? Explique por que essa camada específica é a mais adequada para esse tipo de verificação.",
       "d) Avalie criticamente a fala do desenvolvedor sênior, que atribui o incidente a “azar”. Sua avaliação deve se posicionar explicitamente sobre se a causa foi aleatória ou estrutural — e, nesse segundo caso, qual prática de automação de testes, estudada no capítulo, poderia ter prevenido esse tipo específico de problema."
     ],
-    "linhas": 12
+    "linhas": 12,
+    "respostaEsperada": "a) Um mock serve para isolar a unidade testada, substituindo a dependência por um objeto com respostas e expectativas definidas para cada cenário. No BankFlow, o mock devolvia sempre \"saldo suficiente = true\", até no teste do saldo insuficiente; com isso, o teste deixou de verificar o comportamento da transferência nos dois casos e passou a testar apenas o próprio mock. Isolar é controlar a resposta de acordo com o cenário; fixar uma resposta única é esconder justamente o que deveria ser verificado.\nb) Não. As propriedades FIRST descrevem a forma de bons testes, mas um teste existe para revelar defeitos. Testes rápidos, independentes, repetíveis e autovalidáveis que nunca podem falhar no cenário que importa dão uma falsa segurança: a suíte ficou 100% verde enquanto o defeito ia para a produção.\nc) A camada de integração, que verifica a comunicação entre a função de transferência e o serviço real de validação de saldo, sem mock nesse ponto. É ali que se descobre se as duas partes juntas se comportam como esperado, inclusive no caso das contas conjuntas.\nd) A causa foi estrutural, e não azar: a suíte foi desenhada de modo que nenhum teste exercitava o serviço real nem o cenário de saldo insuficiente. A prevenção estava em seguir a pirâmide de automação, com testes de integração e de contrato de API no pipeline, e em mocks configurados por cenário; os testes de regressão automatizados no CI/CD teriam apontado a mudança no serviço assim que ela foi feita."
   },
   {
     "id": "qualidade-cap6-q2",
@@ -2129,7 +2130,8 @@
       "Trata-se de um stub, pois o registro de chamadas é uma característica exclusiva de mocks, nunca de spies"
     ],
     "correta": 1,
-    "resolucao": "a citação define exatamente essa combinação como spy: um stub (resposta enlatada) que também registra informações sobre como foi chamado, permitindo verificações posteriores — exatamente o comportamento descrito no caso (retorno fixo de sucesso + registro de chamadas e parâmetros). {{A}} ignora a segunda característica (registro de chamadas), que vai além de um stub simples. {{C}} generaliza incorretamente o termo mock para qualquer substituto de teste, contrariando a distinção detalhada da própria citação. {{D}} é falso: a citação define claramente as três categorias. {{E}} inverte a definição: registro de chamadas é justamente a característica que diferencia spy de stub simples, segundo o texto motivador."
+    "resolucao": "a citação define exatamente essa combinação como spy: um stub (resposta enlatada) que também registra informações sobre como foi chamado, permitindo verificações posteriores — exatamente o comportamento descrito no caso (retorno fixo de sucesso + registro de chamadas e parâmetros). {{A}} ignora a segunda característica (registro de chamadas), que vai além de um stub simples. {{C}} generaliza incorretamente o termo mock para qualquer substituto de teste, contrariando a distinção detalhada da própria citação. {{D}} é falso: a citação define claramente as três categorias. {{E}} inverte a definição: registro de chamadas é justamente a característica que diferencia spy de stub simples, segundo o texto motivador.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap6-q3",
@@ -2160,7 +2162,8 @@
       "Esse objeto não se qualifica em nenhuma das três categorias descritas por Fowler (2007), exigindo uma quarta categoria não mencionada no texto motivador"
     ],
     "correta": 2,
-    "resolucao": "a definição central de mock, segundo a citação, é ser pré-programado com expectativas que formam uma especificação das chamadas esperadas, com verificação do comportamento (a chamada em si) — exatamente o que ocorre quando o objeto do caso falha imediatamente ao não cumprir a expectativa definida antecipadamente. {{A}} ignora que um stub simples não verifica comportamento, apenas responde a chamadas. {{B}} confunde o cenário com o caso anterior: o spy registra e permite verificação posterior, mas não falha imediatamente por si só ao violar uma expectativa predefinida, como descrito neste novo cenário. {{D}} ignora uma diferença central: um verifica estado (spy consultado depois) e o outro verifica comportamento (mock que falha durante a própria execução). {{E}} é desnecessário: a citação já cobre esse comportamento na definição de mock."
+    "resolucao": "a definição central de mock, segundo a citação, é ser pré-programado com expectativas que formam uma especificação das chamadas esperadas, com verificação do comportamento (a chamada em si) — exatamente o que ocorre quando o objeto do caso falha imediatamente ao não cumprir a expectativa definida antecipadamente. {{A}} ignora que um stub simples não verifica comportamento, apenas responde a chamadas. {{B}} confunde o cenário com o caso anterior: o spy registra e permite verificação posterior, mas não falha imediatamente por si só ao violar uma expectativa predefinida, como descrito neste novo cenário. {{D}} ignora uma diferença central: um verifica estado (spy consultado depois) e o outro verifica comportamento (mock que falha durante a própria execução). {{E}} é desnecessário: a citação já cobre esse comportamento na definição de mock.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap6-q4",
@@ -2170,7 +2173,7 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“Testes precisam rodar rapidamente. Quando os testes são lentos, você não vai querer rodá-los com frequência. [...] Se os testes não forem independentes, um teste pode estabelecer condições para o próximo teste, tornando-o dependente e difícil de diagnosticar quando algo falha.” (tradução nossa)",
+        "texto": "“Os testes devem ser rápidos. [...] Quando os testes rodam devagar, você não vai querer executá-los com frequência. [...] Os testes não devem depender uns dos outros. Um teste não deve preparar as condições para o próximo. [...] Quando os testes dependem uns dos outros, a primeira falha provoca uma cascata de falhas, o que dificulta o diagnóstico.” (tradução nossa)",
         "fonte": "MARTIN, Robert C. Clean Code: A Handbook of Agile Software Craftsmanship. Upper Saddle River: Prentice Hall, 2008."
       },
       {
@@ -2187,7 +2190,8 @@
       "O teste viola a propriedade de ser Autovalidável (Self-Validating), pois seu resultado depende de interpretação manual do desenvolvedor"
     ],
     "correta": 1,
-    "resolucao": "a dependência de ordem de execução entre dois testes é exatamente o problema descrito na citação sobre a propriedade Independent: quando testes estabelecem condições um para o outro, tornam-se difíceis de diagnosticar e vulneráveis à ordem em que são executados, como o caso demonstra ao falhar de forma imprevisível na execução paralela. {{A}} confunde duas propriedades diferentes: o problema não é necessariamente velocidade, é dependência de estado entre testes. {{C}} trata como boa prática exatamente o anti-padrão que a citação adverte contra. {{D}} atribui à infraestrutura (pipeline) um problema que é, na verdade, de design do teste em si — a execução paralela apenas expôs um problema pré-existente de acoplamento entre testes. {{E}} confunde independência de execução com autovalidação, que se refere à necessidade de o teste ter um resultado automaticamente verificável (passou/falhou), não à ordem de execução."
+    "resolucao": "a dependência de ordem de execução entre dois testes é exatamente o problema descrito na citação sobre a propriedade Independent: quando testes estabelecem condições um para o outro, tornam-se difíceis de diagnosticar e vulneráveis à ordem em que são executados, como o caso demonstra ao falhar de forma imprevisível na execução paralela. {{A}} confunde duas propriedades diferentes: o problema não é necessariamente velocidade, é dependência de estado entre testes. {{C}} trata como boa prática exatamente o anti-padrão que a citação adverte contra. {{D}} atribui à infraestrutura (pipeline) um problema que é, na verdade, de design do teste em si — a execução paralela apenas expôs um problema pré-existente de acoplamento entre testes. {{E}} confunde independência de execução com autovalidação, que se refere à necessidade de o teste ter um resultado automaticamente verificável (passou/falhou), não à ordem de execução.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap6-q5",
@@ -2197,7 +2201,7 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“Testes precisam rodar rapidamente. Quando os testes são lentos, você não vai querer rodá-los com frequência. [...] Se os testes não forem independentes, um teste pode estabelecer condições para o próximo teste, tornando-o dependente e difícil de diagnosticar quando algo falha.” (tradução nossa)",
+        "texto": "“Os testes devem ser rápidos. [...] Quando os testes rodam devagar, você não vai querer executá-los com frequência. [...] Os testes não devem depender uns dos outros. Um teste não deve preparar as condições para o próximo. [...] Quando os testes dependem uns dos outros, a primeira falha provoca uma cascata de falhas, o que dificulta o diagnóstico.” (tradução nossa)",
         "fonte": "MARTIN, Robert C. Clean Code: A Handbook of Agile Software Craftsmanship. Upper Saddle River: Prentice Hall, 2008."
       },
       {
@@ -2218,7 +2222,8 @@
       "A correção é irrelevante para as propriedades FIRST, servindo apenas para facilitar a leitura do código do teste"
     ],
     "correta": 1,
-    "resolucao": "ao configurar seu próprio estado necessário, o teste deixa de depender da execução prévia de outro teste específico, restaurando exatamente a propriedade de Independência discutida na citação, e tornando-o executável em qualquer ordem ou isoladamente. {{A}} trata como proibição absoluta algo que, no contexto específico de testes automatizados, é uma prática aceita em troca de maior confiabilidade. {{C}} contraria diretamente a Questão 4, que já identificou a violação da propriedade Independent no cenário original. {{D}} presume uma perda de velocidade sem base no enunciado, e mesmo que houvesse pequeno custo adicional, a prioridade de corrigir uma violação estrutural (independência) normalmente supera uma perda marginal de velocidade. {{E}} subestima o impacto da mudança, que vai além de legibilidade e resolve diretamente um problema estrutural de confiabilidade da suíte."
+    "resolucao": "ao configurar seu próprio estado necessário, o teste deixa de depender da execução prévia de outro teste específico, restaurando exatamente a propriedade de Independência discutida na citação, e tornando-o executável em qualquer ordem ou isoladamente. {{A}} trata como proibição absoluta algo que, no contexto específico de testes automatizados, é uma prática aceita em troca de maior confiabilidade. {{C}} contraria diretamente a Questão 4, que já identificou a violação da propriedade Independent no cenário original. {{D}} presume uma perda de velocidade sem base no enunciado, e mesmo que houvesse pequeno custo adicional, a prioridade de corrigir uma violação estrutural (independência) normalmente supera uma perda marginal de velocidade. {{E}} subestima o impacto da mudança, que vai além de legibilidade e resolve diretamente um problema estrutural de confiabilidade da suíte.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap6-q6",
@@ -2227,25 +2232,29 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Cobertura de teste é uma métrica útil, mas perigosa. [...] É perfeitamente possível ter 100% de cobertura de linhas e ainda assim ter um código cheio de bugs, porque a métrica de cobertura mede apenas quais linhas foram executadas, não se o comportamento correto foi de fato verificado por uma asserção significativa.” (tradução nossa)",
-        "fonte": "FEATHERS, Michael. Working Effectively with Legacy Code. Upper Saddle River: Prentice Hall, 2004."
+        "t": "p",
+        "texto": "A cobertura de testes é uma métrica útil, mas perigosa quando vira meta isolada: ela mostra quais linhas foram executadas, e não se o comportamento correto foi verificado por uma asserção. É possível ter cobertura muito alta e, mesmo assim, um código cheio de defeitos."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base no capítulo 6 (Automação de Testes)."
       },
       {
         "t": "p",
         "texto": "Uma equipe recebeu a meta de atingir 90% de cobertura de código antes do próximo lançamento. Para cumprir o prazo, um desenvolvedor escreveu dezenas de testes que apenas chamam cada função do sistema, sem nenhuma asserção sobre o valor retornado os testes apenas verificam que a função “não lança exceção” ao ser chamada. Com essa abordagem, a cobertura de linhas do projeto saltou de 62% para 91% em dois dias, e a meta foi formalmente cumprida."
       }
     ],
-    "enunciado": "Considerando a citação de Feathers (2004) e o caso relatado, assinale a alternativa correta:",
+    "enunciado": "Considerando o texto e o caso relatado, assinale a alternativa correta:",
     "alternativas": [
       "A meta de cobertura foi cumprida de forma tecnicamente adequada, pois qualquer execução de uma linha de código, independentemente de haver asserção, já garante que aquele trecho está livre de defeitos",
       "Os testes aumentam a cobertura sem verificar o comportamento: cobertura alta não implica ausência de bugs com asserções fracas",
-      "A citação de Feathers (2004) afirma que cobertura de linhas é uma métrica irrelevante e nunca deveria ser utilizada em nenhum contexto de automação de testes",
+      "O texto afirma que cobertura de linhas é uma métrica irrelevante e nunca deveria ser utilizada em nenhum contexto de automação de testes",
       "O salto de 62% para 91% de cobertura em dois dias é, por si só, prova de que os novos testes escritos têm qualidade equivalente aos testes anteriores da suíte",
       "Testes sem asserção nem chegam a rodar no Jest ou no Vitest"
     ],
     "correta": 1,
-    "resolucao": "o caso é uma ilustração quase didática do risco descrito na citação: a cobertura de linhas subiu significativamente, mas os testes não verificam nenhum comportamento esperado além da ausência de exceção — exatamente o cenário de ‘100% de cobertura e ainda assim bugs presentes’ mencionado por Feathers. {{A}} comete o erro central que a citação adverte: confundir execução de linha com verificação de comportamento correto. {{C}} exagera a posição de Feathers, que não descarta a métrica, apenas alerta sobre sua interpretação isolada. {{D}} presume qualidade a partir de velocidade de produção dos testes, sem qualquer relação lógica entre as duas coisas. {{E}} é factualmente incorreto: frameworks de teste permitem perfeitamente escrever testes sem asserções robustas, o que é justamente o problema descrito, não uma impossibilidade técnica."
+    "resolucao": "o caso é uma ilustração quase didática do risco descrito no texto: a cobertura de linhas subiu significativamente, mas os testes não verificam nenhum comportamento esperado além da ausência de exceção — exatamente o cenário de ‘100% de cobertura e ainda assim bugs presentes’ mencionado no texto. {{A}} comete o erro central que o texto adverte: confundir execução de linha com verificação de comportamento correto. {{C}} exagera a posição do texto, que não descarta a métrica, apenas alerta sobre sua interpretação isolada. {{D}} presume qualidade a partir de velocidade de produção dos testes, sem qualquer relação lógica entre as duas coisas. {{E}} é factualmente incorreto: frameworks de teste permitem perfeitamente escrever testes sem asserções robustas, o que é justamente o problema descrito, não uma impossibilidade técnica.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap6-q7",
@@ -2254,9 +2263,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Cobertura de teste é uma métrica útil, mas perigosa. [...] É perfeitamente possível ter 100% de cobertura de linhas e ainda assim ter um código cheio de bugs, porque a métrica de cobertura mede apenas quais linhas foram executadas, não se o comportamento correto foi de fato verificado por uma asserção significativa.” (tradução nossa)",
-        "fonte": "FEATHERS, Michael. Working Effectively with Legacy Code. Upper Saddle River: Prentice Hall, 2004."
+        "t": "p",
+        "texto": "A cobertura de testes é uma métrica útil, mas perigosa quando vira meta isolada: ela mostra quais linhas foram executadas, e não se o comportamento correto foi verificado por uma asserção. É possível ter cobertura muito alta e, mesmo assim, um código cheio de defeitos."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base no capítulo 6 (Automação de Testes)."
       },
       {
         "t": "p",
@@ -2267,16 +2279,17 @@
         "texto": "Ao revisar os novos testes, uma líder técnica propõe uma mudança na meta da equipe: em vez de “atingir 90% de cobertura de linhas”, a meta passa a ser “garantir que toda função de cálculo financeiro tenha ao menos um teste que verifique o valor de retorno esperado para um cenário válido e um cenário inválido”."
       }
     ],
-    "enunciado": "Assinale a alternativa que avalia corretamente essa mudança de meta, à luz da citação de Feathers (2004):",
+    "enunciado": "Assinale a alternativa que avalia corretamente essa mudança de meta, à luz do texto:",
     "alternativas": [
       "A nova meta é pior do que a anterior, pois abandona completamente qualquer noção de cobertura, tornando a suíte impossível de ser avaliada",
-      "A nova meta troca uma métrica de execução (linhas que rodaram) por uma de comportamento (retorno correto), como defende Feathers",
+      "A nova meta troca uma métrica de execução (linhas que rodaram) por uma de comportamento (retorno correto), como defende o texto",
       "As duas metas são estritamente equivalentes em termos de esforço e resultado, mudando apenas a forma como são descritas para a equipe",
       "A nova meta é tecnicamente inferior, pois não pode ser medida automaticamente por nenhuma ferramenta de cobertura de código, dependendo sempre da revisão manual de cada teste",
       "A mudança de meta só faz sentido se a equipe abandonar completamente o uso de ferramentas de cobertura de linhas no projeto"
     ],
     "correta": 1,
-    "resolucao": "a nova meta desloca exatamente o foco criticado por Feathers: de ‘quantas linhas foram executadas’ para ‘o comportamento correto foi verificado’, com asserções específicas sobre cenários válidos e inválidos — o núcleo da distinção entre cobertura e qualidade de teste discutida no capítulo. {{A}} trata abandonar uma métrica frágil como se fosse abandonar qualquer forma de avaliação, o que não é o caso. {{C}} ignora uma diferença de fundo entre as duas metas, mesmo que ambas sejam mensuráveis de alguma forma. {{D}} é impreciso: é perfeitamente possível medir se as funções financeiras possuem os testes exigidos, mesmo que não seja apenas uma métrica percentual de linhas. {{E}} propõe um extremo desnecessário: as duas métricas podem, na prática, coexistir — cobertura de linhas como indicador complementar, não como meta principal isolada."
+    "resolucao": "a nova meta desloca exatamente o foco criticado no texto: de ‘quantas linhas foram executadas’ para ‘o comportamento correto foi verificado’, com asserções específicas sobre cenários válidos e inválidos — o núcleo da distinção entre cobertura e qualidade de teste discutida no capítulo. {{A}} trata abandonar uma métrica frágil como se fosse abandonar qualquer forma de avaliação, o que não é o caso. {{C}} ignora uma diferença de fundo entre as duas metas, mesmo que ambas sejam mensuráveis de alguma forma. {{D}} é impreciso: é perfeitamente possível medir se as funções financeiras possuem os testes exigidos, mesmo que não seja apenas uma métrica percentual de linhas. {{E}} propõe um extremo desnecessário: as duas métricas podem, na prática, coexistir — cobertura de linhas como indicador complementar, não como meta principal isolada.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap6-q8",
@@ -2285,16 +2298,19 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Um Page Object encapsula os elementos de uma página web dentro de uma aplicação [...] Os métodos desse Page Object então encapsulam a funcionalidade presente na própria página. [...] Como resultado, se a interface do usuário mudar, a correção precisa ser feita em apenas um lugar.” (tradução nossa)",
-        "fonte": "FOWLER, Martin. PageObject. martinfowler.com, 2013."
+        "t": "p",
+        "texto": "No padrão Page Object, cada página da aplicação é representada por um objeto que guarda os seus elementos e oferece métodos para as ações possíveis naquela página. Os testes usam esses métodos, em vez de localizar os elementos diretamente; assim, se a interface mudar, a correção é feita em um só lugar."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em FOWLER, Martin. PageObject. martinfowler.com, 2013."
       },
       {
         "t": "p",
         "texto": "A suíte E2E de um sistema de e-commerce possui 60 testes com Playwright. O seletor CSS do botão “Adicionar ao Carrinho” está escrito diretamente, de forma duplicada, em 22 desses testes. Quando o time de front-end alterou a estrutura HTML dessa página em uma atualização visual, 22 testes quebraram simultaneamente, e a equipe de QA precisou editar, um por um, cada arquivo de teste para atualizar o seletor."
       }
     ],
-    "enunciado": "Considerando a citação de Fowler (2013) sobre o padrão Page Object, assinale a alternativa correta:",
+    "enunciado": "Considerando o padrão Page Object, descrito por Fowler (2013) sobre o padrão Page Object, assinale a alternativa correta:",
     "alternativas": [
       "O problema relatado é inevitável em qualquer suíte E2E, independentemente de como os seletores são organizados no código dos testes",
       "Com um Page Object compartilhado, a mudança no seletor do botão seria corrigida em um só lugar, e não em 22 arquivos",
@@ -2303,7 +2319,8 @@
       "O uso de Page Object eliminaria completamente a necessidade de atualizar testes quando a interface do usuário mudar, independentemente da natureza da mudança"
     ],
     "correta": 1,
-    "resolucao": "a própria citação descreve exatamente esse benefício: encapsular elementos e funcionalidades de uma página em um único lugar, de modo que mudanças na interface exijam correção em um único ponto, não em cada teste que referencia o elemento — exatamente o problema que os 22 testes duplicados sofreram. {{A}} ignora que o padrão descrito no texto motivador existe justamente para mitigar esse tipo de problema. {{C}} é factualmente incorreto: Page Object é uma técnica amplamente associada a testes E2E de interface, como o próprio caso demonstra. {{D}} confunde independência entre testes (uma propriedade positiva, estudada no Texto 3) com duplicação de código de localização de elementos (um problema de manutenibilidade, não relacionado a independência). {{E}} exagera o benefício: Page Object concentra a correção em um lugar, mas não elimina a necessidade de fazer essa correção quando a mudança de fato afeta o elemento encapsulado."
+    "resolucao": "o texto descreve exatamente esse benefício: encapsular elementos e funcionalidades de uma página em um único lugar, de modo que mudanças na interface exijam correção em um único ponto, não em cada teste que referencia o elemento — exatamente o problema que os 22 testes duplicados sofreram. {{A}} ignora que o padrão descrito no texto motivador existe justamente para mitigar esse tipo de problema. {{C}} é factualmente incorreto: Page Object é uma técnica amplamente associada a testes E2E de interface, como o próprio caso demonstra. {{D}} confunde independência entre testes (uma propriedade positiva, estudada no Texto 3) com duplicação de código de localização de elementos (um problema de manutenibilidade, não relacionado a independência). {{E}} exagera o benefício: Page Object concentra a correção em um lugar, mas não elimina a necessidade de fazer essa correção quando a mudança de fato afeta o elemento encapsulado.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap6-q9",
@@ -2312,9 +2329,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Um Page Object encapsula os elementos de uma página web dentro de uma aplicação [...] Os métodos desse Page Object então encapsulam a funcionalidade presente na própria página. [...] Como resultado, se a interface do usuário mudar, a correção precisa ser feita em apenas um lugar.” (tradução nossa)",
-        "fonte": "FOWLER, Martin. PageObject. martinfowler.com, 2013."
+        "t": "p",
+        "texto": "No padrão Page Object, cada página da aplicação é representada por um objeto que guarda os seus elementos e oferece métodos para as ações possíveis naquela página. Os testes usam esses métodos, em vez de localizar os elementos diretamente; assim, se a interface mudar, a correção é feita em um só lugar."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em FOWLER, Martin. PageObject. martinfowler.com, 2013."
       },
       {
         "t": "p",
@@ -2334,7 +2354,8 @@
       "A decisão só seria um problema se o cupom de desconto fosse uma funcionalidade crítica do sistema"
     ],
     "correta": 1,
-    "resolucao": "ao escrever o seletor diretamente, esse teste específico volta a ficar vulnerável ao mesmo problema que motivou a adoção de Page Objects: se a página mudar, será necessário corrigir tanto o Page Object (para os demais testes) quanto esse teste isolado, duplicando exatamente o esforço que o padrão busca evitar. {{A}} prioriza uma economia de tempo imediata e pequena em troca de um risco de manutenção recorrente, contrariando o próprio raciocínio econômico implícito na adoção do padrão. {{C}} é uma afirmação factualmente falsa sobre desenvolvimento de interfaces web. {{D}} inverte o valor do padrão: reduzir a dependência de um Page Object bem mantido não é um benefício, é a perda do benefício central descrito na citação. {{E}} introduz uma condição (criticidade da funcionalidade) irrelevante para o problema estrutural de manutenibilidade em questão."
+    "resolucao": "ao escrever o seletor diretamente, esse teste específico volta a ficar vulnerável ao mesmo problema que motivou a adoção de Page Objects: se a página mudar, será necessário corrigir tanto o Page Object (para os demais testes) quanto esse teste isolado, duplicando exatamente o esforço que o padrão busca evitar. {{A}} prioriza uma economia de tempo imediata e pequena em troca de um risco de manutenção recorrente, contrariando o próprio raciocínio econômico implícito na adoção do padrão. {{C}} é uma afirmação factualmente falsa sobre desenvolvimento de interfaces web. {{D}} inverte o valor do padrão: reduzir a dependência de um Page Object bem mantido não é um benefício, é a perda do benefício central descrito no texto. {{E}} introduz uma condição (criticidade da funcionalidade) irrelevante para o problema estrutural de manutenibilidade em questão.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap6-q10",
@@ -2344,8 +2365,12 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“Esta especificação define um protocolo remoto que pode ser usado para inspecionar e controlar agentes de usuário [...] O protocolo é projetado para permitir que clientes remotos deem instruções ao comportamento de navegadores web, exercitando o controle sobre um agente de usuário. [...] O protocolo utiliza uma API baseada em REST sobre HTTP.” (tradução nossa)",
+        "texto": "“O WebDriver é uma interface de controle remoto que permite a inspeção e o controle de agentes de usuário. Ele oferece um protocolo de comunicação neutro quanto à plataforma e à linguagem, como forma de programas externos instruírem remotamente o comportamento dos navegadores web.” (tradução nossa)",
         "fonte": "W3C. WebDriver: W3C Recommendation. World Wide Web Consortium, 2018."
+      },
+      {
+        "t": "p",
+        "texto": "Na especificação, cada comando enviado ao navegador é uma requisição HTTP, no estilo REST."
       },
       {
         "t": "p",
@@ -2361,7 +2386,8 @@
       "As duas ferramentas usam o mesmo protocolo; a diferença é acaso"
     ],
     "correta": 0,
-    "resolucao": "a especificação do W3C confirma que o WebDriver opera como um protocolo remoto baseado em REST sobre HTTP, uma camada de comunicação adicional entre o código de teste e o navegador — consistente com a maior latência observada no Selenium em comparação ao Playwright, que se conecta de forma mais direta ao protocolo interno do navegador. {{B}} ignora a explicação arquitetural fornecida pela própria especificação citada. {{C}} inverte o sentido da citação, que apenas descreve o protocolo, sem afirmar que ele seja o mais rápido possível. {{D}} nega, sem fundamento, uma relação de causa já documentada na literatura técnica sobre essas ferramentas. {{E}} é factualmente incorreto: a proposta central do Playwright é justamente não depender do protocolo WebDriver da mesma forma que o Selenium."
+    "resolucao": "a especificação do W3C confirma que o WebDriver opera como um protocolo remoto baseado em REST sobre HTTP, uma camada de comunicação adicional entre o código de teste e o navegador — consistente com a maior latência observada no Selenium em comparação ao Playwright, que se conecta de forma mais direta ao protocolo interno do navegador. {{B}} ignora a explicação arquitetural fornecida pela própria especificação citada. {{C}} inverte o sentido da citação, que apenas descreve o protocolo, sem afirmar que ele seja o mais rápido possível. {{D}} nega, sem fundamento, uma relação de causa já documentada na literatura técnica sobre essas ferramentas. {{E}} é factualmente incorreto: a proposta central do Playwright é justamente não depender do protocolo WebDriver da mesma forma que o Selenium.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap6-q11",
@@ -2371,8 +2397,12 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“Esta especificação define um protocolo remoto que pode ser usado para inspecionar e controlar agentes de usuário [...] O protocolo é projetado para permitir que clientes remotos deem instruções ao comportamento de navegadores web, exercitando o controle sobre um agente de usuário. [...] O protocolo utiliza uma API baseada em REST sobre HTTP.” (tradução nossa)",
+        "texto": "“O WebDriver é uma interface de controle remoto que permite a inspeção e o controle de agentes de usuário. Ele oferece um protocolo de comunicação neutro quanto à plataforma e à linguagem, como forma de programas externos instruírem remotamente o comportamento dos navegadores web.” (tradução nossa)",
         "fonte": "W3C. WebDriver: W3C Recommendation. World Wide Web Consortium, 2018."
+      },
+      {
+        "t": "p",
+        "texto": "Na especificação, cada comando enviado ao navegador é uma requisição HTTP, no estilo REST."
       },
       {
         "t": "p",
@@ -2392,7 +2422,8 @@
       "A decisão é irrelevante, pois a escolha de ferramenta de automação nunca deveria considerar fatores como sistemas legados ou base de testes já existente"
     ],
     "correta": 1,
-    "resolucao": "a decisão reflete um raciocínio de custo-benefício realista: a diferença de desempenho é real, mas o custo de reescrever uma suíte extensa e já validada, para um sistema legado, pode não justificar a migração completa — um tipo de análise técnica-econômica recorrente na indústria, coerente com o conteúdo do capítulo sobre quando automatizar (e reescrever) vale a pena. {{A}} ignora completamente considerações práticas de custo e risco de reescrita, tratando velocidade como o único critério relevante. {{C}} propõe uma condição desnecessária e não sustentada pelo capítulo. {{D}} é factualmente falso: nada na especificação do WebDriver torna as duas ferramentas mutuamente exclusivas dentro de uma mesma organização. {{E}} contraria diretamente boas práticas de gestão de automação de testes, que devem sim considerar o contexto real do sistema testado."
+    "resolucao": "a decisão reflete um raciocínio de custo-benefício realista: a diferença de desempenho é real, mas o custo de reescrever uma suíte extensa e já validada, para um sistema legado, pode não justificar a migração completa — um tipo de análise técnica-econômica recorrente na indústria, coerente com o conteúdo do capítulo sobre quando automatizar (e reescrever) vale a pena. {{A}} ignora completamente considerações práticas de custo e risco de reescrita, tratando velocidade como o único critério relevante. {{C}} propõe uma condição desnecessária e não sustentada pelo capítulo. {{D}} é factualmente falso: nada na especificação do WebDriver torna as duas ferramentas mutuamente exclusivas dentro de uma mesma organização. {{E}} contraria diretamente boas práticas de gestão de automação de testes, que devem sim considerar o contexto real do sistema testado.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap6-q12",
@@ -2401,9 +2432,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Escrever testes que passam nos convenceu de que o código estava correto de uma forma que a simples leitura do código nunca havia conseguido. [...] Testadores infectados escrevem código de teste. Muito código de teste. Código de teste que ajuda a acelerar o próprio desenvolvimento, em vez de atrasá-lo.” (tradução nossa)",
-        "fonte": "BECK, Kent; GAMMA, Erich. Test Infected: Programmers Love Writing Tests. Java Report, v. 3, n. 7, 1998."
+        "t": "p",
+        "texto": "Ao apresentar o JUnit, Beck e Gamma descrevem o efeito de escrever testes automatizados: ver os testes passando dá uma confiança no código que a simples leitura não dá, e quem se habitua a essa prática passa a escrever muitos testes, que aceleram o desenvolvimento em vez de atrasá-lo."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em BECK, Kent; GAMMA, Erich. Test Infected: Programmers Love Writing Tests. Java Report, v. 3, n. 7, 1998."
       },
       {
         "t": "p",
@@ -2419,7 +2453,8 @@
       "A equipe deveria abandonar completamente a automação de testes, pois a citação sugere que escrever testes atrasa o desenvolvimento"
     ],
     "correta": 1,
-    "resolucao": "a citação de Beck e Gamma descreve a cultura e a confiança geradas pela prática de testes automatizados, um espírito que se aplica independentemente da ferramenta específica; já a escolha técnica entre JUnit e TestNG deve considerar as características de cada uma — e o requisito descrito (paralelismo, agrupamento por categoria, dependências entre grupos) é justamente o ponto forte do TestNG destacado no capítulo. {{A}} transforma uma citação sobre cultura de testes em uma recomendação de ferramenta específica, o que o texto não afirma. {{C}} nega diferenças técnicas reais e documentadas entre as duas ferramentas, estudadas no capítulo. {{D}} é uma inversão factual: a citação é de 1998, ano de popularização do próprio JUnit, e não menciona o TestNG, criado posteriormente. {{E}} distorce completamente o sentido da citação, que defende exatamente o oposto: testes bem escritos aceleram o desenvolvimento."
+    "resolucao": "o texto de Beck e Gamma descreve a cultura e a confiança geradas pela prática de testes automatizados, um espírito que se aplica independentemente da ferramenta específica; já a escolha técnica entre JUnit e TestNG deve considerar as características de cada uma — e o requisito descrito (paralelismo, agrupamento por categoria, dependências entre grupos) é justamente o ponto forte do TestNG destacado no capítulo. {{A}} transforma uma citação sobre cultura de testes em uma recomendação de ferramenta específica, o que o texto não afirma. {{C}} nega diferenças técnicas reais e documentadas entre as duas ferramentas, estudadas no capítulo. {{D}} é uma inversão factual: a citação é de 1998, ano de popularização do próprio JUnit, e não menciona o TestNG, criado posteriormente. {{E}} distorce completamente o sentido da citação, que defende exatamente o oposto: testes bem escritos aceleram o desenvolvimento.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap6-m1",
@@ -2427,14 +2462,16 @@
     "capituloId": "qualidade-cap6",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa investe R$20.000 no desenvolvimento de scripts de automação para 400 casos de teste. Cada caso levava 8 minutos para ser executado manualmente por um testador com custo de R$60/hora. O sistema tem 15 releases por ano. Após 6 meses, o gerente questiona se o investimento valeu a pena. Qual é a análise correta de ROI?",
+    "enunciado": "Uma empresa investe R$ 20.000 no desenvolvimento de scripts de automação para 400 casos de teste. Cada caso levava 8 minutos para ser executado manualmente por um testador que custa R$ 60 por hora, e o sistema tem 15 releases por ano. Considere desprezível o custo de manutenção dos scripts no período. Seis meses depois, o gerente pergunta se o investimento valeu a pena. Qual é a análise correta?",
     "alternativas": [
-      "O investimento não valeu a pena: automação de testes só apresenta ROI positivo após 24 meses em projetos com menos de 500 casos de teste abaixo desse prazo, o custo de desenvolvimento dos scripts supera qualquer economia gerada pela redução de esforço manual.",
-      "Impossível calcular sem o custo de manutenção dos scripts.",
-      "Manual: 400 × 8 min × R$ 1/min × 15 releases = R$ 48.000 por ano; com R$ 20.000 investidos, a automação se paga antes de 6 meses e segue economizando.",
-      "O ROI é irrelevante para a decisão: a automação deve ser implementada independentemente do retorno financeiro, pois a consistência e a eliminação de erros humanos na execução são benefícios intangíveis que superam qualquer análise quantitativa de custo-benefício."
+      "O manual custa 400 × 8 min × R$ 1/min = R$ 3.200 por release, ou R$ 48.000 por ano; os R$ 20.000 se pagam antes dos 6 meses.",
+      "Não valeu: a automação só tem retorno positivo depois de 24 meses quando o projeto tem menos de 500 casos de teste.",
+      "O manual custa 400 × 8 min × R$ 60 = R$ 192.000 por release, e o investimento se pagou já na primeira release automatizada.",
+      "Não valeu: o manual custa R$ 3.200 por ano, e os R$ 20.000 investidos só serão recuperados depois de mais de seis anos.",
+      "O retorno é irrelevante, pois a automação deve ser feita por seus ganhos intangíveis, sem depender de qualquer cálculo."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "R$ 60 por hora equivalem a R$ 1 por minuto. Cada execução manual custa 400 × 8 = 3.200 minutos, ou R$ 3.200; com 15 releases por ano, são R$ 48.000. Em seis meses acontecem cerca de 7 releases, o que já representa uma economia de aproximadamente R$ 24.000, acima dos R$ 20.000 investidos. Multiplicar os minutos pelo valor da hora, ou esquecer as releases do ano, leva às contas erradas das outras alternativas."
   },
   {
     "id": "qualidade-cap6-m2",
@@ -2442,14 +2479,19 @@
     "capituloId": "qualidade-cap6",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe de QA automatizou 800 testes de interface com Selenium sem usar o padrão Page Object Model. Após uma atualização de layout que alterou 30 elementos da UI, 600 scripts quebraram e precisaram ser corrigidos individualmente. Como o POM teria mitigado esse problema?",
-    "alternativas": [
-      "O POM não teria mitigado o problema: a atualização de 30 elementos da UI exigiria a mesma quantidade de alterações independentemente do padrão adotado, pois cada elemento é referenciado individualmente em cada teste que o utiliza, seja com ou sem POM.",
-      "Com POM, cada página é uma classe com os localizadores centralizados: mudar 30 elementos exige alterar 30 localizadores, não 600 scripts.",
-      "Só ajudaria nos testes desses 30 elementos; os outros seguiriam quebrados.",
-      "O POM teria agravado o problema: centralizar os localizadores em classes de Page Object cria um ponto único de falha — a alteração de qualquer elemento na classe de página propaga o impacto para todos os testes que a utilizam, aumentando o risco em comparação com localizadores distribuídos individualmente."
+    "caso": [
+      "Uma equipe tem três necessidades: (1) uma analista sem experiência em programação quer gravar um teste diretamente no navegador para servir de ponto de partida; (2) os desenvolvedores querem controlar o Chrome e o Firefox a partir de testes escritos em Java; (3) a suíte de 2 mil testes precisa rodar ao mesmo tempo em várias máquinas e navegadores para terminar mais rápido."
     ],
-    "correta": 1
+    "enunciado": "As necessidades 1, 2 e 3 são atendidas, respectivamente, pelos componentes do Selenium",
+    "alternativas": [
+      "Selenium IDE, Selenium WebDriver e Selenium Grid.",
+      "Selenium WebDriver, Selenium IDE e Selenium Grid.",
+      "Selenium Grid, Selenium WebDriver e Selenium IDE.",
+      "Selenium IDE, Selenium Grid e Selenium WebDriver.",
+      "Selenium WebDriver nas três, com plugins diferentes."
+    ],
+    "correta": 0,
+    "resolucao": "O Selenium IDE grava e reproduz testes no navegador, sem programação, e serve para gerar scripts de partida (1). O Selenium WebDriver é a API principal, que controla os navegadores a partir do código, em linguagens como Java e Python (2). O Selenium Grid executa os testes em paralelo, em várias máquinas e navegadores ao mesmo tempo, reduzindo o tempo das suítes grandes (3)."
   },
   {
     "id": "qualidade-cap6-m3",
@@ -2457,14 +2499,16 @@
     "capituloId": "qualidade-cap6",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um gerente de projeto propõe automatizar testes exploratórios para acelerar a detecção de defeitos inesperados. Um engenheiro de qualidade discorda. Qual é o fundamento técnico da discordância?",
+    "enunciado": "Um gerente de projeto propõe automatizar os testes exploratórios para acelerar a descoberta de defeitos inesperados. Um engenheiro de qualidade discorda. Qual é o fundamento técnico da discordância?",
     "alternativas": [
-      "O engenheiro discorda por razões de custo: testes exploratórios automatizados exigem ferramentas especializadas de IA que custam mais do que o orçamento disponível — a discordância é financeira, não técnica, e seria resolvida com ferramentas open source adequadas.",
-      "O engenheiro discorda porque testes exploratórios já são executados automaticamente pelo framework de análise estática SonarQube, tornando a proposta redundante — automatizar o que já é feito pela análise estática desperdiça recursos sem agregar valor ao processo de qualidade.",
       "Testes exploratórios dependem de criatividade, intuição e adaptação ao que se descobre na hora; um script só executa o que foi programado.",
-      "O engenheiro discorda porque testes exploratórios já são cobertos pelos testes de caixa preta automatizados com Selenium — qualquer funcionalidade alcançável pela interface pode ser testada exploratoriamente por scripts, tornando a participação humana desnecessária em projetos com alta cobertura de automação de UI."
+      "O motivo é só o custo: automatizar a exploração exige ferramentas de IA caras, e com ferramentas gratuitas a proposta funcionaria.",
+      "Os testes exploratórios já são feitos automaticamente pela análise estática do SonarQube, e a proposta seria redundante.",
+      "Os testes de caixa preta com Selenium já cobrem toda a exploração possível, o que torna a participação humana desnecessária.",
+      "Os testes exploratórios só podem ser automatizados depois que o sistema estiver pronto, e a proposta chegou cedo demais."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A automação é mais eficaz em testes repetitivos, determinísticos e de alto volume. Na tabela da apostila, os testes exploratórios aparecem entre os que não devem ser automatizados, porque exigem criatividade e julgamento humano: o testador decide o próximo passo com base no que acabou de observar. Um script repete o roteiro previsto e não encontra o que ninguém imaginou testar."
   },
   {
     "id": "qualidade-cap6-m4",
@@ -2472,14 +2516,26 @@
     "capituloId": "qualidade-cap6",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe Java precisa escolher entre JUnit 5 e TestNG para um projeto que inclui testes de integração com dependências entre cenários, execução paralela nativa e relatórios HTML sem dependências externas. Qual é a escolha mais adequada e por quê?",
+    "enunciado": "Ao executar a classe de teste abaixo, quantas vezes cada método de preparação é chamado?",
     "alternativas": [
-      "JUnit 5 é a escolha mais adequada: sua arquitetura modular com JUnit Platform, Jupiter e Vintage oferece maior flexibilidade para todas as necessidades descritas, e plugins Maven de terceiros suprem nativamente as lacunas de paralelismo e relatórios sem configuração adicional.",
-      "Tanto faz: as duas fazem o mesmo, e decide a familiaridade.",
-      "TestNG: tem dependência entre testes (dependsOnMethods), paralelismo no testng.xml e relatório HTML nativos, os três requisitos pedidos.",
-      "JUnit 5 é a escolha mais adequada exclusivamente pela integração superior com IDEs Java: IntelliJ IDEA e Eclipse têm suporte nativo completo ao JUnit 5, enquanto o TestNG exige instalação de plugins adicionais que podem introduzir incompatibilidades com versões recentes das IDEs utilizadas pela equipe."
+      "conectarBanco() é chamado 1 vez, e novoCarrinho() é chamado 2 vezes.",
+      "conectarBanco() é chamado 2 vezes, e novoCarrinho() é chamado 1 vez.",
+      "Os dois métodos são chamados 2 vezes, uma vez antes de cada teste.",
+      "Os dois métodos são chamados 1 vez, antes do primeiro teste da classe.",
+      "conectarBanco() é chamado 1 vez, e novoCarrinho() não é chamado nunca."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "@BeforeAll executa uma única vez, antes de todos os testes da classe, e serve para configurações pesadas, como conectar ao banco de dados. @BeforeEach executa antes de cada teste, e serve para preparar objetos e dados novos, como um carrinho vazio. Como a classe tem dois métodos @Test, conectarBanco() roda 1 vez, e novoCarrinho(), 2 vezes.",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Observe a classe de teste abaixo, escrita em Java com JUnit 5."
+      },
+      {
+        "t": "codigo",
+        "texto": "class CarrinhoTest {\n    @BeforeAll\n    static void conectarBanco() { /* ... */ }\n\n    @BeforeEach\n    void novoCarrinho() { /* ... */ }\n\n    @Test\n    void adicionaProduto() { /* ... */ }\n\n    @Test\n    void removeProduto() { /* ... */ }\n}"
+      }
+    ]
   },
   {
     "id": "qualidade-cap6-m5",
@@ -2487,14 +2543,23 @@
     "capituloId": "qualidade-cap6",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um sistema de e-commerce tem os seguintes testes automatizados: 5% unitários, 10% integração e 85% de testes de interface com Selenium. A suíte leva 4 horas para executar e quebra frequentemente por pequenas mudanças de UI. Qual padrão anti-qualidade isso representa e como corrigi-lo?",
-    "alternativas": [
-      "Representa o paradoxo do pesticida aplicado à automação: os mesmos testes de UI são executados repetidamente e param de detectar novos defeitos, exigindo renovação constante dos scripts — a solução é substituir os testes de interface por novos cenários exploratórios automatizados a cada sprint.",
-      "É o \"cone de sorvete\", a pirâmide invertida: muitos testes de UI lentos e frágeis e poucos unitários; a correção é ter a maioria unitária, parte de integração e UI só nos fluxos críticos.",
-      "Falta de Page Object Model; com POM, as quebras e as 4 horas somem.",
-      "Representa o problema de ambiente instável descrito nas limitações da automação: testes de UI que quebram frequentemente indicam infraestrutura de execução inadequada — a solução é migrar para Selenium Grid na nuvem com BrowserStack ou Sauce Labs, sem necessidade de rebalancear a distribuição dos testes."
+    "caso": [
+      "Sobre o que deve e o que não deve ser automatizado, avalie as afirmativas a seguir.",
+      "I. Os smoke tests executados após cada build do CI/CD devem ser automatizados.",
+      "II. Um teste que será executado uma única vez deve ser automatizado, para ficar documentado no repositório.",
+      "III. Uma funcionalidade que muda com muita frequência é uma má candidata à automação, pois a manutenção dos scripts supera o benefício.",
+      "IV. A validação visual de layout e design pode ser automatizada só em parte, com ferramentas de visual testing."
     ],
-    "correta": 1
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, III e IV, apenas.",
+      "I e III, apenas.",
+      "I, II, III e IV.",
+      "III e IV, apenas.",
+      "I e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: os smoke tests rodam com a maior frequência possível e precisam ser rápidos. II é falsa: um teste executado uma única vez tem retorno negativo, pois o esforço de automatizar não se paga. III é verdadeira: os scripts quebrariam a cada mudança. IV é verdadeira: ferramentas como Percy e Applitools ajudam, mas têm limitações, e por isso a apostila marca esse caso como parcial."
   },
   {
     "id": "qualidade-cap6-m7",
@@ -2502,14 +2567,16 @@
     "capituloId": "qualidade-cap6",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma startup de fintech implementa um pipeline CI/CD e precisa garantir feedback ao desenvolvedor em menos de 5 minutos após o commit, com verificação completa antes do deploy em produção. Como distribuir os testes automatizados pelas etapas do pipeline para atingir esse objetivo?",
+    "enunciado": "Uma fintech vai montar um pipeline de CI/CD e precisa dar retorno ao desenvolvedor em menos de 5 minutos após o commit, com verificação completa antes do deploy em produção. Como distribuir os testes automatizados pelas etapas?",
     "alternativas": [
-      "Todos os testes devem ser executados na etapa de commit para garantir feedback completo e imediato — dividir os testes em etapas cria gaps de cobertura entre os estágios do pipeline, aumentando o risco de defeitos chegarem à produção sem detecção antecipada.",
-      "Começar pelos testes completos de desempenho com JMeter.",
-      "Commit (até 5 min): análise estática e unitários; build: integração e contratos de API; staging: regressão de UI, desempenho e segurança; pré-produção: aceitação, carga e aprovação humana.",
-      "A fintech deve ter apenas duas etapas: commit com testes unitários (< 5min) e deploy direto em produção com monitoramento via APM — etapas intermediárias de staging e pré-produção são desnecessárias em equipes ágeis com cultura DevOps madura e alta cobertura de testes unitários."
+      "Commit: análise estática e unitários; build: integração e API; staging: UI, desempenho e segurança; pré-produção: aceitação e carga.",
+      "Todos os testes na etapa de commit, pois dividi-los em etapas cria lacunas de cobertura entre os estágios do pipeline.",
+      "Commit: testes de carga com JMeter; build: unitários; staging: análise estática; pré-produção: integração e API.",
+      "Só duas etapas: unitários no commit e deploy direto em produção, com monitoramento, sem staging nem pré-produção.",
+      "Commit: regressão de UI completa com Selenium; build: unitários; staging: aceitação; pré-produção: análise estática."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Cada etapa equilibra velocidade e profundidade. No commit, em menos de 5 minutos, ficam o que é rápido: análise estática e testes unitários. No build, em até 15 minutos, testes de integração e de contrato de API, com o quality gate de cobertura. No staging, regressão de interface, desempenho básico e segurança. Na pré-produção, aceitação, carga completa e a aprovação humana. Pôr testes lentos no commit destrói o retorno rápido."
   },
   {
     "id": "qualidade-cap6-m8",
@@ -2517,14 +2584,16 @@
     "capituloId": "qualidade-cap6",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um desenvolvedor escreve o seguinte teste JUnit 5: o método setUp() inicializa uma conexão com banco de dados real, o teste verifica o cadastro de usuário e o tearDown() fecha a conexão. Durante a execução paralela, os testes falham aleatoriamente. Qual princípio FIRST está sendo violado e como corrigir?",
+    "enunciado": "Um teste com Selenium usa Thread.sleep(2000) para esperar o carregamento de uma lista de produtos. Às vezes ele falha porque a lista demora mais de 2 segundos; quando a página é rápida, ele perde tempo à toa. Qual é a boa prática indicada?",
     "alternativas": [
-      "O princípio Fast está sendo violado: conexões com banco de dados real tornam os testes lentos — a solução é usar banco de dados em memória (H2) para aumentar a velocidade de execução e eliminar as falhas aleatórias causadas pela lentidão das consultas ao banco externo.",
-      "O princípio Independent está sendo violado: testes que compartilham estado via banco de dados real criam dependências entre si — em execução paralela, um teste pode modificar dados que outro teste espera encontrar em estado inicial; a solução é usar mocks, stubs ou transações com rollback para isolar cada teste completamente.",
-      "Viola Independent: os testes compartilham estado no banco real, e um altera o que o outro espera; a solução é isolar com mocks, stubs ou transações com rollback.",
-      "Viola Timely, pois o teste foi escrito depois do código."
+      "Usar uma espera explícita (WebDriverWait), que aguarda até o elemento aparecer, em vez de um tempo fixo.",
+      "Aumentar o Thread.sleep para 10 segundos, para que o teste nunca falhe, mesmo que fique bem mais lento.",
+      "Apagar a espera, pois o Selenium sempre aguarda todos os elementos dinâmicos carregarem sozinho.",
+      "Marcar o teste com @Disabled, pois os testes de listas dinâmicas não devem ser automatizados.",
+      "Executar o teste várias vezes seguidas e considerar aprovado se ele passar na maioria das tentativas."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "Entre as boas práticas de desenvolvimento de scripts, a apostila recomenda evitar o Thread.sleep() e usar esperas explícitas, como o WebDriverWait, para elementos dinâmicos. A espera explícita continua assim que o elemento fica disponível: não falha quando a página demora um pouco mais e não desperdiça tempo quando ela é rápida. Aumentar o tempo fixo só deixa a suíte mais lenta, e repetir até passar esconde o problema."
   },
   {
     "id": "qualidade-cap6-m9",
@@ -2532,14 +2601,16 @@
     "capituloId": "qualidade-cap6",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe precisa automatizar testes para um aplicativo que deve funcionar em iOS, Android e web browser. Qual combinação de ferramentas do ecossistema estudado cobre todas as três plataformas e qual é o principal desafio dessa estratégia?",
+    "enunciado": "Uma equipe precisa automatizar os testes de um aplicativo que deve funcionar em iOS, em Android e no navegador. Qual combinação de ferramentas cobre as três plataformas e qual é o principal desafio?",
     "alternativas": [
-      "Cypress cobre as três plataformas nativamente: sua arquitetura baseada em navegador executa testes em Chrome mobile (Android), Safari mobile (iOS) e qualquer navegador desktop — é a solução mais simples e econômica para projetos multiplataforma sem necessidade de ferramentas adicionais.",
-      "Selenium WebDriver cobre as três plataformas com o mesmo script: usando Selenium Grid configurado com drivers para Android, iOS e browsers desktop, a equipe mantém um único conjunto de scripts para todas as plataformas sem necessidade de ferramentas especializadas para mobile.",
-      "Appium para iOS e Android e Selenium, Cypress ou Playwright para a web; o desafio é manter bases de automação distintas, gerenciar os dispositivos e sincronizar tudo no pipeline.",
-      "Robot Framework cobre as três plataformas com uma única biblioteca de palavras-chave: sua arquitetura agnóstica de plataforma permite automatizar iOS, Android e browsers com os mesmos scripts em linguagem natural, eliminando a necessidade de frameworks especializados para cada plataforma."
+      "Appium para iOS e Android, e Selenium, Cypress ou Playwright para a web; o desafio é manter e sincronizar bases de automação diferentes.",
+      "Somente o Cypress, que roda os testes no Chrome do Android, no Safari do iOS e em qualquer navegador de computador.",
+      "Somente o Selenium WebDriver, que, com o Selenium Grid, usa o mesmo script para Android, iOS e navegadores de computador.",
+      "Somente o JMeter, que simula os usuários das três plataformas com o mesmo plano de teste, sem precisar de outras ferramentas.",
+      "Somente o Robot Framework, que automatiza as três plataformas com os mesmos scripts, sem bibliotecas específicas."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "O Appium automatiza aplicativos iOS e Android, nativos, híbridos e web mobile, usando a mesma API do WebDriver. Para a web, a apostila cita Selenium, Cypress e Playwright. Usar ferramentas diferentes por plataforma traz o desafio de manter mais de uma base de testes, gerenciar dispositivos e integrar tudo ao pipeline. O JMeter é uma ferramenta de desempenho, e não de testes funcionais de interface."
   },
   {
     "id": "qualidade-cap6-m10",
@@ -2547,14 +2618,16 @@
     "capituloId": "qualidade-cap6",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um time adota Cucumber com Gherkin para escrever cenários de aceitação antes do desenvolvimento. O analista de negócios escreve: \"Dado que o usuário está logado, Quando ele adiciona um produto ao carrinho, Então o total deve ser atualizado\". Como esse cenário se posiciona na pirâmide de automação e qual ferramenta seria mais adequada para sua execução?",
+    "enunciado": "Um time adota Cucumber com Gherkin para escrever os cenários de aceitação antes do desenvolvimento. O analista de negócios escreve: \"Dado que o usuário está logado, Quando ele adiciona um produto ao carrinho, Então o total deve ser atualizado\". Onde esse cenário fica na pirâmide de automação e qual ferramenta é a mais adequada para executá-lo?",
     "alternativas": [
-      "O cenário Gherkin deve ser executado no nível unitário da pirâmide: por ser escrito em linguagem de negócio, ele substitui os testes unitários técnicos — a ferramenta adequada é JUnit 5 com extensão Cucumber, executando o cenário diretamente contra os métodos Java sem interação com a interface do usuário.",
-      "No nível de integração, com RestAssured na API do carrinho.",
-      "Fica no topo da pirâmide, como teste de aceitação; o adequado é Cucumber com Selenium, Playwright ou Cypress, executando na interface real.",
-      "O cenário deve ser executado em todos os três níveis da pirâmide simultaneamente: Cucumber com JUnit no nível unitário, Cucumber com RestAssured no nível de integração e Cucumber com Selenium no nível de UI — a redundância é desejável pois garante cobertura máxima do comportamento descrito pelo analista de negócios."
+      "No topo da pirâmide, como teste de aceitação; o adequado é o Cucumber com Selenium, Playwright ou Cypress, na interface real.",
+      "Na base da pirâmide, pois o cenário em linguagem de negócio substitui os testes unitários, rodando com JUnit sem a interface.",
+      "No meio da pirâmide, como teste de integração, rodando com o RestAssured diretamente contra a API do carrinho de compras.",
+      "Nos três níveis ao mesmo tempo, com JUnit, RestAssured e Selenium, pois a redundância garante a cobertura máxima do cenário.",
+      "Fora da pirâmide, pois os cenários em Gherkin servem só como documentação e não devem ser executados como testes."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "O cenário descreve um comportamento visível do ponto de vista do usuário, em linguagem de negócio: é um teste de aceitação, no topo da pirâmide. Na tabela de ferramentas da apostila, o Cucumber é a ferramenta de BDD e aceitação, integrada ao Selenium, ao Playwright e ao Appium para executar o cenário na interface. Ele não substitui os testes unitários da base, e repetir o mesmo cenário em todos os níveis só aumenta o custo da suíte."
   },
   {
     "id": "qualidade-cap6-m11",
@@ -2562,14 +2635,19 @@
     "capituloId": "qualidade-cap6",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa migra seus testes de Selenium para Playwright após avaliar as ferramentas modernas. Quais são as vantagens técnicas do Playwright sobre o Selenium que justificam a migração e em qual cenário o Selenium ainda seria preferível?",
-    "alternativas": [
-      "O Playwright não oferece vantagens técnicas reais sobre o Selenium: ambas as ferramentas usam o mesmo protocolo WebDriver e produzem resultados idênticos a migração é justificada apenas por preferência estética da equipe pela API mais moderna do Playwright.",
-      "O Playwright é superior ao Selenium em todos os cenários sem exceção: sua arquitetura baseada no protocolo CDP (Chrome DevTools Protocol) elimina completamente as instabilidades do WebDriver — equipes que ainda usam Selenium em 2026 estão adotando tecnologia obsoleta sem justificativa técnica válida.",
-      "O Playwright tem Chrome, Firefox e Safari numa só API, mais estabilidade, interceptação de rede e paralelismo nativo; o Selenium ainda compensa com muitos scripts Java legados.",
-      "A única vantagem é o suporte a vários navegadores, e o Grid já faz isso."
+    "caso": [
+      "Uma equipe precisa de ferramentas para quatro necessidades: (1) simular 5 mil usuários acessando o site ao mesmo tempo; (2) executar no pipeline as coleções de testes de API criadas pelos analistas; (3) procurar vulnerabilidades de segurança na aplicação em execução; (4) analisar o código-fonte em busca de code smells e bloquear builds abaixo de uma meta de qualidade."
     ],
-    "correta": 2
+    "enunciado": "As ferramentas mais adequadas às necessidades 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "JMeter, Postman com Newman, OWASP ZAP e SonarQube.",
+      "SonarQube, Postman com Newman, JMeter e OWASP ZAP.",
+      "JMeter, OWASP ZAP, Postman com Newman e SonarQube.",
+      "Postman com Newman, JMeter, SonarQube e OWASP ZAP.",
+      "JMeter, Postman com Newman, SonarQube e OWASP ZAP."
+    ],
+    "correta": 0,
+    "resolucao": "O JMeter, da Apache, simula muitos usuários acessando o sistema ao mesmo tempo, em testes de carga e desempenho (1). O Postman testa APIs, e o Newman executa as coleções do Postman em linha de comando, dentro do pipeline (2). O OWASP ZAP é uma ferramenta de testes de segurança (3). O SonarQube faz análise estática, encontra bugs, vulnerabilidades e code smells, mede a cobertura e define quality gates (4)."
   },
   {
     "id": "qualidade-cap7-q1",
@@ -2578,14 +2656,20 @@
     "tipo": "discursiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Teste de regressão é o processo de testar novamente um programa já testado, após uma modificação, para assegurar que nenhum defeito foi introduzido ou revelado em áreas do software que não foram alteradas, como resultado das mudanças realizadas.” (tradução nossa)",
-        "fonte": "BEIZER, Boris. Software Testing Techniques. 2. ed. New York: Van Nostrand Reinhold, 1990."
+        "t": "p",
+        "texto": "Para Beizer, o teste de regressão é testar de novo um programa já testado, depois de uma modificação, para garantir que a mudança não introduziu nem revelou defeitos nas partes do software que não foram alteradas. O software pode \"regredir\", isto é, piorar, mesmo quando a intenção da mudança era melhorá-lo, e quanto mais interligado é o sistema, maior a chance de uma mudança localizada afetar partes aparentemente sem relação."
       },
       {
-        "t": "citacao",
-        "texto": "“Um teste é dito flaky quando pode passar ou falhar sem que nenhuma mudança tenha sido feita no código sob teste. [...] Entre as causas mais comuns de flakiness identificadas em nossa análise estão: espera assíncrona mal implementada, dependência de ordem de execução entre testes, e dependência de condições externas como rede ou tempo do sistema.” (tradução nossa)",
-        "fonte": "LUO, Qingzhou; HARIRI, Farah; ELOUSSI, Lamyaa; MARINOV, Darko. An Empirical Analysis of Flaky Tests. In: Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE 2014), p. 643-653."
+        "t": "fonte",
+        "texto": "Texto elaborado com base em BEIZER, Boris. Software Testing Techniques. 2. ed. New York: Van Nostrand Reinhold, 1990."
+      },
+      {
+        "t": "p",
+        "texto": "Luo e colegas definem como flaky o teste que pode passar ou falhar sem que o código testado tenha mudado. Entre as causas mais comuns que encontraram estão esperas assíncronas mal implementadas, a dependência da ordem em que os testes são executados e a dependência de condições externas, como a rede e o relógio do sistema. Eles observam também que, diante de testes flaky, os desenvolvedores perdem a confiança nos resultados e passam a ignorar falhas reais."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em LUO, Q.; HARIRI, F.; ELOUSSI, L.; MARINOV, D. An Empirical Analysis of Flaky Tests. In: Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE 2014), p. 643-653."
       },
       {
         "t": "p",
@@ -2602,12 +2686,13 @@
     ],
     "enunciado": "Com base no texto e no caso apresentado, responda:",
     "itens": [
-      "a) Com base na citação de Luo et al. (2014), identifique as duas causas de flakiness descritas no caso da EntregaJá, relacionando cada uma a um grupo específico dos 65 testes mencionados.",
-      "b) Com base na citação de Beizer (1990), explique por que a suíte de regressão da EntregaJá deixa de cumprir seu propósito fundamental quando um defeito real de cálculo de frete é mascarado por uma nova tentativa automática que “passa por coincidência”.",
+      "a) Com base no texto de Luo et al. (2014), identifique as duas causas de flakiness descritas no caso da EntregaJá, relacionando cada uma a um grupo específico dos 65 testes mencionados.",
+      "b) Com base no texto de Beizer (1990), explique por que a suíte de regressão da EntregaJá deixa de cumprir seu propósito fundamental quando um defeito real de cálculo de frete é mascarado por uma nova tentativa automática que “passa por coincidência”.",
       "c) Para cada uma das duas causas de flakiness identificadas no item (a), proponha uma correção técnica específica (não a política de novas tentativas automáticas) que elimine a causa raiz, em vez de apenas mascará-la.",
       "d) Avalie criticamente a afirmação do gerente de engenharia de que a política de três tentativas automáticas é uma “solução pragmática”. Sua avaliação deve se posicionar explicitamente sobre se essa política resolve, mascara, ou agrava o problema estrutural relatado no caso — e por quê."
     ],
-    "linhas": 12
+    "linhas": 12,
+    "respostaEsperada": "a) A primeira causa é a espera assíncrona mal implementada: a maioria dos 65 testes usa esperas fixas (\"aguardar 2 segundos\"), e passa ou falha conforme a tela demora mais ou menos. A segunda é a dependência da ordem de execução: o grupo menor só passa quando roda depois de outros testes no pipeline.\nb) Pelo texto de Beizer, a regressão existe para garantir que uma mudança não introduziu nem revelou defeitos. Quando o teste do frete falha (detectando o defeito) e passa na nova tentativa por coincidência, o resultado final da suíte diz que está tudo certo enquanto o defeito vai para a produção. A suíte deixa de cumprir justamente o seu propósito.\nc) Para as esperas fixas: trocar o tempo fixo por uma espera explícita, que aguarda o elemento ou a condição esperada (como o WebDriverWait). Para a dependência de ordem: tornar cada teste independente, preparando o seu próprio estado no início e limpando ao final, sem depender do que outro teste deixou.\nd) A política mascara e agrava o problema. Ela não resolve nenhuma das causas, apenas esconde as falhas; pior, ela também esconde falhas reais, como as do cálculo de frete, e ensina a equipe a desconfiar dos resultados. O correto é colocar os testes instáveis em quarentena, corrigir a causa raiz e acompanhar a taxa de flakiness, cuja meta saudável é ficar abaixo de 2% da suíte."
   },
   {
     "id": "qualidade-cap7-q2",
@@ -2616,25 +2701,29 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“O termo regressão vem da ideia de que o software pode regredir — voltar a um estado pior — mesmo quando a intenção da mudança era apenas melhorá-lo. [...] Quanto maior e mais interconectado o sistema, maior a probabilidade de que uma mudança localizada tenha efeitos em partes aparentemente não relacionadas.” (tradução nossa)",
-        "fonte": "BEIZER, Boris. Software Testing Techniques. 2. ed. New York: Van Nostrand Reinhold, 1990."
+        "t": "p",
+        "texto": "Para Beizer, o teste de regressão é testar de novo um programa já testado, depois de uma modificação, para garantir que a mudança não introduziu nem revelou defeitos nas partes do software que não foram alteradas. O software pode \"regredir\", isto é, piorar, mesmo quando a intenção da mudança era melhorá-lo, e quanto mais interligado é o sistema, maior a chance de uma mudança localizada afetar partes aparentemente sem relação."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em BEIZER, Boris. Software Testing Techniques. 2. ed. New York: Van Nostrand Reinhold, 1990."
       },
       {
         "t": "p",
         "texto": "Um desenvolvedor da ContaFácil corrige um bug isolado no módulo de exportação de relatórios em PDF. O bug era simples: um erro de formatação de data. Duas semanas depois, a equipe de suporte recebe reclamações de que o módulo de envio automático de boletos, que não foi alterado por esse desenvolvedor, começou a enviar boletos com valores duplicados — rastreando o problema, a causa foi uma função utilitária de formatação de datas, compartilhada entre os dois módulos, que o desenvolvedor alterou sem saber que também era usada pelo módulo de boletos."
       }
     ],
-    "enunciado": "Considerando a citação de Beizer (1990) e o caso da ContaFácil, assinale a alternativa correta:",
+    "enunciado": "Considerando o texto de Beizer (1990) e o caso da ContaFácil, assinale a alternativa correta:",
     "alternativas": [
       "O caso não se qualifica como um problema de regressão, pois o módulo de boletos não foi diretamente modificado por nenhum desenvolvedor",
       "É uma regressão: a mudança na formatação de data do PDF afetou o envio de boletos por uma dependência compartilhada",
       "O problema só poderia ser classificado como regressão se o próprio módulo de exportação de PDF tivesse voltado a apresentar o erro de formatação original, corrigido na versão anterior",
-      "A citação de Beizer (1990) se aplica exclusivamente a mudanças de interface visual, não a funções utilitárias internas como a descrita no caso",
+      "O texto de Beizer (1990) se aplica exclusivamente a mudanças de interface visual, não a funções utilitárias internas como a descrita no caso",
       "Só é possível classificar sabendo se a função tinha testes unitários"
     ],
     "correta": 1,
-    "resolucao": "o caso reproduz com precisão a definição de Beizer: uma mudança feita com boa intenção (corrigir formatação de data no PDF) introduziu um defeito em uma área do sistema aparentemente não relacionada (envio de boletos), por meio de uma dependência compartilhada que não era óbvia para quem fez a alteração — exatamente o risco que a regressão busca capturar. {{A}} restringe indevidamente o conceito de regressão a mudanças diretas no próprio módulo afetado, ignorando que dependências compartilhadas são justamente a origem mais comum de regressões sutis. {{C}} inverte a definição: regressão não exige que o mesmo defeito original reapareça, apenas que a mudança tenha causado um novo problema em outro lugar. {{D}} restringe sem fundamento o conceito a um tipo específico de mudança. {{E}} introduz uma condição irrelevante para a classificação conceitual do problema como regressão, ainda que relevante para discutir como o problema poderia ter sido evitado."
+    "resolucao": "o caso reproduz com precisão a definição de Beizer: uma mudança feita com boa intenção (corrigir formatação de data no PDF) introduziu um defeito em uma área do sistema aparentemente não relacionada (envio de boletos), por meio de uma dependência compartilhada que não era óbvia para quem fez a alteração — exatamente o risco que a regressão busca capturar. {{A}} restringe indevidamente o conceito de regressão a mudanças diretas no próprio módulo afetado, ignorando que dependências compartilhadas são justamente a origem mais comum de regressões sutis. {{C}} inverte a definição: regressão não exige que o mesmo defeito original reapareça, apenas que a mudança tenha causado um novo problema em outro lugar. {{D}} restringe sem fundamento o conceito a um tipo específico de mudança. {{E}} introduz uma condição irrelevante para a classificação conceitual do problema como regressão, ainda que relevante para discutir como o problema poderia ter sido evitado.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap7-q3",
@@ -2643,9 +2732,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“O termo regressão vem da ideia de que o software pode regredir — voltar a um estado pior — mesmo quando a intenção da mudança era apenas melhorá-lo. [...] Quanto maior e mais interconectado o sistema, maior a probabilidade de que uma mudança localizada tenha efeitos em partes aparentemente não relacionadas.” (tradução nossa)",
-        "fonte": "BEIZER, Boris. Software Testing Techniques. 2. ed. New York: Van Nostrand Reinhold, 1990."
+        "t": "p",
+        "texto": "Para Beizer, o teste de regressão é testar de novo um programa já testado, depois de uma modificação, para garantir que a mudança não introduziu nem revelou defeitos nas partes do software que não foram alteradas. O software pode \"regredir\", isto é, piorar, mesmo quando a intenção da mudança era melhorá-lo, e quanto mais interligado é o sistema, maior a chance de uma mudança localizada afetar partes aparentemente sem relação."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em BEIZER, Boris. Software Testing Techniques. 2. ed. New York: Van Nostrand Reinhold, 1990."
       },
       {
         "t": "p",
@@ -2665,7 +2757,8 @@
       "A proposta só serve para documentar dependências entre módulos"
     ],
     "correta": 1,
-    "resolucao": "a proposta ataca exatamente a causa raiz do incidente: identificar, através de análise de dependências, quais módulos podem ser afetados por uma mudança aparentemente isolada, e garantir que sejam re-testados mesmo sem alteração direta em seu próprio código — coerente com a definição de regressão discutida no capítulo. {{A}} propõe uma solução impraticável (nunca alterar código compartilhado), que inviabilizaria a manutenção normal do sistema. {{C}} ignora uma diferença real de precisão: rodar toda a suíte a cada commit é a estratégia de Regressão Total, enquanto a proposta descreve uma forma mais direcionada de Seleção por Impacto, tecnicamente distinta. {{D}} propõe um extremo desnecessário para obter o benefício descrito. {{E}} subestima o valor preventivo real da proposta, tratando-a como meramente documental."
+    "resolucao": "a proposta ataca exatamente a causa raiz do incidente: identificar, através de análise de dependências, quais módulos podem ser afetados por uma mudança aparentemente isolada, e garantir que sejam re-testados mesmo sem alteração direta em seu próprio código — coerente com a definição de regressão discutida no capítulo. {{A}} propõe uma solução impraticável (nunca alterar código compartilhado), que inviabilizaria a manutenção normal do sistema. {{C}} ignora uma diferença real de precisão: rodar toda a suíte a cada commit é a estratégia de Regressão Total, enquanto a proposta descreve uma forma mais direcionada de Seleção por Impacto, tecnicamente distinta. {{D}} propõe um extremo desnecessário para obter o benefício descrito. {{E}} subestima o valor preventivo real da proposta, tratando-a como meramente documental.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap7-q4",
@@ -2674,16 +2767,19 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“O termo smoke test vem da indústria de hardware: quando um novo circuito é ligado pela primeira vez, e nenhuma fumaça sai dele, ele passou no smoke test e está pronto para testes mais detalhados. [...] Um smoke test diário garante que o build mais recente do produto seja minimamente funcional o suficiente para ser testado de forma mais completa.” (tradução nossa)",
-        "fonte": "MCCONNELL, Steve. Rapid Development: Taming Wild Software Schedules. Redmond: Microsoft Press, 1996."
+        "t": "p",
+        "texto": "McConnell explica que o termo smoke test vem do hardware: quando um circuito novo é ligado pela primeira vez e não sai fumaça, ele passou no teste e pode seguir para testes mais detalhados. No software, um smoke test diário garante que o build mais recente funciona o mínimo necessário para ser testado de forma mais completa."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em MCCONNELL, Steve. Rapid Development: Taming Wild Software Schedules. Redmond: Microsoft Press, 1996."
       },
       {
         "t": "p",
         "texto": "A StreamPlay, plataforma de streaming de vídeo, configurou seu pipeline para, a cada novo build gerado (em média 12 vezes por dia), executar automaticamente 8 testes que verificam apenas: (1) a página inicial carrega; (2) o login funciona; (3) um vídeo específico consegue ser reproduzido; e (4) a busca retorna resultados para um termo conhecido. Esses 8 testes levam, em média, 90 segundos para rodar."
       }
     ],
-    "enunciado": "Considerando a citação de McConnell (1996) e o caso da StreamPlay, assinale a alternativa correta:",
+    "enunciado": "Considerando o texto de McConnell (1996) e o caso da StreamPlay, assinale a alternativa correta:",
     "alternativas": [
       "Os 8 testes descritos não se qualificam como smoke test, pois um smoke test deve obrigatoriamente cobrir 100% das funcionalidades do sistema",
       "Os 8 testes são um smoke test: uma verificação rápida de que o build está \"funcional o suficiente\", não uma validação completa",
@@ -2692,7 +2788,8 @@
       "Os 8 testes deveriam ser executados apenas uma vez por semana, e não a cada build, para se qualificarem como smoke test segundo a definição citada"
     ],
     "correta": 1,
-    "resolucao": "a citação define exatamente esse propósito: uma verificação mínima e rápida de que o build está ‘funcional o suficiente’ para prosseguir com testes mais detalhados, sem pretensão de cobertura completa — precisamente o papel dos 8 testes rápidos da StreamPlay. {{A}} exige uma cobertura completa que contraria a própria natureza mínima do smoke test descrita na citação. {{C}} confunde smoke test com regressão completa, ignorando que a diferença de propósito (rapidez vs. abrangência) é central ao capítulo. {{D}} é factualmente incorreto: a própria citação, extraída de um livro sobre desenvolvimento rápido, associa o smoke test à prática de builds diários (e, por extensão, frequentes) — a StreamPlay apenas leva essa prática ao extremo de builds múltiplas vezes ao dia. {{E}} inventa uma restrição de frequência sem base na definição citada, que na verdade valoriza execuções frequentes, não esparsas."
+    "resolucao": "o texto define exatamente esse propósito: uma verificação mínima e rápida de que o build está ‘funcional o suficiente’ para prosseguir com testes mais detalhados, sem pretensão de cobertura completa — precisamente o papel dos 8 testes rápidos da StreamPlay. {{A}} exige uma cobertura completa que contraria a própria natureza mínima do smoke test descrita no texto. {{C}} confunde smoke test com regressão completa, ignorando que a diferença de propósito (rapidez vs. abrangência) é central ao capítulo. {{D}} é factualmente incorreto: o próprio texto, extraída de um livro sobre desenvolvimento rápido, associa o smoke test à prática de builds diários (e, por extensão, frequentes) — a StreamPlay apenas leva essa prática ao extremo de builds múltiplas vezes ao dia. {{E}} inventa uma restrição de frequência sem base na definição citada, que na verdade valoriza execuções frequentes, não esparsas.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap7-q5",
@@ -2701,9 +2798,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“O termo smoke test vem da indústria de hardware: quando um novo circuito é ligado pela primeira vez, e nenhuma fumaça sai dele, ele passou no smoke test e está pronto para testes mais detalhados. [...] Um smoke test diário garante que o build mais recente do produto seja minimamente funcional o suficiente para ser testado de forma mais completa.” (tradução nossa)",
-        "fonte": "MCCONNELL, Steve. Rapid Development: Taming Wild Software Schedules. Redmond: Microsoft Press, 1996."
+        "t": "p",
+        "texto": "McConnell explica que o termo smoke test vem do hardware: quando um circuito novo é ligado pela primeira vez e não sai fumaça, ele passou no teste e pode seguir para testes mais detalhados. No software, um smoke test diário garante que o build mais recente funciona o mínimo necessário para ser testado de forma mais completa."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em MCCONNELL, Steve. Rapid Development: Taming Wild Software Schedules. Redmond: Microsoft Press, 1996."
       },
       {
         "t": "p",
@@ -2723,7 +2823,8 @@
       "A sugestão é tecnicamente equivalente a manter as duas camadas, pois o tempo total de execução é o único critério relevante para essa decisão"
     ],
     "correta": 1,
-    "resolucao": "a própria citação de McConnell deixa claro que o smoke test verifica apenas uma funcionalidade mínima, servindo como uma primeira barreira antes de testes mais aprofundados — não uma substituição para eles. Eliminar a Regressão Completa baseando-se unicamente no smoke test contraria diretamente esse propósito declarado, deixando de capturar defeitos em cenários fora dos 4 fluxos mínimos verificados. {{A}} generaliza incorretamente a partir de um caso específico (smoke bem-sucedido) para uma regra geral inválida. {{C}} exagera ainda mais o erro, indo na direção oposta ao capítulo inteiro sobre regressão em camadas. {{D}} introduz uma condição sem relação lógica com o problema de cobertura discutido. {{E}} ignora que tempo de execução e abrangência de cobertura são dois critérios distintos, ambos relevantes, e não apenas um substituindo o outro."
+    "resolucao": "o próprio texto de McConnell deixa claro que o smoke test verifica apenas uma funcionalidade mínima, servindo como uma primeira barreira antes de testes mais aprofundados — não uma substituição para eles. Eliminar a Regressão Completa baseando-se unicamente no smoke test contraria diretamente esse propósito declarado, deixando de capturar defeitos em cenários fora dos 4 fluxos mínimos verificados. {{A}} generaliza incorretamente a partir de um caso específico (smoke bem-sucedido) para uma regra geral inválida. {{C}} exagera ainda mais o erro, indo na direção oposta ao capítulo inteiro sobre regressão em camadas. {{D}} introduz uma condição sem relação lógica com o problema de cobertura discutido. {{E}} ignora que tempo de execução e abrangência de cobertura são dois critérios distintos, ambos relevantes, e não apenas um substituindo o outro.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap7-q6",
@@ -2732,16 +2833,19 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Técnicas de seleção de teste de regressão buscam reduzir o custo do teste de regressão selecionando um subconjunto de casos de teste da suíte existente. [...] Uma técnica é considerada segura se garante que nenhum caso de teste capaz de revelar uma falha causada pelas modificações seja excluído do subconjunto selecionado.” (tradução nossa)",
-        "fonte": "ROTHERMEL, Gregg; HARROLD, Mary Jean. Analyzing Regression Test Selection Techniques. IEEE Transactions on Software Engineering, v. 22, n. 8, p. 529-551, 1996."
+        "t": "p",
+        "texto": "Rothermel e Harrold analisam as técnicas de seleção de testes de regressão, que reduzem o custo da regressão escolhendo um subconjunto da suíte existente. Uma técnica é segura quando garante que nenhum caso de teste capaz de revelar uma falha causada pelas modificações fique de fora do subconjunto escolhido."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em ROTHERMEL, G.; HARROLD, M. J. Analyzing Regression Test Selection Techniques. IEEE Transactions on Software Engineering, v. 22, n. 8, p. 529-551, 1996."
       },
       {
         "t": "p",
         "texto": "A SegurTech, seguradora digital, modificou apenas a função de cálculo de prêmio para apólices de automóvel. Um engenheiro propõe selecionar, para a regressão desse commit específico, apenas os testes cujo nome contém a palavra “auto” — cerca de 40 dos 2.000 testes da suíte total —, argumentando que isso reduziria drasticamente o tempo de execução sem comprometer a segurança da seleção."
       }
     ],
-    "enunciado": "Considerando a citação de Rothermel e Harrold (1996) sobre segurança na seleção de testes de regressão, assinale a alternativa correta:",
+    "enunciado": "Considerando o texto de Rothermel e Harrold (1996) sobre segurança na seleção de testes de regressão, assinale a alternativa correta:",
     "alternativas": [
       "A proposta do engenheiro é necessariamente segura, segundo a definição citada, pois qualquer redução no número de testes executados é, por definição, uma técnica de seleção válida",
       "Selecionar pelo nome conter \"auto\" não é seguro: testes de outros módulos que usam a mesma função de cálculo ficariam de fora",
@@ -2750,7 +2854,8 @@
       "É segura, pois 40 testes bastam para qualquer sistema"
     ],
     "correta": 1,
-    "resolucao": "a citação define segurança como a garantia de que nenhum teste capaz de revelar uma falha causada pela modificação seja excluído; selecionar testes apenas por conterem a palavra ‘auto’ no nome é um critério superficial, que ignora a real análise de impacto da mudança — se a função de cálculo de prêmio for compartilhada por outros produtos (como apólices residenciais), testes desses módulos poderiam ser necessários e ficariam de fora dessa seleção simplista. {{A}} confunde qualquer redução de escopo com segurança, quando a citação exige uma relação real entre a seleção e a mudança feita. {{C}} ignora completamente o critério central da definição citada (relação com o código modificado), atribuindo segurança a um critério numérico irrelevante. {{D}} exagera ao afirmar que toda seleção é insegura, quando o próprio texto motivador discute técnicas de seleção seguras como um objetivo alcançável, não impossível. {{E}} repete o erro de {{A}}, tratando quantidade como sinônimo de adequação de critério."
+    "resolucao": "o texto define segurança como a garantia de que nenhum teste capaz de revelar uma falha causada pela modificação seja excluído; selecionar testes apenas por conterem a palavra ‘auto’ no nome é um critério superficial, que ignora a real análise de impacto da mudança — se a função de cálculo de prêmio for compartilhada por outros produtos (como apólices residenciais), testes desses módulos poderiam ser necessários e ficariam de fora dessa seleção simplista. {{A}} confunde qualquer redução de escopo com segurança, quando o texto exige uma relação real entre a seleção e a mudança feita. {{C}} ignora completamente o critério central da definição citada (relação com o código modificado), atribuindo segurança a um critério numérico irrelevante. {{D}} exagera ao afirmar que toda seleção é insegura, quando o próprio texto motivador discute técnicas de seleção seguras como um objetivo alcançável, não impossível. {{E}} repete o erro de {{A}}, tratando quantidade como sinônimo de adequação de critério.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap7-q7",
@@ -2759,9 +2864,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Técnicas de seleção de teste de regressão buscam reduzir o custo do teste de regressão selecionando um subconjunto de casos de teste da suíte existente. [...] Uma técnica é considerada segura se garante que nenhum caso de teste capaz de revelar uma falha causada pelas modificações seja excluído do subconjunto selecionado.” (tradução nossa)",
-        "fonte": "ROTHERMEL, Gregg; HARROLD, Mary Jean. Analyzing Regression Test Selection Techniques. IEEE Transactions on Software Engineering, v. 22, n. 8, p. 529-551, 1996."
+        "t": "p",
+        "texto": "Rothermel e Harrold analisam as técnicas de seleção de testes de regressão, que reduzem o custo da regressão escolhendo um subconjunto da suíte existente. Uma técnica é segura quando garante que nenhum caso de teste capaz de revelar uma falha causada pelas modificações fique de fora do subconjunto escolhido."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em ROTHERMEL, G.; HARROLD, M. J. Analyzing Regression Test Selection Techniques. IEEE Transactions on Software Engineering, v. 22, n. 8, p. 529-551, 1996."
       },
       {
         "t": "p",
@@ -2781,7 +2889,8 @@
       "A definição de segurança de Rothermel e Harrold (1996) não pode ser aplicada a sistemas com múltiplos produtos de seguro, como o da SegurTech"
     ],
     "correta": 1,
-    "resolucao": "ao basear a seleção em uma análise real de dependência de código, em vez de uma convenção de nomenclatura, a nova abordagem se alinha muito mais precisamente ao critério de segurança citado, que exige que nenhum teste capaz de revelar uma falha real causada pela mudança seja excluído — e o fato de a seleção ter revelado dependências em outros produtos de seguro (residencial, vida) confirma que o critério anterior, por nome, de fato arriscava excluir testes relevantes. {{A}} trata o número de testes como o único critério relevante, ignorando completamente a qualidade da seleção, que é o cerne da citação. {{C}} ignora uma diferença metodológica fundamental entre os dois critérios de seleção. {{D}} inverte a lógica: o objetivo da nova abordagem é justamente corrigir as lacunas do critério anterior, não replicá-lo. {{E}} é uma restrição infundada, sem qualquer base na citação ou no conteúdo do capítulo."
+    "resolucao": "ao basear a seleção em uma análise real de dependência de código, em vez de uma convenção de nomenclatura, a nova abordagem se alinha muito mais precisamente ao critério de segurança citado, que exige que nenhum teste capaz de revelar uma falha real causada pela mudança seja excluído — e o fato de a seleção ter revelado dependências em outros produtos de seguro (residencial, vida) confirma que o critério anterior, por nome, de fato arriscava excluir testes relevantes. {{A}} trata o número de testes como o único critério relevante, ignorando completamente a qualidade da seleção, que é o cerne do texto. {{C}} ignora uma diferença metodológica fundamental entre os dois critérios de seleção. {{D}} inverte a lógica: o objetivo da nova abordagem é justamente corrigir as lacunas do critério anterior, não replicá-lo. {{E}} é uma restrição infundada, sem qualquer base no texto ou no conteúdo do capítulo.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap7-q8",
@@ -2790,25 +2899,29 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Um teste flaky é um teste que pode passar ou falhar mesmo quando o código sob teste não foi alterado. [...] Desenvolvedores tendem a perder a confiança nos resultados dos testes quando encontram testes flaky, e podem passar a ignorar falhas reais de teste, assumindo erroneamente que se trata apenas de mais um caso de flakiness.” (tradução nossa)",
-        "fonte": "LUO, Qingzhou; HARIRI, Farah; ELOUSSI, Lamyaa; MARINOV, Darko. An Empirical Analysis of Flaky Tests. In: Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE 2014), p. 643-653."
+        "t": "p",
+        "texto": "Luo e colegas definem como flaky o teste que pode passar ou falhar sem que o código testado tenha mudado. Entre as causas mais comuns que encontraram estão esperas assíncronas mal implementadas, a dependência da ordem em que os testes são executados e a dependência de condições externas, como a rede e o relógio do sistema. Eles observam também que, diante de testes flaky, os desenvolvedores perdem a confiança nos resultados e passam a ignorar falhas reais."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em LUO, Q.; HARIRI, F.; ELOUSSI, L.; MARINOV, D. An Empirical Analysis of Flaky Tests. In: Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE 2014), p. 643-653."
       },
       {
         "t": "p",
         "texto": "Na AgroSoft, empresa de software para o agronegócio, um teste específico chamado “verificar_envio_relatorio_climatico” falha, em média, uma vez a cada cinco execuções, sempre com a mesma mensagem de erro de timeout, mesmo quando nenhum código relacionado a esse relatório foi alterado. Com o tempo, os desenvolvedores da AgroSoft passaram a, ao ver esse teste falhar, simplesmente reexecutar o pipeline sem investigar — uma reação tão automática que, na semana passada, um novo defeito real introduzido nesse mesmo módulo (não relacionado a timeout, mas a um cálculo incorreto de índice pluviométrico) foi descartado como “mais uma falha do teste flaky de sempre”, sem qualquer investigação, e chegou a produção."
       }
     ],
-    "enunciado": "Considerando a citação de Luo et al. (2014) e o caso da AgroSoft, assinale a alternativa correta:",
+    "enunciado": "Considerando o texto de Luo et al. (2014) e o caso da AgroSoft, assinale a alternativa correta:",
     "alternativas": [
-      "O comportamento dos desenvolvedores da AgroSoft, ao reexecutar o pipeline sem investigar, não tem relação com o fenômeno descrito na citação, sendo apenas uma prática de produtividade recomendada",
+      "O comportamento dos desenvolvedores da AgroSoft, ao reexecutar o pipeline sem investigar, não tem relação com o fenômeno descrito no texto, sendo apenas uma prática de produtividade recomendada",
       "O teste flaky minou a confiança, e a equipe ignorou uma falha real, achando que era a mesma instabilidade de sempre",
       "O teste “verificar_envio_relatorio_climatico” não pode ser classificado como flaky, pois falha com uma mensagem de erro específica e consistente (timeout), e não de forma aleatória",
       "Para Luo et al., testes flaky nunca convivem com defeitos reais",
       "O problema relatado seria resolvido apenas com mais poder de processamento no servidor de CI/CD, sem qualquer mudança na forma como a equipe reage às falhas"
     ],
     "correta": 1,
-    "resolucao": "o caso é uma ilustração direta do risco central apontado pela citação: a exposição repetida a um teste flaky corrói a confiança da equipe nos resultados de teste, ao ponto de um defeito real e não relacionado ser descartado por presunção, não por investigação — exatamente o padrão de ‘cry wolf’ (alarme falso repetido) que a pesquisa sobre flaky tests documenta. {{A}} trata como prática recomendada exatamente o comportamento que a citação identifica como um risco sério de qualidade. {{C}} confunde consistência da mensagem de erro com ausência de flakiness — um teste pode falhar de forma flaky com a mesma mensagem toda vez, desde que a falha não esteja relacionada a uma mudança real no código sob teste, como no caso descrito. {{D}} não corresponde ao conteúdo da citação nem à lógica do capítulo: flaky tests podem, sim, coexistir com (e mascarar) defeitos reais, como o próprio caso demonstra. {{E}} ignora completamente a causa comportamental (perda de confiança, falta de investigação) central ao problema relatado, tratando-o apenas como uma questão de infraestrutura."
+    "resolucao": "o caso é uma ilustração direta do risco central apontado pelo texto: a exposição repetida a um teste flaky corrói a confiança da equipe nos resultados de teste, ao ponto de um defeito real e não relacionado ser descartado por presunção, não por investigação — exatamente o padrão de ‘cry wolf’ (alarme falso repetido) que a pesquisa sobre flaky tests documenta. {{A}} trata como prática recomendada exatamente o comportamento que o texto identifica como um risco sério de qualidade. {{C}} confunde consistência da mensagem de erro com ausência de flakiness — um teste pode falhar de forma flaky com a mesma mensagem toda vez, desde que a falha não esteja relacionada a uma mudança real no código sob teste, como no caso descrito. {{D}} não corresponde ao conteúdo do texto nem à lógica do capítulo: flaky tests podem, sim, coexistir com (e mascarar) defeitos reais, como o próprio caso demonstra. {{E}} ignora completamente a causa comportamental (perda de confiança, falta de investigação) central ao problema relatado, tratando-o apenas como uma questão de infraestrutura.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap7-q9",
@@ -2817,9 +2930,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Um teste flaky é um teste que pode passar ou falhar mesmo quando o código sob teste não foi alterado. [...] Desenvolvedores tendem a perder a confiança nos resultados dos testes quando encontram testes flaky, e podem passar a ignorar falhas reais de teste, assumindo erroneamente que se trata apenas de mais um caso de flakiness.” (tradução nossa)",
-        "fonte": "LUO, Qingzhou; HARIRI, Farah; ELOUSSI, Lamyaa; MARINOV, Darko. An Empirical Analysis of Flaky Tests. In: Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE 2014), p. 643-653."
+        "t": "p",
+        "texto": "Luo e colegas definem como flaky o teste que pode passar ou falhar sem que o código testado tenha mudado. Entre as causas mais comuns que encontraram estão esperas assíncronas mal implementadas, a dependência da ordem em que os testes são executados e a dependência de condições externas, como a rede e o relógio do sistema. Eles observam também que, diante de testes flaky, os desenvolvedores perdem a confiança nos resultados e passam a ignorar falhas reais."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em LUO, Q.; HARIRI, F.; ELOUSSI, L.; MARINOV, D. An Empirical Analysis of Flaky Tests. In: Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE 2014), p. 643-653."
       },
       {
         "t": "p",
@@ -2839,7 +2955,8 @@
       "A quarentena é desnecessária, pois reexecutar o pipeline até o teste passar já resolve completamente o problema descrito no caso"
     ],
     "correta": 1,
-    "resolucao": "a prática de quarentena responde exatamente ao risco identificado na citação: em vez de permitir que um teste conhecidamente instável continue corroendo a confiança da equipe nos resultados da suíte (como ocorreu no incidente), ele é isolado e tratado como um problema específico a ser corrigido, preservando a confiabilidade dos demais testes da suíte principal enquanto sua causa raiz é investigada. {{A}} confunde quarentena temporária, com plano de correção, com abandono permanente de cobertura. {{C}} descreve incorretamente a prática, que é explicitamente temporária e vinculada a uma tarefa de correção. {{D}} inventa uma exigência de aplicação universal sem qualquer relação com o propósito específico da quarentena, que é justamente isolar casos pontuais. {{E}} repete exatamente o comportamento problemático que o capítulo (e o próprio incidente do caso) identifica como arriscado — reexecutar sem investigar."
+    "resolucao": "a prática de quarentena responde exatamente ao risco identificado no texto: em vez de permitir que um teste conhecidamente instável continue corroendo a confiança da equipe nos resultados da suíte (como ocorreu no incidente), ele é isolado e tratado como um problema específico a ser corrigido, preservando a confiabilidade dos demais testes da suíte principal enquanto sua causa raiz é investigada. {{A}} confunde quarentena temporária, com plano de correção, com abandono permanente de cobertura. {{C}} descreve incorretamente a prática, que é explicitamente temporária e vinculada a uma tarefa de correção. {{D}} inventa uma exigência de aplicação universal sem qualquer relação com o propósito específico da quarentena, que é justamente isolar casos pontuais. {{E}} repete exatamente o comportamento problemático que o capítulo (e o próprio incidente do caso) identifica como arriscado — reexecutar sem investigar.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap7-q10",
@@ -2866,7 +2983,8 @@
       "A eliminação da semana de integração de cinco dias não tem relação com a execução automática da suíte de regressão a cada merge, sendo apenas uma mudança cultural da equipe"
     ],
     "correta": 1,
-    "resolucao": "a citação define precisamente esse benefício: integrar e testar frequentemente permite detectar erros de integração ‘o mais rápido possível’, evitando o acúmulo de problemas — exatamente o que a ObraCerta viveu ao trocar um evento mensal de cinco dias por pequenas correções distribuídas, cada uma tratada perto do momento em que o problema foi introduzido. {{A}} nega, sem fundamento, a relação direta entre a prática adotada e a melhoria observada. {{C}} contraria a própria definição citada, que exige integração frequente (tipicamente diária ou mais), não mensal — o oposto do que a ‘semana de integração’ representava. {{D}} inverte completamente a recomendação da citação. {{E}} ignora que a execução automática da suíte a cada merge é justamente o mecanismo técnico que viabiliza a detecção rápida descrita na citação, não um fator à parte."
+    "resolucao": "a citação define precisamente esse benefício: integrar e testar frequentemente permite detectar erros de integração ‘o mais rápido possível’, evitando o acúmulo de problemas — exatamente o que a ObraCerta viveu ao trocar um evento mensal de cinco dias por pequenas correções distribuídas, cada uma tratada perto do momento em que o problema foi introduzido. {{A}} nega, sem fundamento, a relação direta entre a prática adotada e a melhoria observada. {{C}} contraria a própria definição citada, que exige integração frequente (tipicamente diária ou mais), não mensal — o oposto do que a ‘semana de integração’ representava. {{D}} inverte completamente a recomendação da citação. {{E}} ignora que a execução automática da suíte a cada merge é justamente o mecanismo técnico que viabiliza a detecção rápida descrita na citação, não um fator à parte.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap7-q11",
@@ -2897,7 +3015,8 @@
       "A citação de Fowler (2006/2023) apoiaria essa sugestão, pois recomenda explicitamente reduzir a frequência de integração sempre que o custo de infraestrutura de testes for considerado alto"
     ],
     "correta": 1,
-    "resolucao": "a citação é explícita ao valorizar a frequência de integração como o mecanismo central para detecção rápida de erros; reduzir a frequência de merge de contínua para quinzenal recria, ainda que em menor escala, o mesmo padrão de acúmulo de mudanças não testadas em conjunto que caracterizava a antiga ‘semana de integração’ da ObraCerta. {{A}} contraria diretamente o argumento central da citação, que relaciona explicitamente frequência de integração à velocidade de detecção de erros. {{C}} prioriza economia de recursos sem considerar o custo — já demonstrado no histórico da própria empresa — de deixar problemas se acumularem. {{D}} ignora que o acúmulo de mudanças não testadas em conjunto aumenta a complexidade de diagnosticar qual mudança específica causou uma eventual regressão, mesmo que a suíte de testes em si seja a mesma. {{E}} é factualmente incorreto: a citação não faz essa recomendação condicionada a custo de infraestrutura."
+    "resolucao": "a citação é explícita ao valorizar a frequência de integração como o mecanismo central para detecção rápida de erros; reduzir a frequência de merge de contínua para quinzenal recria, ainda que em menor escala, o mesmo padrão de acúmulo de mudanças não testadas em conjunto que caracterizava a antiga ‘semana de integração’ da ObraCerta. {{A}} contraria diretamente o argumento central da citação, que relaciona explicitamente frequência de integração à velocidade de detecção de erros. {{C}} prioriza economia de recursos sem considerar o custo — já demonstrado no histórico da própria empresa — de deixar problemas se acumularem. {{D}} ignora que o acúmulo de mudanças não testadas em conjunto aumenta a complexidade de diagnosticar qual mudança específica causou uma eventual regressão, mesmo que a suíte de testes em si seja a mesma. {{E}} é factualmente incorreto: a citação não faz essa recomendação condicionada a custo de infraestrutura.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap7-q12",
@@ -2906,25 +3025,29 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“O pipeline de implantação modela o processo de levar o software do controle de versão até as mãos dos usuários, através de uma série de etapas de validação [...] Cada estágio do pipeline atua como um portão de qualidade, e uma mudança só avança para o próximo estágio se passar em todas as validações do estágio anterior, dando à equipe feedback progressivamente mais confiável sobre se aquela versão está pronta para ser lançada.” (tradução nossa)",
-        "fonte": "HUMBLE, Jez; FARLEY, David. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Boston: Addison-Wesley, 2010."
+        "t": "p",
+        "texto": "Para Humble e Farley, o pipeline de implantação representa o caminho do software do controle de versão até os usuários, passando por uma série de etapas de validação. Cada etapa funciona como um portão de qualidade: a mudança só avança se passar nas validações da etapa anterior, e a equipe ganha uma confiança cada vez maior de que aquela versão pode ser lançada."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em HUMBLE, Jez; FARLEY, David. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Boston: Addison-Wesley, 2010."
       },
       {
         "t": "p",
         "texto": "A EduPlus, plataforma de ensino a distância, estrutura seu pipeline de implantação em quatro estágios sequenciais: (1) build e testes unitários, com duração de 3 minutos; (2) testes de integração, com duração de 12 minutos; (3) testes end-to-end contra um ambiente de staging, com duração de 40 minutos; (4) implantação em produção, liberada apenas se os três estágios anteriores forem aprovados nessa ordem. Em uma ocasião, um defeito de integração passou despercebido pelo estágio 2 por uma falha de cobertura, mas foi corretamente capturado no estágio 3, impedindo que a mudança chegasse ao estágio 4."
       }
     ],
-    "enunciado": "Considerando a citação de Humble e Farley (2010) e o caso da EduPlus, assinale a alternativa correta:",
+    "enunciado": "Considerando o texto de Humble e Farley (2010) e o caso da EduPlus, assinale a alternativa correta:",
     "alternativas": [
       "O pipeline falhou, pois nenhum defeito deveria passar de um estágio",
       "Os estágios funcionam como portões progressivos: mesmo com uma lacuna na integração, o E2E barrou o defeito antes da produção",
-      "A citação de Humble e Farley (2010) recomenda que todos os estágios do pipeline sejam executados simultaneamente, em vez de sequencialmente, para acelerar o processo",
+      "O texto de Humble e Farley (2010) recomenda que todos os estágios do pipeline sejam executados simultaneamente, em vez de sequencialmente, para acelerar o processo",
       "O fato de o defeito ter sido capturado no estágio 3 prova que os estágios 1 e 2 são desnecessários e poderiam ser removidos do pipeline sem qualquer perda",
-      "Pipelines de implantação, segundo a citação, servem exclusivamente para automatizar o processo de build, sem qualquer relação com testes de regressão"
+      "Pipelines de implantação, segundo o texto, servem exclusivamente para automatizar o processo de build, sem qualquer relação com testes de regressão"
     ],
     "correta": 1,
-    "resolucao": "a citação descreve precisamente essa lógica de defesa em profundidade: cada estágio é um portão de qualidade, e o valor do pipeline está justamente em oferecer múltiplas oportunidades de detecção, de modo que uma lacuna pontual em um estágio (como a falha de cobertura na integração) não signifique necessariamente que o defeito chegará à produção, pois estágios seguintes (E2E, no caso) ainda podem capturá-lo. {{A}} trata uma exceção pontual como falha total do sistema, ignorando que o valor do pipeline está na redundância entre camadas, não na infalibilidade de uma única camada. {{C}} contraria a citação, que descreve estágios sequenciais como portões progressivos, não execuções simultâneas desconectadas. {{D}} comete um erro lógico grave: o fato de o estágio 3 ter capturado esse defeito específico não implica que os estágios 1 e 2 sejam redundantes para os inúmeros outros tipos de defeito que eles capturam rotineiramente, muito mais rapidamente e a menor custo. {{E}} restringe indevidamente o conceito de pipeline de implantação, que a própria citação relaciona diretamente a estágios de teste, não apenas de build."
+    "resolucao": "o texto descreve precisamente essa lógica de defesa em profundidade: cada estágio é um portão de qualidade, e o valor do pipeline está justamente em oferecer múltiplas oportunidades de detecção, de modo que uma lacuna pontual em um estágio (como a falha de cobertura na integração) não signifique necessariamente que o defeito chegará à produção, pois estágios seguintes (E2E, no caso) ainda podem capturá-lo. {{A}} trata uma exceção pontual como falha total do sistema, ignorando que o valor do pipeline está na redundância entre camadas, não na infalibilidade de uma única camada. {{C}} contraria o texto, que descreve estágios sequenciais como portões progressivos, não execuções simultâneas desconectadas. {{D}} comete um erro lógico grave: o fato de o estágio 3 ter capturado esse defeito específico não implica que os estágios 1 e 2 sejam redundantes para os inúmeros outros tipos de defeito que eles capturam rotineiramente, muito mais rapidamente e a menor custo. {{E}} restringe indevidamente o conceito de pipeline de implantação, que o próprio texto relaciona diretamente a estágios de teste, não apenas de build.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap7-m1",
@@ -2932,14 +3055,19 @@
     "capituloId": "qualidade-cap7",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe corrige um bug crítico no módulo de cálculo de impostos de um sistema fiscal. O desenvolvedor testa apenas a função corrigida e faz o deploy. Na semana seguinte, usuários reportam que a geração de notas fiscais — módulo aparentemente não relacionado — passou a calcular valores incorretos. Qual conceito explica esse cenário e o que deveria ter sido feito?",
-    "alternativas": [
-      "O cenário ilustra o paradoxo do pesticida: os testes existentes para o módulo de impostos foram executados repetidamente e pararam de detectar defeitos, tornando necessária a criação de novos casos de teste antes de qualquer correção de bug crítico.",
-      "É regressão: a correção nos impostos afetou as notas fiscais por acoplamento; faltou ao menos um sanity test nas áreas relacionadas e regressão no que depende do cálculo.",
-      "O cenário ilustra falha de verificação: o desenvolvedor realizou validação sem fazer validação testou se o código estava correto tecnicamente, mas não verificou se o sistema como um todo continuava atendendo às necessidades dos usuários fiscais após a correção.",
-      "É débito técnico: o módulo de notas já tinha defeitos ocultos."
+    "caso": [
+      "Uma empresa precisa escolher como selecionar os testes de regressão em quatro situações: (1) a troca do banco de dados e da arquitetura de todo o sistema; (2) uma pequena mudança em um módulo de relatórios bem isolado e com pouco acoplamento; (3) uma correção urgente que precisa ir para produção hoje, sem tempo de rodar tudo; (4) um produto feito em Scrum, em que a suíte de regressão recebe novos casos a cada sprint."
     ],
-    "correta": 1
+    "enunciado": "As estratégias de seleção de casos de regressão mais adequadas às situações 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "regressão total, seletiva por impacto, baseada em risco e progressiva.",
+      "seletiva por impacto, regressão total, baseada em risco e progressiva.",
+      "regressão total, baseada em risco, seletiva por impacto e progressiva.",
+      "progressiva, seletiva por impacto, baseada em risco e regressão total.",
+      "regressão total, seletiva por impacto, progressiva e baseada em risco."
+    ],
+    "correta": 0,
+    "resolucao": "Uma mudança ampla de arquitetura pede a regressão total, com cobertura máxima (1). Uma mudança pequena, em um módulo bem delimitado e de baixo acoplamento, combina com a seletiva por impacto, que testa só o que a mudança afetou (2). Prazo curto, sem tempo para tudo, pede a baseada em risco, que testa primeiro o que é crítico para o negócio (3). Uma suíte que ganha novos casos a cada sprint é a regressão progressiva (4)."
   },
   {
     "id": "qualidade-cap7-m2",
@@ -2947,14 +3075,16 @@
     "capituloId": "qualidade-cap7",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um sistema de e-commerce tem 3.000 casos de teste automatizados que levam 6 horas para executar completamente. A equipe precisa de feedback em menos de 10 minutos após cada commit. Qual estratégia de regressão e arquitetura resolvem esse problema sem comprometer a cobertura total?",
+    "enunciado": "Um sistema de comércio eletrônico tem 3.000 casos de teste automatizados, que levam 6 horas para rodar por completo. A equipe precisa de retorno em menos de 10 minutos após cada commit. Qual estratégia resolve o problema sem abrir mão da cobertura total?",
     "alternativas": [
-      "A solução é substituir todos os testes de sistema e UI por testes unitários equivalentes cada teste de interface pode ser convertido em teste unitário que executa em milissegundos, reduzindo o tempo total de 6 horas para menos de 5 minutos sem perda de cobertura funcional.",
-      "A solução é executar apenas 10% dos casos de teste aleatoriamente a cada commit — a seleção aleatória garante estatisticamente que defeitos serão detectados na maioria dos commits sem necessidade de planejamento estratégico da suíte de regressão.",
-      "Regressão em camadas com paralelismo: smoke test dos 150 casos críticos a cada commit, sanity das áreas alteradas no pull request e regressão completa paralela antes do release.",
-      "A solução é aumentar o hardware do servidor de CI/CD para que os 3.000 casos executem em menos de 10 minutos — o problema descrito é exclusivamente de infraestrutura, e o investimento em servidores mais rápidos resolve o desafio sem necessidade de alterar a estratégia de seleção de casos de teste."
+      "Regressão em camadas, com paralelismo: smoke dos casos críticos no commit, sanity no pull request e completa, em paralelo, antes do release.",
+      "Converter todos os testes de sistema e de interface em testes unitários, que rodam em milissegundos, sem perder cobertura.",
+      "Executar a cada commit 10% dos casos escolhidos ao acaso, pois o sorteio garante que os defeitos aparecem na maioria das vezes.",
+      "Comprar servidores mais rápidos para rodar os 3.000 casos em 10 minutos, já que o problema é só de infraestrutura.",
+      "Rodar a suíte completa só uma vez por mês, já que ela é demorada, e confiar nos testes manuais durante o resto do tempo."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A regressão por camadas organiza os testes em profundidade crescente: o smoke test, rápido e com o mínimo vital, a cada build; o sanity test, nas áreas modificadas; e a regressão completa, antes do release. Assim, o retorno é rápido nas primeiras camadas, e a cobertura total é mantida nas últimas, com o paralelismo reduzindo o tempo da suíte completa. Sortear testes não garante nada, e nem todo teste de interface pode virar unitário."
   },
   {
     "id": "qualidade-cap7-m3",
@@ -2962,14 +3092,16 @@
     "capituloId": "qualidade-cap7",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Após uma refatoração de código que não alterou nenhuma funcionalidade visível, a equipe decide pular os testes de regressão para economizar tempo. Qual é o risco técnico dessa decisão?",
+    "enunciado": "Depois de uma refatoração que não alterou nenhuma funcionalidade visível, a equipe decide pular os testes de regressão para economizar tempo. Qual é o risco técnico dessa decisão?",
     "alternativas": [
-      "Não há risco técnico significativo: refatorações por definição não alteram o comportamento externo do sistema — pular a regressão após refatoração é uma prática aceitável e recomendada em metodologias ágeis para evitar desperdício de tempo em verificações desnecessárias.",
-      "O risco é só político, diante dos stakeholders.",
-      "Refatoração é gatilho de regressão: mesmo sem querer mudar o comportamento, ela pode alterar ordens de execução, casos de borda e módulos acoplados.",
-      "O risco é apenas de auditoria: modelos de maturidade como CMMI e MPS.BR exigem evidência documentada de testes de regressão após qualquer modificação de código — o impacto técnico real de pular a regressão após refatoração é negligenciável, mas a ausência de documentação pode comprometer certificações da organização."
+      "A refatoração é gatilho de regressão: mesmo sem querer mudar o comportamento, ela pode trazer mudanças sutis que só a regressão revela.",
+      "Nenhum, pois a refatoração, por definição, não muda o comportamento externo, e pular a regressão nesse caso é recomendado.",
+      "O risco é só político: os stakeholders podem achar que a equipe não testou o sistema, embora nada tenha mudado de fato.",
+      "O risco é só de auditoria, pois o CMMI e o MPS.BR exigem registro de regressão, mas o impacto técnico real é desprezível.",
+      "O risco é só para os testes unitários, pois a refatoração nunca afeta a integração entre os módulos nem a interface."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A apostila inclui a refatoração entre os gatilhos de regressão: mesmo que a intenção seja não mudar a lógica, refatorações podem introduzir mudanças sutis de comportamento que só os testes de regressão revelam, como uma condição de corrida em operações paralelas. Os testes são justamente a garantia de que a refatoração preservou o comportamento."
   },
   {
     "id": "qualidade-cap7-m4",
@@ -2977,14 +3109,16 @@
     "capituloId": "qualidade-cap7",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma suíte de regressão tem 15% de flaky tests — testes que passam e falham intermitentemente sem mudança no código. A equipe começa a ignorar falhas no pipeline por considerar que \"provavelmente é flaky\". Qual é a consequência mais grave desse comportamento?",
+    "enunciado": "Depois de corrigir um defeito no cálculo do desconto, a equipe quer confirmar rapidamente que a correção funcionou e não quebrou nada diretamente relacionado, antes da regressão completa. Qual teste deve ser feito e com qual escopo?",
     "alternativas": [
-      "A consequência mais grave é o aumento do tempo de execução: flaky tests precisam ser re-executados múltiplas vezes para confirmar se a falha é real ou instabilidade — o impacto é exclusivamente operacional, sem risco para a qualidade do produto entregue aos usuários.",
-      "É financeira: reexecutar testes encarece a nuvem.",
-      "Perde-se a confiança na suíte: ao ignorar falhas como \"flaky\", regressões reais passam, e defeitos críticos chegam à produção.",
-      "A consequência mais grave é de processo: 15% de flaky tests viola os critérios mínimos de qualidade do ISTQB para suítes de regressão, podendo invalidar a certificação de qualidade da equipe e comprometer contratos que exigem conformidade com padrões internacionais de teste."
+      "Um sanity test: o cálculo do desconto e o que depende dele, como o checkout e o total do pedido, em 15 a 60 minutos.",
+      "Um smoke test: só verificar se o login funciona e a página principal carrega, em menos de 15 minutos.",
+      "A regressão completa: rodar 100% da suíte agora, pois nenhum teste parcial serve depois de uma correção.",
+      "Um sanity test: rodar 100% da suíte de regressão, em algumas horas, antes de liberar o build para o QA.",
+      "Um smoke test: testar só o cálculo do desconto, sem olhar o checkout nem o total do pedido do cliente."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "O sanity test é feito depois de uma correção ou de uma mudança pontual, para confirmar que ela resolveu o problema sem impactos colaterais imediatos. O escopo é a área afetada mais as funcionalidades diretamente relacionadas, e a duração vai de 15 minutos a 1 hora; o exemplo da apostila é exatamente o desconto, o checkout e o total do pedido. O smoke test verifica só o mínimo vital a cada build, e a regressão completa vem antes do release."
   },
   {
     "id": "qualidade-cap7-m5",
@@ -2992,14 +3126,16 @@
     "capituloId": "qualidade-cap7",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um time Scrum define sua Definition of Done para histórias de usuário. O QA propõe incluir critérios de regressão na DoD. Quais critérios são mais adequados e em qual momento da sprint cada um deve ser executado?",
+    "enunciado": "Um time Scrum vai incluir critérios de regressão na sua Definition of Done. Pela tabela da apostila, o que é feito em cada momento da sprint?",
     "alternativas": [
-      "A DoD deve incluir apenas o critério de que todos os testes unitários da história passam — regressão completa é responsabilidade da fase de release, não de histórias individuais, e incluí-la na DoD de cada história criaria overhead excessivo que inviabilizaria entregas nos prazos das sprints.",
-      "Regressão completa da suíte para cada história concluída.",
-      "Unitários e de integração passando (no desenvolvimento), sanity test nas áreas relacionadas (ao concluir a história) e smoke test do sistema (antes da Sprint Review).",
-      "A DoD deve incluir apenas critérios de testes manuais exploratórios realizados pelo QA — automação de regressão é responsabilidade do time de DevOps e não deve ser incluída nos critérios de aceitação de histórias de usuário, pois cria dependência entre o time de desenvolvimento e a infraestrutura de CI/CD."
+      "No desenvolvimento, unitários e integração; ao concluir a história, sanity e smoke das áreas ligadas; na Review, regressão das histórias.",
+      "No desenvolvimento, a regressão completa; ao concluir a história, nada; e, na Sprint Review, só o smoke test do sistema.",
+      "No desenvolvimento, unitários; ao concluir a história, a regressão completa; e, na Sprint Review, só os testes exploratórios.",
+      "No desenvolvimento, nada; ao concluir a história, os testes unitários; e, na Sprint Review, o sanity test das áreas ligadas.",
+      "Em todos os momentos, apenas testes manuais exploratórios, pois a automação não faz parte da Definition of Done."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Pela tabela de regressão em sprints Scrum: durante o desenvolvimento, testes unitários e de integração automatizados a cada commit; ao concluir uma história, o sanity test da funcionalidade e o smoke test das áreas relacionadas; na Sprint Review, a regressão das histórias da sprint sobre a base consolidada; antes da próxima sprint, a regressão completa; e, no release, a regressão completa automatizada com testes exploratórios de homologação."
   },
   {
     "id": "qualidade-cap7-m6",
@@ -3007,14 +3143,16 @@
     "capituloId": "qualidade-cap7",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa realiza um release mensal para um sistema bancário crítico com 5.000 casos de regressão automatizados. Dois dias antes do release, uma atualização urgente de segurança é aplicada a uma biblioteca de criptografia. Qual estratégia de regressão deve ser aplicada e por quê?",
+    "enunciado": "Uma empresa faz um release mensal de um sistema bancário crítico, com 5.000 casos de regressão automatizados. Dois dias antes do release, uma atualização urgente de segurança é aplicada a uma biblioteca de criptografia. Qual estratégia de regressão deve ser aplicada e por quê?",
     "alternativas": [
-      "Regressão Seletiva por Impacto é suficiente: como a atualização afeta apenas a biblioteca de criptografia, basta executar os testes relacionados à autenticação e criptografia — não há necessidade de regressão completa para uma mudança de escopo tão bem delimitado.",
-      "Smoke Test é suficiente: atualizações de bibliotecas de segurança são fornecidas por especialistas que garantem compatibilidade retroativa — verificar que as funções básicas do sistema operam é suficiente para autorizar o release após uma atualização de segurança urgente.",
-      "Regressão total, priorizando por risco: criptografia atravessa autenticação, transações e dados sensíveis, e num banco crítico isso justifica a suíte completa.",
-      "Regressão Progressiva é a estratégia adequada: adicionar os novos testes da atualização de segurança ao conjunto incremental e executar apenas o subconjunto mais recente permite validar a mudança sem o overhead da regressão completa, mantendo o cronograma do release mensal sem comprometer a qualidade."
+      "A regressão total, priorizada por risco: a criptografia atravessa autenticação, transações e dados sensíveis em um sistema crítico.",
+      "A seletiva por impacto basta: como só a biblioteca mudou, testar a autenticação dispensa a regressão completa do sistema.",
+      "O smoke test basta: atualizações de segurança são feitas por especialistas que garantem a compatibilidade com as versões anteriores.",
+      "A progressiva basta: rodar só os casos mais recentes da suíte valida a mudança e mantém a data do release sem atraso.",
+      "Nenhuma regressão é necessária, pois a atualização de uma biblioteca externa não altera o código da própria empresa."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Atualizar dependências é um gatilho de regressão, e a apostila manda executar a regressão completa antes de qualquer release. Aqui, a biblioteca de criptografia é usada em autenticação, transações e proteção de dados, e o sistema é bancário e crítico. Priorizar os testes pelo risco ajuda a encontrar primeiro os defeitos mais graves, mas não substitui a cobertura completa."
   },
   {
     "id": "qualidade-cap7-m7",
@@ -3022,14 +3160,16 @@
     "capituloId": "qualidade-cap7",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe monitora suas métricas de regressão e identifica: Pass Rate de 78%, Flakiness Rate de 18%, tempo médio de execução da suíte completa de 9 horas e 5 defeitos críticos escapados para produção no último trimestre. Comparando com as metas saudáveis, qual é o diagnóstico e as ações prioritárias?",
+    "enunciado": "Uma equipe acompanha as métricas da sua suíte de regressão: taxa de aprovação de 78%, taxa de flakiness de 18%, 9 horas para rodar a suíte completa e 5 defeitos críticos escapados para produção no último trimestre. Comparando com as metas saudáveis, qual é o diagnóstico?",
     "alternativas": [
-      "As métricas indicam suíte saudável: Pass Rate de 78% está dentro do intervalo aceitável para sistemas complexos, Flakiness Rate de 18% é esperado em ambientes de nuvem com infraestrutura variável, e o tempo de 9 horas é adequado para suítes com 5.000+ casos de teste executados sequencialmente.",
-      "Só os 5 defeitos escapados importam; o resto é secundário.",
-      "Tudo está crítico: pass rate de 78% (meta de 95%), 18% de flaky (meta de 2%), 9 horas de execução e 5 defeitos escapados; as ações são quarentena dos flaky, paralelização e análise de cobertura.",
-      "O diagnóstico indica que a equipe precisa adotar o modelo CMMI nível 4 para implementar gerenciamento quantitativo de processos: somente com métricas de maturidade de processo formalmente gerenciadas é possível identificar e corrigir as causas raiz dos problemas observados na suíte de regressão."
+      "Tudo está crítico: aprovação abaixo de 95%, flakiness acima de 2%, suíte acima de 2 horas e defeitos críticos escapados acima de zero.",
+      "A suíte está saudável: 78% de aprovação e 18% de flakiness são normais na nuvem, e 9 horas são adequadas para muitos testes.",
+      "Só os 5 defeitos escapados importam, pois as outras métricas medem a suíte, e não a qualidade do produto entregue.",
+      "Só a flakiness está ruim, pois 78% de aprovação, 9 horas e 5 defeitos escapados estão dentro das metas saudáveis.",
+      "O diagnóstico exige primeiro chegar ao nível 4 do CMMI, pois só com ele é possível interpretar métricas de teste."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Pela tabela de métricas da apostila, a meta de aprovação é acima de 95%; a de flakiness, abaixo de 2% da suíte; a suíte completa, com paralelismo, deve rodar em menos de 2 horas; e a meta de defeitos críticos escapados é zero. Todos os indicadores estão fora. As ações prioritárias são a quarentena e a correção dos testes instáveis, a paralelização da suíte e a análise de cobertura dos fluxos em que os defeitos escaparam."
   },
   {
     "id": "qualidade-cap7-m8",
@@ -3037,14 +3177,19 @@
     "capituloId": "qualidade-cap7",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um sistema de streaming lança novas funcionalidades a cada duas semanas. A equipe adota Canary Release, enviando cada deploy para 5% dos usuários antes da expansão total. Como os testes de regressão se integram a essa prática e qual é sua vantagem sobre a regressão tradicional pré-release?",
-    "alternativas": [
-      "Os dois se somam: antes do canary, a regressão automatizada valida em ambiente controlado; durante ele, smoke tests e monitoramento sintético vigiam os 5%, com rollback rápido se algo escapar.",
-      "O canary substitui toda a regressão automatizada.",
-      "Canary Release e regressão automatizada são práticas mutuamente exclusivas: equipes que adotam entrega contínua com Canary Release não precisam de testes de regressão formais, pois o monitoramento de produção em tempo real detecta defeitos antes que impactem a base completa de usuários.",
-      "A vantagem do Canary sobre a regressão tradicional é exclusivamente de velocidade de entrega: ao eliminar a necessidade de regressão completa pré-release, o Canary Release permite que a equipe entregue funcionalidades duas semanas mais rápido — o risco de defeitos é mitigado pelo rollback automático disponível na infraestrutura de nuvem."
+    "caso": [
+      "Uma equipe usou quatro formas de acelerar a sua suíte de regressão: (1) rodar vários testes ao mesmo tempo na mesma máquina, em linhas de execução paralelas; (2) distribuir os testes de interface entre várias máquinas com o Selenium Grid; (3) contratar um serviço como o BrowserStack para rodar os testes em muitos navegadores e sistemas ao mesmo tempo; (4) dividir a suíte em quatro partes, executadas em quatro máquinas do pipeline, e juntar os resultados no final."
     ],
-    "correta": 0
+    "enunciado": "As formas de paralelismo usadas nas situações 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "por thread, por máquina (Grid), em nuvem e sharding.",
+      "por máquina (Grid), por thread, em nuvem e sharding.",
+      "por thread, em nuvem, por máquina (Grid) e sharding.",
+      "sharding, por máquina (Grid), em nuvem e por thread.",
+      "por thread, por máquina (Grid), sharding e em nuvem."
+    ],
+    "correta": 0,
+    "resolucao": "Vários testes ao mesmo tempo na mesma máquina, em threads, é o paralelismo por thread, suportado pelo TestNG e por plugins no JUnit 5 e no pytest (1). O Selenium Grid distribui os testes entre várias máquinas ou contêineres (2). Serviços como BrowserStack e Sauce Labs oferecem a infraestrutura em nuvem (3). Dividir a suíte em subconjuntos executados em máquinas diferentes do pipeline, juntando os resultados no fim, é o sharding (4)."
   },
   {
     "id": "qualidade-cap7-m9",
@@ -3052,14 +3197,16 @@
     "capituloId": "qualidade-cap7",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe tem 2.000 testes de regressão e descobre que 600 deles verificam funcionalidades que foram removidas do sistema há seis meses. Outros 300 são duplicatas de cenários já cobertos por outros testes. Qual é o impacto desse cenário e como a gestão adequada da suíte preveniria esse problema?",
+    "enunciado": "Uma equipe tem 2.000 testes de regressão e descobre que 600 deles verificam funcionalidades removidas há seis meses, e outros 300 repetem cenários já cobertos por outros testes. Qual é o impacto disso e como a gestão da suíte evitaria o problema?",
     "alternativas": [
-      "Afeta só o tempo; a limpeza é opcional.",
-      "O impacto é de cobertura: com 900 testes inúteis consumindo recursos, a equipe tem recursos insuficientes para criar testes para funcionalidades novas — o problema é de priorização de esforço, não de confiabilidade dos resultados da suíte existente.",
-      "O impacto é legal e regulatório: testes que verificam funcionalidades removidas podem gerar evidências contraditórias em auditorias de qualidade — a principal consequência é a invalidade da documentação de testes para certificações ISO e CMMI, sendo a limpeza da suíte obrigatória antes de qualquer processo formal de avaliação de maturidade.",
-      "Testes obsoletos e duplicados inflam a cobertura, alongam a execução e confundem a equipe; previne-se com rastreabilidade entre testes e requisitos e revisão periódica da suíte."
+      "Testes obsoletos e duplicados alongam a execução e confundem a equipe; previne-se com rastreabilidade e revisão periódica da suíte.",
+      "O impacto é só o tempo de execução, e a limpeza da suíte é opcional enquanto os testes continuarem passando.",
+      "O impacto é só de esforço: sobra pouco tempo para testes novos, sem nenhum efeito na confiabilidade dos resultados.",
+      "O impacto é só regulatório, pois testes obsoletos contradizem as auditorias do CMMI, sem efeito técnico nenhum.",
+      "Não há impacto, pois testes duplicados aumentam a segurança da suíte ao verificar os mesmos cenários duas vezes."
     ],
-    "correta": 3
+    "correta": 0,
+    "resolucao": "Testes obsoletos verificam o que não existe mais, geram falhas falsas e confundem a equipe sobre o estado real do sistema; testes duplicados aumentam o tempo de execução sem agregar cobertura. A apostila recomenda tratar a suíte como código de produção: revisá-la a cada sprint, remover o que ficou obsoleto e manter a rastreabilidade bidirecional com os requisitos, para que uma mudança de requisito aponte os testes afetados."
   },
   {
     "id": "qualidade-cap7-m10",
@@ -3067,14 +3214,16 @@
     "capituloId": "qualidade-cap7",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma organização implementa testes de regressão em produção (Production Testing) com smoke tests pós-deploy e synthetic monitoring. Um arquiteto questiona os riscos dessa prática. Quais são os benefícios e os cuidados necessários para implementá-la com segurança?",
+    "enunciado": "Uma organização adota testes de regressão em produção, com smoke tests após cada deploy e monitoramento sintético. Um arquiteto pergunta pelos riscos. Quais são os benefícios e os cuidados necessários?",
     "alternativas": [
-      "Benefício: verificar no ambiente real e pegar falhas logo após o deploy; cuidados: dados sintéticos, nada irreversível (pagamentos, e-mails), só fluxos críticos e rollback automático.",
-      "Production Testing é uma prática irresponsável que nunca deve ser adotada: executar scripts automatizados em produção cria risco de corrupção de dados reais de usuários, sendo proibida por normas de segurança da informação e por regulamentações do setor financeiro e de saúde.",
-      "O único benefício é de marketing; o staging faz o mesmo.",
-      "Production Testing só é seguro em sistemas com arquitetura de microsserviços: a separação de serviços garante que scripts de teste não afetem outros componentes em sistemas monolíticos, a prática é tecnicamente inviável pois qualquer ação de teste propaga-se para toda a base de dados compartilhada do sistema."
+      "Verifica o sistema no ambiente real e pega falhas logo após o deploy; exige dados sintéticos, nenhuma ação irreversível e só fluxos críticos.",
+      "É uma prática irresponsável, proibida por normas de segurança, pois qualquer teste em produção corrompe os dados dos usuários.",
+      "O único benefício é de marketing, pois o ambiente de staging verifica exatamente as mesmas coisas que a produção.",
+      "Só é segura em microsserviços, pois em sistemas monolíticos qualquer teste se espalha por todo o banco de dados.",
+      "Substitui toda a regressão antes do deploy, pois os problemas passam a ser encontrados direto com os usuários reais."
     ],
-    "correta": 0
+    "correta": 0,
+    "resolucao": "Os testes em produção dão a verificação mais realista possível: os smoke tests pós-deploy confirmam que o sistema está operando, e o monitoramento sintético simula continuamente ações de usuários, alertando quando um fluxo crítico falha. Para fazer isso com segurança, usam-se dados e contas de teste, evitam-se ações irreversíveis (como pagamentos reais), limita-se o escopo aos fluxos críticos e mantém-se o rollback disponível. Eles complementam, e não substituem, a regressão antes do deploy."
   },
   {
     "id": "qualidade-cap10-m1",

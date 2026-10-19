@@ -535,7 +535,7 @@
   "E": "Testes sem asserção nem chegam a rodar no Jest ou no Vitest"
  },
  "qualidade-cap6-q7": {
-  "B": "A nova meta troca uma métrica de execução (linhas que rodaram) por uma de comportamento (retorno correto), como defende Feathers",
+  "B": "A nova meta troca uma métrica de execução (linhas que rodaram) por uma de comportamento (retorno correto), como defende o texto",
   "D": "A nova meta é tecnicamente inferior, pois não pode ser medida automaticamente por nenhuma ferramenta de cobertura de código, dependendo sempre da revisão manual de cada teste"
  },
  "qualidade-cap6-q8": {
@@ -590,7 +590,7 @@
  },
  "qualidade-cap7-q8": {
   "B": "O teste flaky minou a confiança, e a equipe ignorou uma falha real, achando que era a mesma instabilidade de sempre",
-  "A": "O comportamento dos desenvolvedores da AgroSoft, ao reexecutar o pipeline sem investigar, não tem relação com o fenômeno descrito na citação, sendo apenas uma prática de produtividade recomendada",
+  "A": "O comportamento dos desenvolvedores da AgroSoft, ao reexecutar o pipeline sem investigar, não tem relação com o fenômeno descrito no texto, sendo apenas uma prática de produtividade recomendada",
   "D": "Para Luo et al., testes flaky nunca convivem com defeitos reais"
  },
  "qualidade-cap7-q9": {
@@ -608,7 +608,7 @@
  },
  "qualidade-cap7-q12": {
   "B": "Os estágios funcionam como portões progressivos: mesmo com uma lacuna na integração, o E2E barrou o defeito antes da produção",
-  "C": "A citação de Humble e Farley (2010) recomenda que todos os estágios do pipeline sejam executados simultaneamente, em vez de sequencialmente, para acelerar o processo",
+  "C": "O texto de Humble e Farley (2010) recomenda que todos os estágios do pipeline sejam executados simultaneamente, em vez de sequencialmente, para acelerar o processo",
   "A": "O pipeline falhou, pois nenhum defeito deveria passar de um estágio"
  },
  "legislacao-cap1-q2": {
@@ -1898,80 +1898,80 @@
   "B": "São redundantes: os cenários em Gherkin do BDD já cobrem a lógica interna, e a equipe que adota BDD pode largar o TDD."
  },
  "qualidade-cap6-m1": {
-  "C": "Manual: 400 × 8 min × R$ 1/min × 15 releases = R$ 48.000 por ano; com R$ 20.000 investidos, a automação se paga antes de 6 meses e segue economizando.",
-  "B": "Impossível calcular sem o custo de manutenção dos scripts."
+  "C": "O manual custa 400 × 8 min × R$ 60 = R$ 192.000 por release, e o investimento se pagou já na primeira release automatizada.",
+  "B": "Não valeu: a automação só tem retorno positivo depois de 24 meses quando o projeto tem menos de 500 casos de teste."
  },
  "qualidade-cap6-m2": {
-  "B": "Com POM, cada página é uma classe com os localizadores centralizados: mudar 30 elementos exige alterar 30 localizadores, não 600 scripts.",
-  "C": "Só ajudaria nos testes desses 30 elementos; os outros seguiriam quebrados."
+  "B": "Selenium WebDriver, Selenium IDE e Selenium Grid.",
+  "C": "Selenium Grid, Selenium WebDriver e Selenium IDE."
  },
  "qualidade-cap6-m3": {
-  "C": "Testes exploratórios dependem de criatividade, intuição e adaptação ao que se descobre na hora; um script só executa o que foi programado."
+  "C": "Os testes exploratórios já são feitos automaticamente pela análise estática do SonarQube, e a proposta seria redundante."
  },
  "qualidade-cap6-m4": {
-  "C": "TestNG: tem dependência entre testes (dependsOnMethods), paralelismo no testng.xml e relatório HTML nativos, os três requisitos pedidos.",
-  "B": "Tanto faz: as duas fazem o mesmo, e decide a familiaridade."
+  "C": "Os dois métodos são chamados 2 vezes, uma vez antes de cada teste.",
+  "B": "conectarBanco() é chamado 2 vezes, e novoCarrinho() é chamado 1 vez."
  },
  "qualidade-cap6-m5": {
-  "B": "É o \"cone de sorvete\", a pirâmide invertida: muitos testes de UI lentos e frágeis e poucos unitários; a correção é ter a maioria unitária, parte de integração e UI só nos fluxos críticos.",
-  "C": "Falta de Page Object Model; com POM, as quebras e as 4 horas somem."
+  "B": "I e III, apenas.",
+  "C": "I, II, III e IV."
  },
  "qualidade-cap6-m7": {
-  "C": "Commit (até 5 min): análise estática e unitários; build: integração e contratos de API; staging: regressão de UI, desempenho e segurança; pré-produção: aceitação, carga e aprovação humana.",
-  "B": "Começar pelos testes completos de desempenho com JMeter."
+  "C": "Commit: testes de carga com JMeter; build: unitários; staging: análise estática; pré-produção: integração e API.",
+  "B": "Todos os testes na etapa de commit, pois dividi-los em etapas cria lacunas de cobertura entre os estágios do pipeline."
  },
  "qualidade-cap6-m8": {
-  "C": "Viola Independent: os testes compartilham estado no banco real, e um altera o que o outro espera; a solução é isolar com mocks, stubs ou transações com rollback.",
-  "D": "Viola Timely, pois o teste foi escrito depois do código."
+  "C": "Apagar a espera, pois o Selenium sempre aguarda todos os elementos dinâmicos carregarem sozinho.",
+  "D": "Marcar o teste com @Disabled, pois os testes de listas dinâmicas não devem ser automatizados."
  },
  "qualidade-cap6-m9": {
-  "C": "Appium para iOS e Android e Selenium, Cypress ou Playwright para a web; o desafio é manter bases de automação distintas, gerenciar os dispositivos e sincronizar tudo no pipeline."
+  "C": "Somente o Selenium WebDriver, que, com o Selenium Grid, usa o mesmo script para Android, iOS e navegadores de computador."
  },
  "qualidade-cap6-m10": {
-  "C": "Fica no topo da pirâmide, como teste de aceitação; o adequado é Cucumber com Selenium, Playwright ou Cypress, executando na interface real.",
-  "B": "No nível de integração, com RestAssured na API do carrinho."
+  "C": "No meio da pirâmide, como teste de integração, rodando com o RestAssured diretamente contra a API do carrinho de compras.",
+  "B": "Na base da pirâmide, pois o cenário em linguagem de negócio substitui os testes unitários, rodando com JUnit sem a interface."
  },
  "qualidade-cap6-m11": {
-  "C": "O Playwright tem Chrome, Firefox e Safari numa só API, mais estabilidade, interceptação de rede e paralelismo nativo; o Selenium ainda compensa com muitos scripts Java legados.",
-  "D": "A única vantagem é o suporte a vários navegadores, e o Grid já faz isso."
+  "C": "JMeter, OWASP ZAP, Postman com Newman e SonarQube.",
+  "D": "Postman com Newman, JMeter, SonarQube e OWASP ZAP."
  },
  "qualidade-cap7-m1": {
-  "B": "É regressão: a correção nos impostos afetou as notas fiscais por acoplamento; faltou ao menos um sanity test nas áreas relacionadas e regressão no que depende do cálculo.",
-  "D": "É débito técnico: o módulo de notas já tinha defeitos ocultos."
+  "B": "seletiva por impacto, regressão total, baseada em risco e progressiva.",
+  "D": "progressiva, seletiva por impacto, baseada em risco e regressão total."
  },
  "qualidade-cap7-m2": {
-  "C": "Regressão em camadas com paralelismo: smoke test dos 150 casos críticos a cada commit, sanity das áreas alteradas no pull request e regressão completa paralela antes do release."
+  "C": "Executar a cada commit 10% dos casos escolhidos ao acaso, pois o sorteio garante que os defeitos aparecem na maioria das vezes."
  },
  "qualidade-cap7-m3": {
-  "C": "Refatoração é gatilho de regressão: mesmo sem querer mudar o comportamento, ela pode alterar ordens de execução, casos de borda e módulos acoplados.",
-  "B": "O risco é só político, diante dos stakeholders."
+  "C": "O risco é só político: os stakeholders podem achar que a equipe não testou o sistema, embora nada tenha mudado de fato.",
+  "B": "Nenhum, pois a refatoração, por definição, não muda o comportamento externo, e pular a regressão nesse caso é recomendado."
  },
  "qualidade-cap7-m4": {
-  "C": "Perde-se a confiança na suíte: ao ignorar falhas como \"flaky\", regressões reais passam, e defeitos críticos chegam à produção.",
-  "B": "É financeira: reexecutar testes encarece a nuvem."
+  "C": "A regressão completa: rodar 100% da suíte agora, pois nenhum teste parcial serve depois de uma correção.",
+  "B": "Um smoke test: só verificar se o login funciona e a página principal carrega, em menos de 15 minutos."
  },
  "qualidade-cap7-m5": {
-  "C": "Unitários e de integração passando (no desenvolvimento), sanity test nas áreas relacionadas (ao concluir a história) e smoke test do sistema (antes da Sprint Review).",
-  "B": "Regressão completa da suíte para cada história concluída."
+  "C": "No desenvolvimento, unitários; ao concluir a história, a regressão completa; e, na Sprint Review, só os testes exploratórios.",
+  "B": "No desenvolvimento, a regressão completa; ao concluir a história, nada; e, na Sprint Review, só o smoke test do sistema."
  },
  "qualidade-cap7-m6": {
-  "C": "Regressão total, priorizando por risco: criptografia atravessa autenticação, transações e dados sensíveis, e num banco crítico isso justifica a suíte completa."
+  "C": "O smoke test basta: atualizações de segurança são feitas por especialistas que garantem a compatibilidade com as versões anteriores."
  },
  "qualidade-cap7-m7": {
-  "C": "Tudo está crítico: pass rate de 78% (meta de 95%), 18% de flaky (meta de 2%), 9 horas de execução e 5 defeitos escapados; as ações são quarentena dos flaky, paralelização e análise de cobertura.",
-  "B": "Só os 5 defeitos escapados importam; o resto é secundário."
+  "C": "Só os 5 defeitos escapados importam, pois as outras métricas medem a suíte, e não a qualidade do produto entregue.",
+  "B": "A suíte está saudável: 78% de aprovação e 18% de flakiness são normais na nuvem, e 9 horas são adequadas para muitos testes."
  },
  "qualidade-cap7-m8": {
-  "A": "Os dois se somam: antes do canary, a regressão automatizada valida em ambiente controlado; durante ele, smoke tests e monitoramento sintético vigiam os 5%, com rollback rápido se algo escapar.",
-  "B": "O canary substitui toda a regressão automatizada."
+  "A": "por thread, por máquina (Grid), em nuvem e sharding.",
+  "B": "por máquina (Grid), por thread, em nuvem e sharding."
  },
  "qualidade-cap7-m9": {
-  "D": "Testes obsoletos e duplicados inflam a cobertura, alongam a execução e confundem a equipe; previne-se com rastreabilidade entre testes e requisitos e revisão periódica da suíte.",
-  "A": "Afeta só o tempo; a limpeza é opcional."
+  "D": "O impacto é só regulatório, pois testes obsoletos contradizem as auditorias do CMMI, sem efeito técnico nenhum.",
+  "A": "Testes obsoletos e duplicados alongam a execução e confundem a equipe; previne-se com rastreabilidade e revisão periódica da suíte."
  },
  "qualidade-cap7-m10": {
-  "A": "Benefício: verificar no ambiente real e pegar falhas logo após o deploy; cuidados: dados sintéticos, nada irreversível (pagamentos, e-mails), só fluxos críticos e rollback automático.",
-  "C": "O único benefício é de marketing; o staging faz o mesmo."
+  "A": "Verifica o sistema no ambiente real e pega falhas logo após o deploy; exige dados sintéticos, nenhuma ação irreversível e só fluxos críticos.",
+  "C": "O único benefício é de marketing, pois o ambiente de staging verifica exatamente as mesmas coisas que a produção."
  },
  "qualidade-cap10-m1": {
   "B": "Erro: o desenvolvedor usar < em vez de <=; defeito: a condição errada que ficou no código; falha: aprovar em produção empréstimos no valor exato do limite.",
