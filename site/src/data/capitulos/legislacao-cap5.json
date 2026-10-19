@@ -34,7 +34,7 @@
   },
   {
    "t": "p",
-   "html": "LGPD (Lei 13.709/2018): exige base legal e consentimento para uso de dados em campanhas."
+   "html": "LGPD (Lei 13.709/2018): exige base legal (em geral, o consentimento ou o legítimo interesse) para o uso de dados em campanhas."
   },
   {
    "t": "p",
@@ -81,7 +81,7 @@
     ],
     [
      "Proteção ao Consumidor",
-     "Proibida segmentação de anúncios de crédito para endividados"
+     "Anúncios não podem abusar da confiança do consumidor nem explorar seu medo ou sua falta de experiência"
     ],
     [
      "Respeito à Concorrência",
@@ -191,7 +191,7 @@
   },
   {
    "t": "h3",
-   "texto": "Resolução CONAR nº 01/2023 — Publicidade por Influenciadores"
+   "texto": "Regras do CONAR para Publicidade por Influenciadores"
   },
   {
    "t": "p",
@@ -242,8 +242,8 @@
     ],
     [
      "Publicidade não identificada p/ menores de 12",
-     "Agravamento por violação do ECA",
-     "ECA art. 78; CONAR"
+     "Publicidade abusiva, por explorar a inexperiência infantil",
+     "CDC arts. 36 e 37, § 2º; CONAR"
     ],
     [
      "Vazar dados de seguidores em sorteios",
@@ -299,7 +299,7 @@
     [
      "Geolocalização",
      "GPS, Wi-Fi, endereço IP",
-     "Dado sensível em certos contextos"
+     "Pode revelar dados sensíveis (ex.: idas a hospitais ou templos)"
     ],
     [
      "Dados sensíveis",
@@ -327,7 +327,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "O Google anunciou — e adiou diversas vezes — a descontinuação dos cookies de terceiros no Chrome, acompanhando decisões semelhantes da Apple (Safari) e Mozilla (Firefox). Para as marcas, o futuro do marketing digital é baseado em dados consentidos (first-party data) e relações diretas com os consumidores."
+     "html": "A Apple (Safari) e a Mozilla (Firefox) já bloqueiam cookies de terceiros por padrão. O Google anunciou e adiou várias vezes a mesma medida no Chrome e, entre 2024 e 2025, desistiu de eliminá-los. Mesmo assim, para as marcas, o futuro do marketing digital é baseado em dados consentidos (first-party data) e relações diretas com os consumidores."
     }
    ]
   },
@@ -346,7 +346,7 @@
   },
   {
    "t": "p",
-   "html": "Livre: não pode ser condicionado à prestação de serviço."
+   "html": "Livre: o titular deve poder escolher de verdade; se o consentimento for condição para o serviço, isso deve ser informado com destaque (art. 9º, § 3º)."
   },
   {
    "t": "p",
@@ -382,8 +382,8 @@
    "linhas": [
     [
      "Single Opt-in",
-     "Questionável — sem confirmação da vontade",
-     "Evitar para e-mail marketing"
+     "Válido, se houver ação positiva do titular",
+     "Aceitável, mas sem confirmar o e-mail"
     ],
     [
      "Double Opt-in",
@@ -397,8 +397,8 @@
     ],
     [
      "Opt-out",
-     "Inválido — sem manifestação prévia",
-     "Vedado pela LGPD para marketing"
+     "Não é consentimento",
+     "Só com outra base legal, como o legítimo interesse com clientes atuais"
     ],
     [
      "Caixa pré-marcada",
@@ -441,7 +441,7 @@
     ],
     [
      "SMS Comercial",
-     "Opt-in exigido; ANATEL veda envio sem consentimento",
+     "Opt-in (consentimento) ou outra base legal válida; respeitar os pedidos de bloqueio",
      "Instrução de STOP ou CANCELAR"
     ],
     [
@@ -467,7 +467,7 @@
   },
   {
    "t": "p",
-   "html": "Lista Própria e Autorizada (nunca compre ou alugue listas); Identificação do Remetente (nome, domínio próprio, CNPJ no rodapé); Assunto Honesto; Conteúdo Verificável; Link de Descadastramento (visível, sem exigir login); Gestão de Bounces (spam acima de 0,1% gera bloqueio); Registro de Consentimento (log de quando, como e onde foi obtido)."
+   "html": "Lista Própria e Autorizada (nunca compre ou alugue listas); Identificação do Remetente (nome, domínio próprio, CNPJ no rodapé); Assunto Honesto; Conteúdo Verificável; Link de Descadastramento (visível, sem exigir login); Gestão de Bounces e de reclamações (provedores como o Gmail exigem taxa de spam abaixo de 0,3%); Registro de Consentimento (log de quando, como e onde foi obtido)."
   },
   {
    "t": "h2",
@@ -484,7 +484,8 @@
    "itens": [
     "Vedado abuso da inexperiência ou apelo emocional (pester power).",
     "Branded content infantil deve ser identificado.",
-    "Dados de crianças até 12 anos exigem consentimento dos pais (LGPD art. 14).",
+    "Dados de crianças (menores de 12 anos) exigem consentimento de um dos pais ou do responsável (LGPD art. 14).",
+    "O ECA Digital (Lei 15.211/2025) reforça a proteção de crianças e adolescentes em produtos e serviços digitais e proíbe usar perfilamento para direcionar publicidade a eles.",
     "YouTube Kids e Roblox têm políticas próprias contra álcool e apostas."
    ]
   },
@@ -496,7 +497,7 @@
    "t": "lista",
    "numerada": false,
    "itens": [
-    "Estatuto do Idoso e CDC protegem consumidores 60+.",
+    "Estatuto da Pessoa Idosa e CDC protegem consumidores 60+.",
     "Produtos financeiros: clareza sobre custos e riscos.",
     "Promessas de cura milagrosa são vedadas pela ANVISA.",
     "Interfaces devem ser acessíveis — dificuldade de uso pode ser dark pattern."
@@ -518,7 +519,7 @@
     [
      "Bebidas Alcoólicas",
      "Vedada segmentação para menores; declaração de maioridade",
-     "CONAR / ANVISA"
+     "CONAR / Lei 9.294/1996"
     ],
     [
      "Tabaco e Derivados",
@@ -528,7 +529,7 @@
     [
      "Medicamentos",
      "Tarjados: só para profissionais de saúde",
-     "ANVISA (RDC 204/2017)"
+     "ANVISA (RDC 96/2008)"
     ],
     [
      "Serviços Financeiros",
@@ -538,7 +539,7 @@
     [
      "Apostas Online",
      "Alerta de riscos; vedação para menores",
-     "SECAP / MF"
+     "SPA / Ministério da Fazenda (Lei 14.790/2023)"
     ],
     [
      "Planos de Saúde",
@@ -546,9 +547,9 @@
      "ANS"
     ],
     [
-     "Alimentos Infantis",
-     "Alertas obrigatórios para ultraprocessados",
-     "ANVISA (RDC 163/2017)"
+     "Alimentos",
+     "Rotulagem frontal (lupa) para alto teor de açúcar, sódio e gordura; publicidade infantil abusiva",
+     "ANVISA (RDC 429/2020) / Conanda (Res. 163/2014)"
     ]
    ]
   },

@@ -908,42 +908,42 @@
   "A": "A contrapropaganda é facultativa e só pode ser aplicada se o consumidor provar prejuízo financeiro individual, e seus custos devem ser divididos entre a empresa e o Procon"
  },
  "legislacao-cap5-f2": {
-  "D": "É dark pattern (recusa mais difícil que aceitação): a LGPD exige consentimento livre, com recusa tão fácil quanto aceitar.",
-  "A": "Não há irregularidade, pois a LGPD exige apenas que o usuário seja informado sobre o uso de cookies, sem obrigação de disponibilizar botão de recusa em posição equivalente ao de aceitação ou com o mesmo destaque visual.",
-  "B": "A irregularidade é só ética, sem consequência jurídica."
+  "D": "Há violação só do Marco Civil, que exige design acessível, mas não trata do consentimento para cookies.",
+  "A": "É dark pattern: a recusa é mais difícil que a aceitação, e a LGPD exige consentimento livre e inequívoco.",
+  "B": "Não há irregularidade, pois a LGPD só exige informar o uso de cookies, sem regra sobre o botão de recusa."
  },
  "legislacao-cap5-f4": {
-  "A": "Não é suficiente: cookies de rastreamento e e-mails de marketing são finalidades distintas, e cada uma exige consentimento próprio.",
-  "D": "Não é necessário qualquer consentimento adicional, pois o legítimo interesse do anunciante em comunicar promoções a visitantes do site é base legal suficiente para o envio de e-mails de marketing pela LGPD.",
-  "C": "Basta o banner mencionar o envio de e-mails, sem opt-in próprio."
+  "A": "Não basta: rastrear com cookies e enviar e-mails de marketing são finalidades distintas, cada uma com seu consentimento.",
+  "D": "Não é preciso consentimento algum, pois quem visita o site já autoriza o envio de promoções por e-mail.",
+  "C": "Basta, desde que o texto do banner mencione o envio de e-mails, sem precisar de um opt-in separado para isso."
  },
  "legislacao-cap5-f5": {
-  "C": "Roach motel: fácil de assinar e difícil de cancelar, prática abusiva pelo CDC e alvo de fiscalização da Senacon.",
-  "A": "Confirmshaming, pois a interface usa linguagem constrangedora para desestimular o cancelamento — prática vedada pelo CONAR por violar o princípio da honestidade publicitária e sujeita a multa."
+  "C": "Hidden costs, pois custos extras aparecem só no fim do cancelamento, o que o Decreto nº 7.962/2013 proíbe.",
+  "A": "Roach motel: fácil de assinar e difícil de cancelar, prática abusiva pelo CDC e alvo de fiscalização da Senacon."
  },
  "legislacao-cap5-f6": {
-  "D": "Publicidade enganosa (omissão do CET e falsa aprovação garantida), com responsabilidade solidária da fintech e do influenciador.",
-  "C": "Infração ao CDC por publicidade enganosa e ao BACEN por omissão do CET, com responsabilidade exclusiva da fintech, pois o influenciador é apenas veículo da mensagem publicitária aprovada pela marca e não responde por ela.",
-  "B": "Só infringe a Resolução CVM nº 35/2021, sobre influenciadores."
+  "D": "Publicidade enganosa, com responsabilidade só da fintech, pois o influenciador é mero veículo da mensagem.",
+  "C": "Só infração às normas da CVM, pois cartões de crédito são produtos de investimento regulados por ela.",
+  "B": "Só infração ao CONAR, pela falta de identificação, sem nenhuma consequência perante os reguladores financeiros."
  },
  "legislacao-cap5-f7": {
-  "C": "Publicidade abusiva que explora a inexperiência infantil (CDC, CONAR e Resolução nº 163/2014 do Conanda), sem identificação publicitária.",
-  "D": "Infração apenas ao ECA, que proíbe qualquer forma de publicidade direcionada a menores de 18 anos em plataformas digitais, independentemente do produto anunciado, da forma de veiculação ou do horário de exibição dos anúncios.",
-  "A": "Só infração ao CONAR, sem sanções legais previstas."
+  "C": "Só infração à LGPD, pois o problema está na coleta de dados das crianças pelo jogo, e não no anúncio em si.",
+  "D": "Só infração ao ECA, que proíbe qualquer publicidade a menores de 18 anos em todas as plataformas digitais.",
+  "A": "Publicidade abusiva que explora a inexperiência infantil (CDC, CONAR e Res. 163/2014 do Conanda), sem identificação."
  },
  "legislacao-cap5-f8": {
-  "A": "Prática ilegal: a lista comprada não traz consentimento livre e informado para marketing, sujeitando a empresa à ANPD e ao Procon.",
-  "D": "Prática permitida desde que a corretora de dados comprove ter obtido os e-mails legalmente, transferindo a responsabilidade integral pelo consentimento à empresa vendedora da lista, que responde sozinha perante a ANPD e o Procon.",
-  "C": "Só é irregular se faltar o link de descadastramento nos e-mails."
+  "A": "É ilegal: a lista comprada não traz consentimento livre e informado para o marketing, o que sujeita a empresa à ANPD.",
+  "D": "É permitida se a corretora provar que obteve os e-mails legalmente, pois ela passa a responder sozinha por tudo.",
+  "C": "Só é irregular se faltar o link de descadastramento, que é a única exigência da LGPD para o e-mail marketing."
  },
  "legislacao-cap5-f9": {
-  "D": "O CONAR veda associar bebida alcoólica a esportes, e a campanha precisa excluir menores; do contrário, é publicidade abusiva.",
-  "A": "A campanha é permitida sem restrições, pois adultos que praticam esportes radicais formam um público claramente identificado como maior de idade, afastando qualquer risco de exposição de menores e dispensando filtros de idade na plataforma."
+  "D": "É totalmente vedada, pois o CONAR e a Lei nº 9.294/1996 proíbem anúncios de bebida alcoólica nas redes.",
+  "A": "O anúncio não pode ligar a bebida a desempenho ou a atividades de risco, e a campanha precisa excluir os menores."
  },
  "legislacao-cap5-f10": {
-  "D": "Viola a LGPD: autorizar notificações no sistema é técnico e não equivale ao consentimento específico para receber marketing.",
-  "C": "A prática é permitida pelo Marco Civil da Internet, que garante às empresas de tecnologia liberdade de comunicação com usuários de seus aplicativos desde que exista relação contratual prévia estabelecida no momento do download do aplicativo.",
-  "A": "É legal: autorizar notificações no celular equivale ao consentimento."
+  "D": "É permitida pelo Marco Civil, que garante às empresas livre comunicação com quem baixou o aplicativo.",
+  "C": "Só seria irregular se as mensagens tivessem dados de saúde; promoções genéricas estão isentas da LGPD.",
+  "A": "Há irregularidade: a permissão do sistema é técnica e não substitui a base legal própria exigida para o marketing."
  },
  "legislacao-cap6-q2": {
   "B": "É admitido pela lei: o aporte pode ou não virar participação, e o investidor só vira sócio se a conversão ocorrer",
