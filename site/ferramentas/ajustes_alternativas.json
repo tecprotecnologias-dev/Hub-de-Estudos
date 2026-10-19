@@ -2049,80 +2049,80 @@
   "B": "É errada só porque 95% é irreal; o certo seria 87 ou 88%."
  },
  "qualidade-cap8-m1": {
-  "B": "A média esconde a cauda: com P95 de 3.200 ms, 250 de cada 5.000 usuários esperam mais de 3 s, e com P99 de 8.500 ms alguns passam de 8 s, justamente quem abandona o carrinho.",
-  "D": "Só é equivocada se o contrato citar percentis."
+  "B": "A conclusão só é equivocada em sistemas financeiros; no comércio eletrônico, a média é a métrica padrão para os contratos de SLA.",
+  "D": "A conclusão só é equivocada se o contrato citar percentis; sem isso, a média de 800 ms basta para aprovar o sistema para o pico."
  },
  "qualidade-cap8-m2": {
-  "D": "Dois erros: banco vazio não reproduz milhões de registros (cache, índices, planos de execução), e um ambiente com 25% da capacidade não escala de forma linear; a aprovação não vale.",
-  "B": "Basta documentar o fator 4x no relatório."
+  "D": "Não há erro: se o sistema suporta 10.000 usuários em um ambiente menor, ele vai suportar muito mais no ambiente de produção.",
+  "B": "O único erro é o ambiente menor: basta multiplicar o tempo por 4 para obter o valor real, e o P95 de 4,8 s ainda seria aceitável."
  },
  "qualidade-cap8-m3": {
-  "B": "Não: o colapso abrupto é o oposto de degradação graciosa; ao passar do limite, o sistema deveria recusar conexões com aviso, manter o essencial e se recuperar sozinho."
+  "B": "Sim: a degradação foi linear e previsível até 8.000 usuários, e o colapso depois disso é o ponto de falha natural do teste."
  },
  "qualidade-cap8-m4": {
-  "C": "O teste de resistência (soak), com carga normal por 24 horas ou mais, observando a memória, a frequência do garbage collection e erros OutOfMemory, usando JMeter e VisualVM ou YourKit.",
-  "B": "O teste de pico, pois o vazamento só aparece em picos."
+  "C": "O teste de pico: o vazamento só aparece quando milhares de usuários entram de uma vez, por isso basta um pico de 30 s.",
+  "B": "O teste de estresse: carga extrema por 30 minutos faz o vazamento aparecer rápido, pela pressão sobre o coletor de lixo."
  },
  "qualidade-cap8-m5": {
-  "C": "Micro-benchmarks a cada commit (menos de 5 min); carga básica com k6 ou Gatling a cada merge; carga completa com JMeter antes dos releases; e APM em produção o tempo todo.",
-  "D": "Só testes de estresse no pipeline; os outros são redundantes."
+  "C": "Nenhum teste de performance no pipeline, pois ambientes de CI variam demais; eles só valem em ambiente dedicado, no release.",
+  "D": "Somente testes de estresse no pipeline, pois os testes de carga e os micro-benchmarks repetem o que o estresse já mede."
  },
  "qualidade-cap8-m6": {
-  "C": "Carga (os 200 mil esperados dentro do SLA), pico (o salto de 10 mil para 200 mil em minutos), estresse (a margem além de 200 mil) e resistência (estabilidade nas horas seguintes).",
-  "A": "Só o teste de carga com 200 mil usuários basta."
+  "C": "Somente pico e estresse, pois o lançamento é um pico por definição, e os outros testes não acrescentam nada ao plano.",
+  "A": "Carga (os 200 mil esperados), pico (o salto de 10 mil a 200 mil), estresse (a margem extra) e resistência (as horas seguintes)."
  },
  "qualidade-cap8-m7": {
-  "D": "O gargalo está em outro recurso: com CPU em 45% e throughput travado, as suspeitas são pool de conexões esgotado, filas saturadas ou locks no banco; vale olhar thread dump, pool e logs.",
-  "B": "Saturação de rede: confira a interface e o balanceador."
+  "D": "Saturação da rede, pois a CPU livre prova que o servidor não é o problema; basta trocar o balanceador de carga.",
+  "B": "Um gargalo de CPU, apesar dos 45%, por disputa de threads em um único núcleo; a prioridade é rever a afinidade de threads."
  },
  "qualidade-cap8-m8": {
-  "C": "k6: scripts em JavaScript, como a equipe já usa, integração nativa com Grafana e Prometheus, motor eficiente em Go e suporte a gRPC para microsserviços.",
-  "A": "JMeter, cuja interface gráfica dispensa programação."
+  "C": "O Gatling, pois a eficiência em recursos é o único fator que importa, e a linguagem da equipe é secundária.",
+  "A": "O k6: scripts em JavaScript, que a equipe domina, integração nativa com Grafana e Prometheus, motor em Go e suporte a gRPC."
  },
  "qualidade-cap8-m9": {
-  "C": "Não: o SLA exige todos os critérios ao mesmo tempo, e o P95 de 1.800 ms passa do limite de 1.500 ms; 5% das transações ficam lentas demais, e é preciso otimizar antes.",
-  "D": "Adiar e deixar a decisão para o product owner."
+  "C": "Sim: em pagamentos, o critério mais importante é a taxa de erros, que ficou dentro do SLA, e o tempo é secundário.",
+  "D": "Não: a disponibilidade de 99,95% ficou abaixo da meta de 99,9%, e é por isso que o sistema deve ser reprovado."
  },
  "qualidade-cap8-m10": {
-  "B": "A escalabilidade piora: +80% e +78% nas primeiras duplicações, mas só +41% de 4 para 8; há um gargalo compartilhado, como o banco central, um lock de cache ou um serviço externo.",
-  "D": "É inconclusivo: repita cada configuração 5 vezes."
+  "B": "Uma escalabilidade linear perfeita, pois o throughput praticamente dobra a cada duplicação, inclusive de 4 para 8 instâncias.",
+  "D": "Que o teste é inconclusivo, pois resultados de escalabilidade só valem depois de cinco repetições de cada configuração."
  },
  "qualidade-cap9-m1": {
-  "B": "A03 (Injection): o input entra na query como código SQL; viola a confidencialidade (e talvez a integridade), e a correção são queries parametrizadas, que tratam o input como dado."
+  "B": "A07 (Authentication Failures): o atacante entrou sem credenciais; viola a disponibilidade, e a correção é exigir MFA."
  },
  "qualidade-cap9-m2": {
-  "C": "O SAST olha o código parado e não simula a execução nem a interação entre componentes; o DAST testa a aplicação rodando, e SAST, DAST e pentest manual se completam.",
-  "B": "Estava numa biblioteca externa; troque o SAST pelo SCA."
+  "C": "A falha estava em uma biblioteca externa, e por isso basta trocar o SAST pelo SCA para que isso não volte a acontecer.",
+  "B": "O SAST estava mal configurado, pois ferramentas como o SonarQube detectam 100% das injeções quando as regras estão ativas."
  },
  "qualidade-cap9-m3": {
-  "B": "Documentar com a prova de conceito mínima, avisar o cliente na hora, não explorar além do necessário e nunca acessar dados reais; sair do escopo é crime, mesmo com boa intenção.",
-  "C": "Parar tudo e só anotar, sem confirmar se é explorável."
+  "B": "Explorar ao máximo, invadir o servidor de produção e anexar ao relatório amostras de dados reais de clientes como prova.",
+  "C": "Parar o teste imediatamente e apenas anotar a suspeita no relatório, sem confirmar se a falha pode mesmo ser explorada."
  },
  "qualidade-cap9-m4": {
-  "C": "A05 (Security Misconfiguration): DEBUG e erros detalhados revelam tecnologias, versões e estrutura do banco, facilitando o reconhecimento e ataques à versão do Oracle exposta.",
-  "B": "A04: é falha de design, que exige redesenhar a aplicação."
+  "C": "A04 (Insecure Design): é uma falha de design, que só se corrige redesenhando toda a aplicação desde o início do projeto.",
+  "B": "A09 (Logging Failures): a aplicação registra informação demais, e a correção é desligar todos os logs em produção."
  },
  "qualidade-cap9-m5": {
-  "B": "A02 (falhas criptográficas), pelo MD5 e pelo HTTP sem TLS, e A07 (falhas de autenticação), pela sessão sem expiração; as prioridades são bcrypt ou Argon2, HTTPS obrigatório e timeout de sessão."
+  "B": "Apenas A07, pois as três falhas são partes do mesmo mecanismo de autenticação, que se corrige com uma única mudança."
  },
  "qualidade-cap9-m6": {
-  "C": "Vantagem: pegar injeção, XSS e más configurações a cada release, sem esforço manual; limite: o DAST não acha falhas de lógica de negócio, controles de acesso complexos nem falhas de design, que pedem pentest manual.",
-  "B": "O ZAP não roda sem interface gráfica no pipeline."
+  "C": "Não funciona, pois o ZAP não roda sem interface gráfica e, por isso, não pode ser executado dentro de um pipeline.",
+  "B": "Não tem limites, pois o ZAP com varredura ativa detecta 100% do OWASP Top 10, o que torna os pentests manuais desnecessários."
  },
  "qualidade-cap9-m7": {
-  "B": "A01 (Broken Access Control), no caso IDOR: o sistema expõe IDs diretos sem checar se o usuário pode ver aquele objeto; a correção é verificar a autorização no servidor a cada acesso.",
-  "D": "A07: falta MFA para acessar documentos."
+  "B": "A03 (Injection): o atacante injeta outro número na URL, e a correção é usar prepared statements para tratar o número.",
+  "D": "A07 (Authentication Failures): falta MFA para abrir documentos, e a correção é pedir um segundo fator a cada acesso."
  },
  "qualidade-cap9-m8": {
-  "B": "A06 (componentes vulneráveis); o SCA no pipeline (Dependency-Check, Snyk) teria alertado assim que a CVE fosse publicada; a resposta é atualizar para o Log4j 2.17.1 ou superior, ou aplicar mitigações.",
-  "C": "A08: houve atualização maliciosa; volte para a versão anterior."
+  "B": "A03 (Injection), detectável só pelo DAST com payloads de JNDI; a resposta é desligar todos os logs até sair uma correção.",
+  "C": "A08 (Integrity Failures), por uma atualização maliciosa; a resposta é voltar o Log4j para uma versão bem mais antiga."
  },
  "qualidade-cap9-m9": {
-  "B": "Por severidade: primeiro a dependência crítica (horas, bloqueando o pipeline), depois o XSS alto (dias) e por fim as médias do SAST (semanas, com planejamento)."
+  "B": "Pela ordem do pipeline: primeiro as do SAST, achadas no commit, depois a do SCA e, por último, a do DAST, em staging."
  },
  "qualidade-cap9-m10": {
-  "C": "Ferramentas e pentests têm lacunas, inclusive entre uma avaliação e outra; faltam treinamento em código seguro, gestão de segredos, hardening, monitoramento de anomalias, WAF, resposta a incidentes e gestão de patches.",
-  "B": "Falta só um pentest semestral para a segurança ficar completa."
+  "C": "Falta apenas trocar o pentest anual por um semestral, e então a segurança do sistema passa a ser completa.",
+  "B": "A conclusão está correta para os sistemas novos, feitos com DevSecOps, e só é incorreta para os sistemas legados da empresa."
  },
  "engsoft-cap6-f1": {
   "D": "QA foca no processo e na prevenção de defeitos; QC foca no produto e na identificação de defeitos."

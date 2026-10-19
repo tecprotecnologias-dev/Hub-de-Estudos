@@ -3531,14 +3531,16 @@
     "capituloId": "qualidade-cap8",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um sistema de e-commerce apresenta tempo de resposta médio de 800ms sob carga de 5.000 usuários simultâneos. No entanto, análise mais detalhada revela P50=400ms, P95=3.200ms e P99=8.500ms. O gerente afirma que \"a média está ótima\". Por que essa conclusão é equivocada e o que os percentis revelam?",
+    "enunciado": "Um sistema de comércio eletrônico tem tempo de resposta médio de 800 ms com 5.000 usuários simultâneos. A análise detalhada mostra P50 = 400 ms, P95 = 3.200 ms e P99 = 8.500 ms. O gerente afirma que \"a média está ótima\". Por que a conclusão é equivocada?",
     "alternativas": [
-      "A conclusão é equivocada apenas para sistemas financeiros: em e-commerce, a média de 800ms é a métrica padrão de mercado para avaliação de SLA — percentis são ferramentas analíticas avançadas sem aplicação prática em contratos comerciais de varejo digital.",
-      "A média esconde a cauda: com P95 de 3.200 ms, 250 de cada 5.000 usuários esperam mais de 3 s, e com P99 de 8.500 ms alguns passam de 8 s, justamente quem abandona o carrinho.",
-      "A conclusão é correta: a média de 800ms é a métrica mais representativa pois pondera igualmente todas as requisições os percentis P95 e P99 representam casos extremos estatisticamente irrelevantes que não devem influenciar decisões de capacidade ou SLA em sistemas de e-commerce.",
-      "Só é equivocada se o contrato citar percentis."
+      "A média esconde a cauda: pelo P95, 5% das requisições levam mais de 3,2 s, e pelo P99, 1% passa de 8,5 s, justamente quem abandona a compra.",
+      "A conclusão só é equivocada em sistemas financeiros; no comércio eletrônico, a média é a métrica padrão para os contratos de SLA.",
+      "A conclusão está correta: P95 e P99 são casos extremos estatisticamente irrelevantes e não devem orientar decisões de capacidade.",
+      "A conclusão só é equivocada se o contrato citar percentis; sem isso, a média de 800 ms basta para aprovar o sistema para o pico.",
+      "A conclusão está correta, pois o P50 de 400 ms mostra que todos os usuários foram atendidos em menos de meio segundo."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "Usar só a média é enganoso: ela pode parecer boa mesmo quando uma parte importante dos usuários espera muito. O P95, métrica mais usada em SLAs, diz que 95% das requisições responderam em até 3,2 s, ou seja, 5% foram mais lentas que isso; o P99 revela a cauda longa, com 1% acima de 8,5 s. O P50 mostra só o usuário típico, e não todos."
   },
   {
     "id": "qualidade-cap8-m2",
@@ -3546,14 +3548,16 @@
     "capituloId": "qualidade-cap8",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe executa teste de carga com banco de dados vazio em ambiente com 25% da capacidade de produção. Os resultados mostram P95=1.200ms com 10.000 usuários. O gerente aprova o sistema para a Black Friday. Qual é o erro crítico dessa decisão?",
+    "enunciado": "Uma equipe executa um teste de carga com o banco de dados vazio, em um ambiente com 25% da capacidade de produção. O resultado é P95 = 1.200 ms com 10.000 usuários, e o gerente aprova o sistema para a Black Friday. Qual é o erro crítico dessa decisão?",
     "alternativas": [
-      "O único erro é o ambiente subproporcional: se o ambiente tiver 25% da capacidade, basta multiplicar o tempo de resposta por 4 para obter o valor real em produção — P95 estimado seria 4.800ms, ainda dentro do limite aceitável de 5 segundos para e-commerce em pico de demanda.",
-      "Basta documentar o fator 4x no relatório.",
-      "O único erro crítico é o banco vazio: o ambiente com 25% de capacidade é adequado pois sistemas de e-commerce modernos com auto-scaling na nuvem compensam automaticamente a diferença de recursos durante o teste — o banco de dados vazio é o único fator que invalida os resultados obtidos.",
-      "Dois erros: banco vazio não reproduz milhões de registros (cache, índices, planos de execução), e um ambiente com 25% da capacidade não escala de forma linear; a aprovação não vale."
+      "Há dois erros: o banco vazio não reproduz o volume real de dados, e um ambiente com 25% da capacidade não se compara linearmente à produção.",
+      "O único erro é o ambiente menor: basta multiplicar o tempo por 4 para obter o valor real, e o P95 de 4,8 s ainda seria aceitável.",
+      "O único erro é o banco vazio: o ambiente com 25% da capacidade serve, pois o auto-scaling da nuvem compensa a diferença no teste.",
+      "Não há erro: se o sistema suporta 10.000 usuários em um ambiente menor, ele vai suportar muito mais no ambiente de produção.",
+      "O único erro é a falta de documentação: basta registrar no relatório que o ambiente tinha um quarto da capacidade."
     ],
-    "correta": 3
+    "correta": 0,
+    "resolucao": "O processo da apostila exige um ambiente representativo da produção em hardware, rede, banco e configuração, pois resultados em ambientes menores são enganosos, e o desempenho não cresce na mesma proporção dos recursos. Exige também dados com volume parecido com o de produção: com o banco vazio, consultas, índices e cache se comportam de forma completamente diferente. O teste não sustenta a aprovação."
   },
   {
     "id": "qualidade-cap8-m3",
@@ -3561,14 +3565,16 @@
     "capituloId": "qualidade-cap8",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um sistema financeiro apresenta o seguinte comportamento no teste de estresse: de 0 a 8.000 usuários, o tempo de resposta aumenta linearmente de 200ms para 1.800ms; de 8.001 a 8.500 usuários, o sistema trava completamente e não responde. Esse comportamento é aceitável segundo os conceitos de graceful degradation?",
+    "enunciado": "No teste de estresse de um sistema financeiro, o tempo de resposta sobe de forma linear de 200 ms para 1.800 ms entre 0 e 8.000 usuários; entre 8.001 e 8.500 usuários, o sistema trava completamente e não responde mais. Esse comportamento é aceitável segundo a ideia de degradação graciosa?",
     "alternativas": [
-      "Sim, é aceitável: o sistema demonstrou graceful degradation na faixa de 0 a 8.000 usuários com degradação linear previsível — o colapso acima de 8.000 é o ponto de falha natural identificado pelo teste de estresse, que por definição deve encontrar o limite do sistema.",
-      "Não: o colapso abrupto é o oposto de degradação graciosa; ao passar do limite, o sistema deveria recusar conexões com aviso, manter o essencial e se recuperar sozinho.",
-      "É parcialmente aceitável: a degradação linear até 8.000 usuários demonstra boa arquitetura, e o colapso acima desse limite é esperado em testes de estresse — o critério de graceful degradation se aplica apenas à fase de carga dentro dos limites operacionais, não ao comportamento além do ponto de falha identificado.",
-      "Sim, é aceitável para sistemas financeiros: regulamentações do setor bancário permitem downtime completo de até 30 minutos quando o volume excede 100% da capacidade contratada — o comportamento observado está dentro dos parâmetros regulatórios e não configura falha de graceful degradation."
+      "Não: o colapso brusco é o oposto da degradação graciosa; além do limite, o sistema deveria recusar com aviso, manter o essencial e se recuperar.",
+      "Sim: a degradação foi linear e previsível até 8.000 usuários, e o colapso depois disso é o ponto de falha natural do teste.",
+      "Em parte: a degradação graciosa vale só dentro dos limites operacionais, e não para o comportamento além do ponto de falha.",
+      "Sim: em sistemas financeiros, a regulamentação permite ficar fora do ar quando a carga passa de 100% da capacidade contratada.",
+      "Sim, desde que o sistema volte a funcionar depois que um operador reiniciar os servidores manualmente."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "Na degradação graciosa, as funcionalidades críticas continuam disponíveis quando as secundárias falham, o usuário recebe mensagens claras, filas e circuit breakers evitam falhas em cascata, e o sistema volta ao normal sozinho quando a carga diminui. A apostila cita como antipadrão o sistema que cai por completo logo acima do limite: é uma falha catastrófica. Encontrar o ponto de falha é o objetivo do teste, mas o modo como o sistema falha também conta."
   },
   {
     "id": "qualidade-cap8-m4",
@@ -3576,14 +3582,16 @@
     "capituloId": "qualidade-cap8",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe precisa detectar memory leak em um serviço Java que processa transações financeiras. O sistema responde normalmente nas primeiras horas mas degrada progressivamente após 8 horas de operação contínua. Qual tipo de teste identifica esse problema e quais métricas e ferramentas são específicas para esse diagnóstico?",
+    "enunciado": "Um serviço Java que processa transações financeiras responde normalmente nas primeiras horas, mas degrada aos poucos depois de 8 horas de operação contínua. A equipe suspeita de vazamento de memória. Qual tipo de teste identifica o problema e o que observar?",
     "alternativas": [
-      "Teste de Estresse identifica o problema: empurrando o sistema além dos limites com carga extrema por 30 minutos, o memory leak se manifesta rapidamente devido à pressão sobre o garbage collector — ferramentas como JMeter com 50.000 usuários simultâneos são suficientes para reproduzir o vazamento em ambiente de teste.",
-      "O teste de pico, pois o vazamento só aparece em picos.",
-      "O teste de resistência (soak), com carga normal por 24 horas ou mais, observando a memória, a frequência do garbage collection e erros OutOfMemory, usando JMeter e VisualVM ou YourKit.",
-      "Teste de Volume identifica o problema: memory leaks em sistemas de transações financeiras são causados exclusivamente pelo volume de dados processados — executar um batch com 500 milhões de transações em 30 minutos é mais eficaz do que 24 horas de carga normal para diagnosticar o vazamento de memória identificado."
+      "O teste de resistência (soak): carga normal por muitas horas, observando o crescimento da memória e a coleta de lixo, com um profiler.",
+      "O teste de estresse: carga extrema por 30 minutos faz o vazamento aparecer rápido, pela pressão sobre o coletor de lixo.",
+      "O teste de pico: o vazamento só aparece quando milhares de usuários entram de uma vez, por isso basta um pico de 30 s.",
+      "O teste de volume: processar 500 milhões de transações em 30 minutos revela o vazamento melhor que horas de carga normal.",
+      "O teste de escalabilidade: adicionar instâncias revela se a memória cresce na mesma proporção dos servidores novos."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "O teste de resistência executa o sistema sob carga normal por um período prolongado, de horas ou dias, para detectar o que só aparece com o tempo: vazamentos de memória, degradação progressiva e acúmulo de conexões. As métricas são a tendência do tempo de resposta e o crescimento do heap; a apostila indica heap dump e profilers como VisualVM e YourKit. Os testes curtos não dão tempo para o vazamento se acumular."
   },
   {
     "id": "qualidade-cap8-m5",
@@ -3591,14 +3599,16 @@
     "capituloId": "qualidade-cap8",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um time DevOps precisa integrar testes de performance ao pipeline CI/CD sem atrasar o ciclo de feedback do desenvolvedor (menos de 10 minutos após commit) e garantir testes completos antes do release. Como distribuir os diferentes tipos de testes de performance pelo pipeline?",
+    "enunciado": "Um time DevOps quer integrar testes de performance ao pipeline de CI/CD sem atrasar o retorno ao desenvolvedor, que deve chegar em menos de 10 minutos após o commit, e com testes completos antes do release. Como distribuir os testes?",
     "alternativas": [
-      "Todos os testes de performance incluindo testes de carga completos com 50.000 usuários devem ser executados a cada commit para garantir feedback imediato e completo; investir em infraestrutura de nuvem poderosa elimina o conflito entre velocidade e profundidade nos testes de performance.",
-      "Testes de performance não devem ser integrados ao pipeline CI/CD: a natureza variável dos ambientes de integração contínua (recursos compartilhados, variação de latência de rede) invalida os resultados — testes de performance confiáveis só podem ser executados em ambientes dedicados e isolados, exclusivamente antes de releases.",
-      "Micro-benchmarks a cada commit (menos de 5 min); carga básica com k6 ou Gatling a cada merge; carga completa com JMeter antes dos releases; e APM em produção o tempo todo.",
-      "Só testes de estresse no pipeline; os outros são redundantes."
+      "Micro-benchmarks a cada commit; carga básica com k6 ou Gatling a cada merge; carga completa antes dos releases; e APM em produção.",
+      "Todos os testes de performance a cada commit, inclusive a carga completa, usando uma infraestrutura de nuvem mais potente.",
+      "Nenhum teste de performance no pipeline, pois ambientes de CI variam demais; eles só valem em ambiente dedicado, no release.",
+      "Somente testes de estresse no pipeline, pois os testes de carga e os micro-benchmarks repetem o que o estresse já mede.",
+      "A carga completa com JMeter a cada commit; os micro-benchmarks antes do release; e nenhum monitoramento em produção."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Em times com cultura DevOps, a apostila distribui os testes assim: micro-benchmarks (como JMH ou pytest-benchmark) a cada commit, carga básica com k6 ou Gatling a cada merge na branch principal, carga completa semanalmente ou antes dos releases, em ambiente dedicado, e ferramentas de APM monitorando a produção o tempo todo. O objetivo é detectar regressões de performance logo que surgem, sem travar o ciclo rápido de retorno."
   },
   {
     "id": "qualidade-cap8-m6",
@@ -3606,14 +3616,16 @@
     "capituloId": "qualidade-cap8",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma plataforma de streaming espera 200.000 usuários simultâneos durante o lançamento de uma série muito aguardada — 20x a carga normal de 10.000 usuários. Qual sequência de tipos de testes de performance deve ser executada antes do lançamento e qual é o objetivo específico de cada um?",
+    "enunciado": "Uma plataforma de streaming espera 200.000 usuários simultâneos no lançamento de uma série muito aguardada, 20 vezes a carga normal de 10.000. Que sequência de testes de performance deve ser feita antes do lançamento?",
     "alternativas": [
-      "Só o teste de carga com 200 mil usuários basta.",
-      "A sequência correta é Teste de Pico seguido de Teste de Estresse: o pico de 200.000 usuários simultâneos no lançamento é por definição um evento de spike, e o estresse é necessário para encontrar o limite além dos 200.000 — os demais tipos de testes são desnecessários para esse cenário específico.",
-      "Carga (os 200 mil esperados dentro do SLA), pico (o salto de 10 mil para 200 mil em minutos), estresse (a margem além de 200 mil) e resistência (estabilidade nas horas seguintes).",
-      "A sequência correta é: Teste de Escalabilidade primeiro (para dimensionar a infraestrutura necessária), depois Teste de Volume (para validar o banco de dados com dados de 200.000 usuários), e finalmente Teste de Carga (para confirmar a capacidade) — Testes de Pico e Estresse são desnecessários pois o auto-scaling da nuvem elimina esses riscos automaticamente."
+      "Carga (os 200 mil esperados), pico (o salto de 10 mil a 200 mil), estresse (a margem extra) e resistência (as horas seguintes).",
+      "Somente o teste de carga com 200 mil usuários, pois ele já mostra se o sistema aguenta o lançamento da série.",
+      "Somente pico e estresse, pois o lançamento é um pico por definição, e os outros testes não acrescentam nada ao plano.",
+      "Escalabilidade, volume e carga, sem pico nem estresse, pois o auto-scaling da nuvem elimina esses riscos sozinho.",
+      "Somente o teste de volume, pois o problema principal será a quantidade de dados dos 200 mil novos usuários."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Cada tipo de teste responde a uma pergunta. O de carga verifica se o sistema opera bem sob a carga esperada. O de pico avalia a reação a um aumento repentino e drástico, como a estreia. O de estresse descobre onde o sistema quebra e como se recupera, o que dá a margem de segurança. O de resistência verifica se ele se mantém estável por horas sob carga alta. Confiar só no auto-scaling deixa esses riscos sem verificação."
   },
   {
     "id": "qualidade-cap8-m7",
@@ -3621,14 +3633,16 @@
     "capituloId": "qualidade-cap8",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um engenheiro analisa os resultados de um teste de carga e observa: throughput estagna em 800 req/s mesmo com aumento de usuários de 1.000 para 5.000, tempo de resposta aumenta de 500ms para 8.000ms e CPU está em 45%. O que esses sintomas indicam e onde investigar?",
+    "enunciado": "Em um teste de carga, o throughput fica estagnado em 800 requisições por segundo mesmo com os usuários subindo de 1.000 para 5.000, o tempo de resposta sobe de 500 ms para 8.000 ms, e a CPU fica em 45%. O que esses sintomas indicam?",
     "alternativas": [
-      "Os sintomas indicam gargalo de CPU: apesar do uso aparente de 45%, o sistema pode estar sofrendo de contenção de threads no nível de núcleo individual — investigar distribuição de CPU por core e configuração de thread affinity no sistema operacional é a ação prioritária.",
-      "Saturação de rede: confira a interface e o balanceador.",
-      "Os sintomas indicam memory leak: quando o throughput estagna antes do limite de CPU, a aplicação está desperdiçando ciclos em garbage collection excessivo causado por acúmulo de objetos na heap — investigar crescimento de memória com heap dump e profiler é a ação prioritária antes de qualquer análise de banco de dados.",
-      "O gargalo está em outro recurso: com CPU em 45% e throughput travado, as suspeitas são pool de conexões esgotado, filas saturadas ou locks no banco; vale olhar thread dump, pool e logs."
+      "Um gargalo em outro recurso que não a CPU: conexões do banco esgotadas, filas cheias ou locks; investigar com thread dump, pool e logs.",
+      "Um gargalo de CPU, apesar dos 45%, por disputa de threads em um único núcleo; a prioridade é rever a afinidade de threads.",
+      "Um vazamento de memória, que faz o throughput parar antes da CPU; a prioridade é um heap dump, antes de olhar o banco.",
+      "Saturação da rede, pois a CPU livre prova que o servidor não é o problema; basta trocar o balanceador de carga.",
+      "Um comportamento normal, pois todo sistema estabiliza o throughput quando a carga passa do dobro do esperado."
     ],
-    "correta": 3
+    "correta": 0,
+    "resolucao": "Pela tabela de análise de resultados da apostila, throughput que estagna mesmo com mais carga indica que o ponto de saturação foi atingido: há um gargalo. Com a CPU em 45%, ele não está no processamento, e as suspeitas passam a ser o pool de conexões, filas e bloqueios no banco de dados, investigados com thread dump e análise de gargalos. Vazamento de memória se mostra como memória crescendo continuamente, o que não foi relatado."
   },
   {
     "id": "qualidade-cap8-m8",
@@ -3636,14 +3650,16 @@
     "capituloId": "qualidade-cap8",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe compara JMeter e k6 para implementar testes de performance em um projeto cloud-native com microserviços, equipe com forte background em JavaScript e integração com dashboards Grafana. Qual é a escolha mais adequada e por quê?",
+    "enunciado": "Uma equipe vai escolher a ferramenta de testes de performance para um projeto cloud-native, com microsserviços, desenvolvedores com forte experiência em JavaScript e painéis no Grafana. Qual é a escolha mais adequada?",
     "alternativas": [
-      "JMeter, cuja interface gráfica dispensa programação.",
-      "Gatling é a escolha mais adequada: sua eficiência superior em recursos é o fator determinante para ambientes cloud-native onde o custo de infraestrutura de teste é crítico — o background da equipe em JavaScript e a integração com Grafana são secundários em relação à eficiência de simulação de usuários virtuais.",
-      "k6: scripts em JavaScript, como a equipe já usa, integração nativa com Grafana e Prometheus, motor eficiente em Go e suporte a gRPC para microsserviços.",
-      "Locust é a escolha mais adequada: embora a equipe use JavaScript, Python tem sintaxe mais limpa para definição de cenários de carga complexos — a migração de JavaScript para Python é rápida para desenvolvedores experientes, e a interface web em tempo real do Locust oferece monitoramento superior ao dashboard do Grafana para análise durante a execução dos testes."
+      "O k6: scripts em JavaScript, que a equipe domina, integração nativa com Grafana e Prometheus, motor em Go e suporte a gRPC.",
+      "O JMeter, pois a interface gráfica dispensa programação, e a experiência da equipe em JavaScript não faz diferença.",
+      "O Gatling, pois a eficiência em recursos é o único fator que importa, e a linguagem da equipe é secundária.",
+      "O Locust, pois a equipe pode migrar rapidamente para Python, e a interface web dele substitui o Grafana.",
+      "O JMeter, pois é a única ferramenta gratuita com relatórios nativos e integração com pipelines de CI/CD."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "O k6, da Grafana Labs, tem scripts em JavaScript ou TypeScript, é implementado em Go e muito eficiente, tem integração nativa com Grafana, Prometheus e InfluxDB e suporta HTTP, WebSocket e gRPC, comum em microsserviços. O JMeter é indicado para equipes menos técnicas, com interface gráfica; o Gatling usa Scala ou Java; e o Locust, Python. Várias dessas ferramentas são gratuitas e se integram a pipelines."
   },
   {
     "id": "qualidade-cap8-m9",
@@ -3651,14 +3667,16 @@
     "capituloId": "qualidade-cap8",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um SLA define P95 < 1.500ms, error rate < 0,5% e disponibilidade > 99,9% para um sistema de pagamentos. Durante o teste de carga com 15.000 usuários simultâneos, os resultados são: P95=1.800ms, error rate=0,3% e uptime=99,95%. O sistema deve ser aprovado para produção?",
+    "enunciado": "O SLA de um sistema de pagamentos exige P95 < 1.500 ms, taxa de erros < 0,5% e disponibilidade > 99,9%. No teste de carga com 15.000 usuários simultâneos, os resultados foram P95 = 1.800 ms, taxa de erros de 0,3% e disponibilidade de 99,95%. O sistema deve ser aprovado?",
     "alternativas": [
-      "Sim, deve ser aprovado: dois dos três critérios do SLA foram atendidos — error rate e disponibilidade estão dentro das metas — e a violação do P95 é marginal (apenas 20% acima do limite), dentro da margem de tolerância padrão de 25% aceita pela indústria para testes de performance.",
-      "Sim, deve ser aprovado: o critério mais crítico para sistemas de pagamento é a taxa de erros, que está dentro do SLA com 0,3% — tempo de resposta de 1.800ms é marginalmente acima do limite mas aceitável para transações financeiras onde segurança e integridade são prioritárias sobre velocidade.",
-      "Não: o SLA exige todos os critérios ao mesmo tempo, e o P95 de 1.800 ms passa do limite de 1.500 ms; 5% das transações ficam lentas demais, e é preciso otimizar antes.",
-      "Adiar e deixar a decisão para o product owner."
+      "Não: o SLA exige todos os critérios ao mesmo tempo, e o P95 de 1.800 ms passa do limite; é preciso otimizar e testar de novo.",
+      "Sim: dois dos três critérios foram atendidos, e a violação do P95 está dentro da tolerância de 25% aceita pela indústria.",
+      "Sim: em pagamentos, o critério mais importante é a taxa de erros, que ficou dentro do SLA, e o tempo é secundário.",
+      "Não: a disponibilidade de 99,95% ficou abaixo da meta de 99,9%, e é por isso que o sistema deve ser reprovado.",
+      "A decisão deve ficar com o product owner, pois os critérios do SLA servem só como uma referência para a equipe."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Os critérios de aprovação são definidos antes do teste justamente para que o resultado seja avaliado de forma objetiva, e todos precisam ser atendidos. A taxa de erros (0,3%) e a disponibilidade (99,95%, acima de 99,9%) estão dentro do SLA, mas o P95 de 1.800 ms ultrapassa o limite de 1.500 ms. A apostila não prevê nenhuma margem de tolerância; depois da otimização, o teste deve ser repetido."
   },
   {
     "id": "qualidade-cap8-m10",
@@ -3666,14 +3684,16 @@
     "capituloId": "qualidade-cap8",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa realiza teste de escalabilidade horizontal com 1, 2, 4 e 8 instâncias de servidor e obtém os seguintes throughputs: 1 instância=1.000 req/s, 2 instâncias=1.800 req/s, 4 instâncias=3.200 req/s, 8 instâncias=4.500 req/s. O que esses resultados revelam sobre a escalabilidade do sistema e quais são as implicações arquiteturais?",
+    "enunciado": "Um teste de escalabilidade horizontal com 1, 2, 4 e 8 instâncias obteve, respectivamente, 1.000, 1.800, 3.200 e 4.500 requisições por segundo. O que os resultados revelam?",
     "alternativas": [
-      "Os resultados revelam escalabilidade linear perfeita: dobrando as instâncias, o throughput praticamente dobra em todas as etapas — 1→2 (+80%), 2→4 (+78%), 4→8 (+41%); a queda final de 41% é normal e esperada devido ao overhead de gerenciamento de instâncias no Kubernetes, sem implicação arquitetural relevante.",
-      "A escalabilidade piora: +80% e +78% nas primeiras duplicações, mas só +41% de 4 para 8; há um gargalo compartilhado, como o banco central, um lock de cache ou um serviço externo.",
-      "Os resultados revelam que o sistema não escala horizontalmente: um sistema verdadeiramente escalável deveria dobrar o throughput a cada duplicação de instâncias — qualquer resultado abaixo de 95% do throughput esperado (dobrando) indica falha de arquitetura que só pode ser resolvida com refatoração completa para arquitetura stateless pura.",
-      "É inconclusivo: repita cada configuração 5 vezes."
+      "A escalabilidade cai: +80% e +78% nas duas primeiras duplicações, mas só +41% de 4 para 8, sinal de um recurso compartilhado limitante.",
+      "Uma escalabilidade linear perfeita, pois o throughput praticamente dobra a cada duplicação, inclusive de 4 para 8 instâncias.",
+      "Que o sistema não escala, pois qualquer ganho abaixo de 95% do dobro exige refazer toda a arquitetura do zero.",
+      "Que o teste é inconclusivo, pois resultados de escalabilidade só valem depois de cinco repetições de cada configuração.",
+      "Que o sistema escala de forma vertical, pois o ganho vem do aumento de CPU e memória em cada uma das instâncias."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "O teste de escalabilidade verifica até quanto o desempenho melhora com mais recursos, por exemplo se a capacidade dobra a cada instância adicionada. Aqui, o ganho cai a cada etapa: 1.000 para 1.800 (+80%), 1.800 para 3.200 (+78%) e 3.200 para 4.500 (+41%). Isso aponta um gargalo que não cresce junto com as instâncias, como um banco de dados central. Adicionar máquinas é escalabilidade horizontal, e não vertical."
   },
   {
     "id": "qualidade-cap9-m1",
@@ -3681,14 +3701,16 @@
     "capituloId": "qualidade-cap9",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um desenvolvedor concatena diretamente a entrada do usuário em uma query SQL: SELECT * FROM users WHERE id = + userId. Um atacante insere 1 OR 1=1 -- e obtém todos os registros da tabela. Qual vulnerabilidade do OWASP Top 10 2021 está sendo explorada, qual propriedade da tríade CIA é violada e qual é a correção técnica adequada?",
+    "enunciado": "Um desenvolvedor junta diretamente a entrada do usuário a uma consulta SQL: SELECT * FROM users WHERE id = + userId. Um atacante digita 1 OR 1=1 -- e obtém todos os registros da tabela. Qual categoria do OWASP Top 10 2021 está sendo explorada, qual propriedade da tríade CIA é violada e qual é a correção?",
     "alternativas": [
-      "A vulnerabilidade é A07 (Authentication Failures), pois o atacante obteve acesso não autorizado aos dados sem credenciais válidas — a propriedade violada é a Disponibilidade, pois todos os registros foram retornados sobrecarregando o banco; a correção é implementar autenticação multifator antes de qualquer consulta.",
-      "A03 (Injection): o input entra na query como código SQL; viola a confidencialidade (e talvez a integridade), e a correção são queries parametrizadas, que tratam o input como dado.",
-      "A vulnerabilidade é A01 (Broken Access Control), pois o atacante acessou registros de outros usuários sem permissão — a propriedade violada é a Integridade; a correção é implementar verificação de autorização no servidor antes de retornar qualquer resultado de consulta ao banco de dados.",
-      "A vulnerabilidade é A05 (Security Misconfiguration), pois o banco de dados está configurado para retornar todos os registros quando não há filtro adequado — a correção é configurar o banco para limitar o número de resultados retornados por consulta independentemente da cláusula WHERE utilizada."
+      "A03 (Injection): o texto digitado vira parte do SQL; viola a confidencialidade, e a correção são consultas parametrizadas.",
+      "A07 (Authentication Failures): o atacante entrou sem credenciais; viola a disponibilidade, e a correção é exigir MFA.",
+      "A01 (Broken Access Control): o atacante viu dados de outros; viola a integridade, e a correção é checar a permissão.",
+      "A05 (Security Misconfiguration): o banco devolve tudo sem filtro; a correção é limitar o número de linhas por consulta.",
+      "A03 (Injection): o texto vira parte do SQL; viola a disponibilidade, e a correção é esconder as mensagens de erro."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "Na injeção, dados não confiáveis são enviados a um interpretador como parte do comando: o 1 OR 1=1 torna a condição sempre verdadeira. O atacante passou a ler dados que não deveria, violando a confidencialidade. A defesa principal são as consultas parametrizadas (prepared statements), que tratam a entrada como dado, e nunca como código. Esconder erros ou limitar linhas não elimina a injeção."
   },
   {
     "id": "qualidade-cap9-m2",
@@ -3696,14 +3718,16 @@
     "capituloId": "qualidade-cap9",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe de segurança realiza SAST, encontra 0 vulnerabilidades de SQL Injection no código, e conclui que o sistema está seguro contra esse ataque. Semanas depois, um ataque de SQL Injection bem-sucedido é reportado. Como isso é possível e o que deveria ter sido feito complementarmente?",
+    "enunciado": "Uma equipe de segurança roda o SAST, não encontra nenhuma vulnerabilidade de SQL Injection e conclui que o sistema está seguro contra esse ataque. Semanas depois, um ataque de SQL Injection bem-sucedido é relatado. Como isso é possível e o que deveria ter sido feito?",
     "alternativas": [
-      "O SAST falhou porque não foi configurado corretamente: ferramentas SAST de qualidade como Checkmarx e SonarQube têm 100% de taxa de detecção para SQL Injection quando as regras corretas são habilitadas — o problema é exclusivamente de configuração inadequada da ferramenta pela equipe de segurança.",
-      "Estava numa biblioteca externa; troque o SAST pelo SCA.",
-      "O SAST olha o código parado e não simula a execução nem a interação entre componentes; o DAST testa a aplicação rodando, e SAST, DAST e pentest manual se completam.",
-      "A conclusão \"0 vulnerabilidades = sistema seguro\" está correta tecnicamente: se o SAST não encontrou SQL Injection, o ataque reportado é um falso positivo — o sistema não foi realmente comprometido por SQL Injection, e a investigação deveria focar em outras categorias do OWASP Top 10 não cobertas pela varredura estática."
+      "O SAST analisa o código sem executá-lo e não vê tudo; o DAST testa a aplicação rodando, e SAST, DAST e pentest manual se completam.",
+      "O SAST estava mal configurado, pois ferramentas como o SonarQube detectam 100% das injeções quando as regras estão ativas.",
+      "A falha estava em uma biblioteca externa, e por isso basta trocar o SAST pelo SCA para que isso não volte a acontecer.",
+      "A conclusão estava certa: se o SAST não achou nada, o ataque relatado é um falso positivo e precisa ser descartado.",
+      "O SAST só funciona em sistemas pequenos, e em sistemas grandes ele deve ser substituído por um pentest anual."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "O SAST examina o código-fonte sem executar a aplicação e encontra padrões de código inseguro, mas não vê o comportamento em execução. O DAST testa a aplicação rodando, simulando ataques externos, e encontra o que só se manifesta em runtime. A apostila lembra que as ferramentas automatizadas encontram apenas cerca de 30% a 40% das vulnerabilidades, e por isso o pentest manual também é essencial."
   },
   {
     "id": "qualidade-cap9-m3",
@@ -3711,14 +3735,16 @@
     "capituloId": "qualidade-cap9",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um pen tester Black Box está testando um sistema bancário e, na fase de exploração, identifica uma vulnerabilidade crítica de RCE (Remote Code Execution) com CVSS 9.8. Quais são as ações corretas e incorretas a partir desse ponto segundo a ética e metodologia de pentest?",
+    "enunciado": "Durante um pentest autorizado em um sistema bancário, na fase de exploração, o pen tester encontra uma vulnerabilidade de execução remota de código (RCE) com CVSS 9.8. O que ele deve fazer a partir desse ponto?",
     "alternativas": [
-      "O pen tester deve explorar completamente a vulnerabilidade RCE, comprometer o servidor de produção, exfiltrar dados de clientes como prova de conceito e incluir amostras dos dados no relatório final — a demonstração completa do impacto real é o que justifica a classificação CVSS 9.8 e a prioridade de correção pelo cliente.",
-      "Documentar com a prova de conceito mínima, avisar o cliente na hora, não explorar além do necessário e nunca acessar dados reais; sair do escopo é crime, mesmo com boa intenção.",
-      "Parar tudo e só anotar, sem confirmar se é explorável.",
-      "O pen tester deve explorar a vulnerabilidade completamente para demonstrar o impacto máximo, mas deve usar apenas dados sintéticos criados especificamente para o teste — a criação de novos dados no sistema de produção do cliente durante a exploração é permitida pela metodologia de pentest desde que os dados sejam removidos após o relatório."
+      "Comprovar com o mínimo necessário, avisar o cliente na hora, não ir além do escopo e nunca acessar nem guardar dados reais.",
+      "Explorar ao máximo, invadir o servidor de produção e anexar ao relatório amostras de dados reais de clientes como prova.",
+      "Parar o teste imediatamente e apenas anotar a suspeita no relatório, sem confirmar se a falha pode mesmo ser explorada.",
+      "Explorar ao máximo, criando dados novos em produção para demonstrar o impacto, e apagá-los depois de entregar o relatório.",
+      "Corrigir a falha por conta própria no servidor do banco, para que ela não seja explorada antes de o relatório ficar pronto."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "O pentest é uma simulação controlada, feita com autorização explícita e dentro de um escopo combinado. A vulnerabilidade é comprovada com uma prova de conceito (PoC), mas sem causar dano nem expor dados reais, e uma falha crítica (CVSS de 9.0 a 10.0) pede correção imediata, por isso o cliente deve ser avisado na hora. Mexer em produção, extrair dados ou alterar o sistema por conta própria foge do escopo autorizado."
   },
   {
     "id": "qualidade-cap9-m4",
@@ -3726,14 +3752,16 @@
     "capituloId": "qualidade-cap9",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma aplicação web exibe mensagens de erro detalhadas como \"ORA-00942: table or view does not exist\" e tem o modo DEBUG ativo em produção com stack traces visíveis. Qual vulnerabilidade do OWASP Top 10 2021 está presente e como ela facilita outros ataques?",
+    "enunciado": "Uma aplicação web exibe mensagens de erro como \"ORA-00942: table or view does not exist\" e roda em produção com o modo DEBUG ligado, mostrando stack traces. Qual categoria do OWASP Top 10 2021 está presente e como ela facilita outros ataques?",
     "alternativas": [
-      "A vulnerabilidade é A09 (Security Logging and Monitoring Failures): a aplicação está logando informações excessivas que ficam visíveis para atacantes — a correção é desativar todos os logs em produção para eliminar o vazamento de informações técnicas sensíveis sobre a arquitetura do sistema.",
-      "A04: é falha de design, que exige redesenhar a aplicação.",
-      "A05 (Security Misconfiguration): DEBUG e erros detalhados revelam tecnologias, versões e estrutura do banco, facilitando o reconhecimento e ataques à versão do Oracle exposta.",
-      "A vulnerabilidade é A02 (Cryptographic Failures): mensagens de erro detalhadas transmitem dados técnicos sem criptografia adequada — a correção é implementar TLS/HTTPS para garantir que as mensagens de erro, mesmo que detalhadas, só sejam visíveis para o usuário autorizado que fez a requisição original."
+      "A05 (Security Misconfiguration): o DEBUG e os erros detalhados revelam tecnologias, versões e estrutura do banco ao atacante.",
+      "A09 (Logging Failures): a aplicação registra informação demais, e a correção é desligar todos os logs em produção.",
+      "A04 (Insecure Design): é uma falha de design, que só se corrige redesenhando toda a aplicação desde o início do projeto.",
+      "A02 (Cryptographic Failures): as mensagens trafegam sem criptografia, e a correção é ativar o HTTPS no servidor da aplicação.",
+      "A06 (Vulnerable Components): o banco Oracle está desatualizado, e a correção é instalar a versão mais recente."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Modo DEBUG ativo em produção, com stack traces, é o exemplo típico de A05 na tabela da apostila. Os detalhes técnicos revelam banco, versões e estrutura, o que facilita o reconhecimento e a escolha de ataques específicos. A prevenção é o hardening: remover configurações padrão, desligar o DEBUG e exibir mensagens de erro genéricas. Desligar os logs criaria outro problema (A09), e o HTTPS não esconde a mensagem de quem a recebe."
   },
   {
     "id": "qualidade-cap9-m5",
@@ -3741,14 +3769,16 @@
     "capituloId": "qualidade-cap9",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma startup de saúde digital armazena prontuários médicos. A equipe identifica que: senhas são armazenadas em MD5, dados trafegam via HTTP e o sistema não implementa expiração de sessão. Quais categorias do OWASP Top 10 2021 estão presentes e quais são as correções prioritárias?",
+    "enunciado": "Uma startup de saúde digital armazena prontuários. A equipe descobre que as senhas são guardadas em MD5, os dados trafegam por HTTP e as sessões nunca expiram. Quais categorias do OWASP Top 10 2021 estão presentes e quais são as correções prioritárias?",
     "alternativas": [
-      "Apenas A07 (Authentication Failures) está presente: as três vulnerabilidades descritas — armazenamento inseguro de senhas, tráfego HTTP e sessões sem expiração — são subproblemas do mesmo mecanismo de autenticação quebrado, exigindo uma única correção estrutural na camada de autenticação da aplicação.",
-      "A02 (falhas criptográficas), pelo MD5 e pelo HTTP sem TLS, e A07 (falhas de autenticação), pela sessão sem expiração; as prioridades são bcrypt ou Argon2, HTTPS obrigatório e timeout de sessão.",
-      "A01 (Broken Access Control) é a vulnerabilidade mais crítica: sessões sem expiração permitem que qualquer pessoa com acesso físico ao dispositivo do médico acesse os prontuários — MD5 e HTTP são problemas secundários que não comprometem diretamente o controle de acesso ao sistema de prontuários médicos.",
-      "As três vulnerabilidades se enquadram em A04 (Insecure Design): senhas em MD5, HTTP e sessões sem expiração são decisões de design que não consideraram segurança desde o início — como são problemas de design, não podem ser corrigidos com patches ou configuração, exigindo redesign completo da aplicação antes de qualquer deploy em produção."
+      "A02, pelo MD5 e pelo HTTP sem TLS, e A07, pela sessão que não expira; as correções são bcrypt ou Argon2, HTTPS e expiração de sessão.",
+      "Apenas A07, pois as três falhas são partes do mesmo mecanismo de autenticação, que se corrige com uma única mudança.",
+      "Apenas A01, pois a sessão sem expiração dá acesso aos prontuários, e o MD5 e o HTTP são problemas secundários.",
+      "Apenas A04, pois são decisões de design, que não se corrigem com ajustes e exigem refazer o sistema do zero.",
+      "A02, pela sessão que não expira, e A07, pelo MD5 e pelo HTTP; as correções são MFA, firewall e backup diário."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "Pela tabela do OWASP Top 10, senhas em MD5 e dados sensíveis transmitidos por HTTP são exemplos de A02 (Cryptographic Failures), e sessões que não expiram são exemplo de A07 (Identification and Authentication Failures). Em prontuários, os dados são altamente sensíveis, e as correções são guardar as senhas com bcrypt ou Argon2, exigir HTTPS (TLS) e definir a expiração das sessões."
   },
   {
     "id": "qualidade-cap9-m6",
@@ -3756,14 +3786,16 @@
     "capituloId": "qualidade-cap9",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa integra o OWASP ZAP ao pipeline CI/CD para varredura automática em staging antes de cada release. O pipeline é configurado para falhar se vulnerabilidades de alta ou crítica severidade forem encontradas. Quais são as vantagens e limitações dessa abordagem?",
+    "enunciado": "Uma empresa integra o OWASP ZAP ao pipeline de CI/CD, com varredura automática em staging antes de cada release, e configura o pipeline para falhar se encontrar vulnerabilidades de severidade alta ou crítica. Quais são as vantagens e os limites dessa abordagem?",
     "alternativas": [
-      "A abordagem não tem limitações relevantes: o OWASP ZAP com varredura ativa detecta 100% das vulnerabilidades do OWASP Top 10 quando configurado corretamente — pipelines que falham em vulnerabilidades críticas garantem que nenhum sistema inseguro chegue à produção, tornando pentests manuais desnecessários.",
-      "O ZAP não roda sem interface gráfica no pipeline.",
-      "Vantagem: pegar injeção, XSS e más configurações a cada release, sem esforço manual; limite: o DAST não acha falhas de lógica de negócio, controles de acesso complexos nem falhas de design, que pedem pentest manual.",
-      "A abordagem é válida apenas para sistemas sem autenticação: o OWASP ZAP não consegue testar endpoints autenticados automaticamente no pipeline, limitando a varredura às páginas públicas da aplicação — sistemas com login obrigatório precisam de ferramentas pagas como Burp Suite Professional para integração eficaz com CI/CD."
+      "Pega injeção, XSS e más configurações a cada release, sem esforço manual; mas não acha falhas de lógica de negócio, que pedem pentest manual.",
+      "Não tem limites, pois o ZAP com varredura ativa detecta 100% do OWASP Top 10, o que torna os pentests manuais desnecessários.",
+      "Não funciona, pois o ZAP não roda sem interface gráfica e, por isso, não pode ser executado dentro de um pipeline.",
+      "Só vale para sistemas sem login, pois o ZAP não testa páginas autenticadas e exige o Burp Suite para isso no pipeline.",
+      "Substitui o SAST e o SCA, pois a varredura dinâmica também analisa o código-fonte e as dependências do projeto."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "O ZAP tem modo daemon (headless) e API REST, o que permite rodá-lo em pipelines e falhar o build conforme a severidade. Ele encontra automaticamente vulnerabilidades como XSS, SQL Injection e problemas de configuração. Mas ferramentas automatizadas encontram só parte das falhas: as de lógica de negócio, controle de acesso complexo e design pedem pentest manual. O DAST também não substitui o SAST nem o SCA, que olham o código e as dependências."
   },
   {
     "id": "qualidade-cap9-m7",
@@ -3771,14 +3803,16 @@
     "capituloId": "qualidade-cap9",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um atacante acessa a URL https://app.com/api/users/1234/documents e altera o ID para 1235, obtendo documentos de outro usuário sem qualquer erro de autorização. Qual vulnerabilidade do OWASP Top 10 2021 está sendo explorada, qual é o nome técnico específico desse ataque e qual é a correção adequada?",
+    "enunciado": "Um atacante acessa https://app.com/api/users/1234/documents, troca o número para 1235 e obtém os documentos de outro usuário, sem nenhum erro de autorização. Qual categoria do OWASP Top 10 2021 está sendo explorada, qual é o nome desse ataque e qual é a correção?",
     "alternativas": [
-      "A vulnerabilidade é A03 (Injection): o atacante está injetando um ID diferente na URL para manipular a query do banco de dados — a correção é usar Prepared Statements para que o ID na URL seja tratado como parâmetro parametrizado e não como parte da lógica de consulta ao banco.",
-      "A01 (Broken Access Control), no caso IDOR: o sistema expõe IDs diretos sem checar se o usuário pode ver aquele objeto; a correção é verificar a autorização no servidor a cada acesso.",
-      "A vulnerabilidade é A05 (Security Misconfiguration): a API está configurada para aceitar qualquer ID na URL sem restrição — a correção é configurar o servidor web para bloquear requisições com IDs diferentes do usuário autenticado na sessão ativa, implementando esse controle na camada de infraestrutura sem modificar o código da aplicação.",
-      "A07: falta MFA para acessar documentos."
+      "A01 (Broken Access Control), no caso um IDOR: o sistema não confere se o usuário pode ver o objeto; a correção é checar no servidor.",
+      "A03 (Injection): o atacante injeta outro número na URL, e a correção é usar prepared statements para tratar o número.",
+      "A05 (Security Misconfiguration): o servidor aceita qualquer número, e a correção é bloquear isso só na infraestrutura.",
+      "A07 (Authentication Failures): falta MFA para abrir documentos, e a correção é pedir um segundo fator a cada acesso.",
+      "A01 (Broken Access Control), no caso um SSRF: o servidor busca a URL errada, e a correção é validar o endereço externo."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "Acessar o perfil de outro usuário alterando o ID na URL é o exemplo de A01 na tabela da apostila, e o nome técnico é IDOR (Insecure Direct Object Reference). A correção é verificar a autorização no servidor a cada acesso, aplicando o menor privilégio. O usuário já está autenticado, então MFA não resolve; e SSRF é quando o servidor busca um recurso remoto a partir de uma URL fornecida pelo usuário, o que não é o caso."
   },
   {
     "id": "qualidade-cap9-m8",
@@ -3786,14 +3820,16 @@
     "capituloId": "qualidade-cap9",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma aplicação usa a biblioteca Log4j versão 2.14.0 em produção. Em dezembro de 2021, a vulnerabilidade Log4Shell (CVE-2021-44228, CVSS 10.0) é divulgada publicamente. Qual categoria do OWASP Top 10 2021 se aplica, qual é a técnica de teste preventivo que teria identificado esse risco antes da divulgação e qual é a resposta imediata recomendada?",
+    "enunciado": "Uma aplicação usa a biblioteca Log4j 2.14.0 em produção. Em dezembro de 2021, a vulnerabilidade Log4Shell (CVE-2021-44228, CVSS 10.0) é divulgada. Qual categoria do OWASP Top 10 2021 se aplica, que verificação teria alertado a equipe e qual é a resposta imediata?",
     "alternativas": [
-      "A categoria é A03 (Injection), pois Log4Shell é uma vulnerabilidade de injeção de código através de mensagens de log — a técnica preventiva é DAST com OWASP ZAP, que detectaria a vulnerabilidade ao enviar payloads de JNDI nos campos de entrada; a resposta imediata é desativar o logging da aplicação até que a correção seja aplicada.",
-      "A06 (componentes vulneráveis); o SCA no pipeline (Dependency-Check, Snyk) teria alertado assim que a CVE fosse publicada; a resposta é atualizar para o Log4j 2.17.1 ou superior, ou aplicar mitigações.",
-      "A08: houve atualização maliciosa; volte para a versão anterior.",
-      "A categoria é A05 (Security Misconfiguration): Log4Shell só é explorável quando o Log4j está configurado com lookup de JNDI habilitado, que é uma configuração padrão insegura — a técnica preventiva é hardening das configurações do Log4j para desabilitar JNDI desde a instalação; a vulnerabilidade não seria um problema se a equipe tivesse seguido guias de configuração segura do framework."
+      "A06 (componentes vulneráveis); o SCA no pipeline teria alertado assim que a CVE fosse publicada; a resposta é atualizar a biblioteca já.",
+      "A03 (Injection), detectável só pelo DAST com payloads de JNDI; a resposta é desligar todos os logs até sair uma correção.",
+      "A08 (Integrity Failures), por uma atualização maliciosa; a resposta é voltar o Log4j para uma versão bem mais antiga.",
+      "A05 (Misconfiguration), pois bastaria seguir o guia de configuração; a resposta é esperar o próximo ciclo de correções.",
+      "A06 (componentes vulneráveis); o SAST do código da empresa teria achado a falha; a resposta é planejar a troca em semanas."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "Usar uma biblioteca com vulnerabilidade conhecida é A06, e o Log4j 2.14 vulnerável ao Log4Shell é o exemplo da própria tabela da apostila. O SCA (como OWASP Dependency-Check e Snyk) compara as dependências com bases de vulnerabilidades conhecidas, como o CVE, e alertaria a equipe assim que a falha fosse catalogada. Com CVSS 10.0, a severidade é crítica e a correção deve ser imediata, em horas, atualizando para uma versão corrigida."
   },
   {
     "id": "qualidade-cap9-m9",
@@ -3801,14 +3837,16 @@
     "capituloId": "qualidade-cap9",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe DevSecOps recebe no pipeline: SAST reporta 3 vulnerabilidades de média severidade no commit, SCA detecta 1 dependência com vulnerabilidade crítica no build e DAST encontra XSS refletido de alta severidade no staging. Como priorizar as respostas segundo o CVSS e o contexto de cada achado?",
+    "enunciado": "No pipeline de uma equipe DevSecOps, o SAST aponta 3 vulnerabilidades de severidade média no commit, o SCA detecta 1 dependência com vulnerabilidade crítica no build, e o DAST encontra um XSS persistente de severidade alta em staging. Como priorizar as respostas segundo o CVSS?",
     "alternativas": [
-      "A prioridade deve seguir a ordem cronológica do pipeline: corrigir primeiro as vulnerabilidades SAST (encontradas no commit), depois a SCA (no build) e por último o DAST (no staging) — a sequência do pipeline define a prioridade de correção independentemente da severidade de cada achado.",
-      "Por severidade: primeiro a dependência crítica (horas, bloqueando o pipeline), depois o XSS alto (dias) e por fim as médias do SAST (semanas, com planejamento).",
-      "Todas as três devem ser corrigidas simultaneamente antes de qualquer deploy: vulnerabilidades identificadas por ferramentas automatizadas no pipeline têm a mesma prioridade independentemente da severidade — qualquer distinção criaria um processo de priorização burocrático que atrasaria as entregas sem benefício proporcional para a postura de segurança.",
-      "A dependência crítica do SCA deve ser ignorada temporariamente se a biblioteca não for diretamente chamada pelo código da aplicação — vulnerabilidades em dependências transitivas raramente são exploráveis na prática; a equipe deve focar exclusivamente no XSS de alta severidade do DAST, que representa um risco real e imediato para os usuários da aplicação."
+      "Por severidade: primeiro a dependência crítica (em horas), depois o XSS alto (em dias) e, por fim, as médias do SAST (em semanas).",
+      "Pela ordem do pipeline: primeiro as do SAST, achadas no commit, depois a do SCA e, por último, a do DAST, em staging.",
+      "Todas ao mesmo tempo e com a mesma prioridade, pois qualquer distinção entre elas só atrasaria as entregas da equipe.",
+      "Primeiro o XSS, e a dependência crítica pode esperar, pois falhas em bibliotecas raramente são exploradas na prática.",
+      "Pela quantidade: primeiro as três do SAST, que são mais numerosas, e depois as outras duas, uma de cada vez."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "Pela tabela CVSS da apostila, uma vulnerabilidade crítica (9.0 a 10.0) pede correção imediata, em horas; uma alta (7.0 a 8.9), como o XSS persistente, correção urgente, em dias; e uma média (4.0 a 6.9), correção planejada, em semanas. O que define a prioridade é a severidade, e não a etapa do pipeline nem a quantidade de achados."
   },
   {
     "id": "qualidade-cap9-m10",
@@ -3816,13 +3854,15 @@
     "capituloId": "qualidade-cap9",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa implementa programa de Bug Bounty, contrata pentest anual e integra SAST/DAST/SCA no CI/CD. Um gerente argumenta que com essas medidas o sistema está completamente seguro. Por que essa conclusão é incorreta e quais dimensões de segurança ainda precisam ser endereçadas?",
+    "enunciado": "Uma empresa tem um programa de Bug Bounty, contrata um pentest por ano e roda SAST, DAST e SCA no CI/CD. Um gerente afirma que, com isso, o sistema está completamente seguro. Por que a conclusão é incorreta?",
     "alternativas": [
-      "A conclusão é incorreta apenas para sistemas legados: a combinação de Bug Bounty, pentest anual e automação no pipeline garante segurança completa para sistemas desenvolvidos com práticas modernas de DevSecOps — o gerente está correto para a parcela do portfólio desenvolvida após a implementação das medidas descritas.",
-      "Falta só um pentest semestral para a segurança ficar completa.",
-      "Ferramentas e pentests têm lacunas, inclusive entre uma avaliação e outra; faltam treinamento em código seguro, gestão de segredos, hardening, monitoramento de anomalias, WAF, resposta a incidentes e gestão de patches.",
-      "A conclusão é incorreta exclusivamente porque o programa de Bug Bounty não deve ser usado como substituto de controles preventivos: Bug Bounty é uma medida reativa que identifica vulnerabilidades após o sistema estar em produção — substituindo o Bug Bounty por um segundo ciclo de DAST, a combinação de medidas descrita pelo gerente garantiria segurança completa sem exposição a pesquisadores externos."
+      "Ferramentas e pentests têm lacunas, e faltam treinamento em código seguro, gestão de segredos, hardening, monitoramento e resposta.",
+      "A conclusão está correta para os sistemas novos, feitos com DevSecOps, e só é incorreta para os sistemas legados da empresa.",
+      "Falta apenas trocar o pentest anual por um semestral, e então a segurança do sistema passa a ser completa.",
+      "O erro é só o Bug Bounty, que é reativo; trocando-o por mais uma rodada de DAST, a segurança ficaria completa.",
+      "A conclusão está correta, pois a combinação de SAST, DAST e SCA cobre todas as fases do ciclo de vida seguro."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Nenhum conjunto de medidas torna um sistema \"completamente seguro\". As ferramentas automatizadas encontram só uma parte das vulnerabilidades, e o pentest anual deixa lacunas entre uma avaliação e outra. O ciclo de vida seguro da apostila inclui ainda requisitos e modelagem de ameaças, treinamento em codificação segura, gestão de segredos, hardening, WAF, monitoramento, gestão de patches e plano de resposta a incidentes."
   }
 ]
