@@ -1035,42 +1035,42 @@
   "D": "A NuvemPay precisa, obrigatoriamente, obter antes uma sentença judicial brasileira, pois a UDRP é um mecanismo apenas complementar, que executa decisões já tomadas pela Justiça do país do registrante"
  },
  "legislacao-cap7-f2": {
-  "B": "Com mais de 45 milhões de usuários mensais na UE, é uma VLOP pelo DSA, sujeita a auditoria e transparência algorítmica.",
-  "D": "A empresa está sujeita apenas ao DMA, pois o DSA se aplica exclusivamente a plataformas de redes sociais e mecanismos de busca, não a marketplaces, independentemente do número de usuários na União Europeia.",
-  "C": "Só se enquadra no DSA se tiver sede física na UE."
+  "B": "É um gatekeeper do DMA, obrigado a dar interoperabilidade aos concorrentes e a abrir seus dados a terceiros.",
+  "D": "Está sujeita só ao DMA, pois o DSA vale apenas para redes sociais e buscadores, e não para marketplaces.",
+  "C": "Só estaria sujeita ao DSA se tivesse sede física ou filial em algum dos países da União Europeia."
  },
  "legislacao-cap7-f3": {
-  "C": "Há obrigações contraditórias: o CLOUD Act manda entregar, a LGPD exige base legal, e há risco de sanção nos dois países.",
-  "A": "Não há conflito real, pois o CLOUD Act tem primazia sobre qualquer legislação nacional estrangeira, incluindo a LGPD, por força do princípio da soberania americana sobre empresas sediadas nos Estados Unidos."
+  "C": "O conflito é só diplomático, e a empresa pode entregar os dados sem nenhuma consequência jurídica no Brasil.",
+  "A": "Há obrigações contraditórias: o CLOUD Act manda entregar, a LGPD exige base legal, e há risco de sanção nos dois países."
  },
  "legislacao-cap7-f4": {
-  "C": "Se a alíquota efetiva em alguma jurisdição ficar abaixo de 15%, o Brasil pode cobrar um imposto complementar (top-up tax).",
-  "B": "A regra Pillar Two se aplica apenas a empresas com sede nos países membros da OCDE, excluindo empresas com operações no Brasil que não sejam de origem europeia ou americana, mesmo com faturamento acima do limite.",
-  "A": "Deve pagar 15% a mais sobre todo o faturamento global."
+  "C": "A regra só vale para grupos de origem europeia ou americana, mesmo que o faturamento supere o limite fixado.",
+  "B": "Deve pagar 15% a mais sobre todo o faturamento global do grupo, além de todos os tributos que já paga.",
+  "A": "Se a tributação efetiva do lucro no Brasil ficar abaixo de 15%, a empresa paga o adicional da CSLL até completar 15%."
  },
  "legislacao-cap7-f5": {
-  "C": "Sem escolha das partes, cada país aplica suas regras de DIPr (lugar de execução ou de celebração), com resultados possivelmente diferentes.",
-  "B": "Aplica-se a lei do país onde o software foi desenvolvido, pois a Lei nº 9.609/1998 estabelece que contratos de licença regem-se pela lei do país do titular dos direitos, independentemente do local de uso.",
-  "D": "Aplica-se sempre o Regulamento Roma I, que tem eficácia global."
+  "C": "Aplica-se a lei do país onde o software foi feito, como determina a Lei nº 9.609/1998 para as licenças.",
+  "B": "Aplica-se a lei alemã, pois o direito da União Europeia prevalece em contratos com empresas europeias.",
+  "D": "Aplica-se sempre o Regulamento Roma I, que tem eficácia global sobre qualquer contrato internacional."
  },
  "legislacao-cap7-f7": {
-  "C": "Imposto de Importação de 60%, com desconto de US$ 20 (US$ 72 - US$ 20 = US$ 52), mais ICMS à parte (Lei nº 14.902/2024).",
-  "D": "Isenção de Imposto de Importação sobre os primeiros US$ 50 e 20% de II apenas sobre os US$ 70 que excedem essa faixa, sem incidência de ICMS em compras feitas pelo Programa Remessa Conforme, por se tratar de remessa postal.",
-  "A": "Isenção total, pois compras até US$ 3.000 são isentas."
+  "C": "Imposto de Importação de 20% sobre os US$ 120, pois essa alíquota vale para qualquer compra do programa.",
+  "D": "Isenção sobre os primeiros US$ 50 e 20% sobre os US$ 70 restantes, sem cobrança de ICMS na remessa.",
+  "A": "Imposto de Importação de 60%, com desconto de US$ 20 (US$ 72 − US$ 20 = US$ 52), mais ICMS à parte."
  },
  "legislacao-cap7-f8": {
-  "D": "Alto risco, por ser IA aplicada à saúde, com avaliação de conformidade e supervisão humana obrigatórias.",
-  "C": "Risco limitado, exigindo apenas que o sistema informe ao paciente que está interagindo com inteligência artificial, sem outras obrigações técnicas, de registro ou de supervisão humana."
+  "D": "Risco limitado, que exige só informar o paciente de que ele interage com IA, sem outras obrigações.",
+  "C": "Risco inaceitável, pois qualquer IA que tome decisões sobre a saúde humana é proibida na União Europeia."
  },
  "legislacao-cap7-f9": {
-  "B": "Conflito positivo de jurisdição: vários países se dizem competentes, o que se evita com cláusula de foro ou arbitragem.",
-  "D": "O conflito negativo de jurisdição, em que nenhum tribunal reconhece competência para o caso — situação típica de contratos digitais internacionais sem cláusula de foro, que só pode ser resolvida por tribunal internacional.",
-  "C": "A imunidade de jurisdição, que impede julgar partes estrangeiras."
+  "B": "Subsidiariedade jurisdicional: o autor escolhe o tribunal que quiser, e vale a decisão que sair primeiro.",
+  "D": "Conflito negativo de jurisdição, em que nenhum tribunal aceita o caso, que vai a um tribunal internacional.",
+  "C": "Imunidade de jurisdição, que impede os tribunais de um país de julgar as partes que são estrangeiras."
  },
  "legislacao-cap7-f10": {
-  "D": "Em contratos B2C, a arbitragem que afasta o Judiciário pode ser abusiva pelo CDC e pelo direito europeu; no B2B, é válida.",
-  "B": "Contratos B2B internacionais não podem conter cláusula arbitral sem aprovação prévia da câmara arbitral escolhida pelas partes, o que inviabiliza a padronização contratual e exige negociação individual com cada cliente.",
-  "A": "A Convenção de Nova York proíbe arbitragem em contratos de tecnologia."
+  "D": "A arbitragem internacional é vedada em contratos de valor inferior a 100 mil euros, como os de SaaS.",
+  "B": "A Convenção de Nova York proíbe a arbitragem em contratos de tecnologia, tanto nos B2B quanto nos B2C.",
+  "A": "Em contratos B2C, a arbitragem que afasta o Judiciário pode ser abusiva pelo CDC e pelo direito europeu; no B2B, é válida."
  },
  "legislacao-cap8-q2": {
   "C": "Incorreta: no vício oculto, o prazo para reclamar só começa quando o defeito aparece",

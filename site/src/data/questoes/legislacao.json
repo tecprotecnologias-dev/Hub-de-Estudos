@@ -2207,7 +2207,8 @@
       "c) A afirmação dos sócios da CloudFlow sobre o GDPR está correta? Explique o critério de aplicação extraterritorial do GDPR (oferta de bens ou serviços a pessoas localizadas na União Europeia) e por que o fato de os dados estarem armazenados no Brasil não resolve a questão.",
       "d) Mesmo que a lei brasileira seja aplicável à ShopLeste, quais dificuldades práticas a ANPD e os consumidores podem enfrentar para fazer valer seus direitos contra uma empresa estrangeira sem presença no país? Cite pelo menos dois caminhos possíveis (por exemplo, cooperação internacional, sanções indiretas ou ações perante a Justiça brasileira)."
     ],
-    "linhas": 12
+    "linhas": 12,
+    "respostaEsperada": "a) Não. O art. 3º aplica a LGPD independentemente do país da sede e de onde estejam os dados. Incide o inciso II, pois a ShopLeste oferece bens a pessoas localizadas no Brasil (site em português, preços em reais, Pix e entrega no país), e também o inciso III, pois os dados foram coletados no território nacional. b) Não. O art. 3º diz expressamente que a lei se aplica independentemente do país onde estejam localizados os dados; o que importa é a oferta ao público brasileiro e a coleta no Brasil. c) Não está correta. O GDPR também se aplica a quem não está estabelecido na União quando oferece bens ou serviços a pessoas que estão lá ou monitora o comportamento delas (art. 3º, nº 2). Se a CloudFlow trata dados de pessoas na Europa ao prestar serviços às empresas europeias, ela fica sujeita ao regulamento, diretamente ou pelos contratos de operador exigidos pelos clientes (art. 28); guardar os dados em São Paulo não muda isso e ainda configura transferência internacional, que exige garantias. d) A empresa não tem sede, bens nem representante no Brasil, o que dificulta notificar, fiscalizar e executar multas e decisões. Caminhos possíveis: ações dos consumidores na Justiça brasileira, competente nas relações de consumo com consumidores domiciliados aqui (CPC, art. 22, II); cooperação internacional entre autoridades de proteção de dados e acordos de assistência jurídica; e sanções indiretas, como ordens a meios de pagamento, lojas de aplicativos e provedores para suspender a atuação da empresa no país."
   },
   {
     "id": "legislacao-cap7-q2",
@@ -2217,8 +2218,8 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“Este Regulamento aplica-se ao tratamento de dados pessoais de titulares que se encontrem na União por um responsável pelo tratamento ou subcontratante não estabelecido na União, quando as atividades de tratamento estejam relacionadas com: a) a oferta de bens ou serviços a esses titulares dos dados na União, independentemente da exigência de os titulares dos dados procederem a um pagamento; ou b) o controlo do seu comportamento, desde que este tenha lugar na União.”",
-        "fonte": "UNIÃO EUROPEIA. Regulamento (UE) 2016/679 (Regulamento Geral sobre a Proteção de Dados – GDPR), art. 3º, nº 2 (tradução livre)."
+        "texto": "“O presente regulamento aplica-se ao tratamento de dados pessoais de titulares residentes no território da União, efetuado por um responsável pelo tratamento ou subcontratante não estabelecido na União, quando as atividades de tratamento estejam relacionadas com: a) A oferta de bens ou serviços a esses titulares de dados na União, independentemente da exigência de os titulares dos dados procederem a um pagamento; b) O controlo do seu comportamento, desde que esse comportamento tenha lugar na União.”",
+        "fonte": "UNIÃO EUROPEIA. Regulamento (UE) 2016/679 (Regulamento Geral sobre a Proteção de Dados – GDPR), art. 3º, nº 2."
       },
       {
         "t": "p",
@@ -2234,7 +2235,8 @@
       "Incorreta apenas se a empresa tiver mais de 250 funcionários"
     ],
     "correta": 3,
-    "resolucao": "o GDPR adota o critério do mercado ou do efeito: aplica-se a controladores e operadores não estabelecidos na União quando oferecem bens ou serviços a titulares localizados na União ou monitoram seu comportamento. Presença física, sede ou o número de funcionários não afastam a aplicação."
+    "resolucao": "o GDPR adota o critério do mercado ou do efeito: aplica-se a controladores e operadores não estabelecidos na União quando oferecem bens ou serviços a titulares localizados na União ou monitoram seu comportamento. Presença física, sede ou o número de funcionários não afastam a aplicação.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap7-q3",
@@ -2261,7 +2263,8 @@
       "Correta, desde que o provedor seja norte-americano, pois os Estados Unidos têm decisão de adequação automática com o Brasil, reconhecida pela ANPD para qualquer tipo de dado, inclusive de saúde"
     ],
     "correta": 1,
-    "resolucao": "a transferência internacional de dados exige uma base prevista no art. 33 (adequação, garantias contratuais, normas corporativas globais, consentimento específico etc.). A reputação do provedor não substitui o mecanismo jurídico, e dados de saúde, por serem sensíveis, elevam o risco da operação."
+    "resolucao": "a transferência internacional de dados exige uma base prevista no art. 33 (adequação, garantias contratuais, normas corporativas globais, consentimento específico etc.). A reputação do provedor não substitui o mecanismo jurídico, e dados de saúde, por serem sensíveis, elevam o risco da operação.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap7-q4",
@@ -2288,7 +2291,8 @@
       "Aceito se a DataBridge provar que perdeu a arbitragem"
     ],
     "correta": 2,
-    "resolucao": "pela Convenção de Nova York, internalizada no Brasil, a homologação de laudos arbitrais estrangeiros pelo STJ verifica requisitos formais e eventuais violações de ordem pública, sem revisar o mérito. Essa é a razão da força da arbitragem internacional em contratos B2B."
+    "resolucao": "pela Convenção de Nova York, internalizada no Brasil, a homologação de laudos arbitrais estrangeiros pelo STJ verifica requisitos formais e eventuais violações de ordem pública, sem revisar o mérito. Essa é a razão da força da arbitragem internacional em contratos B2B.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap7-q5",
@@ -2315,7 +2319,8 @@
       "Válida, desde que a arbitragem seja realizada em inglês, idioma internacional do comércio"
     ],
     "correta": 0,
-    "resolucao": "o CDC considera nula a cláusula que imponha arbitragem compulsória ao consumidor. Em relações de consumo, a convenção de arbitragem só tem espaço quando a iniciativa for do consumidor ou ele concordar expressamente com sua instituição, o que não ocorre em cláusula imposta em contrato de adesão por simples clique."
+    "resolucao": "o CDC considera nula a cláusula que imponha arbitragem compulsória ao consumidor. Em relações de consumo, a convenção de arbitragem só tem espaço quando a iniciativa for do consumidor ou ele concordar expressamente com sua instituição, o que não ocorre em cláusula imposta em contrato de adesão por simples clique.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap7-q6",
@@ -2342,7 +2347,8 @@
       "Procedente, se a consumidora aceitou os termos digitalmente"
     ],
     "correta": 3,
-    "resolucao": "o art. 21 do CPC fixa hipóteses de competência da jurisdição brasileira (domicílio do réu, inclusive filial de empresa estrangeira; obrigação a cumprir no Brasil; fato ocorrido aqui). Em relações de consumo, a cláusula de foro estrangeiro imposta em contrato de adesão pode ser afastada por abusividade, assegurando ao consumidor o acesso à Justiça em seu domicílio."
+    "resolucao": "o art. 21 do CPC fixa hipóteses de competência da jurisdição brasileira (domicílio do réu, inclusive filial de empresa estrangeira; obrigação a cumprir no Brasil; fato ocorrido aqui), e o art. 22, II, acrescenta as ações de consumo quando o consumidor tiver domicílio ou residência no Brasil. Em relações de consumo, a cláusula de foro estrangeiro imposta em contrato de adesão pode ser afastada por abusividade, assegurando ao consumidor o acesso à Justiça em seu domicílio.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap7-q7",
@@ -2357,7 +2363,7 @@
       },
       {
         "t": "p",
-        "texto": "Um aplicativo de mensagens sediado no exterior, utilizado por milhões de brasileiros e com publicidade em português, recebe ordem judicial brasileira, em investigação criminal, para fornecer registros de conexão de um usuário suspeito. A empresa se recusa a cumprir, alegando que “somos uma empresa estrangeira, com servidores fora do país, e a lei brasileira não nos alcança”."
+        "texto": "Um aplicativo de mensagens sediado no exterior, utilizado por milhões de brasileiros e com publicidade em português, recebe ordem judicial brasileira, em investigação criminal, para fornecer os registros de acesso à aplicação de um usuário suspeito. A empresa se recusa a cumprir, alegando que “somos uma empresa estrangeira, com servidores fora do país, e a lei brasileira não nos alcança”."
       }
     ],
     "enunciado": "Com base no art. 11 do Marco Civil da Internet, a alegação da empresa é:",
@@ -2369,7 +2375,8 @@
       "Improcedente: a lei brasileira alcança provedores no exterior que atendem o público brasileiro, se um ato de tratamento ocorre aqui"
     ],
     "correta": 4,
-    "resolucao": "o art. 11 e seu § 2º estendem a aplicação da lei brasileira a provedores estrangeiros que oferecem serviço ao público brasileiro, ainda que sediados no exterior. É a base jurídica de decisões que impuseram sanções a plataformas que descumpriram ordens judiciais brasileiras. A cooperação internacional (MLAT) é outro caminho possível."
+    "resolucao": "o art. 11 e seu § 2º estendem a aplicação da lei brasileira a provedores estrangeiros que oferecem serviço ao público brasileiro, ainda que sediados no exterior. É a base jurídica de decisões que impuseram sanções a plataformas que descumpriram ordens judiciais brasileiras. A cooperação internacional (MLAT) é outro caminho possível.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap7-q8",
@@ -2396,7 +2403,8 @@
       "Basta a NuvemPay provar que é titular da marca; os demais requisitos são irrelevantes"
     ],
     "correta": 1,
-    "resolucao": "a UDRP é um procedimento administrativo, rápido e de custo reduzido, voltado ao combate ao cybersquatting. Exige a comprovação cumulativa dos três requisitos (semelhança com a marca, ausência de interesse legítimo e má-fé) e os remédios são a transferência ou o cancelamento do domínio, não a indenização. A oferta de venda por valor abusivo é indício típico de má-fé."
+    "resolucao": "a UDRP é um procedimento administrativo, rápido e de custo reduzido, voltado ao combate ao cybersquatting. Exige a comprovação cumulativa dos três requisitos (semelhança com a marca, ausência de interesse legítimo e má-fé) e os remédios são a transferência ou o cancelamento do domínio, não a indenização. A oferta de venda por valor abusivo é indício típico de má-fé.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap7-f2",
@@ -2406,12 +2414,13 @@
     "nivel": "facil",
     "enunciado": "Uma plataforma de marketplace brasileira possui 50 milhões de usuários ativos mensais na União Europeia. O jurídico da empresa recebe uma notificação da Comissão Europeia sobre obrigações do DSA. Qual categoria a empresa se enquadra e quais são suas principais obrigações?",
     "alternativas": [
-      "A empresa se enquadra como gatekeeper sob o DMA, sendo obrigada a permitir interoperabilidade com concorrentes e abrir seus dados a terceiros.",
       "Com mais de 45 milhões de usuários mensais na UE, é uma VLOP pelo DSA, sujeita a auditoria e transparência algorítmica.",
-      "Só se enquadra no DSA se tiver sede física na UE.",
-      "A empresa está sujeita apenas ao DMA, pois o DSA se aplica exclusivamente a plataformas de redes sociais e mecanismos de busca, não a marketplaces, independentemente do número de usuários na União Europeia."
+      "É um gatekeeper do DMA, obrigado a dar interoperabilidade aos concorrentes e a abrir seus dados a terceiros.",
+      "Só estaria sujeita ao DSA se tivesse sede física ou filial em algum dos países da União Europeia.",
+      "Está sujeita só ao DMA, pois o DSA vale apenas para redes sociais e buscadores, e não para marketplaces.",
+      "Não tem obrigação nenhuma, pois o DSA só se aplica a empresas com mais de 100 milhões de usuários na UE."
     ],
-    "correta": 1,
+    "correta": 0,
     "resolucao": "o Digital Services Act (DSA) da União Europeia classifica como plataforma online de muito grande dimensão (VLOP) a que tem mais de 45 milhões de usuários ativos mensais na UE, independentemente de onde fica a sede. Essas plataformas têm obrigações extras, como avaliar riscos sistêmicos, passar por auditoria independente, dar transparência aos algoritmos de recomendação e não direcionar anúncios com base em dados sensíveis. O DMA é outra lei, voltada aos 'gatekeepers'."
   },
   {
@@ -2422,12 +2431,13 @@
     "nivel": "facil",
     "enunciado": "O governo americano emite ordem judicial com base no CLOUD Act exigindo que uma empresa americana de nuvem entregue dados de usuários brasileiros armazenados em seus servidores. Esses dados estão protegidos pela LGPD. Qual é o principal conflito jurídico gerado?",
     "alternativas": [
-      "Não há conflito real, pois o CLOUD Act tem primazia sobre qualquer legislação nacional estrangeira, incluindo a LGPD, por força do princípio da soberania americana sobre empresas sediadas nos Estados Unidos.",
-      "O conflito é apenas diplomático, sem consequências jurídicas para a empresa, que pode entregar os dados sem qualquer responsabilização no Brasil.",
       "Há obrigações contraditórias: o CLOUD Act manda entregar, a LGPD exige base legal, e há risco de sanção nos dois países.",
-      "A LGPD se sobrepõe ao CLOUD Act por força do princípio da territorialidade dos dados, impedindo juridicamente qualquer entrega sem autorização da ANPD."
+      "Não há conflito, pois o CLOUD Act prevalece sobre qualquer lei estrangeira sempre que a empresa é americana.",
+      "O conflito é só diplomático, e a empresa pode entregar os dados sem nenhuma consequência jurídica no Brasil.",
+      "A LGPD prevalece pela territorialidade dos dados e proíbe qualquer entrega sem uma autorização prévia da ANPD.",
+      "Não há conflito, pois dados de brasileiros guardados em servidores nos EUA deixam de ser protegidos pela LGPD."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "a ordem americana obriga a empresa a entregar os dados, mas a LGPD só permite transferir dados para fora nas hipóteses do art. 33, como a cooperação jurídica internacional. Cumprir uma lei pode significar descumprir a outra, e a empresa fica exposta a sanções nos dois países. Os acordos de cooperação existem justamente para resolver esse conflito."
   },
   {
@@ -2438,13 +2448,14 @@
     "nivel": "facil",
     "enunciado": "Uma empresa multinacional de tecnologia fatura EUR 900 milhões globalmente e possui operações no Brasil. Com a implementação do Pillar Two da OCDE pela Lei nº 15.079/2024, qual é a obrigação tributária gerada?",
     "alternativas": [
-      "Deve pagar 15% a mais sobre todo o faturamento global.",
-      "A regra Pillar Two se aplica apenas a empresas com sede nos países membros da OCDE, excluindo empresas com operações no Brasil que não sejam de origem europeia ou americana, mesmo com faturamento acima do limite.",
-      "Se a alíquota efetiva em alguma jurisdição ficar abaixo de 15%, o Brasil pode cobrar um imposto complementar (top-up tax).",
-      "A Lei nº 15.079/2024 isenta empresas de tecnologia da tributação mínima global por até 5 anos, desde que reinvistam os lucros no Brasil em projetos de inovação."
+      "Se a tributação efetiva do lucro no Brasil ficar abaixo de 15%, a empresa paga o adicional da CSLL até completar 15%.",
+      "Deve pagar 15% a mais sobre todo o faturamento global do grupo, além de todos os tributos que já paga.",
+      "A regra só vale para grupos de origem europeia ou americana, mesmo que o faturamento supere o limite fixado.",
+      "A Lei nº 15.079/2024 isenta as empresas de tecnologia por 5 anos, se elas reinvestirem os lucros no Brasil.",
+      "Nenhuma, pois o limite da regra é de 1 bilhão de euros de receita, bem acima do faturamento desse grupo."
     ],
-    "correta": 2,
-    "resolucao": "o Pillar Two da OCDE, adotado no Brasil pela Lei nº 15.079/2024 (adicional da CSLL), cria uma tributação mínima global de 15% para grupos multinacionais com receita acima de 750 milhões de euros. Se o grupo paga, em algum país, imposto efetivo abaixo de 15%, outro país pode cobrar a diferença como imposto complementar (top-up tax). O imposto não incide sobre todo o faturamento: ele só completa o que faltou para chegar a 15% sobre o lucro."
+    "correta": 0,
+    "resolucao": "O Pillar Two da OCDE cria uma tributação mínima de 15% para grupos multinacionais com receita acima de 750 milhões de euros. O Brasil o adotou pela Lei nº 15.079/2024, com um adicional da CSLL: se o lucro das empresas do grupo no Brasil for tributado, na prática, abaixo de 15%, elas pagam a diferença aqui. O imposto não incide sobre o faturamento: ele só completa o que faltou para chegar a 15% sobre o lucro. Em outros países, regras do mesmo acordo podem cobrar a diferença sobre lucros tributados abaixo de 15% em outras jurisdições."
   },
   {
     "id": "legislacao-cap7-f5",
@@ -2454,12 +2465,13 @@
     "nivel": "facil",
     "enunciado": "Uma empresa brasileira celebra contrato de licença de software com uma empresa alemã. O contrato não contém cláusula de eleição de lei aplicável. Surge um litígio e ambas as partes recorrem a seus respectivos ordenamentos. Qual critério deve prevalecer para definir a lei aplicável?",
     "alternativas": [
-      "Aplica-se automaticamente a lei alemã, pois a União Europeia possui primazia normativa sobre contratos internacionais que envolvam empresas europeias.",
-      "Aplica-se a lei do país onde o software foi desenvolvido, pois a Lei nº 9.609/1998 estabelece que contratos de licença regem-se pela lei do país do titular dos direitos, independentemente do local de uso.",
-      "Sem escolha das partes, cada país aplica suas regras de DIPr (lugar de execução ou de celebração), com resultados possivelmente diferentes.",
-      "Aplica-se sempre o Regulamento Roma I, que tem eficácia global."
+      "Sem escolha das partes, cada país aplica as próprias regras de DIPr, e os resultados podem ser diferentes.",
+      "Aplica-se a lei alemã, pois o direito da União Europeia prevalece em contratos com empresas europeias.",
+      "Aplica-se a lei do país onde o software foi feito, como determina a Lei nº 9.609/1998 para as licenças.",
+      "Aplica-se sempre o Regulamento Roma I, que tem eficácia global sobre qualquer contrato internacional.",
+      "Aplica-se a lei brasileira, pois o CDC protege a empresa brasileira em qualquer contrato com estrangeiros."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "quando o contrato não escolhe a lei aplicável, cada país usa suas próprias regras de direito internacional privado. No Brasil, o art. 9º da LINDB aponta a lei do lugar onde o contrato foi constituído, considerado o lugar de residência de quem fez a proposta (art. 9º, § 2º). Na União Europeia, o Regulamento Roma I usa outros critérios. Por isso os tribunais dos dois países podem chegar a leis diferentes, e vale sempre incluir a cláusula de lei aplicável."
   },
   {
@@ -2470,12 +2482,13 @@
     "nivel": "facil",
     "enunciado": "Um consumidor brasileiro adquire um produto no valor de US$ 120 em plataforma internacional participante do Programa Remessa Conforme. Qual é a tributação correta na importação?",
     "alternativas": [
-      "Isenção total, pois compras até US$ 3.000 são isentas.",
-      "Incidência de 20% de Imposto de Importação sobre o valor total de US$ 120, sem qualquer isenção parcial, pois o produto supera o limite de US$ 50.",
-      "Imposto de Importação de 60%, com desconto de US$ 20 (US$ 72 - US$ 20 = US$ 52), mais ICMS à parte (Lei nº 14.902/2024).",
-      "Isenção de Imposto de Importação sobre os primeiros US$ 50 e 20% de II apenas sobre os US$ 70 que excedem essa faixa, sem incidência de ICMS em compras feitas pelo Programa Remessa Conforme, por se tratar de remessa postal."
+      "Imposto de Importação de 60%, com desconto de US$ 20 (US$ 72 − US$ 20 = US$ 52), mais ICMS à parte.",
+      "Isenção total do Imposto de Importação, pois compras de até US$ 3.000 são isentas no programa.",
+      "Imposto de Importação de 20% sobre os US$ 120, pois essa alíquota vale para qualquer compra do programa.",
+      "Isenção sobre os primeiros US$ 50 e 20% sobre os US$ 70 restantes, sem cobrança de ICMS na remessa.",
+      "Imposto de Importação de 60% sobre os US$ 120, sem desconto, o que dá US$ 72, e isenção de ICMS."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "desde 1º de agosto de 2024 (Lei nº 14.902/2024), as compras internacionais de pessoas físicas pelo Programa Remessa Conforme não têm mais isenção: até US$ 50 pagam 20% de Imposto de Importação; de US$ 50 a US$ 3.000 pagam 60%, com desconto de US$ 20 no imposto. Para US$ 120, o II fica em US$ 52. O ICMS estadual é cobrado à parte, com alíquota definida pelos estados (17% ou 20%, conforme o estado)."
   },
   {
@@ -2486,12 +2499,13 @@
     "nivel": "facil",
     "enunciado": "O AI Act europeu classifica um sistema de IA utilizado por uma healthtech brasileira para apoiar diagnósticos médicos de pacientes na Alemanha. Em qual categoria de risco ele se enquadra e quais são as obrigações decorrentes?",
     "alternativas": [
-      "Risco mínimo, pois sistemas de apoio médico são expressamente isentos do AI Act por questões de soberania sanitária dos Estados-membros da UE.",
-      "Risco inaceitável, pois qualquer sistema de IA que tome decisões sobre saúde humana é proibido pelo AI Act na União Europeia.",
-      "Risco limitado, exigindo apenas que o sistema informe ao paciente que está interagindo com inteligência artificial, sem outras obrigações técnicas, de registro ou de supervisão humana.",
-      "Alto risco, por ser IA aplicada à saúde, com avaliação de conformidade e supervisão humana obrigatórias."
+      "Alto risco, por ser IA aplicada à saúde, com avaliação de conformidade e supervisão humana obrigatórias.",
+      "Risco mínimo, pois sistemas de apoio médico são isentos do AI Act por respeito à soberania sanitária.",
+      "Risco inaceitável, pois qualquer IA que tome decisões sobre a saúde humana é proibida na União Europeia.",
+      "Risco limitado, que exige só informar o paciente de que ele interage com IA, sem outras obrigações.",
+      "Nenhuma, pois o AI Act só vale para empresas com sede na União Europeia, e a healthtech é brasileira."
     ],
-    "correta": 3,
+    "correta": 0,
     "resolucao": "o AI Act da União Europeia classifica sistemas de IA por nível de risco. IA usada em diagnóstico médico entra como alto risco, porque é ligada a dispositivos médicos e afeta a saúde. Esses sistemas são permitidos, mas exigem avaliação de conformidade, gestão de riscos, documentação técnica, registro e supervisão humana. A lei vale para quem oferece o sistema na UE, mesmo com sede fora dela."
   },
   {
@@ -2500,14 +2514,15 @@
     "capituloId": "legislacao-cap7",
     "tipo": "objetiva",
     "nivel": "facil",
-    "enunciado": "Dois empresários — um brasileiro e um americano celebram contrato de joint venture digital sem cláusula arbitral. O conflito surge e o americano aciona um tribunal em Nova York, enquanto o brasileiro aciona a Justiça Federal em São Paulo. Qual princípio do direito internacional explica esse cenário e como ele poderia ter sido evitado?",
+    "enunciado": "Dois empresários — um brasileiro e um americano — celebram contrato de joint venture digital sem cláusula arbitral. O conflito surge e o americano aciona um tribunal em Nova York, enquanto o brasileiro aciona a Justiça de São Paulo. Qual princípio do direito internacional explica esse cenário e como ele poderia ter sido evitado?",
     "alternativas": [
-      "O princípio da subsidiariedade jurisdicional, que permite ao autor escolher livremente entre os tribunais dos países envolvidos, sendo a decisão mais rápida a prevalente.",
-      "Conflito positivo de jurisdição: vários países se dizem competentes, o que se evita com cláusula de foro ou arbitragem.",
-      "A imunidade de jurisdição, que impede julgar partes estrangeiras.",
-      "O conflito negativo de jurisdição, em que nenhum tribunal reconhece competência para o caso — situação típica de contratos digitais internacionais sem cláusula de foro, que só pode ser resolvida por tribunal internacional."
+      "Conflito positivo de jurisdição: dois países se dizem competentes, o que se evita com cláusula de foro ou arbitragem.",
+      "Subsidiariedade jurisdicional: o autor escolhe o tribunal que quiser, e vale a decisão que sair primeiro.",
+      "Imunidade de jurisdição, que impede os tribunais de um país de julgar as partes que são estrangeiras.",
+      "Conflito negativo de jurisdição, em que nenhum tribunal aceita o caso, que vai a um tribunal internacional.",
+      "Litispendência internacional, que obriga o juiz brasileiro a parar o processo até o fim do caso nos EUA."
     ],
-    "correta": 1,
+    "correta": 0,
     "resolucao": "há conflito positivo de jurisdição quando tribunais de dois países se consideram competentes para o mesmo caso. Isso gera processos paralelos e o risco de decisões contraditórias. Para evitar, o contrato deve trazer cláusula de eleição de foro ou cláusula arbitral, de preferência com sede em país neutro."
   },
   {
@@ -2518,12 +2533,13 @@
     "nivel": "facil",
     "enunciado": "Uma empresa de tecnologia brasileira deseja inserir cláusula arbitral em contrato de SaaS voltado tanto para empresas (B2B) quanto para consumidores finais (B2C) nos EUA e na UE. Qual é o principal limite jurídico a ser observado?",
     "alternativas": [
-      "A Convenção de Nova York proíbe arbitragem em contratos de tecnologia.",
-      "Contratos B2B internacionais não podem conter cláusula arbitral sem aprovação prévia da câmara arbitral escolhida pelas partes, o que inviabiliza a padronização contratual e exige negociação individual com cada cliente.",
-      "A arbitragem internacional é vedada para contratos de valor inferior a EUR 100 mil, tornando-a inadequada para contratos SaaS de ticket baixo com empresas europeias.",
-      "Em contratos B2C, a arbitragem que afasta o Judiciário pode ser abusiva pelo CDC e pelo direito europeu; no B2B, é válida."
+      "Em contratos B2C, a arbitragem que afasta o Judiciário pode ser abusiva pelo CDC e pelo direito europeu; no B2B, é válida.",
+      "A Convenção de Nova York proíbe a arbitragem em contratos de tecnologia, tanto nos B2B quanto nos B2C.",
+      "No B2B, a cláusula exige aprovação prévia da câmara arbitral, o que impede padronizar os contratos de SaaS.",
+      "A arbitragem internacional é vedada em contratos de valor inferior a 100 mil euros, como os de SaaS.",
+      "No B2C, a cláusula é sempre válida, desde que o consumidor tenha aceitado os termos de uso com um clique."
     ],
-    "correta": 3,
+    "correta": 0,
     "resolucao": "em contratos entre empresas (B2B), a cláusula arbitral é aceita tanto no Brasil (Lei nº 9.307/1996) quanto nos EUA e na UE. Em contratos com consumidores (B2C), o CDC (art. 51, VII) declara nula a arbitragem compulsória, e o direito europeu também considera abusiva a cláusula que afasta o consumidor da Justiça. Por isso o mesmo contrato precisa tratar os dois públicos de forma diferente."
   },
   {
