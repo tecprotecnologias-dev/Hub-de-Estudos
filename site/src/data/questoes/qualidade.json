@@ -1323,13 +1323,16 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“Testes exaustivos são impossíveis. Testar tudo (todas as combinações de entradas e pré-condições) não é viável, exceto em casos triviais. Em vez de testes exaustivos, a análise de risco e as prioridades devem ser usadas para focar os esforços de teste.”",
-        "fonte": "ISTQB. Corpo de Conhecimento (Syllabus) Nível Básico — Testador Certificado. Tradução Brasileira: BSTQB (Brazilian Software Testing Qualifications Board), 2018."
+        "texto": "“Testes exaustivos são impossíveis. Testar tudo (todas as combinações de entradas e pré-condições) não é viável, exceto em casos triviais. Em vez de tentar testar exaustivamente, a análise de risco, as técnicas de teste e as prioridades devem ser usadas para concentrar os esforços de teste.”",
+        "fonte": "ISTQB. Syllabus Certified Tester Foundation Level (CTFL), versão 2018. Tradução brasileira: BSTQB, 2018."
       },
       {
-        "t": "citacao",
-        "texto": "“Imagine uma pirâmide dividida em três camadas horizontais. [...] A camada inferior e mais larga é composta de testes de unidade. [...] A segunda camada é composta de testes de serviço [integração]. [...] A camada superior, mais estreita, contém os testes de interface do usuário. [...] A forma da pirâmide indica que devemos ter muito mais testes de unidade do que testes de UI.” (tradução nossa)",
-        "fonte": "COHN, Mike. Succeeding with Agile: Software Development Using Scrum. Boston: Addison-Wesley, 2009."
+        "t": "p",
+        "texto": "Mike Cohn propõe a pirâmide de testes: a base, mais larga, é formada por muitos testes de unidade; o meio, por testes de serviço (integração); e o topo, mais estreito, por poucos testes de interface do usuário, que são lentos, frágeis e caros de manter. A forma da pirâmide indica que deve haver muito mais testes de unidade do que testes de interface."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em COHN, Mike. Succeeding with Agile: Software Development Using Scrum. Boston: Addison-Wesley, 2009."
       },
       {
         "t": "p",
@@ -1346,12 +1349,13 @@
     ],
     "enunciado": "Com base no texto e no caso apresentado, responda:",
     "itens": [
-      "a) Com base na citação de Cohn (2009), explique por que o número absoluto de 350 testes não é, por si só, um indicador de boa cobertura, e identifique o anti-padrão descrito no caso da CloudMed. Proponha, de forma aproximada, como a proporção entre testes unitários, de integração e E2E deveria ser redistribuída.",
+      "a) Com base na pirâmide de Cohn (2009), explique por que o número absoluto de 350 testes não é, por si só, um indicador de boa cobertura, e identifique o anti-padrão descrito no caso da CloudMed. Proponha, de forma aproximada, como a proporção entre testes unitários, de integração e E2E deveria ser redistribuída.",
       "b) Relacione a citação do ISTQB sobre testes exaustivos serem impossíveis com a decisão da CloudMed de cobrir “praticamente toda tela do sistema” por E2E. Essa cobertura ampla de telas garante, por si só, que os riscos mais importantes do negócio (como o cálculo de valor de consulta) estejam adequadamente testados? Justifique.",
       "c) As funções de cálculo de valor de consulta nunca foram testadas isoladamente, apenas indiretamente via E2E. Que tipo de teste (unitário ou de integração) você recomendaria para essas funções especificamente, e por que testes E2E não substituem essa necessidade, mesmo cobrindo a tela onde o cálculo aparece?",
       "d) Avalie criticamente a afirmação do CTO de que o problema é “uma questão de paciência”. Sua avaliação deve se posicionar explicitamente sobre se mais tempo, sem mudança estrutural na distribuição de testes, resolveria os sintomas relatados (lentidão, instabilidade, defeitos não detectados) — e por quê."
     ],
-    "linhas": 12
+    "linhas": 12,
+    "respostaEsperada": "a) Pela pirâmide de Cohn, o que importa é a distribuição: a base deve ter muitos testes de unidade, e o topo, poucos testes de interface. A CloudMed tem 350 testes E2E e só 25 unitários, a pirâmide invertida (o \"cone de sorvete\"): muitos testes lentos, frágeis e caros, e quase nenhum rápido e preciso. O número absoluto não mostra se as regras importantes estão testadas. Uma distribuição saudável seria próxima de 70% unitários, 20% de integração e 10% E2E, mantendo E2E só para os fluxos críticos.\nb) Como testar tudo é impossível, o ISTQB recomenda usar risco e prioridades para concentrar o esforço. Cobrir todas as telas não é o mesmo que cobrir os riscos: o cálculo do valor da consulta, que afeta diretamente o negócio, passou pelos testes E2E sem ser verificado de fato, e dois defeitos chegaram à produção.\nc) Testes unitários, que verificam a função de cálculo isolada, com vários valores, inclusive os de fronteira, e dão retorno imediato. O E2E só observa o resultado na tela, em poucos cenários e de forma lenta; quando falha, não aponta onde está o erro, e não cobre as combinações de valores que um teste unitário cobre com facilidade.\nd) Não é questão de paciência. A lentidão e a instabilidade vêm da própria natureza dos testes E2E, que dependem de telas, animações e layout; com o tempo e com mais telas, a suíte tende a ficar mais lenta e mais frágil, e não mais estável. Os defeitos não detectados vêm da falta de testes na base. Sem mudar a distribuição, os sintomas continuam ou pioram."
   },
   {
     "id": "qualidade-cap4-q2",
@@ -1360,16 +1364,19 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Um erro comum é ter uma proporção muito maior de testes de interface do usuário do que qualquer um dos outros tipos. [...] Os testes de interface do usuário são lentos para rodar, frágeis e caros de manter. [...] Por essas razões, a pirâmide de testes nos diz para escrever muito mais testes de unidade e de serviço do que testes de interface do usuário.” (tradução nossa)",
-        "fonte": "COHN, Mike. Succeeding with Agile: Software Development Using Scrum. Boston: Addison-Wesley, 2009."
+        "t": "p",
+        "texto": "Para Mike Cohn, um erro comum é ter muito mais testes de interface do usuário do que de qualquer outro tipo. Esses testes são lentos para rodar, frágeis e caros de manter; por isso, a pirâmide de testes recomenda escrever muito mais testes de unidade e de serviço do que testes de interface."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em COHN, Mike. Succeeding with Agile: Software Development Using Scrum. Boston: Addison-Wesley, 2009."
       },
       {
         "t": "p",
         "texto": "A VarejoDigital, plataforma de e-commerce, mantém uma suíte com 40 testes unitários, 30 testes de integração e 25 testes end-to-end. Embora a proporção pareça equilibrada em números absolutos, a equipe percebe que os 25 testes E2E consomem 85% do tempo total de execução da suíte (52 dos 61 minutos totais), enquanto os 70 testes unitários e de integração juntos consomem apenas os 9 minutos restantes."
       }
     ],
-    "enunciado": "Considerando a citação de Cohn (2009) e o caso da VarejoDigital, assinale a alternativa correta:",
+    "enunciado": "Considerando a pirâmide de testes de Cohn (2009) e o caso da VarejoDigital, assinale a alternativa correta:",
     "alternativas": [
       "A proporção da VarejoDigital já está de acordo com a Pirâmide de Testes, pois o número absoluto de testes E2E (25) é menor do que a soma de unitários e integração (70)",
       "A Pirâmide só considera a quantidade de testes, não o tempo",
@@ -1378,7 +1385,8 @@
       "A VarejoDigital deveria eliminar completamente os testes E2E, pois qualquer teste de interface é, por definição, incompatível com a Pirâmide de Testes"
     ],
     "correta": 2,
-    "resolucao": "a citação de Cohn destaca que testes de UI são lentos, frágeis e caros de manter, e o ‘custo’ real de uma suíte não se mede apenas pela contagem de testes, mas pelo tempo e esforço que cada camada exige. O caso mostra exatamente esse problema: apesar da contagem numérica parecer equilibrada, 85% do tempo de execução está concentrado nos testes E2E — sintoma do mesmo desequilíbrio estrutural que a pirâmide busca evitar, mesmo que ‘escondido’ atrás de números absolutos aparentemente razoáveis. {{A}} cai exatamente nessa armadilha de olhar só a contagem bruta. {{B}} contraria a citação, que discute custo e velocidade, não apenas quantidade. {{D}} minimiza um tempo de execução que compromete a agilidade de feedback descrita no capítulo. {{E}} é um exagero: a pirâmide recomenda poucos testes E2E, não sua eliminação total, já que eles cobrem riscos que unitários e integração não cobrem sozinhos."
+    "resolucao": "a citação de Cohn destaca que testes de UI são lentos, frágeis e caros de manter, e o ‘custo’ real de uma suíte não se mede apenas pela contagem de testes, mas pelo tempo e esforço que cada camada exige. O caso mostra exatamente esse problema: apesar da contagem numérica parecer equilibrada, 85% do tempo de execução está concentrado nos testes E2E — sintoma do mesmo desequilíbrio estrutural que a pirâmide busca evitar, mesmo que ‘escondido’ atrás de números absolutos aparentemente razoáveis. {{A}} cai exatamente nessa armadilha de olhar só a contagem bruta. {{B}} contraria a citação, que discute custo e velocidade, não apenas quantidade. {{D}} minimiza um tempo de execução que compromete a agilidade de feedback descrita no capítulo. {{E}} é um exagero: a pirâmide recomenda poucos testes E2E, não sua eliminação total, já que eles cobrem riscos que unitários e integração não cobrem sozinhos.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap4-q3",
@@ -1387,9 +1395,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Um erro comum é ter uma proporção muito maior de testes de interface do usuário do que qualquer um dos outros tipos. [...] Os testes de interface do usuário são lentos para rodar, frágeis e caros de manter. [...] Por essas razões, a pirâmide de testes nos diz para escrever muito mais testes de unidade e de serviço do que testes de interface do usuário.” (tradução nossa)",
-        "fonte": "COHN, Mike. Succeeding with Agile: Software Development Using Scrum. Boston: Addison-Wesley, 2009."
+        "t": "p",
+        "texto": "Para Mike Cohn, um erro comum é ter muito mais testes de interface do usuário do que de qualquer outro tipo. Esses testes são lentos para rodar, frágeis e caros de manter; por isso, a pirâmide de testes recomenda escrever muito mais testes de unidade e de serviço do que testes de interface."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em COHN, Mike. Succeeding with Agile: Software Development Using Scrum. Boston: Addison-Wesley, 2009."
       },
       {
         "t": "p",
@@ -1409,7 +1420,8 @@
       "Transformar todos os testes unitários existentes em testes E2E, unificando a suíte em um único nível para simplificar a manutenção"
     ],
     "correta": 1,
-    "resolucao": "como a lógica de validação já existe isolada em funções específicas, testá-la diretamente nesse nível unitário é mais rápido, mais barato e mais preciso do que simulá-la através de uma tela inteira via E2E — exatamente a lógica da pirâmide de concentrar volume na base. {{A}} ignora que regras de lógica pura não precisam da interface completa para serem verificadas. {{C}} descarta cobertura de risco sem necessidade, quando a alternativa correta é apenas mudar o nível de teste, não eliminar a verificação. {{D}} e {{E}} vão na direção oposta da pirâmide: duplicar aumenta custo sem ganho real, e unificar tudo em E2E recriaria exatamente o problema identificado no caso."
+    "resolucao": "como a lógica de validação já existe isolada em funções específicas, testá-la diretamente nesse nível unitário é mais rápido, mais barato e mais preciso do que simulá-la através de uma tela inteira via E2E — exatamente a lógica da pirâmide de concentrar volume na base. {{A}} ignora que regras de lógica pura não precisam da interface completa para serem verificadas. {{C}} descarta cobertura de risco sem necessidade, quando a alternativa correta é apenas mudar o nível de teste, não eliminar a verificação. {{D}} e {{E}} vão na direção oposta da pirâmide: duplicar aumenta custo sem ganho real, e unificar tudo em E2E recriaria exatamente o problema identificado no caso.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap4-q4",
@@ -1418,16 +1430,19 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Na integração incremental de cima para baixo [top-down], o módulo de controle principal é testado primeiro, com os módulos subordinados incorporados à estrutura progressivamente [...] Na integração de baixo para cima [bottom-up], os módulos de nível mais baixo são combinados em clusters (também chamados de builds) que realizam uma subfunção específica do software.” (tradução nossa)",
-        "fonte": "MYERS, Glenford J.; SANDLER, Corey; BADGETT, Tom. The Art of Software Testing. 3. ed. Hoboken: Wiley, 2011."
+        "t": "p",
+        "texto": "Na integração descendente (top-down), o módulo de controle principal é testado primeiro, e os módulos subordinados são incorporados aos poucos, com stubs no lugar dos que ainda não estão prontos. Na integração ascendente (bottom-up), os módulos de nível mais baixo são combinados em grupos (clusters ou builds) que realizam uma subfunção do software, e a integração sobe até o módulo principal."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software: uma abordagem profissional. 8. ed. Porto Alegre: AMGH, 2016."
       },
       {
         "t": "p",
         "texto": "A ErpFacil, empresa que desenvolve um ERP modular (módulos de Estoque, Vendas, Financeiro e Relatórios), definiu que o módulo de Relatórios depende dos dados gerados pelos outros três módulos, mas os três módulos-base (Estoque, Vendas, Financeiro) já estão prontos e estáveis havia meses, enquanto o módulo de Relatórios ainda está em desenvolvimento inicial e sujeito a mudanças frequentes de requisito."
       }
     ],
-    "enunciado": "Considerando a citação de Myers, Sandler e Badgett (2011) e o cenário da ErpFacil, assinale a alternativa que recomenda a estratégia de integração mais adequada, com a justificativa correta:",
+    "enunciado": "Considerando as estratégias de integração descritas e o cenário da ErpFacil, assinale a alternativa que recomenda a estratégia mais adequada, com a justificativa correta:",
     "alternativas": [
       "Top-down, pois o módulo de controle principal (Relatórios) deve ser testado primeiro, incorporando progressivamente os módulos subordinados já estáveis com o uso de stubs",
       "Bottom-up, testando primeiro os módulos estáveis de baixo nível (Estoque, Vendas, Financeiro) e Relatórios por último",
@@ -1436,7 +1451,8 @@
       "Top-down, pois é a única estratégia capaz de lidar com módulos que ainda estão sujeitos a mudanças frequentes de requisito"
     ],
     "correta": 1,
-    "resolucao": "o cenário descreve exatamente a situação ideal para integração bottom-up: os módulos de base (nível mais baixo na dependência) já estão prontos e estáveis, permitindo formar clusters confiáveis antes de agregar o módulo de Relatórios, ainda instável, por último. {{A}} inverte a lógica: Relatórios não é um módulo de controle principal, e sim um módulo dependente dos demais — não faz sentido testá-lo primeiro. {{C}} ignora que Big Bang é recomendado para sistemas pequenos e estáveis, não para um cenário com um módulo explicitamente instável. {{D}} nega, sem fundamento, que a escolha da estratégia tenha impacto técnico real. {{E}} atribui à estratégia top-down uma vantagem (lidar com instabilidade) que não decorre da definição citada no texto motivador."
+    "resolucao": "o cenário descreve exatamente a situação ideal para integração bottom-up: os módulos de base (nível mais baixo na dependência) já estão prontos e estáveis, permitindo formar clusters confiáveis antes de agregar o módulo de Relatórios, ainda instável, por último. {{A}} inverte a lógica: Relatórios não é um módulo de controle principal, e sim um módulo dependente dos demais — não faz sentido testá-lo primeiro. {{C}} ignora que Big Bang é recomendado para sistemas pequenos e estáveis, não para um cenário com um módulo explicitamente instável. {{D}} nega, sem fundamento, que a escolha da estratégia tenha impacto técnico real. {{E}} atribui à estratégia top-down uma vantagem (lidar com instabilidade) que não decorre da definição citada no texto motivador.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap4-q5",
@@ -1445,9 +1461,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Na integração incremental de cima para baixo [top-down], o módulo de controle principal é testado primeiro, com os módulos subordinados incorporados à estrutura progressivamente [...] Na integração de baixo para cima [bottom-up], os módulos de nível mais baixo são combinados em clusters (também chamados de builds) que realizam uma subfunção específica do software.” (tradução nossa)",
-        "fonte": "MYERS, Glenford J.; SANDLER, Corey; BADGETT, Tom. The Art of Software Testing. 3. ed. Hoboken: Wiley, 2011."
+        "t": "p",
+        "texto": "Na integração descendente (top-down), o módulo de controle principal é testado primeiro, e os módulos subordinados são incorporados aos poucos, com stubs no lugar dos que ainda não estão prontos. Na integração ascendente (bottom-up), os módulos de nível mais baixo são combinados em grupos (clusters ou builds) que realizam uma subfunção do software, e a integração sobe até o módulo principal."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software: uma abordagem profissional. 8. ed. Porto Alegre: AMGH, 2016."
       },
       {
         "t": "p",
@@ -1467,7 +1486,8 @@
       "Nenhuma das estratégias de integração se aplica a projetos com menos de três módulos"
     ],
     "correta": 2,
-    "resolucao": "o capítulo indica Big Bang como adequado especificamente para sistemas pequenos, com poucos módulos — exatamente o perfil deste novo projeto, ao contrário do ERP anterior, que tinha módulos de maturidade desigual e justificava uma abordagem incremental. {{A}} e {{B}} transformam recomendações contextuais em regras absolutas, o que contraria a própria lógica de ‘escolher a estratégia mais adequada ao contexto’ estudada no capítulo. {{D}} inventa uma prioridade (notificações antes de tudo) sem base técnica. {{E}} nega, sem fundamento, que projetos pequenos também demandem alguma estratégia de integração — mesmo que essa estratégia seja o Big Bang."
+    "resolucao": "o capítulo indica Big Bang como adequado especificamente para sistemas pequenos, com poucos módulos — exatamente o perfil deste novo projeto, ao contrário do ERP anterior, que tinha módulos de maturidade desigual e justificava uma abordagem incremental. {{A}} e {{B}} transformam recomendações contextuais em regras absolutas, o que contraria a própria lógica de ‘escolher a estratégia mais adequada ao contexto’ estudada no capítulo. {{D}} inventa uma prioridade (notificações antes de tudo) sem base técnica. {{E}} nega, sem fundamento, que projetos pequenos também demandem alguma estratégia de integração — mesmo que essa estratégia seja o Big Bang.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap4-q6",
@@ -1476,9 +1496,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Os dados de vários projetos [...] mostram que o custo de corrigir um erro de software aumenta de fator de 4 a 1.000 vezes ao longo do ciclo de vida do projeto, sendo o menor custo na fase de requisitos e projeto, e o maior custo depois que o software entra em operação.” (tradução nossa)",
-        "fonte": "BOEHM, Barry W. Software Engineering Economics. Englewood Cliffs: Prentice-Hall, 1981."
+        "t": "p",
+        "texto": "Boehm mostrou, com dados de vários projetos, que o custo de corrigir um erro de software cresce muito ao longo do ciclo de vida: é menor quando o erro é encontrado nos requisitos e no projeto, e muito maior depois que o software entra em operação."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em BOEHM, Barry W. Software Engineering Economics. Englewood Cliffs: Prentice-Hall, 1981."
       },
       {
         "t": "p",
@@ -1494,7 +1517,8 @@
       "O menor custo de correção, segundo Boehm (1981), ocorre sempre na fase de testes de sistema, não na fase de requisitos"
     ],
     "correta": 1,
-    "resolucao": "a citação de Boehm descreve exatamente um aumento de fator de 4 a 1.000 vezes entre a fase de requisitos/projeto e a operação, o que sustenta diretamente a vantagem relatada no caso: 40 minutos de discussão na fase de requisitos versus o retrabalho significativo que ocorreria se a ambiguidade só fosse percebida nos testes de sistema. {{A}} ignora completamente a curva de custo descrita. {{C}} e {{E}} invertem ou negam a relação central da citação, que é o próprio fundamento histórico do princípio ‘testar cedo economiza’ do ISTQB, também estudado no capítulo. {{D}} restringe indevidamente um princípio de engenharia de software amplamente aplicado, inclusive no próprio texto motivador, a projetos de hardware."
+    "resolucao": "Boehm mostra que o custo de correção cresce muito da fase de requisitos e projeto até a operação, o que sustenta diretamente a vantagem relatada no caso: 40 minutos de discussão na fase de requisitos versus o retrabalho significativo que ocorreria se a ambiguidade só fosse percebida nos testes de sistema. {{A}} ignora completamente a curva de custo descrita. {{C}} e {{E}} invertem ou negam a relação central da citação, que é o próprio fundamento histórico do princípio ‘testar cedo economiza’ do ISTQB, também estudado no capítulo. {{D}} restringe indevidamente um princípio de engenharia de software amplamente aplicado, inclusive no próprio texto motivador, a projetos de hardware.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap4-q7",
@@ -1503,9 +1527,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Os dados de vários projetos [...] mostram que o custo de corrigir um erro de software aumenta de fator de 4 a 1.000 vezes ao longo do ciclo de vida do projeto, sendo o menor custo na fase de requisitos e projeto, e o maior custo depois que o software entra em operação.” (tradução nossa)",
-        "fonte": "BOEHM, Barry W. Software Engineering Economics. Englewood Cliffs: Prentice-Hall, 1981."
+        "t": "p",
+        "texto": "Boehm mostrou, com dados de vários projetos, que o custo de corrigir um erro de software cresce muito ao longo do ciclo de vida: é menor quando o erro é encontrado nos requisitos e no projeto, e muito maior depois que o software entra em operação."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em BOEHM, Barry W. Software Engineering Economics. Englewood Cliffs: Prentice-Hall, 1981."
       },
       {
         "t": "p",
@@ -1525,7 +1552,8 @@
       "A proposta só seria válida se o sistema bancário não envolvesse nenhuma regra de cálculo financeiro"
     ],
     "correta": 1,
-    "resolucao": "participar de revisões de requisitos é justamente uma forma de identificar problemas na fase de menor custo de correção, coerente com a lógica de Boehm (1981) de que o custo cresce nas fases seguintes. {{A}} restringe sem fundamento a participação em revisões de requisitos, que se beneficia da visão técnica de quem vai implementar o sistema. {{C}} é factualmente incorreto: identificar um defeito mais cedo é justamente o que evita o custo de corrigi-lo mais tarde, conectando diretamente os dois conceitos. {{D}} contraria toda a lógica econômica apresentada no capítulo. {{E}} introduz uma condição arbitrária sem relação com o princípio geral discutido."
+    "resolucao": "participar de revisões de requisitos é justamente uma forma de identificar problemas na fase de menor custo de correção, coerente com a lógica de Boehm (1981) de que o custo cresce nas fases seguintes. {{A}} restringe sem fundamento a participação em revisões de requisitos, que se beneficia da visão técnica de quem vai implementar o sistema. {{C}} é factualmente incorreto: identificar um defeito mais cedo é justamente o que evita o custo de corrigi-lo mais tarde, conectando diretamente os dois conceitos. {{D}} contraria toda a lógica econômica apresentada no capítulo. {{E}} introduz uma condição arbitrária sem relação com o princípio geral discutido.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap4-q8",
@@ -1546,13 +1574,14 @@
     "enunciado": "Considerando a citação de Pressman e Maxim (2016) e o caso da função de frete, assinale a alternativa correta:",
     "alternativas": [
       "A declaração do desenvolvedor está correta, pois qualquer teste que passe sem erros garante cobertura total da lógica da função",
-      "O teste executa só um caminho (peso > 30kg e zona rural), deixando sem execução peso ≤ 30kg e peso > 30kg fora da zona rural",
+      "O teste executa só um caminho (peso > 30 kg e destino urbano), deixando sem execução o peso até 30 kg e o peso > 30 kg com destino rural",
       "A cobertura de caminhos básicos é uma preocupação exclusiva de sistemas embarcados, sem aplicação em funções de cálculo comercial como essa",
       "Como a função possui apenas duas condições (peso e destino), um único teste é matematicamente suficiente para cobrir toda a lógica possível, desde que use valores extremos",
       "O teste realizado cobre a lógica de peso, mas não precisa cobrir a lógica de destino, pois são variáveis independentes entre si"
     ],
     "correta": 1,
-    "resolucao": "a lógica descrita tem, no mínimo, quatro caminhos possíveis (peso ≤ 30kg; peso > 30kg e destino urbano; peso > 30kg e destino rural — este coberto pelo teste único citado; e peso ≤30kg combinações adicionais se existirem), e o único teste executado cobre apenas um desses caminhos, contrariando exatamente o princípio citado de que cada instrução (e caminho relevante) deveria ser exercitada ao menos uma vez. {{A}} generaliza incorretamente ‘passar sem erro’ como sinônimo de cobertura completa — um teste só verifica o caminho que de fato executa. {{C}} restringe sem base um princípio de teste estrutural amplamente aplicável a qualquer lógica condicional. {{D}} erra a contagem: duas condições aninhadas já geram múltiplas combinações possíveis, não uma só. {{E}} ignora que as duas condições estão aninhadas no enunciado (o destino só é avaliado dentro da condição de peso), portanto não são caminhos totalmente independentes a serem ignorados."
+    "resolucao": "a lógica tem três caminhos distintos: peso até 30 kg (não entra na taxa de carga pesada); peso acima de 30 kg com destino urbano (entra na taxa, mas não na taxa rural); e peso acima de 30 kg com destino rural (entra nas duas). O único teste, com 50 kg e destino urbano, percorre só o segundo caminho, e a instrução que soma a taxa de deslocamento nunca é executada, contrariando o princípio citado de executar cada instrução ao menos uma vez. {{A}} confunde \"passar sem erro\" com cobertura completa: um teste só verifica o caminho que executa. {{C}} restringe sem base um princípio de teste estrutural que vale para qualquer lógica condicional. {{D}} erra a contagem: duas condições aninhadas geram mais de um caminho. {{E}} ignora que o destino só é avaliado dentro da condição de peso, e que a taxa rural ficou sem teste.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap4-q9",
@@ -1583,7 +1612,8 @@
       "A suíte é insuficiente porque não testa o caso de peso exatamente igual a 30kg, o único caminho relevante da função"
     ],
     "correta": 1,
-    "resolucao": "os três casos de teste cobrem exatamente os três caminhos logicamente distintos que a estrutura condicional aninhada (peso e, dentro dela, destino) permite: peso baixo (sem entrar na condição de taxa pesada), peso alto com destino urbano (entra na condição, mas não na sub-condição rural), e peso alto com destino rural (entra em ambas as condições) — cobertura estrutural coerente com o princípio citado de exercitar cada caminho relevante. {{A}} inventa uma regra numérica sem relação com a estrutura lógica real da função. {{C}} erra ao considerar os casos (2) e (3) redundantes: eles compartilham a condição de peso, mas divergem exatamente na sub-condição de destino, que é o ponto que se quer testar. {{D}} introduz uma exigência (valores negativos) não implícita na lógica da função nem no texto motivador. {{E}} é o distrator mais sutil: valores de fronteira como peso = 30kg são importantes, mas pertencem à técnica de caixa preta (valor de fronteira), não à cobertura de caminhos de caixa branca, que é o foco específico deste texto motivador."
+    "resolucao": "os três casos de teste cobrem exatamente os três caminhos logicamente distintos que a estrutura condicional aninhada (peso e, dentro dela, destino) permite: peso baixo (sem entrar na condição de taxa pesada), peso alto com destino urbano (entra na condição, mas não na sub-condição rural), e peso alto com destino rural (entra em ambas as condições) — cobertura estrutural coerente com o princípio citado de exercitar cada caminho relevante. {{A}} inventa uma regra numérica sem relação com a estrutura lógica real da função. {{C}} erra ao considerar os casos (2) e (3) redundantes: eles compartilham a condição de peso, mas divergem exatamente na sub-condição de destino, que é o ponto que se quer testar. {{D}} introduz uma exigência (valores negativos) não implícita na lógica da função nem no texto motivador. {{E}} é o distrator mais sutil: valores de fronteira como peso = 30kg são importantes, mas pertencem à técnica de caixa preta (valor de fronteira), não à cobertura de caminhos de caixa branca, que é o foco específico deste texto motivador.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap4-q10",
@@ -1610,7 +1640,8 @@
       "O particionamento de equivalência não se aplica a campos numéricos como idade, sendo restrito a campos de texto"
     ],
     "correta": 1,
-    "resolucao": "a citação define que um bom caso de teste identifica, sozinho, uma classe inteira de erros — o que significa que testar 15 valores dentro da mesma classe válida é redundante e ineficiente, enquanto a suíte falha em cobrir a classe inválida (menor que 18, maior que 65) e os valores de fronteira, onde erros de comparação costumam se esconder. {{A}} e {{D}} caem exatamente na armadilha que a citação adverte: quantidade não é sinônimo de qualidade de cobertura quando os valores pertencem à mesma classe. {{C}} erra a razão: o problema não é o número de casos em si, mas a ausência de diversidade de classes representadas. {{E}} é falso: particionamento de equivalência se aplica a qualquer domínio de entrada, incluindo campos numéricos, exatamente como no caso descrito."
+    "resolucao": "a citação define que um bom caso de teste identifica, sozinho, uma classe inteira de erros — o que significa que testar 15 valores dentro da mesma classe válida é redundante e ineficiente, enquanto a suíte falha em cobrir a classe inválida (menor que 18, maior que 65) e os valores de fronteira, onde erros de comparação costumam se esconder. {{A}} e {{D}} caem exatamente na armadilha que a citação adverte: quantidade não é sinônimo de qualidade de cobertura quando os valores pertencem à mesma classe. {{C}} erra a razão: o problema não é o número de casos em si, mas a ausência de diversidade de classes representadas. {{E}} é falso: particionamento de equivalência se aplica a qualquer domínio de entrada, incluindo campos numéricos, exatamente como no caso descrito.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap4-q11",
@@ -1641,7 +1672,8 @@
       "A nova suíte só seria válida se incluísse também testes automatizados de performance para o mesmo campo"
     ],
     "correta": 1,
-    "resolucao": "os seis valores propostos cobrem exatamente as classes de equivalência relevantes (idade inválida abaixo da faixa, válida, inválida acima) e os valores de fronteira mais propensos a revelar erros de comparação (17/18 e 65/66) — a aplicação mais precisa possível das duas técnicas de caixa preta estudadas no capítulo, com uma fração do esforço da suíte original. {{A}} repete o erro de assumir que mais testes é sempre melhor, ignorando a qualidade da cobertura. {{C}} ignora uma diferença de cobertura real e significativa entre as duas suítes. {{D}} exige valores intermediários que, segundo a própria lógica de particionamento de equivalência, são redundantes quando já se tem um representante de cada classe. {{E}} introduz uma exigência (teste de performance) fora do escopo da técnica discutida no texto motivador."
+    "resolucao": "os seis valores propostos cobrem exatamente as classes de equivalência relevantes (idade inválida abaixo da faixa, válida, inválida acima) e os valores de fronteira mais propensos a revelar erros de comparação (17/18 e 65/66) — a aplicação mais precisa possível das duas técnicas de caixa preta estudadas no capítulo, com uma fração do esforço da suíte original. {{A}} repete o erro de assumir que mais testes é sempre melhor, ignorando a qualidade da cobertura. {{C}} ignora uma diferença de cobertura real e significativa entre as duas suítes. {{D}} exige valores intermediários que, segundo a própria lógica de particionamento de equivalência, são redundantes quando já se tem um representante de cada classe. {{E}} introduz uma exigência (teste de performance) fora do escopo da técnica discutida no texto motivador.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap4-m1",
@@ -1649,14 +1681,16 @@
     "capituloId": "qualidade-cap4",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe de desenvolvimento executa uma bateria completa de testes unitários e de integração em um sistema de e-commerce, obtendo 95% de cobertura de código e zero defeitos reportados. Na semana seguinte, o sistema entra em produção e apresenta falhas críticas relatadas por usuários. Qual princípio do ISTQB explica essa situação?",
+    "enunciado": "Uma equipe executa uma bateria completa de testes unitários e de integração em um sistema de comércio eletrônico, obtém 95% de cobertura de código e nenhum defeito. Na semana seguinte, o sistema entra em produção e apresenta falhas críticas relatadas pelos usuários. Qual princípio do ISTQB explica essa situação?",
     "alternativas": [
-      "Paradoxo do pesticida — os mesmos testes foram executados repetidamente sem atualização, fazendo com que parassem de detectar novos defeitos introduzidos nas últimas modificações do sistema antes do lançamento.",
-      "A cobertura deveria ser de 100%, o que garante zero defeitos.",
-      "Testes mostram a presença de defeitos, não a ausência: 95% de cobertura sem falhas não garante um sistema livre de erros nem adequado às necessidades reais.",
-      "Agrupamento de defeitos — a equipe concentrou os testes nos módulos considerados críticos e negligenciou os módulos secundários, onde 80% dos defeitos que apareceram em produção estavam localizados, conforme prevê a lei de Pareto aplicada a testes."
+      "Testes revelam defeitos, não provam a sua ausência: 95% de cobertura sem falhas não garante um sistema livre de erros nem adequado ao uso.",
+      "O paradoxo do pesticida: os mesmos testes foram repetidos sem atualização e deixaram de encontrar os defeitos das últimas mudanças.",
+      "O agrupamento de defeitos: a equipe testou os módulos críticos e esqueceu os secundários, onde estavam 80% dos defeitos.",
+      "Testar cedo economiza: como os testes foram feitos só no fim, os defeitos encontrados custaram mais para corrigir.",
+      "Testes exaustivos são possíveis: com 100% de cobertura, e não 95%, nenhum defeito teria chegado à produção do sistema."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "O primeiro princípio do ISTQB diz que o teste revela defeitos, mas não prova que eles não existem: a ausência de falhas nos testes não garante um software sem erros. O sétimo lembra que corrigir todos os defeitos não basta se o software não atende às necessidades do usuário. Nada no caso indica testes repetidos sem atualização nem módulos esquecidos, e testes exaustivos são impossíveis: nem 100% de cobertura garante ausência de defeitos."
   },
   {
     "id": "qualidade-cap4-m2",
@@ -1664,14 +1698,16 @@
     "capituloId": "qualidade-cap4",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um testador recebe a especificação de um campo de cadastro que aceita idades entre 18 e 65 anos. Aplicando Particionamento de Equivalência e Análise de Valor Limite, quais são os casos de teste mínimos e mais eficazes?",
+    "enunciado": "Um sistema de pedidos tem os estados Criado, Pago, Enviado, Entregue e Cancelado. Um pedido só pode ser cancelado antes de ser enviado. Qual técnica de caixa preta é a mais adequada para projetar os testes e o que ela deve cobrir?",
     "alternativas": [
-      "Só 2 casos (30 e 70), e os limites já estão cobertos.",
-      "Particionamento de equivalência gera 3 casos: um abaixo do limite (ex: 10), um dentro (ex: 40) e um acima (ex: 80). Análise de valor limite exige apenas testar os extremos exatos de 18 e 65, totalizando 5 casos no conjunto combinado das duas técnicas.",
-      "Três partições: inválida abaixo (10), válida (40) e inválida acima (70); e os limites 17, 18, 19, 64, 65 e 66, onde os defeitos mais aparecem.",
-      "Particionamento de equivalência gera apenas 2 partições — válida e inválida — e um único caso de teste por partição é suficiente. Análise de valor limite exige testar todos os valores entre 15 e 20 e entre 63 e 68 para garantir cobertura completa das fronteiras."
+      "O teste baseado em estado: modela os estados e as transições, e cobre as válidas e as proibidas, como cancelar um pedido já enviado.",
+      "O particionamento de equivalência: divide os pedidos em válidos e inválidos e testa um representante de cada classe.",
+      "A análise do valor limite: testa o primeiro e o último estado do pedido, onde os defeitos costumam se concentrar.",
+      "A tabela de decisão: combina os cinco estados em uma tabela com todas as ações e dispensa testar as transições.",
+      "A cobertura de desvios: exercita cada if do código do pedido nos caminhos verdadeiro e falso, sem olhar os estados."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "O teste baseado em estado modela o sistema como uma máquina de estados e projeta casos para cobrir as transições entre eles; é o indicado para sistemas cujo comportamento depende do estado atual, como pedidos e fluxos de trabalho. Além das transições permitidas (Criado para Pago, Pago para Enviado), é preciso testar as proibidas, como cancelar depois do envio. A cobertura de desvios é uma técnica de caixa branca."
   },
   {
     "id": "qualidade-cap4-m3",
@@ -1679,14 +1715,16 @@
     "capituloId": "qualidade-cap4",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa desenvolve software embarcado para controle de voo de aeronaves. A norma DO-178C exige 100% de cobertura MC/DC. Por que esse critério é exigido nesse contexto e por que statement coverage seria insuficiente?",
+    "enunciado": "Uma empresa desenvolve software embarcado para o controle de voo de aeronaves, e a norma DO-178C exige 100% de cobertura MC/DC. Por que esse critério é exigido nesse contexto e por que a cobertura de declarações seria insuficiente?",
     "alternativas": [
-      "Statement coverage seria insuficiente apenas porque exige menos esforço de implementação — em sistemas de aviação, a exigência de MC/DC é regulatória e burocrática, sem impacto técnico real na detecção de defeitos em comparação com cobertura de declarações de 100%.",
-      "MC/DC é exigido porque sistemas de aviação precisam que cada condição booleana seja testada em todos os valores possíveis simultaneamente — enquanto statement coverage testa apenas se cada linha foi executada, sem verificar se as condições dentro das expressões foram avaliadas corretamente.",
-      "Statement coverage só garante que cada linha rodou, não que cada condição afeta a decisão sozinha; em sistemas críticos, uma condição errada passa despercebida, daí o MC/DC.",
-      "MC/DC é exigido exclusivamente por questões legais de responsabilidade civil — a norma DO-178C foi criada após acidentes aéreos causados por erros de cobertura de testes, e a exigência de MC/DC transfere a responsabilidade por defeitos para a equipe de desenvolvimento caso a cobertura não seja atingida."
+      "A cobertura de declarações só garante que cada linha rodou, e não que cada condição afeta a decisão sozinha; em sistema crítico, isso não basta.",
+      "A cobertura de declarações exige menos esforço, e o MC/DC é só uma exigência burocrática, sem efeito real na detecção de defeitos.",
+      "O MC/DC exige testar todas as combinações possíveis de todas as condições ao mesmo tempo, como faz a cobertura de caminhos.",
+      "O MC/DC existe só por responsabilidade civil, para transferir à equipe a culpa por defeitos se a meta não for atingida.",
+      "A cobertura de declarações já é o critério mais rigoroso, e o MC/DC é exigido apenas para documentar os testes para os auditores."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A cobertura de declarações é o critério mais simples: cada linha é executada ao menos uma vez, mas uma condição errada dentro de uma expressão pode passar despercebida. No MC/DC, cada condição precisa mostrar que influencia, sozinha, o resultado da decisão. É exigido em aviação e medicina porque ali um erro desses pode custar vidas. O MC/DC não testa todas as combinações, o que tornaria o teste inviável; essa é a ideia da cobertura de caminhos."
   },
   {
     "id": "qualidade-cap4-m4",
@@ -1694,14 +1732,16 @@
     "capituloId": "qualidade-cap4",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um módulo de cálculo de frete funciona perfeitamente nos testes unitários, mas quando integrado ao módulo de carrinho de compras, os valores calculados chegam incorretos. Qual nível de teste detectaria esse problema e qual estratégia de integração seria mais indicada para um sistema com múltiplas dependências?",
+    "enunciado": "Um módulo de cálculo de frete funciona perfeitamente nos testes unitários, mas, quando integrado ao módulo de carrinho de compras, os valores chegam incorretos. Qual nível de teste detectaria o problema e, em um projeto grande com muitas dependências, qual estratégia de integração a apostila recomenda?",
     "alternativas": [
-      "O teste de sistema detectaria o problema, pois é o único nível que avalia o comportamento do software em ambiente próximo ao de produção — testes de integração são desnecessários quando os módulos individuais já passaram nos testes unitários com alta cobertura de código.",
-      "O teste de integração, que verifica a comunicação entre módulos; com muitas dependências, a estratégia bottom-up valida primeiro a base (frete) e depois integra os módulos de cima.",
-      "O teste de aceitação, pois só usuários reais percebem o erro.",
-      "O teste unitário detectaria o problema se tivesse sido planejado adequadamente — a falha na integração indica que os mocks utilizados nos testes unitários do módulo de carrinho não representavam fielmente a interface real do módulo de cálculo de frete."
+      "O teste de integração, que verifica a comunicação entre os módulos; para muitas dependências, a estratégia sanduíche (mista).",
+      "O teste de sistema, pois os testes de integração são desnecessários quando os módulos já passaram nos testes unitários.",
+      "O teste de integração; para muitas dependências, a estratégia Big Bang, que integra tudo de uma só vez e é mais rápida.",
+      "O teste de aceitação, pois só os usuários reais conseguem perceber um valor de frete errado no carrinho de compras.",
+      "O teste unitário, desde que os mocks do carrinho fossem mais fiéis; para muitas dependências, a estratégia top-down."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "Um componente pode funcionar isolado e falhar ao interagir com outro, por troca incorreta de dados ou interface incompatível: é o que o teste de integração verifica. Pela tabela da apostila, a estratégia sanduíche, que combina top-down e bottom-up ao mesmo tempo, é a indicada para projetos grandes com muitas dependências. O Big Bang serve a sistemas pequenos com poucos módulos."
   },
   {
     "id": "qualidade-cap4-m5",
@@ -1709,14 +1749,16 @@
     "capituloId": "qualidade-cap4",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma startup lança um produto SaaS e decide pular o teste alfa para economizar tempo, indo diretamente para o teste beta com 10.000 usuários externos. Quais são os riscos específicos dessa decisão?",
+    "enunciado": "Uma startup lança um produto SaaS e decide pular o teste alfa para economizar tempo, indo direto para o teste beta com 10.000 usuários externos. Quais são os riscos dessa decisão?",
     "alternativas": [
-      "Não há risco significativo: o teste beta com grande volume de usuários externos é mais eficaz que o teste alfa controlado, pois expõe o software a cenários de uso real que testadores internos jamais simulariam em ambiente de laboratório controlado.",
-      "Só reputação, pois usuários beta toleram bugs.",
-      "Defeitos que o alfa pegaria em ambiente controlado chegam a 10.000 usuários reais, com falhas de estabilidade e segurança em escala e dano à reputação.",
-      "O risco é exclusivamente técnico de escalabilidade: o teste beta com 10.000 usuários simultâneos pode derrubar os servidores da startup, pois sem o teste alfa não há validação prévia da infraestrutura — esse é o único problema que a ausência do teste alfa introduz."
+      "Defeitos que o alfa pegaria em ambiente controlado chegam a 10.000 usuários reais, com falhas em escala e dano à reputação.",
+      "Nenhum risco relevante, pois o beta com muitos usuários externos é sempre mais eficaz que o alfa feito em laboratório.",
+      "Só o risco à reputação, pois os usuários do beta aceitam qualquer defeito e não deixam de usar o produto por causa deles.",
+      "Só o risco de escalabilidade, pois sem o alfa não há validação da infraestrutura, e esse é o único papel do teste alfa.",
+      "Nenhum, pois o teste beta também acontece em ambiente controlado, com os desenvolvedores observando os usuários."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "O teste alfa é feito por usuários internos ou representantes do cliente, em ambiente controlado e com alta supervisão, e serve para encontrar os defeitos que passaram pelos testes internos antes de liberar ao público. O beta acontece no ambiente real do usuário, sem supervisão, com uma versão já estável. Pular o alfa expõe defeitos conhecidos a milhares de pessoas, com mais dano e um feedback mais difícil de controlar."
   },
   {
     "id": "qualidade-cap4-m6",
@@ -1724,14 +1766,16 @@
     "capituloId": "qualidade-cap4",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um sistema de concessão de crédito possui a seguinte regra: clientes premium com renda acima de R$5.000 recebem 20% de desconto; clientes premium com renda até R$5.000 recebem 10%; clientes não premium com renda acima de R$5.000 recebem 5%; demais clientes não recebem desconto. Qual técnica de caixa preta é mais adequada e quantas regras de teste são necessárias?",
+    "enunciado": "Um sistema de crédito tem a regra: clientes premium com renda acima de R$ 5.000 recebem 20% de desconto; premium com renda até R$ 5.000, 10%; não premium com renda acima de R$ 5.000, 5%; os demais não recebem desconto. Qual técnica de caixa preta é a mais adequada e quantas regras ela gera?",
     "alternativas": [
-      "Particionamento: 2 partições, premium e não premium.",
-      "Análise de valor limite é a técnica mais adequada, pois a renda de R$5.000 é um valor de fronteira crítico — são necessários apenas 4 casos de teste: R$4.999 e R$5.000 para clientes premium, e os mesmos valores para não premium.",
-      "Tabela de decisão, por combinar condições: 4 regras, de premium ou não com renda acima ou até R$ 5.000, cada uma ligada ao seu desconto.",
-      "Teste baseado em estado é a técnica mais adequada, pois o sistema de crédito muda de estado conforme a renda e o perfil do cliente — são necessárias 6 transições de estado para cobrir todos os caminhos possíveis entre os estados de desconto definidos pelas regras de negócio."
+      "A tabela de decisão, por combinar condições: 4 regras (premium ou não, renda acima ou até R$ 5.000), cada uma com o seu desconto.",
+      "O particionamento de equivalência, com 2 partições (premium e não premium), já que a renda não muda o desconto.",
+      "A análise do valor limite, com 4 casos: R$ 4.999 e R$ 5.000 para premium e os mesmos dois valores para não premium.",
+      "O teste baseado em estado, com 6 transições, pois o cliente muda de estado conforme a renda e o perfil de crédito.",
+      "A tabela de decisão, com 2 regras, uma para cada valor de desconto diferente de zero que a regra de negócio prevê."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A tabela de decisão representa combinações de condições e as ações correspondentes, e é a indicada para regras de negócio em que várias condições determinam o resultado. Duas condições com dois valores cada geram 2 x 2 = 4 regras, como no exemplo da apostila. O valor limite (R$ 5.000) também merece testes, mas sozinho não cobre as combinações de perfil e renda."
   },
   {
     "id": "qualidade-cap4-m7",
@@ -1739,14 +1783,16 @@
     "capituloId": "qualidade-cap4",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um desenvolvedor escreve testes unitários após codificar um módulo e obtém 85% de branch coverage. Seu colega pratica TDD e escreve os testes antes do código. Qual é a diferença fundamental entre as duas abordagens e qual oferece maior garantia de qualidade?",
+    "enunciado": "Um desenvolvedor escreve os testes unitários depois de codificar um módulo e obtém 85% de cobertura de desvios. A colega dele pratica TDD e escreve os testes antes do código. Qual é a diferença fundamental entre as duas abordagens?",
     "alternativas": [
-      "As abordagens são equivalentes em qualidade: a ordem de escrita dos testes (antes ou depois do código) não afeta a cobertura obtida nem a capacidade de detecção de defeitos — o que importa é atingir o percentual mínimo de cobertura estabelecido como padrão pela equipe.",
-      "O desenvolvedor que testa após codificar obtém maior qualidade, pois conhece a implementação completa e pode projetar casos de teste mais precisos e abrangentes — o TDD limita o testador a testar apenas o que foi planejado antes da implementação, perdendo cenários descobertos durante a codificação.",
-      "No TDD, o teste vem antes e define o comportamento esperado, o que leva a um design testável e evita testar só o que já se sabe que funciona.",
-      "A diferença é exclusivamente de ordem burocrática no processo de desenvolvimento — ambas as abordagens produzem o mesmo conjunto de casos de teste e a mesma cobertura de código quando aplicadas por desenvolvedores com nível técnico equivalente."
+      "No TDD, o teste vem antes e define o comportamento esperado, o que leva a um design testável e evita testar só o que já funciona.",
+      "Nenhuma: a ordem não afeta a cobertura nem a detecção de defeitos, e o que importa é atingir o percentual mínimo combinado.",
+      "Testar depois é melhor, pois quem conhece a implementação completa projeta casos de teste mais precisos e abrangentes.",
+      "A diferença é só burocrática: as duas produzem os mesmos casos de teste quando aplicadas por pessoas de mesmo nível técnico.",
+      "No TDD, os testes são feitos pelo testador, e não pelo desenvolvedor, o que garante a independência entre quem testa e quem faz."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A apostila cita o TDD como boa prática do teste unitário: escrever o teste antes do código. Assim, o teste nasce da especificação do comportamento esperado, e não do código já pronto, o que evita o viés de testar só o que se sabe que funciona e força um código fácil de testar. No TDD, quem escreve os testes continua sendo o desenvolvedor."
   },
   {
     "id": "qualidade-cap4-m8",
@@ -1754,14 +1800,16 @@
     "capituloId": "qualidade-cap4",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa de jogos online usa Canary Release para lançar uma nova funcionalidade, ativando-a primeiro para 1% dos usuários, depois expandindo progressivamente. Como isso se relaciona com os conceitos de teste beta e qual é a vantagem sobre um lançamento tradicional?",
+    "enunciado": "Uma empresa de jogos on-line usa Canary Release para lançar uma nova funcionalidade: primeiro para 1% dos usuários, depois aumentando aos poucos. Como isso se relaciona com o teste beta e qual é a vantagem sobre um lançamento tradicional?",
     "alternativas": [
-      "Canary Release é uma alternativa ao teste beta que o substitui completamente — empresas que adotam essa prática eliminam a necessidade de qualquer fase de teste antes do lançamento, pois o monitoramento em produção detecta problemas com a mesma eficácia dos testes formais.",
-      "É um teste alfa moderno com usuários internos.",
-      "É uma evolução do beta aberto: expõe a novidade aos poucos a usuários reais, detecta problemas em escala pequena e permite rollback rápido.",
-      "Canary Release elimina a necessidade de testes de integração e sistema, pois a exposição progressiva a usuários reais valida todas as integrações e comportamentos do sistema em condições de produção — tornando as fases anteriores de teste redundantes para equipes com cultura DevOps madura."
+      "É uma variação moderna do beta: expõe a novidade aos poucos a usuários reais, detecta problemas em escala pequena e permite rollback.",
+      "Substitui o beta e todas as outras fases de teste, pois o monitoramento em produção detecta os problemas com a mesma eficácia.",
+      "É um teste alfa moderno, feito com usuários internos nas instalações do desenvolvedor, com alta supervisão da equipe.",
+      "Dispensa os testes de integração e de sistema, pois a exposição gradual a usuários reais já valida todas as integrações.",
+      "É um beta fechado, em que só usuários convidados acessam a funcionalidade, sem possibilidade de voltar à versão anterior."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A apostila apresenta o Canary Release entre as estratégias modernas de teste beta: o software é lançado progressivamente (1%, depois 10%, 50% e assim por diante), o que limita o alcance de um problema e permite rollback rápido. É um complemento, e não um substituto, dos testes anteriores, e não é alfa, que é interno e supervisionado."
   },
   {
     "id": "qualidade-cap4-m9",
@@ -1769,14 +1817,16 @@
     "capituloId": "qualidade-cap4",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um testador usando técnica de caixa preta identifica que um sistema de login não trata corretamente senhas com caracteres especiais como ', \" e --. Qual é a limitação da caixa preta que esse caso ilustra e como a caixa branca complementaria a investigação?",
+    "enunciado": "Um testador, usando caixa preta, percebe que o login de um sistema não trata corretamente senhas com os caracteres aspas simples, aspas duplas e dois hífens seguidos. Qual limitação da caixa preta o caso ilustra e como a caixa branca complementaria a investigação?",
     "alternativas": [
-      "O caso ilustra que a caixa preta é incapaz de detectar vulnerabilidades de segurança — apenas a caixa branca pode identificar falhas como injeção de SQL, pois o testador precisa conhecer o código para saber quais caracteres representam risco na implementação específica do sistema.",
-      "Não há limitação: a caixa preta basta para garantir a segurança.",
-      "A caixa preta achou o sintoma, mas não a causa; a caixa branca examinaria o tratamento da entrada para confirmar a injeção de SQL e localizar a falha.",
-      "O caso ilustra o paradoxo do pesticida aplicado à caixa preta — os mesmos casos de teste com caracteres especiais foram executados repetidamente e deixaram de detectar defeitos, sendo necessário revisar e atualizar os casos de teste para incluir novos caracteres especiais não utilizados anteriormente."
+      "A caixa preta achou o sintoma, mas não a causa; a caixa branca examinaria o tratamento da entrada no código para localizar a falha.",
+      "A caixa preta não consegue detectar falhas de segurança, que só podem ser encontradas por quem conhece o código-fonte.",
+      "Não há limitação, pois a caixa preta basta para garantir a segurança do login, sem precisar olhar o código em nenhum caso.",
+      "O paradoxo do pesticida: os mesmos caracteres foram testados várias vezes e pararam de revelar defeitos novos no sistema.",
+      "A caixa branca substituiria a preta, pois só ela mostra se o login atende aos requisitos de negócio do usuário final."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A caixa preta testa o comportamento externo e encontrou a falha, o que mostra que ela detecta sim problemas de segurança. A sua limitação é não ver a lógica interna: ela não mostra onde está o defeito nem garante que todo o código foi exercitado. A caixa branca examinaria como a entrada é tratada, por exemplo se a senha vai direto para uma consulta ao banco, e localizaria a causa. Por isso, a apostila recomenda combinar as duas."
   },
   {
     "id": "qualidade-cap4-m10",
@@ -1784,14 +1834,23 @@
     "capituloId": "qualidade-cap4",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Segundo a pirâmide de testes de Mike Cohn, a distribuição recomendada é 70% unitários, 20% integração e 10% sistema/aceitação. Uma empresa inverte essa pirâmide — 10% unitários, 20% integração e 70% sistema/aceitação via testes manuais de interface. Quais são as consequências práticas dessa inversão?",
-    "alternativas": [
-      "A inversão não causa problemas práticos: testes de sistema e aceitação oferecem maior confiança do usuário e cobertura de requisitos de negócio — a pirâmide de Mike Cohn é uma recomendação teórica que não se aplica a equipes com testadores experientes em testes manuais de interface.",
-      "A empresa ganha, pois os testes de aceitação validam o negócio.",
-      "Vira o \"cone de sorvete\": testes manuais de interface são lentos, caros e frágeis, o feedback demora, e erros simples chegam caros às camadas de cima.",
-      "A inversão é aceitável apenas em contextos de desenvolvimento ágil com sprints curtos, onde testes de aceitação automatizados substituem funcionalmente os testes unitários — o problema ocorre exclusivamente quando os 70% de testes de sistema são manuais e não automatizados via ferramentas como Selenium ou Cypress."
+    "caso": [
+      "Sobre os sete princípios do ISTQB, avalie as afirmativas a seguir.",
+      "I. Pelo agrupamento de defeitos, a maioria dos defeitos tende a se concentrar em poucos módulos do sistema.",
+      "II. Pelo paradoxo do pesticida, repetir sempre os mesmos testes faz com que eles parem de encontrar novos defeitos.",
+      "III. Como os testes dependem do contexto, a mesma abordagem deve ser usada em um sistema de pagamento e em um site informativo.",
+      "IV. Pela ilusão da ausência de erros, corrigir todos os defeitos não garante o sucesso se o software não atender às necessidades."
     ],
-    "correta": 2
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e IV, apenas.",
+      "I e II, apenas.",
+      "I, II, III e IV.",
+      "II e IV, apenas.",
+      "I, III e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: é a ideia de Pareto aplicada a testes, com 80% dos defeitos em 20% do código. II é verdadeira: por isso os casos de teste devem ser revisados e atualizados. III é falsa: o princípio diz justamente o contrário, que a abordagem de um sistema de pagamento é diferente da de um site informativo, e o contexto define a estratégia. IV é verdadeira: é o sétimo princípio."
   },
   {
     "id": "qualidade-cap5-q12",
@@ -1800,16 +1859,19 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“O plano de teste deve identificar todos os itens de teste, as características a serem testadas, as tarefas de teste a serem realizadas, o pessoal responsável por cada tarefa, e os riscos associados a esse plano. [...] Critérios de suspensão especificam as condições sob as quais as atividades de teste ativas devem ser suspensas, e critérios de retomada especificam quando as atividades de teste podem ser retomadas de forma válida após uma suspensão.” (tradução nossa)",
-        "fonte": "IEEE. IEEE Std 829-2008 — IEEE Standard for Software and System Test Documentation. Nova York: Institute of Electrical and Electronics Engineers, 2008."
+        "t": "p",
+        "texto": "A IEEE 829 define o que um plano de teste deve conter: os itens e as características a testar, as tarefas, os responsáveis por cada uma e os riscos do plano. Entre esses elementos estão os critérios de suspensão, que dizem quando as atividades de teste devem ser interrompidas, e os requisitos de retomada, que dizem o que precisa ser refeito quando os testes recomeçam."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em IEEE. IEEE Std 829-2008 — IEEE Standard for Software and System Test Documentation. Nova York: IEEE, 2008."
       },
       {
         "t": "p",
         "texto": "A equipe de QA de um sistema de folha de pagamento elaborou um plano de teste que definia claramente o escopo, os tipos de teste e os critérios de aceite — mas não incluía nenhuma cláusula sobre o que fazer caso um defeito crítico fosse encontrado durante a execução dos testes, nem sobre as condições em que os testes deveriam ser retomados após uma correção. Durante a execução, um defeito crítico de cálculo salarial foi encontrado no meio da suíte, e a equipe, sem orientação formal, decidiu — de forma improvisada e sem consenso — continuar testando as demais funcionalidades enquanto o defeito ainda não havia sido corrigido, o que gerou confusão sobre quais resultados de teste ainda eram confiáveis."
       }
     ],
-    "enunciado": "Considerando a citação da IEEE 829 (2008) e o caso relatado, assinale a alternativa correta:",
+    "enunciado": "Considerando o que a IEEE 829 (2008) define para o plano de teste e o caso relatado, assinale a alternativa correta:",
     "alternativas": [
       "O problema relatado não tem relação com o conteúdo do plano de teste, sendo apenas uma falha de comunicação pontual da equipe naquele dia específico",
       "Faltavam no plano os critérios de suspensão e retomada da IEEE 829; sem eles, a equipe não sabia agir diante do defeito crítico",
@@ -1818,7 +1880,8 @@
       "A confusão relatada só poderia ter sido evitada com mais testadores na equipe, independentemente do conteúdo do plano de teste"
     ],
     "correta": 1,
-    "resolucao": "a citação da IEEE 829 define explicitamente critérios de suspensão e retomada como componentes do plano de teste, exatamente o elemento ausente no caso e a causa mais direta da decisão improvisada e sem consenso da equipe. {{A}} minimiza um problema estrutural do documento como se fosse um incidente pontual de comunicação. {{C}} afirma incorretamente que o plano estava completo, ignorando a lacuna específica apontada pela norma citada. {{D}} restringe, sem base na citação, a aplicabilidade desses critérios a sistemas ‘críticos’ — a norma não faz essa distinção, e um sistema de folha de pagamento lida com dados financeiros sensíveis. {{E}} propõe uma solução (mais pessoas) que não resolve a causa raiz identificada: a ausência de critérios formais e claros no plano."
+    "resolucao": "a IEEE 829 define explicitamente critérios de suspensão e retomada como componentes do plano de teste, exatamente o elemento ausente no caso e a causa mais direta da decisão improvisada e sem consenso da equipe. {{A}} minimiza um problema estrutural do documento como se fosse um incidente pontual de comunicação. {{C}} afirma incorretamente que o plano estava completo, ignorando a lacuna específica apontada pela norma. {{D}} restringe, sem base na norma, a aplicabilidade desses critérios a sistemas ‘críticos’ — a norma não faz essa distinção, e um sistema de folha de pagamento lida com dados financeiros sensíveis. {{E}} propõe uma solução (mais pessoas) que não resolve a causa raiz identificada: a ausência de critérios formais e claros no plano.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap5-m1",
@@ -1826,14 +1889,16 @@
     "capituloId": "qualidade-cap5",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe de desenvolvimento recebe um novo projeto de sistema bancário e decide criar um único documento chamado \"Plano de Estratégia de Testes\" para cobrir tanto a abordagem geral quanto os detalhes de execução. Um consultor aponta que essa unificação é problemática. Por quê?",
+    "enunciado": "Uma equipe recebe um novo projeto de sistema bancário e decide criar um único documento, chamado \"Plano de Estratégia de Testes\", para cobrir tanto a abordagem geral quanto os detalhes de execução. Um consultor aponta que essa unificação é problemática. Por quê?",
     "alternativas": [
-      "Não há problema na unificação: a norma IEEE 829 permite documentos híbridos que combinam estratégia e plano de teste, sendo essa inclusive a abordagem recomendada para projetos ágeis onde a separação burocrática entre documentos reduz a velocidade de entrega.",
-      "O problema é apenas de nomenclatura: estratégia e plano de teste são documentos sinônimos na norma IEEE 829, e o consultor está aplicando uma distinção acadêmica sem impacto prático no processo de qualidade do projeto bancário.",
-      "Têm propósitos diferentes: a estratégia é a abordagem geral e reutilizável; o plano detalha quem, quando, onde e com que recursos se testa num projeto.",
-      "O problema é exclusivamente de governança: a norma IEEE 829 exige que os dois documentos tenham identificadores diferentes e sejam aprovados por responsáveis distintos — a unificação viola esse requisito formal, podendo invalidar auditorias de qualidade independentemente do conteúdo do documento produzido."
+      "Os dois têm propósitos diferentes: a estratégia é a abordagem geral e reutilizável; o plano detalha quem, quando, onde e com que recursos.",
+      "Não há problema: a IEEE 829 recomenda documentos híbridos de estratégia e plano, em especial para os projetos ágeis.",
+      "O problema é só de nome: estratégia e plano de teste são sinônimos na IEEE 829, e a distinção do consultor é só acadêmica.",
+      "O problema é só de governança: a norma exige identificadores e aprovadores diferentes, e a unificação invalida auditorias.",
+      "A estratégia detalha o cronograma e a equipe de cada projeto, e o plano define as técnicas para toda a organização."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A estratégia de teste é de nível organizacional, de longa duração e reutilizável: define a abordagem geral, os tipos de teste, as técnicas e os critérios de entrada e saída. O plano de teste é específico de um projeto e detalha o quem, o quando, o onde e os recursos: casos de teste, ambiente, riscos, equipe e ferramentas. Juntar os dois mistura o que deveria ser reaproveitado com o que muda a cada projeto."
   },
   {
     "id": "qualidade-cap5-m2",
@@ -1841,14 +1906,16 @@
     "capituloId": "qualidade-cap5",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um gerente de testes aplica a Matriz de Priorização (Probabilidade × Impacto) a um sistema de e-commerce e obtém: módulo de pagamento (9), módulo de login (6), módulo de relatórios (2) e módulo de exportação CSV (1). Como essa análise deve influenciar a alocação do esforço de teste?",
+    "enunciado": "Um gerente de testes aplica a Matriz de Priorização (Probabilidade × Impacto) a um sistema de comércio eletrônico e obtém: pagamento (9), login (6), relatórios (2) e exportação CSV (1). Pela matriz da apostila, como deve ficar a alocação do esforço de teste?",
     "alternativas": [
-      "O esforço deve ser distribuído igualmente entre todos os módulos: a matriz de risco é apenas uma ferramenta de comunicação com stakeholders, sem implicação direta na quantidade de casos de teste ou tempo dedicado a cada módulo.",
-      "Pagamento e login (6 a 9) recebem teste prioritário e profundo; relatórios (2), teste normal; e a exportação CSV (1), teste leve, levando o esforço aonde a falha custa mais.",
-      "Pagamento recebe 90% do esforço, e o resto é dividido.",
-      "Módulos com pontuação baixa (1 e 2) devem receber mais atenção, pois são os mais negligenciados pelas equipes de desenvolvimento — a estratégia de risco inverte a prioridade para compensar o viés natural de desenvolvedores que testam mais os módulos que consideram críticos."
+      "Pagamento e login (6 a 9) recebem teste prioritário e exaustivo; relatórios e exportação (1 a 2), teste superficial ou omitido.",
+      "Pagamento recebe teste prioritário; login e relatórios, teste normal; e a exportação CSV fica sem nenhum teste no ciclo.",
+      "O esforço é dividido igualmente entre os quatro módulos, pois a matriz serve só para comunicar os riscos aos stakeholders.",
+      "Pagamento e login recebem teste prioritário; relatórios, teste normal; e a exportação CSV, teste superficial ou omitido.",
+      "Relatórios e exportação recebem mais atenção, pois os módulos de baixa pontuação costumam ser esquecidos pela equipe."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "A prioridade é a probabilidade de falha vezes o impacto no negócio. Pela matriz da apostila, pontuação de 6 a 9 pede teste prioritário e exaustivo (pagamento e login); de 3 a 4, teste normal; e de 1 a 2, teste superficial ou omitido (relatórios, com 2, e exportação, com 1). A pontuação 2 dos relatórios não chega à faixa do teste normal. Assim, o esforço vai para onde uma falha custa mais."
   },
   {
     "id": "qualidade-cap5-m3",
@@ -1856,14 +1923,16 @@
     "capituloId": "qualidade-cap5",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe ágil trabalha em sprints de duas semanas e adota BDD com Gherkin para escrever critérios de aceitação. Um desenvolvedor questiona por que os critérios são escritos antes do código. Qual é o fundamento estratégico dessa prática?",
+    "enunciado": "Uma equipe ágil trabalha em sprints de duas semanas e adota BDD, com Gherkin, para escrever os critérios de aceitação. Um desenvolvedor pergunta por que os critérios são escritos antes do código. Qual é o fundamento estratégico dessa prática?",
     "alternativas": [
-      "Os critérios em Gherkin são escritos antes do código exclusivamente por razões contratuais: documentar o comportamento esperado antes da implementação protege a empresa legalmente em caso de disputas com o cliente sobre funcionalidades entregues.",
-      "É só formalidade, e os critérios são ajustados depois.",
-      "É Shift-Left e ATDD: alinha cliente, desenvolvedor e testador antes do código, evita retrabalho e gera testes de aceitação que guiam a implementação.",
-      "A prática é válida apenas para histórias de usuário com alta complexidade de negócio — para funcionalidades técnicas simples, escrever critérios Gherkin antes do código aumenta o overhead sem benefício proporcional de qualidade ou alinhamento entre as partes envolvidas."
+      "É o Shift-Left: alinha cliente, desenvolvedor e testador antes do código, evita retrabalho e gera testes de aceitação que guiam a implementação.",
+      "É só uma proteção contratual: documentar o comportamento antes protege a empresa em disputas com o cliente sobre o que foi entregue.",
+      "É só uma formalidade, pois os critérios são reescritos depois, de acordo com o que o código acabou fazendo na prática.",
+      "Só vale para histórias complexas: em funcionalidades simples, escrever os critérios antes só aumenta o trabalho, sem benefício.",
+      "É para dispensar os testes unitários, já que os cenários em Gherkin cobrem toda a lógica interna das funções do sistema."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "No Shift-Left Testing, os testadores participam do refinamento das histórias e escrevem os critérios de aceitação antes do código, o que antecipa a descoberta de mal-entendidos. No BDD, esses critérios, em linguagem natural (Dado/Quando/Então), viram a base dos testes automatizados de caixa preta; no ATDD, os testes de aceitação definidos antes guiam a implementação. Eles não substituem os testes unitários, que verificam a lógica interna."
   },
   {
     "id": "qualidade-cap5-m4",
@@ -1871,14 +1940,19 @@
     "capituloId": "qualidade-cap5",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um sistema de controle de tráfego aéreo está sendo desenvolvido. A equipe precisa definir o critério mínimo de cobertura para os módulos de cálculo de trajetória e alertas de colisão. Com base na estratégia de cobertura progressiva da Caixa Branca, qual critério é adequado e por quê?",
-    "alternativas": [
-      "Branch coverage de 80%, padrão de mercado que basta.",
-      "MC/DC com 100%, pela criticidade máxima, como exigem as normas aeronáuticas (DO-178C e, para sistemas de solo, DO-278A): cada condição deve afetar a decisão de forma independente.",
-      "Path Coverage completo é o único critério aceitável para sistemas aviônicos, pois todos os caminhos possíveis de execução devem ser percorridos — o MC/DC é uma simplificação inadequada para sistemas onde qualquer falha pode resultar em perda de vidas humanas.",
-      "Statement Coverage de 100% é o critério mínimo adequado para módulos críticos de aviação, pois garante que cada linha de código foi executada pelo menos uma vez — critérios mais complexos como MC/DC e Path Coverage são excessivos e inviabilizam economicamente o desenvolvimento."
+    "caso": [
+      "Uma empresa vai definir a cobertura mínima de quatro módulos: (1) um utilitário de formatação de texto, de criticidade baixa; (2) o módulo de relatórios, de criticidade média; (3) o módulo de autenticação e controle de acesso, de criticidade alta; (4) o módulo que calcula a dose de um equipamento médico, de criticidade crítica."
     ],
-    "correta": 1
+    "enunciado": "Pela estratégia de cobertura progressiva, os critérios mínimos de cobertura para os módulos 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "cobertura de declarações (70%+), cobertura de desvios (80%+), cobertura de desvios (90%+) e MC/DC (100%).",
+      "MC/DC (100%), cobertura de desvios (90%+), cobertura de desvios (80%+) e cobertura de declarações (70%+).",
+      "cobertura de desvios (80%+) para os quatro, pois esse é o padrão de mercado para qualquer tipo de módulo.",
+      "cobertura de declarações (70%+), cobertura de condições (85%+), cobertura de caminhos completa e MC/DC (100%).",
+      "cobertura de declarações (70%+) para os três primeiros e cobertura de caminhos completa para o módulo crítico."
+    ],
+    "correta": 0,
+    "resolucao": "Na cobertura progressiva, o critério mínimo fica mais rigoroso conforme a criticidade: baixa, como a formatação de texto, pede cobertura de declarações de 70% ou mais (1); média, como os relatórios, cobertura de desvios de 80% ou mais (2); alta, como a autenticação, cobertura de desvios de 90% ou mais (3); e crítica, como um sistema médico, MC/DC de 100% (4). Cobertura de condições e de caminhos aparecem na tabela como critérios recomendados, e não mínimos."
   },
   {
     "id": "qualidade-cap5-m5",
@@ -1886,14 +1960,16 @@
     "capituloId": "qualidade-cap5",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa de software legado tem 500.000 linhas de código sem testes automatizados. A nova estratégia de qualidade exige 80% de branch coverage. O arquiteto propõe usar \"cobertura diferencial\" como abordagem transitória. O que isso significa e por que é estrategicamente adequado?",
+    "enunciado": "Uma empresa tem 500.000 linhas de código legado sem testes automatizados, e a nova estratégia de qualidade exige 80% de cobertura de desvios. O arquiteto propõe usar a \"cobertura diferencial\" como abordagem de transição. O que isso significa e por que é adequado?",
     "alternativas": [
-      "Cobertura diferencial significa cobrir apenas os módulos com maior número de defeitos históricos registrados — os 20% do código com mais bugs recebem 80% do esforço de cobertura, aplicando o princípio de Pareto à estratégia de testes do sistema legado.",
-      "Cobertura diferencial significa dividir o código legado em módulos e atingir 80% de cobertura em cada módulo individualmente antes de avançar para o próximo — é uma abordagem sequencial que garante cobertura completa sem sobrecarregar a equipe com todas as 500.000 linhas simultaneamente.",
-      "Exigir cobertura só do código novo ou alterado: em vez de 80% de todo o legado de uma vez, cada mudança cumpre a meta, e a cobertura cresce sem parar o desenvolvimento.",
-      "Cobertura diferencial significa medir a diferença entre a cobertura atual (0%) e a meta (80%) e criar um plano de metas intermediárias trimestrais — é uma abordagem de gestão de projetos que transforma o gap de cobertura em backlog de testes priorizados por valor de negócio."
+      "Exigir a cobertura só do código novo ou alterado: cada mudança cumpre a meta, e a cobertura do legado cresce sem parar o desenvolvimento.",
+      "Cobrir só os módulos com mais defeitos no histórico, aplicando Pareto: 20% do código com mais bugs recebe 80% do esforço.",
+      "Atingir 80% em um módulo de cada vez antes de passar ao próximo, até cobrir todas as 500.000 linhas, em sequência.",
+      "Medir a diferença entre a cobertura atual e a meta de 80% e transformá-la em metas trimestrais no backlog de testes.",
+      "Comparar a cobertura de duas ferramentas diferentes e usar o maior valor, para chegar mais rápido aos 80% exigidos."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A cobertura diferencial analisa apenas a cobertura do código novo ou modificado. É útil em projetos legados em que atingir 80% de cobertura total é inviável a curto prazo: cada alteração passa a vir com testes, e a parte coberta do sistema aumenta a cada entrega, sem exigir uma pausa para testar todo o legado."
   },
   {
     "id": "qualidade-cap5-m6",
@@ -1901,14 +1977,16 @@
     "capituloId": "qualidade-cap5",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um time de QA recebe uma história de usuário para testar um sistema de reserva de passagens aéreas com as seguintes regras: passageiros com mais de 60 anos recebem 15% de desconto; passageiros com cartão fidelidade recebem 10%; passageiros com ambos recebem 20%; demais não recebem desconto. Qual técnica de Caixa Preta e quantos casos de teste mínimos são necessários?",
+    "enunciado": "Uma equipe vai testar um sistema de reserva de passagens com as regras: passageiros com mais de 60 anos recebem 15% de desconto; com cartão fidelidade, 10%; com as duas condições, 20%; os demais, nenhum desconto. Qual técnica de caixa preta é a mais adequada e quantos casos ela gera, no mínimo?",
     "alternativas": [
-      "Análise de Valor Limite é a técnica mais adequada, gerando 4 casos de teste: um para cada valor de fronteira da idade (59 e 60 anos) combinado com a presença ou ausência do cartão fidelidade — total de 4 casos suficientes para cobrir todas as regras de desconto.",
-      "Particionamento: 2 partições, com e sem desconto.",
-      "Tabela de decisão: 4 casos, com mais de 60 e cartão (20%), mais de 60 sem cartão (15%), até 60 com cartão (10%) e até 60 sem cartão (0%).",
-      "Teste Baseado em Estado é a técnica mais adequada, pois o sistema transita entre estados de desconto conforme as características do passageiro — são necessários 6 casos de teste para cobrir todas as transições de estado entre os quatro níveis de desconto definidos pelas regras de negócio."
+      "Tabela de decisão: 4 casos (mais de 60 com cartão, 20%; mais de 60 sem cartão, 15%; até 60 com cartão, 10%; até 60 sem cartão, 0%).",
+      "Análise do valor limite: 4 casos, com 59 e 60 anos combinados com e sem cartão, o que basta para cobrir todos os descontos.",
+      "Particionamento de equivalência: 2 casos, um passageiro com desconto e outro sem, já que os percentuais não importam.",
+      "Teste baseado em estado: 6 casos, para cobrir todas as transições entre os quatro níveis de desconto das regras.",
+      "Tabela de decisão: 3 casos, um para cada desconto diferente de zero, pois o caso sem desconto não precisa ser testado."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A tabela de decisão é a técnica para regras de negócio com várias condições combinadas: duas condições (idade acima de 60 e cartão fidelidade), com dois valores cada, geram quatro regras, cada uma com a sua ação. O caso sem desconto também é uma regra e precisa ser testado. O valor limite (60 anos) pode complementar os testes, mas sozinho não cobre as combinações."
   },
   {
     "id": "qualidade-cap5-m7",
@@ -1916,14 +1994,16 @@
     "capituloId": "qualidade-cap5",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um quality gate no pipeline CI/CD está configurado para bloquear merges quando a cobertura de branches cai abaixo de 80%. Um desenvolvedor argumenta que isso atrasa entregas e propõe remover o quality gate. Qual é o contra-argumento estratégico mais sólido?",
+    "enunciado": "Um quality gate no pipeline de CI/CD bloqueia os merges quando a cobertura de desvios cai abaixo de 80%. Um desenvolvedor argumenta que isso atrasa as entregas e propõe remover o quality gate. Qual é o contra-argumento estratégico mais sólido?",
     "alternativas": [
-      "Não pode sair por razões contratuais com clientes financeiros.",
-      "O quality gate pode ser removido desde que a equipe compense com maior volume de testes manuais de sistema — a cobertura automatizada de branches e os testes manuais são tecnicamente equivalentes em termos de detecção de defeitos quando executados por testadores experientes.",
-      "O quality gate testa cedo: barra regressões no commit, onde corrigir é mais barato, e o pequeno atraso custa menos que o retrabalho em produção.",
-      "O quality gate deve ser mantido exclusivamente por razões de auditoria: sem evidência documentada de cobertura mínima a cada commit, a empresa não consegue obter ou manter certificações CMMI e MPS.BR — o impacto na velocidade de entrega é o preço necessário para manter a conformidade com modelos de maturidade."
+      "O quality gate barra as regressões no commit, onde corrigir é mais barato, e o pequeno atraso custa menos que o retrabalho em produção.",
+      "Ele não pode ser removido por cláusulas contratuais com os clientes financeiros, que exigem a cobertura mínima.",
+      "Ele pode sair se a equipe compensar com mais testes manuais, que detectam os mesmos defeitos que a cobertura automatizada.",
+      "Ele deve ficar só por auditoria, pois sem ele a empresa não obtém nem mantém as certificações CMMI e MPS.BR.",
+      "Ele deve ficar porque a cobertura de 80% garante que o código novo não tem defeitos, o que dispensa a revisão de código."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "O quality gate define a cobertura mínima que o build deve atingir; se o código novo não chega lá, o pipeline falha e o merge é bloqueado. É uma aplicação de testar cedo: o problema aparece no momento da mudança, quando corrigir é mais barato. Cobertura alta não garante ausência de defeitos, e testes manuais não substituem a verificação automática a cada commit."
   },
   {
     "id": "qualidade-cap5-m8",
@@ -1931,14 +2011,23 @@
     "capituloId": "qualidade-cap5",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma estratégia de teste define critérios de suspensão como \"mais de 30% dos casos de teste bloqueados por defeito de ambiente\". Durante a execução, 35% dos testes ficam bloqueados. O gerente decide continuar os testes ignorando o critério. Quais são as consequências dessa decisão?",
-    "alternativas": [
-      "A decisão é acertada: critérios de suspensão são diretrizes conservadoras criadas para projetos inexperientes — equipes maduras devem ter autonomia para avaliá-los contextualmente e continuar os testes quando julgarem que os resultados ainda são confiáveis apesar do bloqueio.",
-      "Só gera uma não conformidade no relatório de auditoria.",
-      "Com 35% bloqueado, os resultados perdem confiabilidade: o ambiente instável gera falsos positivos e negativos e uma falsa sensação de qualidade.",
-      "A consequência é operacional: ignorar o critério sobrecarrega a equipe de teste com retrabalho, pois os casos bloqueados precisarão ser reexecutados após a correção do ambiente — o único problema é o aumento do esforço total, sem impacto na qualidade ou confiabilidade dos resultados dos casos que foram executados com sucesso."
+    "caso": [
+      "Sobre as características de um bom caso de teste de caixa preta, avalie as afirmativas a seguir.",
+      "I. Ser rastreável significa estar vinculado a um ou mais requisitos, para que se saiba se todos foram cobertos.",
+      "II. Ser independente significa poder ser executado sem depender do resultado de outros casos de teste.",
+      "III. Ser repetível significa que o testador pode refazer o caso com dados diferentes a cada execução, para variar a cobertura.",
+      "IV. Ser auto-verificável significa ter o resultado esperado claramente definido, sem dúvida sobre aprovar ou reprovar."
     ],
-    "correta": 2
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e IV, apenas.",
+      "I e II, apenas.",
+      "I, II, III e IV.",
+      "II e IV, apenas.",
+      "I, III e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I, II e IV estão corretas e descrevem três das cinco características da apostila; dependências entre casos de teste criam fragilidade e dificultam a execução em paralelo. III é falsa: repetível é produzir o mesmo resultado a cada execução, nas mesmas condições. A quinta característica é ser econômico: cobrir o máximo de cenários com o mínimo de casos."
   },
   {
     "id": "qualidade-cap5-m9",
@@ -1946,14 +2035,19 @@
     "capituloId": "qualidade-cap5",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma startup desenvolve um aplicativo de telemedicina e precisa definir a estratégia de Caixa Preta para o módulo de prescrição médica, que possui regras complexas baseadas em diagnóstico, histórico do paciente e interações medicamentosas. Qual técnica é mais adequada e como ela seria aplicada?",
-    "alternativas": [
-      "Análise de Valor Limite é a técnica mais adequada, pois o módulo de prescrição processa dosagens de medicamentos com valores numéricos — testar os limites mínimo e máximo de cada dosagem cobre as situações de maior risco de erro de prescrição médica.",
-      "Teste Exploratório é a técnica mais adequada para módulos de alta complexidade de domínio: a intuição e experiência de testadores com conhecimento médico são mais eficazes do que técnicas formais para descobrir defeitos em sistemas de prescrição com regras não totalmente documentadas.",
-      "Tabela de decisão: diagnóstico, histórico e interações combinados exigem cobrir sistematicamente todas as combinações, já que uma esquecida pode prejudicar o paciente.",
-      "Particionamento de Equivalência é a técnica mais adequada: dividir os pacientes em classes equivalentes por diagnóstico (crônico, agudo, preventivo) reduz o número de casos de teste mantendo cobertura adequada — em sistemas de saúde, a redução do volume de testes é prioritária para agilizar a homologação regulatória junto à ANVISA."
+    "caso": [
+      "Quatro equipes descreveram como projetam os testes: (1) cada caso de teste nasce da análise formal dos requisitos e dos riscos e é rastreado a um requisito; (2) os testes são derivados dos diagramas de estados do sistema; (3) uma especialista no domínio explora o sistema com base na sua experiência e intuição; (4) a cada mudança, a equipe reexecuta os testes anteriores para ver se algo deixou de funcionar."
     ],
-    "correta": 2
+    "enunciado": "As estratégias de teste usadas pelas equipes 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "analítica, baseada em modelos, dirigida a consultor e regressiva.",
+      "metódica, baseada em modelos, dirigida a consultor e regressiva.",
+      "analítica, orientada a processo, dirigida a consultor e regressiva.",
+      "analítica, baseada em modelos, metódica e orientada a processo.",
+      "baseada em modelos, analítica, regressiva e dirigida a consultor."
+    ],
+    "correta": 0,
+    "resolucao": "Projetar os testes a partir da análise formal de requisitos e riscos, com cada caso rastreado a um requisito, é a estratégia analítica (1). Derivar os testes de modelos do sistema, como diagramas de estados, é a baseada em modelos (2). Apoiar-se na experiência e na intuição de especialistas, como nos testes exploratórios, é a dirigida a consultor (3). Reexecutar testes anteriores para garantir que as mudanças não quebraram nada é a regressiva (4). A metódica usa listas e taxonomias de defeitos, e a orientada a processo segue normas formais."
   },
   {
     "id": "qualidade-cap5-m10",
@@ -1961,14 +2055,16 @@
     "capituloId": "qualidade-cap5",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma organização implementa simultaneamente TDD para desenvolvimento de código e BDD para critérios de aceitação. Um analista questiona se as duas práticas não são redundantes. Como elas se complementam estrategicamente na visão integrada de testes?",
+    "enunciado": "Uma organização adota TDD no desenvolvimento do código e BDD nos critérios de aceitação. Um analista pergunta se as duas práticas não são redundantes. Como elas se complementam na visão integrada de testes?",
     "alternativas": [
-      "São redundantes: TDD e BDD produzem essencialmente o mesmo conjunto de testes automatizados — equipes que adotam BDD podem abandonar o TDD, pois os cenários Gherkin de aceitação cobrem automaticamente a lógica interna que o TDD verificaria nos testes unitários.",
-      "Só se complementam em equipes grandes; nas pequenas, escolha uma.",
-      "Atuam em camadas diferentes: TDD gera testes unitários de caixa branca (cada função correta); BDD, testes de aceitação de caixa preta (o comportamento de negócio).",
-      "São complementares apenas quando combinadas com ATDD: TDD sozinho garante qualidade técnica interna e BDD sozinho garante alinhamento com o negócio, mas apenas a combinação das três práticas — TDD + BDD + ATDD — produz uma estratégia de testes completa segundo as recomendações do ISTQB para equipes ágeis de alta maturidade."
+      "Atuam em camadas diferentes: o TDD gera testes unitários de caixa branca, e o BDD, testes de aceitação de caixa preta.",
+      "São redundantes: os cenários em Gherkin do BDD já cobrem a lógica interna, e a equipe que adota BDD pode largar o TDD.",
+      "Só se complementam em equipes grandes; em equipes pequenas, é preciso escolher apenas uma das duas práticas.",
+      "O BDD gera os testes unitários de caixa branca, e o TDD, os testes de aceitação escritos na linguagem do negócio.",
+      "Só se complementam quando somadas ao ATDD, pois TDD e BDD sozinhos não cobrem nenhuma camada da pirâmide de testes."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Na visão integrada da apostila, o TDD está na base da pirâmide: o desenvolvedor escreve o teste unitário antes do código, garantindo cobertura de caixa branca e design testável. O BDD está no topo: critérios de aceitação em linguagem natural viram testes automatizados de caixa preta, que verificam o comportamento esperado pelo negócio. Uma prática verifica se cada função está certa; a outra, se o sistema faz o que o cliente precisa."
   },
   {
     "id": "qualidade-cap6-q1",

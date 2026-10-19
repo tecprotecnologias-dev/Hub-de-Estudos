@@ -491,7 +491,7 @@
   "A": "A proposta está tecnicamente desalinhada com a citação, pois revisão de requisitos é responsabilidade exclusiva de analistas de negócio, nunca de desenvolvedores, segundo Boehm"
  },
  "qualidade-cap4-q8": {
-  "B": "O teste executa só um caminho (peso > 30kg e zona rural), deixando sem execução peso ≤ 30kg e peso > 30kg fora da zona rural",
+  "B": "O teste executa só um caminho (peso > 30 kg e destino urbano), deixando sem execução o peso até 30 kg e o peso > 30 kg com destino rural",
   "D": "Como a função possui apenas duas condições (peso e destino), um único teste é matematicamente suficiente para cobrir toda a lógica possível, desde que use valores extremos"
  },
  "qualidade-cap4-q9": {
@@ -1823,79 +1823,79 @@
   "D": "Em processos maduros, os problemas tendem a ser identificados e tratados de forma preventiva, e não reativa."
  },
  "qualidade-cap4-m1": {
-  "C": "Testes mostram a presença de defeitos, não a ausência: 95% de cobertura sem falhas não garante um sistema livre de erros nem adequado às necessidades reais.",
-  "B": "A cobertura deveria ser de 100%, o que garante zero defeitos."
+  "C": "O agrupamento de defeitos: a equipe testou os módulos críticos e esqueceu os secundários, onde estavam 80% dos defeitos.",
+  "B": "O paradoxo do pesticida: os mesmos testes foram repetidos sem atualização e deixaram de encontrar os defeitos das últimas mudanças."
  },
  "qualidade-cap4-m2": {
-  "C": "Três partições: inválida abaixo (10), válida (40) e inválida acima (70); e os limites 17, 18, 19, 64, 65 e 66, onde os defeitos mais aparecem.",
-  "A": "Só 2 casos (30 e 70), e os limites já estão cobertos."
+  "C": "A análise do valor limite: testa o primeiro e o último estado do pedido, onde os defeitos costumam se concentrar.",
+  "A": "O teste baseado em estado: modela os estados e as transições, e cobre as válidas e as proibidas, como cancelar um pedido já enviado."
  },
  "qualidade-cap4-m3": {
-  "C": "Statement coverage só garante que cada linha rodou, não que cada condição afeta a decisão sozinha; em sistemas críticos, uma condição errada passa despercebida, daí o MC/DC."
+  "C": "O MC/DC exige testar todas as combinações possíveis de todas as condições ao mesmo tempo, como faz a cobertura de caminhos."
  },
  "qualidade-cap4-m4": {
-  "B": "O teste de integração, que verifica a comunicação entre módulos; com muitas dependências, a estratégia bottom-up valida primeiro a base (frete) e depois integra os módulos de cima.",
-  "C": "O teste de aceitação, pois só usuários reais percebem o erro."
+  "B": "O teste de sistema, pois os testes de integração são desnecessários quando os módulos já passaram nos testes unitários.",
+  "C": "O teste de integração; para muitas dependências, a estratégia Big Bang, que integra tudo de uma só vez e é mais rápida."
  },
  "qualidade-cap4-m5": {
-  "C": "Defeitos que o alfa pegaria em ambiente controlado chegam a 10.000 usuários reais, com falhas de estabilidade e segurança em escala e dano à reputação.",
-  "B": "Só reputação, pois usuários beta toleram bugs."
+  "C": "Só o risco à reputação, pois os usuários do beta aceitam qualquer defeito e não deixam de usar o produto por causa deles.",
+  "B": "Nenhum risco relevante, pois o beta com muitos usuários externos é sempre mais eficaz que o alfa feito em laboratório."
  },
  "qualidade-cap4-m6": {
-  "C": "Tabela de decisão, por combinar condições: 4 regras, de premium ou não com renda acima ou até R$ 5.000, cada uma ligada ao seu desconto.",
-  "A": "Particionamento: 2 partições, premium e não premium."
+  "C": "A análise do valor limite, com 4 casos: R$ 4.999 e R$ 5.000 para premium e os mesmos dois valores para não premium.",
+  "A": "A tabela de decisão, por combinar condições: 4 regras (premium ou não, renda acima ou até R$ 5.000), cada uma com o seu desconto."
  },
  "qualidade-cap4-m7": {
-  "C": "No TDD, o teste vem antes e define o comportamento esperado, o que leva a um design testável e evita testar só o que já se sabe que funciona."
+  "C": "Testar depois é melhor, pois quem conhece a implementação completa projeta casos de teste mais precisos e abrangentes."
  },
  "qualidade-cap4-m8": {
-  "C": "É uma evolução do beta aberto: expõe a novidade aos poucos a usuários reais, detecta problemas em escala pequena e permite rollback rápido.",
-  "B": "É um teste alfa moderno com usuários internos."
+  "C": "É um teste alfa moderno, feito com usuários internos nas instalações do desenvolvedor, com alta supervisão da equipe.",
+  "B": "Substitui o beta e todas as outras fases de teste, pois o monitoramento em produção detecta os problemas com a mesma eficácia."
  },
  "qualidade-cap4-m9": {
-  "C": "A caixa preta achou o sintoma, mas não a causa; a caixa branca examinaria o tratamento da entrada para confirmar a injeção de SQL e localizar a falha.",
-  "B": "Não há limitação: a caixa preta basta para garantir a segurança."
+  "C": "Não há limitação, pois a caixa preta basta para garantir a segurança do login, sem precisar olhar o código em nenhum caso.",
+  "B": "A caixa preta não consegue detectar falhas de segurança, que só podem ser encontradas por quem conhece o código-fonte."
  },
  "qualidade-cap4-m10": {
-  "C": "Vira o \"cone de sorvete\": testes manuais de interface são lentos, caros e frágeis, o feedback demora, e erros simples chegam caros às camadas de cima.",
-  "B": "A empresa ganha, pois os testes de aceitação validam o negócio."
+  "C": "I, II, III e IV.",
+  "B": "I e II, apenas."
  },
  "qualidade-cap5-m1": {
-  "C": "Têm propósitos diferentes: a estratégia é a abordagem geral e reutilizável; o plano detalha quem, quando, onde e com que recursos se testa num projeto."
+  "C": "O problema é só de nome: estratégia e plano de teste são sinônimos na IEEE 829, e a distinção do consultor é só acadêmica."
  },
  "qualidade-cap5-m2": {
-  "B": "Pagamento e login (6 a 9) recebem teste prioritário e profundo; relatórios (2), teste normal; e a exportação CSV (1), teste leve, levando o esforço aonde a falha custa mais.",
-  "C": "Pagamento recebe 90% do esforço, e o resto é dividido."
+  "B": "Pagamento recebe teste prioritário; login e relatórios, teste normal; e a exportação CSV fica sem nenhum teste no ciclo.",
+  "C": "O esforço é dividido igualmente entre os quatro módulos, pois a matriz serve só para comunicar os riscos aos stakeholders."
  },
  "qualidade-cap5-m3": {
-  "C": "É Shift-Left e ATDD: alinha cliente, desenvolvedor e testador antes do código, evita retrabalho e gera testes de aceitação que guiam a implementação.",
-  "B": "É só formalidade, e os critérios são ajustados depois."
+  "C": "É só uma formalidade, pois os critérios são reescritos depois, de acordo com o que o código acabou fazendo na prática.",
+  "B": "É só uma proteção contratual: documentar o comportamento antes protege a empresa em disputas com o cliente sobre o que foi entregue."
  },
  "qualidade-cap5-m4": {
-  "B": "MC/DC com 100%, pela criticidade máxima, como exigem as normas aeronáuticas (DO-178C e, para sistemas de solo, DO-278A): cada condição deve afetar a decisão de forma independente.",
-  "A": "Branch coverage de 80%, padrão de mercado que basta."
+  "B": "MC/DC (100%), cobertura de desvios (90%+), cobertura de desvios (80%+) e cobertura de declarações (70%+).",
+  "A": "cobertura de declarações (70%+), cobertura de desvios (80%+), cobertura de desvios (90%+) e MC/DC (100%)."
  },
  "qualidade-cap5-m5": {
-  "C": "Exigir cobertura só do código novo ou alterado: em vez de 80% de todo o legado de uma vez, cada mudança cumpre a meta, e a cobertura cresce sem parar o desenvolvimento."
+  "C": "Atingir 80% em um módulo de cada vez antes de passar ao próximo, até cobrir todas as 500.000 linhas, em sequência."
  },
  "qualidade-cap5-m6": {
-  "C": "Tabela de decisão: 4 casos, com mais de 60 e cartão (20%), mais de 60 sem cartão (15%), até 60 com cartão (10%) e até 60 sem cartão (0%).",
-  "B": "Particionamento: 2 partições, com e sem desconto."
+  "C": "Particionamento de equivalência: 2 casos, um passageiro com desconto e outro sem, já que os percentuais não importam.",
+  "B": "Análise do valor limite: 4 casos, com 59 e 60 anos combinados com e sem cartão, o que basta para cobrir todos os descontos."
  },
  "qualidade-cap5-m7": {
-  "C": "O quality gate testa cedo: barra regressões no commit, onde corrigir é mais barato, e o pequeno atraso custa menos que o retrabalho em produção.",
-  "A": "Não pode sair por razões contratuais com clientes financeiros."
+  "C": "Ele pode sair se a equipe compensar com mais testes manuais, que detectam os mesmos defeitos que a cobertura automatizada.",
+  "A": "O quality gate barra as regressões no commit, onde corrigir é mais barato, e o pequeno atraso custa menos que o retrabalho em produção."
  },
  "qualidade-cap5-m8": {
-  "C": "Com 35% bloqueado, os resultados perdem confiabilidade: o ambiente instável gera falsos positivos e negativos e uma falsa sensação de qualidade.",
-  "B": "Só gera uma não conformidade no relatório de auditoria."
+  "C": "I, II, III e IV.",
+  "B": "I e II, apenas."
  },
  "qualidade-cap5-m9": {
-  "C": "Tabela de decisão: diagnóstico, histórico e interações combinados exigem cobrir sistematicamente todas as combinações, já que uma esquecida pode prejudicar o paciente."
+  "C": "analítica, orientada a processo, dirigida a consultor e regressiva."
  },
  "qualidade-cap5-m10": {
-  "C": "Atuam em camadas diferentes: TDD gera testes unitários de caixa branca (cada função correta); BDD, testes de aceitação de caixa preta (o comportamento de negócio).",
-  "B": "Só se complementam em equipes grandes; nas pequenas, escolha uma."
+  "C": "Só se complementam em equipes grandes; em equipes pequenas, é preciso escolher apenas uma das duas práticas.",
+  "B": "São redundantes: os cenários em Gherkin do BDD já cobrem a lógica interna, e a equipe que adota BDD pode largar o TDD."
  },
  "qualidade-cap6-m1": {
   "C": "Manual: 400 × 8 min × R$ 1/min × 15 releases = R$ 48.000 por ano; com R$ 20.000 investidos, a automação se paga antes de 6 meses e segue economizando.",
