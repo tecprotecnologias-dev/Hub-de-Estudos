@@ -206,14 +206,14 @@ banco.multipla(
 banco.multipla(
     'dificil',
     'A análise correta da situação é:',
-    'A acessibilidade faz parte da usabilidade, pois o produto deve atender aos usuários do seu contexto de uso, '
-    'e o nível AA da WCAG, padrão de mercado, é uma meta adequada para o site.',
+    'A acessibilidade faz parte da usabilidade, pois o site deve atender a todos os moradores, e o nível AA da WCAG '
+    'é uma meta adequada.',
     [
-        'O gerente está certo: acessibilidade é uma questão à parte, e a usabilidade se preocupa apenas com a maioria '
-        'dos usuários.',
+        'O gerente está certo: a acessibilidade é uma questão à parte, e a usabilidade se preocupa apenas com a '
+        'maioria dos usuários do site.',
         'O site deve buscar o nível A da WCAG, que é o nível máximo de acessibilidade e o padrão de mercado.',
-        'A acessibilidade é responsabilidade do próprio usuário, que deve usar programas que adaptem o site às suas '
-        'necessidades.',
+        'A acessibilidade é responsabilidade do próprio usuário, que deve instalar programas que adaptem o site às '
+        'suas necessidades.',
         'A acessibilidade é apenas uma questão de UI, ligada a cores e tamanhos de fonte, e não afeta a UX.',
     ],
     'A ISO 9241-210 define usabilidade para usuários específicos em um contexto específico de uso. O site de uma '

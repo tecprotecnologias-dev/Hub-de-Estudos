@@ -200,7 +200,7 @@ banco.multipla(
     'dificil',
     'A análise correta dessa situação é:',
     'Trata-se de débito técnico: as decisões tomadas para ganhar velocidade geraram um custo futuro que cresce como '
-    'juros, e a saída é pagá-lo aos poucos, com refatoração e testes automatizados, junto com o trabalho novo.',
+    'juros e deve ser pago aos poucos, com refatoração e testes.',
     [
         'Trata-se de um custo de falha externa, pois os problemas apareceram depois do lançamento; por isso, '
         'a solução é reforçar a equipe de suporte ao cliente.',

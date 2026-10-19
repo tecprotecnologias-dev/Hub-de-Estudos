@@ -80,8 +80,8 @@ banco.multipla(
 banco.multipla(
     'medio',
     'Qual reorganização do pipeline está de acordo com as boas práticas de automação de testes?',
-    'Executar primeiro os testes unitários, depois os de integração e por último os E2E, interrompendo o pipeline '
-    'na primeira falha, para que os defeitos mais simples sejam apontados em poucos minutos.',
+    'Executar primeiro os testes unitários, depois os de integração e por último os E2E, parando o pipeline na '
+    'primeira falha.',
     [
         'Manter os testes E2E no início, pois, por testarem o sistema inteiro, eles tornam desnecessária a execução '
         'dos testes unitários e de integração.',
@@ -102,7 +102,7 @@ banco.multipla(
     'medio',
     'Considerando os conceitos de verificação e validação, o aplicativo está',
     'validado, mas não verificado: atende à necessidade real dos usuários, mas o código tem problemas técnicos que '
-    'trarão dificuldades no futuro.',
+    'trarão dificuldades.',
     [
         'verificado, mas não validado: o código segue as especificações, mas não atende à necessidade dos usuários.',
         'verificado e validado, pois a aprovação dos usuários em testes reais comprova também a qualidade técnica do código.',
@@ -173,9 +173,8 @@ banco.afirmativas(
 banco.multipla(
     'dificil',
     'Sobre a situação, assinale a alternativa correta.',
-    'A desenvolvedora está na fase Green, em que se escreve o mínimo de código necessário para o teste passar; novos '
-    'testes, com outros valores e com clientes não VIP, vão obrigar o código a se generalizar, e a fase Refactor '
-    'melhora o código mantendo os testes passando.',
+    'A desenvolvedora está na fase Green, em que se escreve o mínimo de código para o teste passar; novos testes vão '
+    'obrigar o código a se generalizar.',
     [
         'O colega está certo: no TDD, o código deve ser escrito por completo antes do primeiro teste, e o teste só '
         'confirma o que já foi implementado.',

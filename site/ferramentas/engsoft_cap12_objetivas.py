@@ -160,7 +160,7 @@ banco.multipla(
     'dificil',
     'O trecho apresenta, entre outras, vulnerabilidades das categorias do OWASP Top 10',
     'A03 (Injection), pela consulta montada com o texto digitado, e A02 (Cryptographic Failures), pelo uso de MD5 nas '
-    'senhas; a correção passa por prepared statements e por bcrypt ou Argon2.',
+    'senhas.',
     [
         'A10 (SSRF), pois o servidor executa uma consulta, e A01 (Broken Access Control), pois a função cria uma sessão.',
         'apenas A03 (Injection), pois o MD5 é um algoritmo de hash seguro para armazenar senhas.',
@@ -206,11 +206,12 @@ banco.multipla(
 banco.multipla(
     'dificil',
     'Sobre os princípios fundamentais de segurança, assinale a alternativa INCORRETA.',
-    'O usuário do banco de dados usado pela aplicação pode ter permissão de administrador, pois o princípio do Menor '
-    'Privilégio vale para pessoas, e não para sistemas.',
+    'O usuário de banco usado pela aplicação pode ser administrador, pois o Menor Privilégio vale para pessoas, e não '
+    'para sistemas.',
     [
         'Pelo princípio da Validação de Entradas, toda entrada externa deve ser tratada como não confiável.',
-        'A Defesa em Profundidade usa várias camadas independentes, como firewall, WAF, autenticação e criptografia.',
+        'A Defesa em Profundidade usa várias camadas independentes de proteção, como firewall, WAF, autenticação e '
+        'criptografia.',
         'Pela Segurança por Design, a segurança é considerada desde o início do projeto, e não acrescentada no final.',
         'Controle de acesso baseado em papéis (RBAC) é uma contramedida para a ameaça de Elevation of Privilege.',
     ],

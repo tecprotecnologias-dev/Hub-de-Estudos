@@ -189,8 +189,8 @@ banco.assercao(
 banco.multipla(
     'dificil',
     'A melhor recomendação para essa equipe é:',
-    'Combinar os dois métodos (Scrumban): manter as sprints, com Sprint Goal, para as funcionalidades planejadas, e '
-    'tratar os defeitos urgentes em um fluxo contínuo, com limite de WIP.',
+    'Combinar os dois métodos (Scrumban): sprints com Sprint Goal para as funcionalidades e fluxo contínuo, com limite '
+    'de WIP, para os defeitos urgentes.',
     [
         'Manter o Scrum puro e incluir cada defeito urgente no Sprint Backlog assim que ele chegar, mesmo que isso '
         'comprometa o Sprint Goal.',

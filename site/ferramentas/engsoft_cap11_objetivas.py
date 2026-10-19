@@ -58,8 +58,8 @@ banco.afirmativas(
 banco.multipla(
     'medio',
     'A dificuldade dos usuários e a forma mais adequada de resolvê-la são:',
-    'o Abismo da Execução, pois o usuário não descobre como realizar a ação; a solução é aplicar o princípio da '
-    'visibilidade, deixando a opção de legendas acessível na tela de reprodução.',
+    'o Abismo da Execução, pois o usuário não descobre como realizar a ação; a solução é deixar a opção de legendas '
+    'visível na tela de reprodução.',
     [
         'o Abismo da Avaliação, pois o sistema não comunica o resultado da ação; a solução é exibir uma mensagem de '
         'confirmação após ativar as legendas.',

@@ -22,8 +22,8 @@ banco = Banco('engsoft-cap7')
 banco.multipla(
     'medio',
     'Considerando os tipos de sistema de controle de versão, a análise correta da situação é:',
-    'Com o Git, um sistema distribuído, cada desenvolvedor tem uma cópia completa do repositório e pode fazer commit, '
-    'consultar o histórico e comparar versões sem conexão, enviando as mudanças ao servidor quando a rede voltar.',
+    'Com o Git, um sistema distribuído, cada desenvolvedor tem o repositório completo e pode fazer commit e ver o '
+    'histórico sem conexão, enviando tudo quando a rede voltar.',
     [
         'Com o Git, a equipe também ficaria sem registrar versões, pois todo commit precisa ser gravado no servidor '
         'central no momento em que é feito.',
@@ -181,7 +181,7 @@ banco.multipla(
     'dificil',
     'A análise correta da matriz de rastreabilidade é:',
     'A rastreabilidade forward mostra que o RF03 foi implementado, mas não testado, e que o RF04 não foi implementado; '
-    'por isso, a versão não passaria em uma Auditoria Funcional (FCA).',
+    'a versão não passaria na FCA.',
     [
         'Como o RF03 já tem código, ele pode ser considerado concluído, e só o RF04 impede a entrega.',
         'A matriz não indica problemas, pois a rastreabilidade serve apenas para encontrar a origem de defeitos '
@@ -210,8 +210,8 @@ RF04       não     não     não
 banco.multipla(
     'dificil',
     'Sobre o controle de mudanças nessa situação, assinale a alternativa INCORRETA.',
-    'Na equipe ágil, como não existe um Change Control Board, as mudanças nos itens de configuração podem ser feitas '
-    'sem registro nem avaliação, desde que o código passe nos testes.',
+    'Na equipe ágil, como não existe CCB, as mudanças nos itens de configuração podem ser feitas sem registro nem '
+    'avaliação, se passarem nos testes.',
     [
         'Na equipe ágil, o backlog priorizado pela Product Owner cumpre o papel de controle de mudanças, de forma mais '
         'leve, mas com a mesma essência.',

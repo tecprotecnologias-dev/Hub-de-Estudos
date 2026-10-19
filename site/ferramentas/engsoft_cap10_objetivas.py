@@ -22,16 +22,16 @@ banco.multipla(
     'medio',
     'Os desafios das situações 1, 2, 3 e 4 e as formas mais adequadas de endereçá-los são, respectivamente:',
     'conflitos de interesse (workshop JAD com facilitador neutro), expectativas implícitas (prototipagem rápida), '
-    'volatilidade (gestão de mudanças e arquitetura flexível) e escopo inflado (MoSCoW e valor vs. esforço).',
+    'volatilidade (gestão de mudanças) e escopo inflado (MoSCoW).',
     [
-        'volatilidade (gestão de mudanças), conhecimento tácito (observação etnográfica), conflitos de interesse '
-        '(workshop JAD) e escopo inflado (MoSCoW).',
-        'conflitos de interesse (MoSCoW), expectativas implícitas (observação etnográfica), escopo inflado (prototipagem '
-        'rápida) e volatilidade (workshop JAD).',
-        'escopo inflado (workshop JAD), conhecimento tácito (prototipagem rápida), volatilidade (gestão de mudanças) e '
-        'conflitos de interesse (MoSCoW).',
-        'conflitos de interesse (workshop JAD), volatilidade (prototipagem rápida), expectativas implícitas (gestão de '
-        'mudanças) e escopo inflado (MoSCoW).',
+        'volatilidade (gestão de mudanças e arquitetura flexível), conhecimento tácito (observação etnográfica), '
+        'conflitos de interesse (workshop JAD) e escopo inflado (MoSCoW).',
+        'conflitos de interesse (MoSCoW e valor vs. esforço), expectativas implícitas (observação etnográfica), '
+        'escopo inflado (prototipagem rápida) e volatilidade (workshop JAD).',
+        'escopo inflado (workshop JAD com facilitador neutro), conhecimento tácito (prototipagem rápida), volatilidade '
+        '(gestão de mudanças) e conflitos de interesse (MoSCoW).',
+        'conflitos de interesse (workshop JAD com facilitador neutro), volatilidade (prototipagem rápida), expectativas '
+        'implícitas (gestão de mudanças) e escopo inflado (MoSCoW).',
     ],
     'Diretores com prioridades opostas são um conflito de interesse, tratado em um workshop JAD com facilitador neutro '
     '(1). Deixar de citar algo por achar óbvio é uma expectativa implícita, que aparece quando o usuário vê um protótipo '

@@ -120,6 +120,11 @@ class Banco:
                 erros.append(f'{q["id"]}: {len(q["alternativas"])} alternativas')
             if len(set(q['alternativas'])) != len(q['alternativas']):
                 erros.append(f'{q["id"]}: alternativas repetidas')
+            # a certa não pode se destacar por ser bem mais comprida que as outras
+            tamanhos = [len(a) for a in q['alternativas']]
+            certa, maior_errada = tamanhos[q['correta']], max(tamanhos[:q['correta']] + tamanhos[q['correta'] + 1:])
+            if certa > maior_errada * 1.15 and certa - maior_errada > 15:
+                erros.append(f'{q["id"]}: a certa ({certa}) é bem mais longa que as erradas ({maior_errada})')
             if q['nivel'] not in ('medio', 'dificil'):
                 erros.append(f'{q["id"]}: nível {q["nivel"]}')
             for parte in q.get('contexto', []):
