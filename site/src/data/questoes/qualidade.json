@@ -49,15 +49,15 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“Esta Norma Internacional define oito características de qualidade de produto: adequação funcional, eficiência de desempenho, compatibilidade, usabilidade, confiabilidade, segurança, manutenibilidade e portabilidade. [...] Segurança é definida como o grau em que um produto protege informações e dados, de modo que pessoas ou outros produtos tenham o grau de acesso apropriado aos seus tipos e níveis de autorização.” (tradução nossa)",
-        "fonte": "ISO/IEC 25010:2011. Systems and software engineering — SQuaRE — System and software quality models. Genebra: ISO, 2011."
+        "texto": "“Segurança: grau em que um produto ou sistema protege informações e dados, de modo que pessoas ou outros produtos ou sistemas tenham o grau de acesso aos dados apropriado aos seus tipos e níveis de autorização.” (tradução nossa)",
+        "fonte": "ISO/IEC 25010:2011. Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models. Genebra: ISO, 2011."
       },
       {
         "t": "p",
         "texto": "A fintech PagCerto obteve, em 2015, uma avaliação de qualidade de produto com base na ISO/IEC 9126 — modelo então vigente cobrindo Funcionalidade, Confiabilidade, Usabilidade, Eficiência, Manutenibilidade e Portabilidade, sem nenhum item de avaliação dedicado exclusivamente a controle de acesso e criptografia de dados sensíveis, que ficavam registrados apenas como sub-item de Funcionalidade. Em 2021, a empresa sofreu um vazamento de dados de cartão por falha de criptografia, e decidiu adotar a ISO/IEC 25010 nas avaliações seguintes."
       }
     ],
-    "enunciado": "Considerando o texto de ISO/IEC 25010 (2011) e o caso da PagCerto, assinale a alternativa que identifica corretamente por que a avaliação de 2015 não capturou adequadamente o risco que se concretizou em 2021:",
+    "enunciado": "Considerando a definição da ISO/IEC 25010 (2011) e o caso da PagCerto, assinale a alternativa que identifica corretamente por que a avaliação de 2015 não capturou adequadamente o risco que se concretizou em 2021:",
     "alternativas": [
       "Porque a ISO/IEC 9126 não incluía nenhuma menção à segurança de dados, tornando qualquer avaliação de risco impossível antes de 2011",
       "Porque, na ISO/IEC 9126, Segurança era só uma sub-característica de Funcionalidade, sem avaliação própria, como passou a ter na 25010",
@@ -66,7 +66,8 @@
       "Porque a ISO/IEC 25010 substituiu completamente a avaliação de Funcionalidade por avaliação de Segurança, tornando as duas normas incompatíveis entre si e obrigando a refazer a avaliação de 2015"
     ],
     "correta": 1,
-    "resolucao": "a ISO/IEC 9126 de fato mencionava segurança, mas apenas como sub-característica de Funcionalidade — por isso é falso dizer que ela não fazia nenhuma menção à segurança —, sem o mesmo peso e escopo de avaliação dedicada que a ISO/IEC 25010 passou a exigir como característica independente. Atribuir a falha a erro humano da equipe também está errado: é uma limitação estrutural do modelo de 2001. Dizer que criptografia é só requisito legal é falso, pois segurança é tema central dos dois modelos ISO. Por fim, a 25010 não substituiu a Funcionalidade: manteve a Adequação Funcional e apenas separou Segurança como característica própria."
+    "resolucao": "a ISO/IEC 9126 de fato mencionava segurança, mas apenas como sub-característica de Funcionalidade — por isso é falso dizer que ela não fazia nenhuma menção à segurança —, sem o mesmo peso e escopo de avaliação dedicada que a ISO/IEC 25010 passou a exigir como característica independente. Atribuir a falha a erro humano da equipe também está errado: é uma limitação estrutural do modelo de 2001. Dizer que criptografia é só requisito legal é falso, pois segurança é tema central dos dois modelos ISO. Por fim, a 25010 não substituiu a Funcionalidade: manteve a Adequação Funcional e apenas separou Segurança como característica própria.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap2-q3",
@@ -76,8 +77,8 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“Esta Norma Internacional define oito características de qualidade de produto: adequação funcional, eficiência de desempenho, compatibilidade, usabilidade, confiabilidade, segurança, manutenibilidade e portabilidade. [...] Segurança é definida como o grau em que um produto protege informações e dados, de modo que pessoas ou outros produtos tenham o grau de acesso apropriado aos seus tipos e níveis de autorização.” (tradução nossa)",
-        "fonte": "ISO/IEC 25010:2011. Systems and software engineering — SQuaRE — System and software quality models. Genebra: ISO, 2011."
+        "texto": "“Segurança: grau em que um produto ou sistema protege informações e dados, de modo que pessoas ou outros produtos ou sistemas tenham o grau de acesso aos dados apropriado aos seus tipos e níveis de autorização.” (tradução nossa)",
+        "fonte": "ISO/IEC 25010:2011. Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models. Genebra: ISO, 2011."
       },
       {
         "t": "p",
@@ -97,7 +98,8 @@
       "Segurança, pois qualquer falha de comunicação entre sistemas representa, por definição, uma vulnerabilidade explorável"
     ],
     "correta": 2,
-    "resolucao": "o cenário descreve exatamente a definição de Compatibilidade da ISO/IEC 25010: a capacidade de dois ou mais sistemas trocarem informação e operarem juntos. {{B}} é o distrator mais forte, pois falhas intermitentes de fato tangenciam Confiabilidade, mas a causa raiz descrita — incompatibilidade entre versões de biblioteca de dois sistemas distintos — é o critério que define Compatibilidade, não uma degradação natural do próprio sistema ao longo do tempo. {{A}} confunde Compatibilidade com Portabilidade (rodar em ambientes diferentes, não interoperar com outro sistema). {{D}} e {{E}} descrevem efeitos possíveis, mas não a causa técnica central do problema."
+    "resolucao": "o cenário descreve exatamente a definição de Compatibilidade da ISO/IEC 25010: a capacidade de dois ou mais sistemas trocarem informação e operarem juntos. {{B}} é o distrator mais forte, pois falhas intermitentes de fato tangenciam Confiabilidade, mas a causa raiz descrita — incompatibilidade entre versões de biblioteca de dois sistemas distintos — é o critério que define Compatibilidade, não uma degradação natural do próprio sistema ao longo do tempo. {{A}} confunde Compatibilidade com Portabilidade (rodar em ambientes diferentes, não interoperar com outro sistema). {{D}} e {{E}} descrevem efeitos possíveis, mas não a causa técnica central do problema.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap2-q4",
@@ -106,16 +108,19 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Os fatores de revisão do produto [...] dizem respeito aos atributos do software relacionados aos erros que ocorrem ao tentar fazer alterações especificadas no programa. [...] Os fatores de transição do produto [...] relacionam-se à previsão do desempenho do software quando ele é movido de uma configuração de hardware e/ou ambiente de sistema para outro.” (tradução nossa)",
-        "fonte": "MCCALL, J. A.; RICHARDS, P. K.; WALTERS, G. F. Factors in Software Quality. Rome Air Development Center, US Air Force, 1977."
+        "t": "p",
+        "texto": "No modelo de McCall, os fatores de revisão do produto tratam do esforço e do risco de alterar o software; os fatores de transição do produto tratam do comportamento do software quando ele é levado para outro hardware ou ambiente; e os fatores de operação do produto tratam de como ele funciona no uso do dia a dia."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em MCCALL, J. A.; RICHARDS, P. K.; WALTERS, G. F. Factors in Software Quality. Rome Air Development Center, US Air Force, 1977."
       },
       {
         "t": "p",
         "texto": "Uma equipe de TI avalia um sistema legado de folha de pagamento, em operação contínua há 15 anos. O sistema processa a folha mensal de 3.000 funcionários sem falhas de cálculo há mais de dois anos consecutivos — os usuários do RH o consideram extremamente confiável no uso diário. Por outro lado, a própria equipe de desenvolvimento afirma que qualquer alteração simples, como adicionar um novo tipo de benefício, leva em média três semanas e exige testar manualmente todo o sistema, porque o código não possui nenhuma modularização e qualquer mudança tem efeitos colaterais imprevisíveis em partes aparentemente não relacionadas."
       }
     ],
-    "enunciado": "Considerando o modelo de McCall (1977) apresentado no texto motivador, assinale a alternativa que classifica corretamente os dois aspectos descritos no caso:",
+    "enunciado": "Considerando o modelo de McCall (1977), assinale a alternativa que classifica corretamente os dois aspectos descritos no caso:",
     "alternativas": [
       "Ambos os aspectos — a confiabilidade no uso diário e a dificuldade de alteração — pertencem à mesma categoria: fatores de operação do produto, pois ambos afetam o usuário final",
       "A confiabilidade no uso diário é fator de operação do produto; a dificuldade de alteração é fator de revisão do produto",
@@ -124,7 +129,8 @@
       "A dificuldade de alteração é, na verdade, um indicador de baixa confiabilidade, e não uma categoria separada no modelo de McCall"
     ],
     "correta": 1,
-    "resolucao": "o modelo de McCall separa claramente: fatores de operação avaliam o quão bem o software funciona no uso corrente (a confiabilidade observada pelo RH); fatores de revisão avaliam o esforço e o risco de modificá-lo (exatamente o problema relatado pela equipe de desenvolvimento). {{C}} inverte as categorias. {{D}} confunde revisão com transição (que trata de mudança de ambiente/plataforma, não de alteração funcional). {{E}} tenta fundir as duas categorias, ignorando que um sistema pode ser simultaneamente confiável em operação e péssimo em manutenibilidade — exatamente o ponto central do caso."
+    "resolucao": "o modelo de McCall separa claramente: fatores de operação avaliam o quão bem o software funciona no uso corrente (a confiabilidade observada pelo RH); fatores de revisão avaliam o esforço e o risco de modificá-lo (exatamente o problema relatado pela equipe de desenvolvimento). {{C}} inverte as categorias. {{D}} confunde revisão com transição (que trata de mudança de ambiente/plataforma, não de alteração funcional). {{E}} tenta fundir as duas categorias, ignorando que um sistema pode ser simultaneamente confiável em operação e péssimo em manutenibilidade — exatamente o ponto central do caso.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap2-q5",
@@ -133,9 +139,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Os fatores de revisão do produto [...] dizem respeito aos atributos do software relacionados aos erros que ocorrem ao tentar fazer alterações especificadas no programa. [...] Os fatores de transição do produto [...] relacionam-se à previsão do desempenho do software quando ele é movido de uma configuração de hardware e/ou ambiente de sistema para outro.” (tradução nossa)",
-        "fonte": "MCCALL, J. A.; RICHARDS, P. K.; WALTERS, G. F. Factors in Software Quality. Rome Air Development Center, US Air Force, 1977."
+        "t": "p",
+        "texto": "No modelo de McCall, os fatores de revisão do produto tratam do esforço e do risco de alterar o software; os fatores de transição do produto tratam do comportamento do software quando ele é levado para outro hardware ou ambiente; e os fatores de operação do produto tratam de como ele funciona no uso do dia a dia."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em MCCALL, J. A.; RICHARDS, P. K.; WALTERS, G. F. Factors in Software Quality. Rome Air Development Center, US Air Force, 1977."
       },
       {
         "t": "p",
@@ -155,7 +164,8 @@
       "Fatores de operação e revisão simultaneamente, pois a migração afeta tanto o uso quanto a manutenção do sistema"
     ],
     "correta": 2,
-    "resolucao": "o próprio texto motivador define fatores de transição exatamente como a previsão de desempenho do software ao mudar de ambiente de hardware ou sistema, que é precisamente o risco identificado pela equipe técnica ao migrar para a nuvem. {{B}} tenta encaixar o cenário em revisão (modificação de código), mas o problema descrito é de portabilidade entre ambientes, não de alterar uma funcionalidade. {{D}} ignora que decisões de negócio frequentemente escondem riscos técnicos de qualidade, que é exatamente o papel da equipe técnica apontar. {{E}} dilui a resposta ao tentar combinar duas categorias que o modelo trata como distintas."
+    "resolucao": "no modelo de McCall, os fatores de transição tratam justamente da previsão de desempenho do software ao mudar de ambiente de hardware ou sistema, que é precisamente o risco identificado pela equipe técnica ao migrar para a nuvem. {{B}} tenta encaixar o cenário em revisão (modificação de código), mas o problema descrito é de portabilidade entre ambientes, não de alterar uma funcionalidade. {{D}} ignora que decisões de negócio frequentemente escondem riscos técnicos de qualidade, que é exatamente o papel da equipe técnica apontar. {{E}} dilui a resposta ao tentar combinar duas categorias que o modelo trata como distintas.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap2-m1",
@@ -163,14 +173,16 @@
     "capituloId": "qualidade-cap2",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um sistema bancário processa corretamente todas as transações, mas apresenta falhas intermitentes que derrubam o serviço por 20 minutos a cada 48 horas e leva 45 segundos para processar cada operação. Quais características da ISO/IEC 9126 estão comprometidas e quais métricas evidenciam os problemas?",
+    "enunciado": "Um sistema bancário processa corretamente todas as transações, mas cai a cada 48 horas, fica 20 minutos fora do ar em cada queda e leva 45 segundos para processar cada operação. Quais características da ISO/IEC 9126 estão comprometidas e quais métricas evidenciam os problemas?",
     "alternativas": [
-      "Apenas a funcionalidade está comprometida, pois falhas que interrompem o serviço indicam que o sistema não atende adequadamente às necessidades dos usuários — as demais características são secundárias quando a função principal está prejudicada.",
-      "Usabilidade e portabilidade: as quedas frustram o usuário, e a lentidão indica hardware incompatível.",
-      "Confiabilidade (queda a cada 48 h, com 20 minutos para recuperar, indicando MTBF baixo) e eficiência (45 s por operação ferem o comportamento no tempo).",
-      "Manutenibilidade e confiabilidade estão comprometidas: falhas frequentes indicam código de baixa qualidade (manutenibilidade) e a lentidão de 45 segundos sugere ausência de testes de regressão adequados após manutenções recentes."
+      "Confiabilidade (quedas a cada 48 h indicam MTBF baixo; 20 min para voltar é o MTTR) e eficiência (45 s por operação ferem o comportamento temporal).",
+      "Apenas a funcionalidade, pois quedas mostram que o sistema não atende às necessidades dos usuários, e as demais características ficam em segundo plano.",
+      "Usabilidade e portabilidade: as quedas frustram o usuário, e a lentidão de 45 segundos mostra que o hardware é incompatível com o sistema.",
+      "Manutenibilidade e confiabilidade: as quedas mostram código ruim, e a lentidão indica falta de testes de regressão depois das manutenções.",
+      "Confiabilidade (20 min fora do ar indicam MTBF baixo) e usabilidade (45 s por operação tornam o sistema difícil de aprender e de usar)."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "As transações estão corretas, então a funcionalidade está atendida. As quedas ferem a confiabilidade, medida por duas métricas: o MTBF, tempo médio entre falhas (aqui, cerca de 48 horas, que é baixo), e o MTTR, tempo médio de recuperação (os 20 minutos). Os 45 segundos por operação ferem a eficiência, na subcaracterística comportamento temporal, que trata do tempo de resposta. A lentidão não é um problema de usabilidade, que trata da facilidade de aprender e operar."
   },
   {
     "id": "qualidade-cap2-m2",
@@ -178,14 +190,16 @@
     "capituloId": "qualidade-cap2",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma equipe avalia a qualidade de um software antes de sua execução, analisando métricas de código como complexidade ciclomática, cobertura de comentários e acoplamento entre módulos. Qual perspectiva da ISO/IEC 9126 está sendo avaliada e o que ela representa?",
+    "enunciado": "Uma equipe avalia a qualidade de um software antes da sua execução, analisando métricas de código como complexidade ciclomática, cobertura de comentários e acoplamento entre módulos. Qual perspectiva da ISO/IEC 9126 está sendo avaliada e o que ela representa?",
     "alternativas": [
-      "Qualidade em uso, pois métricas de código refletem diretamente a experiência do usuário final — desenvolvedores são usuários do código-fonte e sua produtividade ao modificá-lo é o resultado real que importa avaliar.",
-      "Qualidade externa: mede o comportamento do sistema em execução.",
       "Qualidade interna: avalia o software sem executá-lo, e complexidade, acoplamento e comentários antecipam problemas de manutenção e confiabilidade.",
-      "Qualidade de processo, pois a análise de métricas de código é uma prática de desenvolvimento que avalia a metodologia da equipe — não uma característica do produto em si segundo a estrutura da ISO/IEC 9126."
+      "Qualidade externa: mede o comportamento observável do sistema em execução, como os tempos de resposta e as falhas durante o uso.",
+      "Qualidade em uso: os desenvolvedores são usuários do código, e a produtividade deles ao modificá-lo é o resultado real a avaliar.",
+      "Qualidade de processo: analisar métricas de código é avaliar a metodologia da equipe, e não uma característica do produto em si.",
+      "Qualidade externa: as métricas de código só fazem sentido quando coletadas com o sistema rodando no ambiente de produção."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A ISO/IEC 9126 organiza a qualidade em três perspectivas. A qualidade interna olha o código e a estrutura, com propriedades do software antes da execução, como as métricas citadas. A qualidade externa olha o comportamento durante a execução, e a qualidade em uso, o resultado do uso no contexto real de trabalho. As métricas de código medem o produto, e não o processo, e ajudam a prever problemas antes que eles apareçam em execução."
   },
   {
     "id": "qualidade-cap2-m3",
@@ -193,14 +207,16 @@
     "capituloId": "qualidade-cap2",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um aplicativo de acessibilidade para pessoas com deficiência visual funciona corretamente e tem ótimo desempenho, mas não é compatível com leitores de tela e não segue as diretrizes WCAG 2.1. Qual característica da ISO/IEC 9126 e da ISO/IEC 25010 está mais diretamente violada?",
+    "enunciado": "Um aplicativo para pessoas com deficiência visual funciona corretamente e tem ótimo desempenho, mas não é compatível com leitores de tela e não segue as diretrizes WCAG 2.1. Qual característica da ISO/IEC 9126 e da ISO/IEC 25010 está mais diretamente violada?",
     "alternativas": [
-      "Portabilidade está violada em ambas as normas, pois a incompatibilidade com leitores de tela configura incapacidade de operar em diferentes ambientes de execução — o leitor de tela é um componente do ambiente que o sistema deveria suportar.",
-      "Funcionalidade está violada em ambas as normas, pois a subcaracterística de conformidade exige que o software atenda a regulamentos e normas do setor — WCAG 2.1 é norma técnica obrigatória para qualquer aplicativo destinado a pessoas com deficiência.",
-      "Usabilidade, nas duas normas: na 9126, pela conformidade com padrões de acessibilidade; na 25010, a acessibilidade virou subcaracterística explícita da usabilidade.",
-      "Compatibilidade está violada exclusivamente na ISO/IEC 25010, pois essa característica — inexistente na 9126 — foi criada especificamente para avaliar a capacidade de coexistência com tecnologias assistivas como leitores de tela e ampliadores de tela."
+      "Usabilidade, nas duas normas: na 9126, pela conformidade com normas de acessibilidade; na 25010, a acessibilidade é explícita na usabilidade.",
+      "Portabilidade, nas duas normas, pois o leitor de tela faz parte do ambiente de execução que o aplicativo deveria suportar.",
+      "Funcionalidade, nas duas normas, pois a WCAG 2.1 é um regulamento, e a conformidade com regulamentos é parte da funcionalidade.",
+      "Compatibilidade, só na 25010, pois essa característica foi criada para avaliar a convivência com tecnologias assistivas.",
+      "Confiabilidade, nas duas normas, pois o aplicativo falha toda vez que um leitor de tela tenta ler as suas telas e botões."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A usabilidade é a ponte entre as capacidades técnicas do sistema e as necessidades reais dos usuários, e está intimamente ligada à acessibilidade. Na ISO/IEC 9126, a conformidade com normas como as WCAG é uma subcaracterística da usabilidade; na ISO/IEC 25010, a usabilidade foi expandida com a acessibilidade de forma explícita. Um aplicativo que pessoas com deficiência visual não conseguem usar falha justamente nesse ponto."
   },
   {
     "id": "qualidade-cap2-m4",
@@ -208,14 +224,16 @@
     "capituloId": "qualidade-cap2",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um sistema ERP legado tem código altamente acoplado, sem testes automatizados e documentação desatualizada. Cada nova funcionalidade introduz em média 3 novos defeitos. A empresa gasta 70% do orçamento de TI em manutenção. Qual característica da ISO/IEC 9126 explica esse cenário e como o conceito de débito técnico se relaciona?",
+    "enunciado": "Um sistema ERP legado tem código altamente acoplado, não tem testes automatizados e a documentação está desatualizada. Cada nova funcionalidade introduz, em média, 3 novos defeitos, e a empresa gasta 70% do orçamento de TI em manutenção. Qual característica da ISO/IEC 9126 explica esse cenário e como o débito técnico se relaciona com ele?",
     "alternativas": [
-      "Confiabilidade explica o cenário: um sistema que introduz defeitos a cada modificação tem baixo MTBF e alta taxa de falhas, e o débito técnico representa o custo acumulado dessas falhas que deveriam ter sido corrigidas em versões anteriores do sistema.",
-      "Manutenibilidade: alto acoplamento, falta de testes e documentação ruim prejudicam analisabilidade, modificabilidade e testabilidade, e o débito técnico encarece cada mudança.",
-      "Eficiência explica o cenário: sistemas com alto acoplamento consomem mais recursos computacionais a cada nova funcionalidade, e o débito técnico representa o custo de infraestrutura adicional necessário para compensar o desperdício de recursos pelo código mal estruturado.",
-      "Portabilidade: código acoplado não migra para outras plataformas."
+      "Manutenibilidade: acoplamento, falta de testes e documentação ruim prejudicam a analisabilidade, a modificabilidade e a testabilidade, e o débito técnico encarece cada mudança.",
+      "Confiabilidade: um sistema que ganha defeitos a cada mudança tem MTBF baixo, e o débito técnico é o custo das falhas que não foram corrigidas nas versões anteriores.",
+      "Eficiência: o código acoplado consome mais recursos a cada funcionalidade, e o débito técnico é o custo da infraestrutura extra para compensar o desperdício.",
+      "Portabilidade: o código acoplado não consegue migrar para outras plataformas, e o débito técnico é o custo de reescrever o sistema para cada novo ambiente.",
+      "Funcionalidade: os novos defeitos mostram que as funções não atendem às necessidades, e o débito técnico é o número de funções que ainda faltam entregar."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "A manutenibilidade é a facilidade de modificar o software, e as suas subcaracterísticas explicam o caso: o acoplamento prejudica a modificabilidade, a falta de testes prejudica a testabilidade e a estabilidade, e a documentação ruim prejudica a analisabilidade. O débito técnico, termo de Ward Cunningham, é o custo acumulado de decisões de design inadequadas tomadas em busca de velocidade: com ele alto, cada modificação fica mais cara e arriscada, como mostram os 70% do orçamento gastos em manutenção."
   },
   {
     "id": "qualidade-cap2-m5",
@@ -223,14 +241,19 @@
     "capituloId": "qualidade-cap2",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "A ISO/IEC 25010 adicionou Segurança e Compatibilidade como novas características em relação à ISO/IEC 9126. Por que essas adições refletem as demandas do desenvolvimento de software moderno?",
-    "alternativas": [
-      "Vieram da pressão do GDPR europeu e de demandas dos mercados asiáticos.",
-      "Segurança foi adicionada porque a ISO/IEC 9126 considerava segurança parte da funcionalidade, o que gerava confusão; compatibilidade foi adicionada porque portabilidade foi removida na 25010 e substituída por um conceito mais amplo de coexistência entre sistemas.",
-      "Segurança reflete ameaças cibernéticas diárias, e proteger dados é tão básico quanto funcionar; compatibilidade reflete sistemas integrados, que precisam coexistir e interoperar via APIs.",
-      "As adições refletem exclusivamente demandas acadêmicas — pesquisadores identificaram lacunas teóricas no modelo original e propuseram as duas novas características, que têm impacto prático limitado pois a maioria das empresas ainda adota a ISO/IEC 9126 em seus processos de avaliação."
+    "caso": [
+      "Em testes com o novo sistema de uma biblioteca, os usuários relataram quatro problemas: (1) na primeira vez, não entenderam para que serve o sistema nem o que cada área da tela faz; (2) um funcionário novo levou dois dias para aprender a registrar um empréstimo; (3) renovar um livro exige 14 cliques; (4) acharam a interface feia, com cores que cansam a vista e textos amontoados."
     ],
-    "correta": 2
+    "enunciado": "Os problemas 1, 2, 3 e 4 afetam, respectivamente, as subcaracterísticas da usabilidade (ISO/IEC 9126)",
+    "alternativas": [
+      "inteligibilidade, apreensibilidade, operacionalidade e atratividade.",
+      "apreensibilidade, inteligibilidade, operacionalidade e atratividade.",
+      "inteligibilidade, apreensibilidade, atratividade e operacionalidade.",
+      "operacionalidade, apreensibilidade, inteligibilidade e atratividade.",
+      "inteligibilidade, operacionalidade, apreensibilidade e conformidade."
+    ],
+    "correta": 0,
+    "resolucao": "Não entender para que serve o sistema é falta de inteligibilidade, a facilidade de compreender o que o software faz (1). Precisar de muito tempo para aprender uma tarefa é falta de apreensibilidade, a facilidade de aprender a usar (2). Precisar de muitos cliques para uma tarefa comum é falta de operacionalidade, a facilidade de operar e controlar (3). Achar a interface feia e confusa é falta de atratividade, a qualidade visual e o apelo estético (4)."
   },
   {
     "id": "qualidade-cap2-m6",
@@ -238,14 +261,16 @@
     "capituloId": "qualidade-cap2",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Um desenvolvedor afirma que seu sistema tem \"altíssima funcionalidade\" porque possui mais de 300 funções disponíveis. Um arquiteto discorda, afirmando que várias funções não atendem às necessidades reais dos usuários. Quem tem razão segundo a ISO/IEC 9126?",
+    "enunciado": "Um desenvolvedor afirma que o seu sistema tem \"altíssima funcionalidade\" porque possui mais de 300 funções. Um arquiteto discorda, afirmando que várias funções não atendem às necessidades reais dos usuários. Quem tem razão segundo a ISO/IEC 9126?",
     "alternativas": [
-      "O desenvolvedor tem razão: a subcaracterística de adequação da funcionalidade avalia a amplitude do conjunto de funções disponíveis — sistemas com mais funções têm maior pontuação de funcionalidade segundo os critérios quantitativos da norma.",
-      "Os dois, em parte: a norma soma quantidade e qualidade das funções.",
-      "O arquiteto: para a norma, funcionalidade é atender às necessidades do usuário, não ter muitas funções; 300 funções inadequadas são baixa funcionalidade.",
-      "Nenhum tem razão completamente: a ISO/IEC 9126 avalia funcionalidade exclusivamente pela subcaracterística de conformidade com normas e regulamentos do setor — nem a quantidade nem a adequação das funções são critérios diretos de avaliação segundo a estrutura da norma."
+      "O arquiteto: para a norma, funcionalidade é atender às necessidades dos usuários, e não ter muitas funções; 300 funções inadequadas são baixa funcionalidade.",
+      "O desenvolvedor: a subcaracterística adequação mede a amplitude do conjunto de funções, e mais funções significam pontuação maior na norma.",
+      "Os dois, em parte: a norma soma a quantidade e a qualidade das funções, e um número alto compensa algumas funções inadequadas.",
+      "Nenhum dos dois: a norma avalia a funcionalidade só pela conformidade com regulamentos, sem considerar a quantidade nem a adequação.",
+      "O desenvolvedor: na norma, a funcionalidade é a quantidade de funções, e a adequação às necessidades é avaliada pela usabilidade."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A apostila destaca que é comum confundir funcionalidade com quantidade de funções. A ISO/IEC 9126 deixa claro que funcionalidade é a capacidade das funções de atenderem às necessidades explícitas e implícitas dos usuários, com adequação, acurácia e segurança. Funções que não atendem a ninguém não aumentam a funcionalidade, e a conformidade é só uma das subcaracterísticas."
   },
   {
     "id": "qualidade-cap2-m7",
@@ -253,14 +278,16 @@
     "capituloId": "qualidade-cap2",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma aplicação mobile consome 85% da bateria do dispositivo em 2 horas de uso normal e ocupa 4GB de armazenamento para funções básicas. Qual característica da ISO/IEC 9126 está violada e qual subcaracterística específica evidencia o problema?",
+    "enunciado": "Um aplicativo para celular consome 85% da bateria em 2 horas de uso normal e ocupa 4 GB de armazenamento para funções básicas. Qual característica da ISO/IEC 9126 está violada e qual subcaracterística evidencia o problema?",
     "alternativas": [
-      "Portabilidade está violada, pois o alto consumo de bateria e armazenamento indica que o aplicativo não foi adaptado adequadamente para diferentes modelos de dispositivos móveis com capacidades de hardware distintas.",
-      "Confiabilidade está violada, pois o consumo excessivo de bateria pode causar desligamento inesperado do dispositivo, configurando falha do sistema — a subcaracterística de tolerância a falhas é a mais diretamente impactada pelo esgotamento de recursos.",
-      "Eficiência, na subcaracterística utilização de recursos: bateria e armazenamento consumidos devem ser proporcionais ao que o app faz.",
-      "Manutenibilidade está violada, pois consumo excessivo de recursos indica código mal estruturado com alto débito técnico — a subcaracterística de modificabilidade é a mais impactada, pois otimizações de desempenho exigirão refatoração profunda do código existente."
+      "Eficiência, na utilização de recursos: a bateria e o armazenamento consumidos devem ser proporcionais ao que o aplicativo faz.",
+      "Portabilidade, na adaptabilidade: o alto consumo mostra que o aplicativo não foi adaptado aos diferentes modelos de celular.",
+      "Confiabilidade, na tolerância a falhas: o consumo excessivo pode desligar o celular, o que configura uma falha do sistema.",
+      "Manutenibilidade, na modificabilidade: o consumo excessivo indica código mal estruturado, que vai exigir uma refatoração.",
+      "Eficiência, na subcaracterística comportamento temporal: o consumo de bateria indica que o aplicativo responde devagar."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A eficiência avalia a relação entre o desempenho do software e os recursos que ele usa. A subcaracterística utilização de recursos trata exatamente de memória, processamento, energia e armazenamento condizentes com a função. O comportamento temporal trata do tempo de resposta, que o caso não menciona. A apostila lembra que, em dispositivos móveis, o uso eficiente de recursos pesa diretamente na experiência do usuário."
   },
   {
     "id": "qualidade-cap2-m8",
@@ -268,14 +295,16 @@
     "capituloId": "qualidade-cap2",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa precisa migrar seu sistema de gestão de um servidor Windows Server 2012 para contêineres Docker em Linux. O sistema foi desenvolvido sem preocupação com portabilidade. Quais subcaracterísticas da portabilidade (ISO/IEC 9126) serão mais críticas nessa migração?",
+    "enunciado": "Uma empresa precisa migrar o seu sistema de gestão de um servidor Windows Server 2012 para contêineres Docker em Linux. O sistema foi desenvolvido sem preocupação com portabilidade. Quais subcaracterísticas da portabilidade (ISO/IEC 9126) serão mais críticas nessa migração?",
     "alternativas": [
-      "Substituibilidade e conformidade serão as subcaracterísticas mais críticas: o sistema precisará substituir funcionalidades nativas do Windows e conformar-se com padrões abertos para operar em ambiente Linux sem reescrita significativa do código.",
-      "Coexistência e estabilidade, para conviver com outros contêineres no mesmo host.",
-      "Adaptabilidade (rodar em Linux sem depender de APIs do Windows ou caminhos fixos) e instalabilidade (facilidade de empacotar em contêiner e implantar).",
-      "Substituibilidade e adaptabilidade serão as subcaracterísticas mais críticas: substituibilidade avalia se o sistema Docker pode substituir o servidor Windows sem perda de dados, e adaptabilidade avalia se o código foi escrito de forma suficientemente genérica para executar em qualquer sistema operacional."
+      "Adaptabilidade (rodar em Linux sem depender de recursos do Windows) e instalabilidade (facilidade de empacotar em contêiner e implantar).",
+      "Substituibilidade e conformidade: o sistema terá de substituir funções nativas do Windows e seguir padrões abertos do Linux.",
+      "Coexistência e estabilidade: o sistema terá de conviver com outros contêineres no mesmo servidor, sem efeitos inesperados.",
+      "Substituibilidade e adaptabilidade: a substituibilidade avalia se o contêiner substitui o servidor Windows sem perder dados.",
+      "Instalabilidade e analisabilidade: o sistema terá de ser instalado no contêiner e ter as falhas de migração diagnosticadas."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A adaptabilidade é a capacidade de se adaptar a outro ambiente sem ações não previstas, o maior desafio para um sistema preso ao Windows. A instalabilidade é a facilidade de instalar no ambiente de destino, aqui o contêiner. A substituibilidade trata de o software ser usado no lugar de outro software com o mesmo propósito, e não de trocar o servidor. Estabilidade e analisabilidade são subcaracterísticas da manutenibilidade."
   },
   {
     "id": "qualidade-cap2-m9",
@@ -283,14 +312,16 @@
     "capituloId": "qualidade-cap2",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma norma interna de desenvolvimento exige que toda nova funcionalidade seja acompanhada de testes unitários com cobertura mínima de 80%, documentação técnica atualizada e aprovação em code review. Quais subcaracterísticas da manutenibilidade essa prática fortalece diretamente?",
+    "enunciado": "Uma norma interna de desenvolvimento exige que toda nova funcionalidade venha com testes unitários de cobertura mínima de 80%, documentação técnica atualizada e aprovação em code review. Quais subcaracterísticas da manutenibilidade essa prática fortalece diretamente?",
     "alternativas": [
-      "Analisabilidade e conformidade, pelo diagnóstico e pelo padrão de código.",
-      "Modificabilidade e estabilidade são fortalecidas: o code review previne a introdução de modificações inadequadas, e a documentação técnica facilita futuras alterações sem comprometer a estabilidade do sistema existente.",
-      "Testabilidade (cobertura de 80%), analisabilidade (documentação que facilita diagnosticar) e estabilidade (testes que pegam efeitos colaterais das mudanças).",
-      "Modificabilidade e conformidade são fortalecidas exclusivamente: o code review garante que modificações seguem padrões estabelecidos (conformidade) e a cobertura de testes confirma que novas funções foram implementadas corretamente (modificabilidade)."
+      "Testabilidade (os testes), analisabilidade (a documentação, que facilita diagnosticar falhas) e estabilidade (testes que pegam efeitos colaterais).",
+      "Somente a conformidade, pois a prática apenas garante que o código siga o padrão interno, sem efeito nas demais subcaracterísticas.",
+      "Modificabilidade e conformidade, exclusivamente: o code review garante o padrão, e a cobertura confirma que as funções novas estão certas.",
+      "Adaptabilidade e instalabilidade: os testes e a documentação facilitam levar o sistema para outros ambientes e instalá-lo neles.",
+      "Maturidade e recuperabilidade: os testes reduzem a frequência de falhas, e a documentação acelera a recuperação depois delas."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A testabilidade é a facilidade de validar o software modificado, reforçada pelos testes unitários. A analisabilidade é a facilidade de diagnosticar deficiências e causas de falhas, reforçada pela documentação. A estabilidade é minimizar efeitos inesperados após modificações, e os testes detectam esses efeitos. Adaptabilidade e instalabilidade são da portabilidade; maturidade e recuperabilidade, da confiabilidade."
   },
   {
     "id": "qualidade-cap2-m10",
@@ -298,14 +329,16 @@
     "capituloId": "qualidade-cap2",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "A família SQuaRE (ISO/IEC 25000) é composta por mais de 20 normas organizadas em divisões. Uma empresa quer definir critérios mensuráveis de qualidade para um novo sistema, executar sua avaliação formal e garantir conformidade com requisitos de clientes. Quais divisões da família SQuaRE ela deve utilizar e em qual ordem?",
+    "enunciado": "A família SQuaRE (ISO/IEC 25000) é composta por mais de 20 normas organizadas em divisões. Uma empresa quer definir critérios mensuráveis de qualidade para um novo sistema, executar a sua avaliação formal e garantir a conformidade com os requisitos dos clientes. Quais divisões ela deve usar e em qual ordem?",
     "alternativas": [
-      "A empresa deve utilizar primeiro a divisão de Avaliação (2504n) para definir o método de avaliação, depois a divisão de Modelo de Qualidade (2501n) para identificar as características relevantes e por fim a divisão de Requisitos (2503n) para formalizar os critérios junto ao cliente.",
-      "Modelo de Qualidade (2501n) para escolher as características; Requisitos (2503n) para os critérios; Medição (2502n) para as métricas; e Avaliação (2504n) para a avaliação formal.",
-      "Só a de Gerenciamento (2500n), que reúne tudo num único documento.",
-      "A ordem correta é: Medição da Qualidade (2502n) para definir as métricas do sistema; Modelo de Qualidade (2501n) para mapear as características; Avaliação da Qualidade (2504n) para executar os testes; e Gerenciamento da Qualidade (2500n) para garantir a conformidade contratual com os requisitos do cliente."
+      "Modelo de Qualidade (2501n), para escolher as características; Requisitos (2503n), para os critérios; Medição (2502n); e Avaliação (2504n).",
+      "Avaliação (2504n), para definir o método; Modelo de Qualidade (2501n), para as características; e Requisitos (2503n), por último.",
+      "Somente a divisão de Gerenciamento da Qualidade (2500n), que reúne em um único documento os modelos, as medições e as avaliações.",
+      "Medição (2502n), para as métricas; Modelo de Qualidade (2501n); Avaliação (2504n); e Gerenciamento (2500n), para a conformidade.",
+      "Requisitos (2503n), para os critérios; Avaliação (2504n), para avaliar; e Medição (2502n), sem usar o Modelo de Qualidade."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "O modelo de qualidade (2501n, onde está a 25010) diz quais características existem; com ele, a empresa define os requisitos de qualidade do sistema (2503n); para verificar esses requisitos, precisa de medidas (2502n); e, com as medidas, faz a avaliação formal (2504n). A divisão 2500n trata do gerenciamento da qualidade e não substitui as demais. Começar pela avaliação ou dispensar o modelo inverte a lógica do processo."
   },
   {
     "id": "qualidade-cap1-q6",
@@ -720,9 +753,12 @@
     "tipo": "discursiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Em uma organização com processos imaturos, o desempenho dos processos de software é amplamente determinado pelas habilidades de indivíduos específicos, e varia conforme as competências natas de quem realiza a tarefa naquele momento. [...] Em uma organização madura, existe uma capacidade organizacional de gerenciar o desenvolvimento e a manutenção de software ao longo de toda a empresa, independentemente de quais indivíduos estejam, de fato, empregados em um dado momento.” (tradução nossa)",
-        "fonte": "PAULK, M. C.; CURTIS, B.; CHRISSIS, M. B.; WEBER, C. V. Capability Maturity Model for Software, Version 1.1. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 1993."
+        "t": "p",
+        "texto": "Paulk e colegas, ao apresentar o CMM, contrastam dois tipos de organização. Na imatura, o resultado dos projetos depende das habilidades e do esforço de indivíduos específicos. Na madura, existe uma capacidade organizacional de gerenciar o desenvolvimento e a manutenção de software, que não depende de quais pessoas estão na equipe naquele momento."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em PAULK, M. C.; CURTIS, B.; CHRISSIS, M. B.; WEBER, C. V. Capability Maturity Model for Software, Version 1.1. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 1993."
       },
       {
         "t": "p",
@@ -739,12 +775,13 @@
     ],
     "enunciado": "Com base no texto e no caso apresentado, responda:",
     "itens": [
-      "a) Com base na citação de Paulk et al. (1993), explique por que os 40 projetos bem-sucedidos com clientes recorrentes não são, por si só, evidência de que a TechNova opera em um nível de maturidade elevado. Relacione sua resposta à distinção entre desempenho dependente de indivíduos específicos e capacidade organizacional independente deles.",
+      "a) Com base no texto sobre Paulk et al. (1993), explique por que os 40 projetos bem-sucedidos com clientes recorrentes não são, por si só, evidência de que a TechNova opera em um nível de maturidade elevado. Relacione sua resposta à distinção entre desempenho dependente de indivíduos específicos e capacidade organizacional independente deles.",
       "b) Considerando os 5 níveis do CMM estudados no capítulo, em qual nível a TechNova provavelmente se encontra? Justifique com base em pelo menos dois elementos concretos do caso (não apenas a conclusão).",
       "c) Identifique qual Área de Processo do CMMI (Nível 2) está claramente ausente na condução do projeto de prontuário eletrônico, e explique de que forma sua existência poderia ter evitado a contradição entre as três funcionalidades entregues e as decisões tomadas anteriormente com o cliente.",
       "d) Avalie criticamente a afirmação da diretoria de que “o problema foi exclusivamente a complexidade do domínio de saúde”. Sua avaliação deve se posicionar explicitamente sobre se a causa raiz relatada no caso é, de fato, a complexidade do domínio, ou outra questão — e por quê."
     ],
-    "linhas": 12
+    "linhas": 12,
+    "respostaEsperada": "a) Os 40 projetos tiveram sucesso com três clientes recorrentes do mesmo setor, um contexto que a equipe já conhecia. Pelo texto de Paulk, o que distingue uma organização madura é ter uma capacidade organizacional que não depende de indivíduos específicos. O bom resultado pode ter vindo do talento e da experiência das mesmas pessoas em projetos parecidos, e não de um processo; tanto que, no primeiro projeto de um domínio novo, o desempenho despencou.\nb) Provavelmente no Nível 1 (Inicial), em que o processo é imprevisível e reativo e o sucesso depende do esforço individual. Evidências: não havia nenhum processo formal de controle de mudanças, e as 22 alterações de escopo eram passadas verbalmente a um desenvolvedor, às vezes sem informar a equipe; as decisões tomadas com o cliente não eram documentadas; e o desempenho variou muito de um projeto para outro (3 dias de atraso contra 95 dias).\nc) Falta a Gerência de Requisitos, área de processo do Nível 2. Com ela, cada mudança de requisito seria registrada, avaliada e aprovada, e os requisitos ficariam rastreáveis até as decisões tomadas com o cliente. Assim, as três funcionalidades não poderiam contradizer decisões anteriores sem que isso fosse percebido. A Gerência de Configuração, também do Nível 2, ajudaria a controlar as versões do que foi alterado.\nd) A afirmação não se sustenta. A complexidade do domínio de saúde existe e é um fator externo, mas a causa raiz descrita no caso é a imaturidade do processo: mudanças sem controle, decisões não documentadas e dependência de cada desenvolvedor. Esses problemas apareceriam em qualquer domínio novo. Atribuir a culpa só ao domínio impede a empresa de enxergar que precisa evoluir o seu processo."
   },
   {
     "id": "qualidade-cap3-q2",
@@ -754,7 +791,7 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“No nível 2 (Repetível), políticas básicas de gerenciamento de projeto são estabelecidas para acompanhar custos, cronograma e funcionalidade. [...] Os processos necessários para repetir sucessos anteriores em projetos com aplicações similares estão em vigor. [...] No nível 3 (Definido), o processo-padrão de desenvolvimento e manutenção de software da organização está documentado, [...] e esse processo é usado para ajudar os gerentes e a equipe técnica a desempenhar com mais eficácia.” (tradução nossa)",
+        "texto": "“No Nível Repetível, processos básicos de gerenciamento de projeto são estabelecidos para acompanhar custo, cronograma e funcionalidade. A disciplina de processo necessária está em vigor para repetir sucessos anteriores em projetos com aplicações semelhantes. [...] No Nível Definido, o processo de software, tanto das atividades de gerência quanto das de engenharia, é documentado, padronizado e integrado em um processo de software padrão para a organização.” (tradução nossa)",
         "fonte": "PAULK, M. C.; CURTIS, B.; CHRISSIS, M. B.; WEBER, C. V. Capability Maturity Model for Software, Version 1.1. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 1993."
       },
       {
@@ -771,7 +808,8 @@
       "Nível 5 (Otimizando), pois a repetição de boas práticas em projetos semelhantes já caracteriza um processo de melhoria contínua"
     ],
     "correta": 1,
-    "resolucao": "o caso descreve exatamente a definição do Nível 2 citada no texto motivador: a empresa repete sucessos em projetos semelhantes, mas essa capacidade depende do conhecimento tácito de dois gerentes específicos, não de um processo-padrão documentado e ensinável — o que caracterizaria o Nível 3. {{A}} é o distrator mais forte: confunde a previsibilidade obtida por repetição empírica (Nível 2) com a existência de um processo documentado e institucionalizado (Nível 3), que o caso explicitamente afirma não existir. {{C}} ignora que o CMM reconhece graus intermediários de maturidade antes da documentação formal completa. {{D}} e {{E}} atribuem à empresa capacidades de medição quantitativa e melhoria contínua não descritas no caso."
+    "resolucao": "o caso descreve exatamente a definição do Nível 2 citada no texto motivador: a empresa repete sucessos em projetos semelhantes, mas essa capacidade depende do conhecimento tácito de dois gerentes específicos, não de um processo-padrão documentado e ensinável — o que caracterizaria o Nível 3. {{A}} é o distrator mais forte: confunde a previsibilidade obtida por repetição empírica (Nível 2) com a existência de um processo documentado e institucionalizado (Nível 3), que o caso explicitamente afirma não existir. {{C}} ignora que o CMM reconhece graus intermediários de maturidade antes da documentação formal completa. {{D}} e {{E}} atribuem à empresa capacidades de medição quantitativa e melhoria contínua não descritas no caso.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap3-q3",
@@ -781,7 +819,7 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“No nível 2 (Repetível), políticas básicas de gerenciamento de projeto são estabelecidas para acompanhar custos, cronograma e funcionalidade. [...] Os processos necessários para repetir sucessos anteriores em projetos com aplicações similares estão em vigor. [...] No nível 3 (Definido), o processo-padrão de desenvolvimento e manutenção de software da organização está documentado, [...] e esse processo é usado para ajudar os gerentes e a equipe técnica a desempenhar com mais eficácia.” (tradução nossa)",
+        "texto": "“No Nível Repetível, processos básicos de gerenciamento de projeto são estabelecidos para acompanhar custo, cronograma e funcionalidade. A disciplina de processo necessária está em vigor para repetir sucessos anteriores em projetos com aplicações semelhantes. [...] No Nível Definido, o processo de software, tanto das atividades de gerência quanto das de engenharia, é documentado, padronizado e integrado em um processo de software padrão para a organização.” (tradução nossa)",
         "fonte": "PAULK, M. C.; CURTIS, B.; CHRISSIS, M. B.; WEBER, C. V. Capability Maturity Model for Software, Version 1.1. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 1993."
       },
       {
@@ -802,7 +840,8 @@
       "Não produzir nenhum efeito relevante sobre a maturidade da empresa, já que a capacidade de prever prazos já existia informalmente"
     ],
     "correta": 1,
-    "resolucao": "documentar o processo de estimativa e torná-lo ensinável a qualquer novo gerente de projeto é exatamente a transição descrita no capítulo entre o Nível 2 (conhecimento tácito, individual) e o Nível 3 (processo padronizado e institucionalizado). {{A}} ignora a motivação explícita do caso (risco de perda de conhecimento com a aposentadoria dos gerentes), tratando a iniciativa como puramente financeira. {{C}} erra ao pular etapas do modelo, que é sequencial. {{D}} inverte a lógica do CMM: formalizar processos é o que caracteriza avanço de maturidade, não retrocesso. {{E}} ignora a diferença entre previsibilidade dependente de pessoas específicas e previsibilidade institucionalizada, tema central da citação motivadora."
+    "resolucao": "documentar o processo de estimativa e torná-lo ensinável a qualquer novo gerente de projeto é exatamente a transição descrita no capítulo entre o Nível 2 (conhecimento tácito, individual) e o Nível 3 (processo padronizado e institucionalizado). {{A}} ignora a motivação explícita do caso (risco de perda de conhecimento com a aposentadoria dos gerentes), tratando a iniciativa como puramente financeira. {{C}} erra ao pular etapas do modelo, que é sequencial. {{D}} inverte a lógica do CMM: formalizar processos é o que caracteriza avanço de maturidade, não retrocesso. {{E}} ignora a diferença entre previsibilidade dependente de pessoas específicas e previsibilidade institucionalizada, tema central da citação motivadora.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap3-q4",
@@ -812,7 +851,7 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“Uma área de processo é um conjunto de práticas relacionadas em uma área que, quando implementadas coletivamente, satisfazem um conjunto de metas consideradas importantes para produzir uma melhoria significativa naquela área. [...] No nível de maturidade 2, o foco está em estabelecer a disciplina de gerenciamento de projeto básica.” (tradução nossa)",
+        "texto": "“Área de processo: um conjunto de práticas relacionadas em uma área que, quando implementadas coletivamente, satisfazem um conjunto de metas consideradas importantes para promover melhorias naquela área.” (tradução nossa)",
         "fonte": "CMMI PRODUCT TEAM. CMMI for Development, Version 1.3. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 2010."
       },
       {
@@ -829,7 +868,8 @@
       "É impossível avaliar o nível de maturidade de qualquer empresa sem uma auditoria presencial, independentemente das práticas relatadas, pois o CMMI não aceita autodeclaração"
     ],
     "correta": 2,
-    "resolucao": "o Nível 2 do CMMI exige a implementação coletiva de múltiplas Áreas de Processo (entre elas, Gerência de Requisitos e Garantia da Qualidade), não apenas uma isoladamente, conforme a própria definição citada no texto motivador (‘quando implementadas coletivamente’). {{A}} e {{B}} cometem o mesmo erro: tratam uma única prática forte como suficiente para todo o nível, ignorando que a Empresa X carece de controle de requisitos e a Empresa Y carece de garantia de qualidade. {{D}} erra ao supor que qualquer prática documentada já representa o Nível 3, que exige um processo organizacional padronizado, não apenas práticas pontuais. {{E}} é um exagero: o caso fornece informações suficientes para uma avaliação comparativa, mesmo que uma certificação formal exigisse etapas adicionais."
+    "resolucao": "o Nível 2 do CMMI exige a implementação coletiva de múltiplas Áreas de Processo (entre elas, Gerência de Requisitos e Garantia da Qualidade), não apenas uma isoladamente, conforme a própria definição citada no texto motivador (‘quando implementadas coletivamente’). {{A}} e {{B}} cometem o mesmo erro: tratam uma única prática forte como suficiente para todo o nível, ignorando que a Empresa X carece de controle de requisitos e a Empresa Y carece de garantia de qualidade. {{D}} erra ao supor que qualquer prática documentada já representa o Nível 3, que exige um processo organizacional padronizado, não apenas práticas pontuais. {{E}} é um exagero: o caso fornece informações suficientes para uma avaliação comparativa, mesmo que uma certificação formal exigisse etapas adicionais.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap3-q5",
@@ -839,7 +879,7 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“Uma área de processo é um conjunto de práticas relacionadas em uma área que, quando implementadas coletivamente, satisfazem um conjunto de metas consideradas importantes para produzir uma melhoria significativa naquela área. [...] No nível de maturidade 2, o foco está em estabelecer a disciplina de gerenciamento de projeto básica.” (tradução nossa)",
+        "texto": "“Área de processo: um conjunto de práticas relacionadas em uma área que, quando implementadas coletivamente, satisfazem um conjunto de metas consideradas importantes para promover melhorias naquela área.” (tradução nossa)",
         "fonte": "CMMI PRODUCT TEAM. CMMI for Development, Version 1.3. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 2010."
       },
       {
@@ -860,7 +900,8 @@
       "O efeito depende exclusivamente do tamanho da equipe da Empresa X, informação que não foi fornecida no caso"
     ],
     "correta": 1,
-    "resolucao": "como o Nível 2 do CMMI exige a cobertura coletiva de várias Áreas de Processo, adicionar Gerência de Requisitos à Garantia da Qualidade já existente aproxima a Empresa X de atender ao nível completo, exatamente o raciocínio inverso do problema identificado na Questão 4. {{A}} contraria a própria lógica cumulativa do modelo. {{C}} erra ao pular diretamente ao Nível 4, que exige gerenciamento quantitativo, não apenas a soma de duas práticas do Nível 2. {{D}} inverte o princípio central do CMMI, em que mais processo formal (bem aplicado) indica maior maturidade, não menor. {{E}} introduz uma variável (tamanho da equipe) irrelevante para a lógica de Áreas de Processo descrita no texto motivador."
+    "resolucao": "como o Nível 2 do CMMI exige a cobertura coletiva de várias Áreas de Processo, adicionar Gerência de Requisitos à Garantia da Qualidade já existente aproxima a Empresa X de atender ao nível completo, exatamente o raciocínio inverso do problema identificado na Questão 4. {{A}} contraria a própria lógica cumulativa do modelo. {{C}} erra ao pular diretamente ao Nível 4, que exige gerenciamento quantitativo, não apenas a soma de duas práticas do Nível 2. {{D}} inverte o princípio central do CMMI, em que mais processo formal (bem aplicado) indica maior maturidade, não menor. {{E}} introduz uma variável (tamanho da equipe) irrelevante para a lógica de Áreas de Processo descrita no texto motivador.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap3-q6",
@@ -870,7 +911,7 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“A representação contínua permite que uma organização selecione a ordem de melhoria que melhor atenda aos seus objetivos de negócio e que mitigue as áreas de maior risco da organização. [...] A representação por estágios oferece uma sequência predefinida e comprovada de melhorias, cada nível de maturidade servindo como base para o próximo.” (tradução nossa)",
+        "texto": "“[A representação contínua] permite que a organização selecione a ordem de melhoria que melhor atende aos seus objetivos de negócio e que mitiga as suas áreas de risco. [...] [A representação por estágios] oferece uma sequência comprovada de melhorias, cada uma servindo de base para a seguinte.” (tradução nossa)",
         "fonte": "CMMI PRODUCT TEAM. CMMI for Development, Version 1.3. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 2010."
       },
       {
@@ -887,7 +928,8 @@
       "Representação contínua, pois é a única forma de uma organização atingir o Nível 5 de maturidade"
     ],
     "correta": 1,
-    "resolucao": "o próprio texto motivador define a representação contínua como aquela que permite priorizar áreas específicas de maior risco, exatamente a necessidade da DataSeg. {{A}} é factualmente incorreto: ambas as representações são formalmente reconhecidas pelo CMMI. {{C}} inventa uma regra inexistente sobre ordem obrigatória de Áreas de Processo. {{D}} contraria diretamente a definição do texto motivador. {{E}} é falso: o Nível 5 pode ser alcançado por qualquer uma das duas representações, dependendo de como a organização estrutura sua jornada de melhoria."
+    "resolucao": "o próprio texto motivador define a representação contínua como aquela que permite priorizar áreas específicas de maior risco, exatamente a necessidade da DataSeg. {{A}} é factualmente incorreto: ambas as representações são formalmente reconhecidas pelo CMMI. {{C}} inventa uma regra inexistente sobre ordem obrigatória de Áreas de Processo. {{D}} contraria diretamente a definição do texto motivador. {{E}} é falso: o Nível 5 pode ser alcançado por qualquer uma das duas representações, dependendo de como a organização estrutura sua jornada de melhoria.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap3-q7",
@@ -897,7 +939,7 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“A representação contínua permite que uma organização selecione a ordem de melhoria que melhor atenda aos seus objetivos de negócio e que mitigue as áreas de maior risco da organização. [...] A representação por estágios oferece uma sequência predefinida e comprovada de melhorias, cada nível de maturidade servindo como base para o próximo.” (tradução nossa)",
+        "texto": "“[A representação contínua] permite que a organização selecione a ordem de melhoria que melhor atende aos seus objetivos de negócio e que mitiga as suas áreas de risco. [...] [A representação por estágios] oferece uma sequência comprovada de melhorias, cada uma servindo de base para a seguinte.” (tradução nossa)",
         "fonte": "CMMI PRODUCT TEAM. CMMI for Development, Version 1.3. Pittsburgh: Software Engineering Institute, Carnegie Mellon University, 2010."
       },
       {
@@ -918,7 +960,8 @@
       "A exigência só poderia ser atendida pela DataSeg se a empresa nunca tivesse utilizado a representação contínua em nenhum momento de sua história"
     ],
     "correta": 0,
-    "resolucao": "“Nível de Maturidade” como classificação única e global da organização é justamente a lógica da representação por estágios, apresentada no texto motivador como uma sequência predefinida em que cada nível se aplica à organização como um todo — diferente da representação contínua, que descreve níveis de capacidade por Área de Processo, não um nível organizacional único. {{B}} inverte as definições. {{C}} nega, sem fundamento, que o CMMI defina níveis organizacionais — o que a representação por estágios faz exatamente. {{D}} ignora a diferença estrutural entre as duas abordagens, central ao texto motivador. {{E}} introduz uma condição sem qualquer relação com a definição técnica das representações."
+    "resolucao": "“Nível de Maturidade” como classificação única e global da organização é justamente a lógica da representação por estágios, apresentada no texto motivador como uma sequência predefinida em que cada nível se aplica à organização como um todo — diferente da representação contínua, que descreve níveis de capacidade por Área de Processo, não um nível organizacional único. {{B}} inverte as definições. {{C}} nega, sem fundamento, que o CMMI defina níveis organizacionais — o que a representação por estágios faz exatamente. {{D}} ignora a diferença estrutural entre as duas abordagens, central ao texto motivador. {{E}} introduz uma condição sem qualquer relação com a definição técnica das representações.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap3-q8",
@@ -927,16 +970,19 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“O MPS.BR é um programa mobilizador de longo prazo, criado em 2003, coordenado pela Associação para Promoção da Excelência do Software Brasileiro (SOFTEX), cujo propósito é definir e aprimorar um modelo de melhoria de processo de software adequado ao contexto das empresas brasileiras, em especial as micro, pequenas e médias empresas, buscando estabelecer um caminho economicamente viável para que essas empresas alcancem os benefícios da melhoria de processos.”",
-        "fonte": "SOFTEX. MPS.BR — Guia Geral MPS de Software. Campinas: Associação para Promoção da Excelência do Software Brasileiro, 2016."
+        "t": "p",
+        "texto": "O MPS.BR é um programa criado em 2003 e coordenado pela SOFTEX (Associação para Promoção da Excelência do Software Brasileiro). O seu propósito é oferecer um modelo de melhoria de processo de software adequado à realidade das empresas brasileiras, em especial as micro, pequenas e médias, com um caminho economicamente viável para que elas alcancem os benefícios da melhoria de processos."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em SOFTEX. MPS.BR — Guia Geral MPS de Software. Campinas: SOFTEX, 2016."
       },
       {
         "t": "p",
         "texto": "A ViaCode, desenvolvedora de software com 12 funcionários em uma cidade do interior, avalia buscar certificação de maturidade para participar de licitações públicas municipais. Uma consultoria apresentou dois orçamentos: certificação CMMI Nível 3, por R$ 180.000, com prazo estimado de 18 meses; ou certificação MPS.BR Nível F, por R$ 35.000, com prazo estimado de 8 meses — este último, segundo a consultoria, plenamente suficiente para os requisitos técnicos das licitações municipais que a ViaCode pretende disputar."
       }
     ],
-    "enunciado": "Considerando a citação do Guia Geral MPS de Software (SOFTEX, 2016) e o caso da ViaCode, assinale a alternativa correta:",
+    "enunciado": "Considerando o propósito do MPS.BR (SOFTEX, 2016) e o caso da ViaCode, assinale a alternativa correta:",
     "alternativas": [
       "A recomendação da consultoria pela certificação MPS.BR é incompatível com o propósito do modelo, que se destina exclusivamente a grandes corporações multinacionais",
       "A recomendação é coerente com o MPS.BR, que busca uma melhoria de processo viável para micro, pequenas e médias empresas",
@@ -945,7 +991,8 @@
       "O MPS.BR não é aplicável a licitações públicas municipais, sendo restrito a contratos com o governo federal"
     ],
     "correta": 1,
-    "resolucao": "o próprio texto motivador define o propósito do MPS.BR como oferecer um caminho de melhoria de processo economicamente viável para micro, pequenas e médias empresas — perfil exato da ViaCode, com 12 funcionários. {{A}} inverte o público-alvo real do modelo. {{C}} ignora diferenças estruturais reais entre os dois modelos (número de níveis, custo de certificação, foco). {{D}} afirma uma exclusividade que não existe: licitações municipais frequentemente aceitam o MPS.BR como certificação válida. {{E}} é uma restrição fabricada, sem qualquer base no texto motivador ou no conteúdo do capítulo."
+    "resolucao": "o próprio texto motivador define o propósito do MPS.BR como oferecer um caminho de melhoria de processo economicamente viável para micro, pequenas e médias empresas — perfil exato da ViaCode, com 12 funcionários. {{A}} inverte o público-alvo real do modelo. {{C}} ignora diferenças estruturais reais entre os dois modelos (número de níveis, custo de certificação, foco). {{D}} afirma uma exclusividade que não existe: licitações municipais frequentemente aceitam o MPS.BR como certificação válida. {{E}} é uma restrição fabricada, sem qualquer base no texto motivador ou no conteúdo do capítulo.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap3-q9",
@@ -954,9 +1001,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“O MPS.BR é um programa mobilizador de longo prazo, criado em 2003, coordenado pela Associação para Promoção da Excelência do Software Brasileiro (SOFTEX), cujo propósito é definir e aprimorar um modelo de melhoria de processo de software adequado ao contexto das empresas brasileiras, em especial as micro, pequenas e médias empresas, buscando estabelecer um caminho economicamente viável para que essas empresas alcancem os benefícios da melhoria de processos.”",
-        "fonte": "SOFTEX. MPS.BR — Guia Geral MPS de Software. Campinas: Associação para Promoção da Excelência do Software Brasileiro, 2016."
+        "t": "p",
+        "texto": "O MPS.BR é um programa criado em 2003 e coordenado pela SOFTEX (Associação para Promoção da Excelência do Software Brasileiro). O seu propósito é oferecer um modelo de melhoria de processo de software adequado à realidade das empresas brasileiras, em especial as micro, pequenas e médias, com um caminho economicamente viável para que elas alcancem os benefícios da melhoria de processos."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em SOFTEX. MPS.BR — Guia Geral MPS de Software. Campinas: SOFTEX, 2016."
       },
       {
         "t": "p",
@@ -976,7 +1026,8 @@
       "Os sete níveis existem exclusivamente por motivos de tradução linguística entre as letras do alfabeto e os números do CMMI"
     ],
     "correta": 1,
-    "resolucao": "a maior granularidade do MPS.BR (7 níveis) é uma escolha deliberada de design para permitir avanços intermediários mais acessíveis a empresas menores, sem que isso implique redução de rigor técnico em cada nível — é uma diferença de escala de progressão, não de exigência. {{A}} confunde quantidade de degraus com facilidade de cada degrau individual, um raciocínio logicamente falho. {{C}} ignora diferenças reais de estrutura e progressão entre os dois modelos. {{D}} aceita a premissa (menor rigor) sem justificativa, quando na verdade a diferença tem propósito técnico documentado. {{E}} é uma explicação sem qualquer fundamento técnico ou histórico real."
+    "resolucao": "a maior granularidade do MPS.BR (7 níveis) é uma escolha deliberada de design para permitir avanços intermediários mais acessíveis a empresas menores, sem que isso implique redução de rigor técnico em cada nível — é uma diferença de escala de progressão, não de exigência. {{A}} confunde quantidade de degraus com facilidade de cada degrau individual, um raciocínio logicamente falho. {{C}} ignora diferenças reais de estrutura e progressão entre os dois modelos. {{D}} aceita a premissa (menor rigor) sem justificativa, quando na verdade a diferença tem propósito técnico documentado. {{E}} é uma explicação sem qualquer fundamento técnico ou histórico real.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap3-q10",
@@ -985,9 +1036,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“O modelo CMMI V2.0 foi desenvolvido para ser mais fácil de usar e mais diretamente aplicável às necessidades de negócio das organizações, integrando-se a práticas ágeis já adotadas amplamente pela indústria de software. [...] O modelo é organizado em constelações que endereçam diferentes áreas de aplicação: desenvolvimento de produtos e serviços (CMMI-DEV), gestão de serviços (CMMI-SVC) e gestão de fornecedores e aquisição (CMMI-ACQ).” (tradução nossa)",
-        "fonte": "ISACA. CMMI V2.0 Model. Schaumburg: ISACA, 2018."
+        "t": "p",
+        "texto": "Na versão 2.0, lançada em 2018 e hoje administrada pela ISACA, o CMMI foi simplificado, passou a dar mais ênfase ao desempenho de negócio e integrou de forma explícita as práticas ágeis. O modelo continua organizado em constelações: CMMI-DEV, para desenvolvimento de produtos; CMMI-SVC, para prestação de serviços; e CMMI-ACQ, para aquisição de produtos e serviços de fornecedores."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em ISACA. CMMI V2.0 Model. Schaumburg: ISACA, 2018."
       },
       {
         "t": "p",
@@ -1003,7 +1057,8 @@
       "Buscar a constelação CMMI-ACQ, pois presta serviços a terceiros"
     ],
     "correta": 1,
-    "resolucao": "a constelação CMMI-SVC foi criada exatamente para organizações cuja atividade principal é a prestação de serviços (como help desk sob SLA), diferente da constelação CMMI-DEV, focada em desenvolvimento de produtos e sistemas. {{A}} ignora a existência das constelações, tratando o CMMI como um modelo único e genérico. {{C}} é factualmente incorreto: o texto motivador explicitamente descreve constelações para diferentes áreas de aplicação, incluindo serviços. {{D}} contraria o propósito declarado de existirem constelações distintas. {{E}} confunde CMMI-ACQ (voltada à gestão de fornecedores e processos de aquisição por parte de quem contrata) com a atividade da SupportPro, que é prestadora de serviço, não compradora."
+    "resolucao": "a constelação CMMI-SVC foi criada exatamente para organizações cuja atividade principal é a prestação de serviços (como help desk sob SLA), diferente da constelação CMMI-DEV, focada em desenvolvimento de produtos e sistemas. {{A}} ignora a existência das constelações, tratando o CMMI como um modelo único e genérico. {{C}} é factualmente incorreto: o texto motivador explicitamente descreve constelações para diferentes áreas de aplicação, incluindo serviços. {{D}} contraria o propósito declarado de existirem constelações distintas. {{E}} confunde CMMI-ACQ (voltada à gestão de fornecedores e processos de aquisição por parte de quem contrata) com a atividade da SupportPro, que é prestadora de serviço, não compradora.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap3-q11",
@@ -1012,9 +1067,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“O modelo CMMI V2.0 foi desenvolvido para ser mais fácil de usar e mais diretamente aplicável às necessidades de negócio das organizações, integrando-se a práticas ágeis já adotadas amplamente pela indústria de software. [...] O modelo é organizado em constelações que endereçam diferentes áreas de aplicação: desenvolvimento de produtos e serviços (CMMI-DEV), gestão de serviços (CMMI-SVC) e gestão de fornecedores e aquisição (CMMI-ACQ).” (tradução nossa)",
-        "fonte": "ISACA. CMMI V2.0 Model. Schaumburg: ISACA, 2018."
+        "t": "p",
+        "texto": "Na versão 2.0, lançada em 2018 e hoje administrada pela ISACA, o CMMI foi simplificado, passou a dar mais ênfase ao desempenho de negócio e integrou de forma explícita as práticas ágeis. O modelo continua organizado em constelações: CMMI-DEV, para desenvolvimento de produtos; CMMI-SVC, para prestação de serviços; e CMMI-ACQ, para aquisição de produtos e serviços de fornecedores."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em ISACA. CMMI V2.0 Model. Schaumburg: ISACA, 2018."
       },
       {
         "t": "p",
@@ -1034,7 +1092,8 @@
       "SEI, CMMI Institute e ISACA são apenas nomes alternativos para a mesma entidade legal, sem qualquer diferença histórica ou organizacional entre eles"
     ],
     "correta": 1,
-    "resolucao": "reflete corretamente a evolução histórica: o modelo nasceu no SEI (Carnegie Mellon), passou a ser administrado pelo CMMI Institute, e este foi adquirido pela ISACA, que hoje conduz a evolução do modelo, incluindo o lançamento da versão 2.0. {{A}} ignora essa evolução institucional documentada. {{C}} inverte a ordem histórica real dos fatos. {{D}} é falso: o CMMI continua sendo um modelo ativo e atualizado, não descontinuado. {{E}} simplifica de forma incorreta três organizações e momentos históricos distintos como se fossem idênticos."
+    "resolucao": "reflete corretamente a evolução histórica: o modelo nasceu no SEI (Carnegie Mellon), passou a ser administrado pelo CMMI Institute, e este foi adquirido pela ISACA, que hoje conduz a evolução do modelo, incluindo o lançamento da versão 2.0. {{A}} ignora essa evolução institucional documentada. {{C}} inverte a ordem histórica real dos fatos. {{D}} é falso: o CMMI continua sendo um modelo ativo e atualizado, não descontinuado. {{E}} simplifica de forma incorreta três organizações e momentos históricos distintos como se fossem idênticos.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap3-q12",
@@ -1043,9 +1102,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Embora desenvolvidos em contextos distintos — o CMM e o CMMI no âmbito de um instituto de pesquisa norte-americano voltado a contratos de defesa, e o MPS.BR como iniciativa nacional voltada à realidade das empresas brasileiras —, os três modelos compartilham a mesma lógica de base: a maturidade organizacional evolui de processos caóticos e dependentes de indivíduos para processos institucionalizados, medidos e continuamente otimizados.”",
-        "fonte": "Elaborado com base em: PAULK et al. (1993); CMMI PRODUCT TEAM (2010); SOFTEX (2016)."
+        "t": "p",
+        "texto": "Embora desenvolvidos em contextos distintos — o CMM e o CMMI no âmbito de um instituto de pesquisa norte-americano voltado a contratos de defesa, e o MPS.BR como iniciativa nacional voltada à realidade das empresas brasileiras —, os três modelos compartilham a mesma lógica de base: a maturidade organizacional evolui de processos caóticos e dependentes de indivíduos para processos institucionalizados, medidos e continuamente otimizados."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em PAULK et al. (1993); CMMI PRODUCT TEAM (2010); SOFTEX (2016)."
       },
       {
         "t": "p",
@@ -1061,7 +1123,8 @@
       "O Fornecedor A deveria ser automaticamente desqualificado, pois certificações nacionais não têm nenhum reconhecimento fora do Brasil"
     ],
     "correta": 2,
-    "resolucao": "segundo a equivalência aproximada apresentada no capítulo (CMM/CMMI nível 3 ≈ MPS.BR nível C), o Fornecedor A, certificado no nível C do MPS.BR, corresponde a uma maturidade aproximadamente equivalente ao Nível 3 do CMMI — superior, portanto, ao Nível 2 do Fornecedor B. {{A}} nega, sem fundamento, qualquer possibilidade de comparação entre os modelos, contrariando o próprio propósito do quadro de equivalência estudado. {{B}} assume uma superioridade automática do CMMI sobre o MPS.BR que não corresponde à lógica de equivalência de níveis. {{D}} ignora completamente a diferença de patamar entre as duas certificações específicas mencionadas. {{E}} é uma afirmação infundada sobre reconhecimento internacional, que contraria inclusive o próprio cenário do caso, em que a multinacional está avaliando seriamente o fornecedor certificado no modelo brasileiro."
+    "resolucao": "segundo a equivalência aproximada apresentada no capítulo (CMM/CMMI nível 3 ≈ MPS.BR nível C), o Fornecedor A, certificado no nível C do MPS.BR, corresponde a uma maturidade aproximadamente equivalente ao Nível 3 do CMMI — superior, portanto, ao Nível 2 do Fornecedor B. {{A}} nega, sem fundamento, qualquer possibilidade de comparação entre os modelos, contrariando o próprio propósito do quadro de equivalência estudado. {{B}} assume uma superioridade automática do CMMI sobre o MPS.BR que não corresponde à lógica de equivalência de níveis. {{D}} ignora completamente a diferença de patamar entre as duas certificações específicas mencionadas. {{E}} é uma afirmação infundada sobre reconhecimento internacional, que contraria inclusive o próprio cenário do caso, em que a multinacional está avaliando seriamente o fornecedor certificado no modelo brasileiro.",
+    "nivel": "medio"
   },
   {
     "id": "qualidade-cap3-m1",
@@ -1069,14 +1132,16 @@
     "capituloId": "qualidade-cap3",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa de software ganha contratos por ter desenvolvedores talentosos, mas os resultados variam drasticamente entre projetos: alguns entregam no prazo com boa qualidade, outros atrasam meses e chegam cheios de defeitos. Qual nível de maturidade do CMM essa organização demonstra e qual é o risco central desse estágio?",
+    "enunciado": "Uma empresa de software ganha contratos por ter desenvolvedores talentosos, mas os resultados variam muito entre os projetos: alguns entregam no prazo e com boa qualidade, outros atrasam meses e chegam cheios de defeitos. Qual nível de maturidade do CMM essa organização demonstra e qual é o risco central desse estágio?",
     "alternativas": [
-      "Nível 2 — Repetível, pois a empresa já demonstra capacidade de repetir sucessos anteriores em alguns projetos, indicando que processos básicos de gerenciamento foram parcialmente estabelecidos em pelo menos parte das equipes.",
       "Nível 1, Inicial: o sucesso depende de talentos individuais, e os resultados variam; o risco é a saída de pessoas-chave derrubar a capacidade de entrega.",
-      "Nível 2 — Repetível, pois a variação entre projetos é característica esperada desse nível, onde processos básicos existem mas ainda não foram padronizados para toda a organização, gerando resultados heterogêneos entre equipes distintas.",
-      "Nível 3 — Definido, pois a empresa possui processos documentados informalmente em cada equipe, e a variação de resultados reflete diferenças de implementação local — não ausência de processos, que é característica exclusiva do nível 1."
+      "Nível 2, Repetível: a empresa já repete sucessos em alguns projetos, o que mostra processos básicos de gerenciamento em parte das equipes.",
+      "Nível 2, Repetível: a variação entre projetos é esperada nesse nível, em que os processos existem, mas ainda não são padronizados.",
+      "Nível 3, Definido: cada equipe tem os seus processos documentados, e a variação vem só de diferenças de implementação local.",
+      "Nível 4, Gerenciado: a empresa já mede a variação entre os projetos, e o risco é a medição ainda não estar automatizada."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "No Nível 1 (Inicial), o processo é imprevisível e reativo, e o sucesso depende do esforço individual, o que explica resultados tão diferentes. O Nível 2 exige processos básicos de gerenciamento de projeto que permitam repetir sucessos em projetos semelhantes, e nada no caso indica isso. Sem processo, a capacidade de entrega está nas pessoas, e não na organização: se os talentos saem, ela vai embora junto."
   },
   {
     "id": "qualidade-cap3-m2",
@@ -1084,14 +1149,16 @@
     "capituloId": "qualidade-cap3",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma organização certificada no CMMI nível 3 decide implementar diretamente práticas do nível 5 — otimização e gestão causal de defeitos — sem consolidar as práticas de medição quantitativa do nível 4. Qual é a consequência esperada segundo o modelo?",
+    "enunciado": "Uma organização avaliada no nível 3 do CMMI decide implementar diretamente as práticas do nível 5 (melhoria contínua e gestão causal de defeitos), sem consolidar a medição quantitativa do nível 4. Qual é a consequência esperada segundo o modelo?",
     "alternativas": [
-      "A organização pode avançar diretamente ao nível 5 desde que demonstre resultados mensuráveis de melhoria contínua — o CMMI v2.0 eliminou a obrigatoriedade de progressão sequencial para permitir integração com práticas ágeis modernas.",
-      "Recebe certificação parcial no nível 5, num perfil híbrido aceito.",
-      "Os níveis são cumulativos e não dá para pular: sem a base quantitativa do nível 4, faltam dados para a otimização do nível 5, e os resultados tendem a regredir.",
-      "A organização pode implementar práticas do nível 5 em projetos-piloto enquanto consolida o nível 4 nos demais, estratégia reconhecida pelo CMMI como \"implementação paralela por estágios\" para organizações com recursos limitados."
+      "Os níveis são cumulativos e não se pode pular: sem a base quantitativa do nível 4, faltam dados para a otimização do nível 5.",
+      "A organização pode ir direto ao nível 5, pois o CMMI v2.0 deixou de exigir a progressão em sequência para integrar as práticas ágeis.",
+      "A organização recebe uma avaliação parcial no nível 5, em um perfil híbrido que o modelo aceita durante a transição.",
+      "A organização pode aplicar o nível 5 em projetos-piloto, estratégia que o CMMI chama de implementação paralela por estágios.",
+      "Nada muda, pois os níveis do CMMI são independentes, e cada um pode ser implementado na ordem que a empresa preferir."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A progressão pelos níveis é cumulativa: um nível deve consolidar todas as práticas dos anteriores, e tentar pular níveis geralmente leva a instabilidade e retrocesso. A otimização do nível 5 se baseia em dados e nas causas comuns de variação, que só existem quando o processo já é medido e controlado quantitativamente, como no nível 4. Escolher a ordem das melhorias por área é possível na representação contínua, mas não para chegar a um nível de maturidade."
   },
   {
     "id": "qualidade-cap3-m3",
@@ -1099,14 +1166,16 @@
     "capituloId": "qualidade-cap3",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma multinacional americana de defesa precisa contratar uma fornecedora de software e exige certificação em modelo de maturidade reconhecido internacionalmente. Uma startup brasileira de 25 funcionários deseja concorrer ao contrato. Qual estratégia de certificação é mais adequada e por quê?",
+    "enunciado": "Uma empresa americana do setor de defesa vai contratar um fornecedor de software e exige uma certificação de maturidade reconhecida internacionalmente. Uma startup brasileira de 25 funcionários quer concorrer. Qual estratégia de certificação é mais adequada e por quê?",
     "alternativas": [
-      "A startup deve buscar certificação MPS.BR nível A, equivalente ao CMMI nível 5 — essa equivalência é reconhecida internacionalmente pelo SEI e pelo ISACA, sendo aceita por contratantes americanos como substituta direta do CMMI em processos licitatórios do Departamento de Defesa dos EUA.",
-      "CMMI nível 2, o único aceito pelo governo americano.",
-      "CMMI: tem prestígio global e é exigido em contratos internacionais; o MPS.BR é mais acessível, mas reconhecido sobretudo no Brasil.",
-      "A startup deve buscar certificação ISO/IEC 15504 (SPICE), pois é o único modelo de maturidade com reconhecimento simultâneo pelo governo americano e pelo governo brasileiro, sendo compatível tanto com o CMMI quanto com o MPS.BR por derivação técnica direta."
+      "O CMMI: tem prestígio global e é exigido em contratos internacionais; o MPS.BR é mais acessível, mas vale sobretudo no Brasil.",
+      "O MPS.BR nível A, aceito pelo Departamento de Defesa americano como substituto direto do CMMI nível 5 nas licitações.",
+      "O CMMI nível 2, pois é o único nível aceito pelo governo americano, e os demais servem apenas para o mercado interno.",
+      "A ISO/IEC 15504 (SPICE), por ser o único modelo reconhecido ao mesmo tempo pelo governo americano e pelo brasileiro.",
+      "O MPS.BR, pois o seu custo menor compensa a falta de reconhecimento internacional em contratos de defesa americanos."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "Pela apostila, o CMMI deve ser adotado quando a organização atua em mercados internacionais, participa de licitações do governo americano ou busca uma certificação de prestígio global, exatamente o caso. O MPS.BR é ideal para pequenas e médias empresas brasileiras e é reconhecido em licitações do governo federal brasileiro, mas não substitui o CMMI em contratos internacionais. As demais alternativas inventam regras de aceitação que não existem."
   },
   {
     "id": "qualidade-cap3-m4",
@@ -1114,14 +1183,19 @@
     "capituloId": "qualidade-cap3",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa certificada no MPS.BR nível D deseja migrar para o CMMI. Em qual nível CMMI ela se enquadraria aproximadamente e quais esforços adicionais seriam necessários?",
-    "alternativas": [
-      "Ela se enquadraria no CMMI nível 2, pois o MPS.BR nível D corresponde às práticas básicas de gerenciamento de projetos e requisitos — equivalentes às KPAs do nível 2 do CMMI — sem cobertura das práticas de definição e padronização de processos do nível 3.",
-      "Aproximadamente ao nível 3 do CMMI, pois os níveis E, D e C do MPS.BR correspondem a ele; faltaria cobrir as áreas restantes do nível 3, adaptar a documentação e passar pela avaliação SCAMPI.",
-      "Ao nível 4, bastando adaptar a documentação ao formato do ISACA.",
-      "Ela se enquadraria no CMMI nível 2, pois a equivalência entre MPS.BR e CMMI é conservadora: apenas os níveis A e B do MPS.BR têm correspondência com os níveis 4 e 5 do CMMI, e todos os demais níveis do MPS.BR são considerados equivalentes ao nível 2 pelos avaliadores internacionais."
+    "caso": [
+      "A empresa já implementou os processos exigidos nos níveis G, F e E do MPS.BR."
     ],
-    "correta": 1
+    "enunciado": "Uma empresa avaliada no nível E do MPS.BR quer chegar ao nível D. Quais processos ela precisa passar a implementar?",
+    "alternativas": [
+      "Desenvolvimento de Requisitos, Projeto do Software, Integração do Produto, Verificação e Validação.",
+      "Gerência de Riscos e Análise de Decisão, que formam a base de processos exigida no nível D do modelo.",
+      "Gerência de Desempenho Quantitativo, para medir estatisticamente o desempenho dos processos.",
+      "Gerência de Configuração, Aquisição e Medição, que ainda faltam para completar o nível D do modelo.",
+      "Inovação e Implantação na Organização, para analisar as causas de problemas e inovar no processo."
+    ],
+    "correta": 0,
+    "resolucao": "No MPS.BR, o nível D (Largamente Definido) tem como foco o desenvolvimento de software e a verificação e validação: Desenvolvimento de Requisitos (DRE), Projeto do Software (DES), Integração do Produto, Verificação (VER) e Validação (VAL). Gerência de Configuração, Aquisição e Medição já são exigidas no nível F; Gerência de Riscos, no nível C; Gerência de Desempenho Quantitativo, no nível B; e Inovação e Implantação, no nível A."
   },
   {
     "id": "qualidade-cap3-m5",
@@ -1129,14 +1203,19 @@
     "capituloId": "qualidade-cap3",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa pública brasileira de TI precisa contratar fornecedoras de software e deseja exigir certificação em modelo de maturidade nos editais de licitação. Qual modelo é mais adequado para essa exigência e por quê?",
-    "alternativas": [
-      "O CMMI é o modelo mais adequado para licitações públicas brasileiras, pois seu reconhecimento internacional garante maior número de fornecedoras aptas a participar dos editais, aumentando a competitividade e reduzindo o risco de direcionamento a poucos fornecedores.",
-      "O CMM original é o modelo mais adequado, pois foi o modelo pioneiro criado pelo SEI e ainda é o único com reconhecimento formal pelo Tribunal de Contas da União (TCU) para avaliação de qualidade de fornecedores de software em contratos públicos brasileiros.",
-      "O MPS.BR: é aceito em licitações de TI no Brasil, está em português e custa menos que o CMMI, o que amplia a participação de pequenas e médias fornecedoras.",
-      "A ISO/IEC 25010 é mais adequada que modelos de maturidade para licitações públicas, pois avalia a qualidade do produto entregue — não apenas a maturidade do processo da fornecedora — garantindo que o software adquirido atenda diretamente às necessidades do órgão público contratante."
+    "caso": [
+      "Uma consultora explicou a uma empresa os três guias do programa MPS.BR: (1) o que define os processos, as capacidades e os resultados esperados do desenvolvimento de software; (2) o que define como a empresa será avaliada para obter a certificação em cada nível; (3) o que define o modelo de negócio para a implementação e a avaliação do programa pelas Instituições Implementadoras credenciadas."
     ],
-    "correta": 2
+    "enunciado": "Os documentos 1, 2 e 3 correspondem, respectivamente, aos guias do MPS.BR",
+    "alternativas": [
+      "MR-MPS-SW, MA-MPS e MN-MPS.",
+      "MA-MPS, MR-MPS-SW e MN-MPS.",
+      "MN-MPS, MA-MPS e MR-MPS-SW.",
+      "MR-MPS-SW, MN-MPS e MA-MPS.",
+      "MA-MPS, MN-MPS e MR-MPS-SW."
+    ],
+    "correta": 0,
+    "resolucao": "O Modelo de Referência para Software (MR-MPS-SW) define os processos, as capacidades e os resultados esperados (1). O Método de Avaliação (MA-MPS) define como as organizações são avaliadas para obter cada nível (2). O Modelo de Negócio (MN-MPS) define como o programa é implementado e avaliado pelas Instituições Implementadoras credenciadas (3)."
   },
   {
     "id": "qualidade-cap3-m6",
@@ -1144,14 +1223,16 @@
     "capituloId": "qualidade-cap3",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "O CMMI v2.0 introduziu integração explícita com práticas ágeis como Scrum e Kanban. Como isso impacta a percepção de que CMMI e agilidade são incompatíveis?",
+    "enunciado": "O CMMI v2.0 passou a integrar de forma explícita práticas ágeis, como Scrum e Kanban. Como isso afeta a percepção de que CMMI e agilidade são incompatíveis?",
     "alternativas": [
-      "A integração é só de fachada, e a incompatibilidade continua.",
-      "A incompatibilidade foi completamente eliminada: o CMMI v2.0 adotou o Scrum como metodologia de implementação oficial, e organizações que seguem o framework Scrum rigorosamente são automaticamente consideradas no nível 3 de maturidade sem necessidade de avaliação formal.",
-      "Mostra que maturidade e agilidade não se opõem: práticas ágeis podem implementar as áreas do CMMI, e uma organização pode usar Scrum com medição e melhoria estruturadas.",
-      "A integração beneficia exclusivamente organizações no nível 1 do CMMI, que podem usar Scrum como substituto dos processos formais exigidos pelo modelo — nos níveis superiores, a documentação e o controle quantitativo exigidos pelo CMMI são incompatíveis com a velocidade e flexibilidade do desenvolvimento ágil."
+      "Mostra que maturidade e agilidade não se opõem: práticas ágeis podem implementar as áreas do CMMI, com medição e melhoria estruturadas.",
+      "A integração é só de fachada, e a incompatibilidade continua, pois o CMMI segue exigindo documentação extensa em todos os níveis.",
+      "A incompatibilidade sumiu porque o Scrum virou o método oficial do CMMI, e quem o segue já é considerado nível 3 sem avaliação.",
+      "A integração só beneficia as organizações do nível 1, que podem usar o Scrum no lugar dos processos formais exigidos pelo modelo.",
+      "A integração vale só para a constelação CMMI-SVC, pois as práticas ágeis não se aplicam ao desenvolvimento de produtos."
     ],
-    "correta": 2
+    "correta": 0,
+    "resolucao": "A versão 2.0 simplificou a linguagem, deu mais ênfase ao desempenho de negócio e integrou de forma explícita as práticas ágeis, como Scrum, Kanban e SAFe. Isso não torna ninguém maduro automaticamente: as práticas ágeis passam a ser uma forma de implementar o que o modelo pede, com medição e melhoria contínua. A integração não se limita a um nível nem a uma constelação."
   },
   {
     "id": "qualidade-cap3-m7",
@@ -1159,14 +1240,23 @@
     "capituloId": "qualidade-cap3",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "A representação contínua do CMMI permite que uma organização evolua em áreas de processo específicas de forma independente. Em qual situação essa abordagem é mais vantajosa do que a representação por estágios?",
-    "alternativas": [
-      "Sempre; a por estágios só existe por compatibilidade histórica.",
-      "A representação contínua é mais vantajosa para organizações que buscam certificação e benchmarking com o mercado, pois o nível de capacidade por área de processo é mais informativo para clientes externos do que o nível de maturidade geral obtido pela representação por estágios.",
-      "Quando se quer melhorar áreas específicas, como uma empresa boa em projetos e fraca em riscos, sem ter de cumprir todos os requisitos de um nível.",
-      "A representação contínua é mais vantajosa exclusivamente para organizações no setor de serviços que utilizam a constelação CMMI-SVC, pois a representação por estágios foi projetada especificamente para desenvolvimento de produtos e não se adapta adequadamente às características dos processos de entrega de serviços."
+    "caso": [
+      "Sobre o CMM e a criação do CMMI, avalie as afirmativas a seguir.",
+      "I. O CMM focava exclusivamente em processos de software, sem integrar engenharia de sistemas, hardware e serviços.",
+      "II. Existiam modelos CMM separados para disciplinas diferentes, o que gerava inconsistências entre eles.",
+      "III. A avaliação no CMM era rápida e barata, o que facilitava a sua adoção por pequenas e médias empresas.",
+      "IV. O CMMI, lançado em 2002, integrou os vários modelos CMM existentes em um único modelo coerente."
     ],
-    "correta": 2
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e IV, apenas.",
+      "I e II, apenas.",
+      "I, II, III e IV.",
+      "II e IV, apenas.",
+      "I e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I e II são verdadeiras: são duas das limitações do CMM apontadas no capítulo. III é falsa: a avaliação no CMM era custosa e demorada, o que dificultava a adoção por pequenas e médias empresas. IV é verdadeira: essas limitações levaram ao CMMI, que integrou os modelos de software, sistemas, engenharia de hardware e fornecedores."
   },
   {
     "id": "qualidade-cap3-m8",
@@ -1174,14 +1264,16 @@
     "capituloId": "qualidade-cap3",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa implementou as KPAs do CMM nível 2 — incluindo gerência de requisitos, planejamento e controle de projetos — mas os processos variam entre equipes e não estão documentados de forma padronizada para toda a organização. Qual é a limitação identificada e qual seria o próximo passo segundo o modelo?",
+    "enunciado": "Uma empresa implementou as áreas-chave do nível 2 do CMM, incluindo gerência de requisitos e planejamento e controle de projetos, mas os processos variam entre as equipes e não estão padronizados para toda a organização. Qual é a limitação e qual seria o próximo passo?",
     "alternativas": [
-      "Já cumpre o nível 2, e padronizar só é exigido no nível 4.",
-      "Está no nível 2, mas sem padronização organizacional não chega ao 3; o próximo passo é foco no processo organizacional, definição do processo e treinamento.",
-      "A empresa está no nível 3, pois as KPAs de planejamento e controle de projetos já implicam definição e documentação de processos — a variação entre equipes é problema de implementação que não afeta a classificação formal do nível de maturidade obtido pela organização.",
-      "A empresa precisa retornar ao nível 1 para reconstruir sua base processual, pois o CMM exige que as KPAs de cada nível sejam implementadas de forma idêntica em 100% das equipes antes de qualquer progressão — variações entre equipes invalidam a certificação já obtida."
+      "Está no nível 2, mas sem padronização não chega ao 3; o próximo passo é focar no processo organizacional, defini-lo e treinar.",
+      "Já cumpre todo o modelo até o nível 3, pois a padronização para toda a organização só passa a ser exigida no nível 4.",
+      "Está no nível 3, pois o planejamento e o controle de projetos já implicam a definição e a documentação dos processos.",
+      "Precisa voltar ao nível 1, pois o CMM exige que cada área seja implementada de forma idêntica em todas as equipes antes.",
+      "Está no nível 2, e o próximo passo é a gestão quantitativa dos processos, que é a única área-chave do nível 3 do modelo."
     ],
-    "correta": 1
+    "correta": 0,
+    "resolucao": "O nível 2 (Repetível) estabelece processos básicos de gerenciamento de projetos, e o nível 3 (Definido) exige processos documentados e padronizados para toda a organização. As áreas-chave do nível 3 incluem Foco no Processo Organizacional, Definição do Processo e Programa de Treinamento, que resolvem justamente a variação entre as equipes. A gestão quantitativa é do nível 4."
   },
   {
     "id": "qualidade-cap3-m9",
@@ -1189,14 +1281,19 @@
     "capituloId": "qualidade-cap3",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "O MPS.BR possui 7 níveis de maturidade, enquanto o CMM e o CMMI possuem 5. Qual é a vantagem prática dessa granularidade maior para empresas brasileiras de pequeno porte?",
-    "alternativas": [
-      "A granularidade maior é uma desvantagem disfarçada: 7 níveis tornam o processo de certificação mais longo e custoso, pois a empresa precisa ser avaliada em mais etapas — o que contradiz o objetivo do MPS.BR de ser mais acessível do que o CMMI para MPMEs brasileiras.",
-      "A granularidade maior permite que empresas brasileiras obtenham múltiplas certificações em menos tempo, pois cada nível do MPS.BR exige menos esforço de implementação do que um nível do CMMI — empresas que buscam volume de certificações para fins de marketing se beneficiam dessa estrutura.",
-      "Permite evoluir em degraus menores (G, F, E, D, C) em vez de um salto grande, com reconhecimento a cada etapa e investimento diluído.",
-      "A granularidade maior beneficia exclusivamente as Instituições Implementadoras (IIs) credenciadas pela SOFTEX, que podem cobrar por mais avaliações intermediárias — do ponto de vista da empresa certificanda, 7 níveis representam apenas custo adicional sem benefício prático em relação aos 5 níveis do CMMI."
+    "caso": [
+      "Uma empresa organizou o seu plano de melhoria a partir de quatro áreas-chave de processo do CMM: (1) Gestão de Configuração; (2) Revisões Formais; (3) Gestão Quantitativa de Processos; (4) Prevenção de Defeitos."
     ],
-    "correta": 2
+    "enunciado": "No CMM, as áreas-chave de processo 1, 2, 3 e 4 pertencem, respectivamente, aos níveis",
+    "alternativas": [
+      "2, 3, 4 e 5.",
+      "2, 2, 4 e 5.",
+      "3, 2, 4 e 5.",
+      "2, 3, 5 e 4.",
+      "1, 3, 4 e 5."
+    ],
+    "correta": 0,
+    "resolucao": "Gestão de Configuração é área-chave do nível 2 (Repetível) (1). Revisões Formais fazem parte do nível 3 (Definido) (2). Gestão Quantitativa de Processos é do nível 4 (Gerenciado) (3). Prevenção de Defeitos é do nível 5 (Otimizado) (4). O nível 1 não tem áreas-chave de processo."
   },
   {
     "id": "qualidade-cap3-m10",
@@ -1204,14 +1301,19 @@
     "capituloId": "qualidade-cap3",
     "tipo": "objetiva",
     "nivel": "medio",
-    "enunciado": "Uma empresa de desenvolvimento de software, uma empresa de suporte e manutenção de sistemas e uma empresa de aquisição de tecnologia desejam cada uma adotar o CMMI. Qual constelação do CMMI é mais adequada para cada uma e por quê?",
-    "alternativas": [
-      "Todas as três devem adotar o CMMI-DEV, pois é a constelação mais completa e abrange implicitamente os processos de serviços e aquisição — as constelações CMMI-SVC e CMMI-ACQ são simplificações do CMMI-DEV criadas apenas para reduzir o custo de certificação de organizações menores.",
-      "Desenvolvimento usa CMMI-DEV; suporte e manutenção, CMMI-SVC (serviços); aquisição, CMMI-ACQ (gestão de fornecedores), pois cada constelação serve a um tipo de organização.",
-      "A empresa de desenvolvimento deve adotar o CMMI-DEV; as demais devem adotar o CMMI-SVC, pois tanto suporte quanto aquisição são atividades de prestação de serviço — o CMMI-ACQ foi descontinuado na versão 2.0 do modelo e suas práticas foram incorporadas ao CMMI-SVC atualizado.",
-      "Tanto faz: as três constelações avaliam os mesmos processos."
+    "caso": [
+      "Em uma aula sobre maturidade de processo, a turma reuniu informações sobre a história dos modelos e os motivos para adotá-los."
     ],
-    "correta": 1
+    "enunciado": "Sobre a origem dos modelos de maturidade e os seus benefícios, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "O CMM foi criado pela ISO na década de 1980, para certificar as empresas europeias de software em licitações.",
+      "O conceito de maturidade de processo surgiu no SEI, a partir de uma demanda do Departamento de Defesa americano.",
+      "Processos maduros permitem estimar prazos e custos com maior precisão, o que aumenta a previsibilidade.",
+      "Em processos maduros, os problemas tendem a ser identificados e tratados de forma preventiva, e não reativa.",
+      "Certificações em modelos de maturidade são exigidas em licitações e em contratos internacionais."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a da ISO: o CMM foi desenvolvido pelo SEI, da Universidade Carnegie Mellon, nos Estados Unidos, a partir de uma demanda do Departamento de Defesa americano, que precisava avaliar os seus fornecedores de software, e foi publicado em 1991. As demais alternativas trazem a origem correta e os benefícios citados no capítulo: previsibilidade, redução de riscos e competitividade."
   },
   {
     "id": "qualidade-cap4-q1",

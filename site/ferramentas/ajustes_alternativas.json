@@ -1710,42 +1710,42 @@
   "C": "Depende de critérios: Container Queries tem amplo suporte desde 2023; vale checar o suporte, ver se resolve um problema real, usar fallback e fazer piloto; a fase do ciclo é indicador, não regra."
  },
  "qualidade-cap2-m1": {
-  "C": "Confiabilidade (queda a cada 48 h, com 20 minutos para recuperar, indicando MTBF baixo) e eficiência (45 s por operação ferem o comportamento no tempo).",
-  "B": "Usabilidade e portabilidade: as quedas frustram o usuário, e a lentidão indica hardware incompatível."
+  "C": "Usabilidade e portabilidade: as quedas frustram o usuário, e a lentidão de 45 segundos mostra que o hardware é incompatível com o sistema.",
+  "B": "Apenas a funcionalidade, pois quedas mostram que o sistema não atende às necessidades dos usuários, e as demais características ficam em segundo plano."
  },
  "qualidade-cap2-m2": {
-  "C": "Qualidade interna: avalia o software sem executá-lo, e complexidade, acoplamento e comentários antecipam problemas de manutenção e confiabilidade.",
-  "B": "Qualidade externa: mede o comportamento do sistema em execução."
+  "C": "Qualidade em uso: os desenvolvedores são usuários do código, e a produtividade deles ao modificá-lo é o resultado real a avaliar.",
+  "B": "Qualidade externa: mede o comportamento observável do sistema em execução, como os tempos de resposta e as falhas durante o uso."
  },
  "qualidade-cap2-m3": {
-  "C": "Usabilidade, nas duas normas: na 9126, pela conformidade com padrões de acessibilidade; na 25010, a acessibilidade virou subcaracterística explícita da usabilidade."
+  "C": "Funcionalidade, nas duas normas, pois a WCAG 2.1 é um regulamento, e a conformidade com regulamentos é parte da funcionalidade."
  },
  "qualidade-cap2-m4": {
-  "B": "Manutenibilidade: alto acoplamento, falta de testes e documentação ruim prejudicam analisabilidade, modificabilidade e testabilidade, e o débito técnico encarece cada mudança.",
-  "D": "Portabilidade: código acoplado não migra para outras plataformas."
+  "B": "Confiabilidade: um sistema que ganha defeitos a cada mudança tem MTBF baixo, e o débito técnico é o custo das falhas que não foram corrigidas nas versões anteriores.",
+  "D": "Portabilidade: o código acoplado não consegue migrar para outras plataformas, e o débito técnico é o custo de reescrever o sistema para cada novo ambiente."
  },
  "qualidade-cap2-m5": {
-  "C": "Segurança reflete ameaças cibernéticas diárias, e proteger dados é tão básico quanto funcionar; compatibilidade reflete sistemas integrados, que precisam coexistir e interoperar via APIs.",
-  "A": "Vieram da pressão do GDPR europeu e de demandas dos mercados asiáticos."
+  "C": "inteligibilidade, apreensibilidade, atratividade e operacionalidade.",
+  "A": "inteligibilidade, apreensibilidade, operacionalidade e atratividade."
  },
  "qualidade-cap2-m6": {
-  "C": "O arquiteto: para a norma, funcionalidade é atender às necessidades do usuário, não ter muitas funções; 300 funções inadequadas são baixa funcionalidade.",
-  "B": "Os dois, em parte: a norma soma quantidade e qualidade das funções."
+  "C": "Os dois, em parte: a norma soma a quantidade e a qualidade das funções, e um número alto compensa algumas funções inadequadas.",
+  "B": "O desenvolvedor: a subcaracterística adequação mede a amplitude do conjunto de funções, e mais funções significam pontuação maior na norma."
  },
  "qualidade-cap2-m7": {
-  "C": "Eficiência, na subcaracterística utilização de recursos: bateria e armazenamento consumidos devem ser proporcionais ao que o app faz."
+  "C": "Confiabilidade, na tolerância a falhas: o consumo excessivo pode desligar o celular, o que configura uma falha do sistema."
  },
  "qualidade-cap2-m8": {
-  "C": "Adaptabilidade (rodar em Linux sem depender de APIs do Windows ou caminhos fixos) e instalabilidade (facilidade de empacotar em contêiner e implantar).",
-  "B": "Coexistência e estabilidade, para conviver com outros contêineres no mesmo host."
+  "C": "Coexistência e estabilidade: o sistema terá de conviver com outros contêineres no mesmo servidor, sem efeitos inesperados.",
+  "B": "Substituibilidade e conformidade: o sistema terá de substituir funções nativas do Windows e seguir padrões abertos do Linux."
  },
  "qualidade-cap2-m9": {
-  "C": "Testabilidade (cobertura de 80%), analisabilidade (documentação que facilita diagnosticar) e estabilidade (testes que pegam efeitos colaterais das mudanças).",
-  "A": "Analisabilidade e conformidade, pelo diagnóstico e pelo padrão de código."
+  "C": "Modificabilidade e conformidade, exclusivamente: o code review garante o padrão, e a cobertura confirma que as funções novas estão certas.",
+  "A": "Testabilidade (os testes), analisabilidade (a documentação, que facilita diagnosticar falhas) e estabilidade (testes que pegam efeitos colaterais)."
  },
  "qualidade-cap2-m10": {
-  "B": "Modelo de Qualidade (2501n) para escolher as características; Requisitos (2503n) para os critérios; Medição (2502n) para as métricas; e Avaliação (2504n) para a avaliação formal.",
-  "C": "Só a de Gerenciamento (2500n), que reúne tudo num único documento."
+  "B": "Avaliação (2504n), para definir o método; Modelo de Qualidade (2501n), para as características; e Requisitos (2503n), por último.",
+  "C": "Somente a divisão de Gerenciamento da Qualidade (2500n), que reúne em um único documento os modelos, as medições e as avaliações."
  },
  "qualidade-cap1-m1": {
   "C": "Qualidade de Produto, Qualidade em Uso e Qualidade de Processo.",
@@ -1786,41 +1786,41 @@
   "B": "Porque processos ágeis, como Scrum e Kanban, eliminam o custo das atividades de verificação, sem investimento em testes."
  },
  "qualidade-cap3-m1": {
-  "B": "Nível 1, Inicial: o sucesso depende de talentos individuais, e os resultados variam; o risco é a saída de pessoas-chave derrubar a capacidade de entrega."
+  "B": "Nível 2, Repetível: a empresa já repete sucessos em alguns projetos, o que mostra processos básicos de gerenciamento em parte das equipes."
  },
  "qualidade-cap3-m2": {
-  "C": "Os níveis são cumulativos e não dá para pular: sem a base quantitativa do nível 4, faltam dados para a otimização do nível 5, e os resultados tendem a regredir.",
-  "B": "Recebe certificação parcial no nível 5, num perfil híbrido aceito."
+  "C": "A organização recebe uma avaliação parcial no nível 5, em um perfil híbrido que o modelo aceita durante a transição.",
+  "B": "A organização pode ir direto ao nível 5, pois o CMMI v2.0 deixou de exigir a progressão em sequência para integrar as práticas ágeis."
  },
  "qualidade-cap3-m3": {
-  "C": "CMMI: tem prestígio global e é exigido em contratos internacionais; o MPS.BR é mais acessível, mas reconhecido sobretudo no Brasil.",
-  "B": "CMMI nível 2, o único aceito pelo governo americano."
+  "C": "O CMMI nível 2, pois é o único nível aceito pelo governo americano, e os demais servem apenas para o mercado interno.",
+  "B": "O MPS.BR nível A, aceito pelo Departamento de Defesa americano como substituto direto do CMMI nível 5 nas licitações."
  },
  "qualidade-cap3-m4": {
-  "B": "Aproximadamente ao nível 3 do CMMI, pois os níveis E, D e C do MPS.BR correspondem a ele; faltaria cobrir as áreas restantes do nível 3, adaptar a documentação e passar pela avaliação SCAMPI.",
-  "C": "Ao nível 4, bastando adaptar a documentação ao formato do ISACA."
+  "B": "Gerência de Riscos e Análise de Decisão, que formam a base de processos exigida no nível D do modelo.",
+  "C": "Gerência de Desempenho Quantitativo, para medir estatisticamente o desempenho dos processos."
  },
  "qualidade-cap3-m5": {
-  "C": "O MPS.BR: é aceito em licitações de TI no Brasil, está em português e custa menos que o CMMI, o que amplia a participação de pequenas e médias fornecedoras."
+  "C": "MN-MPS, MA-MPS e MR-MPS-SW."
  },
  "qualidade-cap3-m6": {
-  "C": "Mostra que maturidade e agilidade não se opõem: práticas ágeis podem implementar as áreas do CMMI, e uma organização pode usar Scrum com medição e melhoria estruturadas.",
-  "A": "A integração é só de fachada, e a incompatibilidade continua."
+  "C": "A incompatibilidade sumiu porque o Scrum virou o método oficial do CMMI, e quem o segue já é considerado nível 3 sem avaliação.",
+  "A": "Mostra que maturidade e agilidade não se opõem: práticas ágeis podem implementar as áreas do CMMI, com medição e melhoria estruturadas."
  },
  "qualidade-cap3-m7": {
-  "C": "Quando se quer melhorar áreas específicas, como uma empresa boa em projetos e fraca em riscos, sem ter de cumprir todos os requisitos de um nível.",
-  "A": "Sempre; a por estágios só existe por compatibilidade histórica."
+  "C": "I, II, III e IV.",
+  "A": "I, II e IV, apenas."
  },
  "qualidade-cap3-m8": {
-  "B": "Está no nível 2, mas sem padronização organizacional não chega ao 3; o próximo passo é foco no processo organizacional, definição do processo e treinamento.",
-  "A": "Já cumpre o nível 2, e padronizar só é exigido no nível 4."
+  "B": "Já cumpre todo o modelo até o nível 3, pois a padronização para toda a organização só passa a ser exigida no nível 4.",
+  "A": "Está no nível 2, mas sem padronização não chega ao 3; o próximo passo é focar no processo organizacional, defini-lo e treinar."
  },
  "qualidade-cap3-m9": {
-  "C": "Permite evoluir em degraus menores (G, F, E, D, C) em vez de um salto grande, com reconhecimento a cada etapa e investimento diluído."
+  "C": "3, 2, 4 e 5."
  },
  "qualidade-cap3-m10": {
-  "B": "Desenvolvimento usa CMMI-DEV; suporte e manutenção, CMMI-SVC (serviços); aquisição, CMMI-ACQ (gestão de fornecedores), pois cada constelação serve a um tipo de organização.",
-  "D": "Tanto faz: as três constelações avaliam os mesmos processos."
+  "B": "O conceito de maturidade de processo surgiu no SEI, a partir de uma demanda do Departamento de Defesa americano.",
+  "D": "Em processos maduros, os problemas tendem a ser identificados e tratados de forma preventiva, e não reativa."
  },
  "qualidade-cap4-m1": {
   "C": "Testes mostram a presença de defeitos, não a ausência: 95% de cobertura sem falhas não garante um sistema livre de erros nem adequado às necessidades reais.",
