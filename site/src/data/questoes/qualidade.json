@@ -3970,6 +3970,288 @@
     "resolucao": "A análise de causa raiz busca padrões nos defeitos para mudar o processo e prevenir defeitos semelhantes. Cada origem pede uma ação própria: requisitos ambíguos se combatem no refinamento, com critérios de aceitação testáveis; erros de integração, com testes de contrato e de integração; e regressões, com testes unitários na Definition of Done. Buscar culpados contraria a ideia de melhorar o processo."
   },
   {
+    "id": "qualidade-cap10-d1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Ao testar a versão 3.2.0 de um sistema de agendamento, no ambiente de homologação, com o Firefox 125 no Windows 11, uma testadora percebeu que, ao tentar remarcar uma consulta para um horário no dia seguinte, aparece a mensagem \"Erro inesperado\" e a consulta continua no horário antigo. O log do servidor mostra o código HTTP 500. Pela regra de negócio, a remarcação para qualquer horário livre deveria ser aceita. Ela tentou cinco vezes, e o erro aconteceu em todas. O registro que ela abriu diz apenas: \"Remarcação não funciona.\""
+    ],
+    "enunciado": "Reescreva esse registro como um bug report completo, seguindo a anatomia apresentada no capítulo, e justifique a severidade e a prioridade escolhidas.",
+    "linhas": 10,
+    "respostaEsperada": "Título: \"Erro 500 ao remarcar consulta para um horário do dia seguinte na tela de agendamento\". Severidade: Alta (S2), pois a remarcação é uma funcionalidade principal e não há contorno viável. Prioridade: Alta, pois afeta diretamente pacientes e clínicas no uso diário. Ambiente: Windows 11, Firefox 125, homologação, versão 3.2.0. Componente: Agendamento. Pré-condições: usuário autenticado com uma consulta já marcada e horários livres no dia seguinte. Passos para reproduzir: (1) abrir a consulta marcada; (2) clicar em \"Remarcar\"; (3) escolher um horário livre no dia seguinte; (4) clicar em \"Confirmar\". Resultado obtido: mensagem \"Erro inesperado\", a consulta permanece no horário antigo e o log registra HTTP 500. Resultado esperado: a consulta é remarcada para o novo horário, com mensagem de confirmação, conforme a regra de negócio. Frequência: sempre (5 em 5 tentativas). Evidências: print da tela e trecho do log com o erro 500. Reportado por: nome da testadora e data. Assim, o desenvolvedor consegue reproduzir o defeito sem precisar perguntar nada, e ele não vira \"Não Reproduzível\"."
+  },
+  {
+    "id": "qualidade-cap10-d2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Em uma empresa de software, os defeitos são comunicados por e-mail ou por mensagens no chat. Cada desenvolvedor decide sozinho o que corrigir primeiro e, quando termina, avisa que \"está resolvido\". Não há registro de quantos defeitos existem, e a diretoria não consegue saber se o produto está pronto para um lançamento. Vários defeitos reaparecem depois de \"resolvidos\", e outros são esquecidos."
+    ],
+    "enunciado": "Com base no capítulo, proponha um processo de gerenciamento de defeitos para essa empresa, explicando como ele resolveria os problemas relatados.",
+    "linhas": 10,
+    "respostaEsperada": "O primeiro passo é centralizar tudo em uma ferramenta de rastreamento, como Jira, GitHub Issues ou Azure DevOps, com um template obrigatório de bug report (título, ambiente, passos, resultado obtido e esperado, evidências, severidade e prioridade). Assim nenhum defeito se perde. Em seguida, um ciclo de vida com estados e responsáveis: o testador registra (Novo); o QA Lead ou o Tech Lead faz a triagem regular, valida, define severidade e prioridade e atribui ao desenvolvedor, o que tira dele a decisão solitária sobre o que fazer primeiro; o desenvolvedor corrige e marca como Resolvido, indicando o commit; e só o testador fecha, depois de verificar a correção e procurar regressões, ou reabre. Isso ataca os defeitos que voltam. As discussões ficam no ticket, e o número do defeito é citado nos commits. Com os dados registrados, a empresa passa a ter métricas: defeitos abertos por severidade, taxas de detecção, de correção e de reabertura, DDE e burn down, que respondem de forma objetiva se o produto está pronto. Por fim, a análise de causa raiz nas retrospectivas ajuda a evitar que defeitos semelhantes voltem."
+  },
+  {
+    "id": "qualidade-cap10-o1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em um sistema de vendas, foram registrados quatro defeitos: (1) o sistema sai do ar ao fechar o caixa e perde as vendas do dia; (2) não é possível emitir nota fiscal, e não há outra forma de fazer isso; (3) o filtro por data dos relatórios não funciona, mas dá para ordenar a lista e encontrar o período; (4) a palavra \"desconto\" aparece escrita como \"descomto\" em uma tela de configuração."
+      }
+    ],
+    "enunciado": "Pela escala da apostila, os defeitos 1, 2, 3 e 4 têm, respectivamente, severidade",
+    "alternativas": [
+      "crítica (S1), alta (S2), média (S3) e trivial (S5).",
+      "alta (S2), crítica (S1), média (S3) e trivial (S5).",
+      "crítica (S1), média (S3), alta (S2) e baixa (S4).",
+      "crítica (S1), alta (S2), baixa (S4) e trivial (S5).",
+      "alta (S2), alta (S2), média (S3) e baixa (S4)."
+    ],
+    "correta": 0,
+    "resolucao": "Sistema inoperante com perda de dados é crítico (S1), com correção imediata (1). Funcionalidade principal comprometida sem contorno viável é alta (S2), com correção na sprint atual (2). Funcionalidade afetada, mas com um contorno aceitável, é média (S3) (3). Erro de ortografia, imperceptível para o uso, é trivial (S5) (4). A severidade baixa (S4) fica para problemas menores de usabilidade ou cosméticos."
+  },
+  {
+    "id": "qualidade-cap10-o2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "A equipe de QA classificou quatro defeitos: (1) a busca funciona no Chrome, mas não no Safari; (2) o relatório mensal leva 45 segundos para carregar; (3) a senha do usuário aparece em texto puro no log da aplicação; (4) o valor total do pedido é arredondado para baixo de forma errada."
+      }
+    ],
+    "enunciado": "Pela classificação por tipo da apostila, os defeitos 1, 2, 3 e 4 são, respectivamente, de",
+    "alternativas": [
+      "compatibilidade, performance, segurança e dados.",
+      "interface, performance, segurança e dados.",
+      "compatibilidade, usabilidade, segurança e funcional.",
+      "compatibilidade, performance, dados e segurança.",
+      "funcional, performance, segurança e regressão."
+    ],
+    "correta": 0,
+    "resolucao": "Comportamento incorreto em um navegador, sistema ou dispositivo específico é defeito de compatibilidade (1). Lentidão ou consumo excessivo de recursos é de performance (2). Senha visível em log compromete a confidencialidade: é de segurança (3). Valor arredondado de forma incorreta é um problema de dados (4). Os quatro exemplos estão na própria apostila."
+  },
+  {
+    "id": "qualidade-cap10-o3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe está configurando os estados do ciclo de vida dos defeitos na sua ferramenta de rastreamento."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Um defeito marcado como Duplicado é fechado com uma referência ao registro original.",
+      "II. Um defeito marcado como Não Reproduzível é fechado automaticamente como inválido, sem mais nenhuma ação.",
+      "III. Um defeito marcado como Won't Fix foi reconhecido, mas se decidiu não corrigi-lo neste ciclo.",
+      "IV. Um defeito Reaberto volta ao desenvolvedor porque a correção foi insuficiente ou causou uma regressão."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, III e IV, apenas.",
+      "I e III, apenas.",
+      "I e IV, apenas.",
+      "III e IV, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I, III e IV descrevem corretamente os estados do ciclo de vida da apostila. II é falsa: quando o defeito não pode ser reproduzido com as informações fornecidas, solicitam-se mais detalhes a quem o registrou; ele não é simplesmente descartado."
+  },
+  {
+    "id": "qualidade-cap10-o4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Todos os dias, por volta das 18 horas, os usuários de um sistema de pedidos relatam que ele fica lento. Ainda não se sabe a causa."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. A lentidão observada em certo horário deve ser registrada, a princípio, como incidente, e não necessariamente como defeito.",
+      "PORQUE",
+      "II. Um incidente é qualquer evento que exige investigação e pode ou não ser causado por um defeito."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II explica a I. A lentidão pode vir de um defeito no código, mas também de um pico de carga, de um problema de rede ou de uma tarefa agendada no servidor. É o exemplo da própria apostila: um sistema lento em determinado horário é um incidente até que a investigação mostre a causa; só então se sabe se há um defeito a registrar."
+  },
+  {
+    "id": "qualidade-cap10-o5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Depois da entrega de um sistema de estoque, que exporta relatórios em PDF, como diz a especificação, um cliente abriu um chamado: \"O sistema deveria exportar os relatórios também em Excel.\""
+      }
+    ],
+    "enunciado": "Como a equipe deve registrar esse pedido?",
+    "alternativas": [
+      "Como melhoria (enhancement), pois é um comportamento que não estava especificado, e não um defeito.",
+      "Como defeito de severidade alta, pois o cliente considera que falta algo importante no sistema.",
+      "Como defeito de compatibilidade, pois o sistema não funciona com o Excel, que o cliente usa no dia a dia.",
+      "Como defeito de regressão, pois algo que o cliente esperava deixou de existir no sistema entregue.",
+      "Em lugar nenhum, pois só defeitos entram na ferramenta de rastreamento, e pedidos novos ficam por e-mail."
+    ],
+    "correta": 0,
+    "resolucao": "Entre as boas práticas da apostila está diferenciar defeito de melhoria: um comportamento que não estava especificado, mas que o usuário gostaria de ter, é uma melhoria. Registrá-lo como defeito distorce as métricas, como a densidade de defeitos, e reportar sugestões como defeitos é um dos antipadrões do bug report. A melhoria também deve ser registrada, na categoria certa."
+  },
+  {
+    "id": "qualidade-cap10-o6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em média, por sprint, a equipe encontra 60 defeitos novos e corrige e verifica 45. Dos 45 corrigidos, 9 são reabertos porque a correção não resolveu o problema."
+      }
+    ],
+    "enunciado": "A análise correta das métricas é:",
+    "alternativas": [
+      "O backlog cresce 15 defeitos por sprint, e a reabertura de 20% mostra correções de baixa qualidade.",
+      "O backlog diminui 15 defeitos por sprint, e a reabertura de 20% está dentro da meta de prontidão.",
+      "O backlog fica estável, pois cada correção cobre um defeito, e a reabertura é de 9%, abaixo de 10%.",
+      "O backlog cresce 15 defeitos por sprint, mas a reabertura de 20% mostra correções de alta qualidade.",
+      "As métricas não permitem avaliar o backlog, pois a detecção e a correção medem coisas diferentes."
+    ],
+    "correta": 0,
+    "resolucao": "Comparar a taxa de detecção com a de correção mostra se o backlog de defeitos cresce ou diminui: com 60 novos e 45 corrigidos e verificados por sprint, ele cresce 15 a cada sprint. A taxa de reabertura é 9 de 45, ou 20%, o dobro do limite de 10% citado nos critérios de prontidão; uma taxa alta indica baixa qualidade nas correções."
+  },
+  {
+    "id": "qualidade-cap10-o7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Às vésperas de um release, cujos critérios seguem os indicadores da apostila (com no máximo 3 defeitos S2 abertos), a equipe tem: nenhum defeito S1 aberto; 5 defeitos S2 abertos; DDE de 93%; taxa de reabertura de 8%; e um defeito novo de severidade alta encontrado ontem nos testes."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. O critério sobre defeitos críticos (S1) está atendido.",
+      "II. O critério sobre defeitos de severidade alta (S2) não está atendido.",
+      "III. Os critérios de DDE e de taxa de reabertura estão atendidos.",
+      "IV. O defeito de severidade alta aberto ontem não impede o release, pois os outros critérios foram cumpridos."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e III, apenas.",
+      "I e II, apenas.",
+      "I e III, apenas.",
+      "II e III, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: não há defeitos S1 abertos, e o critério é zero. II é verdadeira: há 5 defeitos S2 abertos, acima do limite de 3. III é verdadeira: o DDE de 93% passa dos 90%, e a reabertura de 8% fica abaixo de 10%. IV é falsa: um dos indicadores de prontidão é não ter nenhum defeito novo de alta severidade nas últimas 48 horas de teste; somado ao critério de S2, o produto não está pronto."
+  },
+  {
+    "id": "qualidade-cap10-o8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Na reunião diária de triagem, a equipe encontrou um defeito novo, válido, e outro que repete um registro já existente."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Na triagem, o QA Lead ou o Tech Lead valida o defeito, define a severidade e a prioridade e o atribui ao desenvolvedor responsável.",
+      "PORQUE",
+      "II. Na triagem, os defeitos duplicados devem seguir todo o fluxo, até a verificação, para que nenhuma informação se perca."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A I é verdadeira: é o papel da triagem na tabela de responsabilidades por estado. A II é falsa: pela apostila, defeitos inválidos ou duplicados são fechados diretamente na triagem; o duplicado é fechado com uma referência ao registro original, onde as informações continuam disponíveis."
+  },
+  {
+    "id": "qualidade-cap10-o9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Quatro equipes escolhem uma ferramenta de gerenciamento de defeitos: (1) um projeto de código aberto que precisa de uma solução gratuita, hospedada nos próprios servidores, com dependências entre bugs; (2) um time .NET que usa Azure e quer relatórios no Power BI; (3) desenvolvedores que querem que a issue seja fechada sozinha quando o pull request da correção for aceito; (4) um time ágil que precisa de fluxos de trabalho muito personalizados e de casos de teste integrados por plugins."
+      }
+    ],
+    "enunciado": "As ferramentas mais adequadas às equipes 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "Bugzilla, Azure DevOps, GitHub Issues e Jira.",
+      "Jira, Azure DevOps, GitHub Issues e Bugzilla.",
+      "Bugzilla, GitHub Issues, Azure DevOps e Jira.",
+      "GitHub Issues, Azure DevOps, Bugzilla e Jira.",
+      "Bugzilla, Azure DevOps, Jira e GitHub Issues."
+    ],
+    "correta": 0,
+    "resolucao": "O Bugzilla, da Mozilla, é gratuito, pode ser hospedado pela própria organização e tem dependências entre bugs (1). O Azure DevOps se integra ao ecossistema Microsoft e tem relatórios excelentes com Power BI (2). O GitHub Issues fica junto do código e pode fechar a issue automaticamente quando o pull request com a correção é integrado (3). O Jira tem fluxos muito customizáveis e plugins como Zephyr e Xray para integrar os casos de teste (4)."
+  },
+  {
+    "id": "qualidade-cap10-o10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap10",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe vai escrever o seu guia interno de gerenciamento de defeitos e reuniu algumas recomendações."
+      }
+    ],
+    "enunciado": "Sobre as boas práticas de gerenciamento de defeitos, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "As discussões sobre o defeito devem ficar no chat da equipe, que é mais rápido, e o registro deve ter só o título e a severidade.",
+      "O número do defeito deve ser citado nos commits e nos pull requests, criando rastreabilidade entre o código e o defeito.",
+      "Um template obrigatório na ferramenta de rastreamento garante que as informações essenciais não sejam omitidas.",
+      "A triagem deve ser regular, pois um backlog de defeitos não triados é uma dívida técnica escondida.",
+      "As causas raiz devem ser analisadas periodicamente para encontrar padrões, como módulos com muitos defeitos."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a do chat: pela apostila, toda discussão sobre o defeito, como esclarecimentos, descobertas da investigação e a razão da abordagem escolhida, deve ficar registrada no próprio ticket, e não em conversas que se perdem. Um registro só com título e severidade também fere o template padronizado. As demais alternativas são boas práticas do capítulo."
+  },
+  {
     "id": "qualidade-cap11-m1",
     "disciplinaId": "qualidade-e-testes-de-software",
     "capituloId": "qualidade-cap11",
@@ -4151,6 +4433,288 @@
     ],
     "correta": 0,
     "resolucao": "A apostila lembra que a cobertura é um indicador, e não um objetivo: 85% com testes superficiais pode valer menos que 60% com testes bem pensados. Os números preocupantes são outros: a taxa de falha de mudança de 18% (as equipes de elite ficam abaixo de 5%), o MTTR de 6 horas (a elite fica abaixo de uma hora) e 28% de builds falhando, sinal de um processo instável. Equipes de alto desempenho acompanham um conjunto equilibrado de métricas, sem otimizar uma só."
+  },
+  {
+    "id": "qualidade-cap11-d1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Em uma empresa de software, os testes rodam apenas no notebook de cada desenvolvedor, quando ele se lembra. As versões são publicadas manualmente, às sextas-feiras à noite, copiando os arquivos para o servidor. Nos últimos meses, três publicações levaram para produção um código que nem compilava, e uma delas expôs no repositório a senha do banco de dados."
+    ],
+    "enunciado": "Proponha um pipeline de CI/CD com quality gates para essa empresa, explicando como cada etapa ajudaria a evitar os problemas relatados.",
+    "linhas": 10,
+    "respostaEsperada": "O pipeline começaria a cada commit, com análise de código (linting), secret scanning, que teria barrado a senha enviada ao repositório, e um SAST rápido. Depois, o build automatizado, com verificação das dependências (SCA) e geração de artefatos versionados: código que não compila para ali, e nunca chega à produção. Em seguida, os testes unitários, com medição de cobertura, e os de integração, com testes de contrato de API e de banco em contêiner isolado, que deixam de depender da memória de cada desenvolvedor. Na análise estática completa, o SonarQube verifica segurança, qualidade e duplicações. O deploy em staging seria automático, com smoke tests e testes de aceitação, e depois viriam o DAST, a performance básica e a acessibilidade. Os quality gates bloqueiam o avanço se algo falhar: cobertura abaixo do mínimo, vulnerabilidade crítica, segredo no código ou teste de regressão quebrado, com aprovação manual para releases críticos. Por fim, o deploy em produção seria gradual (canary ou blue-green), com smoke tests e monitoramento, e não uma cópia manual de arquivos na sexta à noite."
+  },
+  {
+    "id": "qualidade-cap11-d2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma equipe de desenvolvimento tem taxa de falha de mudança de 25% e leva, em média, 8 horas para restaurar o serviço depois de um incidente. A cada problema, a liderança anuncia uma grande mudança no processo, mas nada é medido depois, e as mudanças são abandonadas em poucas semanas."
+    ],
+    "enunciado": "Explique como a equipe poderia usar o ciclo PDCA e as técnicas de melhoria contínua do capítulo para melhorar esses resultados de forma sustentável.",
+    "linhas": 10,
+    "respostaEsperada": "O problema é mudar sem planejar nem medir. No Plan, a equipe partiria dos dados (25% de falha de mudança e 8 horas de MTTR, comparados ao padrão de elite das pesquisas DORA: menos de 5% e menos de uma hora), usaria a análise de causa raiz, com os \"5 Porquês\" ou o diagrama de Ishikawa, para entender por que os deploys falham e por que a recuperação é lenta, e definiria objetivos mensuráveis, como reduzir a falha de mudança para 15% no próximo trimestre. No Do, aplicaria as mudanças em escala controlada, em uma equipe ou sprint piloto, por exemplo testes automatizados no pipeline e um procedimento de rollback. No Check, mediria se as métricas melhoraram e se houve efeitos colaterais. No Act, padronizaria e expandiria o que funcionou, ou ajustaria a abordagem e repetiria o ciclo, registrando o aprendizado. No lugar das grandes reformas, a ideia de Kaizen: pequenas melhorias frequentes, atacando primeiro a maior fonte de problemas. Retrospectivas com dados e post-mortems sem culpa depois de cada incidente alimentam o ciclo seguinte."
+  },
+  {
+    "id": "qualidade-cap11-o1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em uma empresa: (1) uma auditoria revisa se o processo de desenvolvimento está sendo seguido e onde ele pode melhorar; (2) a equipe inspeciona o produto e revisa o código antes da entrega; (3) os testadores executam os casos de teste da nova versão."
+      }
+    ],
+    "enunciado": "As atividades 1, 2 e 3 são, respectivamente, de",
+    "alternativas": [
+      "Garantia de Qualidade (QA), Controle de Qualidade (QC) e Teste.",
+      "Controle de Qualidade (QC), Garantia de Qualidade (QA) e Teste.",
+      "Garantia de Qualidade (QA), Teste e Controle de Qualidade (QC).",
+      "Teste, Controle de Qualidade (QC) e Garantia de Qualidade (QA).",
+      "Garantia de Qualidade (QA) nas três, pois todas melhoram a qualidade."
+    ],
+    "correta": 0,
+    "resolucao": "A QA é orientada ao processo e preventiva: auditar e revisar a forma de trabalhar é QA (1). O QC é orientado ao produto e detectivo: inspecionar o produto e revisar o código é QC (2). O Teste também é detectivo e voltado ao produto, e o seu exemplo típico é a execução de casos de teste (3). Os três exemplos estão na tabela da apostila."
+  },
+  {
+    "id": "qualidade-cap11-o2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em um time ágil, a profissional de QA: (1) ajuda o PO a escrever critérios de aceitação e revisa o design pensando em como testá-lo; (2) escolhe o framework de automação e define os padrões dos testes; (3) faz sessões livres de teste, simulando o comportamento de usuários reais; (4) dá oficinas para os desenvolvedores sobre como escrever bons testes."
+      }
+    ],
+    "enunciado": "Nas situações 1, 2, 3 e 4, o QA atua, respectivamente, como",
+    "alternativas": [
+      "consultor, automatizador, explorador e coach.",
+      "automatizador, consultor, explorador e coach.",
+      "consultor, automatizador, analista de qualidade e coach.",
+      "consultor, explorador, automatizador e analista de qualidade.",
+      "coach, automatizador, explorador e consultor."
+    ],
+    "correta": 0,
+    "resolucao": "Ajudar a definir critérios de aceitação e revisar a testabilidade é o papel de consultor (1). Liderar a estratégia de automação e definir frameworks e padrões é o de automatizador (2). Conduzir sessões exploratórias para achar o que os scripts não cobrem é o de explorador (3). Treinar e capacitar o time em práticas de qualidade é o de coach (4). O analista de qualidade coleta e interpreta métricas e comunica riscos."
+  },
+  {
+    "id": "qualidade-cap11-o3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe vai montar o seu primeiro pipeline de Integração Contínua e listou o que ele deve ter."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Cada push no repositório dispara um build automatizado.",
+      "II. O retorno ao desenvolvedor pode levar até um dia, desde que seja completo.",
+      "III. O merge na branch principal pode ser feito com o build vermelho quando o prazo estiver apertado.",
+      "IV. Os testes automatizados são executados a cada build."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e IV, apenas.",
+      "I, apenas.",
+      "IV, apenas.",
+      "I, II e IV, apenas.",
+      "I, III e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "Entre os elementos essenciais de um pipeline de CI, a apostila lista o build automatizado a cada push (I, verdadeira) e os testes automatizados a cada build (IV, verdadeira). II é falsa: o retorno deve ser rápido, em menos de 10 minutos. III é falsa: o build verde é pré-requisito para o merge na branch principal."
+  },
+  {
+    "id": "qualidade-cap11-o4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Na revisão da suíte de testes, a equipe encontrou testes longos, em que a preparação dos dados, as chamadas e as verificações aparecem misturadas. Uma desenvolvedora propôs reorganizá-los no padrão AAA."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Organizar cada teste no padrão AAA (Arrange, Act, Assert) torna os testes mais fáceis de entender e de manter.",
+      "PORQUE",
+      "II. O padrão AAA separa, em cada teste, a preparação do cenário, a ação testada e a verificação do resultado."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II explica a I. A apostila recomenda manter os testes simples e legíveis, seguindo o padrão AAA ou o Given-When-Then. Com as três partes separadas, quem lê o teste vê logo o que foi preparado, o que foi feito e o que se espera, e um teste fácil de entender é fácil de manter."
+  },
+  {
+    "id": "qualidade-cap11-o5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe comparou ferramentas de CI/CD: (1) integrada ao repositório do GitHub, com workflows em YAML; (2) configurada pelo arquivo .gitlab-ci.yml, dentro da própria plataforma do repositório; (3) servidor de código aberto com mais de 1.800 plugins, muito customizável, mas trabalhoso de manter; (4) plataforma na nuvem com \"orbs\" reutilizáveis e foco em velocidade."
+      }
+    ],
+    "enunciado": "As ferramentas de CI/CD descritas em 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "GitHub Actions, GitLab CI/CD, Jenkins e CircleCI.",
+      "GitLab CI/CD, GitHub Actions, Jenkins e CircleCI.",
+      "GitHub Actions, GitLab CI/CD, CircleCI e Jenkins.",
+      "GitHub Actions, Jenkins, GitLab CI/CD e Azure Pipelines.",
+      "Azure Pipelines, GitLab CI/CD, Jenkins e CircleCI."
+    ],
+    "correta": 0,
+    "resolucao": "O GitHub Actions é integrado ao GitHub, com workflows em YAML e um marketplace de actions (1). O GitLab CI/CD é configurado no arquivo .gitlab-ci.yml (2). O Jenkins é o servidor de automação de código aberto mais antigo e flexível, com mais de 1.800 plugins, mas exige mais configuração e manutenção (3). O CircleCI é uma plataforma cloud-native com orbs reutilizáveis (4). O Azure Pipelines integra-se ao ecossistema Microsoft."
+  },
+  {
+    "id": "qualidade-cap11-o6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe mediu as quatro métricas DORA no último trimestre: cinco deploys por dia; lead time for changes de três dias; taxa de falha de mudança de 4%; e MTTR de 30 minutos."
+      }
+    ],
+    "enunciado": "Comparando com o perfil de elite das pesquisas DORA, qual métrica da equipe está fora do padrão?",
+    "alternativas": [
+      "O lead time for changes, pois a elite leva menos de uma hora do commit até a produção, e a equipe leva três dias.",
+      "A frequência de deploy, pois a elite faz um deploy por semana, e cinco por dia é um excesso que gera risco.",
+      "A taxa de falha de mudança, pois a elite tem zero falhas, e 4% dos deploys causando incidentes é muito alto.",
+      "O MTTR, pois a elite restaura o serviço em menos de cinco minutos, e a equipe leva trinta minutos.",
+      "Nenhuma, pois as quatro métricas da equipe já estão dentro do padrão de elite das pesquisas DORA."
+    ],
+    "correta": 0,
+    "resolucao": "Pelas pesquisas DORA, as equipes de elite fazem deploy várias vezes por dia, têm lead time de menos de uma hora, taxa de falha de mudança abaixo de 5% e MTTR abaixo de uma hora. A frequência (5 por dia), a taxa de falha (4%) e o MTTR (30 minutos) estão no padrão; só o lead time, de três dias, fica muito acima da meta."
+  },
+  {
+    "id": "qualidade-cap11-o7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Na revisão das práticas de teste de uma fintech, a equipe discutiu os dados usados nos testes e o papel da cobertura de código."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Dados de teste triviais, como usuário \"teste\" e valor 1, podem esconder problemas que os dados reais revelariam.",
+      "II. O recomendado é copiar os dados reais de produção para os testes, sem nenhum tratamento, para ganhar realismo.",
+      "III. Uma cobertura de 80% com testes superficiais vale menos que 60% com testes robustos e bem pensados.",
+      "IV. A cobertura deve ser usada para encontrar lacunas nos testes, e não como uma meta a ser batida."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, III e IV, apenas.",
+      "I e III, apenas.",
+      "I e IV, apenas.",
+      "III e IV, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: dados simples demais não exercitam situações reais. II é falsa: a apostila recomenda dados parecidos com os de produção, mas com técnicas de ofuscação, para usá-los com segurança; copiar dados reais sem tratamento expõe informações pessoais. III e IV são verdadeiras: a cobertura é um indicador, e não um objetivo, e não deve ser \"gamificada\"."
+  },
+  {
+    "id": "qualidade-cap11-o8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um gerente quer proibir a programação em pares na equipe, alegando que \"é pagar dois salários para escrever o mesmo código\"."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. A programação em pares dobra o custo do desenvolvimento sem nenhum ganho de qualidade, pois duas pessoas fazem o trabalho de uma.",
+      "PORQUE",
+      "II. Na programação em pares, um desenvolvedor escreve e o outro revisa em tempo real, o que funciona como uma revisão de código contínua."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A II é verdadeira, e é por ela que a I é falsa. No XP, a programação em pares funciona como revisão de código contínua e previne defeitos antes mesmo de eles chegarem ao repositório. Como corrigir um defeito fica mais caro a cada fase, encontrá-lo enquanto o código é escrito é um ganho real de qualidade, e não um desperdício."
+  },
+  {
+    "id": "qualidade-cap11-o9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Na análise de um incidente, a equipe perguntou \"por quê?\" várias vezes: o desconto foi calculado errado em produção, porque a regra de desconto mudou e o código não foi atualizado; o código não foi atualizado porque a nova regra foi enviada por e-mail a uma única pessoa, que estava de férias; e a regra foi enviada por e-mail porque não existe nenhum processo para registrar mudanças de requisito no backlog."
+      }
+    ],
+    "enunciado": "Pela técnica dos \"5 Porquês\", a causa raiz do incidente e a ação mais adequada são:",
+    "alternativas": [
+      "A falta de um processo para registrar as mudanças de requisito no backlog; a ação é criar esse processo de controle de mudanças.",
+      "O erro do desenvolvedor no cálculo; a ação é registrar a falha dele e exigir mais atenção nas próximas entregas.",
+      "O cálculo de desconto errado; a ação é corrigir o código e encerrar a análise, já que o defeito foi resolvido.",
+      "A falta de testes automatizados; a ação é aumentar a cobertura de testes, pois isso resolve a origem do problema.",
+      "O e-mail do diretor; a ação é proibir que os diretores mandem e-mails com pedidos de mudança para a equipe."
+    ],
+    "correta": 0,
+    "resolucao": "Os \"5 Porquês\" seguem a cadeia de causas até chegar à causa fundamental, e não param no sintoma. Aqui, o cálculo errado é o sintoma, e a regra desatualizada no código é uma causa intermediária; a causa raiz é a ausência de um processo que leve as mudanças de requisito para o backlog. Culpar o desenvolvedor contraria a ideia de post-mortems sem culpa, e mais testes não resolveriam um requisito que nunca chegou à equipe."
+  },
+  {
+    "id": "qualidade-cap11-o10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap11",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa quer descrever, no seu guia de cultura, como deve ser uma equipe com qualidade de verdade."
+      }
+    ],
+    "enunciado": "Sobre uma cultura de qualidade autêntica, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "Cortar testes por pressão de prazo deve ser decidido em silêncio pela equipe técnica, para não preocupar a liderança.",
+      "Os defeitos são vistos como oportunidades de aprendizado, e não como falhas pessoais de quem os introduziu.",
+      "A qualidade é responsabilidade de todos: desenvolvedores, testadores, Product Owner e equipe de DevOps.",
+      "O feedback é rápido, concreto e baseado em dados, e não em opiniões sobre o trabalho das pessoas.",
+      "A liderança dá o exemplo, praticando os comportamentos de qualidade que espera ver na equipe."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a do corte de testes: pela apostila, em uma cultura de qualidade, cortar atalhos de qualidade por pressão de prazo é uma decisão explícita e consciente, nunca tácita ou ignorada. As demais alternativas estão na lista de características de uma cultura de qualidade autêntica."
   },
   {
     "id": "qualidade-cap8-m1",
@@ -4783,5 +5347,293 @@
     ],
     "correta": 0,
     "resolucao": "Nenhum conjunto de medidas torna um sistema \"completamente seguro\". As ferramentas automatizadas encontram só uma parte das vulnerabilidades, e o pentest anual deixa lacunas entre uma avaliação e outra. O ciclo de vida seguro da apostila inclui ainda requisitos e modelagem de ameaças, treinamento em codificação segura, gestão de segredos, hardening, WAF, monitoramento, gestão de patches e plano de resposta a incidentes."
+  },
+  {
+    "id": "qualidade-cap9-d1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma startup desenvolveu, durante um ano, uma plataforma de telemedicina sem nenhuma atividade de segurança. Uma semana antes do lançamento, contratou um pentest, que encontrou 40 vulnerabilidades, 12 delas ligadas ao próprio desenho do sistema, como a recuperação de senha por perguntas fáceis e a ausência de limite de tentativas de login. O lançamento atrasou três meses, e parte da arquitetura teve de ser refeita."
+    ],
+    "enunciado": "Com base no capítulo, explique como a startup deveria ter integrado a segurança ao seu ciclo de desenvolvimento para evitar essa situação.",
+    "linhas": 10,
+    "respostaEsperada": "A startup tratou a segurança como uma etapa no fim, o oposto do Shift-Left Security, que leva as atividades de segurança para as fases iniciais, onde corrigir custa muito menos; pela apostila, uma vulnerabilidade corrigida em produção pode custar até 30 vezes mais do que no design. Pelo ciclo de vida seguro: nos requisitos, incluir requisitos e critérios de aceitação de segurança e fazer a modelagem de ameaças (STRIDE), o que teria revelado as falhas de design (A04), como a recuperação de senha e a falta de limite de tentativas; no design, aplicar defesa em profundidade e menor privilégio; na implementação, treinar a equipe em codificação segura e revisar o código com foco em segurança; nos testes, SAST, SCA e DAST no pipeline, como em uma abordagem DevSecOps; no deploy, hardening e gestão de segredos; e, na operação, monitoramento, atualização de dependências e plano de resposta a incidentes. O pentest continuaria sendo importante, mas como uma camada a mais, e não como a única verificação, feita quando já é tarde demais."
+  },
+  {
+    "id": "qualidade-cap9-d2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "O relatório de um pentest em um sistema de notas fiscais trouxe os achados abaixo. A equipe tem poucos desenvolvedores e quer saber por onde começar."
+    ],
+    "enunciado": "Com base na classificação CVSS e nas boas práticas de gestão de vulnerabilidades do capítulo, proponha a ordem de tratamento desses achados e explique como a equipe deve acompanhar as correções.",
+    "linhas": 10,
+    "respostaEsperada": "A ordem segue a severidade do CVSS. Primeiro, a execução remota de código sem autenticação (9,8, crítica): correção imediata, em horas, por permitir que qualquer pessoa assuma o servidor. Em seguida, as altas, com correção urgente, em dias: o IDOR nas notas fiscais (8,1), que expõe documentos de outros clientes (A01) e deve ser resolvido checando a autorização no servidor, e o XSS persistente (7,5), com encode da saída e CSP. Depois, a média: o CSRF (5,4), com correção planejada, em semanas. Por fim, a baixa: a versão do servidor exposta (2,1), corrigida no próximo ciclo, escondendo a informação. Para acompanhar, cada vulnerabilidade deve ser registrada em uma ferramenta, como Jira ou DefectDojo, com responsável, prazo e status; depois de corrigida, deve ser testada de novo para confirmar a correção; e a equipe deve analisar as causas, como a falta de validação de autorização, para evitar que falhas do mesmo tipo voltem a aparecer.",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "Achado                                     CVSS\nExecução remota de código sem autenticação  9,8\nIDOR: acesso às notas de outros clientes    8,1\nXSS persistente nos comentários             7,5\nCSRF na troca de e-mail do perfil           5,4\nVersão do servidor exposta nos cabeçalhos   2,1"
+      }
+    ]
+  },
+  {
+    "id": "qualidade-cap9-o1",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma loja virtual sofreu três incidentes em um ano: (1) os dados de cartão dos clientes foram copiados por meio de uma SQL Injection; (2) um atacante alterou os preços dos produtos no banco de dados; (3) um ataque DDoS deixou o site fora do ar durante a Black Friday."
+      }
+    ],
+    "enunciado": "Os incidentes 1, 2 e 3 violam, respectivamente, as propriedades da tríade CIA",
+    "alternativas": [
+      "confidencialidade, integridade e disponibilidade.",
+      "integridade, confidencialidade e disponibilidade.",
+      "confidencialidade, disponibilidade e integridade.",
+      "disponibilidade, integridade e confidencialidade.",
+      "confidencialidade, integridade e autenticidade."
+    ],
+    "correta": 0,
+    "resolucao": "O vazamento dos dados de cartão expõe informações a quem não deveria vê-las: confidencialidade (1). A alteração dos preços modifica dados sem autorização: integridade (2). O ataque que derruba o site impede o acesso quando ele é necessário: disponibilidade (3). Os três exemplos são os da tabela da apostila."
+  },
+  {
+    "id": "qualidade-cap9-o2",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em uma análise de segurança de um e-commerce, a equipe registrou: (1) o campo de busca aceita qualquer texto, sem validação; (2) um grupo criminoso que ataca lojas virtuais do setor; (3) a chance alta de esse grupo usar o campo de busca, combinada com o impacto alto de um vazamento; (4) o conjunto de todas as telas, APIs e serviços expostos à internet."
+      }
+    ],
+    "enunciado": "Os elementos 1, 2, 3 e 4 correspondem, respectivamente, aos conceitos de",
+    "alternativas": [
+      "vulnerabilidade, ameaça, risco e superfície de ataque.",
+      "ameaça, vulnerabilidade, risco e superfície de ataque.",
+      "vulnerabilidade, ameaça, superfície de ataque e risco.",
+      "vulnerabilidade, risco, ameaça e vetor de ataque.",
+      "vetor de ataque, ameaça, risco e superfície de ataque."
+    ],
+    "correta": 0,
+    "resolucao": "Uma fraqueza que pode ser explorada é uma vulnerabilidade (1). Um agente ou evento com potencial para explorá-la é uma ameaça (2). A combinação da probabilidade de a ameaça explorar a vulnerabilidade com o impacto resultante é o risco (3). O conjunto total de pontos de entrada disponíveis para um atacante é a superfície de ataque (4). O vetor de ataque é o caminho usado em um ataque específico."
+  },
+  {
+    "id": "qualidade-cap9-o3",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um banco contratou três pentests: (1) a equipe recebe só o endereço do site, sem nenhuma outra informação; (2) a equipe recebe o código-fonte, os diagramas da arquitetura e senhas de administrador; (3) a equipe recebe o login de um cliente comum e tenta acessar funções restritas aos gerentes."
+      }
+    ],
+    "enunciado": "Os pentests 1, 2 e 3 são, respectivamente, do tipo",
+    "alternativas": [
+      "black box, white box e gray box.",
+      "white box, black box e gray box.",
+      "black box, gray box e white box.",
+      "gray box, white box e black box.",
+      "black box, white box e black box."
+    ],
+    "correta": 0,
+    "resolucao": "No black box, o pen tester não tem conhecimento prévio do sistema e simula um atacante externo (1). No white box, tem acesso total, com código, arquitetura e credenciais, e o teste é o mais completo (2). No gray box, tem conhecimento parcial, normalmente as credenciais de um usuário comum, e simula um usuário legítimo mal-intencionado tentando elevar os seus privilégios (3)."
+  },
+  {
+    "id": "qualidade-cap9-o4",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma testadora vai usar o OWASP ZAP pela primeira vez e anotou o que faz cada recurso da ferramenta."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. O spider percorre a aplicação e mapeia automaticamente os endpoints e recursos encontrados.",
+      "II. A varredura passiva envia payloads maliciosos para descobrir XSS e SQL Injection.",
+      "III. O fuzzer envia dados inesperados ou malformados para encontrar falhas de validação.",
+      "IV. O modo daemon executa o ZAP sem interface gráfica, o que permite usá-lo em pipelines de CI/CD."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, III e IV, apenas.",
+      "I e III, apenas.",
+      "I e IV, apenas.",
+      "III e IV, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I, III e IV descrevem corretamente recursos do OWASP ZAP. II é falsa: a varredura passiva só analisa o tráfego já capturado, sem enviar requisições extras, e encontra problemas como cabeçalhos de segurança ausentes; quem envia payloads maliciosos é a varredura ativa."
+  },
+  {
+    "id": "qualidade-cap9-o5",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em um fórum, um usuário publicou um comentário com um script escondido. Todos que abriam a página tinham o seu login roubado. A equipe discute como impedir que isso se repita."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Codificar (encode) os dados exibidos no HTML e usar uma Content Security Policy (CSP) ajudam a prevenir o XSS.",
+      "PORQUE",
+      "II. No XSS, scripts maliciosos são injetados na aplicação e executados no navegador de outros usuários."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II explica a I. Como o ataque depende de o navegador executar um script colocado pelo atacante, a defesa é impedir essa execução: o encode faz o navegador tratar o conteúdo como texto, e não como código, e a CSP limita quais scripts podem rodar na página. A sanitização das entradas completa a prevenção."
+  },
+  {
+    "id": "qualidade-cap9-o6",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Na modelagem de ameaças de um aplicativo bancário, a equipe identificou: (1) um atacante usa o token de sessão roubado de um cliente para agir em nome dele; (2) o valor de um pagamento é alterado entre o aplicativo e o servidor; (3) um cliente nega ter feito uma transferência, e o sistema não tem registro que prove o contrário; (4) um usuário comum consegue acessar as funções de administrador."
+      }
+    ],
+    "enunciado": "Pela metodologia STRIDE, as ameaças 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "Spoofing, Tampering, Repudiation e Elevation of Privilege.",
+      "Tampering, Spoofing, Repudiation e Elevation of Privilege.",
+      "Spoofing, Tampering, Information Disclosure e Elevation of Privilege.",
+      "Spoofing, Repudiation, Tampering e Denial of Service.",
+      "Elevation of Privilege, Tampering, Repudiation e Spoofing."
+    ],
+    "correta": 0,
+    "resolucao": "Usar o token de outra pessoa para se passar por ela é Spoofing (1). Alterar o valor do pedido no caminho é Tampering, a modificação de dados (2). Negar ter feito a transferência, sem que haja como provar o contrário, é Repudiation (3). Um usuário comum que obtém permissões de administrador é Elevation of Privilege (4). Information Disclosure é a exposição de dados confidenciais, e Denial of Service, tornar o sistema indisponível."
+  },
+  {
+    "id": "qualidade-cap9-o7",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em um treinamento sobre o OWASP Top 10 2021, os alunos associaram exemplos às categorias."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Uma recuperação de senha baseada em perguntas fáceis de adivinhar é um exemplo de A04 (Insecure Design).",
+      "II. Uma dependência maliciosa publicada no npm e usada pelo projeto é um exemplo de A08 (Software and Data Integrity Failures).",
+      "III. Um sistema sem logs de autenticação, em que um ataque passa meses sem ser percebido, é um exemplo de A09 (Security Logging and Monitoring Failures).",
+      "IV. Acessar o perfil de outro usuário trocando o ID na URL é um exemplo de A10 (Server-Side Request Forgery)."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e III, apenas.",
+      "I e II, apenas.",
+      "I e III, apenas.",
+      "II e III, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I, II e III trazem os exemplos da tabela do OWASP Top 10 2021 da apostila. IV é falsa: trocar o ID na URL para ver os dados de outro usuário é A01 (Broken Access Control), no caso um IDOR. O SSRF (A10) acontece quando o servidor busca um recurso em uma URL fornecida pelo usuário, sem validá-la, como no acesso ao endereço de metadados da nuvem para roubar credenciais."
+  },
+  {
+    "id": "qualidade-cap9-o8",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "No relatório de um pentest, as atividades realizadas foram registradas fora de ordem: o movimento lateral para outros servidores; a varredura de portas e serviços com o Nmap; o relatório com as falhas classificadas por severidade; a pesquisa de informações públicas sobre a empresa (OSINT); e a exploração de uma falha encontrada no servidor web."
+      }
+    ],
+    "enunciado": "Na metodologia de pentest em cinco fases, a ordem correta das atividades é:",
+    "alternativas": [
+      "pesquisa em fontes abertas, varredura de portas, exploração da falha, movimento lateral e relatório.",
+      "varredura de portas, pesquisa em fontes abertas, exploração da falha, relatório e movimento lateral.",
+      "pesquisa em fontes abertas, exploração da falha, varredura de portas, movimento lateral e relatório.",
+      "exploração da falha, movimento lateral, pesquisa em fontes abertas, varredura de portas e relatório.",
+      "pesquisa em fontes abertas, varredura de portas, movimento lateral, exploração da falha e relatório."
+    ],
+    "correta": 0,
+    "resolucao": "O pentest começa pelo reconhecimento, com a coleta de informações públicas, como OSINT e DNS; segue para a varredura e enumeração, com ferramentas como o Nmap, que encontram portas e serviços; depois vem a obtenção de acesso, com a exploração das vulnerabilidades (por exemplo, com o Metasploit); em seguida, a manutenção de acesso, que avalia o que dá para fazer com ele, como o movimento lateral; e, por fim, o relatório, com severidade, prova de conceito e recomendações."
+  },
+  {
+    "id": "qualidade-cap9-o9",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Depois de colocar SAST, DAST e SCA no pipeline, a diretoria de uma empresa propôs cancelar o contrato de pentest anual, \"porque agora as ferramentas fazem esse trabalho\"."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Como as ferramentas automatizadas encontram a maior parte das vulnerabilidades, o pentest manual é dispensável em empresas que já adotam DevSecOps.",
+      "PORQUE",
+      "II. As ferramentas automatizadas encontram cerca de 30% a 40% das vulnerabilidades, e as falhas de lógica e de negócio pedem a análise de um especialista."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A II é verdadeira, e é justamente por ela que a I é falsa. Pela apostila, a automação encontra apenas uma parte das vulnerabilidades; falhas de lógica e de regras de negócio, que os scanners não detectam, exigem pentest manual. Por isso, mesmo com SAST, DAST e SCA no pipeline, a recomendação é fazer pentests periódicos, ao menos uma vez por ano e sempre depois de mudanças grandes na arquitetura."
+  },
+  {
+    "id": "qualidade-cap9-o10",
+    "disciplinaId": "qualidade-e-testes-de-software",
+    "capituloId": "qualidade-cap9",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa está montando o seu pipeline com práticas de DevSecOps e revisou em que etapa entra cada verificação de segurança."
+      }
+    ],
+    "enunciado": "Sobre a segurança integrada ao pipeline no DevSecOps, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "O DAST é executado no commit, analisando o código-fonte antes do build, sem precisar da aplicação em execução.",
+      "No commit ou no pull request, o SAST analisa o código, e o secret scanning procura credenciais enviadas por engano.",
+      "No build, o SCA verifica se as dependências usadas pelo projeto têm vulnerabilidades conhecidas.",
+      "Em staging, o DAST faz a varredura da aplicação em execução, junto com os testes funcionais de segurança.",
+      "Em produção, entram o WAF, o monitoramento de comportamento anômalo e os alertas de intrusão (IDS/IPS)."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a do DAST: ele testa a aplicação em execução, simulando ataques externos, e por isso roda em staging, e não no commit. Quem analisa o código-fonte sem executar a aplicação é o SAST. As demais alternativas descrevem corretamente as etapas do pipeline DevSecOps da apostila."
   }
 ]
