@@ -1859,7 +1859,8 @@
       "c) Cite dois benefícios previstos no Marco Legal das Startups (por exemplo, ambiente regulatório experimental, formas de investimento sem alteração imediata do capital social ou contratação pública de soluções inovadoras) e explique como a AgroSense poderia se valer de um deles.",
       "d) Suponha que, daqui a alguns anos, a AgroSense ultrapasse os limites de receita ou de tempo de existência previstos na lei. Discuta por que o enquadramento como startup tem natureza transitória e quais cuidados jurídicos a empresa deve tomar para essa transição."
     ],
-    "linhas": 12
+    "linhas": 12,
+    "respostaEsperada": "a) A AgroSense aplica inovação ao produto e ao modelo de negócio (sensores e IA para prever pragas, vendidos por assinatura), tem 6 anos de CNPJ (o limite é 10), teve receita de R$ 9 milhões no ano anterior (o limite é R$ 16 milhões) e declarou em seus atos que usa modelo de negócio inovador. A lei exige a combinação desses critérios para dar o tratamento especial: nenhum deles, sozinho, basta. b) Não. O art. 4º exige que a atuação se caracterize pela inovação aplicada ao modelo de negócios ou aos produtos e serviços, e ser nova e pequena não basta. A padaria vende produtos tradicionais e usa um aplicativo de terceiros, sem inovação própria, e não consta que tenha feito a declaração exigida. c) Por exemplo: o ambiente regulatório experimental (sandbox), em que o regulador afasta temporariamente certas normas para testar uma inovação; os instrumentos de investimento do art. 5º, como o mútuo conversível, que permitem captar sem alterar de imediato o capital social; e a contratação de soluções inovadoras pelo poder público. A AgroSense poderia captar com mútuo conversível sem discutir já o valuation, ou oferecer sua solução a um órgão público pela licitação especial da lei. d) O enquadramento depende dos limites de receita e de tempo de CNPJ: ao ultrapassá-los, a empresa deixa de ter o tratamento de startup. Ela deve planejar a transição: revisar os contratos e os instrumentos de investimento, adequar a estrutura societária e a governança (por exemplo, migrando para S.A.), rever o regime tributário e passar a cumprir as normas setoriais que tenham sido afastadas em um sandbox."
   },
   {
     "id": "legislacao-cap6-q2",
@@ -1868,9 +1869,12 @@
     "tipo": "objetiva",
     "contexto": [
       {
-        "t": "citacao",
-        "texto": "“Podem aportar capital na startup, que poderá resultar ou não em participação no capital social da startup, pessoas físicas ou jurídicas, por meio dos seguintes instrumentos, dentre outros: [...] contrato de opção de compra de ações ou de quotas; [...] debêntures conversíveis; contrato de mútuo conversível [...].”",
-        "fonte": "BRASIL. Lei Complementar nº 182, de 1º de junho de 2021 (Marco Legal das Startups e do Empreendedorismo Inovador), art. 5º, caput e incisos (trecho)."
+        "t": "p",
+        "texto": "Pelo Marco Legal das Startups, a startup pode receber aportes de pessoas físicas ou jurídicas que podem resultar ou não em participação no capital social, conforme o instrumento escolhido: contrato de opção de subscrição ou de compra de ações ou quotas, debênture conversível, contrato de mútuo conversível em participação societária, contrato de investimento-anjo, entre outros. Enquanto não houver a conversão, o investidor não é considerado sócio."
+      },
+      {
+        "t": "fonte",
+        "texto": "Texto elaborado com base em BRASIL. Lei Complementar nº 182, de 1º de junho de 2021 (Marco Legal das Startups e do Empreendedorismo Inovador), arts. 5º e 8º."
       },
       {
         "t": "p",
@@ -1886,7 +1890,8 @@
       "A lei proíbe qualquer forma de investimento em startups que não seja a compra direta de quotas ou ações"
     ],
     "correta": 1,
-    "resolucao": "o art. 5º do Marco Legal prevê instrumentos de investimento (como mútuo conversível, opção de compra e debêntures conversíveis) em que o aporte pode resultar ou não em participação no capital social. Enquanto não houver a conversão, o investidor não é sócio, o que permite à startup captar recursos adiando a discussão de valuation e de participação."
+    "resolucao": "o art. 5º do Marco Legal prevê instrumentos de investimento (como mútuo conversível, opção de compra e debêntures conversíveis) em que o aporte pode resultar ou não em participação no capital social. Enquanto não houver a conversão, o investidor não é sócio, o que permite à startup captar recursos adiando a discussão de valuation e de participação.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap6-q3",
@@ -1913,7 +1918,8 @@
       "Rejeitado apenas se o aporte tiver sido feito em dinheiro, e não em bens"
     ],
     "correta": 3,
-    "resolucao": "o investidor-anjo regulado pelo art. 61-A não integra o quadro societário, não tem direito a gerência ou voto e não responde por dívidas da empresa, inclusive em recuperação judicial, sendo afastada a aplicação do art. 50 do Código Civil a ele. Essa blindagem é um dos incentivos legais ao investimento em empresas inovadoras."
+    "resolucao": "o investidor-anjo regulado pelo art. 61-A não integra o quadro societário, não tem direito a gerência ou voto e não responde por dívidas da empresa, inclusive em recuperação judicial, sendo afastada a aplicação do art. 50 do Código Civil a ele. Essa blindagem é um dos incentivos legais ao investimento em empresas inovadoras.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap6-q4",
@@ -1940,7 +1946,8 @@
       "Devida, desde que Carlos aceite perder 50% do valor investido como penalidade"
     ],
     "correta": 0,
-    "resolucao": "a lei estabelece prazo mínimo de 2 anos para o exercício do direito de resgate (ou prazo superior fixado no contrato). Esse período protege a empresa de saídas precoces de capital, que comprometeriam a execução do plano de negócios financiado pelo aporte."
+    "resolucao": "a lei estabelece prazo mínimo de 2 anos para o exercício do direito de resgate (ou prazo superior fixado no contrato). Esse período protege a empresa de saídas precoces de capital, que comprometeriam a execução do plano de negócios financiado pelo aporte.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap6-q5",
@@ -1967,7 +1974,8 @@
       "Só é possível se os fornecedores provarem que os sócios agiram com dolo de cometer crime, sendo a confusão patrimonial irrelevante para atingir o patrimônio pessoal dos sócios de uma sociedade limitada"
     ],
     "correta": 1,
-    "resolucao": "a separação entre patrimônio da empresa e dos sócios é a base da limitação de responsabilidade. Quando há confusão patrimonial ou desvio de finalidade, o juiz pode desconsiderar a personalidade jurídica e atingir bens dos sócios beneficiados. Por isso, startups devem manter contabilidade e contas separadas desde o início."
+    "resolucao": "a separação entre patrimônio da empresa e dos sócios é a base da limitação de responsabilidade. Quando há confusão patrimonial ou desvio de finalidade, o juiz pode desconsiderar a personalidade jurídica e atingir bens dos sócios beneficiados. Por isso, startups devem manter contabilidade e contas separadas desde o início.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap6-q6",
@@ -1994,7 +2002,8 @@
       "Frágil: a Justiça do Trabalho olha a realidade, e pessoalidade, habitualidade, subordinação e salário fixo podem gerar vínculo"
     ],
     "correta": 4,
-    "resolucao": "pelo princípio da primazia da realidade, a forma contratual não prevalece sobre os fatos. Onde há trabalho pessoal, não eventual, subordinado e remunerado, pode haver vínculo de emprego, com passivo trabalhista relevante. Startups devem definir com cuidado a natureza da contratação, e a análise concreta depende das provas de cada caso."
+    "resolucao": "pelo princípio da primazia da realidade, a forma contratual não prevalece sobre os fatos. Onde há trabalho pessoal, não eventual, subordinado e remunerado, pode haver vínculo de emprego, com passivo trabalhista relevante. Startups devem definir com cuidado a natureza da contratação, e a análise concreta depende das provas de cada caso.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap6-q7",
@@ -2021,7 +2030,8 @@
       "Inadequada apenas se a startup tiver investidores estrangeiros"
     ],
     "correta": 3,
-    "resolucao": "o art. 46, § 2º, impõe a observância das medidas de segurança desde a concepção do produto, e dados de saúde são sensíveis, o que eleva o risco. Além da responsabilização em caso de incidente, a falta de conformidade tende a ser identificada em auditorias de investidores (due diligence), prejudicando captações futuras."
+    "resolucao": "o art. 46, § 2º, impõe a observância das medidas de segurança desde a concepção do produto, e dados de saúde são sensíveis, o que eleva o risco. Além da responsabilização em caso de incidente, a falta de conformidade tende a ser identificada em auditorias de investidores (due diligence), prejudicando captações futuras.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap6-q8",
@@ -2048,7 +2058,8 @@
       "É um benefício tributário que reduz impostos para startups em fase inicial"
     ],
     "correta": 1,
-    "resolucao": "o sandbox regulatório é um programa de ambiente experimental no qual o regulador pode afastar a incidência de normas específicas, em condições definidas, com prazo, escopo limitado e acompanhamento. Não é imunidade permanente nem alcança outras legislações, como proteção de dados ou defesa do consumidor."
+    "resolucao": "o sandbox regulatório é um programa de ambiente experimental no qual o regulador pode afastar a incidência de normas específicas, em condições definidas, com prazo, escopo limitado e acompanhamento. Não é imunidade permanente nem alcança outras legislações, como proteção de dados ou defesa do consumidor.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap6-f1",
@@ -2056,15 +2067,16 @@
     "capituloId": "legislacao-cap6",
     "tipo": "objetiva",
     "nivel": "facil",
-    "enunciado": "Uma startup de inteligência artificial foi fundada há 8 anos, possui receita bruta anual de R$ 14 milhões e opera em modelo de negócio inovador com alta incerteza de mercado. Recentemente, um investidor questionou se ela ainda se enquadra no Marco Legal das Startups. Com base na LC nº 182/2021, qual é a conclusão correta?",
+    "enunciado": "Uma startup de inteligência artificial foi fundada há 8 anos, teve receita bruta de R$ 14 milhões no ano passado e declarou, no contrato social, que usa modelo de negócio inovador. Um investidor questionou se ela ainda se enquadra no Marco Legal das Startups. Com base na LC nº 182/2021, qual é a conclusão correta?",
     "alternativas": [
-      "Não se enquadra, pois receita acima de R$ 10 milhões desqualifica automaticamente a empresa, independentemente do tempo de constituição.",
-      "Não se enquadra: startup só pode ter até 5 anos.",
-      "Enquadra-se: é inovadora, fatura até R$ 16 milhões e tem até 10 anos.",
-      "Enquadra-se apenas se estiver constituída como S.A. ou SAS, conforme exige a lei."
+      "Enquadra-se: tem modelo inovador declarado, receita de até R$ 16 milhões e até 10 anos de CNPJ.",
+      "Não se enquadra, pois receita acima de R$ 10 milhões tira o enquadramento, qualquer que seja a idade.",
+      "Não se enquadra, pois a lei só considera startup a empresa com até 5 anos de inscrição no CNPJ.",
+      "Enquadra-se só se for uma S.A., pois a lei exige esse tipo societário para todas as startups.",
+      "Não se enquadra, pois empresas de IA são reguladas por lei própria, e não pelo Marco Legal."
     ],
-    "correta": 2,
-    "resolucao": "a Lei Complementar nº 182/2021 (art. 4º) considera startup a empresa com receita bruta de até R$ 16 milhões no ano anterior, com até 10 anos de inscrição no CNPJ e que declare usar modelo de negócio inovador. Com 8 anos e R$ 14 milhões de receita, a empresa atende aos três requisitos. A lei não exige um tipo societário específico."
+    "correta": 0,
+    "resolucao": "A Lei Complementar nº 182/2021 (art. 4º, § 1º) dá o tratamento de startup à empresa com receita bruta de até R$ 16 milhões no ano anterior, até 10 anos de inscrição no CNPJ e que declare, no ato constitutivo, usar modelo de negócio inovador (ou esteja no Inova Simples). Com 8 anos, R$ 14 milhões de receita e a declaração no contrato social, a empresa atende aos requisitos. A lei não exige um tipo societário específico."
   },
   {
     "id": "legislacao-cap6-f3",
@@ -2074,12 +2086,13 @@
     "nivel": "facil",
     "enunciado": "Uma startup em fase seed necessita captar R$ 1,5 milhão. Os fundadores desejam evitar a definição imediata de valuation e simplificar a documentação jurídica. Qual instrumento de investimento é o mais adequado para esse perfil?",
     "alternativas": [
-      "Contrato de investimento em equity com emissão de ações ordinárias e definição de valuation pré-money.",
-      "Debêntures conversíveis registradas na CVM.",
-      "Investimento via equity crowdfunding pela plataforma autorizada, com emissão de cotas para o público geral e valuation definido pela própria plataforma.",
-      "SAFE ou Mútuo Conversível, que adiam o valuation para uma rodada futura."
+      "SAFE ou mútuo conversível, que adiam o valuation para uma rodada futura e têm documentação mais simples.",
+      "Investimento em equity, com emissão de ações ordinárias e valuation pré-money definido agora.",
+      "Debêntures conversíveis registradas na CVM, com oferta pública a investidores em geral.",
+      "Equity crowdfunding, com cotas para o público e valuation fixado pela própria plataforma.",
+      "Empréstimo bancário comum, que vira participação societária automaticamente após um ano."
     ],
-    "correta": 3,
+    "correta": 0,
     "resolucao": "o mútuo conversível e o SAFE permitem receber o investimento sem fixar o valor da empresa (valuation) naquele momento: o valor aportado vira participação no futuro, numa rodada em que a empresa for avaliada. A documentação é mais simples e o investidor não vira sócio de imediato, o que combina com a fase seed. Emitir ações com valuation e debêntures registradas na CVM fazem o contrário do que os fundadores querem."
   },
   {
@@ -2090,10 +2103,11 @@
     "nivel": "facil",
     "enunciado": "Três fundadores constituem uma startup com participação igualitária de 33,33% cada. Após 8 meses, um deles decide sair sem que haja acordo de vesting. Qual é a consequência jurídica mais provável?",
     "alternativas": [
-      "Ele mantém seus 33,33%, podendo negociá-los ou pedir apuração de haveres.",
-      "Perde toda a participação por sair antes de 12 meses.",
-      "O sócio retém apenas 50% de sua participação, devolvendo o restante proporcionalmente ao tempo trabalhado, conforme regra padrão de vesting prevista em lei.",
-      "O sócio deve devolver toda a participação ao capital social, que será redistribuído entre os demais fundadores em partes iguais."
+      "Ele mantém os 33,33%, pois sem vesting a participação já é dele, e pode negociá-la ou pedir haveres.",
+      "Perde toda a participação, pois saiu antes do cliff de 12 meses previsto em lei para todos os sócios.",
+      "Fica com metade da participação, devolvendo o resto conforme a regra de vesting prevista em lei.",
+      "Deve devolver toda a participação, que será dividida em partes iguais entre os outros fundadores.",
+      "Fica com 8/48 da participação, pois a lei aplica a todos os sócios um vesting mensal de 4 anos."
     ],
     "correta": 0,
     "resolucao": "vesting é a regra que faz o sócio adquirir sua participação aos poucos, conforme o tempo que permanece na empresa. Sem acordo de vesting, a participação já pertence integralmente ao sócio desde a constituição, e a saída não faz com que ele perca as quotas. Por isso o vesting é tão recomendado entre fundadores."
@@ -2106,13 +2120,14 @@
     "nivel": "facil",
     "enunciado": "Uma fintech deseja lançar uma carteira digital que permite armazenar saldo e realizar transferências entre usuários. Qual autorização regulatória é obrigatória junto ao Banco Central do Brasil?",
     "alternativas": [
-      "Autorização como Sociedade de Crédito Direto (SCD), modalidade voltada a fintechs que operam com capital próprio para concessão de crédito.",
-      "Registro como Sociedade de Empréstimo entre Pessoas (SEP), voltada a plataformas de peer-to-peer lending.",
-      "Autorização do BACEN como Instituição de Pagamento emissora de moeda eletrônica.",
-      "Credenciamento junto à CVM como plataforma de investimento participativo, conforme Resolução CVM nº 88/2022, por envolver a guarda de recursos de terceiros."
+      "Autorização do BACEN como instituição de pagamento emissora de moeda eletrônica (Lei nº 12.865/2013).",
+      "Autorização como Sociedade de Crédito Direto, voltada a fintechs que emprestam com capital próprio.",
+      "Registro como Sociedade de Empréstimo entre Pessoas, voltada a plataformas de empréstimo peer-to-peer.",
+      "Credenciamento na CVM como plataforma de investimento participativo, por guardar recursos de terceiros.",
+      "Nenhuma, pois carteiras digitais ficam fora da regulação do BACEN quando não concedem crédito."
     ],
-    "correta": 2,
-    "resolucao": "guardar saldo do usuário em conta digital e permitir transferências é atividade de instituição de pagamento emissora de moeda eletrônica, regulada pela Lei nº 12.865/2013 e pelas normas do Banco Central. Sociedade de Crédito Direto e Sociedade de Empréstimo entre Pessoas são autorizações para conceder crédito, e a CVM cuida de investimentos."
+    "correta": 0,
+    "resolucao": "guardar saldo do usuário em conta digital e permitir transferências é atividade de instituição de pagamento emissora de moeda eletrônica, regulada pela Lei nº 12.865/2013 e pelas normas do Banco Central. Sociedade de Crédito Direto e Sociedade de Empréstimo entre Pessoas são autorizações para conceder crédito, e a CVM cuida de investimentos. Pela regulamentação do Banco Central, instituições de pagamento com volume pequeno podem ser dispensadas da autorização, mas continuam sujeitas às regras do setor."
   },
   {
     "id": "legislacao-cap6-f6",
@@ -2122,12 +2137,13 @@
     "nivel": "facil",
     "enunciado": "Dois dos três sócios de uma startup desejam vender 100% da empresa por R$ 60 milhões, mas o terceiro sócio se recusa. O acordo de sócios contém cláusula de drag along. Qual é o desfecho juridicamente correto?",
     "alternativas": [
-      "A venda não pode ser concluída, pois decisões de alienação total da empresa exigem unanimidade dos sócios, mesmo que exista acordo de sócios com cláusula de drag along.",
-      "Os dois sócios podem vender apenas suas próprias participações, sem obrigar o terceiro.",
-      "A venda depende de aprovação judicial, já que o sócio dissidente tem direito constitucional à propriedade.",
-      "Pela cláusula de drag along, os majoritários podem obrigar o terceiro a vender nas mesmas condições."
+      "Pela cláusula de drag along, os majoritários podem obrigar o terceiro sócio a vender nas mesmas condições.",
+      "A venda não pode ocorrer, pois vender 100% da empresa exige unanimidade, mesmo com cláusula de drag along.",
+      "Os dois sócios só podem vender as próprias participações, sem obrigar o terceiro a vender junto.",
+      "A venda depende de aprovação judicial, pois o sócio dissidente tem direito constitucional à propriedade.",
+      "O terceiro sócio pode exigir vender só depois dos outros, pelo dobro do preço, por força do tag along."
     ],
-    "correta": 3,
+    "correta": 0,
     "resolucao": "a cláusula de drag along (direito de arrastar) do acordo de sócios permite que a maioria, numa venda da empresa, obrigue os minoritários a vender suas participações nas mesmas condições de preço e pagamento. Ela existe justamente para que um sócio minoritário não impeça a venda de 100% da empresa. Como o sócio assinou o acordo, a cláusula vale para ele."
   },
   {
@@ -2138,12 +2154,13 @@
     "nivel": "facil",
     "enunciado": "Uma startup de marketplace de serviços domésticos cresce rapidamente e passa a ter 200 prestadores cadastrados. O jurídico identifica risco de reconhecimento de vínculo empregatício. Qual medida de compliance preventiva é mais adequada?",
     "alternativas": [
-      "Converter todos os prestadores em MEI e assinar contratos de prestação de serviço, o que elimina juridicamente qualquer risco trabalhista, mesmo que a rotina de trabalho continue a mesma.",
-      "Contratos que reflitam a real autonomia dos prestadores, sem subordinação, revendo a prática periodicamente.",
-      "Registrar todos os prestadores como empregados CLT para eliminar o passivo trabalhista, mesmo que isso inviabilize o modelo de negócio.",
-      "Ignorar o risco, pois plataformas são isentas da lei trabalhista."
+      "Contratos que reflitam a real autonomia dos prestadores, sem subordinação, revendo a prática com frequência.",
+      "Converter todos os prestadores em MEI, o que elimina o risco trabalhista mesmo sem mudar a rotina de trabalho.",
+      "Registrar todos como empregados CLT, ainda que isso inviabilize por completo o modelo de negócio da startup.",
+      "Ignorar o risco, pois plataformas digitais estão isentas da legislação trabalhista pelo Marco Legal das Startups.",
+      "Exigir que cada prestador assine uma renúncia ao vínculo de emprego, o que afasta qualquer ação trabalhista."
     ],
-    "correta": 1,
+    "correta": 0,
     "resolucao": "pela primazia da realidade, o que define o vínculo de emprego é a forma como o trabalho acontece de fato, e não o contrato assinado: subordinação, pessoalidade, habitualidade e onerosidade (art. 3º da CLT). Transformar todos em MEI não afasta o risco se, na prática, houver subordinação. A prevenção é garantir autonomia real aos prestadores e revisar a operação com frequência. O Marco Legal das Startups não isenta ninguém da legislação trabalhista."
   },
   {
@@ -2154,12 +2171,13 @@
     "nivel": "facil",
     "enunciado": "Uma startup em fase de crescimento planeja contratar com o poder público para fornecer uma solução de gestão escolar. O jurídico alerta sobre a necessidade de implementar um programa de compliance anticorrupção. Qual é o fundamento legal dessa exigência e sua principal medida prática?",
     "alternativas": [
-      "A LGPD exige programa anticorrupção de toda empresa que trate dados de servidores públicos, sob pena de multa de 2% do faturamento, limitada a R$ 50 milhões por infração e aplicada pela ANPD.",
-      "A Lei de Responsabilidade Fiscal impõe às contratadas do poder público a adoção de código de ética e auditoria contábil semestral.",
-      "A Resolução CVM nº 88/2022 exige due diligence para licitar.",
-      "A Lei Anticorrupção (nº 12.846/2013) responsabiliza a empresa objetivamente, o que torna essencial um programa de integridade."
+      "A Lei Anticorrupção (Lei nº 12.846/2013) responsabiliza a empresa objetivamente, por isso o programa de integridade.",
+      "A LGPD exige programa anticorrupção de quem trata dados de servidores, sob multa de até R$ 50 milhões.",
+      "A Lei de Responsabilidade Fiscal impõe às contratadas um código de ética e auditoria contábil semestral.",
+      "A Resolução CVM nº 88/2022 exige due diligence anticorrupção de toda empresa que participa de licitações.",
+      "O Marco Legal das Startups exige programa de integridade de toda startup, mesmo sem contratos públicos."
     ],
-    "correta": 3,
+    "correta": 0,
     "resolucao": "a Lei Anticorrupção (Lei nº 12.846/2013) responsabiliza a empresa de forma objetiva por atos lesivos à administração pública, mesmo sem culpa dos dirigentes. Um programa de integridade, com código de conduta, canal de denúncias e verificação de parceiros, reduz o risco e é considerado na hora de aplicar sanções. Em contratos públicos de grande valor, a Lei nº 14.133/2021 chega a exigir esse programa."
   },
   {
