@@ -1193,6 +1193,333 @@
     "resolucao": "Devem ser automatizados os testes repetitivos executados a cada build, a regressão de funcionalidades estáveis e os testes unitários e de integração (I, IV e V). Testes exploratórios (II) dependem de aprendizado e criatividade humana — como mostra a definição de Bach — e testes de usabilidade e percepção estética com usuários reais (III) exigem julgamento humano subjetivo."
   },
   {
+    "id": "engsoft-cap5-d1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "texto": {
+      "citacao": "\"Testing is the process of executing a program with the intent of finding errors.\"",
+      "traducao": "(Tradução livre: \"Testar é o processo de executar um programa com a intenção de encontrar erros.\")",
+      "fonte": "MYERS, G. J. The Art of Software Testing. New York: John Wiley & Sons, 1979."
+    },
+    "caso": [
+      "Em uma empresa que desenvolve um sistema de gestão escolar, cada desenvolvedor escreve os testes da própria funcionalidade quando termina de programá-la, usando apenas dados que sabe que funcionam: alunos com cadastro completo e notas válidas. Em todas as versões, o relatório mostra 100% dos testes passando, e o gerente apresenta esse número à diretoria como prova de que o sistema tem qualidade.",
+      "Mesmo assim, as escolas relatam falhas frequentes: o sistema trava com notas em branco, calcula errado a média de alunos transferidos no meio do semestre e não aceita nomes com acento."
+    ],
+    "enunciado": "Com base no texto de Myers e no caso apresentado, analise a forma como a equipe conduz os testes e o uso que o gerente faz do resultado \"100% dos testes passando\".",
+    "linhas": 10,
+    "respostaEsperada": "Para Myers, testar é procurar defeitos; um bom teste é aquele que tem chance de revelar um defeito. A equipe faz o contrário: testa só o \"caminho feliz\", com dados que já sabe que funcionam, e por isso os testes apenas confirmam o que o desenvolvedor esperava, sem procurar problemas. O resultado de 100% dos testes passando mostra só que os casos pensados funcionam, e não que o sistema está livre de defeitos: testes provam a presença de defeitos, nunca a ausência. As falhas relatadas pelas escolas vêm de defeitos que já existiam e que nenhum caso de teste procurou. A equipe deveria criar casos de teste com entradas inválidas, vazias e incomuns (nota em branco, aluno transferido, nomes acentuados); incluir testes caixa preta feitos por testadores que comparem o sistema com os requisitos, sem o viés de quem escreveu o código; fazer testes exploratórios, que dependem da criatividade humana; e realizar testes de aceitação com as secretarias das escolas antes de cada versão."
+  },
+  {
+    "id": "engsoft-cap5-d2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "texto": {
+      "citacao": "\"Test-driven development is a way of managing fear during programming.\"",
+      "traducao": "(Tradução livre: \"O desenvolvimento guiado por testes é uma forma de administrar o medo durante a programação.\")",
+      "fonte": "BECK, K. Test-Driven Development: By Example. Boston: Addison-Wesley, 2003."
+    },
+    "caso": [
+      "Uma empresa mantém há dez anos o módulo de cálculo da folha de pagamento dos seus clientes. O módulo não tem testes automatizados, e os desenvolvedores evitam alterá-lo: quase toda mudança quebra alguma outra parte, e os problemas só aparecem no fim do mês, quando o setor de recursos humanos confere os contracheques.",
+      "A empresa precisa incluir no módulo uma nova regra de adicional noturno e decidiu que, a partir de agora, toda regra nova será desenvolvida com TDD."
+    ],
+    "enunciado": "Com base no texto de Beck e no caso apresentado, explique como o ciclo do TDD pode ajudar a equipe a lidar com o \"medo\" de alterar esse módulo.",
+    "linhas": 10,
+    "respostaEsperada": "O medo vem da falta de retorno: hoje, a equipe só descobre que quebrou algo semanas depois, quando o erro já virou falha para o cliente. No TDD, o ciclo Red, Green e Refactor muda isso. Primeiro se escreve um teste que falha, descrevendo o comportamento esperado do adicional noturno (Red); depois, o mínimo de código para ele passar (Green); por fim, o código é melhorado com a segurança de que os testes continuam passando (Refactor). O teste documenta a regra antes da implementação, e o código já nasce testável. Cada teste criado fica na suíte e passa a funcionar como teste de regressão automatizado: rodando no pipeline a cada commit, ele aponta em minutos qualquer mudança que quebre uma regra já testada, e o pipeline para antes de o defeito chegar à produção, quando a correção ainda é barata. Com o tempo, a rede de testes cresce e a equipe passa a alterar o módulo com confiança. Para as partes antigas, vale escrever testes sobre o comportamento atual antes de mexer nelas."
+  },
+  {
+    "id": "engsoft-cap5-o1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Antes de lançar a nova versão de uma loja virtual, a equipe registrou quatro problemas: (1) a função que calcula o desconto de um cupom aceita cupons vencidos; (2) o serviço de pedidos envia a data no formato \"dd/mm/aaaa\", mas o serviço de estoque espera \"aaaa-mm-dd\", e as reservas de produtos falham; (3) o site fica lento com 5 mil usuários simultâneos, situação esperada para a Black Friday; (4) o gerente de uma loja física, ao usar o sistema, percebe que o fluxo de troca de produtos não segue o procedimento que as lojas realmente adotam."
+      }
+    ],
+    "enunciado": "Os níveis de teste mais adequados para detectar os problemas 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "unitário, integração, sistema e aceitação.",
+      "integração, unitário, aceitação e sistema.",
+      "unitário, sistema, integração e aceitação.",
+      "sistema, integração, unitário e aceitação.",
+      "unitário, integração, aceitação e sistema."
+    ],
+    "correta": 0,
+    "resolucao": "O problema 1 está dentro de uma única função, o menor componente testável: teste unitário. O 2 só aparece quando dois serviços conversam, cada um correto isoladamente: teste de integração. O 3 exige o sistema inteiro, em ambiente parecido com o de produção, sob carga: teste de sistema (desempenho). O 4 depende do julgamento de quem conhece o processo real do negócio, o usuário final: teste de aceitação (UAT)."
+  },
+  {
+    "id": "engsoft-cap5-o2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Antes de liberar a nova versão de um aplicativo bancário, uma equipe fez revisão de código por pares, uma inspeção formal do módulo de pagamentos e uma análise estática com o SonarQube. Nenhuma não conformidade foi encontrada."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. As atividades realizadas pela equipe são atividades de verificação.",
+      "PORQUE",
+      "II. Revisão de código, inspeção e análise estática avaliam se o produto atende às reais necessidades do usuário."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A I é verdadeira: revisão de código, inspeção e análise estática respondem à pergunta \"estamos construindo o produto corretamente?\", conferindo a conformidade com especificações e padrões. A II é falsa: avaliar se o produto atende às reais necessidades do usuário é validação (\"estamos construindo o produto correto?\"), feita com testes de aceitação e usuários reais. Por isso, mesmo sem nenhuma não conformidade, a equipe ainda não sabe se construiu o produto certo."
+  },
+  {
+    "id": "engsoft-cap5-o3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa vai definir a estratégia de testes de um sistema de matrículas on-line. Na reunião, a equipe discute quem deve testar o quê e com qual nível de acesso ao código."
+      }
+    ],
+    "enunciado": "Sobre as técnicas de teste caixa branca, caixa preta e caixa cinza, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "Por ter acesso ao código-fonte, o teste caixa branca garante que o sistema atende às necessidades reais dos usuários, o que dispensa os testes caixa preta.",
+      "No teste caixa preta, o testador não tem acesso ao código e compara as respostas do sistema com o que os requisitos determinam.",
+      "O teste caixa branca costuma ser feito pelos desenvolvedores e alcança alta cobertura técnica da lógica interna.",
+      "O teste caixa cinza combina as duas perspectivas, com acesso parcial à estrutura interna, e costuma ser conduzido por testadores experientes ou pentesters.",
+      "Uma limitação do teste caixa preta é não garantir que todos os caminhos internos do código tenham sido exercitados."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a do teste caixa branca: ver o código dá alta cobertura técnica, mas não mostra se o sistema atende à necessidade real do usuário. Essa é justamente a sua limitação, e por isso ele não dispensa o caixa preta, que valida os requisitos. As demais alternativas descrevem corretamente a visibilidade, quem executa, as vantagens e as limitações de cada técnica."
+  },
+  {
+    "id": "engsoft-cap5-o4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "O pipeline de uma equipe executa, nesta ordem: commit → testes E2E (50 minutos) → testes de integração (10 minutos) → testes unitários (3 minutos) → deploy. Quando um teste unitário falha, os desenvolvedores só ficam sabendo depois de mais de uma hora."
+      }
+    ],
+    "enunciado": "Qual reorganização do pipeline está de acordo com as boas práticas de automação de testes?",
+    "alternativas": [
+      "Executar primeiro os testes unitários, depois os de integração e por último os E2E, interrompendo o pipeline na primeira falha, para que os defeitos mais simples sejam apontados em poucos minutos.",
+      "Manter os testes E2E no início, pois, por testarem o sistema inteiro, eles tornam desnecessária a execução dos testes unitários e de integração.",
+      "Executar todas as etapas até o fim mesmo quando alguma falha, e liberar o deploy se a maioria dos testes passar.",
+      "Fazer o deploy logo após o commit e rodar os testes depois, já em produção, para não atrasar as entregas.",
+      "Remover os testes unitários e manter apenas os E2E, que são os mais próximos do uso real do sistema."
+    ],
+    "correta": 0,
+    "resolucao": "Os testes unitários são os mais rápidos e baratos, por isso vêm primeiro: em poucos minutos, a equipe sabe se quebrou algo. Em seguida vêm os de integração e, por último, os E2E, os mais lentos e caros. Pela regra de ouro do pipeline, se um teste falha, o pipeline para e nenhum código com defeito avança; liberar o deploy com falhas ou testar só em produção contraria essa regra. Remover os unitários inverte a Pirâmide de Testes."
+  },
+  {
+    "id": "engsoft-cap5-o5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma startup apresentou o protótipo de um aplicativo de caronas para universitários. Nas sessões de teste, os estudantes aprovaram o aplicativo e disseram que ele resolve exatamente o problema deles. Uma revisão técnica feita depois mostrou que não há nenhum teste automatizado, que as consultas ao banco de dados são montadas juntando o texto digitado pelo usuário, que há trechos de código copiados em vários lugares e que nenhum código passou por revisão."
+      }
+    ],
+    "enunciado": "Considerando os conceitos de verificação e validação, o aplicativo está",
+    "alternativas": [
+      "validado, mas não verificado: atende à necessidade real dos usuários, mas o código tem problemas técnicos que trarão dificuldades no futuro.",
+      "verificado, mas não validado: o código segue as especificações, mas não atende à necessidade dos usuários.",
+      "verificado e validado, pois a aprovação dos usuários em testes reais comprova também a qualidade técnica do código.",
+      "nem verificado nem validado, pois a validação só é possível depois que existem testes automatizados.",
+      "apenas verificado, pois as sessões com os estudantes são uma forma de revisão de código."
+    ],
+    "correta": 0,
+    "resolucao": "As sessões com usuários reais são validação, e os estudantes aprovaram: o aplicativo é o produto certo. Mas a verificação, que confere se o produto foi construído corretamente, falharia: não há testes nem revisão, e o código tem problemas técnicos (inclusive de segurança, ao montar consultas com o texto digitado). É o caso \"válido, mas não verificado\": o usuário aprova o resultado, mas o código trará dores de cabeça no futuro."
+  },
+  {
+    "id": "engsoft-cap5-o6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um banco definiu a regra: \"clientes com mais de 65 anos são isentos da tarifa mensal de R$ 15,00\". Um desenvolvedor escreveu a função abaixo e um único teste automatizado, que passou:"
+      },
+      {
+        "t": "codigo",
+        "texto": "def calcular_tarifa(idade):\n    tarifa = 15\n    if idade >= 65:\n        tarifa = 0\n    return tarifa\n\nassert calcular_tarifa(70) == 0"
+      },
+      {
+        "t": "p",
+        "texto": "A ferramenta de análise mostrou 100% de cobertura de linhas, e o desenvolvedor concluiu que a função estava livre de defeitos."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Mesmo com 100% de cobertura de linhas, a função ainda tem um defeito que o teste criado não é capaz de revelar.",
+      "PORQUE",
+      "II. A cobertura de linhas indica apenas quais instruções foram executadas durante os testes; ela não garante que todos os desvios de decisão e os valores-limite da regra tenham sido verificados."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II explica a I. A regra diz \"mais de 65 anos\", mas o código usa >=: um cliente com exatamente 65 anos fica isento indevidamente. O único teste, com 70 anos, executa todas as linhas, mas só percorre o caminho em que a condição é verdadeira. Ficam sem teste o caminho falso (por exemplo, 30 anos) e o valor-limite (65 anos), que revelaria o defeito."
+  },
+  {
+    "id": "engsoft-cap5-o7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um sistema de folha de pagamento foi implantado em 2021 e funcionou sem problemas por três anos. No dia 29 de fevereiro de 2024, ele gerou contracheques com data inválida e travou. A investigação mostrou que o programador, ao escrever a rotina de datas, não considerou os anos bissextos, e a função trata fevereiro sempre como um mês de 28 dias."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. A falha só apareceu em 2024, mas o defeito existia no código desde a implantação do sistema.",
+      "II. Como o sistema funcionou durante três anos sem nenhuma falha, até fevereiro de 2024 era correto afirmar que ele estava livre de defeitos.",
+      "III. O erro foi o programador não considerar os anos bissextos; o defeito é a regra de fevereiro com 28 dias, escrita no código; a falha é o travamento observado no dia 29 de fevereiro de 2024."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e III, apenas.",
+      "I, apenas.",
+      "III, apenas.",
+      "I, II e III.",
+      "I e II, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: o defeito, a manifestação do erro no código, estava lá desde o início; ele só não tinha sido executado em uma situação que o revelasse. II é falsa: a ausência de falhas observadas não prova a ausência de defeitos, assim como os testes provam a presença de defeitos, mas não a sua ausência. III é verdadeira: erro é a ação humana, defeito é o que ficou no código e falha é o comportamento incorreto que o usuário observa."
+  },
+  {
+    "id": "engsoft-cap5-o8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma desenvolvedora pratica TDD. Ela escreveu primeiro o teste abaixo, executou-o e viu que falhou. Em seguida, escreveu a função, e o teste passou."
+      },
+      {
+        "t": "codigo",
+        "texto": "def test_desconto_cliente_vip():\n    assert calcular_desconto(100, vip=True) == 10\n\ndef calcular_desconto(valor, vip):\n    return 10"
+      },
+      {
+        "t": "p",
+        "texto": "Um colega criticou: \"Isso não é TDD, é trapaça: a função devolve sempre 10\"."
+      }
+    ],
+    "enunciado": "Sobre a situação, assinale a alternativa correta.",
+    "alternativas": [
+      "A desenvolvedora está na fase Green, em que se escreve o mínimo de código necessário para o teste passar; novos testes, com outros valores e com clientes não VIP, vão obrigar o código a se generalizar, e a fase Refactor melhora o código mantendo os testes passando.",
+      "O colega está certo: no TDD, o código deve ser escrito por completo antes do primeiro teste, e o teste só confirma o que já foi implementado.",
+      "A desenvolvedora está na fase Red, pois a função ainda não calcula o desconto de forma geral.",
+      "A desenvolvedora errou ao ver o teste falhar antes de escrever o código; no TDD, o teste deve passar já na primeira execução.",
+      "A desenvolvedora está na fase Refactor, que consiste em escrever o código mínimo para o teste passar."
+    ],
+    "correta": 0,
+    "resolucao": "O ciclo do TDD é Red (escrever um teste que falha), Green (escrever o mínimo de código para o teste passar) e Refactor (melhorar o código mantendo os testes passando). Ver o teste falhar primeiro é o passo Red, feito corretamente. Devolver 10 é o mínimo que faz o teste passar: é a fase Green. A função ainda não está completa, mas os próximos testes, que falharão com outros valores, vão exigir o cálculo de verdade."
+  },
+  {
+    "id": "engsoft-cap5-o9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "A equipe de um aplicativo bancário escreveu o cenário abaixo como critério de aceitação de uma nova funcionalidade. Antes da implantação, um grupo de clientes do banco vai usar o aplicativo para confirmar que ele atende ao que precisam."
+      },
+      {
+        "t": "codigo",
+        "texto": "Cenário: Pagamento recusado por saldo insuficiente\n  Dado que o cliente tem R$ 50,00 de saldo\n  Quando ele tenta pagar uma compra de R$ 80,00\n  Então o pagamento é recusado\n  E o sistema mostra a mensagem \"Saldo insuficiente\""
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. O teste feito pelo grupo de clientes é o último nível de validação antes da implantação em produção.",
+      "II. Por estar na linguagem do negócio, o cenário pode ser lido e conferido pela Product Owner, mesmo sem conhecimento de programação.",
+      "III. Como o cenário descreve o comportamento do sistema, ele substitui os testes unitários da função que calcula o saldo.",
+      "IV. A linha iniciada por \"Então\" corresponde ao resultado esperado de um caso de teste."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e IV, apenas.",
+      "I e II, apenas.",
+      "I e IV, apenas.",
+      "II e IV, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: o teste de aceitação (UAT), feito pelos usuários finais, é o último nível antes da produção. II é verdadeira: o BDD usa Gherkin justamente para aproximar os testes da linguagem do negócio. III é falsa: o cenário fica no topo da Pirâmide de Testes e não substitui a base; a função do saldo continua precisando de testes unitários, rápidos e isolados. IV é verdadeira: o \"Dado\" traz as condições, o \"Quando\", a ação, e o \"Então\", o resultado esperado, as mesmas partes de um caso de teste."
+  },
+  {
+    "id": "engsoft-cap5-o10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe escreveu o teste abaixo, classificado como unitário, para a função que calcula o total de um pedido."
+      },
+      {
+        "t": "codigo",
+        "texto": "def test_calcular_total_pedido():\n    banco = conectar(\"servidor-producao.empresa.com\")\n    pedido = banco.buscar_pedido(1234)\n    assert calcular_total(pedido) == 250.0"
+      },
+      {
+        "t": "p",
+        "texto": "O teste às vezes falha quando o servidor está lento ou quando alguém altera o pedido 1234, mesmo sem nenhuma mudança na função calcular_total."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Por acessar o banco de dados real, esse teste é um teste unitário mais confiável do que um que use mock, pois trabalha com dados verdadeiros.",
+      "PORQUE",
+      "II. O teste unitário verifica o menor componente testável de forma isolada, com as dependências externas substituídas por mocks ou stubs."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A II é a definição correta de teste unitário. Por ela, a I é falsa: o teste depende do servidor e de um pedido que outras pessoas podem alterar, por isso falha sem que a função calcular_total tenha mudado. Ele não é isolado e, na prática, é um teste de integração. Para testar a função de forma unitária, o pedido deve ser montado no próprio teste ou fornecido por um mock ou stub, sempre com os mesmos dados."
+  },
+  {
     "id": "engsoft-cap6-f1",
     "disciplinaId": "engenharia-de-software-e-da-usabilidade",
     "capituloId": "engsoft-cap6",
@@ -1266,6 +1593,313 @@
       "Falhas externas possuem menor impacto financeiro do que falhas internas."
     ],
     "correta": 1
+  },
+  {
+    "id": "engsoft-cap6-d1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "texto": {
+      "citacao": "\"Cease dependence on inspection to achieve quality. Eliminate the need for inspection on a mass basis by building quality into the product in the first place.\"",
+      "traducao": "(Tradução livre: \"Deixe de depender da inspeção para alcançar a qualidade. Elimine a necessidade de inspeção em massa construindo a qualidade no produto desde o início.\")",
+      "fonte": "DEMING, W. E. Out of the Crisis. Cambridge: MIT Press, 1986."
+    },
+    "caso": [
+      "Uma empresa desenvolve um sistema de agendamento para hospitais. Ao fim de cada versão, uma equipe de oito testadores passa três semanas testando o sistema antes da entrega. Mesmo assim, os hospitais continuam encontrando muitos defeitos depois da implantação. Um levantamento mostrou que a maior parte desses defeitos nasceu de requisitos mal compreendidos, ainda no início de cada versão.",
+      "Para resolver o problema, o diretor de tecnologia propôs dobrar a equipe de testes e estender a fase de testes de três para seis semanas."
+    ],
+    "enunciado": "Com base no texto de Deming e no caso apresentado, avalie se a proposta do diretor é a melhor estratégia para melhorar a qualidade do sistema, justificando a sua resposta com os conceitos do capítulo.",
+    "linhas": 10,
+    "respostaEsperada": "A proposta não é a melhor estratégia. Dobrar os testadores e alongar a fase de testes reforça apenas o Controle de Qualidade (QC): uma ação reativa, orientada ao produto, que encontra defeitos depois que eles já foram criados. É exatamente a \"dependência da inspeção\" que Deming critica, e no Custo da Qualidade isso aumenta os gastos com avaliação e falha interna sem atacar a causa. Como os defeitos nascem nos requisitos, cada um deles atravessa design e implementação antes de ser encontrado; pela Regra dos 10x, o defeito que custaria 1x para corrigir nos requisitos custa 20x nos testes e 100x ou mais em produção, onde se torna falha externa. O caminho indicado é investir em Garantia da Qualidade (QA), que é proativa e orientada ao processo: revisar os requisitos e os critérios de aceitação com o hospital antes do desenvolvimento, treinar a equipe, adotar revisão de código e testes automatizados desde o início, com integração contínua. Os testes continuam necessários, pois QA sem QC nunca verifica o resultado, mas não podem ser a única forma de buscar qualidade."
+  },
+  {
+    "id": "engsoft-cap6-d2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "texto": {
+      "citacao": "\"When a measure becomes a target, it ceases to be a good measure.\"",
+      "traducao": "(Tradução livre: \"Quando uma medida se torna uma meta, ela deixa de ser uma boa medida.\")",
+      "fonte": "STRATHERN, M. \"Improving ratings\": audit in the British University system. European Review, v. 5, n. 3, p. 305-321, 1997. Formulação conhecida como Lei de Goodhart."
+    },
+    "caso": [
+      "Para melhorar a qualidade dos seus sistemas, a gerência de uma empresa de software determinou que nenhum pull request seria aprovado com cobertura de testes abaixo de 90% e criou um bônus trimestral para as equipes que mantivessem a maior cobertura.",
+      "Três meses depois, a cobertura média subiu de 55% para 93%, mas a taxa de defeitos escapados continuou a mesma. Uma revisão por amostragem mostrou que muitos dos testes novos executavam o código, mas não verificavam se o resultado estava correto."
+    ],
+    "enunciado": "Com base no texto e no caso apresentado, explique por que a meta de cobertura não trouxe a melhoria de qualidade esperada pela gerência.",
+    "linhas": 10,
+    "respostaEsperada": "A cobertura de testes mede apenas quanto do código foi executado pelos testes, e não se os testes verificam o comportamento correto; por isso, alta cobertura não garante ausência de defeitos. Ao transformar a cobertura em meta obrigatória e premiada, a gerência criou o efeito descrito pela Lei de Goodhart: as equipes passaram a otimizar o número, e não a qualidade, escrevendo testes sem valor, sem verificações, só para \"passar pelo\" código. A métrica subiu, mas deixou de representar o que deveria medir, e a prova disso é a taxa de defeitos escapados, que mostra o que de fato chega ao cliente e não mudou. As métricas devem ser usadas para entender e melhorar o processo, não para pressionar ou premiar; a cobertura funciona melhor como indicador acompanhado junto com outras métricas, como a taxa de defeitos escapados e a densidade de defeitos, e apoiado por revisão de código que avalie a qualidade dos próprios testes."
+  },
+  {
+    "id": "engsoft-cap6-o1",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Ao fechar o balanço anual, uma empresa de software listou os seguintes gastos ligados à qualidade: (1) um curso de escrita de testes automatizados para os desenvolvedores; (2) as horas gastas na execução da suíte de testes de regressão e em uma auditoria de processos; (3) o retrabalho para corrigir um defeito encontrado na homologação interna, antes do lançamento; (4) a multa contratual paga a um cliente por causa de uma indisponibilidade do sistema em produção."
+      }
+    ],
+    "enunciado": "Considerando as categorias do Custo da Qualidade (CoQ), os gastos 1, 2, 3 e 4 classificam-se, respectivamente, como custos de",
+    "alternativas": [
+      "prevenção, avaliação, falha interna e falha externa.",
+      "avaliação, prevenção, falha externa e falha interna.",
+      "prevenção, falha interna, avaliação e falha externa.",
+      "avaliação, avaliação, falha interna e falha externa.",
+      "prevenção, avaliação, falha externa e falha externa."
+    ],
+    "correta": 0,
+    "resolucao": "O curso de testes automatizados é investimento para evitar defeitos: prevenção. Executar a suíte de regressão e fazer auditoria é verificar a qualidade: avaliação. O retrabalho feito na homologação interna corrige o defeito antes da entrega: falha interna. A multa por indisponibilidade vem de um defeito que chegou ao cliente: falha externa, a categoria mais cara."
+  },
+  {
+    "id": "engsoft-cap6-o2",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe adotou três práticas novas: todo pull request passa pela revisão de outro desenvolvedor; o pipeline roda o SonarQube a cada envio de código; e a gerência criou um processo padrão de desenvolvimento, com checklist, que vale para todos os projetos da empresa e é ensinado em um treinamento obrigatório."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. A revisão dos pull requests e a análise com o SonarQube são atividades de Controle de Qualidade (QC), pois atuam sobre um artefato que já foi produzido.",
+      "II. A análise estática de código executa o programa com dados de teste para encontrar falhas que só aparecem em tempo de execução.",
+      "III. A criação de um processo padrão com checklist e treinamento é uma atividade de QC, pois o seu objetivo também é reduzir a quantidade de defeitos."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, apenas.",
+      "I e II, apenas.",
+      "I e III, apenas.",
+      "II, apenas.",
+      "III, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: revisão de código e análise estática examinam o produto já criado, por isso são QC. II é falsa: a análise estática examina o código-fonte sem executá-lo; quem executa o programa são os testes. III é falsa: definir processos e treinar pessoas é Garantia da Qualidade (QA), que é orientada ao processo e previne defeitos. O objetivo de reduzir defeitos é comum a QA e QC; o que os distingue é atuar no processo ou no produto."
+  },
+  {
+    "id": "engsoft-cap6-o3",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "O painel de monitoramento de um sistema de agendamento mostra que, em média, o sistema fica 30 dias funcionando sem falhas. Quando uma falha acontece, porém, a equipe leva em média 4 horas para colocá-lo de volta no ar. A equipe decidiu implantar uma reversão automática (rollback) para a versão anterior, com a meta de deixar o sistema fora do ar por no máximo 30 minutos a cada falha."
+      }
+    ],
+    "enunciado": "A meta definida pela equipe está diretamente ligada à melhoria de qual métrica?",
+    "alternativas": [
+      "MTTR, o tempo médio para restaurar o serviço após uma falha.",
+      "MTBF, o tempo médio entre falhas.",
+      "Lead Time, o tempo desde a solicitação até a entrega em produção.",
+      "Taxa de Defeitos Escapados, o percentual de defeitos encontrados em produção.",
+      "Cycle Time, o tempo que uma tarefa leva do início até a entrega."
+    ],
+    "correta": 0,
+    "resolucao": "Os 30 dias entre uma falha e outra são o MTBF, que a meta não pretende mudar: a reversão automática não evita a falha. O que ela encurta é o tempo para voltar a funcionar depois que a falha acontece, de 4 horas para 30 minutos: isso é o MTTR. Lead Time e Cycle Time medem o tempo de entrega de trabalho, e a taxa de defeitos escapados mede quantos defeitos chegam à produção."
+  },
+  {
+    "id": "engsoft-cap6-o4",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Durante a revisão de código, uma desenvolvedora analisou a função abaixo, escrita em Python."
+      },
+      {
+        "t": "codigo",
+        "texto": "def total_pedidos(pedidos):\n    total = 0\n    for p in pedidos:\n        if p.cancelado:\n            continue\n        if p.valor > 1000:\n            total += p.valor * 0.90\n        elif p.valor > 500:\n            total += p.valor * 0.95\n        else:\n            total += p.valor\n    return total"
+      }
+    ],
+    "enunciado": "A complexidade ciclomática da função e o número mínimo de casos de teste para percorrer todos os seus caminhos independentes são, respectivamente,",
+    "alternativas": [
+      "5 e 5.",
+      "4 e 4.",
+      "4 e 5.",
+      "5 e 3.",
+      "6 e 6."
+    ],
+    "correta": 0,
+    "resolucao": "A complexidade ciclomática é o número de pontos de decisão mais 1. A função tem quatro decisões: o for, o if p.cancelado, o if p.valor > 1000 e o elif p.valor > 500 (o else não conta, pois não testa condição). Assim, 4 + 1 = 5. Esse número é também a quantidade de caminhos independentes, que é o mínimo de casos de teste para percorrer todos eles."
+  },
+  {
+    "id": "engsoft-cap6-o5",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em um semestre, a equipe de um aplicativo de delivery encontrou 90 defeitos durante os testes internos. No mesmo período, os usuários relataram mais 10 defeitos no aplicativo já publicado."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. A taxa de defeitos escapados dessa equipe é de aproximadamente 11%.",
+      "PORQUE",
+      "II. A taxa de defeitos escapados é o percentual de defeitos encontrados em produção sobre o total de defeitos encontrados."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A II é a definição correta da métrica. Pela própria definição, a I é falsa: o total de defeitos é 90 + 10 = 100, e os 10 encontrados em produção correspondem a 10%. O valor de 11% aparece quando se divide 10 por 90, ou seja, pelos defeitos internos em vez do total."
+  },
+  {
+    "id": "engsoft-cap6-o6",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma fintech lançou uma atualização do seu aplicativo de empréstimos. Duas semanas depois, descobriu que o cálculo de juros estava errado, e centenas de clientes foram cobrados a mais. A equipe de suporte trabalhou em regime emergencial, a empresa precisou devolver valores e foi notificada pelo Procon. A investigação mostrou que o erro vinha de um requisito ambíguo, escrito ainda no início do projeto."
+      },
+      {
+        "t": "p",
+        "texto": "Para evitar novos casos, a diretoria propôs três medidas: (1) treinar a equipe em engenharia de requisitos e revisar os critérios de aceitação com o cliente antes do desenvolvimento; (2) dar um bônus à equipe que atingir 100% de cobertura de testes no próximo trimestre; (3) fazer um post-mortem do incidente para identificar o culpado e aplicar uma advertência formal."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Os gastos com o atendimento emergencial, a devolução de valores e o desgaste com o Procon são custos de falha externa, a categoria mais cara do Custo da Qualidade.",
+      "II. A medida 1 é uma ação de Garantia da Qualidade (QA), de caráter preventivo, e ataca a origem do problema: um defeito de requisito custa bem menos para corrigir quando é detectado na própria fase de requisitos.",
+      "III. A medida 2 tende a elevar a qualidade de forma confiável, pois 100% de cobertura de testes assegura que defeitos como o do cálculo de juros sejam encontrados antes da entrega.",
+      "IV. A medida 3 está alinhada à cultura DevOps, pois um post-mortem com responsabilização individual incentiva a equipe a relatar falhas com transparência."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e II, apenas.",
+      "I, apenas.",
+      "II, apenas.",
+      "I, II e III, apenas.",
+      "I, II e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: o defeito chegou ao cliente, por isso os custos são de falha externa. II é verdadeira: treinamento e revisão de requisitos melhoram o processo (QA), e pela Regra dos 10x o defeito corrigido nos requisitos custa 1x, contra 100x ou mais em produção. III é falsa: alta cobertura não garante ausência de defeitos, e transformar a cobertura em meta premiada leva a testes sem valor, só para bater o número (Lei de Goodhart). IV é falsa: a cultura DevOps adota o post-mortem blameless, sem culpados; punir pessoas faz a equipe esconder falhas."
+  },
+  {
+    "id": "engsoft-cap6-o7",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa com cinco equipes ágeis criou um ranking mensal pela velocity de cada equipe, com bônus para as duas primeiras colocadas. Três meses depois, a velocity de todas as equipes havia dobrado, mas a quantidade de funcionalidades entregues aos clientes continuava a mesma."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Depois que a velocity passou a ser usada para comparar e premiar as equipes, ela tende a perder o valor como indicador da capacidade de entrega de cada equipe.",
+      "PORQUE",
+      "II. A velocity mede o tempo desde a solicitação do cliente até a entrega em produção, o que a torna sensível a atrasos causados fora da equipe."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A I é verdadeira: é a Lei de Goodhart (\"quando uma medida se torna uma meta, ela deixa de ser uma boa medida\"). Com prêmio em jogo, as equipes passam a inflar as estimativas ou a quebrar as histórias em pedaços artificialmente pequenos, e os pontos deixam de refletir o que é entregue. A II é falsa: velocity é a quantidade de pontos entregues por sprint; o tempo da solicitação até a entrega em produção é o Lead Time."
+  },
+  {
+    "id": "engsoft-cap6-o8",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa brasileira de software com 15 funcionários quer participar de licitações públicas de TI. Hoje, cada projeto é conduzido do jeito que o gerente da vez prefere, e as entregas só saem no prazo quando dois desenvolvedores mais experientes assumem o trabalho nos momentos críticos."
+      }
+    ],
+    "enunciado": "Sobre os modelos de maturidade e a situação dessa empresa, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "Por ser de pequeno porte, a empresa pode adotar o MPS.BR, cuja escala de sete níveis começa no nível A, o de menor maturidade, e termina no nível G, o de maior maturidade.",
+      "A dependência de dois desenvolvedores experientes para que os projetos deem certo é típica do nível 1 (Inicial) do CMMI.",
+      "O MPS.BR, desenvolvido pela SOFTEX, é um modelo nacional equivalente ao CMMI, adaptado a empresas de pequeno e médio porte e reconhecido em licitações públicas de TI no Brasil.",
+      "Para chegar ao nível 3 (Definido) do CMMI, a empresa precisa ter processos padronizados para toda a organização, e não apenas regras que cada projeto define por conta própria.",
+      "No nível 4 (Gerenciado Quantitativamente) do CMMI, o processo passa a ser medido e controlado estatisticamente."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta é a da escala do MPS.BR: os sete níveis vão de G, o menos maduro, até A, o mais maduro, e não o contrário. As demais estão corretas: depender de \"heróis\" caracteriza o nível 1 do CMMI; o MPS.BR é o modelo nacional da SOFTEX, voltado a pequenas e médias empresas; o nível 3 exige processos padronizados para toda a organização; e o nível 4 mede e controla o processo estatisticamente."
+  },
+  {
+    "id": "engsoft-cap6-o9",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Para lançar um aplicativo antes da concorrência, uma startup suspendeu as revisões de código e deixou de escrever testes automatizados, com a promessa de \"arrumar depois\". Seis meses após o lançamento, cada nova funcionalidade leva o dobro do tempo para ficar pronta, e quase toda correção de defeito quebra alguma outra parte do sistema."
+      }
+    ],
+    "enunciado": "A análise correta dessa situação é:",
+    "alternativas": [
+      "Trata-se de débito técnico: as decisões tomadas para ganhar velocidade geraram um custo futuro que cresce como juros, e a saída é pagá-lo aos poucos, com refatoração e testes automatizados, junto com o trabalho novo.",
+      "Trata-se de um custo de falha externa, pois os problemas apareceram depois do lançamento; por isso, a solução é reforçar a equipe de suporte ao cliente.",
+      "A lentidão é natural em todo software que cresce e não tem relação com as decisões anteriores; por isso, a equipe deve apenas aumentar o prazo das próximas entregas.",
+      "Débito técnico só existe quando há defeitos em produção; como os problemas estão no desenvolvimento, o conceito não se aplica a essa situação.",
+      "A melhor saída é aumentar a meta de velocity das sprints, para compensar o tempo perdido com as correções."
+    ],
+    "correta": 0,
+    "resolucao": "Débito técnico é o custo futuro do trabalho extra causado por decisões técnicas inadequadas tomadas para ganhar velocidade. Como uma dívida financeira, ele acumula juros: cada funcionalidade nova fica mais lenta e cada correção quebra outra parte. A lentidão não é natural, é consequência das escolhas feitas no lançamento. O débito não depende de defeitos em produção, e aumentar a meta de velocity só pioraria o quadro (Lei de Goodhart)."
+  },
+  {
+    "id": "engsoft-cap6-o10",
+    "disciplinaId": "engenharia-de-software-e-da-usabilidade",
+    "capituloId": "engsoft-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa de comércio eletrônico reorganizou o seu processo de entrega. Agora, a cada commit, um pipeline compila o sistema e executa os testes automatizados; o código da branch principal fica sempre pronto para ser implantado; e a liberação para os clientes é feita quando o gerente de produto aprova a publicação."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Com a Integração Contínua, um defeito pode ser detectado poucos minutos depois de ser introduzido, quando a correção ainda é barata.",
+      "II. Como os testes passaram a ser automatizados, a responsabilidade pela qualidade fica concentrada na equipe de QA, o que libera os desenvolvedores para cuidar apenas de novas funcionalidades.",
+      "III. Na Entrega Contínua, o pipeline é mantido sempre pronto para implantação, mas a decisão de publicar em produção pode continuar sendo tomada por uma pessoa."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e III, apenas.",
+      "I, apenas.",
+      "III, apenas.",
+      "I, II e III.",
+      "I e II, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I é verdadeira: os testes rodam a cada commit, e o defeito é encontrado logo depois de criado, ainda na implementação, quando corrigir é muito mais barato do que em produção (Regra dos 10x). II é falsa: em uma cultura DevOps madura, a qualidade não é responsabilidade de um departamento isolado, e sim de toda a cadeia de entrega. III é verdadeira: a Entrega Contínua garante que o código esteja sempre em condições de ser implantado; publicar sem nenhuma aprovação humana já é a Implantação Contínua."
   },
   {
     "id": "engsoft-cap10-m1",
