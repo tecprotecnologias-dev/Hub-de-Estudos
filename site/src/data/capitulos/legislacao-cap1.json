@@ -98,37 +98,37 @@
     [
      "Origem racial ou étnica",
      "Cor da pele declarada, ancestralidade",
-     "Consentimento específico obrigatório"
+     "Só nas hipóteses do art. 11 (risco de discriminação)"
     ],
     [
      "Dados de saúde",
      "Prontuários, diagnósticos, exames",
-     "Uso restrito a finalidades de saúde"
+     "Vedado compartilhar para obter vantagem econômica, salvo exceções (art. 11, § 4º)"
     ],
     [
      "Convicção religiosa",
      "Religião praticada, afiliação religiosa",
-     "Vedada coleta para fins discriminatórios"
+     "Só nas hipóteses do art. 11; vedado uso discriminatório (art. 6º, IX)"
     ],
     [
      "Opinião política",
      "Filiação partidária, posição política",
-     "Proteção reforçada em pleitos eleitorais"
+     "Só nas hipóteses do art. 11 (risco de discriminação)"
     ],
     [
      "Vida sexual",
      "Orientação sexual, vida íntima",
-     "Sigilo absoluto salvo consentimento"
+     "Só nas hipóteses do art. 11 (risco de discriminação)"
     ],
     [
      "Dado genético",
      "DNA, perfil genético",
-     "Coleta restrita a finalidades científicas"
+     "Em pesquisas, anonimizar sempre que possível (art. 11, II, c)"
     ],
     [
      "Dado biométrico",
      "Digital, face, íris usados para identificação",
-     "Proteção máxima pela LGPD e GDPR"
+     "Admitido na prevenção à fraude em identificação e autenticação (art. 11, II, g)"
     ]
    ]
   },
@@ -224,8 +224,8 @@
     ],
     [
      "Canadá",
-     "PIPEDA / Bill C-27 (em tramitação)",
-     "2000 / pendente",
+     "PIPEDA (a reforma do Bill C-27 foi arquivada em 2025)",
+     "2000",
      "OPC"
     ]
    ]
@@ -237,7 +237,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "Tanto o GDPR quanto a LGPD possuem efeito extraterritorial. Isso significa que uma empresa brasileira que trate dados de cidadãos europeus deve cumprir o GDPR, mesmo que não possua sede na Europa. Da mesma forma, empresas estrangeiras que tratem dados de pessoas localizadas no Brasil estão sujeitas à LGPD. Ignorar essa realidade pode resultar em multas milionárias e bloqueio de operações."
+     "html": "Tanto o GDPR quanto a LGPD possuem efeito extraterritorial. Isso significa que uma empresa brasileira que ofereça bens ou serviços a pessoas que estão na União Europeia, ou que monitore o comportamento delas, deve cumprir o GDPR, mesmo que não possua sede na Europa. Da mesma forma, empresas estrangeiras que tratem dados de pessoas localizadas no Brasil estão sujeitas à LGPD. Ignorar essa realidade pode resultar em multas milionárias e bloqueio de operações."
     }
    ]
   },
@@ -412,7 +412,7 @@
   },
   {
    "t": "p",
-   "html": "O GDPR (General Data Protection Regulation), em vigor desde maio de 2018, é considerado o regulamento de proteção de dados mais abrangente e rigoroso do mundo. Ele se aplica a qualquer organização que processe dados de cidadãos ou residentes da União Europeia, independentemente de onde a organização esteja sediada. Por conta dessa abrangência territorial — combinada às pesadas multas previstas — o GDPR influenciou diretamente a elaboração da LGPD brasileira e de dezenas de outras legislações ao redor do globo, consolidando-se como uma espécie de \"padrão-ouro\" regulatório internacional."
+   "html": "O GDPR (General Data Protection Regulation), aplicado desde maio de 2018, é considerado o regulamento de proteção de dados mais abrangente e rigoroso do mundo. Ele se aplica às organizações estabelecidas na União Europeia e também às de fora dela que ofereçam bens ou serviços a pessoas que estão na União ou monitorem o comportamento delas, independentemente de onde a organização esteja sediada. Por conta dessa abrangência territorial — combinada às pesadas multas previstas — o GDPR influenciou diretamente a elaboração da LGPD brasileira e de dezenas de outras legislações ao redor do globo, consolidando-se como uma espécie de \"padrão-ouro\" regulatório internacional."
   },
   {
    "t": "h3",
@@ -492,7 +492,7 @@
   },
   {
    "t": "p",
-   "html": "Amazon (2021): € 746 milhões pela autoridade luxemburguesa, por violações de cookies."
+   "html": "Amazon (2021): € 746 milhões pela autoridade luxemburguesa, por tratar dados para publicidade direcionada sem consentimento válido."
   },
   {
    "t": "p",
@@ -526,8 +526,8 @@
     ],
     [
      "Multa máxima",
-     "2% do fat. (limite R$ 50 mi)",
-     "4% do fat. global (até € 20 mi)"
+     "2% do fat. no Brasil (limite R$ 50 mi por infração)",
+     "€ 20 mi ou 4% do fat. global (o que for maior)"
     ],
     [
      "Bases legais",
@@ -536,17 +536,17 @@
     ],
     [
      "DPO / Encarregado",
-     "Obrigatório p/ controladores e operadores",
+     "Obrigatório para o controlador (agentes de pequeno porte dispensados)",
      "Obrigatório em casos específicos"
     ],
     [
      "Notificação de incidente",
-     "Prazo razoável (ANPD)",
+     "3 dias úteis (Resolução CD/ANPD nº 15/2024)",
      "72 horas para a autoridade"
     ],
     [
      "Direito ao esquecimento",
-     "Previsto (eliminação dos dados)",
+     "Não usa o termo; prevê a eliminação dos dados (art. 18, VI)",
      "Expressamente previsto"
     ],
     [
@@ -670,7 +670,7 @@
     "<strong>Contratos com terceiros:</strong> o compartilhamento com parceiros e fornecedores deve ser amparado por contrato de operação de dados, com cláusulas de proteção e confidencialidade.",
     "<strong>Proibição de venda indevida:</strong> a venda de dados pessoais a terceiros sem base legal e sem conhecimento do titular é ilegal sob a LGPD e o GDPR.",
     "<strong>Mudança de finalidade:</strong> antes de usar dados para finalidade diversa da original, a empresa deve verificar compatibilidade ou obter novo consentimento.",
-    "<strong>Decisões automatizadas:</strong> em decisões que afetem o titular (como análise de crédito ou seleção de candidatos), este tem direito de solicitar revisão humana."
+    "<strong>Decisões automatizadas:</strong> em decisões que afetem o titular (como análise de crédito ou seleção de candidatos), este tem direito de solicitar a revisão da decisão e de receber informações claras sobre os critérios usados (art. 20)."
    ]
   },
   {
@@ -684,7 +684,7 @@
      "itens": [
       "1. Contenção imediata: isolar os sistemas afetados e identificar a extensão do incidente.",
       "2. Avaliação de risco: analisar quais dados foram comprometidos e quais os riscos para os titulares.",
-      "3. Notificação à ANPD: comunicar o incidente em prazo razoável (o GDPR exige 72 horas).",
+      "3. Notificação à ANPD: comunicar o incidente em até 3 dias úteis (Resolução CD/ANPD nº 15/2024); o GDPR exige 72 horas.",
       "4. Notificação aos titulares: quando o incidente puder acarretar risco ou dano relevante.",
       "5. Documentação: registrar todas as ações tomadas, o escopo do incidente e as medidas de remediação."
      ]
@@ -698,7 +698,7 @@
   },
   {
    "t": "p",
-   "html": "Tanto a LGPD quanto o GDPR conferem um conjunto robusto de direitos aos titulares de dados pessoais. As empresas devem criar mecanismos eficientes para responder às solicitações dos titulares de forma gratuita e em prazo razoável — a LGPD não define prazo específico para a maioria das solicitações, enquanto o GDPR estipula 30 dias, prorrogáveis por mais 60 dias em casos complexos."
+   "html": "Tanto a LGPD quanto o GDPR conferem um conjunto robusto de direitos aos titulares de dados pessoais. As empresas devem criar mecanismos eficientes para responder às solicitações dos titulares de forma gratuita e em prazo razoável — a LGPD fixa 15 dias para a declaração completa no direito de acesso (art. 19, II) e deixa outros prazos para a regulamentação, enquanto o GDPR estipula um mês, prorrogável por mais dois meses em casos complexos."
   },
   {
    "t": "tabela",
@@ -741,7 +741,7 @@
     ],
     [
      "Revisão de decisão automatizada",
-     "Solicitar revisão humana de decisões tomadas exclusivamente por algoritmos"
+     "Solicitar a revisão de decisões tomadas unicamente com base em tratamento automatizado (art. 20)"
     ],
     [
      "Petição à ANPD",
@@ -756,7 +756,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "O direito de portabilidade é a base jurídica de iniciativas como o Open Finance brasileiro: ao autorizar a portabilidade de seu histórico financeiro de um banco tradicional para uma fintech concorrente, o titular exerce, na prática, esse direito garantido pela LGPD — permitindo maior concorrência e melhores ofertas de crédito, sem que o banco original possa se recusar a fornecer os dados."
+     "html": "O direito de portabilidade tem a mesma lógica de iniciativas como o Open Finance brasileiro, regulamentado pelo Conselho Monetário Nacional e pelo Banco Central: com o consentimento do cliente, um banco compartilha o histórico financeiro dele com outra instituição, o que aumenta a concorrência e melhora as ofertas de crédito. Na LGPD, a portabilidade (art. 18, V) depende de regulamentação da ANPD e respeita os segredos comercial e industrial."
     }
    ]
   },
@@ -771,7 +771,7 @@
   },
   {
    "t": "p",
-   "html": "A ANPD é a autoridade brasileira responsável por zelar pela proteção dos dados pessoais, fiscalizar o cumprimento da LGPD, aplicar sanções e editar normas complementares. Criada pelo Decreto nº 10.474/2020, a ANPD passou a operar com autonomia técnica e decisória, tornando-se peça fundamental para a efetividade prática da LGPD no Brasil — sem uma autoridade fiscalizadora atuante, a lei correria o risco de permanecer como uma declaração de princípios sem força coercitiva real."
+   "html": "A ANPD é a autoridade brasileira responsável por zelar pela proteção dos dados pessoais, fiscalizar o cumprimento da LGPD, aplicar sanções e editar normas complementares. Criada pela Lei nº 13.853/2019, que incluiu os arts. 55-A a 55-L na LGPD, e estruturada pelo Decreto nº 10.474/2020, a ANPD foi transformada em autarquia de natureza especial pela Lei nº 14.460/2022 e opera com autonomia técnica e decisória, tornando-se peça fundamental para a efetividade prática da LGPD no Brasil — sem uma autoridade fiscalizadora atuante, a lei correria o risco de permanecer como uma declaração de princípios sem força coercitiva real."
   },
   {
    "t": "h3",
@@ -790,7 +790,7 @@
     ],
     [
      "Multa simples",
-     "Até 2% do faturamento da empresa no último exercício (limite de R$ 50 milhões por infração)"
+     "Até 2% do faturamento da empresa, grupo ou conglomerado no Brasil no último exercício (limite de R$ 50 milhões por infração)"
     ],
     [
      "Multa diária",
@@ -810,7 +810,11 @@
     ],
     [
      "Suspensão parcial",
-     "Suspensão do funcionamento do banco de dados por até 6 meses"
+     "Suspensão parcial do funcionamento do banco de dados por até 6 meses, prorrogável por igual período"
+    ],
+    [
+     "Suspensão da atividade",
+     "Suspensão do exercício da atividade de tratamento por até 6 meses, prorrogável por igual período"
     ],
     [
      "Proibição de tratamento",
@@ -839,7 +843,7 @@
    "itens": [
     "1. Mapeamento de dados (Data Mapping): identifique todos os dados pessoais que a empresa coleta, trata e armazena.",
     "2. Revisão de contratos: adeque contratos com fornecedores, parceiros e clientes para incluir cláusulas de proteção de dados.",
-    "3. Nomeação do Encarregado (DPO): designe um responsável pelo tratamento de dados e pelo canal de comunicação com a ANPD e os titulares.",
+    "3. Nomeação do Encarregado (DPO): designe a pessoa que atua como canal de comunicação entre a empresa, os titulares e a ANPD.",
     "4. Treinamento da equipe: capacite colaboradores sobre as obrigações da LGPD e boas práticas de segurança da informação.",
     "5. Elaboração do RIPD: produza o Relatório de Impacto à Proteção de Dados para tratamentos de alto risco.",
     "6. Revisão da Política de Privacidade: garanta que a política seja clara, atualizada e facilmente acessível aos titulares.",

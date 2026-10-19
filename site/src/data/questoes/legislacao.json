@@ -26,7 +26,8 @@
       "c) Dado que o registro do ciclo menstrual é um dado sensível, qual exigência adicional a LGPD impõe para que a BemEstar+ possa tratá-lo licitamente? Fundamente com base no art. 11 da lei.",
       "d) O “índice de bem-estar” agregado enviado ao RH das empresas parceiras é calculado a partir de dados individuais de sono, atividade física e humor. Discuta se esse repasse ao empregador pode representar risco aos titulares, mesmo sendo um dado “agregado”, relacionando sua resposta ao princípio da finalidade (art. 6º, I)."
     ],
-    "linhas": 12
+    "linhas": 12,
+    "respostaEsperada": "a) Nome completo, e-mail e CPF são dados pessoais comuns (art. 5º, I): identificam diretamente uma pessoa natural. A contagem de passos também é dado pessoal, pois está ligada a um usuário identificado. b) O registro do ciclo menstrual é dado pessoal sensível, da categoria dado referente à saúde (art. 5º, II); o padrão de sono e o humor também podem revelar condições de saúde. c) Por ser sensível, o dado só pode ser tratado nas hipóteses do art. 11. A mais adequada aqui é o consentimento específico e destacado da usuária, para essa finalidade (art. 11, I); o legítimo interesse não está entre as hipóteses permitidas para dados sensíveis. d) Sim, há risco. Os dados foram coletados para personalizar treinos, e repassá-los ao empregador é uma finalidade nova, que precisaria ser informada aos usuários e ter base legal (princípio da finalidade, art. 6º, I). Em equipes pequenas, um índice \"agregado\" pode permitir identificar pessoas, e o empregador poderia usá-lo em decisões sobre os empregados, com risco de discriminação. A BemEstar+ deveria garantir anonimização real, informar os usuários e, em regra, obter o consentimento deles; a LGPD também restringe o compartilhamento de dados de saúde para obter vantagem econômica (art. 11, § 4º)."
   },
   {
     "id": "legislacao-cap1-q2",
@@ -53,7 +54,8 @@
       "A LGPD não se aplica a marketing, apenas a dados financeiros e de identificação"
     ],
     "correta": 1,
-    "resolucao": "o legítimo interesse (art. 7º, IX) não é uma base legal em branco: a própria lei condiciona seu uso a uma ponderação entre os interesses do controlador e os direitos fundamentais do titular. Marketing direto sem qualquer possibilidade de recusa prévia tende a pender contra o controlador nessa ponderação. {{C}}, {{D}} e {{E}} fazem afirmações categóricas incompatíveis com o sistema de bases legais da LGPD."
+    "resolucao": "o legítimo interesse (art. 7º, IX) não é uma base legal em branco: a própria lei condiciona seu uso a uma ponderação entre os interesses do controlador e os direitos fundamentais do titular. Marketing direto sem qualquer possibilidade de recusa prévia tende a pender contra o controlador nessa ponderação. {{C}}, {{D}} e {{E}} fazem afirmações categóricas incompatíveis com o sistema de bases legais da LGPD.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap1-q3",
@@ -63,7 +65,7 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“O presente regulamento aplica-se ao tratamento de dados pessoais de titulares que se encontrem no território da União, efetuado por um responsável pelo tratamento ou subcontratante não estabelecido na União, quando as atividades de tratamento estejam relacionadas com: a) a oferta de bens ou serviços a esses titulares de dados na União [...]; ou b) o controlo do seu comportamento, desde que esse comportamento tenha lugar na União.”",
+        "texto": "“O presente regulamento aplica-se ao tratamento de dados pessoais de titulares residentes no território da União, efetuado por um responsável pelo tratamento ou subcontratante não estabelecido na União, quando as atividades de tratamento estejam relacionadas com: a) A oferta de bens ou serviços a esses titulares de dados na União, independentemente da exigência de os titulares dos dados procederem a um pagamento; b) O controlo do seu comportamento, desde que esse comportamento tenha lugar na União.”",
         "fonte": "UNIÃO EUROPEIA. Regulamento (UE) 2016/679 do Parlamento Europeu e do Conselho (Regulamento Geral sobre a Proteção de Dados), de 27 de abril de 2016, art. 3º, nº 2."
       },
       {
@@ -80,7 +82,8 @@
       "A aplicabilidade do GDPR depende exclusivamente da nacionalidade dos sócios da empresa e do país onde ficam os servidores, não da localização dos clientes atendidos"
     ],
     "correta": 1,
-    "resolucao": "o critério do GDPR é o do efeito/mercado: basta oferecer bens ou serviços de forma direcionada a titulares na União Europeia para que o regulamento se aplique, independentemente de onde a empresa esteja sediada. {{C}} e {{E}} inventam critérios (número de clientes, nacionalidade dos sócios) que a lei não prevê; {{D}} isola um único fator (idioma do site) quando o conjunto de indícios (idioma, moeda, clientela) é o que caracteriza o direcionamento ao mercado europeu."
+    "resolucao": "o critério do GDPR é o do efeito/mercado: basta oferecer bens ou serviços de forma direcionada a titulares na União Europeia para que o regulamento se aplique, independentemente de onde a empresa esteja sediada. {{C}} e {{E}} inventam critérios (número de clientes, nacionalidade dos sócios) que a lei não prevê; {{D}} isola um único fator (idioma do site) quando o conjunto de indícios (idioma, moeda, clientela) é o que caracteriza o direcionamento ao mercado europeu.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap1-q4",
@@ -107,7 +110,8 @@
       "A segunda prática é mais segura juridicamente que a primeira, pois manter a tabela de correspondência é uma exigência legal da LGPD para fins de auditoria"
     ],
     "correta": 2,
-    "resolucao": "o critério do art. 12 é a (im)possibilidade de reversão com meios razoáveis. Na primeira prática, a reversão é inviável mesmo para a própria empresa (anonimização); na segunda, a empresa mantém deliberadamente a chave de reversão (pseudonimização), o que mantém os dados sob o alcance integral da LGPD. {{B}} inverte as classificações; {{E}} fabrica uma exigência legal inexistente."
+    "resolucao": "o critério do art. 12 é a (im)possibilidade de reversão com meios razoáveis. Na primeira prática, a reversão é inviável mesmo para a própria empresa (anonimização); na segunda, a empresa mantém deliberadamente a chave de reversão (pseudonimização), o que mantém os dados sob o alcance integral da LGPD. {{B}} inverte as classificações; {{E}} fabrica uma exigência legal inexistente.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap1-q5",
@@ -134,7 +138,8 @@
       "A obrigação de comunicação do art. 48 se aplica apenas a órgãos públicos, não a empresas privadas como a EduPass"
     ],
     "correta": 1,
-    "resolucao": "o dever de comunicação do art. 48 nasce do risco ou dano relevante ao titular, não da duração do incidente nem da repercussão na imprensa. Senhas com hash fraco e e-mails expostos representam risco relevante (possibilidade de acesso indevido às contas), o que torna a comunicação obrigatória desde a identificação do incidente — não apenas depois de virar notícia."
+    "resolucao": "o dever de comunicação do art. 48 nasce do risco ou dano relevante ao titular, não da duração do incidente nem da repercussão na imprensa. Senhas com hash fraco e e-mails expostos representam risco relevante (possibilidade de acesso indevido às contas), o que torna a comunicação obrigatória desde a identificação do incidente — não apenas depois de virar notícia. A Resolução CD/ANPD nº 15/2024 fixou o prazo de 3 dias úteis para comunicar a ANPD.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap1-q6",
@@ -144,7 +149,7 @@
     "contexto": [
       {
         "t": "citacao",
-        "texto": "“As violações das disposições a seguir enumeradas estão sujeitas, [...] a coimas [multas] até 20 000 000 EUR ou, no caso de uma empresa, até 4% do seu volume de negócios anual a nível mundial correspondente ao exercício financeiro anterior, consoante o montante mais elevado.”",
+        "texto": "“A violação das disposições a seguir enumeradas está sujeita, [...] a coimas [multas] até 20 000 000 EUR ou, no caso de uma empresa, até 4 % do seu volume de negócios anual a nível mundial correspondente ao exercício financeiro anterior, consoante o montante que for mais elevado [...].”",
         "fonte": "UNIÃO EUROPEIA. Regulamento (UE) 2016/679, art. 83, nº 5."
       },
       {
@@ -161,7 +166,8 @@
       "A afirmação está incorreta, pois apenas a LGPD prevê multas percentuais sobre o faturamento; o GDPR usa somente valores fixos em euros, nunca percentuais, o que reduz a exposição da GlobalRetail na Europa"
     ],
     "correta": 1,
-    "resolucao": "a LGPD combina um percentual (2%) com um teto fixo em reais (R$ 50 milhões por infração); o GDPR, para infrações mais graves, usa um percentual maior (4%) sem esse teto fixo equivalente, apenas um piso em euros que funciona como valor mínimo de referência. Para uma empresa de grande porte, isso pode significar exposição financeira bem maior sob o GDPR. {{C}} e {{E}} contradizem a existência de multas percentuais em ambas as leis."
+    "resolucao": "a LGPD combina um percentual (2% do faturamento no Brasil) com um teto fixo de R$ 50 milhões por infração. O GDPR, nas infrações mais graves, permite multa de até € 20 milhões ou de até 4% do faturamento mundial, o que for maior: para empresas grandes, o limite é o percentual, sem teto fixo. Para a GlobalRetail, com € 500 milhões de faturamento, o limite europeu seria de € 20 milhões, bem acima do teto brasileiro. {{C}} e {{E}} contradizem a existência de multas percentuais em ambas as leis.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap1-q7",
@@ -188,7 +194,8 @@
       "A portabilidade só pode ser exercida judicialmente, nunca por requisição direta ao controlador"
     ],
     "correta": 1,
-    "resolucao": "o art. 18, V, garante expressamente o direito de portabilidade mediante requisição do titular; a negativa fundamentada em suposta “propriedade dos dados” pelo banco não encontra amparo na LGPD, que trata os dados como algo sobre o qual o titular mantém direitos mesmo quando gerados na relação com o controlador. É esse tipo de direito que sustenta, na prática, iniciativas como o Open Finance."
+    "resolucao": "o art. 18, V, garante expressamente o direito de portabilidade mediante requisição do titular; a negativa fundamentada em suposta “propriedade dos dados” pelo banco não encontra amparo na LGPD, que trata os dados como algo sobre o qual o titular mantém direitos mesmo quando gerados na relação com o controlador. É esse tipo de direito que sustenta, na prática, iniciativas como o Open Finance.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap1-q8",
@@ -215,7 +222,8 @@
       "A competência é do Banco Central, independentemente do setor de atuação da empresa"
     ],
     "correta": 1,
-    "resolucao": "a ANPD foi criada especificamente para centralizar a fiscalização e a aplicação de sanções administrativas relacionadas à LGPD, embora isso não impeça a atuação complementar do PROCON ou do Ministério Público em situações específicas envolvendo relação de consumo ou interesses difusos."
+    "resolucao": "a ANPD foi criada especificamente para centralizar a fiscalização e a aplicação de sanções administrativas relacionadas à LGPD, embora isso não impeça a atuação complementar do PROCON ou do Ministério Público em situações específicas envolvendo relação de consumo ou interesses difusos.",
+    "nivel": "medio"
   },
   {
     "id": "legislacao-cap1-f1",
@@ -225,12 +233,13 @@
     "nivel": "facil",
     "enunciado": "Uma startup de healthtech coleta o endereço IP, o histórico de navegação e o diagnóstico médico de seus usuários. O jurídico precisa classificar corretamente cada dado para definir o nível de proteção aplicável. Qual é a classificação juridicamente correta sob a LGPD?",
     "alternativas": [
-      "Todos são dados pessoais comuns, pois nenhum deles permite identificar diretamente o titular pelo nome ou CPF, requisito mínimo exigido pelo art. 5º da LGPD para caracterizar dado pessoal.",
-      "IP e histórico são dados anonimizados; só o diagnóstico é dado sensível.",
-      "IP e histórico de navegação são dados pessoais comuns (identificação indireta); o diagnóstico médico é dado pessoal sensível, de saúde.",
-      "IP é dado anonimizado por ser gerado automaticamente pelo sistema; histórico de navegação é dado pessoal comum; e diagnóstico médico é dado pessoal comum, pois só se torna sensível quando associado ao nome do paciente."
+      "IP e histórico de navegação são dados pessoais comuns, pois identificam de forma indireta; o diagnóstico é dado sensível.",
+      "Todos são dados pessoais comuns, pois nenhum deles traz o nome ou o CPF, que a LGPD exige para haver dado pessoal.",
+      "IP e histórico de navegação são dados anonimizados, e só o diagnóstico médico é dado pessoal sensível.",
+      "O IP é anonimizado por ser gerado pelo sistema; o histórico é comum; o diagnóstico só é sensível com o nome.",
+      "Os três são dados pessoais sensíveis, pois juntos permitem montar um perfil completo do usuário da healthtech."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "dado pessoal é qualquer informação relacionada a pessoa natural identificada ou identificável (art. 5º, I), e IP e histórico de navegação permitem identificar o usuário de forma indireta. O diagnóstico médico é dado referente à saúde, que a LGPD classifica como dado pessoal sensível (art. 5º, II), com regras mais rígidas de tratamento (art. 11). Dado anonimizado é só aquele que não pode mais ser associado ao titular, o que não é o caso."
   },
   {
@@ -241,12 +250,13 @@
     "nivel": "facil",
     "enunciado": "Uma plataforma de e-commerce utiliza dados de histórico de compras dos clientes para recomendar produtos. O encarregado (DPO) questiona qual base legal ampara esse tratamento. Qual é a mais adequada e por quê?",
     "alternativas": [
-      "Consentimento, pois qualquer uso de dados comportamentais para personalização de experiência exige manifestação expressa e específica do titular, sendo essa a única base legal aplicável ao caso.",
-      "Obrigação legal, pois a LGPD obriga o e-commerce a guardar esse histórico.",
-      "Legítimo interesse do controlador, desde que respeite as expectativas razoáveis do titular, com registro e transparência.",
-      "Execução de contrato, pois recomendar produtos é obrigação contratual implícita em qualquer plataforma de e-commerce, dispensando qualquer análise adicional de base legal sob a LGPD."
+      "Legítimo interesse do controlador, desde que respeite as expectativas do titular, com transparência e registro.",
+      "Consentimento, pois é a única base legal possível para qualquer uso de dados de comportamento na personalização.",
+      "Obrigação legal, pois a LGPD obriga o e-commerce a guardar o histórico de compras para recomendar produtos.",
+      "Execução de contrato, pois recomendar produtos é obrigação implícita de toda plataforma, sem outra análise.",
+      "Proteção ao crédito, pois o histórico de compras mostra a capacidade de pagamento de cada cliente da loja."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "recomendar produtos com base no histórico de compras do próprio cliente é uso esperado na relação com a plataforma e pode se apoiar no legítimo interesse (art. 7º, IX), desde que respeite as expectativas e os direitos do titular, com transparência e registro da avaliação feita (art. 10). O consentimento não é a única base possível, e não existe obrigação legal nem cláusula contratual implícita que imponha recomendações."
   },
   {
@@ -257,12 +267,13 @@
     "nivel": "facil",
     "enunciado": "Uma empresa sofre vazamento de dados que expõe nome, e-mail e dados de saúde de 50 mil usuários. O jurídico precisa definir os prazos e obrigações de notificação. Qual é a conduta correta sob a LGPD e o GDPR, respectivamente?",
     "alternativas": [
-      "Ambas as leis exigem notificação à autoridade competente em 72 horas e notificação simultânea a todos os titulares afetados no mesmo prazo, sem qualquer distinção entre os regimes.",
-      "A LGPD exige notificar a ANPD em 72 horas; o GDPR não fixa prazo.",
-      "O GDPR exige notificar a autoridade em até 72 horas; a LGPD, pela Resolução CD/ANPD nº 15/2024, em até 3 dias úteis, avisando também os titulares.",
-      "A LGPD exige notificação apenas aos titulares afetados, sem obrigação de comunicar a ANPD salvo quando o vazamento envolver dados sensíveis; o GDPR exige notificação apenas à autoridade reguladora, sem obrigação de comunicar os titulares individualmente."
+      "O GDPR exige avisar a autoridade em até 72 horas; a LGPD, em até 3 dias úteis, e os titulares também devem ser avisados.",
+      "As duas leis exigem avisar a autoridade e todos os titulares em 72 horas, sem nenhuma diferença entre os regimes.",
+      "A LGPD exige avisar a ANPD em até 72 horas, e o GDPR não fixa nenhum prazo para avisar a autoridade europeia.",
+      "A LGPD só exige avisar os titulares, e a ANPD apenas se houver dados sensíveis; o GDPR só exige avisar a autoridade.",
+      "As duas leis deixam o aviso a critério da empresa, que decide se comunica o incidente conforme o risco à imagem."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "pelo GDPR (art. 33), a autoridade deve ser notificada em até 72 horas. Na LGPD, o art. 48 manda comunicar a ANPD e os titulares quando o incidente puder causar risco ou dano relevante, e o Regulamento de Comunicação de Incidentes (Resolução CD/ANPD nº 15/2024) fixou o prazo de 3 dias úteis. Nenhuma das duas leis dispensa a comunicação à autoridade, e as duas preveem aviso aos titulares em casos de risco."
   },
   {
@@ -273,13 +284,14 @@
     "nivel": "facil",
     "enunciado": "Um algoritmo de concessão de crédito nega automaticamente o empréstimo de uma consumidora sem qualquer explicação. Ela solicita à empresa a revisão da decisão e os critérios utilizados. Com base na LGPD, qual é o direito exercido e qual é a obrigação da empresa?",
     "alternativas": [
-      "A consumidora está exercendo o direito de portabilidade, que garante o acesso aos dados utilizados no processo decisório para que ela possa transferi-los a outro fornecedor de crédito.",
-      "Ela exerce o direito de correção de dados inexatos usados na decisão.",
-      "A consumidora exerce o direito de revisão de decisão automatizada (art. 20 da LGPD) sobre uma decisão tomada só por algoritmo.",
-      "A consumidora está exercendo o direito de eliminação de dados, podendo exigir que a empresa apague todos os dados utilizados na análise de crédito, o que automaticamente invalida a decisão de negativa e obriga uma nova análise."
+      "Ela exerce o direito de revisão de decisão automatizada (art. 20), e a empresa deve informar os critérios usados.",
+      "Ela exerce a portabilidade, que garante receber os dados usados na decisão para levá-los a outro fornecedor.",
+      "Ela exerce o direito de correção de dados inexatos, e a empresa só precisa corrigir o cadastro dela.",
+      "Ela exerce o direito de eliminação, e apagar os dados usados na análise anula sozinho a negativa do crédito.",
+      "Ela não tem direito algum, pois o algoritmo é segredo comercial e a decisão automática não pode ser revista."
     ],
-    "correta": 2,
-    "resolucao": "o art. 20 da LGPD garante ao titular o direito de pedir a revisão de decisões tomadas unicamente com base em tratamento automatizado que afetem seus interesses, como a análise de crédito, e de receber informações claras sobre os critérios usados, respeitados os segredos comercial e industrial. Portabilidade, correção e eliminação são outros direitos, que não resolvem a contestação da decisão."
+    "correta": 0,
+    "resolucao": "o art. 20 da LGPD garante ao titular o direito de pedir a revisão de decisões tomadas unicamente com base em tratamento automatizado que afetem seus interesses, como a análise de crédito, e de receber informações claras sobre os critérios usados, respeitados os segredos comercial e industrial. Portabilidade, correção e eliminação são outros direitos, que não resolvem a contestação da decisão. Desde a Lei nº 13.853/2019, a lei não exige que essa revisão seja feita por uma pessoa."
   },
   {
     "id": "legislacao-cap1-f6",
@@ -289,12 +301,13 @@
     "nivel": "facil",
     "enunciado": "Uma startup coleta dados de crianças menores de 12 anos em seu aplicativo educacional. Os pais não foram consultados. Qual é a base legal exigida pela LGPD e qual é a consequência do descumprimento?",
     "alternativas": [
-      "A base legal é o legítimo interesse da startup no desenvolvimento educacional, dispensando consentimento parental para aplicativos com finalidade pedagógica comprovada.",
-      "A base legal é a execução de contrato firmado entre a startup e a escola contratante, que atua como representante legal das crianças para fins de proteção de dados.",
-      "A LGPD exige consentimento específico e em destaque de pelo menos um dos pais ou responsável legal para dados de crianças.",
-      "A base legal é o consentimento da própria criança, que pode ser obtido no momento do cadastro no aplicativo mediante aceite dos termos de uso em linguagem simplificada adaptada à faixa etária, dispensando os pais."
+      "Exige consentimento específico e em destaque de um dos pais ou responsável; sem ele, cabem as sanções do art. 52.",
+      "A base é o legítimo interesse da startup no ensino, que dispensa os pais em aplicativos com fim pedagógico.",
+      "A base é a execução do contrato com a escola, que representa as crianças para fins de proteção de dados.",
+      "Basta o aceite da própria criança nos termos de uso, desde que o texto use linguagem adequada à idade dela.",
+      "Exige só um aviso aos pais por e-mail depois do cadastro, e a falta do aviso gera apenas uma advertência."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "o art. 14, § 1º, da LGPD exige consentimento específico e em destaque de pelo menos um dos pais ou do responsável legal para tratar dados de crianças, sempre no melhor interesse delas. Nem a escola nem a própria criança podem substituir esse consentimento. Tratar os dados sem ele expõe a empresa às sanções do art. 52, que vão de advertência e multa até a proibição do tratamento."
   },
   {
@@ -305,10 +318,11 @@
     "nivel": "facil",
     "enunciado": "Uma empresa deseja compartilhar com uma parceira de marketing a base de dados de clientes coletada em seu e-commerce, sem informar os titulares. Qual princípio da LGPD é violado e qual é a consequência jurídica?",
     "alternativas": [
-      "Viola o princípio da finalidade: os dados foram coletados para a compra e venda, e o marketing externo exige nova base legal.",
-      "Não há violação, pois o compartilhamento com empresas parceiras é expressamente permitido pelo princípio do legítimo interesse, desde que as empresas pertençam ao mesmo grupo econômico.",
-      "Viola apenas o princípio da segurança, pois o problema central é a ausência de contrato de operação de dados com a parceira — a finalidade não é violada, já que marketing é uso compatível com qualquer relação comercial.",
-      "Viola o princípio da necessidade, pois foram coletados dados demais."
+      "Viola o princípio da finalidade: os dados foram coletados para a compra, e o novo uso exige base legal própria.",
+      "Não viola nada, pois o legítimo interesse permite compartilhar com qualquer parceira do mesmo grupo econômico.",
+      "Viola só o princípio da segurança, pela falta de contrato com a parceira, já que o marketing é uso compatível.",
+      "Viola o princípio da necessidade, pois o problema é a quantidade de dados coletados no cadastro da loja.",
+      "Viola o princípio da qualidade dos dados, pois a parceira pode receber informações desatualizadas dos clientes."
     ],
     "correta": 0,
     "resolucao": "pelo princípio da finalidade (art. 6º, I), os dados só podem ser usados para os propósitos informados ao titular na coleta. Dados obtidos para concluir uma compra não podem ser repassados a um parceiro de marketing sem que o titular saiba: esse novo uso precisa de base legal própria, em geral o consentimento específico, e de transparência."
@@ -319,15 +333,16 @@
     "capituloId": "legislacao-cap1",
     "tipo": "objetiva",
     "nivel": "facil",
-    "enunciado": "Uma empresa de RH utiliza reconhecimento facial para registrar o ponto dos funcionários. O jurídico é questionado sobre a base legal adequada e os riscos envolvidos. Qual é a análise correta sob a LGPD?",
+    "enunciado": "Uma empresa de RH utiliza reconhecimento facial para registrar o ponto dos funcionários. O jurídico é questionado sobre a base legal e os riscos envolvidos. Qual é a análise correta sob a LGPD?",
     "alternativas": [
-      "A base legal é a execução de contrato de trabalho, pois o controle de jornada é obrigação legal do empregador prevista na CLT, dispensando consentimento específico para coleta de dados biométricos.",
-      "Dados biométricos utilizados para controle de ponto não são classificados como dados pessoais sensíveis pela LGPD, pois sua finalidade é exclusivamente operacional e não envolve risco discriminatório.",
-      "Biometria para identificação é dado sensível; a base mais adequada é o consentimento específico, atento à desigualdade da relação de emprego.",
-      "A base legal é o legítimo interesse do empregador no controle de jornada, dispensando consentimento para dados biométricos desde que a empresa elabore e publique o Relatório de Impacto (RIPD) antes de iniciar o tratamento dos dados."
+      "É dado sensível, tratado só nas hipóteses do art. 11; se a base for o consentimento, o empregado precisa ter alternativa.",
+      "A base é a execução do contrato de trabalho, que vale para dados sensíveis e dispensa qualquer outra análise.",
+      "A biometria do ponto não é dado sensível, pois tem fim só operacional e não traz risco de discriminação.",
+      "A base é o legítimo interesse do empregador, que vale para dados sensíveis se a empresa publicar o RIPD.",
+      "É dado sensível, mas basta avisar os empregados no regulamento interno, sem precisar de base legal."
     ],
-    "correta": 2,
-    "resolucao": "dado biométrico usado para identificar a pessoa é dado pessoal sensível (art. 5º, II), e por isso só pode ser tratado nas hipóteses do art. 11. O ponto de atenção é a relação de emprego: como o trabalhador depende do empregador, o consentimento só é válido se for realmente livre, o que exige oferecer alternativa a quem não quiser usar o reconhecimento facial. Biometria não deixa de ser sensível por ter finalidade operacional."
+    "correta": 0,
+    "resolucao": "Dado biométrico usado para identificar a pessoa é dado pessoal sensível (art. 5º, II) e só pode ser tratado nas hipóteses do art. 11, que não incluem a execução de contrato nem o legítimo interesse. Entre elas estão o cumprimento de obrigação legal, a prevenção à fraude em processos de identificação e autenticação e o consentimento. Na relação de emprego, o consentimento só vale se for realmente livre, o que exige oferecer outra forma de registro a quem não quiser usar o reconhecimento facial."
   },
   {
     "id": "legislacao-cap1-f10",
@@ -337,12 +352,13 @@
     "nivel": "facil",
     "enunciado": "Uma empresa recebe solicitação de um titular pedindo a eliminação de todos os seus dados pessoais. A empresa argumenta que não pode atender pois mantém os dados por obrigação fiscal. O titular insiste que o consentimento foi revogado. Quem tem razão?",
     "alternativas": [
-      "O titular tem razão em todos os casos: a revogação do consentimento é direito absoluto e incondicional previsto na LGPD, prevalecendo sobre qualquer outra obrigação da empresa, incluindo as de natureza fiscal.",
-      "A empresa só tem razão se houver cláusula contratual de retenção fiscal.",
-      "Em parte: os dados tratados por consentimento devem ser eliminados, mas os exigidos por obrigação legal, como os fiscais, podem ser mantidos.",
-      "O titular tem razão apenas quanto aos dados sensíveis, cuja eliminação deve ser imediata após a revogação do consentimento — dados comuns como nome e CPF podem ser retidos indefinidamente para fins fiscais sem qualquer limitação de prazo pela LGPD."
+      "Em parte: os dados tratados por consentimento devem ser eliminados, mas os exigidos por lei, como os fiscais, ficam.",
+      "O titular tem razão em tudo: a revogação do consentimento é absoluta e vale até sobre as obrigações fiscais.",
+      "A empresa tem razão em tudo, mas só se houver cláusula de retenção fiscal no contrato assinado com o titular.",
+      "O titular só tem razão quanto aos dados sensíveis; os comuns podem ser guardados para sempre por motivo fiscal.",
+      "A empresa tem razão em tudo, pois revogar o consentimento não obriga a apagar nenhum dado já coletado."
     ],
-    "correta": 2,
+    "correta": 0,
     "resolucao": "a revogação do consentimento (art. 8º, § 5º) obriga a eliminar os dados tratados com base nele, mas o art. 16, I, permite conservar dados para cumprir obrigação legal ou regulatória, como a guarda de registros fiscais. Esses dados ficam guardados só pelo prazo exigido em lei e só para essa finalidade."
   },
   {

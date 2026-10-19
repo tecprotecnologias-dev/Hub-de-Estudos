@@ -640,42 +640,42 @@
   "A": "O PROCON, pois qualquer questão envolvendo dados de consumidores é de competência exclusiva dos órgãos de defesa do consumidor, que aplicam as multas previstas na LGPD"
  },
  "legislacao-cap1-f1": {
-  "C": "IP e histórico de navegação são dados pessoais comuns (identificação indireta); o diagnóstico médico é dado pessoal sensível, de saúde.",
-  "D": "IP é dado anonimizado por ser gerado automaticamente pelo sistema; histórico de navegação é dado pessoal comum; e diagnóstico médico é dado pessoal comum, pois só se torna sensível quando associado ao nome do paciente.",
-  "B": "IP e histórico são dados anonimizados; só o diagnóstico é dado sensível."
+  "C": "IP e histórico de navegação são dados anonimizados, e só o diagnóstico médico é dado pessoal sensível.",
+  "D": "O IP é anonimizado por ser gerado pelo sistema; o histórico é comum; o diagnóstico só é sensível com o nome.",
+  "B": "Todos são dados pessoais comuns, pois nenhum deles traz o nome ou o CPF, que a LGPD exige para haver dado pessoal."
  },
  "legislacao-cap1-f3": {
-  "C": "Legítimo interesse do controlador, desde que respeite as expectativas razoáveis do titular, com registro e transparência.",
-  "A": "Consentimento, pois qualquer uso de dados comportamentais para personalização de experiência exige manifestação expressa e específica do titular, sendo essa a única base legal aplicável ao caso.",
-  "B": "Obrigação legal, pois a LGPD obriga o e-commerce a guardar esse histórico."
+  "C": "Obrigação legal, pois a LGPD obriga o e-commerce a guardar o histórico de compras para recomendar produtos.",
+  "A": "Legítimo interesse do controlador, desde que respeite as expectativas do titular, com transparência e registro.",
+  "B": "Consentimento, pois é a única base legal possível para qualquer uso de dados de comportamento na personalização."
  },
  "legislacao-cap1-f4": {
-  "C": "O GDPR exige notificar a autoridade em até 72 horas; a LGPD, pela Resolução CD/ANPD nº 15/2024, em até 3 dias úteis, avisando também os titulares.",
-  "D": "A LGPD exige notificação apenas aos titulares afetados, sem obrigação de comunicar a ANPD salvo quando o vazamento envolver dados sensíveis; o GDPR exige notificação apenas à autoridade reguladora, sem obrigação de comunicar os titulares individualmente.",
-  "B": "A LGPD exige notificar a ANPD em 72 horas; o GDPR não fixa prazo."
+  "C": "A LGPD exige avisar a ANPD em até 72 horas, e o GDPR não fixa nenhum prazo para avisar a autoridade europeia.",
+  "D": "A LGPD só exige avisar os titulares, e a ANPD apenas se houver dados sensíveis; o GDPR só exige avisar a autoridade.",
+  "B": "As duas leis exigem avisar a autoridade e todos os titulares em 72 horas, sem nenhuma diferença entre os regimes."
  },
  "legislacao-cap1-f5": {
-  "C": "A consumidora exerce o direito de revisão de decisão automatizada (art. 20 da LGPD) sobre uma decisão tomada só por algoritmo.",
-  "D": "A consumidora está exercendo o direito de eliminação de dados, podendo exigir que a empresa apague todos os dados utilizados na análise de crédito, o que automaticamente invalida a decisão de negativa e obriga uma nova análise.",
-  "B": "Ela exerce o direito de correção de dados inexatos usados na decisão."
+  "C": "Ela exerce o direito de correção de dados inexatos, e a empresa só precisa corrigir o cadastro dela.",
+  "D": "Ela exerce o direito de eliminação, e apagar os dados usados na análise anula sozinho a negativa do crédito.",
+  "B": "Ela exerce a portabilidade, que garante receber os dados usados na decisão para levá-los a outro fornecedor."
  },
  "legislacao-cap1-f6": {
-  "C": "A LGPD exige consentimento específico e em destaque de pelo menos um dos pais ou responsável legal para dados de crianças.",
-  "D": "A base legal é o consentimento da própria criança, que pode ser obtido no momento do cadastro no aplicativo mediante aceite dos termos de uso em linguagem simplificada adaptada à faixa etária, dispensando os pais."
+  "C": "A base é a execução do contrato com a escola, que representa as crianças para fins de proteção de dados.",
+  "D": "Basta o aceite da própria criança nos termos de uso, desde que o texto use linguagem adequada à idade dela."
  },
  "legislacao-cap1-f7": {
-  "A": "Viola o princípio da finalidade: os dados foram coletados para a compra e venda, e o marketing externo exige nova base legal.",
-  "C": "Viola apenas o princípio da segurança, pois o problema central é a ausência de contrato de operação de dados com a parceira — a finalidade não é violada, já que marketing é uso compatível com qualquer relação comercial.",
-  "D": "Viola o princípio da necessidade, pois foram coletados dados demais."
+  "A": "Viola o princípio da finalidade: os dados foram coletados para a compra, e o novo uso exige base legal própria.",
+  "C": "Viola só o princípio da segurança, pela falta de contrato com a parceira, já que o marketing é uso compatível.",
+  "D": "Viola o princípio da necessidade, pois o problema é a quantidade de dados coletados no cadastro da loja."
  },
  "legislacao-cap1-f9": {
-  "C": "Biometria para identificação é dado sensível; a base mais adequada é o consentimento específico, atento à desigualdade da relação de emprego.",
-  "D": "A base legal é o legítimo interesse do empregador no controle de jornada, dispensando consentimento para dados biométricos desde que a empresa elabore e publique o Relatório de Impacto (RIPD) antes de iniciar o tratamento dos dados."
+  "C": "A biometria do ponto não é dado sensível, pois tem fim só operacional e não traz risco de discriminação.",
+  "D": "A base é o legítimo interesse do empregador, que vale para dados sensíveis se a empresa publicar o RIPD."
  },
  "legislacao-cap1-f10": {
-  "C": "Em parte: os dados tratados por consentimento devem ser eliminados, mas os exigidos por obrigação legal, como os fiscais, podem ser mantidos.",
-  "D": "O titular tem razão apenas quanto aos dados sensíveis, cuja eliminação deve ser imediata após a revogação do consentimento — dados comuns como nome e CPF podem ser retidos indefinidamente para fins fiscais sem qualquer limitação de prazo pela LGPD.",
-  "B": "A empresa só tem razão se houver cláusula contratual de retenção fiscal."
+  "C": "A empresa tem razão em tudo, mas só se houver cláusula de retenção fiscal no contrato assinado com o titular.",
+  "D": "O titular só tem razão quanto aos dados sensíveis; os comuns podem ser guardados para sempre por motivo fiscal.",
+  "B": "O titular tem razão em tudo: a revogação do consentimento é absoluta e vale até sobre as obrigações fiscais."
  },
  "legislacao-cap2-q2": {
   "B": "Está equivocada: a titularidade automática do art. 4º vale para empregados e servidores, não para autônomos sem contrato de cessão",
