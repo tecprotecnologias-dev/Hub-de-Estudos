@@ -95,7 +95,7 @@
   },
   {
    "t": "p",
-   "html": "O Decreto nº 7.962/2013 regulamentou o art. 44 do CDC para o comércio eletrônico, estabelecendo três grandes eixos de obrigação. Seu descumprimento configura prática abusiva passível de sanções administrativas pelo PROCON e de indenização na esfera judicial."
+   "html": "O Decreto nº 7.962/2013 regulamentou o CDC para a contratação no comércio eletrônico, estabelecendo três grandes eixos de obrigação. Seu descumprimento sujeita o fornecedor às sanções administrativas do art. 56 do CDC, aplicadas por órgãos como o PROCON, além de indenização na esfera judicial."
   },
   {
    "t": "h3",
@@ -121,7 +121,7 @@
     "<strong>Art. 30 — Oferta Vinculante:</strong> toda informação ou publicidade no site vincula o fornecedor, mesmo fora do contrato.",
     "<strong>Art. 39, III:</strong> proibido enviar produto sem solicitação prévia; se ocorrer, é amostra grátis.",
     "<strong>Art. 26:</strong> vícios devem ser reclamados em 30 dias (não duráveis) ou 90 dias (duráveis).",
-    "<strong>Art. 18:</strong> fornecedor responde por defeitos independentemente de culpa (responsabilidade objetiva)."
+    "<strong>Arts. 12 e 18:</strong> o fornecedor responde, independentemente de culpa, pelos defeitos que causam danos (art. 12) e, de forma solidária com toda a cadeia, pelos vícios do produto (art. 18)."
    ]
   },
   {
@@ -154,7 +154,7 @@
   },
   {
    "t": "p",
-   "html": "O STJ, no julgamento do REsp 1.599.2016 (Tema 938), firmou entendimento de que o marketplace responde solidariamente com o vendedor pelos danos causados ao consumidor, por fazer parte da cadeia de fornecimento."
+   "html": "Com base no CDC (arts. 7º, parágrafo único, e 25, § 1º), os tribunais, inclusive o STJ, têm reconhecido que o marketplace que participa da venda — intermediando o pagamento, cobrando comissão ou cuidando da entrega — integra a cadeia de fornecimento e responde solidariamente com o vendedor pelos danos ao consumidor. Sites de simples classificados, que só aproximam as partes sem participar da transação, costumam receber tratamento diferente."
   },
   {
    "t": "tabela",
@@ -167,12 +167,12 @@
     [
      "Produto com defeito, vendedor terceiro",
      "Solidária — consumidor pode acionar o marketplace direto",
-     "CDC art. 18; STJ Tema 938"
+     "CDC arts. 7º e 18"
     ],
     [
      "Produto não entregue por terceiro",
      "Solidária — deve garantir reembolso ou entrega",
-     "CDC art. 35; STJ Tema 938"
+     "CDC arts. 7º e 35"
     ],
     [
      "Fraude por vendedor falso",
@@ -205,7 +205,7 @@
    "numerada": false,
    "itens": [
     "<strong>Cartão de Crédito/Débito:</strong> bandeiras e credenciadoras; normas do BACEN e regras de chargeback.",
-    "<strong>Boleto Bancário:</strong> vencimento padrão D+1; cancelamento automático após vencimento.",
+    "<strong>Boleto Bancário:</strong> em lojas virtuais, costuma ter vencimento curto (1 a 3 dias úteis); se não for pago até o vencimento, o pedido é cancelado pela loja.",
     "<strong>Pix:</strong> instantâneo, 24/7, sem custo para PF e MEI (Res. BCB nº 1/2020).",
     "<strong>Carteiras Digitais:</strong> PayPal, PicPay, Mercado Pago — reguladas como Instituições de Pagamento.",
     "<strong>Criptomoedas:</strong> Lei 14.478/2022 regula VASPs, exigindo autorização do BACEN.",
@@ -276,9 +276,9 @@
      "Termos de uso no rodapé"
     ],
     [
-     "Sign-wrap",
-     "Assinatura eletrônica do contrato",
-     "Prestação de serviço, locação"
+     "Sign-in-wrap",
+     "Ao criar a conta ou entrar, o usuário é avisado de que aceita os termos",
+     "Cadastro em aplicativos e redes sociais"
     ],
     [
      "Scroll-wrap",
@@ -329,7 +329,7 @@
   },
   {
    "t": "p",
-   "html": "A MP nº 2.200-2/2001 criou a ICP-Brasil, conferindo presunção legal de autenticidade e integridade às assinaturas digitais de certificadoras credenciadas. A Lei nº 14.063/2020 avançou ao reconhecer múltiplos tipos de assinatura eletrônica."
+   "html": "A MP nº 2.200-2/2001 criou a ICP-Brasil, conferindo presunção legal de autenticidade e integridade às assinaturas digitais de certificadoras credenciadas. A Lei nº 14.063/2020 avançou ao reconhecer múltiplos tipos de assinatura eletrônica. Ela trata das interações com entes públicos, de atos de pessoas jurídicas e de questões de saúde, mas sua classificação em três tipos também serve de referência para os contratos privados."
   },
   {
    "t": "h3",
@@ -345,7 +345,7 @@
   },
   {
    "t": "p",
-   "html": "Qualificada (AEQ): certificado emitido por AC credenciada pela ICP-Brasil (e-CPF, e-CNPJ). Máxima presunção legal; obrigatória para atos com o Poder Público."
+   "html": "Qualificada (AEQ): certificado emitido por AC credenciada pela ICP-Brasil (e-CPF, e-CNPJ). Máxima presunção legal; obrigatória em alguns atos, como os assinados por chefes de Poder, a emissão de notas fiscais eletrônicas (salvo por pessoas físicas e MEI) e a transferência e o registro de imóveis (art. 5º, § 2º)."
   },
   {
    "t": "tabela",
@@ -375,10 +375,10 @@
      "Máxima"
     ],
     [
-     "Obrigatória para",
-     "Atos cotidianos",
+     "Uso típico",
+     "Atos cotidianos e de baixo risco",
      "Contratos empresariais",
-     "Atos com o Poder Público"
+     "Atos em que a lei a exige, como NF-e e registro de imóveis"
     ]
    ]
   },
@@ -456,8 +456,8 @@
    "linhas": [
     [
      "Consumidor.gov.br",
-     "Mediação federal gratuita",
-     "Rápido (~7 dias)",
+     "Plataforma pública e gratuita de diálogo direto com as empresas",
+     "Rápido (a empresa tem até 10 dias para responder)",
      "Só empresas cadastradas"
     ],
     [

@@ -758,7 +758,7 @@
   "D": "A resposta está incorreta, mas apenas porque o marketplace deveria ter fornecido os dados de contato do vendedor, sem qualquer outra responsabilidade adicional perante o consumidor lesado pela compra"
  },
  "legislacao-cap3-q4": {
-  "B": "É inválida: o arrependimento vale para produtos digitais, e a restrição só valeria se informada claramente antes da compra",
+  "B": "É inválida: o CDC não exclui os produtos digitais do arrependimento, e a restrição nem foi informada antes",
   "D": "A negativa é inválida, mas apenas porque o valor do curso é superior a R$ 500,00 — para valores menores, a restrição ao arrependimento seria automaticamente válida, mesmo sem aviso prévio"
  },
  "legislacao-cap3-q5": {
@@ -774,47 +774,47 @@
   "A": "A alegação está correta: nenhuma lei brasileira pode se aplicar a uma empresa sem sede no Brasil, independentemente de a oferta ser direcionada a consumidores brasileiros em português e em reais"
  },
  "legislacao-cap3-f1": {
-  "C": "O STJ tem admitido invalidar ofertas com erro evidente e desproporcional, desde que o fornecedor corrija e avise o consumidor logo.",
-  "A": "O fornecedor é obrigado a entregar todos os produtos pelo preço anunciado, pois o art. 30 do CDC vincula o fornecedor a qualquer oferta veiculada, sem exceção para erros materiais, independentemente da desproporcionalidade do valor.",
-  "B": "O fornecedor não tem obrigação: erro de preço digital isenta o CDC."
+  "C": "O fornecedor não tem obrigação alguma, pois erros de preço em lojas virtuais ficam fora do alcance do CDC.",
+  "A": "O STJ tem admitido afastar ofertas com erro evidente e desproporcional, se o fornecedor corrigir e avisar logo.",
+  "B": "O fornecedor deve entregar todos os produtos pelo preço anunciado, pois o art. 30 não admite nenhuma exceção."
  },
  "legislacao-cap3-f2": {
-  "B": "O marketplace responde solidariamente com o fraudador, pois integra a cadeia de fornecimento e falhou na verificação do cadastro.",
-  "C": "O marketplace não responde, pois atua exclusivamente como intermediário tecnológico neutro, sem participação no negócio jurídico entre vendedor e comprador, o que afasta qualquer responsabilidade pelos atos dos vendedores cadastrados.",
-  "A": "Responde só subsidiariamente, se o fraudador não for encontrado."
+  "B": "Responde só de forma subsidiária, se o consumidor provar que não conseguiu de jeito nenhum encontrar o fraudador.",
+  "C": "Não responde, pois é intermediário tecnológico neutro, sem nenhuma participação no negócio entre as partes.",
+  "A": "Responde solidariamente com o fraudador, pois integra a cadeia de fornecimento e falhou ao verificar o cadastro."
  },
  "legislacao-cap3-f3": {
-  "C": "É irregular nos dois pontos: a suspensão exige aviso prévio, e os dados devem ser preservados por prazo razoável.",
-  "A": "A conduta é legal, pois contratos de serviços digitais permitem suspensão e exclusão imediata de dados em caso de inadimplemento, conforme cláusula padrão de serviços SaaS amplamente aceita pelo mercado e pelos tribunais brasileiros.",
-  "B": "Ambas são legais: a LGPD permite apagar dados de inadimplentes."
+  "C": "É legal nos dois pontos, pois a LGPD permite apagar os dados de clientes inadimplentes a qualquer momento.",
+  "A": "É irregular nos dois pontos: a suspensão exige aviso prévio, e os dados devem ser preservados por prazo razoável.",
+  "B": "É legal, pois cláusulas padrão de SaaS permitem suspender e apagar os dados logo após o inadimplemento."
  },
  "legislacao-cap3-f4": {
-  "C": "É válido: proposta e aceitação expressas por e-mail cumprem os requisitos do Código Civil, e os e-mails servem de prova.",
-  "D": "O contrato é válido apenas se os e-mails foram enviados de domínios corporativos verificados com certificado SSL, requisito técnico mínimo para que comunicações eletrônicas B2B tenham presunção de autenticidade no direito brasileiro."
+  "C": "Vale só como prova de intenção, e para obrigar as partes seria preciso um documento único assinado por elas.",
+  "D": "Só vale se os e-mails saíram de domínios corporativos com certificado SSL, que dão autenticidade à mensagem."
  },
  "legislacao-cap3-f5": {
-  "C": "Não: o CDC considera nula a cláusula que exclui a responsabilidade por vícios, qualquer que seja o modelo de aceite.",
-  "A": "Sim, é válida: o modelo scroll-wrap garante que o consumidor teve acesso integral ao contrato antes de aceitar, o que configura consentimento pleno e afasta qualquer alegação de desconhecimento das cláusulas, inclusive as limitativas.",
-  "B": "É válida só em contratos B2B; no B2C, seria nula pelo CDC."
+  "C": "Sim, pois o consumidor que rola o texto até o fim renuncia aos direitos de garantia previstos no CDC.",
+  "A": "Não: o CDC considera nula a cláusula que exclui a responsabilidade por vícios, qualquer que seja o aceite.",
+  "B": "Sim: o scroll-wrap prova que o consumidor viu todo o contrato, o que torna válidas até as cláusulas limitativas."
  },
  "legislacao-cap3-f6": {
-  "C": "Não transfere a propriedade: o art. 108 do Código Civil exige escritura pública para imóveis acima de 30 salários mínimos.",
-  "D": "É válida apenas se ambas as partes utilizarem assinatura eletrônica qualificada ICP-Brasil, pois esse é o único tipo de assinatura eletrônica com presunção legal equivalente à escritura pública para negócios imobiliários acima de 30 salários mínimos.",
-  "B": "É válida para a promessa de compra e venda; a escritura vem só no registro."
+  "C": "Sim, desde que as duas partes usem assinatura qualificada ICP-Brasil, que substitui a escritura pública.",
+  "D": "Sim, pois a exigência de escritura pública vale só para imóveis rurais, e não para imóveis urbanos.",
+  "B": "Sim, pois a Lei nº 14.063/2020 iguala a assinatura avançada à manuscrita para todos os atos, inclusive imobiliários."
  },
  "legislacao-cap3-f8": {
-  "B": "A emissão de NF-e exige certificado digital ICP-Brasil (assinatura qualificada); a assinatura simples não atende a esse requisito.",
-  "D": "A assinatura eletrônica avançada seria suficiente para a emissão de NF-e, sendo o problema apenas a escolha da modalidade simples — bastaria a empresa migrar para plataforma que use certificado não-ICP para regularizar integralmente a situação fiscal.",
-  "A": "Não há problema: a assinatura simples vale para todos os fins, até fiscais."
+  "B": "Não há problema, pois a assinatura simples vale para todos os documentos, inclusive para os fiscais.",
+  "D": "O problema é só contratual, entre a empresa e o cliente, sem nenhum efeito sobre a validade da nota.",
+  "A": "A NF-e deve ser assinada com certificado digital ICP-Brasil (assinatura qualificada), e a simples não atende."
  },
  "legislacao-cap3-f9": {
-  "C": "Ele pode acionar o golpista, o banco se houver falha de segurança, o MED do Pix e o Procon; a responsabilidade depende da culpa de cada um.",
-  "D": "O consumidor não tem qualquer recurso jurídico efetivo, pois o Pix é modalidade de pagamento de alto risco expressamente excluída das proteções do CDC, cabendo ao consumidor arcar integralmente com os prejuízos decorrentes de golpes nessa modalidade."
+  "C": "O banco do golpista devolve tudo em 30 dias, pois o Pix garante reembolso automático em toda fraude.",
+  "D": "Não há recurso, pois o Pix é modalidade de alto risco excluída das proteções do CDC."
  },
  "legislacao-cap3-f10": {
-  "C": "Não: a arbitragem imposta em contrato de adesão com consumidor pode ser abusiva, e custas de R$ 5.000 dificultam o acesso à justiça.",
-  "A": "Sim, é válida: a Lei de Arbitragem (nº 9.307/1996) permite cláusulas arbitrais em qualquer contrato, inclusive de adesão com consumidores, desde que a câmara arbitral escolhida seja registrada no CNJ e as custas sejam previamente informadas ao consumidor.",
-  "B": "É válida para consumidores com renda acima de 10 salários mínimos."
+  "C": "Sim, mas só para consumidores com renda acima de 10 salários mínimos, que não são considerados vulneráveis.",
+  "A": "Não: arbitragem imposta ao consumidor em contrato de adesão é nula, e custas de R$ 5.000 dificultam o acesso.",
+  "B": "Sim, pois a Lei de Arbitragem permite a cláusula em qualquer contrato, desde que a câmara seja registrada no CNJ."
  },
  "legislacao-cap4-q2": {
   "B": "É frágil: em regra (art. 19), a plataforma só responde por conteúdo de terceiros se descumprir ordem judicial específica de remoção",
