@@ -54,7 +54,7 @@
     ],
     [
      "bcrypt",
-     "Criptografia de senhas"
+     "Hash (proteção) de senhas"
     ],
     [
      "dotenv",
@@ -121,7 +121,7 @@
   },
   {
    "t": "p",
-   "html": "Essa separação importa porque, ao colocar uma aplicação em produção, normalmente executamos <code>npm install --production</code>, que instala apenas o que está em <code>dependencies</code>, ignorando ferramentas que só fazem sentido durante o desenvolvimento."
+   "html": "Essa separação importa porque, ao colocar uma aplicação em produção, normalmente executamos <code>npm install --omit=dev</code> (em tutoriais antigos aparece <code>--production</code>, a forma anterior desse comando), que instala apenas o que está em <code>dependencies</code>, ignorando ferramentas que só fazem sentido durante o desenvolvimento."
   },
   {
    "t": "h2",

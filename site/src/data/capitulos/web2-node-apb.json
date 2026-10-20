@@ -23,7 +23,18 @@
    "blocos": [
     {
      "t": "p",
-     "html": "<strong>O quê:</strong> Arquivo principal do servidor Node.js. Inicializa o Express, registra os <em>middlewares</em> globais, importa e monta todas as rotas, e inicia o servidor na porta definida.<br> <strong>Por quê:</strong> É o ponto de entrada da aplicação – sem ele, o servidor não sobe e nenhuma rota funciona.<br> <strong>Quando:</strong> Sempre que o projeto é iniciado com <code>npm run dev</code> ou <code>npm start</code>. É o primeiro e único arquivo executado diretamente pelo Node.js.<br> <strong>Onde:</strong> Raiz do projeto. Referenciado em <code>package.json</code>, no campo <code>main</code> e nos <em>scripts</em>.<br> <strong>Quem usa:</strong> O Node.js, ao executar o projeto. Nunca é importado por outros arquivos.<br> <strong>Como funciona:</strong> <code>require(\"express\")</code> cria o <code>app</code> → <code>app.use(express.json())</code> habilita a leitura de JSON → cada módulo de rota é importado e registrado com <code>app.use(\"/rota\", router)</code> → <code>app.listen(PORT)</code> sobe o servidor."
+     "html": "<strong>O quê:</strong> Arquivo principal do servidor Node.js. Inicia o servidor na porta definida. Até o Capítulo 11, ele também monta o Express e as rotas; a partir do Capítulo 12, essa parte fica no <code>src/app.js</code>.<br> <strong>Por quê:</strong> É o ponto de entrada da aplicação – sem ele, o servidor não sobe e nenhuma rota funciona.<br> <strong>Quando:</strong> Sempre que o projeto é iniciado com <code>npm run dev</code> ou <code>npm start</code>. É o primeiro e único arquivo executado diretamente pelo Node.js.<br> <strong>Onde:</strong> Raiz do projeto. Referenciado em <code>package.json</code>, no campo <code>main</code> e nos <em>scripts</em>.<br> <strong>Quem usa:</strong> O Node.js, ao executar o projeto. Nunca é importado por outros arquivos.<br> <strong>Como funciona:</strong> <code>require(\"./src/app\")</code> traz o <code>app</code> já montado → <code>app.listen(PORT)</code> sobe o servidor."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "src/app.js",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>O quê:</strong> Monta a aplicação Express: carrega o <code>.env</code>, registra o <code>express.json()</code>, as rotas e o <code>errorHandler</code>, e exporta o <code>app</code> (Capítulo 12).<br> <strong>Por quê:</strong> Separar a montagem do <code>listen</code> permite que os testes usem o <code>app</code> sem ligar o servidor.<br> <strong>Quando:</strong> Carregado pelo <code>server.js</code> ao iniciar, e pelos testes do Jest.<br> <strong>Onde:</strong> Pasta <code>src/</code>.<br> <strong>Quem usa:</strong> O <code>server.js</code> e os arquivos de <code>tests/</code>.<br> <strong>Como funciona:</strong> <code>express()</code> cria o <code>app</code> → <code>app.use(express.json())</code> → cada rota com <code>app.use(\"/rota\", router)</code> → <code>app.use(errorHandler)</code> por último → <code>module.exports = app</code>."
     }
    ]
   },
@@ -34,7 +45,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "<strong>O quê:</strong> Arquivo de configuração com variáveis de ambiente sensíveis – credenciais do banco, chave JWT, porta do servidor.<br> <strong>Por quê:</strong> Separa configurações do código-fonte, permitindo usar senhas diferentes em desenvolvimento e produção sem alterar uma linha de código.<br> <strong>Quando:</strong> Carregado na inicialização, pelo <code>dotenv.config()</code> no topo de <code>db.js</code> (Capítulo 8), antes de qualquer outro código rodar.<br> <strong>Onde:</strong> Raiz do projeto. <strong>Nunca</strong> deve entrar no repositório Git.<br> <strong>Quem usa:</strong> O desenvolvedor, ao configurar o ambiente local; a equipe de infraestrutura, ao configurar o servidor de produção.<br> <strong>Como funciona:</strong> Formato <code>CHAVE=valor</code>, sem espaços nem aspas (<code>DB_HOST=localhost</code>). Acessado no código via <code>process.env.DB_HOST</code>."
+     "html": "<strong>O quê:</strong> Arquivo de configuração com variáveis de ambiente sensíveis – credenciais do banco, chave JWT, porta do servidor.<br> <strong>Por quê:</strong> Separa configurações do código-fonte, permitindo usar senhas diferentes em desenvolvimento e produção sem alterar uma linha de código.<br> <strong>Quando:</strong> Carregado na inicialização, pelo <code>require(\"dotenv\").config()</code> na primeira linha do ponto de entrada (<code>server.js</code> no Capítulo 9, <code>src/app.js</code> a partir do Capítulo 12), antes de qualquer outro código ler <code>process.env</code>.<br> <strong>Onde:</strong> Raiz do projeto. <strong>Nunca</strong> deve entrar no repositório Git.<br> <strong>Quem usa:</strong> O desenvolvedor, ao configurar o ambiente local; a equipe de infraestrutura, ao configurar o servidor de produção.<br> <strong>Como funciona:</strong> Formato <code>CHAVE=valor</code>, sem espaços em volta do <code>=</code>; as aspas são opcionais (<code>DB_HOST=localhost</code>). Acessado no código via <code>process.env.DB_HOST</code>."
     }
    ]
   },
@@ -334,7 +345,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "<strong>O quê:</strong> Carrega variáveis de ambiente a partir do arquivo <code>.env</code> (Capítulo 8).<br> <strong>Por quê:</strong> Mantém credenciais fora do código-fonte e do repositório Git.<br> <strong>Quando:</strong> No início de <code>db.js</code>, antes de qualquer outra configuração.<br> <strong>Como funciona:</strong> <code>require(\"dotenv\").config()</code> → variáveis disponíveis em <code>process.env</code>."
+     "html": "<strong>O quê:</strong> Carrega variáveis de ambiente a partir do arquivo <code>.env</code> (Capítulo 8).<br> <strong>Por quê:</strong> Mantém credenciais fora do código-fonte e do repositório Git.<br> <strong>Quando:</strong> Na primeira linha do ponto de entrada (<code>server.js</code> ou <code>src/app.js</code>), antes de qualquer outro <code>require</code>.<br> <strong>Como funciona:</strong> <code>require(\"dotenv\").config()</code> → variáveis disponíveis em <code>process.env</code>."
     }
    ]
   },

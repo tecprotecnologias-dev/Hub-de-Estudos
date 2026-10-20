@@ -112,11 +112,11 @@
   },
   {
    "t": "codigo",
-   "texto": "CREATE TABLE livros (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    titulo VARCHAR(200) NOT NULL,\n    isbn VARCHAR(20) UNIQUE,\n    ano_publicacao YEAR,\n    quantidade INT DEFAULT 1,\n    disponivel BOOLEAN DEFAULT TRUE,\n    autor_id INT NOT NULL,\n    editora_id INT NOT NULL,\n    categoria_id INT NOT NULL,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n        ON UPDATE CURRENT_TIMESTAMP,\n    CONSTRAINT fk_livro_autor FOREIGN KEY (autor_id)\n        REFERENCES autores(id),\n    CONSTRAINT fk_livro_editora FOREIGN KEY (editora_id)\n        REFERENCES editoras(id),\n    CONSTRAINT fk_livro_categoria FOREIGN KEY (categoria_id)\n        REFERENCES categorias(id)\n) ENGINE=InnoDB;\n\nCREATE INDEX idx_livros_titulo ON livros(titulo);\nCREATE INDEX idx_livros_isbn ON livros(isbn);"
+   "texto": "CREATE TABLE livros (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    titulo VARCHAR(200) NOT NULL,\n    isbn VARCHAR(20) UNIQUE,\n    ano_publicacao SMALLINT,\n    quantidade INT DEFAULT 1,\n    disponivel BOOLEAN DEFAULT TRUE,\n    autor_id INT NOT NULL,\n    editora_id INT NOT NULL,\n    categoria_id INT NOT NULL,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n        ON UPDATE CURRENT_TIMESTAMP,\n    CONSTRAINT fk_livro_autor FOREIGN KEY (autor_id)\n        REFERENCES autores(id),\n    CONSTRAINT fk_livro_editora FOREIGN KEY (editora_id)\n        REFERENCES editoras(id),\n    CONSTRAINT fk_livro_categoria FOREIGN KEY (categoria_id)\n        REFERENCES categorias(id)\n) ENGINE=InnoDB;\n\nCREATE INDEX idx_livros_titulo ON livros(titulo);"
   },
   {
    "t": "p",
-   "html": "Essa é a primeira tabela do livro com três chaves estrangeiras – ela é o \"centro\" do banco, conectando autores, editoras e categorias."
+   "html": "O <code>ano_publicacao</code> é <code>SMALLINT</code>, e não <code>YEAR</code>: o tipo <code>YEAR</code> do MySQL só aceita anos de 1901 a 2155, e Dom Casmurro é de 1899. O <code>isbn</code> não ganha um índice próprio porque o <code>UNIQUE</code> já cria um. Essa é a primeira tabela do livro com três chaves estrangeiras – ela é o \"centro\" do banco, conectando autores, editoras e categorias."
   },
   {
    "t": "h3",
@@ -240,7 +240,7 @@
   },
   {
    "t": "p",
-   "html": "O mesmo padrão – Model → Service → Controller → Route – se repete para <strong>autores</strong>, <strong>editoras</strong>, <strong>categorias</strong> e <strong>usuários</strong>. Como essas tabelas não têm chaves estrangeiras (exceto <code>usuarios</code>, que veremos com atenção especial no Capítulo 11), seus Models ficam ainda mais diretos:"
+   "html": "O mesmo padrão – Model → Service → Controller → Route – se repete para <strong>autores</strong>, <strong>editoras</strong>, <strong>categorias</strong> e <strong>usuários</strong>. Como essas tabelas não têm chaves estrangeiras, seus Models ficam ainda mais diretos (<code>usuarios</code> só exige um cuidado especial com a senha, como veremos logo abaixo e no Capítulo 11):"
   },
   {
    "t": "codigo",
@@ -376,7 +376,7 @@
   },
   {
    "t": "codigo",
-   "texto": "async function atualizarParcial(id, dados) {\n    const campos = Object.keys(dados);\n\n    if (campos.length === 0) {\n        const erro = new Error(\"Nenhum campo para atualizar.\");\n        erro.status = 400;\n        throw erro;\n    }\n\n    const sets = campos.map(campo => `${campo} = ?`).join(\", \");\n    const valores = campos.map(campo => dados[campo]);\n\n    const sql = `UPDATE livros SET ${sets} WHERE id = ?`;\n    const [resultado] = await db.execute(sql, [...valores, id]);\n\n    return resultado.affectedRows > 0;\n}"
+   "texto": "// so estes campos podem ser alterados pelo PATCH\nconst CAMPOS_EDITAVEIS = [\n    \"titulo\", \"isbn\", \"ano_publicacao\", \"quantidade\",\n    \"autor_id\", \"editora_id\", \"categoria_id\"\n];\n\nasync function atualizarParcial(id, dados) {\n    // as chaves fora da lista sao descartadas\n    const campos = Object.keys(dados)\n        .filter(campo => CAMPOS_EDITAVEIS.includes(campo));\n\n    if (campos.length === 0) {\n        const erro = new Error(\"Nenhum campo valido para atualizar.\");\n        erro.status = 400;\n        throw erro;\n    }\n\n    const sets = campos.map(campo => `${campo} = ?`).join(\", \");\n    const valores = campos.map(campo => dados[campo]);\n\n    const sql = `UPDATE livros SET ${sets} WHERE id = ?`;\n    const [resultado] = await db.execute(sql, [...valores, id]);\n\n    return resultado.affectedRows > 0;\n}"
   },
   {
    "t": "quadro",
@@ -385,7 +385,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "Como os nomes dos campos vêm de <code>Object.keys(dados)</code> – ou seja, das <strong>chaves</strong> do JSON enviado pelo cliente, não dos <strong>valores</strong> – essa construção continua segura contra SQL Injection: os valores em si sempre passam pelo <code>?</code> parametrizado. Nunca inverta essa lógica e monte nomes de coluna a partir de valores livres digitados pelo usuário."
+     "html": "Os nomes das colunas não podem ir num <code>?</code> (ele só serve para valores), então eles entram direto no texto do SQL. Por isso, <strong>nunca</strong> use as chaves do JSON sem filtrar: o cliente escolhe essas chaves livremente. Sem a lista <code>CAMPOS_EDITAVEIS</code>, uma chave como <code>titulo = (SELECT senha FROM usuarios LIMIT 1), isbn</code> copiaria o hash de uma senha para o título do livro (SQL Injection), e uma chave como <code>disponivel</code> ou <code>id</code> alteraria campos que o cliente não deveria mexer (o chamado <em>mass assignment</em>). Com o <code>filter</code>, só nomes escritos por você, no código, chegam ao SQL; os valores continuam passando pelo <code>?</code>."
     }
    ]
   },
@@ -465,6 +465,25 @@
    "html": "Note o fluxo: primeiro verificamos a regra de negócio (o livro está disponível?), só então inserimos o empréstimo, e por fim atualizamos a disponibilidade do livro – três operações no banco, coordenadas por uma única função de Service. O Controller e a Route seguem exatamente o mesmo formato que já vimos:"
   },
   {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Essas três operações são independentes: se o servidor cair entre o <code>INSERT</code> e o <code>UPDATE</code>, o empréstimo fica gravado com o livro ainda \"disponível\"; e dois pedidos do mesmo livro ao mesmo tempo podem passar os dois pela verificação. Em um sistema real, as operações ficam numa <strong>transação</strong>: ou todas acontecem, ou nenhuma. Com o <code>mysql2</code>, a transação usa uma conexão só, pega do <em>pool</em>:"
+    },
+    {
+     "t": "codigo",
+     "texto": "const conexao = await db.getConnection();\ntry {\n    await conexao.beginTransaction();\n    // FOR UPDATE trava a linha do livro ate o commit\n    const [rows] = await conexao.execute(\n        \"SELECT disponivel FROM livros WHERE id = ? FOR UPDATE\",\n        [livroId]\n    );\n    // ... confere rows[0], insere o emprestimo e atualiza o livro,\n    // sempre com conexao.execute(...)\n    await conexao.commit();     // grava tudo\n} catch (erro) {\n    await conexao.rollback();   // desfaz tudo\n    throw erro;\n} finally {\n    conexao.release();          // devolve a conexao ao pool\n}"
+    },
+    {
+     "t": "p",
+     "html": "A devolução, logo abaixo, também faz duas gravações e pode usar o mesmo padrão."
+    }
+   ]
+  },
+  {
    "t": "codigo",
    "texto": "// emprestimoController.js\nasync function registrar(req, res, next) {\n    try {\n        const emprestimo = await emprestimoService.registrarEmprestimo(req.body);\n        res.status(201).json(emprestimo);\n    } catch (erro) {\n        next(erro);\n    }\n}"
   },
@@ -535,7 +554,7 @@
   },
   {
    "t": "codigo",
-   "texto": "// livroController.js\nasync function listar(req, res, next) {\n    try {\n        const page = parseInt(req.query.page) || 1;\n        const limit = Math.min(parseInt(req.query.limit) || 10, 100);\n\n        const resultado = await livroService.listarLivros(page, limit);\n        res.json(resultado);\n    } catch (erro) {\n        next(erro);\n    }\n}"
+   "texto": "// livroController.js\nasync function listar(req, res, next) {\n    try {\n        const page = Math.max(parseInt(req.query.page) || 1, 1);\n        const limit = Math.min(parseInt(req.query.limit) || 10, 100);\n\n        const resultado = await livroService.listarLivros(page, limit);\n        res.json(resultado);\n    } catch (erro) {\n        next(erro);\n    }\n}"
   },
   {
    "t": "p",
@@ -571,7 +590,7 @@
   },
   {
    "t": "codigo",
-   "texto": "const camposPermitidos = [\"titulo\", \"ano_publicacao\", \"preco\"];\nconst campo = camposPermitidos.includes(req.query.sort) ? req.query.sort : \"titulo\";\n\nconst sql = `SELECT * FROM livros ORDER BY ${campo} LIMIT ? OFFSET ?`;"
+   "texto": "const camposPermitidos = [\"titulo\", \"ano_publicacao\", \"created_at\"];\nconst campo = camposPermitidos.includes(req.query.sort) ? req.query.sort : \"titulo\";\n\nconst sql = `SELECT * FROM livros ORDER BY ${campo} LIMIT ? OFFSET ?`;"
   },
   {
    "t": "p",

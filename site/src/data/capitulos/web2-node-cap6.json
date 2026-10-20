@@ -13,7 +13,7 @@
   },
   {
    "t": "p",
-   "html": "Um <strong>banco de dados relacional</strong> organiza as informações em <strong>tabelas</strong>, onde cada linha representa um registro e cada coluna representa um atributo desse registro – de forma bem parecida com uma planilha eletrônica. A grande vantagem é que essas tabelas podem se <strong>relacionar</strong> entre si: um livro pode apontar para o autor que o escreveu, um pedido pode apontar para o cliente que o fez, e assim por diante. Veremos esses relacionamentos em detalhe na seção 6.15."
+   "html": "Um <strong>banco de dados relacional</strong> organiza as informações em <strong>tabelas</strong>, onde cada linha representa um registro e cada coluna representa um atributo desse registro – de forma bem parecida com uma planilha eletrônica. A grande vantagem é que essas tabelas podem se <strong>relacionar</strong> entre si: um livro pode apontar para o autor que o escreveu, um pedido pode apontar para o cliente que o fez, e assim por diante. Veremos esses relacionamentos em detalhe na seção 6.16."
   },
   {
    "t": "p",
@@ -38,7 +38,7 @@
   },
   {
    "t": "codigo",
-   "texto": "$ mysql --version\nmysql  Ver 8.0.40 for Win64 on x86_64"
+   "texto": "$ mysql --version\nmysql  Ver 8.4.6 for Win64 on x86_64"
   },
   {
    "t": "p",
@@ -403,7 +403,7 @@
     ],
     [
      "<code>FOREIGN KEY</code>",
-     "Garante relacionamentos entre tabelas (seção 6.15)"
+     "Garante relacionamentos entre tabelas (seção 6.16)"
     ]
    ]
   },
@@ -429,6 +429,14 @@
      "html": "Sempre aplique regras de integridade no banco, mesmo que a aplicação (Node.js) também as valide – nunca confie apenas na validação do lado da aplicação. Documente cada <em>constraint</em> como o que ela é: uma regra de negócio registrada no nível do banco de dados."
     }
    ]
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, cada exemplo de <code>CREATE TABLE</code> mostrou uma ideia separada, com colunas diferentes. Para acompanhar os comandos das próximas seções no seu MySQL, apague a tabela de testes e crie esta versão, que reúne todas as colunas usadas daqui até a seção 6.15:"
+  },
+  {
+   "t": "codigo",
+   "texto": "DROP TABLE IF EXISTS livros;\n\nCREATE TABLE livros (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    titulo VARCHAR(200) NOT NULL,\n    autor VARCHAR(150),\n    ano_publicacao SMALLINT,\n    isbn CHAR(13) UNIQUE,\n    preco DECIMAL(10,2) CHECK (preco >= 0),\n    disponivel BOOLEAN DEFAULT TRUE\n);"
   },
   {
    "t": "h2",
@@ -583,7 +591,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "<strong>Utilizar <code>= NULL</code></strong> – o correto é sempre <code>IS NULL</code> ou <code>IS NOT NULL</code>.<br> <strong>Abusar do <code>LIKE '%texto%'</code></strong> – consultas assim podem ficar lentas em tabelas grandes, pois impedem o uso eficiente de índices (seção 6.16)."
+     "html": "<strong>Utilizar <code>= NULL</code></strong> – o correto é sempre <code>IS NULL</code> ou <code>IS NOT NULL</code>.<br> <strong>Abusar do <code>LIKE '%texto%'</code></strong> – consultas assim podem ficar lentas em tabelas grandes, pois impedem o uso eficiente de índices (seção 6.18)."
     }
    ]
   },
@@ -833,11 +841,11 @@
   },
   {
    "t": "codigo",
-   "texto": "CREATE INDEX idx_livros_titulo ON livros(titulo);\nCREATE INDEX idx_livros_isbn ON livros(isbn);"
+   "texto": "CREATE INDEX idx_livros_titulo ON livros(titulo);\nCREATE INDEX idx_livros_autor ON livros(autor);"
   },
   {
    "t": "p",
-   "html": "Colunas de chave primária já recebem um índice automaticamente. Vale criar índices próprios em colunas que você consulta com frequência – mas não exagere: cada índice ocupa espaço e deixa `INSERT`/`UPDATE` levemente mais lentos, então a regra prática é indexar apenas o que realmente é consultado com frequência."
+   "html": "Colunas de chave primária e colunas com <code>UNIQUE</code> (como o <code>isbn</code>) já recebem um índice automaticamente; criar outro índice nelas só ocuparia espaço. Vale criar índices próprios em colunas que você consulta com frequência – mas não exagere: cada índice ocupa espaço e deixa `INSERT`/`UPDATE` levemente mais lentos, então a regra prática é indexar apenas o que realmente é consultado com frequência."
   }
  ]
 }

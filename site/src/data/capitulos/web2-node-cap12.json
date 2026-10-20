@@ -47,7 +47,7 @@
   },
   {
    "t": "p",
-   "html": "Até aqui, algumas rotas retornam o objeto diretamente (<code>res.json(livro)</code>), enquanto outras retornam mensagens (<code>res.json({ mensagem: ... })</code>). Em uma API profissional, vale adotar um formato <strong>único</strong> para todas as respostas – isso facilita muito a vida de quem consome a API (incluindo você mesma, seis meses depois)."
+   "html": "Até aqui, algumas rotas retornam o objeto diretamente (<code>res.json(livro)</code>), enquanto outras retornam mensagens (<code>res.json({ mensagem: ... })</code>). Em uma API profissional, vale adotar um formato <strong>único</strong> para todas as respostas – isso facilita muito a vida de quem consome a API (incluindo você, seis meses depois)."
   },
   {
    "t": "codigo",
@@ -100,11 +100,11 @@
   },
   {
    "t": "codigo",
-   "texto": "const logger = require(\"../config/logger\");\n\nfunction errorHandler(err, req, res, next) {\n    logger.error(err.message, { rota: req.originalUrl, metodo: req.method });\n    res.status(err.status || 500).json({ sucesso: false, mensagem: err.message });\n}"
+   "texto": "const logger = require(\"../config/logger\");\n\nfunction errorHandler(err, req, res, next) {\n    const status = err.status || 500;\n    logger.error(err.message, { rota: req.originalUrl, metodo: req.method });\n\n    // erro inesperado (500): o detalhe fica so no log\n    const mensagem = status === 500 ? \"Erro interno do servidor.\" : err.message;\n    res.status(status).json({ sucesso: false, mensagem });\n}"
   },
   {
    "t": "p",
-   "html": "Agora, além de aparecer no terminal, todo erro fica registrado em <code>logs/erros.log</code>, com data, hora e a rota exata onde aconteceu – essencial para investigar problemas depois que já ocorreram, especialmente em um servidor rodando sem ninguém olhando o terminal o tempo todo."
+   "html": "Repare que, nos erros inesperados (status 500), o cliente recebe só \"Erro interno do servidor.\": a mensagem original (que pode trazer nomes de tabelas, colunas ou trechos do SQL) vai apenas para o log. Os erros que nós mesmos criamos, com <code>erro.status = 400</code> ou <code>404</code>, continuam mostrando a mensagem. Vale aplicar a mesma regra ao <code>errorHandler</code> do Capítulo 9. Agora, além de aparecer no terminal, todo erro fica registrado em <code>logs/erros.log</code>, com data, hora e a rota exata onde aconteceu – essencial para investigar problemas depois que já ocorreram, especialmente em um servidor rodando sem ninguém olhando o terminal o tempo todo."
   },
   {
    "t": "h2",
@@ -118,6 +118,18 @@
   {
    "t": "codigo",
    "texto": "$ npm install --save-dev jest supertest"
+  },
+  {
+   "t": "p",
+   "html": "Para o teste conseguir usar a aplicação sem ligar o servidor, o projeto se divide em dois arquivos: o <code>src/app.js</code> monta e exporta o <code>app</code> (os <em>middlewares</em> e as rotas), e o <code>server.js</code> só importa esse <code>app</code> e liga o servidor com <code>listen</code>. É a divisão que aparece na estrutura de pastas do Capítulo 7:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/app.js -- monta o app, sem ligar o servidor\nrequire(\"dotenv\").config();\n\nconst express = require(\"express\");\nconst livroRoutes = require(\"./routes/livroRoutes\");\nconst errorHandler = require(\"./middlewares/errorHandler\");\n\nconst app = express();\napp.use(express.json());\napp.use(\"/livros\", livroRoutes);\n// ... as demais rotas\napp.use(errorHandler);\n\nmodule.exports = app;"
+  },
+  {
+   "t": "codigo",
+   "texto": "// server.js -- so liga o servidor\nconst app = require(\"./src/app\");\n\nconst PORT = process.env.PORT || 3000;\n\napp.listen(PORT, () => {\n    console.log(`Servidor executando na porta ${PORT}`);\n});"
   },
   {
    "t": "p",
@@ -158,11 +170,11 @@
   },
   {
    "t": "codigo",
-   "texto": "// src/config/db.js\nrequire(\"dotenv\").config({\n    path: `.env.${process.env.NODE_ENV || \"development\"}`\n});"
+   "texto": "// src/app.js -- no lugar do require(\"dotenv\").config() da primeira linha\nrequire(\"dotenv\").config({\n    path: `.env.${process.env.NODE_ENV || \"development\"}`\n});"
   },
   {
    "t": "p",
-   "html": "Assim, rodar <code>NODE_ENV=production node server.js</code> carrega automaticamente as credenciais de produção, sem precisar alterar uma linha de código."
+   "html": "A linha <code>require(\"dotenv\").config()</code> do <code>db.js</code> (Capítulo 8) pode ser apagada: o <code>app.js</code> já carrega as variáveis antes de tudo. Para escolher o ambiente, defina <code>NODE_ENV</code> ao iniciar o servidor. No Linux e no macOS: <code>NODE_ENV=production node server.js</code>. No PowerShell do Windows: <code>$env:NODE_ENV=\"production\"; node server.js</code>. Assim, as credenciais de produção são carregadas sem alterar uma linha de código."
   },
   {
    "t": "quadro",

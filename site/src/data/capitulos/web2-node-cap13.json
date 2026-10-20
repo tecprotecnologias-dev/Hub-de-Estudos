@@ -186,6 +186,33 @@
    "texto": "<!DOCTYPE html>\n<html lang=\"pt-br\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>BibliotecaAPI -- Cliente de Teste</title>\n</head>\n<body>\n\n    <h1>Livros cadastrados</h1>\n    <ul id=\"lista-livros\"></ul>\n\n    <script>\n        async function carregarLivros() {\n            const resposta = await fetch(\"http://localhost:3000/livros\", {\n                headers: {\n                    \"Authorization\": \"Bearer \" + localStorage.getItem(\"token\")\n                }\n            });\n\n            const { dados } = await resposta.json();\n\n            const lista = document.getElementById(\"lista-livros\");\n            lista.innerHTML = \"\";\n\n            dados.forEach(livro => {\n                const item = document.createElement(\"li\");\n                item.textContent = `${livro.titulo} -- ${livro.autor}`;\n                lista.appendChild(item);\n            });\n        }\n\n        carregarLivros();\n    </script>\n\n</body>\n</html>"
   },
   {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Por segurança, o navegador só deixa uma página buscar dados de <strong>outro endereço</strong> se esse endereço permitir (a regra se chama CORS). Uma página aberta direto do arquivo, ou pelo Live Server do VS Code (<code>http://127.0.0.1:5500</code>), está em outro endereço, e o <code>fetch</code> para <code>http://localhost:3000</code> é bloqueado, com um erro de CORS no console. Há dois caminhos:"
+    },
+    {
+     "t": "p",
+     "html": "<strong>1. Servir a página pela própria API</strong> (o mais simples): salve o HTML como <code>public/cliente.html</code>, na raiz do projeto, acrescente a linha abaixo no <code>app.js</code>, e abra <code>http://localhost:3000/cliente.html</code>. Página e API ficam no mesmo endereço:"
+    },
+    {
+     "t": "codigo",
+     "texto": "app.use(express.static(\"public\"));"
+    },
+    {
+     "t": "p",
+     "html": "<strong>2. Liberar o endereço da página</strong> com o pacote <code>cors</code>, informando exatamente qual endereço pode acessar a API:"
+    },
+    {
+     "t": "codigo",
+     "texto": "$ npm install cors\n\n// src/app.js, antes das rotas\nconst cors = require(\"cors\");\napp.use(cors({ origin: \"http://127.0.0.1:5500\" }));"
+    }
+   ]
+  },
+  {
    "t": "p",
    "html": "Observe como cada peça deste HTML se conecta diretamente a algo que já construímos:"
   },
@@ -299,8 +326,8 @@
    "numerada": false,
    "itens": [
     "<strong>Reservas</strong>: permitir que um leitor reserve um livro emprestado, sendo notificado quando ele for devolvido.",
-    "<strong>Multas</strong>: calcular automaticamente multas por atraso na devolução (revisite a seção 12.6 sobre <code>data_prevista</code> e <code>CURDATE()</code>).",
-    "<strong>Múltiplos autores por livro</strong>: implementar a tabela intermediária <code>livros_autores</code>, resolvendo o relacionamento N:N que mencionamos brevemente no Capítulo 10.",
+    "<strong>Multas</strong>: calcular automaticamente multas por atraso na devolução (revisite a seção 10.9, com <code>data_prevista</code> e <code>CURDATE()</code>).",
+    "<strong>Múltiplos autores por livro</strong>: implementar a tabela intermediária <code>livros_autores</code>, resolvendo o relacionamento N:N (muitos-para-muitos) que o Capítulo 10 simplificou ao guardar só o autor principal de cada livro.",
     "<strong>Documentação automática</strong> com Swagger/OpenAPI, gerando uma interface interativa a partir da tabela da seção 13.3.",
     "<strong>Deploy</strong>: publicar a API em um serviço como Render, Railway ou um VPS, tornando-a acessível publicamente – o passo que transforma um projeto de estudo em algo que você pode de fato compartilhar."
    ]
@@ -337,7 +364,7 @@
      "t": "lista",
      "numerada": true,
      "itens": [
-      "1. Reúna todo o código desenvolvido ao longo dos três volumes em um único repositório Git, seguindo a estrutura da seção 13.2.",
+      "1. Reúna todo o código desenvolvido ao longo do livro em um único repositório Git, seguindo a estrutura da seção 13.2.",
       "2. Escreva o README completo do projeto, incluindo a tabela de endpoints da seção 13.3.",
       "3. Implemente pelo menos uma das extensões sugeridas na seção 13.7.",
       "4. Publique o projeto no GitHub, com o <code>.env</code> corretamente ignorado e um <code>.env.example</code> no lugar.",

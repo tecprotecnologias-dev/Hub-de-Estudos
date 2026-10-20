@@ -320,11 +320,11 @@
   },
   {
    "t": "codigo",
-   "texto": "BibliotecaAPI/\n|-- src/\n|   |-- controllers/\n|   |-- services/\n|   |-- repositories/\n|   |-- routes/\n|   |-- middlewares/\n|   |-- config/\n|   `-- app.js\n|-- .env\n|-- package.json\n|-- package-lock.json\n`-- server.js"
+   "texto": "BibliotecaAPI/\n|-- src/\n|   |-- controllers/\n|   |-- services/\n|   |-- models/\n|   |-- routes/\n|   |-- middlewares/\n|   |-- config/\n|   `-- app.js\n|-- .env\n|-- package.json\n|-- package-lock.json\n`-- server.js"
   },
   {
    "t": "p",
-   "html": "Cada pasta corresponde diretamente a uma camada da arquitetura: <code>routes</code> define os endpoints, <code>controllers</code> recebe as requisições, <code>services</code> concentra as regras de negócio, e <code>repositories</code> é o único lugar do projeto onde consultas SQL são escritas. Vamos preencher essas pastas, uma a uma, a partir do próximo capítulo."
+   "html": "Cada pasta corresponde diretamente a uma camada da arquitetura: <code>routes</code> define os endpoints, <code>controllers</code> recebe as requisições, <code>services</code> concentra as regras de negócio, e <code>models</code> (a camada Repository/Model da tabela) é o único lugar do projeto onde consultas SQL são escritas. Vamos preencher essas pastas, uma a uma, a partir do próximo capítulo."
   }
  ]
 }
