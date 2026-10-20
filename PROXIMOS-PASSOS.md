@@ -25,7 +25,6 @@ O site está em https://estudos.tecprotecnologias.com.br (Cloudflare) e se atual
 - [ ] **Apostilas seguintes** (pedido em 17/10/2026): Estrutura de Dados, Análise e Projeto de Sistemas, Cliente-Servidor, Dispositivos Móveis, Gestão de Banco de Dados.
 - [ ] **Material complementar da Web II** (anotado em 20/10/2026). Já revisados: o guia de Prompt (sem erros) e o livro de Node.js (corrigido). Falta:
   - [ ] **← retomar aqui.** Guia de Git: atualizar (link de instalação, `git://`, `main`, `git switch`, `reset`, `rm --cached`), reescrever os trechos traduzidos por máquina e acrescentar o envio ao GitHub (`remote add`, `push -u`, login sem senha).
-  - [ ] Diagrama do Event Loop (cap. 4 do livro de Node.js): a libuv no lugar do Event Loop.
   - [ ] Infográfico do React (opcional, imagem da professora): "duas vezes" → "dois momentos"; o contador aparece só num comentário.
 
 ## Segurança dos dados e do site (antes de liberar para os alunos)
