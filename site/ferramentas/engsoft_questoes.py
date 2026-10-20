@@ -20,6 +20,7 @@ PASTA_QUESTOES = Path(__file__).resolve().parent.parent / 'src' / 'data' / 'ques
 # (id da disciplina, arquivo de questões)
 ENGSOFT = ('engenharia-de-software-e-da-usabilidade', PASTA_QUESTOES / 'engsoft.json')
 QUALIDADE = ('qualidade-e-testes-de-software', PASTA_QUESTOES / 'qualidade.json')
+LEGISLACAO = ('legislacao-em-negocios-digitais', PASTA_QUESTOES / 'legislacao.json')
 PROIBIDAS = ['faeterj', 'faetec', 'enade', 'barra mansa']
 ROMANOS = ['I', 'II', 'III', 'IV']
 

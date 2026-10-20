@@ -362,6 +362,282 @@
     "resolucao": "a revogação do consentimento (art. 8º, § 5º) obriga a eliminar os dados tratados com base nele, mas o art. 16, I, permite conservar dados para cumprir obrigação legal ou regulatória, como a guarda de registros fiscais. Esses dados ficam guardados só pelo prazo exigido em lei e só para essa finalidade."
   },
   {
+    "id": "legislacao-cap1-d1",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap1",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma startup vai lançar um aplicativo de apoio à saúde mental. No cadastro, o usuário informa nome, e-mail, data de nascimento e CPF; depois, registra diariamente o humor, as horas de sono e anotações sobre crises de ansiedade. A empresa quer usar inteligência artificial para sugerir exercícios e pretende, no futuro, firmar parcerias com planos de saúde. Os dados ficarão em uma nuvem contratada e ainda não há nenhuma política de privacidade."
+    ],
+    "enunciado": "Proponha um plano de adequação desse aplicativo à LGPD, antes do lançamento.",
+    "linhas": 10,
+    "respostaEsperada": "O plano começa pelo mapeamento dos dados e das finalidades: os dados de cadastro são pessoais comuns, e os registros de humor, sono e crises são dados sensíveis de saúde. Cada finalidade precisa de base legal; para os dados sensíveis, só valem as hipóteses do art. 11, e a mais adequada aqui é o consentimento específico e destacado, livre e informado. Deve-se aplicar a necessidade, coletando só o indispensável (o CPF, por exemplo, só se houver motivo), e o privacy by design e by default, com segurança desde a concepção, como criptografia e controle de acesso (art. 46). Como há dados sensíveis e uso de IA, convém elaborar o RIPD. A política de privacidade deve ser clara e informar dados, finalidades, bases, prazos de guarda, compartilhamentos e o encarregado indicado. A nuvem é operadora e precisa de contrato com cláusulas de proteção de dados e, se os servidores ficarem fora do Brasil, de garantias para a transferência internacional. A parceria com planos de saúde exige muito cuidado: a LGPD restringe o compartilhamento de dados de saúde para obter vantagem econômica (art. 11, § 4º) e proíbe as operadoras de usá-los para selecionar riscos (art. 11, § 5º). Por fim, a startup deve criar um canal para os direitos dos titulares, permitir revogar o consentimento com facilidade, garantir a revisão de decisões automatizadas (art. 20) e ter um plano de resposta a incidentes, com comunicação à ANPD em até 3 dias úteis quando houver risco relevante."
+  },
+  {
+    "id": "legislacao-cap1-d2",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap1",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma empresa brasileira de software, que hoje atende só clientes no Brasil e já segue a LGPD, vai começar a vender assinaturas para pessoas na Alemanha e na França, com site em alemão e francês e preços em euros. Um dos sócios afirma que \"quem cumpre a LGPD já cumpre automaticamente o GDPR, porque as duas leis são iguais\"."
+    ],
+    "enunciado": "Avalie a afirmação do sócio, apontando as semelhanças e as diferenças entre a LGPD e o GDPR que a empresa precisa considerar.",
+    "linhas": 10,
+    "respostaEsperada": "A afirmação é exagerada. O GDPR se aplica à empresa, mesmo sem sede na Europa, porque ela vai oferecer serviços a pessoas que estão na União Europeia (art. 3º, nº 2). As leis têm muito em comum, pois o GDPR inspirou a LGPD: conceitos de dado pessoal e sensível, controlador e operador, princípios parecidos, direitos dos titulares, segurança e responsabilização. Mas há diferenças: o GDPR tem seis bases legais, e a LGPD, dez hipóteses; o GDPR exige notificar a autoridade de um incidente em até 72 horas, e a LGPD, em até 3 dias úteis; as respostas aos titulares têm prazo de um mês no GDPR e de 15 dias para a declaração completa na LGPD; o encarregado (DPO) é obrigatório só em casos específicos no GDPR; e as multas do GDPR chegam a € 20 milhões ou 4% do faturamento mundial, enquanto as da LGPD têm teto de R$ 50 milhões por infração. A empresa também pode precisar indicar um representante na União Europeia (art. 27 do GDPR), seguir as regras europeias de cookies e garantir mecanismos para transferir os dados dos europeus ao Brasil, como as cláusulas contratuais padrão. Por isso, precisa revisar sua conformidade à luz do GDPR, e não presumir que a LGPD basta."
+  },
+  {
+    "id": "legislacao-cap1-o1",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em uma fiscalização, foram encontradas quatro situações: (1) um aplicativo de delivery exige, no cadastro, a religião e o estado civil do usuário; (2) uma loja mantém por meses um endereço errado, mesmo depois de o cliente pedir a correção; (3) a política de privacidade de um site está em um link escondido, com linguagem confusa; (4) uma empresa não consegue mostrar à ANPD nenhum registro das medidas de proteção que diz adotar."
+      }
+    ],
+    "enunciado": "As situações 1, 2, 3 e 4 violam, respectivamente, os princípios da LGPD chamados",
+    "alternativas": [
+      "necessidade, qualidade dos dados, transparência e responsabilização.",
+      "finalidade, qualidade dos dados, transparência e prevenção.",
+      "necessidade, adequação, livre acesso e responsabilização.",
+      "necessidade, qualidade dos dados, segurança e responsabilização.",
+      "adequação, transparência, qualidade dos dados e não discriminação."
+    ],
+    "correta": 0,
+    "resolucao": "Pedir religião e estado civil para entregar comida vai além do mínimo necessário (necessidade). Manter um endereço errado depois do pedido de correção fere a exatidão e a atualização dos dados (qualidade dos dados). Uma política escondida e confusa não dá informações claras e acessíveis (transparência). Não conseguir demonstrar as medidas adotadas fere a demonstração de cumprimento da lei (responsabilização e prestação de contas). Todos estão no art. 6º."
+  },
+  {
+    "id": "legislacao-cap1-o2",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Considere os tratamentos de dados a seguir: (1) a equipe médica de um hospital consulta o prontuário de um paciente durante o atendimento; (2) um banco consulta um birô de crédito antes de aprovar um empréstimo; (3) uma empresa guarda os registros de jornada de um ex-empregado para se defender em uma ação trabalhista; (4) uma empresa envia ao eSocial os dados da folha de pagamento dos empregados."
+      }
+    ],
+    "enunciado": "As bases legais que amparam os tratamentos 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "tutela da saúde, proteção do crédito, exercício regular de direitos e cumprimento de obrigação legal.",
+      "consentimento, proteção do crédito, legítimo interesse e cumprimento de obrigação legal.",
+      "tutela da saúde, legítimo interesse, exercício regular de direitos e execução de contrato.",
+      "proteção da vida, proteção do crédito, cumprimento de obrigação legal e exercício regular de direitos.",
+      "tutela da saúde, consentimento, execução de contrato e cumprimento de obrigação legal."
+    ],
+    "correta": 0,
+    "resolucao": "O acesso ao prontuário por profissionais de saúde, durante o atendimento, é tutela da saúde (art. 7º, VIII, e art. 11, II, f). A consulta a um birô para conceder crédito é proteção do crédito (art. 7º, X). Guardar dados para se defender em processo é exercício regular de direitos (art. 7º, VI). Enviar as informações exigidas pelo eSocial é cumprimento de obrigação legal ou regulatória (art. 7º, II)."
+  },
+  {
+    "id": "legislacao-cap1-o3",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma loja virtual contrata uma plataforma de e-mail marketing para enviar suas campanhas aos clientes. A loja define o conteúdo, a frequência e quem recebe cada mensagem, e a plataforma apenas executa os envios. Meses depois, descobre-se que a plataforma passou a usar a lista de clientes da loja para vender anúncios de outras empresas."
+      }
+    ],
+    "enunciado": "Como se classificam a loja e a plataforma de e-mail e qual é a consequência da conduta da plataforma?",
+    "alternativas": [
+      "A loja é controladora e a plataforma, operadora; ao usar os dados para fins próprios, esta responde como controladora.",
+      "As duas são controladoras desde o início, pois ambas têm acesso à lista de clientes e participam dos envios.",
+      "A loja é operadora e a plataforma, controladora, pois é a plataforma que executa de fato o tratamento dos dados.",
+      "A loja é controladora e a plataforma, operadora; a conduta da plataforma é lícita, pois os dados já estavam com ela.",
+      "Nenhuma das duas é agente de tratamento, pois o envio de e-mails marketing não é regulado pela LGPD."
+    ],
+    "correta": 0,
+    "resolucao": "O controlador decide sobre o tratamento (a loja define o que enviar e a quem), e o operador trata os dados em nome dele (a plataforma) (art. 5º, VI e VII). Pelo art. 42, § 1º, I, o operador que descumpre a lei ou não segue as instruções lícitas do controlador responde solidariamente pelos danos e é equiparado ao controlador. Vender anúncios com a lista da loja é usar os dados para finalidade própria."
+  },
+  {
+    "id": "legislacao-cap1-o4",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe de produto discute como aplicar os conceitos de privacy by design e privacy by default em um novo aplicativo."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Um aplicativo de rede social cujo perfil do usuário já nasce configurado como privado pratica privacy by default.",
+      "PORQUE",
+      "II. Privacy by default é a incorporação da privacidade na arquitetura do sistema, desde a fase de projeto, como na criptografia de ponta a ponta."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "A I é verdadeira: privacy by default é a configuração inicial mais protetiva, que só muda por ação do usuário, como o perfil que nasce privado. A II é falsa: a incorporação da privacidade desde a concepção, como a criptografia de ponta a ponta, é o privacy by design. O primeiro é uma decisão sobre a configuração entregue ao usuário; o segundo, uma decisão de arquitetura."
+  },
+  {
+    "id": "legislacao-cap1-o5",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap1",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Depois de uma fiscalização, uma empresa quer entender as sanções administrativas que a ANPD pode aplicar com base no art. 52 da LGPD."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. A advertência é aplicada com a indicação de prazo para a adoção de medidas corretivas.",
+      "II. A multa simples chega a 2% do faturamento no Brasil, limitada a R$ 50 milhões por infração.",
+      "III. A publicização da infração é feita antes da apuração, para alertar os titulares o quanto antes.",
+      "IV. A suspensão parcial do banco de dados pode durar até 6 meses, prorrogável por igual período."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e IV, apenas.",
+      "I e II, apenas.",
+      "I e IV, apenas.",
+      "II e IV, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I, II e IV estão de acordo com o art. 52 da LGPD. III é falsa: a publicização da infração só ocorre depois de devidamente apurada e confirmada a sua ocorrência (art. 52, IV), com processo administrativo que assegure a ampla defesa."
+  },
+  {
+    "id": "legislacao-cap1-o6",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap1",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um cliente pede a uma operadora de telefonia uma declaração completa de todos os seus dados pessoais tratados, com a origem dos dados e os critérios usados. A operadora responde que vai analisar o pedido e enviar a declaração em até 60 dias, mediante pagamento de uma taxa de emissão."
+      }
+    ],
+    "enunciado": "Pela LGPD, como a empresa deve atender ao pedido?",
+    "alternativas": [
+      "Deve fornecer a declaração clara e completa em até 15 dias, contados do requerimento do titular (art. 19, II).",
+      "Pode responder em até 60 dias, pois a LGPD não fixa prazo para os pedidos feitos pelos titulares.",
+      "Deve responder em até 30 dias, prorrogáveis por mais 60, que é o prazo previsto na LGPD para o acesso.",
+      "Deve responder em até 72 horas, o mesmo prazo previsto para a comunicação de incidentes de segurança.",
+      "Pode cobrar uma taxa pela declaração completa, pois a gratuidade vale só para a confirmação simples."
+    ],
+    "correta": 0,
+    "resolucao": "O art. 19 da LGPD prevê que a confirmação da existência ou o acesso aos dados seja dado em formato simplificado, imediatamente, ou por declaração clara e completa, em até 15 dias contados do requerimento (inciso II). O prazo de um mês, prorrogável, é do GDPR, e o de 72 horas é o da notificação de incidentes no regulamento europeu. O acesso deve ser facilitado e gratuito (art. 6º, IV, e art. 18, § 5º)."
+  },
+  {
+    "id": "legislacao-cap1-o7",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap1",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um grupo de comércio eletrônico tem faturamento mundial de € 2 bilhões, dos quais o equivalente a R$ 4 bilhões vêm do Brasil. Uma mesma falha grave, que violou princípios e direitos dos titulares, foi cometida na Europa e no Brasil."
+      }
+    ],
+    "enunciado": "Quais são os limites máximos de multa por essa infração em cada lei?",
+    "alternativas": [
+      "Até € 80 milhões pelo GDPR e até R$ 50 milhões pela LGPD.",
+      "Até € 20 milhões pelo GDPR e até R$ 80 milhões pela LGPD.",
+      "Até € 80 milhões pelo GDPR e até R$ 80 milhões pela LGPD.",
+      "Até € 40 milhões pelo GDPR e até R$ 50 milhões pela LGPD.",
+      "Até € 20 milhões pelo GDPR e até R$ 50 milhões pela LGPD."
+    ],
+    "correta": 0,
+    "resolucao": "Nas infrações mais graves, o GDPR permite multa de até € 20 milhões ou 4% do faturamento mundial, o que for maior: 4% de € 2 bilhões são € 80 milhões. Na LGPD, a multa simples é de até 2% do faturamento no Brasil (2% de R$ 4 bilhões são R$ 80 milhões), mas limitada a R$ 50 milhões por infração. Usar 2% no GDPR (€ 40 milhões) seria aplicar o nível das infrações menos graves."
+  },
+  {
+    "id": "legislacao-cap1-o8",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap1",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um hospital privado passou a usar um sistema de inteligência artificial para priorizar o atendimento de pacientes no pronto-socorro, a partir de dados de saúde. A ANPD pediu informações sobre o Relatório de Impacto à Proteção de Dados Pessoais (RIPD)."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. A ANPD pode determinar que o controlador elabore o RIPD, inclusive de dados sensíveis.",
+      "II. O RIPD deve descrever os dados coletados, a metodologia, as medidas de segurança e a análise do controlador.",
+      "III. O RIPD é exigido apenas de órgãos públicos, e não de empresas privadas como o hospital.",
+      "IV. O tratamento com base no legítimo interesse nunca pode levar a ANPD a pedir o RIPD."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e II, apenas.",
+      "I, apenas.",
+      "II, apenas.",
+      "I, II e III, apenas.",
+      "I, II e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I e II estão no art. 38 da LGPD: a ANPD pode determinar ao controlador a elaboração do relatório de impacto, inclusive de dados sensíveis, e o parágrafo único lista o seu conteúdo mínimo. III é falsa: o RIPD vale para qualquer controlador. IV é falsa: quando o tratamento se baseia no legítimo interesse, a ANPD pode solicitar o RIPD (art. 10, § 3º)."
+  },
+  {
+    "id": "legislacao-cap1-o9",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap1",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa brasileira que vai começar a vender para a Europa preparou um quadro comparativo entre as duas leis de proteção de dados."
+      }
+    ],
+    "enunciado": "Sobre a comparação entre a LGPD e o GDPR, assinale a alternativa INCORRETA.",
+    "alternativas": [
+      "O GDPR prevê dez bases legais para o tratamento de dados, enquanto a LGPD prevê apenas seis hipóteses.",
+      "O GDPR exige que a autoridade seja notificada de um incidente em até 72 horas, quando houver risco.",
+      "Na LGPD, a multa simples é calculada sobre o faturamento da empresa ou do grupo no Brasil.",
+      "As duas leis podem ser aplicadas a empresas de fora do seu território, em certas situações.",
+      "Na LGPD, a indicação do encarregado é obrigação do controlador, com dispensa para pequenos agentes."
+    ],
+    "correta": 0,
+    "resolucao": "A afirmação incorreta inverte os números: a LGPD prevê dez hipóteses de tratamento (art. 7º), e o GDPR, seis bases legais (art. 6º). As demais estão corretas: o prazo de 72 horas do GDPR (art. 33), a multa ligada ao faturamento no Brasil (art. 52, II), o alcance extraterritorial das duas leis e a obrigação do controlador de indicar o encarregado (art. 41), com a dispensa prevista pela ANPD para agentes de tratamento de pequeno porte."
+  },
+  {
+    "id": "legislacao-cap1-o10",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap1",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma universidade publicou, para pesquisas, uma base de atendimentos de saúde da qual retirou nomes e CPFs, mas manteve o CEP, a data de nascimento e o sexo de cada paciente. Um pesquisador mostrou que, cruzando esses campos com listas públicas, conseguia identificar a maior parte dos pacientes."
+      }
+    ],
+    "enunciado": "Considerando o art. 12 da LGPD, a base publicada pode ser tratada como anonimizada?",
+    "alternativas": [
+      "Não: se é possível reidentificar as pessoas com esforços razoáveis, cruzando dados públicos, ela continua sendo de dados pessoais.",
+      "Sim: como os nomes e os CPFs foram retirados, a base deixa de ter dados pessoais, qualquer que seja o risco.",
+      "Sim: só haveria dado pessoal se a própria universidade conseguisse reverter a base com meios exclusivamente seus.",
+      "Não: qualquer base com informação sobre pessoas é sempre dado pessoal, mesmo que a reidentificação seja impossível.",
+      "Sim, desde que a universidade publique uma nota pedindo que ninguém tente identificar as pessoas da base."
+    ],
+    "correta": 0,
+    "resolucao": "Pelo art. 12, os dados anonimizados não são dados pessoais, salvo quando o processo puder ser revertido com esforços razoáveis, inclusive por terceiros. CEP, data de nascimento e sexo, combinados com registros públicos, permitem apontar uma única pessoa: são identificadores indiretos. Por isso, a base continua sujeita à LGPD. Uma base realmente anonimizada, sem possibilidade razoável de reversão, deixaria de ser dado pessoal."
+  },
+  {
     "id": "legislacao-cap2-q1",
     "disciplinaId": "legislacao-em-negocios-digitais",
     "capituloId": "legislacao-cap2",
@@ -744,6 +1020,282 @@
     "resolucao": "pelo princípio da especialidade, a marca registrada é protegida no seu ramo de atividade. Fora dele, a proteção só existe se a marca for de alto renome (art. 125 da Lei nº 9.279/1996, proteção em todos os ramos) ou se houver risco de confusão para o consumidor. No caso do perfil no Instagram, a empresa pode pedir a remoção à plataforma, comprovando ser titular da marca."
   },
   {
+    "id": "legislacao-cap2-d1",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap2",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Três amigos vão lançar um aplicativo de entregas chamado \"LevaJá\". Um deles escreveu o código antes de a empresa existir; um freelancer está criando o design das telas; e a equipe desenvolveu um algoritmo de roteirização que reduz o consumo de combustível da frota. O aplicativo usa várias bibliotecas de código aberto, e a marca ainda não foi registrada."
+    ],
+    "enunciado": "Proponha uma estratégia de proteção da propriedade intelectual para essa startup.",
+    "linhas": 10,
+    "respostaEsperada": "A marca \"LevaJá\" deve ser depositada no INPI antes do lançamento, nas classes ligadas ao serviço, porque o Brasil adota o sistema first to file; também convém registrar o domínio e os perfis nas redes sociais. O código é protegido pelo direito autoral de software, sem necessidade de registro (Lei nº 9.609/1998), mas o registro facultativo no INPI ajuda a provar a autoria e a data. Como o sócio escreveu o código antes de a empresa existir, ele precisa ceder os direitos à startup por escrito; o mesmo vale para o freelancer do design, com contrato que preveja a cessão dos direitos sobre as telas, e para os futuros empregados e prestadores, com cláusulas de PI. O algoritmo de roteirização pode ser protegido como segredo industrial, com controle de acesso e acordos de confidencialidade (NDAs), ou, se tiver efeito técnico e for novo, por um pedido de patente de invenção implementada por software, que não pode ser divulgada antes do depósito. A startup deve ter uma política de código aberto, conferindo as licenças: as permissivas, como MIT, exigem só manter os avisos, enquanto a GPL pode obrigar a abrir o código se o produto for distribuído. Por fim, deve verificar se não viola marcas e patentes de terceiros, o que costuma ser checado na due diligence de investidores."
+  },
+  {
+    "id": "legislacao-cap2-d2",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap2",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma agência de publicidade passou a usar ferramentas de inteligência artificial generativa para criar imagens, textos e jingles para campanhas dos clientes. Em uma das campanhas, a imagem gerada ficou muito parecida com a obra de um ilustrador conhecido, e o jingle lembrava uma música famosa. A agência entrega o material aos clientes dizendo que eles \"passam a ser donos de tudo\"."
+    ],
+    "enunciado": "Analise os riscos de propriedade intelectual dessa prática e proponha cuidados que a agência deveria adotar.",
+    "linhas": 10,
+    "respostaEsperada": "Há riscos em várias frentes. Primeiro, a autoria: pela LDA, autor é a pessoa física criadora (art. 11), e o material gerado só pela IA, sem contribuição criativa humana, tende a não ter proteção autoral, o que torna frágil a promessa de que o cliente \"passa a ser dono de tudo\"; o que pode ser protegido é a contribuição humana de seleção, edição e composição. Segundo, a violação de direitos de terceiros: uma imagem muito parecida com a obra de um ilustrador e um jingle que reproduz trechos de uma música podem ser considerados reprodução ou obra derivada não autorizada, com responsabilidade civil (indenização, remoção) e até penal (art. 184 do CP), além do uso indevido de marcas que apareçam no material. Terceiro, o treino dos modelos com obras protegidas é tema em disputa judicial, e os termos de uso de cada ferramenta definem o que pode ser feito com o resultado. A agência deveria revisar os termos de uso das ferramentas, evitar prompts que peçam o estilo de artistas ou obras específicas, checar semelhanças antes de entregar, ter intervenção criativa humana documentada, licenciar trilhas e imagens quando necessário e ajustar os contratos com os clientes, explicando o uso de IA e limitando garantias sobre a titularidade."
+  },
+  {
+    "id": "legislacao-cap2-o1",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um escritor brasileiro morreu em 10 de março de 1954, deixando romances que continuam sendo vendidos por uma editora. Uma plataforma de livros digitais quer publicá-los gratuitamente, sem pedir autorização aos herdeiros."
+      }
+    ],
+    "enunciado": "A partir de quando as obras desse escritor entram em domínio público?",
+    "alternativas": [
+      "Em 1º de janeiro de 2025.",
+      "Em 10 de março de 2024.",
+      "Em 1º de janeiro de 2024.",
+      "Em 10 de março de 2034.",
+      "Em 1º de janeiro de 2005."
+    ],
+    "correta": 0,
+    "resolucao": "Pelo art. 41 da Lei nº 9.610/1998, os direitos patrimoniais duram por toda a vida do autor e por 70 anos contados de 1º de janeiro do ano seguinte ao da sua morte. Como ele morreu em 1954, a contagem começa em 1º de janeiro de 1955 e termina em 31 de dezembro de 2024: as obras entram em domínio público em 1º de janeiro de 2025. Contar da data da morte ou usar 50 anos, prazo do software, leva às respostas erradas."
+  },
+  {
+    "id": "legislacao-cap2-o2",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe de conteúdo de uma startup quer saber o que pode usar livremente ao produzir artigos e cursos para o seu blog."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Ideias, métodos e conceitos não são protegidos; a proteção recai sobre a forma de expressão.",
+      "II. Textos de leis, decretos e decisões judiciais não são objeto de proteção pelo direito autoral.",
+      "III. Um texto publicado em blog sem o símbolo © não é protegido pelo direito autoral.",
+      "IV. O aproveitamento industrial ou comercial das ideias contidas em uma obra é protegido pela LDA."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e II, apenas.",
+      "I, apenas.",
+      "II, apenas.",
+      "I, II e III, apenas.",
+      "I, II e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I e II estão no art. 8º da Lei nº 9.610/1998, que exclui da proteção as ideias, os métodos e os conceitos (inciso I) e os textos de leis, decretos e decisões judiciais (inciso IV). III é falsa: a proteção nasce com a criação, sem registro nem símbolo. IV é falsa: o aproveitamento industrial ou comercial das ideias contidas nas obras também está fora da proteção autoral (inciso VII)."
+  },
+  {
+    "id": "legislacao-cap2-o3",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "O fundador de uma startup acredita que, sem registrar o código no INPI, qualquer concorrente pode copiar o seu aplicativo sem consequências."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. O registro de um programa de computador no INPI é facultativo.",
+      "PORQUE",
+      "II. A proteção dos direitos sobre o programa de computador independe de registro."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II justifica a I. Pela Lei nº 9.609/1998 (art. 2º, § 3º), a proteção independe de registro, como no direito autoral em geral. Por isso o registro no INPI é facultativo: ele não cria o direito, mas serve como prova de autoria e da data da criação em caso de disputa."
+  },
+  {
+    "id": "legislacao-cap2-o4",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma desenvolvedora vai publicar quatro projetos e quer escolher a licença de cada um: (1) uma biblioteca que qualquer empresa possa usar até em produtos fechados, desde que mantenha o aviso de copyright; (2) uma biblioteca que possa ser usada em produtos fechados, mas cujas modificações nela mesma sejam abertas; (3) um programa cujas versões derivadas distribuídas tenham de continuar abertas, sob a mesma licença; (4) um conjunto de ícones que ela quer liberar sem reservar nenhum direito."
+      }
+    ],
+    "enunciado": "As licenças mais adequadas às necessidades 1, 2, 3 e 4 são, respectivamente,",
+    "alternativas": [
+      "MIT, LGPL, GPL e CC0.",
+      "GPL, LGPL, MIT e CC0.",
+      "MIT, GPL, LGPL e CC0.",
+      "LGPL, MIT, GPL e CC BY.",
+      "MIT, LGPL, CC BY-SA e GPL."
+    ],
+    "correta": 0,
+    "resolucao": "A MIT é permissiva: permite usar o código em produtos fechados, bastando manter o aviso de copyright (1). A LGPL é copyleft fraco: permite usar a biblioteca em software proprietário, mas as mudanças na própria biblioteca devem ser abertas (2). A GPL é copyleft forte: obras derivadas distribuídas devem seguir a mesma licença (3). A CC0 é a renúncia a todos os direitos, equivalente ao domínio público (4)."
+  },
+  {
+    "id": "legislacao-cap2-o5",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap2",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma rede de lojas chamada \"Casa Prática\" identificou quatro condutas de terceiros: (1) o registro do domínio \"casapratka.com.br\", com uma letra trocada; (2) a criação do perfil @casapratica_oficial em uma rede social por alguém sem ligação com a rede; (3) a compra da expressão \"Casa Prática\" como palavra-chave de anúncios por um concorrente; (4) o registro do domínio \"casapratica.com\" por uma pessoa que ofereceu vendê-lo à rede por R$ 80 mil."
+      }
+    ],
+    "enunciado": "As condutas 1, 2, 3 e 4 correspondem, respectivamente, a",
+    "alternativas": [
+      "typosquatting, username squatting, keyword advertising e cybersquatting.",
+      "cybersquatting, username squatting, keyword advertising e typosquatting.",
+      "typosquatting, cybersquatting, metatags e username squatting.",
+      "typosquatting, username squatting, cybersquatting e keyword advertising.",
+      "username squatting, typosquatting, keyword advertising e cybersquatting."
+    ],
+    "correta": 0,
+    "resolucao": "Registrar domínios com erros de digitação de uma marca famosa é typosquatting (1). Criar perfis em redes sociais com o nome de uma marca alheia é username squatting (2). Comprar como palavra-chave de anúncio a marca de um concorrente é keyword advertising, cujo tratamento varia conforme o país e a plataforma (3). Registrar um domínio com a marca de outra empresa para vendê-lo a ela é cybersquatting (4)."
+  },
+  {
+    "id": "legislacao-cap2-o6",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa de tecnologia depositou no INPI, em março de 2015, um pedido de patente de invenção e um pedido de modelo de utilidade, ambos concedidos depois. O registro da sua marca foi concedido em março de 2019. Desde então, a empresa não fez nenhum pedido de prorrogação."
+      }
+    ],
+    "enunciado": "Em abril de 2031, sem nenhuma renovação ou prorrogação, quais direitos continuam em vigor?",
+    "alternativas": [
+      "Somente a patente de invenção, que dura 20 anos a contar do depósito.",
+      "A patente de invenção e o modelo de utilidade, que duram 20 anos a contar do depósito.",
+      "A patente de invenção e a marca, pois a marca vale enquanto a empresa continuar usando o nome.",
+      "Somente a marca, pois as patentes duram 10 anos, e o registro de marca não tem prazo.",
+      "Nenhum, pois todos os direitos de propriedade industrial duram no máximo 15 anos."
+    ],
+    "correta": 0,
+    "resolucao": "A patente de invenção dura 20 anos do depósito (art. 40 da Lei nº 9.279/1996): depositada em 2015, vai até 2035. O modelo de utilidade dura 15 anos do depósito: terminou em 2030. O registro de marca vale 10 anos a contar da concessão e pode ser prorrogado por períodos iguais (art. 133): concedido em 2019, venceu em 2029 sem renovação. O uso da marca não renova o registro."
+  },
+  {
+    "id": "legislacao-cap2-o7",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um desenvolvedor criou um sistema de gestão e cedeu à empresa contratante todos os direitos patrimoniais sobre ele. Dois anos depois, a empresa reescreveu partes do código para lançar uma nova versão, mantendo o nome do desenvolvedor nos créditos. Ele quer impedir as mudanças, invocando o direito de assegurar a integridade da obra (art. 24, IV, da LDA)."
+      }
+    ],
+    "enunciado": "Considerando a Lei nº 9.609/1998, o desenvolvedor pode impedir as alterações com base no direito moral de integridade?",
+    "alternativas": [
+      "Em regra, não: no software, a lei só preserva a paternidade e a oposição a alterações que deformem o programa ou atinjam a honra.",
+      "Sim, pois os direitos morais da LDA valem integralmente para o software, inclusive o de impedir qualquer alteração.",
+      "Sim, pois a cessão dos direitos patrimoniais não inclui o direito de alterar o código, que fica sempre com o autor.",
+      "Não, pois quem cede os direitos patrimoniais de um software também perde o direito de ser reconhecido como autor.",
+      "Não, pois o software não é obra intelectual, e por isso não tem direitos morais nem direitos patrimoniais."
+    ],
+    "correta": 0,
+    "resolucao": "O art. 2º, § 1º, da Lei nº 9.609/1998 afasta do software os direitos morais da LDA, ressalvados o direito de reivindicar a paternidade do programa e o de se opor a alterações não autorizadas que impliquem deformação, mutilação ou outra modificação que prejudique a honra ou a reputação do autor. Atualizar o código para uma nova versão, depois de ceder os direitos patrimoniais, em regra não viola esses direitos. O software é obra intelectual e continua tendo direitos patrimoniais, que foram cedidos."
+  },
+  {
+    "id": "legislacao-cap2-o8",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma operação policial encontrou, em uma feira, uma banca que vendia cópias piratas de filmes. Os investigadores discutem as consequências penais e civis da violação de direitos autorais."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Vender cópias piratas de filmes com intuito de lucro é crime com pena de reclusão de 2 a 4 anos e multa.",
+      "II. A cópia de uma obra em um só exemplar, para uso privado do copista e sem intuito de lucro, não é esse crime.",
+      "III. Violar direito autoral sem intuito de lucro nunca é crime, gerando apenas indenização na esfera civil.",
+      "IV. Sem saber quantos exemplares foram vendidos, a indenização considera o valor de 3.000 exemplares."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e IV, apenas.",
+      "I e II, apenas.",
+      "I e IV, apenas.",
+      "II e IV, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I e II estão no art. 184 do Código Penal: a reprodução com intuito de lucro tem pena de reclusão de 2 a 4 anos e multa (§ 1º), e o § 4º exclui do crime a cópia em um só exemplar para uso privado do copista, sem intuito de lucro direto ou indireto. III é falsa: o caput pune a violação simples com detenção de 3 meses a 1 ano, ou multa. IV é verdadeira: é o art. 103, parágrafo único, da Lei nº 9.610/1998."
+  },
+  {
+    "id": "legislacao-cap2-o9",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma ilustradora usa uma ferramenta de inteligência artificial generativa para criar imagens apenas a partir de prompts de texto, sem desenhar nem editar o resultado. Depois, monta com algumas dessas imagens um livro, escolhendo, ordenando e editando o conjunto, e quer saber se as imagens estão protegidas."
+      }
+    ],
+    "enunciado": "Qual é a análise mais adequada sobre a proteção autoral dessas imagens?",
+    "alternativas": [
+      "Autor é a pessoa física criadora: o que a IA gerou sozinha tende a ficar sem proteção, mas a edição humana pode ser protegida.",
+      "As imagens são protegidas integralmente, pois quem escreve o prompt é sempre o autor de tudo o que a IA vier a gerar.",
+      "As imagens pertencem à empresa dona da IA, que é a autora das obras geradas pelo seu sistema, por força da LDA.",
+      "As imagens são protegidas automaticamente por 50 anos, como os programas de computador, por serem geradas por software.",
+      "As imagens caem em domínio público só depois de 70 anos, contados da data em que foram geradas pela IA."
+    ],
+    "correta": 0,
+    "resolucao": "O art. 11 da Lei nº 9.610/1998 define o autor como a pessoa física criadora de obra literária, artística ou científica. A lei brasileira ainda não trata da IA de forma específica, e o entendimento predominante é de que o material gerado sem contribuição criativa humana não se qualifica para proteção; nos EUA, o Copyright Office tem negado o registro dessas obras. Já a seleção, a organização e a edição feitas pela artista podem ser protegidas."
+  },
+  {
+    "id": "legislacao-cap2-o10",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap2",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma pesquisadora apresentou, em um congresso científico aberto ao público, um novo sensor para detectar vazamentos de gás. Dois anos depois, depositou no INPI um pedido de patente para esse sensor, que foi indeferido."
+      }
+    ],
+    "enunciado": "Qual é o motivo mais provável do indeferimento do pedido de patente?",
+    "alternativas": [
+      "Falta de novidade: a divulgação pelo próprio inventor só é perdoada se feita até 12 meses antes do depósito.",
+      "Falta de atividade inventiva, pois toda invenção apresentada em congresso passa a ser óbvia para os técnicos.",
+      "Falta de aplicação industrial, pois invenções apresentadas em eventos científicos não podem ser fabricadas.",
+      "Patente de software, pois o art. 10 da Lei nº 9.279/1996 proíbe proteger qualquer invenção que use sensores.",
+      "Nenhum, pois a divulgação feita pelo próprio inventor nunca prejudica a novidade do pedido de patente."
+    ],
+    "correta": 0,
+    "resolucao": "A invenção precisa ser nova, isto é, não pode estar no estado da técnica (art. 11 da Lei nº 9.279/1996). O art. 12 cria o período de graça: a divulgação feita pelo próprio inventor nos 12 meses anteriores ao depósito não tira a novidade. Como a apresentação ocorreu 2 anos antes, a invenção já fazia parte do estado da técnica. A lei veda o programa de computador em si, e não as invenções com efeito técnico que usam sensores."
+  },
+  {
     "id": "legislacao-cap3-q1",
     "disciplinaId": "legislacao-em-negocios-digitais",
     "capituloId": "legislacao-cap3",
@@ -1121,6 +1673,282 @@
     ],
     "correta": 0,
     "resolucao": "o art. 51, VII, do CDC declara nula a cláusula que impõe arbitragem compulsória ao consumidor. Em contrato de adesão, a arbitragem só vale se o consumidor tomar a iniciativa ou concordar expressamente depois de surgido o conflito. Custas iniciais de R$ 5.000 reforçam a abusividade, porque dificultam o acesso do consumidor à justiça."
+  },
+  {
+    "id": "legislacao-cap3-d1",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap3",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma pequena marca de roupas vai abrir a sua loja virtual própria e também vender em um marketplace. O site terá cadastro de clientes, pagamento por cartão, Pix e boleto, entrega pelos Correios e cupons de desconto enviados por e-mail. As sócias pretendem usar um modelo de termos de uso copiado da internet e ainda não pensaram no atendimento ao cliente."
+    ],
+    "enunciado": "Proponha as medidas jurídicas que a marca deve adotar para lançar a loja virtual em conformidade com a legislação.",
+    "linhas": 10,
+    "respostaEsperada": "Pelo Decreto nº 7.962/2013, o site deve mostrar em local visível o nome empresarial, o CNPJ e os endereços físico e eletrônico, inclusive na página do marketplace, e informar com clareza as características dos produtos, o preço total com frete e encargos, as condições de pagamento e o prazo de entrega. Antes da compra, deve apresentar um sumário do contrato, com destaque para as cláusulas que limitam direitos, permitir corrigir erros, confirmar imediatamente o pedido e manter um canal de atendimento eficaz, respondendo às reclamações em até 5 dias. Deve informar como exercer o arrependimento em 7 dias (art. 49 do CDC), com devolução integral, inclusive do frete, e aviso imediato à administradora do cartão. A oferta vincula (art. 30), e os termos de uso não podem ser copiados: precisam refletir o negócio, sem cláusulas abusivas (art. 51), como as que excluem responsabilidade por vícios ou impõem arbitragem. Na LGPD, a loja precisa de política de privacidade, de base legal para cada finalidade e de consentimento próprio para os cupons por e-mail, além de medidas de segurança; os pagamentos devem passar por instituições autorizadas pelo Banco Central, com cuidado contra fraudes. Por fim, a marca responde pelos vícios dos produtos, inclusive vendidos no marketplace, que também pode responder solidariamente."
+  },
+  {
+    "id": "legislacao-cap3-d2",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap3",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma construtora quer eliminar o papel e assinar tudo digitalmente: os contratos com fornecedores de material, a venda de um galpão de R$ 2 milhões, o aceite dos termos de uso do aplicativo pelos clientes e as notas fiscais eletrônicas que emite. O diretor sugere usar, para todos esses casos, a mesma assinatura simples por e-mail, que é a mais barata."
+    ],
+    "enunciado": "Avalie a sugestão do diretor, indicando a forma de assinatura ou de contratação adequada a cada situação.",
+    "linhas": 10,
+    "respostaEsperada": "A sugestão não serve para todos os casos. Contratos digitais são válidos quando cumprem o art. 104 do Código Civil e a lei não exige forma especial, e a escolha da assinatura depende do risco e da exigência legal. Para os contratos com fornecedores, uma assinatura avançada, por plataforma que registre autenticidade, integridade e não repúdio (biometria, IP, hash, trilha de auditoria), é adequada; a simples até vale, mas é mais fácil de contestar, e só a qualificada, com certificado ICP-Brasil, tem presunção legal de veracidade (MP nº 2.200-2/2001). O aceite dos termos do aplicativo pode ser por clique (clickwrap), com registro do aceite, desde que os termos sejam claros e as cláusulas limitativas venham em destaque. A venda do galpão, acima de 30 salários mínimos, exige escritura pública (art. 108 do Código Civil), que pode ser feita eletronicamente, mas por um tabelião, e depois registrada no cartório de imóveis; nenhuma assinatura eletrônica substitui isso. As notas fiscais eletrônicas exigem certificado digital ICP-Brasil, ou seja, assinatura qualificada. Assim, a empresa economiza onde a lei permite, mas usa a forma exigida onde há risco ou obrigação legal."
+  },
+  {
+    "id": "legislacao-cap3-o1",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Considere os negócios a seguir: (1) uma fábrica de tênis vende seus produtos diretamente ao consumidor, pelo próprio site; (2) um aplicativo em que pessoas vendem roupas usadas umas às outras; (3) uma indústria que vende embalagens para outras empresas por um portal de pedidos; (4) uma marca de cosméticos que vende por transmissões ao vivo em uma rede social."
+      }
+    ],
+    "enunciado": "Os negócios 1, 2, 3 e 4 correspondem, respectivamente, aos modelos",
+    "alternativas": [
+      "D2C, C2C, B2B e social commerce.",
+      "B2C, C2C, B2B e marketplace.",
+      "D2C, B2C, B2B e social commerce.",
+      "D2C, C2C, marketplace e B2C.",
+      "B2B, C2C, D2C e social commerce."
+    ],
+    "correta": 0,
+    "resolucao": "Quando o próprio fabricante vende ao consumidor final, sem intermediários, o modelo é D2C (1). Consumidores vendendo entre si é C2C (2). Transações entre empresas são B2B (3). Vendas feitas diretamente nas redes sociais, como em transmissões ao vivo, são social commerce (4). Uma mesma empresa pode atuar em vários modelos ao mesmo tempo."
+  },
+  {
+    "id": "legislacao-cap3-o2",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma loja virtual está revisando a forma como os clientes aceitam os seus termos de uso e quer saber o valor jurídico de cada modelo de contratação eletrônica."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. No clickwrap, o usuário marca \"Li e aceito\", e o registro de IP, data e hora ajuda a provar o aceite.",
+      "II. No browsewrap, os termos ficam só no rodapé e o uso do site é tratado como aceite, o modelo mais frágil.",
+      "III. Os contratos por clique são inválidos, pois o Código Civil exige assinatura manuscrita nos contratos.",
+      "IV. Um contrato fechado por troca de e-mails só vale se as partes usarem assinatura eletrônica qualificada."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e II, apenas.",
+      "I, apenas.",
+      "II, apenas.",
+      "I, II e III, apenas.",
+      "I, II e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I e II descrevem corretamente o clickwrap e o browsewrap; este é o mais frágil como prova, porque não há uma manifestação clara de aceite. III é falsa: o Código Civil adota a liberdade de forma (art. 107), e o contrato por clique é válido quando a lei não exige forma especial. IV é falsa: proposta e aceitação expressas por e-mail formam um contrato válido, sem exigir assinatura qualificada."
+  },
+  {
+    "id": "legislacao-cap3-o3",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma consumidora enviou, pelo canal de atendimento de uma loja virtual, uma reclamação sobre a cobrança de um valor diferente do anunciado. A loja só respondeu 20 dias depois, dizendo que \"não há prazo legal para responder a reclamações\"."
+      }
+    ],
+    "enunciado": "Pelo Decreto nº 7.962/2013, em quanto tempo a loja deveria ter respondido à reclamação?",
+    "alternativas": [
+      "Em até 5 dias, prazo para o fornecedor encaminhar ao consumidor a resposta às reclamações.",
+      "Em até 30 dias, prazo para o fornecedor sanar vícios do produto previsto no art. 18 do CDC.",
+      "Em até 10 dias, prazo que as empresas têm para responder às reclamações do consumidor.gov.br.",
+      "Em até 7 dias, prazo para o exercício do direito de arrependimento nas compras fora da loja.",
+      "Não há prazo, pois o decreto exige apenas um canal de atendimento, sem fixar tempo de resposta."
+    ],
+    "correta": 0,
+    "resolucao": "O art. 4º do Decreto nº 7.962/2013 obriga o fornecedor a manter atendimento adequado e eficaz em meio eletrônico, e o seu parágrafo único fixa que a manifestação do fornecedor às reclamações deve ser encaminhada ao consumidor em até 5 dias. O decreto também exige o sumário do contrato antes da compra e a confirmação imediata do pedido. Os demais prazos existem, mas tratam de outras situações."
+  },
+  {
+    "id": "legislacao-cap3-o4",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Dois irmãos, um de 15 e outro de 17 anos, compraram, cada um, um videogame de R$ 4.000 em uma loja virtual, usando o cartão de crédito dos pais sem que eles soubessem. Os pais querem desfazer as compras."
+      }
+    ],
+    "enunciado": "Quanto à validade das compras, é correto afirmar que",
+    "alternativas": [
+      "a compra do adolescente de 15 anos é nula, e a do de 17 anos é anulável, por incapacidade de cada um.",
+      "as duas compras são válidas, pois quem compra pela internet presume-se maior de idade e capaz.",
+      "as duas compras são nulas, pois qualquer menor de 18 anos é absolutamente incapaz para contratar.",
+      "a compra do adolescente de 15 anos é anulável, e a do de 17 anos é nula, pela regra do Código Civil.",
+      "as duas compras são anuláveis, e só os pais podem pedir a anulação, no prazo de 7 dias da entrega."
+    ],
+    "correta": 0,
+    "resolucao": "Pelo art. 104 do Código Civil, a validade do negócio exige agente capaz. Os menores de 16 anos são absolutamente incapazes (art. 3º), e o negócio feito por eles é nulo (art. 166, I). Os maiores de 16 e menores de 18 são relativamente incapazes (art. 4º, I), e o negócio feito sem assistência é anulável (art. 171, I). O prazo de 7 dias é o do arrependimento, que é outra coisa."
+  },
+  {
+    "id": "legislacao-cap3-o5",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap3",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um consumidor desistiu, no terceiro dia após o recebimento, de um fone de ouvido comprado em 10 parcelas no cartão de crédito, e a loja disse que ele teria de continuar pagando as parcelas até o estorno."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Exercido o arrependimento em uma compra com cartão de crédito, o fornecedor deve comunicar imediatamente a administradora para que a transação não seja lançada ou seja estornada.",
+      "PORQUE",
+      "II. O Decreto nº 7.962/2013 obriga o fornecedor a informar, de forma clara e ostensiva, os meios adequados e eficazes para o exercício do direito de arrependimento."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, mas a II não justifica a I. A I é o art. 5º, § 3º, do Decreto nº 7.962/2013, que trata do efeito do arrependimento sobre o pagamento com cartão. A II é o caput do mesmo artigo, que trata do dever de informar como o consumidor pode desistir. São deveres distintos: informar os meios não explica a obrigação de avisar a administradora do cartão."
+  },
+  {
+    "id": "legislacao-cap3-o6",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma loja virtual envia seus produtos por uma transportadora, sem rastreamento e sem exigir assinatura na entrega. Um cliente pediu ao banco o chargeback de uma compra de R$ 2.500, alegando que nunca recebeu o produto. A loja quer contestar."
+      }
+    ],
+    "enunciado": "Qual é a situação mais provável da loja ao contestar o chargeback?",
+    "alternativas": [
+      "Tende a perder: cabe a ela provar que entregou o produto, e sem rastreio nem assinatura ela não tem essa prova.",
+      "Tende a ganhar: cabe ao cliente provar que não recebeu o produto, pois ninguém é obrigado a provar fato negativo.",
+      "Tende a ganhar: o chargeback só é aceito quando o cliente apresenta um boletim de ocorrência da não entrega.",
+      "Tende a perder, mas pode cobrar o valor da transportadora sozinha, pois a loja não responde pela entrega.",
+      "Não pode contestar, pois o chargeback é definitivo e a loja não tem nenhum meio de discutir a cobrança."
+    ],
+    "correta": 0,
+    "resolucao": "No chargeback, o portador contesta a compra diretamente com o emissor do cartão, e o lojista precisa demonstrar que a transação foi legítima e cumprida. Sem rastreamento, comprovante de entrega ou assinatura, a loja não tem como provar a entrega, e, num processo de consumo, o juiz ainda pode inverter o ônus da prova (art. 6º, VIII, do CDC). A transportadora integra a cadeia de fornecimento, mas a loja responde perante o cliente."
+  },
+  {
+    "id": "legislacao-cap3-o7",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma startup de software, registrada como microempresa, quer cobrar de um cliente uma dívida equivalente a 30 salários mínimos, referente a um contrato digital de prestação de serviços que não foi pago."
+      }
+    ],
+    "enunciado": "Pela Lei nº 9.099/1995, qual é a situação da empresa no Juizado Especial Cível?",
+    "alternativas": [
+      "Pode usar o Juizado, que julga causas de até 40 salários mínimos, mas precisa de advogado, por passar de 20.",
+      "Não pode usar o Juizado, pois ele só julga causas de até 20 salários mínimos, sem advogado.",
+      "Pode usar o Juizado sem advogado, pois a assistência só é obrigatória acima de 40 salários mínimos.",
+      "Não pode usar o Juizado, pois empresas nunca podem ser autoras de ações nos Juizados Especiais.",
+      "Pode usar o Juizado sem advogado, pois a dispensa vale para qualquer causa de consumo, em qualquer valor."
+    ],
+    "correta": 0,
+    "resolucao": "O Juizado Especial Cível julga causas de até 40 salários mínimos (art. 3º, I). Nas de até 20 salários mínimos, a parte pode ir sem advogado; acima disso, a assistência é obrigatória (art. 9º). Microempresas e empresas de pequeno porte podem ser autoras no Juizado (art. 8º, § 1º, II), por isso a startup, sendo microempresa, pode usá-lo, mas com advogado."
+  },
+  {
+    "id": "legislacao-cap3-o8",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma loja virtual quer aceitar pagamentos em criptomoedas por meio de uma corretora (exchange) e pediu ao jurídico um resumo do marco legal dos ativos virtuais."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. As prestadoras de serviços de ativos virtuais só podem funcionar com autorização do Banco Central.",
+      "II. A lei criou o crime de fraude com utilização de ativos virtuais, com pena de reclusão de 4 a 8 anos.",
+      "III. Desde 2022, os criptoativos são moeda de curso legal no Brasil, ao lado do real.",
+      "IV. A lei proíbe as pessoas físicas de comprar e vender criptomoedas, permitindo isso só a empresas."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e II, apenas.",
+      "I, apenas.",
+      "II, apenas.",
+      "I, II e III, apenas.",
+      "I, II e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I e II estão de acordo com a Lei nº 14.478/2022: as prestadoras de serviços de ativos virtuais dependem de autorização de órgão federal, que o Decreto nº 11.563/2023 definiu como o Banco Central, e a lei incluiu no Código Penal o art. 171-A, com reclusão de 4 a 8 anos e multa. III é falsa: o real continua sendo a única moeda de curso legal. IV é falsa: a lei regula as prestadoras desses serviços, e não proíbe as pessoas de negociar criptoativos."
+  },
+  {
+    "id": "legislacao-cap3-o9",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Duas empresas assinaram um contrato de R$ 2 milhões em uma plataforma de assinatura eletrônica avançada, com verificação por biometria facial, que elas mesmas escolheram. Meses depois, uma delas alega que o contrato não vale, porque \"só a assinatura com certificado ICP-Brasil tem validade jurídica\"."
+      }
+    ],
+    "enunciado": "Considerando a MP nº 2.200-2/2001, a alegação da empresa contestante procede?",
+    "alternativas": [
+      "Não: a MP admite outros meios aceitos pelas partes; só falta a presunção legal, e a prova vem da trilha de auditoria.",
+      "Sim: só a assinatura com certificado ICP-Brasil tem validade jurídica, e qualquer outra é nula para todos os fins.",
+      "Sim: contratos acima de R$ 1 milhão só podem ser assinados com certificado ICP-Brasil, por exigência expressa da MP.",
+      "Não: a assinatura avançada tem a mesma presunção de veracidade da ICP-Brasil, e a empresa nem pode contestar.",
+      "Não: assinaturas eletrônicas não podem ser contestadas em juízo depois de 30 dias da data da assinatura."
+    ],
+    "correta": 0,
+    "resolucao": "O art. 10, § 1º, da MP nº 2.200-2/2001 dá presunção de veracidade apenas às assinaturas com certificado ICP-Brasil. Mas o § 2º não impede o uso de outros meios de comprovar a autoria e a integridade, desde que admitidos pelas partes como válidos ou aceitos por quem recebe o documento. Como as empresas escolheram a plataforma, o contrato vale; sem a presunção legal, a prova se faz pela trilha de auditoria, com biometria, IP, data, hora e hash do documento."
+  },
+  {
+    "id": "legislacao-cap3-o10",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap3",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um aplicativo de academia on-line vende planos mensais. No meio dos termos de uso, de 30 páginas, sem nenhum destaque, há uma cláusula de fidelidade de 24 meses com multa de R$ 600 em caso de cancelamento. O aceite é feito por um único clique em \"Li e aceito\". Um cliente cancelou no terceiro mês e recebeu a cobrança da multa."
+      }
+    ],
+    "enunciado": "A cobrança da multa de fidelidade é válida?",
+    "alternativas": [
+      "Tende a não ser: cláusula que limita direitos deve vir em destaque, ou não obriga o consumidor.",
+      "É válida, pois o consumidor marcou \"Li e aceito\", o que torna obrigatórias todas as cláusulas do contrato.",
+      "É válida, pois os contratos de adesão de serviços digitais não seguem as regras de destaque previstas no CDC.",
+      "Tende a não ser, mas só porque o valor da multa passa de 10% do total, limite fixado pelo CDC para multas.",
+      "É válida, desde que a empresa ofereça um desconto de 50% na multa para quem cancelar no primeiro ano."
+    ],
+    "correta": 0,
+    "resolucao": "Nos contratos de adesão, as cláusulas que limitam direitos do consumidor devem ser redigidas com destaque, para fácil compreensão (art. 54, § 4º, do CDC). Além disso, o contrato não obriga o consumidor se ele não teve a oportunidade de conhecer o seu conteúdo previamente ou se o texto dificulta a compreensão (art. 46), e as cláusulas são interpretadas a favor dele (art. 47). Uma multa escondida no meio de 30 páginas, sem destaque, não cumpre essas regras."
   },
   {
     "id": "legislacao-cap4-q1",
