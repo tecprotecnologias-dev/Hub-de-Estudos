@@ -158,8 +158,89 @@
   },
   {
    "t": "h2",
-   "id": "3-6-useeffect-efeitos-colaterais",
-   "texto": "3.6 useEffect: Efeitos Colaterais"
+   "id": "3-6-estado-com-arrays-listas-que-mudam",
+   "texto": "3.6 Estado com Arrays: Listas que Mudam"
+  },
+  {
+   "t": "p",
+   "html": "Arrays no estado seguem a mesma regra dos objetos: nunca são alterados no lugar. Para saber se precisa redesenhar, o React compara o array novo com o anterior; se for o <strong>mesmo</strong> array (só que modificado), ele entende que nada mudou. Por isso, adicionar, remover ou alterar um item sempre cria um array novo."
+  },
+  {
+   "t": "codigo",
+   "texto": "import { useState } from \"react\";\n\ninterface Tarefa {\n  id: number;\n  texto: string;\n}\n\nfunction ListaTarefas() {\n  const [tarefas, setTarefas] = useState<Tarefa[]>([]);\n  const [texto, setTexto] = useState(\"\");\n\n  function adicionar() {\n    if (!texto.trim()) return;          // ignora campo vazio\n    const nova = { id: Date.now(), texto: texto.trim() };\n    setTarefas((atual) => [...atual, nova]);   // array NOVO\n    setTexto(\"\");                       // limpa o campo\n  }\n\n  function remover(id: number) {\n    setTarefas((atual) => atual.filter((t) => t.id !== id));\n  }\n\n  return (\n    <div>\n      <input value={texto} onChange={(e) => setTexto(e.target.value)} />\n      <button onClick={adicionar}>Adicionar</button>\n      <ul>\n        {tarefas.map((t) => (\n          <li key={t.id}>\n            {t.texto} <button onClick={() => remover(t.id)}>x</button>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Operação",
+    "Errado (altera o array)",
+    "Certo (cria um novo)"
+   ],
+   "linhas": [
+    [
+     "Adicionar",
+     "<code>tarefas.push(nova)</code>",
+     "<code>[...tarefas, nova]</code>"
+    ],
+    [
+     "Remover",
+     "<code>tarefas.splice(i, 1)</code>",
+     "<code>tarefas.filter((t) =&gt; t.id !== id)</code>"
+    ],
+    [
+     "Alterar um item",
+     "<code>tarefas[0].texto = \"x\"</code>",
+     "<code>tarefas.map((t) =&gt; t.id === id ? { ...t, texto: \"x\" } : t)</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Repare no <code>key={t.id}</code>: cada tarefa ganha um <code>id</code> próprio (aqui, <code>Date.now()</code>, o horário em milissegundos), e não o índice. Como vimos na seção 2.8, o índice confunde o React quando itens são removidos."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Dei <code>push</code> e a lista não atualizou.\" – O <code>push</code> muda o array que já está no estado. Ao chamar <code>setTarefas(tarefas)</code> com esse mesmo array, o React vê que é o mesmo e não redesenha. Use o <em>spread</em>, o <code>filter</code> e o <code>map</code>, que devolvem arrays novos."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-7-enviando-o-formulario-onsubmit-e-validacao",
+   "texto": "3.7 Enviando o Formulário: onSubmit e Validação"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, os campos só guardavam o que era digitado. Para enviar, o formulário usa o evento <code>onSubmit</code>, disparado pelo botão <code>type=\"submit\"</code> ou pela tecla Enter. A primeira coisa a fazer é chamar <code>e.preventDefault()</code>: sem isso, o navegador faz o envio tradicional e <strong>recarrega a página</strong>, apagando todo o estado."
+  },
+  {
+   "t": "codigo",
+   "texto": "import { useState } from \"react\";\n\ninterface Erros {\n  nome?: string;\n  email?: string;\n}\n\nfunction FormCadastro() {\n  const [nome, setNome] = useState(\"\");\n  const [email, setEmail] = useState(\"\");\n  const [erros, setErros] = useState<Erros>({});\n  const [enviado, setEnviado] = useState(false);\n\n  function validar(): boolean {\n    const novos: Erros = {};\n    if (nome.trim().length < 3) novos.nome = \"Minimo de 3 letras\";\n    if (!email.includes(\"@\")) novos.email = \"E-mail invalido\";\n    setErros(novos);\n    return Object.keys(novos).length === 0;   // sem erros?\n  }\n\n  function enviar() {\n    if (!validar()) return;\n    // aqui entraria o envio para uma API\n    setEnviado(true);\n  }\n\n  if (enviado) return <p>Cadastro realizado!</p>;\n\n  return (\n    <form\n      onSubmit={(e) => {\n        e.preventDefault();   // nao recarrega a pagina\n        enviar();\n      }}\n      noValidate\n    >\n      <input value={nome} onChange={(e) => setNome(e.target.value)} />\n      {erros.nome && <span className=\"erro\">{erros.nome}</span>}\n\n      <input value={email} onChange={(e) => setEmail(e.target.value)} />\n      {erros.email && <span className=\"erro\">{erros.email}</span>}\n\n      <button type=\"submit\">Cadastrar</button>\n    </form>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "Os erros ficam no estado: cada mensagem aparece embaixo do seu campo com o <code>&amp;&amp;</code> (seção 2.7) e some quando o usuário corrige e envia de novo. O <code>noValidate</code> desliga as mensagens automáticas do navegador, para que só a nossa validação apareça. Repare também no <code>if (enviado) return ...</code> antes do <code>return</code> principal: é um <em>early return</em>, outra forma de renderização condicional, que troca a tela inteira quando a condição vale."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Cliquei em Cadastrar, a página piscou e os campos voltaram vazios.\" – Faltou o <code>e.preventDefault()</code>: o navegador enviou o formulário do jeito tradicional e recarregou a página."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-8-useeffect-efeitos-colaterais",
+   "texto": "3.8 useEffect: Efeitos Colaterais"
   },
   {
    "t": "p",
@@ -175,8 +256,8 @@
   },
   {
    "t": "h2",
-   "id": "3-7-o-array-de-dependencias",
-   "texto": "3.7 O Array de Dependências"
+   "id": "3-9-o-array-de-dependencias",
+   "texto": "3.9 O Array de Dependências"
   },
   {
    "t": "p",
@@ -222,6 +303,187 @@
     {
      "t": "p",
      "html": "\"Meu <code>useEffect</code> entra em loop infinito.\" – Geralmente é porque uma dependência do array muda dentro do próprio efeito, disparando ele de novo, que muda de novo, e por aí vai. Confira sempre se o que está dentro do efeito realmente precisa estar no array de dependências."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-10-limpando-o-efeito-e-buscando-dados",
+   "texto": "3.10 Limpando o Efeito e Buscando Dados"
+  },
+  {
+   "t": "p",
+   "html": "A função passada ao <code>useEffect</code> pode devolver <strong>outra função</strong>: a <strong>limpeza</strong> (<em>cleanup</em>). O React chama a limpeza antes de rodar o efeito de novo e quando o componente sai da tela (desmonta). Ela desfaz o que o efeito começou: para um timer, remove um ouvinte de evento, cancela uma busca."
+  },
+  {
+   "t": "codigo",
+   "texto": "import { useState, useEffect } from \"react\";\n\nfunction Relogio() {\n  const [hora, setHora] = useState(new Date());\n\n  useEffect(() => {\n    const id = setInterval(() => setHora(new Date()), 1000);\n    return () => clearInterval(id);   // limpeza: para o timer\n  }, []);\n\n  return <p>{hora.toLocaleTimeString()}</p>;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Sem a limpeza, toda vez que o <code>Relogio</code> saísse e voltasse para a tela, um timer novo seria criado, e os antigos continuariam rodando. É isso que o <code>StrictMode</code> procura ao montar o componente duas vezes em desenvolvimento (seção 3.9): com a limpeza certa, ninguém percebe a diferença."
+  },
+  {
+   "t": "p",
+   "html": "O efeito mais comum de todos é <strong>buscar dados</strong> numa API. O padrão completo usa três estados (os dados, o carregamento e o erro) e um <code>AbortController</code>, que cancela a busca se o componente sair da tela antes de a resposta chegar:"
+  },
+  {
+   "t": "codigo",
+   "texto": "import { useState, useEffect } from \"react\";\n\ninterface Post {\n  id: number;\n  title: string;\n}\n\nfunction ListaPosts() {\n  const [posts, setPosts] = useState<Post[]>([]);\n  const [carregando, setCarregando] = useState(true);\n  const [erro, setErro] = useState<string | null>(null);\n\n  useEffect(() => {\n    const controle = new AbortController();\n\n    async function buscar() {\n      try {\n        const url = \"https://jsonplaceholder.typicode.com/posts?_limit=5\";\n        const res = await fetch(url, { signal: controle.signal });\n        if (!res.ok) throw new Error(`Erro ${res.status}`);\n        setPosts(await res.json());\n      } catch (e) {\n        if (controle.signal.aborted) return;   // cancelada de proposito\n        setErro(e instanceof Error ? e.message : \"Erro desconhecido\");\n      } finally {\n        if (!controle.signal.aborted) setCarregando(false);\n      }\n    }\n\n    buscar();\n    return () => controle.abort();   // limpeza: cancela a busca\n  }, []);\n\n  if (carregando) return <p>Carregando...</p>;\n  if (erro) return <p>Erro: {erro}</p>;\n\n  return (\n    <ul>\n      {posts.map((p) => <li key={p.id}>{p.title}</li>)}\n    </ul>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "Quando a busca é cancelada, o <code>fetch</code> lança um erro de propósito. Por isso o <code>catch</code> e o <code>finally</code> conferem <code>controle.signal.aborted</code> antes de mexer no estado: uma busca cancelada não é um erro para mostrar ao usuário."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Posso escrever <code>useEffect(async () =&gt; { ... })</code>?\" – Não. O <code>useEffect</code> espera que a função devolva nada ou uma função de limpeza, e uma função <code>async</code> sempre devolve uma <em>Promise</em>. Por isso a função <code>async</code> fica <strong>dentro</strong> do efeito e é chamada logo em seguida, como o <code>buscar()</code> acima."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-11-useref-referencias-e-valores-que-nao-redesenham",
+   "texto": "3.11 useRef: Referências e Valores que Não Redesenham"
+  },
+  {
+   "t": "p",
+   "html": "O <code>useRef</code> guarda um valor que sobrevive entre as renderizações, como o estado, mas com duas diferenças: o valor fica em <code>.current</code> e muda direto, sem <em>setter</em>, e mudar esse valor <strong>não redesenha</strong> a tela. Ele tem dois usos principais: acessar um elemento do DOM e guardar algo que o componente precisa lembrar, mas não exibe, como o número de um timer."
+  },
+  {
+   "t": "codigo",
+   "texto": "import { useState, useRef, useEffect } from \"react\";\n\n// 1. Referencia a um elemento do DOM\nfunction CampoBusca() {\n  const inputRef = useRef<HTMLInputElement>(null);\n\n  useEffect(() => {\n    inputRef.current?.focus();   // coloca o cursor no campo\n  }, []);\n\n  return <input ref={inputRef} placeholder=\"Buscar...\" />;\n}\n\n// 2. Valor guardado sem redesenhar a tela\nfunction Cronometro() {\n  const [segundos, setSegundos] = useState(0);\n  const timerRef = useRef<number | null>(null);\n\n  function iniciar() {\n    if (timerRef.current !== null) return;   // ja esta rodando\n    timerRef.current = window.setInterval(() => {\n      setSegundos((s) => s + 1);\n    }, 1000);\n  }\n\n  function pausar() {\n    if (timerRef.current !== null) {\n      clearInterval(timerRef.current);\n      timerRef.current = null;\n    }\n  }\n\n  return (\n    <div>\n      <p>{segundos}s</p>\n      <button onClick={iniciar}>Iniciar</button>\n      <button onClick={pausar}>Pausar</button>\n    </div>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "No <code>CampoBusca</code>, o atributo <code>ref={inputRef}</code> faz o React guardar o elemento <code>&lt;input&gt;</code> em <code>inputRef.current</code> assim que ele aparece na tela. O <code>?.</code> evita erro caso o elemento ainda não exista. No <code>Cronometro</code>, o número do timer fica no <em>ref</em> porque não aparece na tela; já os segundos, que aparecem, ficam no estado."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    "<code>useState</code>",
+    "<code>useRef</code>"
+   ],
+   "linhas": [
+    [
+     "Como muda",
+     "Pela função <em>setter</em>",
+     "Direto: <code>ref.current = ...</code>"
+    ],
+    [
+     "Mudar redesenha a tela?",
+     "Sim",
+     "Não"
+    ],
+    [
+     "Use para",
+     "O que aparece na tela",
+     "Elementos do DOM e valores de bastidor"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Mostrei <code>ref.current</code> na tela e o número não muda.\" – Mudar um <em>ref</em> não avisa o React. Tudo que precisa aparecer atualizado na tela tem que ser estado."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-12-usememo-e-usecallback-evitando-trabalho-repetido",
+   "texto": "3.12 useMemo e useCallback: Evitando Trabalho Repetido"
+  },
+  {
+   "t": "p",
+   "html": "A cada renderização, o React executa a função do componente inteira de novo: cálculos e funções criados ali dentro são refeitos. Quase sempre isso é rápido. Quando um cálculo é pesado, o <code>useMemo</code> guarda o resultado e só recalcula quando uma dependência muda (o array funciona como no <code>useEffect</code>). O <code>useCallback</code> faz o mesmo com uma função: devolve a mesma função entre as renderizações."
+  },
+  {
+   "t": "codigo",
+   "texto": "import { useState, useMemo, useCallback } from \"react\";\n\ninterface Produto {\n  id: number;\n  nome: string;\n}\n\nfunction Catalogo({ produtos }: { produtos: Produto[] }) {\n  const [busca, setBusca] = useState(\"\");\n  const [tema, setTema] = useState(\"claro\");\n\n  // so refaz o filtro quando produtos ou busca mudam;\n  // trocar o tema NAO refaz o filtro\n  const filtrados = useMemo(\n    () =>\n      produtos.filter((p) =>\n        p.nome.toLowerCase().includes(busca.toLowerCase())\n      ),\n    [produtos, busca]\n  );\n\n  // a mesma funcao em todas as renderizacoes\n  const limpar = useCallback(() => setBusca(\"\"), []);\n\n  return (\n    <div className={tema}>\n      <input value={busca} onChange={(e) => setBusca(e.target.value)} />\n      <button onClick={limpar}>Limpar</button>\n      <button onClick={() => setTema(tema === \"claro\" ? \"escuro\" : \"claro\")}>\n        Trocar tema\n      </button>\n      <ul>\n        {filtrados.map((p) => <li key={p.id}>{p.nome}</li>)}\n      </ul>\n    </div>\n  );\n}"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Não espalhe <code>useMemo</code> e <code>useCallback</code> por todo o código: eles também têm custo e deixam a leitura mais difícil. Use quando um cálculo deixar a tela lenta de verdade, ou quando a função for dependência de um <code>useEffect</code> ou prop de um componente otimizado com <code>memo</code>. Em projetos que ativam o React Compiler, boa parte dessa memorização é feita sozinha."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-13-context-api-dados-para-a-arvore-inteira",
+   "texto": "3.13 Context API: Dados para a Árvore Inteira"
+  },
+  {
+   "t": "p",
+   "html": "Quando um dado é usado por componentes em vários níveis (o tema do site, o usuário logado, o idioma), passá-lo por <em>props</em> obriga cada componente do meio do caminho a receber e repassar algo que ele mesmo não usa. Esse problema tem nome: <strong><em>prop drilling</em></strong>. O <strong>Context</strong> resolve isso: um componente no alto da árvore oferece o valor, e qualquer descendente o lê direto, com <code>useContext</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "import { createContext, useContext, useState, type ReactNode } from \"react\";\n\n// 1. O formato do que o contexto oferece\ninterface TemaContexto {\n  tema: \"claro\" | \"escuro\";\n  alternarTema: () => void;\n}\n\n// 2. Criar o contexto (undefined = fora do Provider)\nconst TemaCtx = createContext<TemaContexto | undefined>(undefined);\n\n// 3. Provider: envolve a parte da arvore que usa o tema\nexport function TemaProvider({ children }: { children: ReactNode }) {\n  const [tema, setTema] = useState<\"claro\" | \"escuro\">(\"claro\");\n\n  function alternarTema() {\n    setTema((t) => (t === \"claro\" ? \"escuro\" : \"claro\"));\n  }\n\n  return (\n    <TemaCtx value={{ tema, alternarTema }}>\n      {children}\n    </TemaCtx>\n  );\n}\n\n// 4. Hook para ler o contexto, com aviso de uso errado\nexport function useTema() {\n  const ctx = useContext(TemaCtx);\n  if (!ctx) throw new Error(\"useTema precisa estar dentro do TemaProvider\");\n  return ctx;\n}\n\n// 5. Qualquer componente dentro do Provider pode usar\nfunction BotaoTema() {\n  const { tema, alternarTema } = useTema();\n  return <button onClick={alternarTema}>Tema atual: {tema}</button>;\n}\n\n// 6. No App: o Provider envolve tudo\nfunction App() {\n  return (\n    <TemaProvider>\n      <BotaoTema />\n    </TemaProvider>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>BotaoTema</code> não recebe nenhuma <em>prop</em>: ele lê o tema direto do contexto, não importa quantos níveis existam entre ele e o <code>TemaProvider</code>. O <code>type</code> antes de <code>ReactNode</code> avisa que ele é só um tipo; o projeto do Vite exige essa marcação nos imports de tipos. No React 19, o próprio contexto serve de Provider (<code>&lt;TemaCtx value={...}&gt;</code>); em versões anteriores, escreve-se <code>&lt;TemaCtx.Provider value={...}&gt;</code>."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Context não substitui todas as <em>props</em>. Use para dados que muitos componentes, em níveis diferentes, precisam. Toda vez que o valor do contexto muda, todos os componentes que o leem são redesenhados."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-14-custom-hooks-reaproveitando-logica",
+   "texto": "3.14 Custom Hooks: Reaproveitando Lógica"
+  },
+  {
+   "t": "p",
+   "html": "Um <strong>Custom Hook</strong> é uma função sua, com nome começando por <code>use</code>, que chama outros Hooks. Ele permite tirar de dentro do componente uma lógica com estado e reaproveitá-la em vários lugares, do mesmo jeito que você tira um cálculo repetido para uma função comum. O prefixo <code>use</code> é obrigatório: é por ele que o React (e o editor) sabe que a Regra dos Hooks vale ali dentro."
+  },
+  {
+   "t": "codigo",
+   "texto": "import { useState, useEffect } from \"react\";\n\n// Guarda o valor no estado E no localStorage do navegador\nfunction useLocalStorage<T>(chave: string, inicial: T) {\n  const [valor, setValor] = useState<T>(() => {\n    try {\n      const salvo = localStorage.getItem(chave);\n      return salvo ? (JSON.parse(salvo) as T) : inicial;\n    } catch {\n      return inicial;\n    }\n  });\n\n  function salvar(novo: T) {\n    setValor(novo);\n    localStorage.setItem(chave, JSON.stringify(novo));\n  }\n\n  return [valor, salvar] as const;\n}\n\n// A busca da secao 3.10, agora reutilizavel\nfunction useFetch<T>(url: string) {\n  const [dados, setDados] = useState<T | null>(null);\n  const [carregando, setCarregando] = useState(true);\n  const [erro, setErro] = useState<string | null>(null);\n\n  useEffect(() => {\n    const controle = new AbortController();\n    fetch(url, { signal: controle.signal })\n      .then((res) => {\n        if (!res.ok) throw new Error(`HTTP ${res.status}`);\n        return res.json() as Promise<T>;\n      })\n      .then((d) => setDados(d))\n      .catch((e) => {\n        if (!controle.signal.aborted) setErro(e.message);\n      })\n      .finally(() => {\n        if (!controle.signal.aborted) setCarregando(false);\n      });\n    return () => controle.abort();\n  }, [url]);\n\n  return { dados, carregando, erro };\n}"
+  },
+  {
+   "t": "p",
+   "html": "Usando os dois num componente (a interface <code>Post</code> é a da seção 3.10):"
+  },
+  {
+   "t": "codigo",
+   "texto": "function Painel() {\n  const [tema, setTema] = useLocalStorage(\"tema\", \"claro\");\n  const { dados: posts, carregando, erro } = useFetch<Post[]>(\n    \"https://jsonplaceholder.typicode.com/posts?_limit=5\"\n  );\n\n  if (carregando) return <p>Carregando...</p>;\n  if (erro) return <p>Erro: {erro}</p>;\n\n  return (\n    <div className={tema}>\n      <button onClick={() => setTema(tema === \"claro\" ? \"escuro\" : \"claro\")}>\n        Tema: {tema}\n      </button>\n      <ul>\n        {posts?.map((p) => <li key={p.id}>{p.title}</li>)}\n      </ul>\n    </div>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "O componente ficou curto e fácil de ler: os detalhes de como o tema é salvo e de como a busca é feita ficaram escondidos nos Hooks. O <code>useLocalStorage</code> devolve um par, como o <code>useState</code>; o <code>as const</code> mantém os tipos de cada posição. O <code>posts?.map</code> cuida do caso em que os dados ainda são <code>null</code>."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Dois componentes usam o <code>useLocalStorage</code>, e um não vê a mudança feita pelo outro.\" – Um Custom Hook reaproveita a <strong>lógica</strong>, não o <strong>estado</strong>: cada componente que o chama ganha a sua própria cópia. Para os dois enxergarem o mesmo valor, use Context (seção 3.13)."
     }
    ]
   }

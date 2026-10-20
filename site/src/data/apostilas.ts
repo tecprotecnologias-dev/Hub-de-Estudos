@@ -663,7 +663,7 @@ export const apostilas: Apostila[] = [
     titulo: 'React: Hooks e Estado',
     disciplinaId: 'programacao-e-design-para-web-ii',
     descricao:
-      'Estado com useState, atualização correta, formulários controlados, estado como objeto, useEffect e o array de dependências.',
+      'Estado com useState, formulários controlados e validação, estado com objetos e arrays, useEffect com limpeza e busca de dados, useRef, useMemo e useCallback, Context API e Custom Hooks.',
   },
   {
     id: 'web2-cap4',
