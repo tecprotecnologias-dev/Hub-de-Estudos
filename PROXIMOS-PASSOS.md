@@ -28,7 +28,14 @@ O site está em https://estudos.tecprotecnologias.com.br (Cloudflare) e se atual
   - [ ] o quadro sobre o NextAuth.js / Auth.js ("A Web III ensina a autenticação por dentro...").
   - Obs.: os exercícios do PDF já foram acrescentados aos de antes e levados ao simulado em 20/10/2026 (commit c59fb87).
 - [ ] **Livro de Node.js, Express e MySQL: deixar pronto para publicar** (pedido em 20/10/2026). Guia prático, direto, sem enrolação. Já corrigido e atualizado (Node 24, MySQL 9.7). Falta:
-  - [ ] **← retomar aqui.** Rodar o teste completo da BibliotecaAPI (já montada; basta dizer "continua") e corrigir no livro o que o teste já mostrou: código que o livro usa e não mostra (busca do usuário por e-mail, registro das rotas no app.js, listagem paginada, PATCH e devolução, scripts do package.json), como gerar a senha real do seed, formato da listagem (dados.data) no cap. 12 e 13, empréstimo usando o usuário do token, aviso sobre senha com # no .env.
+  - Já testado (20/10/2026): no MySQL 9.7, as 6 tabelas e o cadastro inicial do cap. 10 foram criados sem erro; a BibliotecaAPI inteira foi montada com o código de cada capítulo.
+  - [ ] **← retomar aqui.** Rodar o roteiro de 25 verificações (passo 7 do cap. 13: login certo e errado, token, permissões de leitor e admin, cadastro e validação, PATCH contra o ataque, empréstimo, devolução e novo empréstimo, usuários sem a senha, página HTML). Basta dizer "continua".
+  - [ ] Corrigir no livro o que o teste já mostrou (guia prático, direto; só código e avisos curtos onde o leitor travaria):
+    1. Código que o livro usa e não mostra: a busca do usuário por e-mail (login); o registro das rotas no `app.js` (`/login`, `/autores`, `/emprestimos`...); o Service e o Controller da listagem paginada e do PATCH; o Controller e a rota da devolução; os scripts finais do `package.json` (`dev`, `start`, `test`).
+    2. Senha do seed: o passo 5 do cap. 13 manda gerar hashes reais com bcrypt, mas não mostra como (falta um comando de uma linha).
+    3. Formato da listagem: com a paginação, os livros vêm em `dados.data`, mas o teste do cap. 12 e a página do cap. 13 esperam a lista direto em `dados` (a página quebraria).
+    4. Segurança no empréstimo: o `usuario_id` vem do corpo da requisição, e um leitor consegue registrar empréstimo em nome de outro; usar `req.usuario.id` (do token).
+    5. Senha com `#` no `.env`: sem aspas, o dotenv corta o que vem depois do `#` e a conexão falha com "Access denied"; um aviso de uma linha.
   - [ ] Revisar os serviços citados (Railway sem plano gratuito, Thunder Client pago) e o MySQL Workbench com o MySQL 9.7.
   - [ ] Levar as correções do site de volta para o LaTeX do livro (pasta Guia NODES.js), antes de publicar.
   - [ ] Enviar ao GitHub as correções do livro (ainda não enviadas).
