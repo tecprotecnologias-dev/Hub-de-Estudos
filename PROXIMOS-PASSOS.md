@@ -23,6 +23,10 @@ O site está em https://estudos.tecprotecnologias.com.br (Cloudflare) e se atual
   - Arquivos: `apostilas/web-i`. Roteiro da faculdade: `C:\Users\Neia\Downloads\Material_Didatico_Web_I.pdf`.
 - [ ] **Módulo Projetos no site** (pedido em 17/10/2026): um módulo próprio, separado das apostilas, exercícios e simulados, com os projetos de todas as disciplinas, organizados por período. Os projetos dos materiais da faculdade (o portfólio da Web I, o projeto final da Web II) ficam guardados para esse módulo.
 - [ ] **Apostilas seguintes** (pedido em 17/10/2026): Estrutura de Dados, Análise e Projeto de Sistemas, Cliente-Servidor, Dispositivos Móveis, Gestão de Banco de Dados.
+- [ ] **Web II, Módulo 6: retirar da apostila** (pedido em 20/10/2026):
+  - [ ] a seção 6.7 "O que Continua na Web III" (a tabela que liga os assuntos aos capítulos da Web III);
+  - [ ] o quadro sobre o NextAuth.js / Auth.js ("A Web III ensina a autenticação por dentro...").
+  - Obs.: os exercícios do PDF já foram acrescentados aos de antes e levados ao simulado em 20/10/2026 (commit c59fb87).
 - [ ] **Livro de Node.js, Express e MySQL: deixar pronto para publicar** (pedido em 20/10/2026). Guia prático, direto, sem enrolação. Já corrigido e atualizado (Node 24, MySQL 9.7). Falta:
   - [ ] **← retomar aqui.** Rodar o teste completo da BibliotecaAPI (já montada; basta dizer "continua") e corrigir no livro o que o teste já mostrou: código que o livro usa e não mostra (busca do usuário por e-mail, registro das rotas no app.js, listagem paginada, PATCH e devolução, scripts do package.json), como gerar a senha real do seed, formato da listagem (dados.data) no cap. 12 e 13, empréstimo usando o usuário do token, aviso sobre senha com # no .env.
   - [ ] Revisar os serviços citados (Railway sem plano gratuito, Thunder Client pago) e o MySQL Workbench com o MySQL 9.7.
