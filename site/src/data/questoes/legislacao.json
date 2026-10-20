@@ -2299,6 +2299,275 @@
     "resolucao": "os logs são a principal prova do incidente: mostram o que aconteceu, quais dados foram afetados e quem foi atingido, informações que a comunicação à ANPD precisa trazer (art. 48, § 1º, da LGPD). Apagá-los atrapalha a análise forense e a defesa da empresa, e pode ser visto como falta de cooperação. A contenção deve isolar os sistemas, preservando as evidências."
   },
   {
+    "id": "legislacao-cap4-d1",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap4",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Na madrugada de uma segunda-feira, uma rede de clínicas descobre que um ransomware criptografou os seus servidores. Os criminosos dizem ter copiado os prontuários de 30 mil pacientes e exigem um resgate em criptomoeda, ameaçando publicar os dados em 72 horas. Parte da equipe quer formatar tudo e restaurar os backups imediatamente; outra parte quer pagar o resgate em silêncio para \"evitar escândalo\"."
+    ],
+    "enunciado": "Proponha a conduta jurídica e técnica que a rede de clínicas deve adotar nas primeiras horas e dias depois do incidente.",
+    "linhas": 10,
+    "respostaEsperada": "A clínica deve acionar o plano de resposta a incidentes, a equipe de segurança, o encarregado e o jurídico. Na contenção, isola os sistemas afetados, sem formatar nem apagar nada antes de preservar as evidências, como logs, imagens dos discos e mensagens dos criminosos, necessárias à perícia, à investigação e à defesa da empresa; depois, restaura a partir de backups íntegros. Deve avaliar o escopo: quais dados, quantos titulares e o risco; prontuários são dados sensíveis de saúde, e o risco é relevante. Por isso, deve comunicar a ANPD em até 3 dias úteis (art. 48 da LGPD e Resolução CD/ANPD nº 15/2024) e avisar os pacientes, com informações claras e orientações, além de registrar boletim de ocorrência: há invasão de dispositivo (art. 154-A do CP) e extorsão (art. 158). Pagar o resgate em silêncio não resolve: não garante a devolução nem o sigilo dos dados, não dispensa as comunicações obrigatórias e pode financiar o crime; esconder o incidente agrava as sanções. A clínica responde pela segurança dos dados (art. 46), pode sofrer sanções da ANPD e dos órgãos de saúde e indenizar danos, e, na fase pós-incidente, deve documentar tudo, corrigir as falhas e reforçar os controles, como autenticação multifator, backups 3-2-1 e treinamento."
+  },
+  {
+    "id": "legislacao-cap4-d2",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap4",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma rede social brasileira, com milhões de usuários, recebe todos os dias denúncias de conteúdos como ofensas a pessoas, golpes financeiros anunciados por impulsionamento pago, vídeos íntimos divulgados sem consentimento e ameaças de ataques a escolas. Hoje, a empresa só remove conteúdos quando recebe uma ordem judicial."
+    ],
+    "enunciado": "Com base no Marco Civil da Internet e na decisão do STF de 2025, avalie a política atual da rede social e proponha uma nova política de moderação.",
+    "linhas": 10,
+    "respostaEsperada": "A política atual está desatualizada e expõe a empresa a responsabilidade. Desde o julgamento dos Temas 987 e 533, em 2025, o art. 19 do Marco Civil é parcialmente inconstitucional: para a maior parte dos conteúdos ilícitos, incluindo crimes como golpes, a plataforma pode responder se não remover o conteúdo depois de notificação extrajudicial. Nas ofensas à honra, a responsabilização continua dependendo de ordem judicial, embora a empresa possa remover por notificação. Os vídeos íntimos sem consentimento já seguiam o art. 21: basta a notificação da vítima, e a remoção deve ser diligente. Para conteúdos graves, como ameaças de ataques e terrorismo, a plataforma tem dever de cuidado e responde por falha sistêmica, mesmo sem notificação, o que exige monitoramento ativo. Nos golpes por impulsionamento pago, responde sem notificação, pois lucrou com o anúncio. A nova política deve ter canal de denúncias acessível, prazos rápidos de análise, critérios claros por tipo de conteúdo, possibilidade de recurso para o autor, relatórios de transparência, verificação dos anunciantes, guarda dos registros de acesso por 6 meses (art. 15) e cooperação com as autoridades, fornecendo dados mediante ordem judicial."
+  },
+  {
+    "id": "legislacao-cap4-o1",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Considere as condutas: (1) criptografar os arquivos de um hospital com um ransomware; (2) enviar ameaças de morte a um ex-colega por um aplicativo de mensagens; (3) derrubar o site de uma prefeitura com um ataque de negação de serviço (DDoS); (4) acusar falsamente um vizinho de um crime em uma rede social."
+      }
+    ],
+    "enunciado": "Quais das condutas são crimes cibernéticos puros e quais são impróprios?",
+    "alternativas": [
+      "São puros o 1 e o 3, em que o sistema é o alvo; são impróprios o 2 e o 4, crimes comuns praticados por meio digital.",
+      "São puros o 1, o 2 e o 3, pois todos usam tecnologia; só o 4 é impróprio, por ofender a honra da pessoa.",
+      "São puros o 2 e o 4, que só existem nas redes; são impróprios o 1 e o 3, que já existiam antes da internet.",
+      "Todos são puros, pois qualquer crime praticado com um computador ou um celular é crime cibernético puro.",
+      "Todos são impróprios, pois o Código Penal não prevê nenhum crime em que o sistema informático seja o alvo."
+    ],
+    "correta": 0,
+    "resolucao": "No crime cibernético puro, o sistema informático é o alvo e o crime não existiria sem a tecnologia: é o caso do ransomware (1) e do ataque de negação de serviço (3), que pode ser enquadrado na interrupção de serviço telemático (art. 266, § 1º, do CP). No impróprio, o meio digital é usado para um crime tradicional: ameaça (art. 147) por aplicativo de mensagens (2) e calúnia (art. 138) em rede social (4)."
+  },
+  {
+    "id": "legislacao-cap4-o2",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "A equipe de segurança de uma empresa registrou quatro tentativas de golpe em uma semana: (1) um e-mail falso enviado só à diretora financeira, citando o nome dela, o cargo e um fornecedor real; (2) uma ligação de alguém que se dizia da central do banco e pedia o código de segurança; (3) um SMS com um link sobre uma \"entrega pendente\" de encomenda; (4) milhares de tentativas automáticas de login com e-mails e senhas vazados de outros sites."
+      }
+    ],
+    "enunciado": "As tentativas 1, 2, 3 e 4 correspondem, respectivamente, a",
+    "alternativas": [
+      "spear phishing, vishing, smishing e credential stuffing.",
+      "phishing, smishing, vishing e man-in-the-middle.",
+      "spear phishing, smishing, vishing e credential stuffing.",
+      "spear phishing, vishing, smishing e engenharia social.",
+      "vishing, spear phishing, smishing e credential stuffing."
+    ],
+    "correta": 0,
+    "resolucao": "O spear phishing é o phishing dirigido a uma pessoa específica, com dados reais dela (1). O vishing usa ligações de voz, como a falsa central do banco (2). O smishing usa mensagens de SMS com links falsos (3). O credential stuffing são tentativas automatizadas de login com senhas vazadas de outros serviços, explorando o reuso de senhas (4)."
+  },
+  {
+    "id": "legislacao-cap4-o3",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma rede de clínicas registrou quatro incidentes: (1) um banco de dados de pacientes ficou acessível na internet por erro de configuração; (2) um malware alterou os resultados de exames guardados no sistema; (3) um ataque de negação de serviço deixou o sistema de agendamento fora do ar por um dia; (4) uma funcionária copiou a lista de pacientes para levar a uma clínica concorrente."
+      }
+    ],
+    "enunciado": "Os incidentes 1, 2, 3 e 4 são, respectivamente, violações de",
+    "alternativas": [
+      "confidencialidade, integridade e disponibilidade, além de uma ameaça interna (insider threat).",
+      "integridade, confidencialidade e disponibilidade, além de um vazamento por terceiro.",
+      "confidencialidade, disponibilidade e integridade, além de uma ameaça interna (insider threat).",
+      "disponibilidade, integridade e confidencialidade, além de uma ameaça interna (insider threat).",
+      "confidencialidade, integridade e disponibilidade, além de um vazamento por terceiro."
+    ],
+    "correta": 0,
+    "resolucao": "Um banco de dados exposto por erro de configuração permite acesso não autorizado: viola a confidencialidade (1). Alterar registros sem autorização viola a integridade (2). Derrubar o sistema e impedir o acesso viola a disponibilidade (3). Um empregado que copia dados sem autorização é uma ameaça interna (4); o vazamento por terceiro ocorre quando o incidente é de um fornecedor."
+  },
+  {
+    "id": "legislacao-cap4-o4",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma investigação precisa saber quando um usuário acessou uma rede social e de qual endereço IP. O delegado tem dúvidas sobre quem deve guardar cada tipo de registro."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. O provedor de aplicações constituído como pessoa jurídica, que atua de forma profissional e com fins econômicos, deve guardar os registros de acesso a aplicações por 6 meses.",
+      "PORQUE",
+      "II. Na provisão de conexão à internet, é vedado ao provedor guardar os registros de acesso a aplicações de internet."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, mas a II não justifica a I. A I é o art. 15 do Marco Civil da Internet, que fixa a guarda dos registros de acesso a aplicações por 6 meses. A II é o art. 14, que proíbe o provedor de conexão de guardar esses registros, cabendo-lhe guardar só os registros de conexão, por 1 ano (art. 13). São regras sobre agentes diferentes."
+  },
+  {
+    "id": "legislacao-cap4-o5",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap4",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa foi alvo de ofensas publicadas em um fórum por um usuário anônimo. Descobriu que ele usa a internet de uma operadora local e decidiu processar a operadora, e não o fórum, pelos danos sofridos."
+      }
+    ],
+    "enunciado": "Qual é a responsabilidade da operadora de internet nesse caso?",
+    "alternativas": [
+      "Ela não responde pelo conteúdo, mas pode ser obrigada, por ordem judicial, a fornecer registros para identificar o autor.",
+      "Ela responde solidariamente com o autor, pois foi pela conexão dela que as ofensas chegaram à internet.",
+      "Ela responde se não bloquear o acesso do ofensor à internet em até 24 horas depois de notificada pela vítima.",
+      "Ela não responde e também não pode ser obrigada a nada, pois os registros de conexão são sempre sigilosos.",
+      "Ela responde sozinha, pois o autor das ofensas está protegido pela liberdade de expressão garantida no MCI."
+    ],
+    "correta": 0,
+    "resolucao": "Pelo art. 18 do Marco Civil da Internet, o provedor de conexão não é responsabilizado civilmente por danos decorrentes de conteúdo gerado por terceiros. Os registros de conexão são sigilosos, mas podem ser fornecidos por ordem judicial (arts. 10, § 1º, e 22), o que permite identificar o autor das ofensas, que é quem responde por elas."
+  },
+  {
+    "id": "legislacao-cap4-o6",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap4",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Caso A: um golpista instalou um programa espião no celular de uma vítima, capturou as senhas do banco e ele mesmo transferiu R$ 10 mil da conta dela. Caso B: outro golpista, fingindo ser um parente em apuros, convenceu uma vítima a fazer, ela mesma, um Pix de R$ 10 mil para a conta dele."
+      }
+    ],
+    "enunciado": "Como se enquadram, em regra, as condutas dos casos A e B?",
+    "alternativas": [
+      "A é furto mediante fraude por meio eletrônico, e B é fraude eletrônica; os dois têm reclusão de 4 a 8 anos.",
+      "Os dois são fraude eletrônica, pois em ambos o golpista usou meios digitais para ficar com o dinheiro.",
+      "A é fraude eletrônica, e B é furto mediante fraude, pois em B a vítima foi enganada pelo golpista.",
+      "A é só invasão de dispositivo, com reclusão de 1 a 4 anos, e B não é crime, pois a vítima consentiu.",
+      "Os dois são estelionato simples, com pena de 1 a 5 anos, pois a Lei 14.155/2021 não alcança essas condutas."
+    ],
+    "correta": 0,
+    "resolucao": "No furto mediante fraude, a fraude serve para diminuir a vigilância da vítima, e o próprio agente subtrai o dinheiro: é o caso A, enquadrado no art. 155, § 4º-B, do CP. Na fraude eletrônica, a vítima, enganada, entrega ela mesma o dinheiro: é o caso B, art. 171, § 2º-A. Os dois foram criados pela Lei nº 14.155/2021, com reclusão de 4 a 8 anos e multa; no caso A, a invasão do celular também pode ser punida."
+  },
+  {
+    "id": "legislacao-cap4-o7",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap4",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Depois da decisão do STF de 2025 sobre o Marco Civil da Internet, uma rede social revisou a sua política de moderação de conteúdo."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Para a maior parte dos conteúdos ilícitos, a plataforma pode responder se não remover após notificação.",
+      "II. Nos crimes contra a honra, a responsabilização da plataforma continua dependendo de ordem judicial.",
+      "III. Em anúncios pagos e impulsionamentos, a plataforma pode responder mesmo sem nenhuma notificação.",
+      "IV. O STF declarou o art. 19 totalmente constitucional, mantendo a ordem judicial para todo conteúdo."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e III, apenas.",
+      "I e II, apenas.",
+      "I e III, apenas.",
+      "II e III, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I, II e III resumem o julgamento dos Temas 987 e 533 pelo STF, em junho de 2025, que declarou o art. 19 do Marco Civil parcialmente inconstitucional: para a maioria dos conteúdos ilícitos, vale o regime de notificação e retirada; nos crimes contra a honra, mantém-se a ordem judicial; e anúncios pagos e impulsionamentos geram responsabilidade sem notificação. IV é falsa, pelo mesmo motivo."
+  },
+  {
+    "id": "legislacao-cap4-o8",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap4",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um homem publicou em uma rede social, para milhares de seguidores, que um colega de trabalho \"chega embriagado ao escritório todos os dias\", o que não era verdade e prejudicou a reputação do colega."
+      }
+    ],
+    "enunciado": "Qual é o enquadramento penal mais adequado e a pena prevista em abstrato?",
+    "alternativas": [
+      "Difamação, com pena triplicada por ter sido divulgada em rede social: detenção de 9 meses a 3 anos, e multa.",
+      "Difamação, com a pena comum do crime, pois a internet não altera a pena: detenção de 3 meses a 1 ano, e multa.",
+      "Difamação, com pena dobrada por ter sido divulgada em rede social: detenção de 6 meses a 2 anos, e multa.",
+      "Calúnia, pois o fato atribuído é ofensivo à reputação: detenção de 6 meses a 2 anos, e multa.",
+      "Injúria, pois ofende a honra da vítima: detenção de 1 a 6 meses, ou multa, sem nenhum aumento."
+    ],
+    "correta": 0,
+    "resolucao": "Atribuir a alguém um fato ofensivo à reputação que não é crime (embriaguez no trabalho) é difamação (art. 139 do CP), com detenção de 3 meses a 1 ano e multa. A calúnia exige a imputação falsa de um crime, e a injúria ofende a dignidade sem atribuir fato. Pelo art. 141, § 2º, se o crime contra a honra é cometido ou divulgado em redes sociais, aplica-se a pena em triplo: de 9 meses a 3 anos."
+  },
+  {
+    "id": "legislacao-cap4-o9",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap4",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "O Ministério Público investiga uma fraude cometida há 11 meses e pede a um provedor de conexão que guarde, por mais tempo que o prazo legal, os registros de conexão de um suspeito, para depois pedir acesso a eles."
+      }
+    ],
+    "enunciado": "Considerando o art. 13 do Marco Civil, qual é o procedimento correto?",
+    "alternativas": [
+      "O provedor guarda os registros além de 1 ano, em sigilo, e o MP tem 60 dias para pedir à Justiça o acesso a eles.",
+      "O provedor deve entregar os registros ao MP na hora, pois o pedido cautelar dispensa a ordem judicial.",
+      "O provedor pode negar o pedido, pois a lei proíbe guardar os registros de conexão por mais de 1 ano.",
+      "O provedor guarda os registros por mais tempo e avisa o usuário investigado, que pode se opor ao pedido.",
+      "O provedor guarda os registros por mais tempo, e o MP tem 1 ano para pedir à Justiça o acesso a eles."
+    ],
+    "correta": 0,
+    "resolucao": "O art. 13, § 2º, permite que a autoridade policial ou administrativa ou o Ministério Público peça, cautelarmente, que os registros de conexão sejam guardados por prazo superior a 1 ano. O § 3º dá à autoridade 60 dias, contados do pedido, para ingressar com o pedido de autorização judicial de acesso, e o § 4º obriga o provedor a manter sigilo sobre o requerimento. O acesso aos registros continua dependendo de ordem judicial."
+  },
+  {
+    "id": "legislacao-cap4-o10",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap4",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma loja virtual sofreu um ataque que expôs o nome, o e-mail e o telefone de milhares de clientes. Um deles entrou na Justiça pedindo R$ 10 mil de indenização por dano moral, sem apontar nenhum golpe ou prejuízo que tenha sofrido depois do vazamento."
+      }
+    ],
+    "enunciado": "Com base no entendimento do STJ, o pedido de indenização por dano moral tende a ser",
+    "alternativas": [
+      "negado se o cliente não provar o prejuízo, pois o vazamento de dados comuns não gera dano moral presumido.",
+      "aceito, pois todo vazamento de dados pessoais gera dano moral presumido, sem necessidade de nenhuma prova.",
+      "aceito, pois a LGPD fixa uma indenização mínima de R$ 10 mil por titular afetado em qualquer vazamento.",
+      "negado, pois a empresa só responde se o vazamento tiver sido causado por um empregado, e não por hackers.",
+      "negado, pois as sanções da ANPD substituem as indenizações civis aos titulares, que não podem ir à Justiça."
+    ],
+    "correta": 0,
+    "resolucao": "O STJ decidiu que o vazamento de dados pessoais comuns, como nome, e-mail e telefone, não gera dano moral presumido: o titular precisa demonstrar um prejuízo concreto, como golpes sofridos ou uso indevido dos dados. Com dados sensíveis, a análise tende a ser mais rigorosa. Isso não afasta a responsabilidade da empresa (arts. 42 a 44 da LGPD) nem as sanções da ANPD, que são independentes."
+  },
+  {
     "id": "legislacao-cap5-q1",
     "disciplinaId": "legislacao-em-negocios-digitais",
     "capituloId": "legislacao-cap5",
@@ -2661,6 +2930,282 @@
     "resolucao": "Autorizar notificações no celular é uma permissão técnica do sistema operacional e não equivale, sozinha, a uma base legal da LGPD para marketing. Para enviar mensagens promocionais, o aplicativo precisa de base própria, em geral o consentimento específico para essa finalidade (art. 8º, § 4º), informado e com opção clara de recusar."
   },
   {
+    "id": "legislacao-cap5-d1",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap5",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma marca de suplementos vai lançar um produto com uma campanha digital: vídeos de influenciadoras que receberão o produto e um pagamento, anúncios segmentados por interesse em academia e dieta, e-mails para uma lista de contatos comprada de uma agência e a frase \"emagrece até 8 kg em um mês\" na embalagem e nos anúncios. Parte do público das influenciadoras tem menos de 18 anos."
+    ],
+    "enunciado": "Analise os riscos jurídicos dessa campanha e proponha os ajustes necessários.",
+    "linhas": 10,
+    "respostaEsperada": "A promessa de emagrecimento sem comprovação pode ser publicidade enganosa (art. 37, § 1º, do CDC), e cabe à marca provar o que anuncia (art. 38); alegações sobre saúde também estão sujeitas às regras da ANVISA. Deve-se retirar a promessa ou sustentá-la com estudos válidos. Os vídeos das influenciadoras são publicidade, mesmo que a contrapartida fosse só o produto, e precisam ser identificados de forma clara, no início, com marcações como \"#publi\" (art. 36 do CDC e regras do CONAR); as influenciadoras devem ter experiência real com o produto e podem responder junto com a marca. Como parte do público é menor de idade, a campanha não deve ser dirigida a eles: o CDC considera abusiva a publicidade que se aproveita da inexperiência infantil, e o ECA Digital proíbe o perfilamento para publicidade a crianças e adolescentes, por isso a segmentação deve excluir menores. Nos anúncios segmentados, a marca precisa de base legal na LGPD e de consentimento para cookies e rastreadores não essenciais. A lista de e-mails comprada não traz consentimento válido e deve ser descartada; a marca deve formar uma lista própria, com opt-in e descadastramento fácil. O contrato com as influenciadoras deve prever a identificação, a aprovação prévia do conteúdo e a responsabilidade pelas afirmações."
+  },
+  {
+    "id": "legislacao-cap5-d2",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap5",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Um aplicativo de cursos de idiomas oferece 7 dias grátis, mas exige o cartão de crédito no início e passa a cobrar automaticamente a assinatura anual depois do teste. O aviso da cobrança aparece só em letras pequenas. Para cancelar, o usuário passa por cinco telas, com mensagens como \"Tem certeza de que quer desistir de aprender?\", e o botão de cancelar é cinza e pequeno. No cadastro, a opção de receber ofertas de parceiros já vem marcada."
+    ],
+    "enunciado": "Identifique os dark patterns presentes nesse aplicativo, explique por que são irregulares e proponha um redesenho conforme a legislação.",
+    "linhas": 10,
+    "respostaEsperada": "O aplicativo reúne vários dark patterns. A cobrança automática da assinatura anual, informada só em letras pequenas, é um custo escondido e pode ser publicidade enganosa por omissão de dado essencial (art. 37, §§ 1º e 3º, do CDC), além de violar o dever de informação clara (art. 6º, III). As cinco telas para cancelar formam um roach motel, e a mensagem \"Tem certeza de que quer desistir de aprender?\" é confirmshaming: dificultar o cancelamento é prática abusiva (art. 39), e o consumidor ainda tem o direito de arrependimento em 7 dias (art. 49). A caixa já marcada para ofertas de parceiros não é consentimento válido, pois a LGPD exige manifestação inequívoca e para finalidade determinada (arts. 5º, XII, e 8º, § 4º). No redesenho, o aplicativo deve informar com destaque, antes de pedir o cartão, o preço e a data da cobrança, avisar o usuário antes do fim do teste, oferecer um botão de cancelamento simples e visível, que funcione em poucos passos, sem mensagens que constrangem, e deixar a caixa de ofertas desmarcada, separada por finalidade e fácil de revogar."
+  },
+  {
+    "id": "legislacao-cap5-o1",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Em um aplicativo de compras, foram encontradas quatro práticas: (1) o botão para recusar o cupom diz \"Não, prefiro pagar mais caro\"; (2) uma \"taxa de serviço\" aparece só na última tela antes do pagamento; (3) as configurações são tão confusas que o usuário acaba liberando o acesso aos seus contatos; (4) a caixa do cadastro diz \"Não quero deixar de receber ofertas\" e já vem marcada."
+      }
+    ],
+    "enunciado": "As práticas 1, 2, 3 e 4 correspondem, respectivamente, aos dark patterns",
+    "alternativas": [
+      "confirmshaming, hidden costs, privacy zuckering e trick questions.",
+      "roach motel, hidden costs, privacy zuckering e trick questions.",
+      "confirmshaming, trick questions, privacy zuckering e hidden costs.",
+      "confirmshaming, hidden costs, trick questions e privacy zuckering.",
+      "trick questions, roach motel, privacy zuckering e confirmshaming."
+    ],
+    "correta": 0,
+    "resolucao": "O botão de recusa com texto que constrange é confirmshaming (1). Taxas reveladas só na última etapa do checkout são hidden costs (2). Uma interface confusa que leva a compartilhar mais dados do que se pretendia é privacy zuckering (3). Perguntas confusas, com dupla negação, que levam a aceitar comunicações sem perceber são trick questions (4). Todas comprometem a decisão livre e informada do consumidor."
+  },
+  {
+    "id": "legislacao-cap5-o2",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma marca de garrafas plásticas lançou uma campanha nas redes sociais dizendo que os seus produtos são \"100% carbono neutro\", sem ter feito nenhum estudo ou certificação sobre as emissões."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Anunciar um produto como \"carbono neutro\" sem nenhuma comprovação técnica pode configurar publicidade enganosa.",
+      "PORQUE",
+      "II. É enganosa a informação publicitária capaz de induzir o consumidor em erro sobre as propriedades do produto, ainda que por omissão."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II justifica a I. A alegação ambiental sem comprovação (greenwashing) é capaz de levar o consumidor a acreditar em uma propriedade que o produto talvez não tenha, o que se encaixa no conceito de publicidade enganosa do art. 37, § 1º, do CDC. Além disso, cabe a quem patrocina o anúncio provar a veracidade da informação (art. 38)."
+  },
+  {
+    "id": "legislacao-cap5-o3",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma loja virtual de artigos esportivos quer enviar, aos clientes que compraram tênis de corrida nos últimos três meses, e-mails com ofertas de outros produtos de corrida, com um link de descadastramento em cada mensagem."
+      }
+    ],
+    "enunciado": "Qual é a análise mais adequada sobre a base legal desses e-mails?",
+    "alternativas": [
+      "Podem se apoiar no legítimo interesse (soft opt-in), se a compra é recente, o produto parecido e a saída fácil.",
+      "Exigem sempre o double opt-in, pois o e-mail marketing só é válido com confirmação dupla do consentimento.",
+      "Dispensam qualquer base legal, pois quem já comprou na loja autorizou receber ofertas por tempo indeterminado.",
+      "São proibidos, pois a LGPD veda o envio de qualquer comunicação comercial a clientes, salvo por ordem judicial.",
+      "Podem ser enviados sem descadastramento, pois o cliente que comprou não tem o direito de se opor às ofertas."
+    ],
+    "correta": 0,
+    "resolucao": "Para clientes atuais, a oferta de produtos semelhantes aos que eles já compraram pode se apoiar no legítimo interesse (art. 7º, IX), o chamado soft opt-in, desde que a relação seja recente, o uso seja esperado pelo cliente, haja transparência e cada e-mail traga um descadastramento fácil. O double opt-in é uma boa prática para o consentimento, mas não é a única base possível; e o titular sempre pode se opor ao tratamento."
+  },
+  {
+    "id": "legislacao-cap5-o4",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma agência de publicidade digital atende clientes de vários setores e preparou um guia sobre as regras específicas de cada um."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. A propaganda de cigarros é proibida na internet, restando apenas a exposição nos pontos de venda.",
+      "II. Os medicamentos de venda sob prescrição médica só podem ser anunciados a profissionais de saúde.",
+      "III. Anúncios de apostas podem apresentá-las como forma de investimento ou de renda, se trouxerem alerta.",
+      "IV. Anúncios de crédito podem deixar de informar o CET, desde que mostrem a taxa de juros mensal."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e II, apenas.",
+      "I, apenas.",
+      "II, apenas.",
+      "I, II e III, apenas.",
+      "I, II e IV, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I e II estão de acordo com a Lei nº 9.294/1996 e com as normas da ANVISA (RDC nº 96/2008). III é falsa: a Lei nº 14.790/2023 e as regras do Ministério da Fazenda proíbem apresentar as apostas como investimento ou fonte de renda, além de vedar a publicidade dirigida a menores. IV é falsa: as ofertas de crédito devem informar o Custo Efetivo Total, que inclui juros, tarifas e encargos."
+  },
+  {
+    "id": "legislacao-cap5-o5",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap5",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma fabricante de celulares publicou anúncios dizendo que a bateria do seu modelo dura 30% mais que a do principal concorrente, citado pelo nome, com base em testes feitos por um laboratório independente."
+      }
+    ],
+    "enunciado": "Pelas regras do CONAR, essa publicidade comparativa é",
+    "alternativas": [
+      "admitida, se for objetiva e comprovável e não denegrir o concorrente nem causar confusão entre as marcas.",
+      "proibida, pois o CONAR não admite citar o nome de concorrentes em nenhum tipo de anúncio no Brasil.",
+      "admitida só se o concorrente autorizar por escrito o uso da sua marca e dos resultados dos testes.",
+      "admitida, mesmo sem comprovação, pois a comparação é uma opinião protegida pela liberdade de expressão.",
+      "proibida, pois a comparação de preços e de desempenho é sempre considerada concorrência desleal."
+    ],
+    "correta": 0,
+    "resolucao": "O Código do CONAR admite a publicidade comparativa quando o seu objetivo é esclarecer ou defender o consumidor, desde que a comparação seja objetiva, entre produtos equivalentes, e possa ser comprovada, sem denegrir a imagem do concorrente, causar confusão entre as marcas ou configurar concorrência desleal. Testes de laboratório independentes ajudam a comprovar a afirmação."
+  },
+  {
+    "id": "legislacao-cap5-o6",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um aplicativo de jogos, usado principalmente por adolescentes de 13 a 16 anos, monta perfis de comportamento de cada usuário e os usa para exibir anúncios personalizados de lanches, roupas e outros jogos."
+      }
+    ],
+    "enunciado": "Considerando o ECA Digital e a LGPD, a estratégia de anúncios do aplicativo é",
+    "alternativas": [
+      "vedada: o ECA Digital proíbe o perfilamento para direcionar publicidade a crianças e adolescentes.",
+      "permitida, pois as regras especiais só protegem crianças de até 12 anos, e não adolescentes.",
+      "permitida, desde que o próprio adolescente aceite os termos de uso ao instalar o aplicativo.",
+      "permitida, desde que o aplicativo mostre um banner de cookies antes de exibir os anúncios.",
+      "vedada só para os anúncios de jogos, sendo permitida para os demais produtos e serviços."
+    ],
+    "correta": 0,
+    "resolucao": "A Lei nº 15.211/2025 (ECA Digital) reforçou a proteção de crianças e adolescentes em produtos e serviços digitais e proíbe usar técnicas de perfilamento para direcionar publicidade comercial a eles. Na LGPD, o tratamento de dados de crianças e adolescentes deve atender ao seu melhor interesse (art. 14). O aceite do próprio adolescente ou um banner de cookies não afasta essa proibição."
+  },
+  {
+    "id": "legislacao-cap5-o7",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma farmácia on-line separou os clientes que compram medicamentos para diabetes e enviou os e-mails e telefones deles a uma rede social, para criar um público de anúncios e encontrar pessoas parecidas (lookalike)."
+      }
+    ],
+    "enunciado": "Qual é a análise correta sobre essa prática?",
+    "alternativas": [
+      "Os dados revelam saúde e são sensíveis, mesmo inferidos; o envio exige base do art. 11, que limita o uso econômico.",
+      "Não há dado sensível, pois a farmácia só enviou e-mails e telefones, e não diagnósticos dos clientes.",
+      "É lícita, pois o legítimo interesse permite compartilhar qualquer dado para fins de publicidade digital.",
+      "É lícita, pois a rede social é operadora da farmácia, e o envio entre operadores dispensa base legal.",
+      "Só seria irregular se a farmácia vendesse a lista, pois o compartilhamento gratuito não é tratamento."
+    ],
+    "correta": 0,
+    "resolucao": "Saber que alguém compra remédios para diabetes revela um dado referente à saúde, que é sensível (art. 5º, II), mesmo que a lista traga só e-mails e telefones. O tratamento de dados sensíveis só é possível nas hipóteses do art. 11, que não incluem o legítimo interesse, e o § 4º restringe o compartilhamento de dados de saúde com o objetivo de obter vantagem econômica. Compartilhar, com ou sem pagamento, também é tratamento (art. 5º, X)."
+  },
+  {
+    "id": "legislacao-cap5-o8",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empresa de e-mail marketing foi questionada pela ANPD sobre a forma como obtém e registra o consentimento dos destinatários das suas campanhas."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Cabe ao controlador o ônus de provar que o consentimento foi obtido de acordo com a lei.",
+      "II. O consentimento deve ser dado por escrito ou por outro meio que demonstre a vontade do titular.",
+      "III. É vedado o tratamento de dados pessoais mediante vício de consentimento.",
+      "IV. Autorizações genéricas são válidas, desde que o titular possa revogá-las depois."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e III, apenas.",
+      "I e II, apenas.",
+      "I e III, apenas.",
+      "II e III, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I, II e III estão no art. 8º da LGPD: o ônus da prova é do controlador (§ 2º), o consentimento deve ser fornecido por escrito ou por outro meio que demonstre a manifestação de vontade (caput), e o tratamento com vício de consentimento é vedado (§ 3º). IV é falsa: as autorizações genéricas são nulas, pois o consentimento deve se referir a finalidades determinadas (§ 4º); a possibilidade de revogação não corrige isso."
+  },
+  {
+    "id": "legislacao-cap5-o9",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma financeira faz ligações e envia mensagens diárias a aposentados com o anúncio: \"Crédito na hora para negativados, sem consulta ao SPC e sem análise de renda. Aproveite hoje!\"."
+      }
+    ],
+    "enunciado": "À luz do CDC, alterado pela Lei do Superendividamento, essa campanha é",
+    "alternativas": [
+      "irregular: a lei proíbe anunciar crédito sem consulta ou sem avaliação financeira e assediar consumidores idosos.",
+      "regular, pois a oferta de crédito a aposentados é livre, e o CDC não traz regras específicas sobre o tema.",
+      "regular, desde que o contrato final traga a taxa de juros, ainda que o anúncio não fale nos custos do crédito.",
+      "irregular só porque usa ligações, pois ofertas de crédito por mensagem de texto são sempre permitidas.",
+      "irregular só se algum aposentado ficar inadimplente, pois o superendividamento exige dano já ocorrido."
+    ],
+    "correta": 0,
+    "resolucao": "A Lei nº 14.181/2021 incluiu no CDC o art. 54-C, que proíbe, na oferta de crédito, indicar que a operação pode ser concluída sem consulta a serviços de proteção ao crédito ou sem avaliação da situação financeira do consumidor, e assediar ou pressionar o consumidor, principalmente se for idoso. A oferta também deve informar o custo efetivo total e os encargos (art. 54-B). A proibição vale para a própria oferta, sem depender de dano."
+  },
+  {
+    "id": "legislacao-cap5-o10",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap5",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma operadora anuncia em destaque um plano de celular com \"internet ilimitada\". Só no rodapé da página, em letras pequenas, informa que, depois de 20 GB por mês, a velocidade é reduzida a um nível que impede assistir a vídeos ou fazer chamadas."
+      }
+    ],
+    "enunciado": "Como se classifica esse anúncio pelo CDC?",
+    "alternativas": [
+      "Publicidade enganosa por omissão: a redução da velocidade é dado essencial, e escondê-la induz o consumidor a erro.",
+      "Publicidade abusiva, pois explora o medo que o consumidor tem de ficar sem internet no fim do mês.",
+      "Publicidade lícita, pois a regra sobre a redução da velocidade aparece no rodapé da própria página do plano.",
+      "Publicidade enganosa só se a operadora cortar a internet por completo depois que a franquia acabar.",
+      "Publicidade lícita, pois o consumidor pode desistir do plano em 7 dias se não gostar do serviço."
+    ],
+    "correta": 0,
+    "resolucao": "Pelo art. 37, § 3º, do CDC, a publicidade é enganosa por omissão quando deixa de informar dado essencial do produto ou serviço. Anunciar \"internet ilimitada\" e esconder, em letras miúdas, que a velocidade cai a quase nada depois de uma franquia leva o consumidor a erro sobre a característica principal do plano. O direito de arrependimento não torna lícita uma publicidade enganosa."
+  },
+  {
     "id": "legislacao-cap6-q1",
     "disciplinaId": "legislacao-em-negocios-digitais",
     "capituloId": "legislacao-cap6",
@@ -3007,6 +3552,275 @@
     ],
     "correta": 0,
     "resolucao": "a Lei Anticorrupção (Lei nº 12.846/2013) responsabiliza a empresa de forma objetiva por atos lesivos à administração pública, mesmo sem culpa dos dirigentes. Um programa de integridade, com código de conduta, canal de denúncias e verificação de parceiros, reduz o risco e é considerado na hora de aplicar sanções. Em contratos públicos de grande valor, a Lei nº 14.133/2021 chega a exigir esse programa."
+  },
+  {
+    "id": "legislacao-cap6-d1",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap6",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Três amigos vão fundar uma startup de educação: um cuida da tecnologia, outro do comercial e o terceiro entrou só com dinheiro e não vai trabalhar na empresa. Eles pretendem dividir as quotas em partes iguais e não querem \"perder tempo com papelada\", pois confiam uns nos outros. Daqui a dois anos, pretendem receber investimento de um fundo."
+    ],
+    "enunciado": "Proponha as principais cláusulas do acordo de sócios dessa startup, justificando cada uma.",
+    "linhas": 10,
+    "respostaEsperada": "O acordo de sócios é o contrato mais importante da startup e previne conflitos. Para os sócios que trabalham, convém o vesting, em geral de 4 anos com cliff de 1 ano, para que quem sair cedo não leve a participação inteira; o sócio que entrou só com capital pode ter regras diferentes, ligadas ao aporte. A divisão igual pode ser revista conforme a contribuição de cada um. O acordo deve prever o direito de preferência na venda de quotas, o tag along, que protege o minoritário, e o drag along, que permite vender 100% da empresa quando a maioria aprovar, algo que os investidores costumam exigir. Deve haver cláusulas de não competição e de confidencialidade, e a cessão à empresa da propriedade intelectual criada pelos sócios, em especial o código do sócio de tecnologia. Também são importantes as regras de saída e de apuração de haveres (por morte, desligamento ou conflito), a definição de quem decide o quê (alçadas) e formas de resolver impasses, como mediação ou arbitragem. Pensando no fundo, o acordo deve prever como novos investidores entram e a possibilidade de cláusulas de antidiluição e liquidation preference, além de manter a contabilidade e as contas separadas desde o início."
+  },
+  {
+    "id": "legislacao-cap6-d2",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap6",
+    "tipo": "discursiva",
+    "nivel": "dificil",
+    "caso": [
+      "Uma startup de saúde, constituída como sociedade limitada, quer captar R$ 300 mil agora, com amigos e um investidor-anjo, e R$ 5 milhões em dois anos, com um fundo de venture capital. Os fundadores não querem definir o valor da empresa neste momento. Um deles sugere anunciar nas redes sociais um investimento \"com retorno garantido\" para acelerar a captação."
+    ],
+    "enunciado": "Proponha uma estratégia jurídica de captação para essa startup, nas duas etapas, apontando os instrumentos adequados e os cuidados necessários.",
+    "linhas": 10,
+    "respostaEsperada": "Na primeira etapa, a startup pode usar o contrato de mútuo conversível ou o SAFE, que adiam a definição do valuation para uma rodada futura, ou o contrato de investimento-anjo da LC nº 123/2006, em que o investidor não é sócio, não responde pelas dívidas, só pode resgatar após 2 anos e é remunerado pelos resultados, até 50% dos lucros. A LC nº 182/2021 confirma que esses aportes podem não virar participação imediatamente (art. 5º). A sugestão de anunciar retorno garantido nas redes sociais deve ser descartada: seria uma oferta pública sem registro ou dispensa da CVM, e a promessa de rentabilidade fixa pode configurar crime. Para captar do público, o caminho seria o equity crowdfunding por plataforma autorizada (Resolução CVM nº 88/2022). Na segunda etapa, o fundo deve fazer uma due diligence: a startup precisa ter a propriedade intelectual em seu nome, contratos regulares com empregados e prestadores, conformidade com a LGPD, especialmente por tratar dados de saúde, e licenças setoriais. Para receber o fundo, costuma ser necessário transformar a LTDA em S.A., com um acordo de acionistas que trate de tag along, drag along, antidiluição e liquidation preference, e converter os mútuos conforme as condições combinadas."
+  },
+  {
+    "id": "legislacao-cap6-o1",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "O acordo de sócios de uma startup traz as seguintes cláusulas: (1) se o sócio majoritário vender a sua parte, o minoritário pode vender a dele nas mesmas condições; (2) em uma venda da empresa, o fundo investidor recebe o valor aportado antes dos fundadores; (3) se a empresa emitir novas quotas a um preço menor, a participação do investidor é ajustada; (4) quem quiser vender as suas quotas deve oferecê-las primeiro aos outros sócios."
+      }
+    ],
+    "enunciado": "As cláusulas 1, 2, 3 e 4 correspondem, respectivamente, a",
+    "alternativas": [
+      "tag along, liquidation preference, antidiluição e direito de preferência.",
+      "drag along, liquidation preference, antidiluição e direito de preferência.",
+      "tag along, antidiluição, liquidation preference e direito de preferência.",
+      "tag along, liquidation preference, vesting e não competição.",
+      "direito de preferência, liquidation preference, antidiluição e tag along."
+    ],
+    "correta": 0,
+    "resolucao": "O tag along garante ao minoritário vender nas mesmas condições oferecidas ao majoritário (1). A liquidation preference define quem recebe primeiro em uma venda ou liquidação (2). A antidiluição protege o investidor quando novas participações são emitidas a preço menor, em um down round (3). O direito de preferência obriga a oferecer as quotas aos sócios antes de vendê-las a terceiros (4). O drag along é o oposto do tag along: o majoritário obriga o minoritário a vender junto."
+  },
+  {
+    "id": "legislacao-cap6-o2",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma fundadora tem 40% de uma startup, com vesting de 4 anos, cliff de 1 ano e aquisição mensal linear depois do cliff. Ela decide sair da empresa depois de 30 meses."
+      }
+    ],
+    "enunciado": "Com quantos por cento da empresa a fundadora fica ao sair?",
+    "alternativas": [
+      "25%.",
+      "10%.",
+      "40%.",
+      "0%.",
+      "30%."
+    ],
+    "correta": 0,
+    "resolucao": "Com vesting de 4 anos (48 meses) e cliff de 1 ano, a fundadora não adquire nada nos primeiros 12 meses; ao completar o cliff, adquire 12/48 da participação, e depois mais 1/48 por mês. Em 30 meses, adquiriu 30/48 de 40%, ou seja, 25%. Ficar com 10% seria contar só o cliff; com 40%, seria ignorar o vesting; com 0%, seria aplicar a regra de quem sai antes do cliff."
+  },
+  {
+    "id": "legislacao-cap6-o3",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma desenvolvedora vai abrir sozinha uma empresa para lançar o seu aplicativo e quer conhecer as estruturas jurídicas disponíveis."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. O MEI não pode ter sócio nem participar de outra empresa como sócio ou titular.",
+      "II. A sociedade limitada pode ser constituída por uma única pessoa.",
+      "III. O Simples Nacional admite empresas com receita bruta anual de até R$ 4,8 milhões.",
+      "IV. A Eireli é a forma recomendada para startups com um só fundador, pela LC 182/2021."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I, II e III, apenas.",
+      "I e II, apenas.",
+      "I e III, apenas.",
+      "II e III, apenas.",
+      "I, II, III e IV."
+    ],
+    "correta": 0,
+    "resolucao": "I, II e III estão corretas: o MEI é empresário individual, sem sócios; desde 2019, o Código Civil admite a sociedade limitada unipessoal; e o limite do Simples Nacional para a empresa de pequeno porte é de R$ 4,8 milhões por ano. IV é falsa: a Eireli foi extinta em 2021, e as que existiam foram transformadas em sociedades limitadas unipessoais."
+  },
+  {
+    "id": "legislacao-cap6-o4",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma startup de energia solar quer captar recursos de centenas de pequenos investidores, oferecendo uma participação futura no negócio."
+      }
+    ],
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Uma startup pode captar recursos do público por equity crowdfunding, em plataforma autorizada pela CVM, até o limite de R$ 15 milhões por ano.",
+      "PORQUE",
+      "II. A Resolução CVM nº 88/2022 dispensa essas ofertas de registro na CVM, desde que feitas por plataforma autorizada e dentro dos limites da norma."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II justifica a I. Em regra, oferecer investimentos ao público exige registro na CVM. A Resolução CVM nº 88/2022 cria um regime próprio para o investimento participativo: as ofertas de empresas de pequeno porte, feitas por plataformas autorizadas e até R$ 15 milhões por ano, são dispensadas de registro, o que permite à startup captar de muitos investidores."
+  },
+  {
+    "id": "legislacao-cap6-o5",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Um investidor quer aportar R$ 200 mil em uma microempresa de tecnologia como investidor-anjo e pergunta como será remunerado pelo investimento."
+      }
+    ],
+    "enunciado": "Pela Lei Complementar nº 123/2006, como pode ser a remuneração do investidor-anjo?",
+    "alternativas": [
+      "Pelos resultados, conforme o contrato, até 50% dos lucros, em um contrato de participação de até 7 anos.",
+      "Por pró-labore mensal fixo, como os sócios administradores, durante todo o tempo do contrato.",
+      "Por juros fixos de 3% ao mês sobre o valor aportado, pagos mesmo que a empresa tenha prejuízo.",
+      "Pela distribuição de todo o lucro da empresa, sem limite, até que o aporte seja devolvido em dobro.",
+      "Por participação no capital social desde o aporte, com direito a voto nas decisões da empresa."
+    ],
+    "correta": 0,
+    "resolucao": "Pelo art. 61-A da LC nº 123/2006, o investidor-anjo é remunerado pelos seus aportes conforme o contrato de participação, que tem vigência de até 7 anos (§ 1º), e a remuneração não pode passar de 50% dos lucros da sociedade (§ 6º). Ele não é sócio, não tem direito a voto nem gerência e não responde pelas dívidas da empresa."
+  },
+  {
+    "id": "legislacao-cap6-o6",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma empregada de uma startup recebeu opções de compra de ações a R$ 10 por ação. Exerceu as opções quando a ação valia R$ 30 e, um ano depois, vendeu as ações por R$ 50 cada uma."
+      }
+    ],
+    "enunciado": "Pelo entendimento do STJ no Tema 1.226, como se dá a tributação pelo imposto de renda?",
+    "alternativas": [
+      "Não há imposto como salário no exercício; na venda, paga-se ganho de capital sobre a diferença entre R$ 50 e R$ 10.",
+      "Paga-se imposto como salário no exercício, sobre a diferença entre R$ 30 e R$ 10, e nada na venda.",
+      "Paga-se imposto como salário no exercício e ganho de capital na venda, sobre a diferença entre R$ 50 e R$ 30.",
+      "Não há imposto nem no exercício nem na venda, pois as opções de compra de ações são isentas.",
+      "Paga-se ganho de capital no exercício, sobre R$ 30, e de novo na venda, sobre os R$ 50 recebidos."
+    ],
+    "correta": 0,
+    "resolucao": "No Tema 1.226 (2024), o STJ decidiu que os planos de opção de compra de ações (stock options) têm natureza mercantil, e não remuneratória: o exercício da opção não é tratado como salário. O imposto incide como ganho de capital na venda das ações, sobre a diferença entre o valor de venda (R$ 50) e o custo de aquisição, que é o preço pago no exercício (R$ 10), com as alíquotas de 15% a 22,5% da Lei nº 13.259/2016."
+  },
+  {
+    "id": "legislacao-cap6-o7",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Os fundadores de uma startup de logística publicaram em suas redes sociais: \"Invista a partir de R$ 5 mil na nossa empresa e receba 3% ao mês garantidos\". Mais de 200 pessoas transferiram dinheiro diretamente para a conta da startup."
+      }
+    ],
+    "enunciado": "Qual é a avaliação jurídica dessa captação?",
+    "alternativas": [
+      "É oferta pública sem registro ou dispensa da CVM, e prometer retorno fixo agrava o risco de sanções e de crime.",
+      "É lícita, pois oferecer investimento em redes sociais não é oferta pública e não depende de nenhuma regra da CVM.",
+      "É lícita, desde que a startup registre os contratos em cartório e entregue recibo aos investidores.",
+      "É lícita, pois a LC 182/2021 permite que startups captem do público sem limite e sem nenhuma autorização.",
+      "É irregular só se algum investidor perder dinheiro, pois a CVM só age depois que há prejuízo comprovado."
+    ],
+    "correta": 0,
+    "resolucao": "Oferecer investimentos ao público em geral, como em redes sociais, é oferta pública e exige registro na CVM ou dispensa, como a do equity crowdfunding por plataforma autorizada (Resolução CVM nº 88/2022). Prometer rentabilidade fixa e garantida não combina com investimento de risco e pode indicar pirâmide financeira, crime contra a economia popular. A irregularidade existe na própria oferta, independentemente de perdas."
+  },
+  {
+    "id": "legislacao-cap6-o8",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Os sócios de uma microempresa de software, que recebeu aporte de um investidor-anjo, decidiram vender a empresa a uma grande companhia de tecnologia por R$ 12 milhões."
+      }
+    ],
+    "enunciado": "Pela Lei Complementar nº 123/2006, quais direitos o investidor-anjo tem nessa venda?",
+    "alternativas": [
+      "Preferência na compra e direito de vender o seu aporte junto, nas mesmas condições oferecidas aos sócios.",
+      "Nenhum, pois o investidor-anjo não é sócio e por isso não participa de nenhuma decisão de venda.",
+      "Direito de vetar a venda, pois o investidor-anjo tem voto nas decisões sobre o controle da empresa.",
+      "Direito de receber o dobro do valor aportado, pago pelos sócios, sempre que a empresa for vendida.",
+      "Só o resgate do aporte, desde que já tenham passado 2 anos, sem nenhum direito sobre o preço da venda."
+    ],
+    "correta": 0,
+    "resolucao": "A LC nº 123/2006 garante ao investidor-anjo, se os sócios decidirem vender a empresa, o direito de preferência na aquisição (art. 61-C) e o direito de venda conjunta da titularidade do aporte, nos mesmos termos e condições oferecidos aos sócios regulares (art. 61-D), uma espécie de tag along. Ele não é sócio nem tem voto, por isso não pode vetar a venda."
+  },
+  {
+    "id": "legislacao-cap6-o9",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma startup assinou um acordo de confidencialidade (NDA) com um parceiro, com multa de R$ 200 mil em caso de violação e sem cláusula sobre indenização adicional. O parceiro vazou o roadmap do produto a um concorrente, e a startup estima ter perdido R$ 1 milhão em contratos."
+      }
+    ],
+    "enunciado": "Pelo Código Civil, o que a startup pode exigir do ex-parceiro?",
+    "alternativas": [
+      "A multa, sem provar o prejuízo; para cobrar mais que ela, o contrato teria de prever indenização suplementar.",
+      "Só o prejuízo de R$ 1 milhão, pois a cláusula penal perde o efeito quando o dano é maior que a multa.",
+      "A multa e também R$ 1 milhão, pois a cláusula penal sempre se soma à indenização pelo prejuízo provado.",
+      "Nada, pois NDAs não têm validade no Brasil quando não são registrados em cartório de títulos.",
+      "A multa, mas só se provar que o prejuízo foi de pelo menos o mesmo valor, ou seja, R$ 200 mil."
+    ],
+    "correta": 0,
+    "resolucao": "A cláusula penal pode ser exigida sem que o credor alegue ou prove prejuízo (art. 416 do Código Civil). Se o dano for maior, o credor só pode cobrar a indenização suplementar se isso estiver previsto no contrato, e a multa vale como mínimo da indenização, cabendo provar o prejuízo excedente (parágrafo único). Por isso, a cláusula penal facilita a cobrança, e o NDA não depende de registro para valer."
+  },
+  {
+    "id": "legislacao-cap6-o10",
+    "disciplinaId": "legislacao-em-negocios-digitais",
+    "capituloId": "legislacao-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Quatro fintechs vão pedir autorização ao Banco Central: (1) uma que empresta o próprio dinheiro a pequenas empresas, por um aplicativo; (2) uma plataforma que conecta pessoas que querem investir a pessoas que querem empréstimos; (3) uma carteira digital em que o usuário guarda saldo e faz transferências; (4) uma empresa de maquininhas que habilita lojistas a aceitar pagamentos com cartão."
+      }
+    ],
+    "enunciado": "As fintechs 1, 2, 3 e 4 devem se enquadrar, respectivamente, como",
+    "alternativas": [
+      "SCD, SEP, instituição de pagamento emissora de moeda eletrônica e instituição de pagamento credenciadora.",
+      "SEP, SCD, instituição de pagamento emissora de moeda eletrônica e instituição de pagamento credenciadora.",
+      "SCD, SEP, instituição de pagamento credenciadora e instituição de pagamento emissora de moeda eletrônica.",
+      "SCD, plataforma de investimento participativo, instituição de pagamento emissora e banco comercial.",
+      "Banco comercial, SEP, instituição de pagamento emissora de moeda eletrônica e SCD."
+    ],
+    "correta": 0,
+    "resolucao": "A Sociedade de Crédito Direto (SCD) empresta com capital próprio, por plataforma eletrônica (1). A Sociedade de Empréstimo entre Pessoas (SEP) faz a ponte entre investidores e tomadores, o peer-to-peer lending (2). A instituição de pagamento emissora de moeda eletrônica guarda o saldo em conta de pagamento e permite transferências (3). A credenciadora habilita lojistas a aceitar cartões, como nas maquininhas (4). Todas seguem as regras do Banco Central."
   },
   {
     "id": "legislacao-cap7-q1",
