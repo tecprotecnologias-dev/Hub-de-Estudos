@@ -113,7 +113,7 @@
       },
       {
         "t": "codigo",
-        "texto": "console.log(\"API_TOKEN:\", mascarar(process.env.API_TOKEN));\n// API_TOKEN: **************cdef\nconsole.log(\"DB_PASSWORD:\", mascarar(process.env.DB_PASSWORD));\n// DB_PASSWORD: *********y123\n// E-mail nao e um dado sigiloso da mesma forma -- pode ser impresso direto\nconsole.log(\"ADMIN_EMAIL:\", process.env.ADMIN_EMAIL);"
+        "texto": "console.log(\"API_TOKEN:\", mascarar(process.env.API_TOKEN));\n// API_TOKEN: ***************cdef\nconsole.log(\"DB_PASSWORD:\", mascarar(process.env.DB_PASSWORD));\n// DB_PASSWORD: *********a123\n// E-mail nao e um dado sigiloso da mesma forma -- pode ser impresso direto\nconsole.log(\"ADMIN_EMAIL:\", process.env.ADMIN_EMAIL);"
       },
       {
         "t": "p",
@@ -271,7 +271,7 @@
       },
       {
         "t": "codigo",
-        "texto": "function atualizarCampo(campo, valor) {\n  setDados({ ...dados, [campo]: valor });\n}"
+        "texto": "type Campo = \"nome\" | \"email\" | \"mensagem\";\n\nfunction atualizarCampo(campo: Campo, valor: string) {\n  setDados({ ...dados, [campo]: valor });\n}"
       },
       {
         "t": "p",
@@ -393,11 +393,11 @@
     "capituloId": "web2-cap5",
     "tipo": "discursiva",
     "pratica": true,
-    "enunciado": "Classificando Componentes: Reveja os componentes Button.tsx, ProjetoCard.tsx e FormularioContato.tsx do seu projeto. Para cada um, decida: precisa de \"use client\", ou pode continuar Server Component?",
+    "enunciado": "Classificando Componentes: Reveja os componentes Botao.tsx e Card.tsx (Módulo 2) e FormularioContato.tsx (Módulo 3). Para cada um, decida: precisa de \"use client\", ou pode continuar Server Component?",
     "resolucao": [
       {
         "t": "p",
-        "texto": "Button.tsx – precisa de \"use client\" se usar onClick (o exemplo do Módulo 2 não usava, mas normalmente um botão real dispara alguma ação). ProjetoCard.tsx – pode continuar Server Component: só recebe props e exibe informação, sem estado nem eventos. FormularioContato.tsx – precisa de \"use client\", porque usa useState (Módulo 3) para controlar os campos do formulário."
+        "texto": "Botao.tsx – precisa de \"use client\" se usar onClick (o exemplo do Módulo 2 não usava, mas normalmente um botão real dispara alguma ação). Card.tsx – pode continuar Server Component: só recebe props (titulo, children e footer) e exibe informação, sem estado nem eventos. FormularioContato.tsx – precisa de \"use client\", porque usa useState (Módulo 3) para controlar os campos do formulário."
       },
       {
         "t": "codigo",
@@ -457,7 +457,7 @@
       },
       {
         "t": "p",
-        "texto": "Atenção: Cada <BotaoCurtir /> tem seu próprio estado independente – clicar em \"Curtir\" num post não afeta os outros. Isso acontece porque cada instância do componente é uma \"cópia\" separada, com sua própria memória"
+        "texto": "Atenção: Cada <BotaoCurtir /> tem seu próprio estado independente – clicar em \"Curtir\" num post não afeta os outros. Isso acontece porque cada instância do componente é uma \"cópia\" separada, com sua própria memória."
       }
     ]
   },
@@ -520,7 +520,11 @@
       },
       {
         "t": "codigo",
-        "texto": "desafio-node/\nnode_modules/       (vazio, já que ainda não instalamos nada)\nindex.js\npackage.json\npackage-lock.json"
+        "texto": "desafio-node/\n  index.js\n  package.json"
+      },
+      {
+        "t": "p",
+        "texto": "O npm init -y cria só o package.json. A pasta node_modules/ e o package-lock.json aparecem depois do primeiro npm install, como no exercício seguinte."
       }
     ]
   },
@@ -595,7 +599,7 @@
       },
       {
         "t": "p",
-        "texto": "Atenção: o script \"start\" do npm não repassa argumentos automaticamente — pra passar o nome junto com npm start, o comando certo é npm start -- Maria (com -- antes do argumento). Sem o --, o npm tentaria interpretar Maria como uma opção do próprio npm."
+        "texto": "Atenção: o npm repassa ao script o que vem depois do nome dele, por isso npm start Maria funciona. O -- (npm start -- Maria) só é obrigatório quando o argumento começa com hífen, como --verbose: sem ele, o npm entende a opção como dele. Escrever o -- sempre também funciona."
       },
       {
         "t": "p",
@@ -621,6 +625,10 @@
       "Renderize 3 cartões diferentes na tela passando dados variados."
     ],
     "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1 — Criar o projeto com o Vite:"
+      },
       {
         "t": "codigo",
         "texto": "npm create vite@latest perfil-cards -- --template react\ncd perfil-cards\nnpm install"
@@ -760,7 +768,7 @@
       },
       {
         "t": "p",
-        "texto": "Atenção: repare em Number(e.target.value) no <select> — o valor de um <select> sempre chega como texto (string), mesmo quando as <option> têm números. Sem essa conversão, contador + passo faria uma concatenação de texto (\"05\" + \"1\" viraria \"051\") em vez de somar de verdade."
+        "texto": "Atenção: repare em Number(e.target.value) no <select> — o valor de um <select> sempre chega como texto (string), mesmo quando as <option> têm números. Sem essa conversão, contador + passo faria uma concatenação de texto (0 + \"5\" viraria \"05\", e depois \"05\" + \"5\" viraria \"055\") em vez de somar de verdade."
       },
       {
         "t": "p",
@@ -921,7 +929,7 @@
       },
       {
         "t": "p",
-        "texto": "Atenção: as três pastas (sobre/, produtos/, components/) precisam ficar lado a lado, todas soltas direto dentro de app/ — nunca uma dentro da outra. E o Navbar vai dentro de app/components/, não dentro de uma das pastas de rota."
+        "texto": "Atenção: as três pastas (sobre/, produtos/, components/) ficam lado a lado, direto dentro de app/. Se uma ficasse dentro da outra, o endereço mudaria: app/sobre/produtos/ viraria /sobre/produtos. E o Navbar vai dentro de app/components/, não dentro de uma das pastas de rota."
       },
       {
         "t": "p",
@@ -929,7 +937,7 @@
       },
       {
         "t": "codigo",
-        "texto": "loja-next/\n  node_modules/\n  public/\n  app/\n    components/\n      Navbar.js\n    sobre/\n      page.js\n    produtos/\n      page.js\n    layout.js\n    page.js\n    globals.css\n  package.json\n  next.config.js"
+        "texto": "loja-next/\n  node_modules/\n  public/\n  app/\n    components/\n      Navbar.js\n    sobre/\n      page.js\n    produtos/\n      page.js\n    layout.js\n    page.js\n    globals.css\n  package.json\n  next.config.mjs"
       }
     ]
   },
@@ -960,7 +968,7 @@
       },
       {
         "t": "codigo",
-        "texto": "// app/produtos/[id]/page.js\nimport Link from \"next/link\";\nexport default function DetalheProduto({ params }) {\n  return (\n    <main>\n      <h1>Exibindo detalhes do produto número: {params.id}</h1>\n      <Link href=\"/produtos\">Voltar para Produtos</Link>\n    </main>\n  );\n}"
+        "texto": "// app/produtos/[id]/page.js\nimport Link from \"next/link\";\nexport default async function DetalheProduto({ params }) {\n  const { id } = await params;\n  return (\n    <main>\n      <h1>Exibindo detalhes do produto número: {id}</h1>\n      <Link href=\"/produtos\">Voltar para Produtos</Link>\n    </main>\n  );\n}"
       },
       {
         "t": "p",
@@ -976,7 +984,7 @@
       },
       {
         "t": "p",
-        "texto": "Repare também que o Next.js entrega automaticamente o valor da URL dentro do objeto params — params.id é o pedacinho da URL que corresponde ao nome da pasta entre colchetes."
+        "texto": "Repare também que o Next.js entrega o valor da URL dentro de params: o id é o pedacinho da URL que corresponde ao nome da pasta entre colchetes. A partir do Next.js 15, params é uma Promise; por isso a função é async e faz await params antes de ler o id. Escrever params.id direto, sem await, dá erro no Next.js 16."
       },
       {
         "t": "p",
@@ -984,7 +992,7 @@
       },
       {
         "t": "codigo",
-        "texto": "loja-next/\n  node_modules/\n  public/\n  app/\n    components/\n      Navbar.js\n    sobre/\n      page.js\n    produtos/\n      page.js\n      [id]/\n        page.js\n    layout.js\n    page.js\n    globals.css\n  package.json\n  next.config.js"
+        "texto": "loja-next/\n  node_modules/\n  public/\n  app/\n    components/\n      Navbar.js\n    sobre/\n      page.js\n    produtos/\n      page.js\n      [id]/\n        page.js\n    layout.js\n    page.js\n    globals.css\n  package.json\n  next.config.mjs"
       }
     ]
   },
@@ -1032,6 +1040,10 @@
       },
       {
         "t": "p",
+        "texto": "Atenção: o script usa import e await fora de função, recursos de ES Modules, e o package.json criado pelo create-next-app não tem \"type\": \"module\". As versões atuais do Node.js percebem isso sozinhas e rodam o script mostrando um aviso. Para não ter o aviso (ou se o seu Node.js for antigo e der erro), salve o arquivo como gerar-produtos.mjs e rode node gerar-produtos.mjs 6."
+      },
+      {
+        "t": "p",
         "texto": "Passo 3 — Rodar o script pra gerar os produtos:"
       },
       {
@@ -1052,7 +1064,7 @@
       },
       {
         "t": "p",
-        "texto": "Atenção: esse componente usa useState (interatividade), então precisa da diretiva \"use client\" no topo — sem ela, o Next.js recusaria compilar, exatamente como vimos no Módulo 5."
+        "texto": "Atenção: esse componente usa useState (interatividade), então precisa da diretiva \"use client\" no topo — sem ela, o Next.js mostra um erro, exatamente como vimos no Módulo 5."
       },
       {
         "t": "p",
@@ -1112,7 +1124,11 @@
       },
       {
         "t": "codigo",
-        "texto": "// app/produtos/[id]/page.js\nimport Link from \"next/link\";\nexport default function DetalheProduto({ params }) {\n  return (\n    <main>\n      <h1>Detalhes do Produto</h1>\n      <p>Exibindo detalhes do produto número: {params.id}</p>\n      <Link href=\"/produtos\">Voltar para Produtos</Link>\n    </main>\n  );\n}"
+        "texto": "// app/produtos/[id]/page.js\nimport Link from \"next/link\";\nimport { readFile } from \"fs/promises\";\nimport { join } from \"path\";\nexport default async function DetalheProduto({ params }) {\n  const { id } = await params;\n  const caminho = join(process.cwd(), \"public\", \"produtos.json\");\n  const produtos = JSON.parse(await readFile(caminho, \"utf-8\"));\n  const produto = produtos.find((p) => p.id === Number(id));\n  return (\n    <main>\n      <h1>Detalhes do Produto</h1>\n      <p>Exibindo detalhes do produto número: {id}</p>\n      {produto ? (\n        <p>{produto.nome} -- R$ {produto.preco.toFixed(2)}</p>\n      ) : (\n        <p>Produto não encontrado.</p>\n      )}\n      <Link href=\"/produtos\">Voltar para Produtos</Link>\n    </main>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: essa página continua Server Component. Ela lê o produtos.json direto do disco com fs/promises (Módulo 1), sem useEffect, e procura o produto pelo id. Como params é uma Promise a partir do Next.js 15, a função é async e faz await params; params.id direto, sem await, dá erro no Next.js 16."
       },
       {
         "t": "p",
@@ -1128,7 +1144,7 @@
       },
       {
         "t": "codigo",
-        "texto": "npm run dev\n/ → título + parágrafo de boas-vindas\n/sobre → texto sobre a loja\n/produtos → os 6 produtos gerados, cada um com contador +/-\n/produtos/101 → \"Exibindo detalhes do produto número: 101\" + botão de voltar"
+        "texto": "npm run dev\n/ → título + parágrafo de boas-vindas\n/sobre → texto sobre a loja\n/produtos → os 6 produtos gerados, cada um com contador +/-\n/produtos/3 → nome e preço do produto 3 + botão de voltar\n/produtos/101 → \"Produto não encontrado.\" (só existem 6 produtos) + botão de voltar"
       },
       {
         "t": "p",
@@ -1136,7 +1152,7 @@
       },
       {
         "t": "codigo",
-        "texto": "mini-loja/\n  node_modules/\n  public/\n    produtos.json\n  app/\n    components/\n      Navbar.js\n      Container.js\n      ProdutoCard.js\n    sobre/\n      page.js\n    produtos/\n      page.js\n      [id]/\n        page.js\n    layout.js\n    page.js\n    globals.css\n  gerar-produtos.js\n  package.json\n  next.config.js"
+        "texto": "mini-loja/\n  node_modules/\n  public/\n    produtos.json\n  app/\n    components/\n      Navbar.js\n      Container.js\n      ProdutoCard.js\n    sobre/\n      page.js\n    produtos/\n      page.js\n      [id]/\n        page.js\n    layout.js\n    page.js\n    globals.css\n  gerar-produtos.js\n  package.json\n  next.config.mjs"
       }
     ]
   },
@@ -1271,14 +1287,14 @@
     ],
     "enunciado": "Qual alternativa reescreve corretamente esse módulo e essa importação no formato ES Modules?",
     "alternativas": [
-      "No utils.js: export { somar, PI }; e, no outro arquivo: import { somar, PI } from \"./utils\";",
-      "No utils.js: module.export = { somar, PI }; e, no outro arquivo: import { somar, PI } = require(\"./utils\");",
-      "No utils.js: exports.default = { somar, PI }; e, no outro arquivo: const { somar, PI } = import(\"./utils\");",
-      "No utils.js: export require { somar, PI }; e, no outro arquivo: import require(\"./utils\");",
-      "No utils.js: module.exports = { somar, PI }; e, no outro arquivo: import * from \"./utils\";"
+      "No utils.js: export { somar, PI }; e, no outro arquivo: import { somar, PI } from \"./utils.js\";",
+      "No utils.js: module.export = { somar, PI }; e, no outro arquivo: import { somar, PI } = require(\"./utils.js\");",
+      "No utils.js: exports.default = { somar, PI }; e, no outro arquivo: const { somar, PI } = import(\"./utils.js\");",
+      "No utils.js: export require { somar, PI }; e, no outro arquivo: import require(\"./utils.js\");",
+      "No utils.js: module.exports = { somar, PI }; e, no outro arquivo: import * from \"./utils.js\";"
     ],
     "correta": 0,
-    "resolucao": "Em ES Modules, a exportação nomeada usa export (export { somar, PI } ou export antes de cada declaração) e a importação usa import { ... } from \"...\". require e module.exports pertencem ao CommonJS, e import * exige um nome (import * as Utils from ...)."
+    "resolucao": "Em ES Modules, a exportação nomeada usa export (export { somar, PI } ou export antes de cada declaração) e a importação usa import { ... } from \"...\". No Node.js, o caminho de um arquivo do próprio projeto leva a extensão (./utils.js). require e module.exports pertencem ao CommonJS, e import * exige um nome (import * as Utils from ...)."
   },
   {
     "id": "web2-cap1-o7",
@@ -1765,7 +1781,7 @@
         "texto": "function Lista() {\n  const [itens, setItens] = useState<string[]>([]);\n\n  useEffect(() => {\n    setItens([...itens, \"novo item\"]);\n  }, [itens]);\n\n  return <p>{itens.length} itens</p>;\n}"
       }
     ],
-    "enunciado": "O que acontece quando o componente abaixo aparece na tela?",
+    "enunciado": "O que acontece quando o componente acima aparece na tela?",
     "alternativas": [
       "O efeito entra em repetição sem fim: ele altera itens, que está no array de dependências, e isso dispara o efeito de novo.",
       "O efeito roda uma única vez e itens fica com um elemento.",
@@ -1864,14 +1880,14 @@
     "nivel": "facil",
     "enunciado": "Sobre o App Router e o Pages Router do Next.js, assinale a alternativa INCORRETA.",
     "alternativas": [
-      "No App Router, os componentes são Client Components por padrão, como no Pages Router.",
-      "O App Router usa a pasta app/ e é o padrão dos projetos novos desde a versão 13.",
+      "No App Router, todo componente é Client Component por padrão e só vira Server Component com uma diretiva.",
+      "O App Router usa a pasta app/ e é o padrão dos projetos novos desde a versão 13.4.",
       "O App Router permite layouts aninhados, com um layout.tsx em cada pasta de rota.",
       "O Pages Router usa a pasta pages/ e um layout único definido em _app.js.",
-      "No Pages Router, os componentes são Client Components por padrão."
+      "No Pages Router não existem Server Components: o código de todos os componentes vai para o navegador."
     ],
     "correta": 0,
-    "resolucao": "No App Router, todo componente dentro de app/ é Server Component por padrão; só vira Client Component com a diretiva \"use client\". O padrão Client é característica do Pages Router. As demais afirmações estão corretas."
+    "resolucao": "No App Router, todo componente dentro de app/ é Server Component por padrão; só vira Client Component com a diretiva \"use client\". É no Pages Router que o código de todos os componentes vai para o navegador. As demais afirmações estão corretas."
   },
   {
     "id": "web2-cap4-o4",

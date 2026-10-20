@@ -181,15 +181,16 @@ afirmativas(
 multipla(
     1, 'medio',
     'Qual alternativa reescreve corretamente esse módulo e essa importação no formato ES Modules?',
-    'No utils.js: export { somar, PI }; e, no outro arquivo: import { somar, PI } from "./utils";',
+    'No utils.js: export { somar, PI }; e, no outro arquivo: import { somar, PI } from "./utils.js";',
     [
-        'No utils.js: module.export = { somar, PI }; e, no outro arquivo: import { somar, PI } = require("./utils");',
-        'No utils.js: exports.default = { somar, PI }; e, no outro arquivo: const { somar, PI } = import("./utils");',
-        'No utils.js: export require { somar, PI }; e, no outro arquivo: import require("./utils");',
-        'No utils.js: module.exports = { somar, PI }; e, no outro arquivo: import * from "./utils";',
+        'No utils.js: module.export = { somar, PI }; e, no outro arquivo: import { somar, PI } = require("./utils.js");',
+        'No utils.js: exports.default = { somar, PI }; e, no outro arquivo: const { somar, PI } = import("./utils.js");',
+        'No utils.js: export require { somar, PI }; e, no outro arquivo: import require("./utils.js");',
+        'No utils.js: module.exports = { somar, PI }; e, no outro arquivo: import * from "./utils.js";',
     ],
     'Em ES Modules, a exportação nomeada usa export (export { somar, PI } ou export antes de cada declaração) '
-    'e a importação usa import { ... } from "...". require e module.exports pertencem ao CommonJS, e import * exige um nome (import * as Utils from ...).',
+    'e a importação usa import { ... } from "...". No Node.js, o caminho de um arquivo do próprio projeto leva a extensão (./utils.js). '
+    'require e module.exports pertencem ao CommonJS, e import * exige um nome (import * as Utils from ...).',
     contexto=[
         p('Um projeto antigo em CommonJS tem o módulo e a importação abaixo, e será migrado para ES Modules.'),
         codigo('''
@@ -606,7 +607,7 @@ assercao(
 
 multipla(
     3, 'dificil',
-    'O que acontece quando o componente abaixo aparece na tela?',
+    'O que acontece quando o componente acima aparece na tela?',
     'O efeito entra em repetição sem fim: ele altera itens, que está no array de dependências, e isso dispara o efeito de novo.',
     [
         'O efeito roda uma única vez e itens fica com um elemento.',
@@ -683,15 +684,15 @@ multipla(
 multipla(
     4, 'facil',
     'Sobre o App Router e o Pages Router do Next.js, assinale a alternativa INCORRETA.',
-    'No App Router, os componentes são Client Components por padrão, como no Pages Router.',
+    'No App Router, todo componente é Client Component por padrão e só vira Server Component com uma diretiva.',
     [
-        'O App Router usa a pasta app/ e é o padrão dos projetos novos desde a versão 13.',
+        'O App Router usa a pasta app/ e é o padrão dos projetos novos desde a versão 13.4.',
         'O App Router permite layouts aninhados, com um layout.tsx em cada pasta de rota.',
         'O Pages Router usa a pasta pages/ e um layout único definido em _app.js.',
-        'No Pages Router, os componentes são Client Components por padrão.',
+        'No Pages Router não existem Server Components: o código de todos os componentes vai para o navegador.',
     ],
     'No App Router, todo componente dentro de app/ é Server Component por padrão; só vira Client Component com a diretiva "use client". '
-    'O padrão Client é característica do Pages Router. As demais afirmações estão corretas.',
+    'É no Pages Router que o código de todos os componentes vai para o navegador. As demais afirmações estão corretas.',
 )
 
 multipla(

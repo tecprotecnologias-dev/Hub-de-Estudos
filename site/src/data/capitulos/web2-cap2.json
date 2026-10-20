@@ -22,7 +22,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "\"React substitui o JavaScript?\" – Não! React é só uma biblioteca escrita <em>em</em> JavaScript. Tudo que você já aprendeu no Módulo 1 (funções, <em>arrays</em>, módulos, <code>import</code>/<code>export</code>) continua valendo – React só adiciona um jeito organizado de construir interfaces em cima disso."
+     "html": "\"React substitui o JavaScript?\" – Não! React é só uma biblioteca escrita <em>em</em> JavaScript. Tudo que você já sabe de JavaScript (funções, <em>arrays</em> e os módulos com <code>import</code>/<code>export</code> do Módulo 1) continua valendo – React só adiciona um jeito organizado de construir interfaces em cima disso."
     }
    ]
   },
@@ -175,7 +175,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "<em>Props</em> são <strong>somente leitura</strong> (<em>read-only</em>). Um componente filho <strong>nunca</strong> deve tentar alterar as <em>props</em> que recebeu (<code>props.texto = \"outro valor\"</code> gera erro). Se um valor precisa mudar ao longo do tempo, isso é <strong>estado</strong> (<em>state</em>) – assunto do Módulo 3, com o <code>useState</code>."
+     "html": "<em>Props</em> são <strong>somente leitura</strong> (<em>read-only</em>). Um componente filho <strong>nunca</strong> deve tentar alterar as <em>props</em> que recebeu (em desenvolvimento, o React congela o objeto das <em>props</em>, e <code>props.texto = \"outro valor\"</code> gera erro). Se um valor precisa mudar ao longo do tempo, isso é <strong>estado</strong> (<em>state</em>) – assunto do Módulo 3, com o <code>useState</code>."
     }
    ]
   },
@@ -190,7 +190,7 @@
   },
   {
    "t": "codigo",
-   "texto": "// Card.tsx\ninterface CardProps {\n  titulo: string;\n  children: React.ReactNode;\n  footer?: React.ReactNode;\n}\n\nfunction Card({ titulo, children, footer }: CardProps) {\n  return (\n    <div className=\"card\">\n      <div className=\"card__header\">\n        <h2>{titulo}</h2>\n      </div>\n      <div className=\"card__body\">\n        {children}\n      </div>\n      {footer && (\n        <div className=\"card__footer\">{footer}</div>\n      )}\n    </div>\n  );\n}\n\n// Usando com children\nfunction App() {\n  return (\n    <Card\n      titulo=\"Programacao Web II\"\n      footer={<button>Ver mais</button>}\n    >\n      <p>Aprenda Next.js, React e Prisma do zero ao deploy.</p>\n      <ul>\n        <li>7 modulos</li>\n        <li>Projeto final fullstack</li>\n      </ul>\n    </Card>\n  );\n}"
+   "texto": "// Card.tsx\ninterface CardProps {\n  titulo: string;\n  children: React.ReactNode;\n  footer?: React.ReactNode;\n}\n\nfunction Card({ titulo, children, footer }: CardProps) {\n  return (\n    <div className=\"card\">\n      <div className=\"card__header\">\n        <h2>{titulo}</h2>\n      </div>\n      <div className=\"card__body\">\n        {children}\n      </div>\n      {footer && (\n        <div className=\"card__footer\">{footer}</div>\n      )}\n    </div>\n  );\n}\n\n// Usando com children\nfunction App() {\n  return (\n    <Card\n      titulo=\"Programacao Web II\"\n      footer={<button>Ver mais</button>}\n    >\n      <p>Aprenda Node.js, React e Next.js na pratica.</p>\n      <ul>\n        <li>Componentes e props</li>\n        <li>Hooks e estado</li>\n      </ul>\n    </Card>\n  );\n}"
   },
   {
    "t": "p",
@@ -227,7 +227,7 @@
   },
   {
    "t": "p",
-   "html": "Para renderizar uma lista de itens (um <em>array</em> de dados), usamos o método <code>.map()</code> do JavaScript – já visto de relance no Módulo 1 – combinado com JSX."
+   "html": "Para renderizar uma lista de itens (um <em>array</em> de dados), usamos o método <code>.map()</code> do JavaScript, que cria um novo <em>array</em> transformando cada item, combinado com JSX."
   },
   {
    "t": "codigo",

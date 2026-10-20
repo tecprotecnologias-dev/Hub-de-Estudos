@@ -32,7 +32,7 @@
     ],
     [
      "Sem backend embutido",
-     "API Routes (backend dentro do mesmo projeto)"
+     "Route Handlers, as antigas API Routes (backend dentro do mesmo projeto)"
     ],
     [
      "SEO manual",
@@ -58,7 +58,7 @@
   },
   {
    "t": "p",
-   "html": "O Next.js tem dois sistemas de roteamento. Projetos mais antigos usam o <strong>Pages Router</strong> (pasta <code>pages/</code>); todo projeto novo usa o <strong>App Router</strong> (pasta <code>app/</code>, padrão desde a versão 13) – é o que vamos usar no curso inteiro."
+   "html": "O Next.js tem dois sistemas de roteamento. Projetos mais antigos usam o <strong>Pages Router</strong> (pasta <code>pages/</code>); todo projeto novo usa o <strong>App Router</strong> (pasta <code>app/</code>, padrão dos projetos novos desde a versão 13.4) – é o que vamos usar no curso inteiro."
   },
   {
    "t": "tabela",
@@ -73,7 +73,7 @@
     ],
     [
      "Server Components por padrão",
-     "Client Components por padrão"
+     "Sem Server Components: o código de todos os componentes vai para o navegador"
     ],
     [
      "Layouts aninhados (<code>layout.js</code>)",
@@ -113,7 +113,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "Diferente do Vite (Módulo 2), aqui criamos um projeto NOVO em vez de instalar Next.js dentro da pasta antiga."
+     "html": "O Next.js não é instalado dentro do projeto do Vite (Módulo 2): ele é um projeto NOVO, em outra pasta, criado pelo <code>create-next-app</code>."
     }
    ]
   },
@@ -193,7 +193,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "As pastas de rota (<code>sobre/</code>, <code>projetos/</code>, <code>blog/</code>) devem ficar todas lado a lado, soltas direto dentro de <code>app/</code> – nunca uma dentro da outra. Criar <code>app/blog/projetos/</code> por engano (em vez de <code>app/projetos/</code>) faz a URL virar <code>/blog/projetos</code> em vez de <code>/projetos</code>. Depois de criar as pastas, confira visualmente no Explorador de Arquivos que todas estão no mesmo nível de recuo."
+     "html": "Para ter os endereços <code>/sobre</code>, <code>/projetos</code> e <code>/blog</code>, as pastas <code>sobre/</code>, <code>projetos/</code> e <code>blog/</code> ficam lado a lado, direto dentro de <code>app/</code>. Uma pasta dentro da outra cria um endereço aninhado: <code>app/blog/projetos/</code> vira <code>/blog/projetos</code>, e não <code>/projetos</code>. Isso é útil quando é o que você quer (como no <code>/blog/[slug]</code> da seção 4.7), mas é um engano comum quando não é. Depois de criar as pastas, confira no Explorador de Arquivos se cada uma ficou no nível certo."
     }
    ]
   },
@@ -244,6 +244,14 @@
   {
    "t": "codigo",
    "texto": "app/\n  layout.tsx           <- envolve o site inteiro\n  page.tsx\n  blog/\n    layout.tsx          <- envolve so as paginas do blog\n    page.tsx             -> /blog\n    [slug]/\n      page.tsx            -> /blog/qualquer-coisa"
+  },
+  {
+   "t": "p",
+   "html": "A pasta <code>[slug]</code>, com colchetes, é um <strong>segmento dinâmico</strong>: atende <code>/blog/primeiro-post</code>, <code>/blog/novidades</code> e qualquer outro valor nesse trecho da URL. A página recebe esse valor em <code>params</code>. A partir do Next.js 15, <code>params</code> é uma <em>Promise</em>: a página precisa ser <code>async</code> e usar <code>await</code> antes de ler o valor."
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/blog/[slug]/page.tsx\nexport default async function Post({\n  params,\n}: {\n  params: Promise<{ slug: string }>;\n}) {\n  const { slug } = await params;\n  return <h1>Post: {slug}</h1>;\n}"
   },
   {
    "t": "p",

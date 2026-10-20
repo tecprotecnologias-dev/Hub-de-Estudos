@@ -54,7 +54,7 @@
     ],
     [
      "Acesso ao DOM",
-     "Sim – <code>document</code>, <code>window</code>, <code>fetch</code>, <code>localStorage</code>",
+     "Sim – <code>document</code>, <code>window</code>, <code>localStorage</code>",
      "Não"
     ],
     [
@@ -114,7 +114,7 @@
   },
   {
    "t": "codigo",
-   "texto": "# Verificar versoes instaladas\n$ node --version   # v20.x.x ou superior\n$ npm --version    # 10.x.x\n\n# Criar projeto novo (gera package.json)\n$ npm init -y      # -y aceita todos os defaults\n\n# INSTALAR PACOTES\n$ npm install express        # dependencia de producao (vai para \"dependencies\")\n$ npm install -D typescript  # dependencia de desenvolvimento (\"devDependencies\")\n$ npm install -g nodemon     # instalacao global -- disponivel em qualquer pasta\n\n# ATALHOS\n$ npm i axios            # i = install\n$ npm i -D @types/node   # tipos TypeScript para Node\n\n# REMOVER\n$ npm uninstall lodash\n$ npm un lodash           # atalho\n\n# LISTAR\n$ npm list        # dependencias do projeto\n$ npm list -g     # pacotes globais\n$ npm outdated    # pacotes com versoes mais novas disponiveis\n$ npm update      # atualizar todos para versoes compativeis\n\n# EXECUTAR SCRIPTS do package.json\n$ npm run dev     # executa script \"dev\"\n$ npm run build   # executa script \"build\"\n$ npm start       # atalho para \"start\" (sem run)\n$ npm test        # atalho para \"test\""
+   "texto": "# Verificar versoes instaladas\n$ node --version   # v22.x.x ou superior\n$ npm --version    # 10.x.x ou superior\n\n# Criar projeto novo (gera package.json)\n$ npm init -y      # -y aceita todos os defaults\n\n# INSTALAR PACOTES\n$ npm install express        # dependencia de producao (vai para \"dependencies\")\n$ npm install -D typescript  # dependencia de desenvolvimento (\"devDependencies\")\n$ npm install -g nodemon     # instalacao global -- disponivel em qualquer pasta\n\n# ATALHOS\n$ npm i axios            # i = install\n$ npm i -D @types/node   # tipos TypeScript para Node\n\n# REMOVER\n$ npm uninstall lodash\n$ npm un lodash           # atalho\n\n# LISTAR\n$ npm list        # dependencias do projeto\n$ npm list -g     # pacotes globais\n$ npm outdated    # pacotes com versoes mais novas disponiveis\n$ npm update      # atualizar todos para versoes compativeis\n\n# EXECUTAR SCRIPTS do package.json\n$ npm run dev     # executa script \"dev\"\n$ npm run build   # executa script \"build\"\n$ npm start       # atalho para \"start\" (sem run)\n$ npm test        # atalho para \"test\""
   },
   {
    "t": "h2",
@@ -137,8 +137,12 @@
    ]
   },
   {
+   "t": "p",
+   "html": "No exemplo abaixo, os comentários com <code>//</code> estão aí só para explicar cada linha. O JSON não aceita comentários: no <code>package.json</code> de verdade eles não podem aparecer, senão o <code>npm</code> não consegue ler o arquivo."
+  },
+  {
    "t": "codigo",
-   "texto": "{\n  \"name\": \"meu-projeto\",\n  \"version\": \"1.0.0\",\n  \"description\": \"Aplicacao web fullstack com Next.js\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",         // npm run dev -> inicia servidor de desenvolvimento\n    \"build\": \"next build\",     // npm run build -> compila para producao\n    \"start\": \"next start\",     // npm start -> inicia servidor de producao\n    \"lint\": \"next lint\",       // npm run lint -> verifica erros de codigo\n    \"db:push\": \"prisma db push\",       // sincroniza schema com banco\n    \"db:studio\": \"prisma studio\"       // abre interface visual do banco\n  },\n  \"dependencies\": {\n    \"next\": \"14.x.x\",          // versoes de producao -- instaladas em deploy\n    \"react\": \"18.x.x\",\n    \"react-dom\": \"18.x.x\",\n    \"@prisma/client\": \"5.x.x\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"5.x.x\",     // so em desenvolvimento -- nao vao para producao\n    \"@types/node\": \"20.x.x\",\n    \"@types/react\": \"18.x.x\",\n    \"prisma\": \"5.x.x\",\n    \"tailwindcss\": \"3.x.x\",\n    \"eslint\": \"8.x.x\"\n  }\n}"
+   "texto": "{\n  \"name\": \"meu-projeto\",\n  \"version\": \"1.0.0\",\n  \"description\": \"Aplicacao web fullstack com Next.js\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",         // npm run dev -> inicia servidor de desenvolvimento\n    \"build\": \"next build\",     // npm run build -> compila para producao\n    \"start\": \"next start\",     // npm start -> inicia servidor de producao\n    \"lint\": \"eslint\",          // npm run lint -> verifica erros de codigo\n    \"db:push\": \"prisma db push\",       // sincroniza schema com banco\n    \"db:studio\": \"prisma studio\"       // abre interface visual do banco\n  },\n  \"dependencies\": {\n    \"next\": \"16.x.x\",          // necessarias para a aplicacao rodar\n    \"react\": \"19.x.x\",\n    \"react-dom\": \"19.x.x\",\n    \"@prisma/client\": \"7.x.x\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"5.x.x\",     // ferramentas de desenvolvimento e de build\n    \"@types/node\": \"24.x.x\",\n    \"@types/react\": \"19.x.x\",\n    \"prisma\": \"7.x.x\",\n    \"tailwindcss\": \"4.x.x\",\n    \"eslint\": \"9.x.x\"\n  }\n}"
   },
   {
    "t": "h2",
@@ -154,6 +158,21 @@
    "texto": "// --- COMMONJS (formato legado, ainda muito comum) ---\n\n// Exportar (arquivo: utils.js)\nfunction somar(a, b) { return a + b; }\nconst PI = 3.14159;\n\nmodule.exports = { somar, PI };   // exportar objeto\nmodule.exports = somar;           // exportar funcao diretamente\n\n// Importar\nconst { somar, PI } = require(\"./utils\");\nconst fs = require(\"fs\");            // modulo nativo\nconst express = require(\"express\");  // pacote npm\n\n\n// --- ES MODULES (formato moderno -- padrao em Next.js/TS) ---\n\n// Exportar (arquivo: utils.ts)\nexport function somar(a: number, b: number): number { return a + b; }\nexport const PI = 3.14159;\nexport default function principal() {}   // exportacao padrao\n\n// Importar\nimport { somar, PI } from \"./utils\";\nimport principal from \"./utils\";\nimport * as Utils from \"./utils\";   // importar tudo com namespace\n\n// Modulos nativos do Node.js com ES Modules\nimport { readFile, writeFile } from \"fs/promises\";\nimport { join, dirname } from \"path\";\nimport { fileURLToPath } from \"url\";\n\n// __dirname nao existe em ESM -- equivalente:\nconst __filename = fileURLToPath(import.meta.url);\nconst __dirname = dirname(__filename);"
   },
   {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Para usar <code>import</code> e <code>export</code> em arquivos <code>.js</code> executados direto pelo Node.js, acrescente <code>\"type\": \"module\"</code> ao <code>package.json</code> (ou use a extensão <code>.mjs</code>). Sem isso, o Node.js espera CommonJS: versões antigas dão erro de sintaxe, e as atuais rodam o arquivo, mas mostram um aviso (<code>MODULE_TYPELESS_PACKAGE_JSON</code>)."
+    },
+    {
+     "t": "p",
+     "html": "Nesse modo, o caminho de um arquivo do próprio projeto leva a extensão: <code>import { somar, PI } from \"./utils.js\"</code>. Sem o <code>.js</code>, o Node.js responde com <code>ERR_MODULE_NOT_FOUND</code>. Em projetos com Next.js, Vite ou TypeScript, quem resolve os caminhos é a ferramenta, e a extensão pode ficar de fora, como no exemplo acima."
+    }
+   ]
+  },
+  {
    "t": "h2",
    "id": "1-5-servidor-http-com-node-js-nativo",
    "texto": "1.5 Servidor HTTP com Node.js Nativo"
@@ -165,6 +184,10 @@
   {
    "t": "codigo",
    "texto": "// servidor.js -- servidor HTTP basico sem framework\nimport { createServer } from \"http\";\nimport { readFile } from \"fs/promises\";\nimport { join, extname } from \"path\";\n\nconst PORT = process.env.PORT || 3000;\n\nconst MIME = {\n  \".html\": \"text/html\",\n  \".css\": \"text/css\",\n  \".js\": \"application/javascript\",\n  \".json\": \"application/json\",\n  \".png\": \"image/png\",\n};\n\nconst server = createServer(async (req, res) => {\n  // req = IncomingMessage (dados da requisicao)\n  // res = ServerResponse (o que enviamos de volta)\n  const url = req.url === \"/\" ? \"/index.html\" : req.url;\n  const filePath = join(process.cwd(), \"public\", url);\n\n  try {\n    const content = await readFile(filePath);\n    const ext = extname(filePath);\n    const mime = MIME[ext] || \"application/octet-stream\";\n\n    res.writeHead(200, { \"Content-Type\": mime });\n    res.end(content);\n  } catch {\n    res.writeHead(404, { \"Content-Type\": \"text/plain\" });\n    res.end(\"404 -- Arquivo nao encontrado\");\n  }\n});\n\nserver.listen(PORT, () => {\n  console.log(`Servidor rodando em http://localhost:${PORT}`);\n});"
+  },
+  {
+   "t": "p",
+   "html": "Como o arquivo usa <code>import</code>, o <code>package.json</code> do projeto precisa ter <code>\"type\": \"module\"</code> (seção 1.4). Para testar, crie a pasta <code>public/</code> com um <code>index.html</code>, rode <code>node servidor.js</code> e abra <code>http://localhost:3000</code>. O mesmo vale para o <code>tasks.js</code> da seção 1.7."
   },
   {
    "t": "h2",

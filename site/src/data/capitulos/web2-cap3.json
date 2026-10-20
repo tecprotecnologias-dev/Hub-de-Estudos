@@ -9,7 +9,7 @@
   },
   {
    "t": "p",
-   "html": "Até agora, os componentes que construímos (<code>Button</code>, <code>ProjetoCard</code>) recebem dados de fora, via <em>props</em>, mas nunca \"lembram\" de nada por conta própria. Se você clicar num botão, nada muda na tela – porque não existe nenhum mecanismo guardando esse clique."
+   "html": "Até agora, os componentes que construímos (<code>Botao</code>, <code>Card</code>, <code>ListaProjetos</code>) recebem dados de fora, via <em>props</em>, mas nunca \"lembram\" de nada por conta própria. Se você clicar num botão, nada muda na tela – porque não existe nenhum mecanismo guardando esse clique."
   },
   {
    "t": "p",
@@ -65,6 +65,17 @@
    "html": "Sempre que <code>setContagem</code> é chamado, o React executa a função do componente de novo, com o novo valor – é isso que faz o número mudar na tela."
   },
   {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<strong>Regra dos Hooks:</strong> chame os Hooks sempre no nível mais alto do componente, nunca dentro de <code>if</code>, laços ou funções internas. O React reconhece cada Hook pela ordem em que ele é chamado a cada renderização; se um <code>if</code> pular uma chamada, a ordem muda e o estado vai parar no Hook errado."
+    }
+   ]
+  },
+  {
    "t": "h2",
    "id": "3-3-atualizando-estado-corretamente",
    "texto": "3.3 Atualizando Estado Corretamente"
@@ -75,7 +86,7 @@
   },
   {
    "t": "codigo",
-   "texto": "// ERRADO -- nao faz nada na tela\ncontagem = contagem + 1;\n\n// CERTO -- avisa o React que precisa redesenhar\nsetContagem(contagem + 1);"
+   "texto": "// ERRADO -- contagem e const: isso da erro (TypeError)\n// e, mesmo com let, a tela nao mudaria\ncontagem = contagem + 1;\n\n// CERTO -- avisa o React que precisa redesenhar\nsetContagem(contagem + 1);"
   },
   {
    "t": "quadro",
@@ -124,11 +135,15 @@
   },
   {
    "t": "codigo",
-   "texto": "function FormularioContato() {\n  const [dados, setDados] = useState({\n    nome: \"\",\n    email: \"\",\n    mensagem: \"\",\n  });\n\n  function atualizarCampo(campo, valor) {\n    setDados({ ...dados, [campo]: valor });\n  }\n\n  return (\n    <form>\n      <input\n        value={dados.nome}\n        onChange={(e) => atualizarCampo(\"nome\", e.target.value)}\n      />\n      <input\n        value={dados.email}\n        onChange={(e) => atualizarCampo(\"email\", e.target.value)}\n      />\n    </form>\n  );\n}"
+   "texto": "import { useState } from \"react\";\n\ntype Campo = \"nome\" | \"email\" | \"mensagem\";\n\nfunction FormularioContato() {\n  const [dados, setDados] = useState({\n    nome: \"\",\n    email: \"\",\n    mensagem: \"\",\n  });\n\n  function atualizarCampo(campo: Campo, valor: string) {\n    setDados({ ...dados, [campo]: valor });\n  }\n\n  return (\n    <form>\n      <input\n        value={dados.nome}\n        onChange={(e) => atualizarCampo(\"nome\", e.target.value)}\n      />\n      <input\n        value={dados.email}\n        onChange={(e) => atualizarCampo(\"email\", e.target.value)}\n      />\n    </form>\n  );\n}"
   },
   {
    "t": "p",
-   "html": "O <code>{...dados, [campo]: valor}</code> usa o operador <em>spread</em> (já visto de relance no Módulo 2) para copiar todos os campos existentes, e só sobrescrever o campo que mudou."
+   "html": "O <code>{...dados, [campo]: valor}</code> usa o operador <em>spread</em> (os três pontos, que espalham as propriedades de um objeto dentro de outro) para copiar todos os campos existentes, e só sobrescrever o campo que mudou."
+  },
+  {
+   "t": "p",
+   "html": "O tipo <code>Campo</code> lista os nomes aceitos, com a mesma união de valores usada na interface <code>BotaoProps</code> (Módulo 2). Sem os tipos nos parâmetros, o TypeScript do projeto, que vem no modo estrito, acusa erro: <code>Parameter 'campo' implicitly has an 'any' type</code>."
   },
   {
    "t": "quadro",
@@ -186,6 +201,17 @@
      "sem array nenhum",
      "Depois de TODA renderização (raramente é o que você quer)"
     ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em desenvolvimento, o projeto criado pelo Vite usa o <code>&lt;StrictMode&gt;</code> (veja o <code>main.tsx</code>). Nele, o React monta o componente, desmonta e monta de novo, de propósito, para revelar efeitos mal escritos: por isso um efeito com <code>[]</code> aparece rodando duas vezes no console. Na versão de produção (<code>npm run build</code>), ele roda uma vez só."
+    }
    ]
   },
   {

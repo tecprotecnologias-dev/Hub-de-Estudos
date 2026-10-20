@@ -9,7 +9,7 @@
   },
   {
    "t": "p",
-   "html": "No Módulo 4, você criou páginas com o App Router – mas todo componente que você escreveu até agora (<code>Button</code>, <code>ProjetoCard</code>, <code>FormularioContato</code>) rodava inteiramente no <strong>navegador</strong> do usuário, mesmo com o Next.js."
+   "html": "No Módulo 4, você criou páginas com o App Router – mas todo componente que você escreveu até agora (<code>Botao</code>, <code>Card</code>, <code>Contador</code>, <code>FormularioContato</code>) rodava inteiramente no <strong>navegador</strong> do usuário, mesmo com o Next.js."
   },
   {
    "t": "p",
@@ -47,7 +47,7 @@
   },
   {
    "t": "codigo",
-   "texto": "// app/projetos/page.tsx -- Server Component (padrao)\nasync function buscarProjetos() {\n  // simula uma busca (no Modulo 6, isso vira uma consulta real)\n  return [\n    { id: 1, titulo: \"Portfolio Pessoal\", tecnologias: [\"React\", \"Next.js\"] },\n  ];\n}\n\nexport default async function Projetos() {\n  const projetos = await buscarProjetos();\n\n  return (\n    <main>\n      <h1>Meus Projetos</h1>\n      {projetos.map((p) => (\n        <p key={p.id}>{p.titulo}</p>\n      ))}\n    </main>\n  );\n}"
+   "texto": "// app/projetos/page.tsx -- Server Component (padrao)\nasync function buscarProjetos() {\n  // simula uma busca (numa aplicacao real, seria uma consulta ao banco)\n  return [\n    { id: 1, titulo: \"Portfolio Pessoal\", tecnologias: [\"React\", \"Next.js\"] },\n  ];\n}\n\nexport default async function Projetos() {\n  const projetos = await buscarProjetos();\n\n  return (\n    <main>\n      <h1>Meus Projetos</h1>\n      {projetos.map((p) => (\n        <p key={p.id}>{p.titulo}</p>\n      ))}\n    </main>\n  );\n}"
   },
   {
    "t": "p",
@@ -84,9 +84,13 @@
    "blocos": [
     {
      "t": "p",
-     "html": "Os componentes <code>Button</code>, <code>FormularioContato</code> (que usam <code>useState</code> – Módulo 3) e qualquer componente com <code>onClick</code> precisam ganhar <code>\"use client\"</code> no topo do arquivo quando forem migrados para dentro do Next.js. Sem essa linha, o Next.js tenta tratá-los como Server Component, e o <code>useState</code> simplesmente não funciona."
+     "html": "Os componentes <code>Contador</code>, <code>FormularioContato</code> (que usam <code>useState</code> – Módulo 3) e qualquer componente com <code>onClick</code> precisam ganhar <code>\"use client\"</code> no topo do arquivo quando forem levados para o Next.js. Sem essa linha, o Next.js os trata como Server Components e mostra um erro avisando que o <code>useState</code> só funciona em Client Components."
     }
    ]
+  },
+  {
+   "t": "p",
+   "html": "A diretiva marca uma <strong>fronteira</strong>: os componentes importados por um Client Component também rodam no navegador, sem precisar repetir o <code>\"use client\"</code> em cada arquivo."
   },
   {
    "t": "h2",
