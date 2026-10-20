@@ -7,9 +7,8 @@ O site está em https://estudos.tecprotecnologias.com.br (Cloudflare) e se atual
 
 ## Conteúdo
 
-- [ ] **Web II: revisão e complemento da apostila** (pedido em 20/10/2026). Roteiro da faculdade: `C:\Users\Neia\Downloads\Material_Didatico_Web_II.pdf`. A correção dos erros e os Módulos 3 e 4 já estão feitos.
-  - [ ] **← retomar aqui.** Módulo 5: fetch com cache e revalidação, generateStaticParams, Server Actions e formulários
-  - [ ] Decidir o Módulo 6 (Prisma, Route Handlers, NextAuth): curto, com remissão à Web III, ou completo
+- [ ] **Web II: revisão e complemento da apostila** (pedido em 20/10/2026). Roteiro da faculdade: `C:\Users\Neia\Downloads\Material_Didatico_Web_II.pdf`. A correção dos erros e os Módulos 3, 4 e 5 já estão feitos.
+  - [ ] **← retomar aqui.** Decidir o Módulo 6 (Prisma, Route Handlers, NextAuth): curto, com remissão à Web III, ou completo
   - [ ] Decidir os exercícios do PDF: acrescentar aos que já existem (e levar ao simulado)
   - [ ] Enviar ao GitHub para entrar no site (as mudanças de 20/10/2026 ainda não foram enviadas)
 - [ ] **Web III: exercícios e simulado** (pedido em 17/10/2026). Os 12 capítulos estão prontos. Falta uma seção de exercícios no fim de cada capítulo e o simulado da Web III no site com **os mesmos exercícios, no mesmo capítulo**, mais as objetivas no estilo de concurso. Regra geral: todo exercício da apostila também está no simulado.
