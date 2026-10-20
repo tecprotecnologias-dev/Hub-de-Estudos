@@ -53,8 +53,62 @@
   },
   {
    "t": "h2",
-   "id": "4-2-app-router-vs-pages-router",
-   "texto": "4.2 App Router vs Pages Router"
+   "id": "4-2-onde-o-html-e-gerado-ssr-ssg-isr-e-csr",
+   "texto": "4.2 Onde o HTML é Gerado: SSR, SSG, ISR e CSR"
+  },
+  {
+   "t": "p",
+   "html": "A maior diferença entre o React puro e o Next.js é <strong>onde</strong> e <strong>quando</strong> o HTML da página é montado. No projeto do Vite, o navegador recebe uma página quase vazia, e o JavaScript monta tudo lá (CSR). No Next.js, o HTML pode chegar pronto do servidor. São quatro estratégias:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Estratégia",
+    "Quando o HTML é gerado",
+    "Bom para"
+   ],
+   "linhas": [
+    [
+     "<strong>SSR</strong> – <em>Server-Side Rendering</em>",
+     "No servidor, a cada visita",
+     "Dados que mudam a cada pedido: usuário logado, carrinho, estoque"
+    ],
+    [
+     "<strong>SSG</strong> – <em>Static Site Generation</em>",
+     "Uma vez só, no <em>build</em> (<code>npm run build</code>)",
+     "Conteúdo que não muda: página \"Sobre\", documentação, página de vendas"
+    ],
+    [
+     "<strong>ISR</strong> – <em>Incremental Static Regeneration</em>",
+     "No <em>build</em> e de novo de tempos em tempos (revalidação)",
+     "Conteúdo que muda pouco: catálogo, preços, posts"
+    ],
+    [
+     "<strong>CSR</strong> – <em>Client-Side Rendering</em>",
+     "No navegador, depois que o JavaScript carrega",
+     "Painéis pessoais, dados em tempo real, partes que reagem ao usuário"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "No App Router, a estratégia não é escolhida num arquivo de configuração: o Next.js decide <strong>página por página</strong>, olhando o que cada uma usa. Uma página que não depende de nada da visita (como a página \"Sobre\") é gerada no <em>build</em> (SSG). Se ela lê algo que só existe na hora da visita (<em>cookies</em>, os parâmetros da URL) ou pede dados sem cache, passa a ser gerada a cada visita (SSR). Com um tempo de revalidação, vira ISR. E os Client Components continuam fazendo CSR nas partes interativas. O cache e a revalidação ficam para o Módulo 5."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Para ver o que o Next.js decidiu, rode <code>npm run build</code>. Na lista de rotas, no final, <code>○</code> (<em>Static</em>) marca as páginas geradas no <em>build</em>, <code>ƒ</code> (<em>Dynamic</em>) as geradas a cada visita, e <code>●</code> as rotas dinâmicas geradas no <em>build</em> com <code>generateStaticParams</code> (Módulo 5)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-3-app-router-vs-pages-router",
+   "texto": "4.3 App Router vs Pages Router"
   },
   {
    "t": "p",
@@ -83,8 +137,8 @@
   },
   {
    "t": "h2",
-   "id": "4-3-criando-o-projeto-next-js",
-   "texto": "4.3 Criando o Projeto Next.js"
+   "id": "4-4-criando-o-projeto-next-js",
+   "texto": "4.4 Criando o Projeto Next.js"
   },
   {
    "t": "codigo",
@@ -130,8 +184,8 @@
   },
   {
    "t": "h2",
-   "id": "4-4-estrutura-de-pastas-do-app-router",
-   "texto": "4.4 Estrutura de Pastas do App Router"
+   "id": "4-5-estrutura-de-pastas-do-app-router",
+   "texto": "4.5 Estrutura de Pastas do App Router"
   },
   {
    "t": "codigo",
@@ -170,9 +224,17 @@
    ]
   },
   {
+   "t": "p",
+   "html": "Fora de <code>app/</code>, o projeto tem a pasta <code>public/</code>, com arquivos servidos do jeito que estão, a partir da raiz do site (<code>public/logo.png</code> aparece em <code>/logo.png</code>), e os arquivos de configuração (<code>package.json</code>, <code>next.config.ts</code>, <code>tsconfig.json</code>). Para organizar o código, o costume é criar pastas próprias ao lado de <code>app/</code>: <code>components/</code>, para os componentes reutilizáveis, e <code>lib/</code>, para funções utilitárias. Uma pasta dentro de <code>app/</code> sem <code>page.tsx</code> não vira endereço, então até daria para guardar componentes lá, mas deixá-los fora deixa claro o que é rota e o que não é."
+  },
+  {
+   "t": "p",
+   "html": "Nos <code>import</code>, o <code>@/</code> é um atalho configurado no <code>tsconfig.json</code>: aponta para a pasta <code>src/</code> (ou para a raiz, quando o projeto não tem <code>src/</code>). Assim, <code>import Menu from \"@/components/Menu\"</code> funciona em qualquer arquivo, sem contar quantos <code>../</code> são precisos."
+  },
+  {
    "t": "h2",
-   "id": "4-5-roteamento-baseado-em-arquivos",
-   "texto": "4.5 Roteamento Baseado em Arquivos"
+   "id": "4-6-roteamento-baseado-em-arquivos",
+   "texto": "4.6 Roteamento Baseado em Arquivos"
   },
   {
    "t": "p",
@@ -210,8 +272,85 @@
   },
   {
    "t": "h2",
-   "id": "4-6-navegando-entre-paginas-o-componente-link",
-   "texto": "4.6 Navegando entre Páginas: o Componente Link"
+   "id": "4-7-rotas-dinamicas",
+   "texto": "4.7 Rotas Dinâmicas"
+  },
+  {
+   "t": "p",
+   "html": "Quando o mesmo tipo de página serve para muitos endereços (um post para cada <code>/blog/...</code>, um produto para cada <code>/produtos/...</code>), não dá para criar uma pasta para cada item. A solução é uma pasta com o nome entre colchetes: um <strong>segmento dinâmico</strong>, que aceita qualquer valor naquele trecho da URL."
+  },
+  {
+   "t": "codigo",
+   "texto": "app/\n  blog/\n    page.tsx              -> /blog\n    [slug]/\n      page.tsx            -> /blog/primeiro-post, /blog/novidades...\n  loja/\n    [categoria]/\n      [id]/\n        page.tsx          -> /loja/eletronicos/notebook\n  docs/\n    [...partes]/\n      page.tsx            -> /docs/a, /docs/a/b, /docs/a/b/c..."
+  },
+  {
+   "t": "p",
+   "html": "A página recebe os valores em <code>params</code>, um objeto com uma chave para cada pasta entre colchetes. A partir do Next.js 15, <code>params</code> é uma <em>Promise</em>: a página é <code>async</code> e usa <code>await</code> antes de ler os valores."
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/blog/[slug]/page.tsx\nimport { notFound } from \"next/navigation\";\n\nconst posts = [\n  { slug: \"primeiro-post\", titulo: \"Meu primeiro post\" },\n  { slug: \"novidades\", titulo: \"Novidades do Next.js\" },\n];\n\nexport default async function Post({\n  params,\n}: {\n  params: Promise<{ slug: string }>;\n}) {\n  const { slug } = await params;\n  const post = posts.find((p) => p.slug === slug);\n\n  if (!post) notFound();   // mostra a pagina 404 (secao 4.11)\n\n  return <h1>{post.titulo}</h1>;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Se o <code>slug</code> não corresponde a nenhum post, a função <code>notFound()</code>, de <code>next/navigation</code>, interrompe a página e mostra a página 404. Com mais de um segmento, cada pasta vira uma chave de <code>params</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/loja/[categoria]/[id]/page.tsx -- dois segmentos\nexport default async function Produto({\n  params,\n}: {\n  params: Promise<{ categoria: string; id: string }>;\n}) {\n  const { categoria, id } = await params;\n  return <p>{categoria} / {id}</p>;   // /loja/eletronicos/notebook\n}"
+  },
+  {
+   "t": "p",
+   "html": "Os três pontos em <code>[...partes]</code> criam um segmento que <strong>captura vários níveis</strong> de uma vez (<em>catch-all</em>). Nele, o valor chega como um <em>array</em>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/docs/[...partes]/page.tsx -- captura varios niveis\nexport default async function Docs({\n  params,\n}: {\n  params: Promise<{ partes: string[] }>;\n}) {\n  const { partes } = await params;   // /docs/a/b -> [\"a\", \"b\"]\n  return <p>{partes.join(\" / \")}</p>;\n}"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Pasta",
+    "Atende",
+    "Valor em <code>params</code>"
+   ],
+   "linhas": [
+    [
+     "<code>[slug]</code>",
+     "<code>/blog/qualquer-coisa</code> (um nível)",
+     "<code>{ slug: \"qualquer-coisa\" }</code>"
+    ],
+    [
+     "<code>[...partes]</code>",
+     "<code>/docs/a</code>, <code>/docs/a/b</code>... (um ou mais níveis)",
+     "<code>{ partes: [\"a\", \"b\"] }</code>"
+    ],
+    [
+     "<code>[[...partes]]</code>",
+     "O mesmo, e também <code>/docs</code> sozinho",
+     "<code>partes</code> fica <code>undefined</code> em <code>/docs</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Os valores de <code>params</code> são sempre <strong>texto</strong>: em <code>/produtos/101</code>, o <code>id</code> chega como <code>\"101\"</code>. Para comparar com um <code>id</code> numérico, converta antes, com <code>Number(id)</code>."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"<code>params.slug</code> aparece como <code>undefined</code> (ou dá erro).\" – A partir do Next.js 15, <code>params</code> é uma <em>Promise</em>. Ler <code>params.slug</code> direto, sem <code>await</code>, não funciona, e no Next.js 16 dá erro. Escreva <code>const { slug } = await params</code>. O mesmo vale para o <code>searchParams</code> (seção 4.9)."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-8-navegando-entre-paginas-o-componente-link",
+   "texto": "4.8 Navegando entre Páginas: o Componente Link"
   },
   {
    "t": "p",
@@ -233,9 +372,82 @@
    ]
   },
   {
+   "t": "p",
+   "html": "Em produção, o <code>Link</code> também faz <strong><em>prefetch</em></strong>: quando um link aparece na tela, o Next.js já baixa a página de destino em segundo plano, e o clique fica instantâneo."
+  },
+  {
    "t": "h2",
-   "id": "4-7-layouts-aninhados",
-   "texto": "4.7 Layouts Aninhados"
+   "id": "4-9-userouter-e-usepathname-navegacao-pelo-codigo",
+   "texto": "4.9 useRouter e usePathname: Navegação pelo Código"
+  },
+  {
+   "t": "p",
+   "html": "O <code>Link</code> serve para quando o usuário clica num link. Às vezes, a navegação precisa acontecer pelo código: depois de enviar um formulário, num botão \"Voltar\", ao fazer uma busca. Para isso existe o <code>useRouter</code>. E o <code>usePathname</code> informa o endereço atual, o que serve, por exemplo, para destacar no menu a página em que o usuário está. Os dois vêm de <code>next/navigation</code> e, por serem Hooks que rodam no navegador, só funcionam em Client Components, com <code>\"use client\"</code> no topo do arquivo (Módulo 5)."
+  },
+  {
+   "t": "codigo",
+   "texto": "\"use client\";\n\nimport Link from \"next/link\";\nimport { usePathname } from \"next/navigation\";\n\nconst links = [\n  { href: \"/\", rotulo: \"Inicio\" },\n  { href: \"/projetos\", rotulo: \"Projetos\" },\n  { href: \"/contato\", rotulo: \"Contato\" },\n];\n\nexport default function Menu() {\n  const caminho = usePathname();   // ex.: \"/projetos\"\n\n  return (\n    <nav>\n      {links.map((link) => (\n        <Link\n          key={link.href}\n          href={link.href}\n          className={caminho === link.href ? \"ativo\" : \"\"}\n        >\n          {link.rotulo}\n        </Link>\n      ))}\n    </nav>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "O link da página atual ganha a classe <code>ativo</code>, que o CSS pode destacar (em negrito, sublinhado, com outra cor). Já o <code>useRouter</code> devolve um objeto com os métodos de navegação:"
+  },
+  {
+   "t": "codigo",
+   "texto": "\"use client\";\n\nimport { useState } from \"react\";\nimport { useRouter } from \"next/navigation\";\n\nexport default function CaixaBusca() {\n  const router = useRouter();\n  const [termo, setTermo] = useState(\"\");\n\n  return (\n    <form\n      onSubmit={(e) => {\n        e.preventDefault();\n        router.push(`/busca?q=${encodeURIComponent(termo)}`);\n      }}\n    >\n      <input value={termo} onChange={(e) => setTermo(e.target.value)} />\n      <button type=\"submit\">Buscar</button>\n      <button type=\"button\" onClick={() => router.back()}>\n        Voltar\n      </button>\n    </form>\n  );\n}"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Método",
+    "O que faz"
+   ],
+   "linhas": [
+    [
+     "<code>router.push(url)</code>",
+     "Vai para <code>url</code> e guarda no histórico"
+    ],
+    [
+     "<code>router.replace(url)</code>",
+     "Vai para <code>url</code> sem guardar: o \"Voltar\" do navegador não retorna à página anterior"
+    ],
+    [
+     "<code>router.back()</code>",
+     "Volta uma página, como o botão do navegador"
+    ],
+    [
+     "<code>router.refresh()</code>",
+     "Busca de novo, no servidor, os dados da página atual"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "O <code>encodeURIComponent</code> prepara o texto para a URL (espaços e acentos viram códigos). Na página <code>/busca</code>, o termo é lido do <code>searchParams</code>, que, como o <code>params</code>, é uma <em>Promise</em>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/busca/page.tsx -- Server Component\nexport default async function Busca({\n  searchParams,\n}: {\n  searchParams: Promise<{ q?: string }>;\n}) {\n  const { q } = await searchParams;   // /busca?q=next -> \"next\"\n  return <h1>Resultados para: {q ?? \"(nada)\"}</h1>;\n}"
+  },
+  {
+   "t": "p",
+   "html": "Para links comuns, prefira sempre o <code>Link</code>: ele gera uma tag <code>&lt;a&gt;</code> de verdade (que leitores de tela e buscadores entendem) e faz o <em>prefetch</em>. O <code>useRouter</code> é para quando a navegação depende de uma ação, como o envio de um formulário."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Importei o <code>useRouter</code> de <code>next/router</code> e deu erro.\" – O <code>next/router</code> é do Pages Router. No App Router, <code>useRouter</code>, <code>usePathname</code> e <code>useSearchParams</code> vêm de <code>next/navigation</code>."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-10-layouts-aninhados",
+   "texto": "4.10 Layouts Aninhados"
   },
   {
    "t": "p",
@@ -247,15 +459,127 @@
   },
   {
    "t": "p",
-   "html": "A pasta <code>[slug]</code>, com colchetes, é um <strong>segmento dinâmico</strong>: atende <code>/blog/primeiro-post</code>, <code>/blog/novidades</code> e qualquer outro valor nesse trecho da URL. A página recebe esse valor em <code>params</code>. A partir do Next.js 15, <code>params</code> é uma <em>Promise</em>: a página precisa ser <code>async</code> e usar <code>await</code> antes de ler o valor."
-  },
-  {
-   "t": "codigo",
-   "texto": "// app/blog/[slug]/page.tsx\nexport default async function Post({\n  params,\n}: {\n  params: Promise<{ slug: string }>;\n}) {\n  const { slug } = await params;\n  return <h1>Post: {slug}</h1>;\n}"
+   "html": "Isso permite, por exemplo, um menu lateral que aparece só nas páginas do blog, sem precisar repetir esse código em cada <code>page.tsx</code> – o layout \"empacota\" tudo que está dentro daquela pasta automaticamente."
   },
   {
    "t": "p",
-   "html": "Isso permite, por exemplo, um menu lateral que aparece só nas páginas do blog, sem precisar repetir esse código em cada <code>page.tsx</code> – o layout \"empacota\" tudo que está dentro daquela pasta automaticamente."
+   "html": "Um layout não é recriado quando o usuário navega entre as páginas que ele envolve: só o conteúdo de <code>children</code> troca. Por isso, um menu lateral com estado (aberto ou fechado, por exemplo) continua como estava ao trocar de página."
+  },
+  {
+   "t": "p",
+   "html": "<strong>Grupos de rotas.</strong> Às vezes você quer um layout para algumas páginas sem mudar a URL delas. Uma pasta com o nome entre parênteses é um <strong>grupo de rotas</strong>: ela organiza as pastas e pode ter o seu próprio <code>layout.tsx</code>, mas não entra no endereço."
+  },
+  {
+   "t": "codigo",
+   "texto": "app/\n  layout.tsx              <- html e body\n  (site)/\n    layout.tsx            <- menu e rodape do site publico\n    page.tsx              -> /\n    sobre/page.tsx        -> /sobre\n  (painel)/\n    layout.tsx            <- menu lateral do painel\n    admin/page.tsx        -> /admin"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Dois grupos não podem ter páginas com o mesmo endereço: <code>(site)/sobre/page.tsx</code> e <code>(painel)/sobre/page.tsx</code> seriam os dois <code>/sobre</code>, e o Next.js acusa o conflito."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-11-arquivos-especiais-loading-error-e-not-found",
+   "texto": "4.11 Arquivos Especiais: loading, error e not-found"
+  },
+  {
+   "t": "p",
+   "html": "Além de <code>page.tsx</code> e <code>layout.tsx</code>, o App Router reconhece outros nomes de arquivo, que resolvem situações comuns sem você precisar escrever a lógica:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Arquivo",
+    "O que faz"
+   ],
+   "linhas": [
+    [
+     "<code>loading.tsx</code>",
+     "Aparece enquanto a página da pasta carrega (por exemplo, esperando o <code>await</code> de uma busca)"
+    ],
+    [
+     "<code>error.tsx</code>",
+     "Aparece no lugar da página quando acontece um erro nela; precisa ser Client Component"
+    ],
+    [
+     "<code>not-found.tsx</code>",
+     "A página 404: para endereços que não existem e quando o código chama <code>notFound()</code>"
+    ],
+    [
+     "<code>template.tsx</code>",
+     "Como um layout, mas recriado a cada navegação (o layout é mantido)"
+    ]
+   ]
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/loading.tsx\nexport default function Carregando() {\n  return <p>Carregando...</p>;\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/error.tsx\n\"use client\";   // obrigatorio no error.tsx\n\nexport default function ErroPagina({\n  error,\n  reset,\n}: {\n  error: Error & { digest?: string };\n  reset: () => void;\n}) {\n  return (\n    <div>\n      <h2>Algo deu errado!</h2>\n      <p>{error.message}</p>\n      <button onClick={() => reset()}>Tentar novamente</button>\n    </div>\n  );\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/not-found.tsx\nimport Link from \"next/link\";\n\nexport default function NaoEncontrada() {\n  return (\n    <div>\n      <h1>404 -- Pagina nao encontrada</h1>\n      <Link href=\"/\">Voltar para o inicio</Link>\n    </div>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "Como o layout, esses arquivos valem para a pasta onde estão e para tudo o que está dentro dela: um <code>app/blog/loading.tsx</code> aparece só nas páginas do blog. O <code>reset</code> do <code>error.tsx</code> tenta mostrar a página de novo. Em produção, a mensagem dos erros que acontecem no servidor é trocada por um texto genérico, para não mostrar detalhes internos ao usuário; o <code>digest</code> é o código que identifica o erro nos registros (<em>logs</em>) do servidor."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O <code>error.tsx</code> não pega os erros do <code>layout.tsx</code> da mesma pasta, porque é o próprio layout que envolve o <code>error.tsx</code>. Os erros do layout raiz têm um arquivo só para eles: <code>app/global-error.tsx</code>."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "4-12-metadata-titulo-da-pagina-e-seo",
+   "texto": "4.12 Metadata: Título da Página e SEO"
+  },
+  {
+   "t": "p",
+   "html": "O título da aba, a descrição que aparece no Google e a imagem de prévia quando o link é compartilhado (WhatsApp, redes sociais) vêm das tags do <code>&lt;head&gt;</code> da página. No App Router, essas tags não são escritas à mão: você exporta um objeto <code>metadata</code> de um <code>page.tsx</code> ou <code>layout.tsx</code>, e o Next.js gera as tags."
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/layout.tsx\nimport type { Metadata } from \"next\";\nimport \"./globals.css\";\n\nexport const metadata: Metadata = {\n  title: {\n    template: \"%s | Meu Portfolio\",   // %s = titulo de cada pagina\n    default: \"Meu Portfolio\",         // quando a pagina nao define\n  },\n  description: \"Projetos e estudos de desenvolvimento web\",\n};\n\nexport default function RootLayout({\n  children,\n}: {\n  children: React.ReactNode;\n}) {\n  return (\n    <html lang=\"pt-BR\">\n      <body>{children}</body>\n    </html>\n  );\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/projetos/page.tsx\nimport type { Metadata } from \"next\";\n\nexport const metadata: Metadata = {\n  title: \"Projetos\",   // a aba mostra \"Projetos | Meu Portfolio\"\n  description: \"Lista dos meus projetos\",\n  openGraph: {\n    title: \"Projetos\",\n    images: [\"/capa-projetos.png\"],   // previa ao compartilhar\n  },\n};\n\nexport default function Projetos() {\n  return <h1>Projetos</h1>;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>template</code> do layout raiz monta o título de cada página: a página de projetos define só <code>\"Projetos\"</code>, e a aba mostra \"Projetos | Meu Portfolio\". O <code>openGraph</code> controla a prévia do link nas redes sociais. Numa rota dinâmica, o título depende do post, então em vez do objeto fixo a página exporta a função <code>generateMetadata</code>, que recebe os mesmos <code>params</code> da página (o array <code>posts</code> é o da seção 4.7):"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/blog/[slug]/page.tsx (junto com o componente Post)\nimport type { Metadata } from \"next\";\n\nexport async function generateMetadata({\n  params,\n}: {\n  params: Promise<{ slug: string }>;\n}): Promise<Metadata> {\n  const { slug } = await params;\n  const post = posts.find((p) => p.slug === slug);\n  return { title: post?.titulo ?? \"Post nao encontrado\" };\n}"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "<code>metadata</code> e <code>generateMetadata</code> só funcionam em Server Components: exportá-los de um arquivo com <code>\"use client\"</code> dá erro. Cada arquivo exporta um ou outro, nunca os dois. E, para as imagens da prévia saírem com o endereço certo, o layout raiz deve informar o endereço do site em <code>metadataBase: new URL(\"https://meusite.com.br\")</code>."
+    }
+   ]
   }
  ]
 }

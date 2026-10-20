@@ -672,7 +672,7 @@ export const apostilas: Apostila[] = [
     titulo: 'Next.js: App Router e Roteamento',
     disciplinaId: 'programacao-e-design-para-web-ii',
     descricao:
-      'O que é Next.js, App Router vs Pages Router, criação do projeto, estrutura de pastas, rotas por arquivos, o componente Link e layouts.',
+      'O que é Next.js, SSR, SSG, ISR e CSR, App Router vs Pages Router, estrutura de pastas, rotas por arquivos e rotas dinâmicas, Link, useRouter e usePathname, layouts e grupos de rotas, loading, error e not-found, e Metadata.',
   },
   {
     id: 'web2-cap5',
