@@ -63,6 +63,10 @@
     },
     {
      "t": "p",
+     "html": "As versões pares viram LTS todo mês de outubro. Em outubro de 2026, a LTS recomendada é o <strong>Node.js 24</strong>, e a Current é o 26."
+    },
+    {
+     "t": "p",
      "html": "Ao longo deste livro, sempre utilizaremos a versão <strong>LTS</strong>."
     }
    ]
@@ -73,7 +77,7 @@
   },
   {
    "t": "codigo",
-   "texto": "$ node -v\nv22.18.0"
+   "texto": "$ node -v\nv24.22.0"
   },
   {
    "t": "p",
@@ -81,7 +85,7 @@
   },
   {
    "t": "codigo",
-   "texto": "$ npm -v\n10.9.3"
+   "texto": "$ npm -v\n11.19.1"
   },
   {
    "t": "p",
@@ -134,7 +138,7 @@
   },
   {
    "t": "codigo",
-   "texto": "package name: (meuprimeiroprojeto)\nversion: (1.0.0)\ndescription:\nentry point: (index.js)\ntest command:\ngit repository:\nkeywords:\nauthor:\nlicense: (ISC)"
+   "texto": "package name: (meuprimeiroprojeto)\nversion: (1.0.0)\ndescription:\nentry point: (index.js)\ntest command:\ngit repository:\nkeywords:\nauthor:\nlicense: (ISC)\ntype: (commonjs)"
   },
   {
    "t": "p",
@@ -163,7 +167,7 @@
   },
   {
    "t": "codigo",
-   "texto": "{\n  \"name\": \"meuprojeto\",\n  \"version\": \"1.0.0\",\n  \"description\": \"Projeto exemplo\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"start\": \"node index.js\"\n  },\n  \"author\": \"Seu Nome\",\n  \"license\": \"MIT\"\n}"
+   "texto": "{\n  \"name\": \"meuprojeto\",\n  \"version\": \"1.0.0\",\n  \"description\": \"Projeto exemplo\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"start\": \"node index.js\"\n  },\n  \"author\": \"Seu Nome\",\n  \"license\": \"MIT\",\n  \"type\": \"commonjs\"\n}"
   },
   {
    "t": "tabela",
@@ -187,6 +191,10 @@
     [
      "main",
      "Arquivo principal"
+    ],
+    [
+     "type",
+     "Formato dos módulos: <code>commonjs</code> (<code>require</code>, usado neste livro) ou <code>module</code> (<code>import</code>/<code>export</code>)"
     ],
     [
      "scripts",

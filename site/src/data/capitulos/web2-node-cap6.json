@@ -26,7 +26,7 @@
   },
   {
    "t": "p",
-   "html": "O MySQL pode ser obtido gratuitamente no site oficial (<a href=\"https://dev.mysql.com/downloads/\" target=\"_blank\" rel=\"noreferrer\">https://dev.mysql.com/downloads/</a>). Durante a instalação, você vai definir uma senha para o usuário administrador (<code>root</code>) – guarde essa senha, pois vamos utilizá-la em breve."
+   "html": "O MySQL pode ser obtido gratuitamente no site oficial (<a href=\"https://dev.mysql.com/downloads/\" target=\"_blank\" rel=\"noreferrer\">https://dev.mysql.com/downloads/</a>). Escolha a versão <strong>LTS</strong> mais recente (a 9.7, em outubro de 2026); a 8.4 LTS também funciona com tudo o que está neste livro. Evite a 8.0, que deixou de receber atualizações em abril de 2026. Durante a instalação, você vai definir uma senha para o usuário administrador (<code>root</code>) – guarde essa senha, pois vamos utilizá-la em breve."
   },
   {
    "t": "p",
@@ -38,7 +38,7 @@
   },
   {
    "t": "codigo",
-   "texto": "$ mysql --version\nmysql  Ver 8.4.6 for Win64 on x86_64"
+   "texto": "$ mysql --version\nmysql  Ver 9.7.2 for Win64 on x86_64"
   },
   {
    "t": "p",
@@ -731,11 +731,19 @@
   },
   {
    "t": "codigo",
-   "texto": "CREATE TABLE autores (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    nome VARCHAR(150)\n);\n\nCREATE TABLE livros (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    titulo VARCHAR(200),\n    autor_id INT,\n    FOREIGN KEY (autor_id) REFERENCES autores(id)\n);"
+   "texto": "-- apaga a versao anterior de livros, da secao 6.9\nDROP TABLE IF EXISTS livros;\n\nCREATE TABLE autores (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    nome VARCHAR(150)\n);\n\nCREATE TABLE livros (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    titulo VARCHAR(200) NOT NULL,\n    autor_id INT,\n    ano_publicacao SMALLINT,\n    isbn CHAR(13) UNIQUE,\n    preco DECIMAL(10,2) CHECK (preco >= 0),\n    disponivel BOOLEAN DEFAULT TRUE,\n    FOREIGN KEY (autor_id) REFERENCES autores(id)\n);"
   },
   {
    "t": "p",
    "html": "Agora o nome do autor é armazenado em um único lugar, e a tabela <code>livros</code> apenas <strong>referencia</strong> o autor por meio do <code>autor_id</code> – essa técnica é chamada de <strong>normalização</strong>."
+  },
+  {
+   "t": "p",
+   "html": "Para testar, cadastre alguns autores e livros:"
+  },
+  {
+   "t": "codigo",
+   "texto": "INSERT INTO autores (nome) VALUES\n('Machado de Assis'), ('Graciliano Ramos'), ('Clarice Lispector');\n\nINSERT INTO livros (titulo, autor_id, ano_publicacao, preco) VALUES\n('Dom Casmurro', 1, 1899, 39.90),\n('Vidas Secas', 2, 1938, 35.90),\n('Memórias Póstumas de Brás Cubas', 1, 1881, 42.50);"
   },
   {
    "t": "p",
@@ -841,7 +849,7 @@
   },
   {
    "t": "codigo",
-   "texto": "CREATE INDEX idx_livros_titulo ON livros(titulo);\nCREATE INDEX idx_livros_autor ON livros(autor);"
+   "texto": "CREATE INDEX idx_livros_titulo ON livros(titulo);\nCREATE INDEX idx_livros_ano ON livros(ano_publicacao);"
   },
   {
    "t": "p",

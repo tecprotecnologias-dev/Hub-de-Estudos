@@ -123,7 +123,11 @@
   {
    "t": "imagem",
    "src": "apostilas/web2/node/capitulo-04_diagrama3.png",
-   "alt": "capitulo 04 diagrama3"
+   "alt": "Diagrama do Event Loop: o código entra na Call Stack, que delega as operações demoradas à libuv (timers, rede e banco de dados, arquivos); ao terminar, cada operação põe o seu callback na fila, e o Event Loop leva o próximo callback para a Call Stack quando ela fica vazia."
+  },
+  {
+   "t": "p",
+   "html": "Repare no caminho completo: a Call Stack executa o código e entrega as operações demoradas à libuv, que cuida dos timers, da rede (incluindo o banco de dados) e dos arquivos. Quando uma operação termina, o seu callback entra na fila. O Event Loop é quem vigia essa fila: assim que a Call Stack fica vazia, ele leva o próximo callback para ser executado."
   },
   {
    "t": "h2",

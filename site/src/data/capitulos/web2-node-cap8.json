@@ -61,6 +61,10 @@
    ]
   },
   {
+   "t": "p",
+   "html": "O Node.js 24 também sabe ler o <code>.env</code> sozinho, com <code>node --env-file=.env server.js</code> ou <code>process.loadEnvFile()</code>. Neste livro usamos o <code>dotenv</code> porque ele funciona do mesmo jeito em qualquer versão do Node.js e também nos testes automatizados do Capítulo 12."
+  },
+  {
    "t": "h2",
    "id": "8-3-criando-a-conexao-pool",
    "texto": "8.3 Criando a Conexão (Pool)"
@@ -96,7 +100,7 @@
   },
   {
    "t": "p",
-   "html": "Se tudo estiver correto, o terminal exibirá <code>Conexão realizada com sucesso!</code>. Dois erros comuns nessa etapa:"
+   "html": "Se tudo estiver correto, o terminal exibirá <code>Conexão realizada com sucesso!</code>. Nas versões atuais do <code>dotenv</code>, aparece antes uma linha como <code>◇ injected env (5) from .env</code>, avisando quantas variáveis foram carregadas: não é erro. Dois erros comuns nessa etapa:"
   },
   {
    "t": "lista",
@@ -114,6 +118,10 @@
   {
    "t": "p",
    "html": "Com a conexão pronta, já podemos consultar dados reais do banco criado no Capítulo 6:"
+  },
+  {
+   "t": "p",
+   "html": "Os exemplos deste capítulo usam as tabelas <code>autores</code> e <code>livros</code> da seção 6.16, em que cada livro aponta para o seu autor pelo <code>autor_id</code>."
   },
   {
    "t": "codigo",
@@ -271,7 +279,7 @@
   },
   {
    "t": "p",
-   "html": "Nessa forma, o MySQL trata o valor recebido sempre como <strong>dado</strong>, nunca como parte do comando SQL – mesmo que o usuário digite algo parecido com um comando, ele será tratado como texto literal. É por isso que, ao longo de todo este livro, <strong>todo</strong> valor vindo do usuário será passado como parâmetro, nunca concatenado."
+   "html": "Nessa forma, o MySQL trata o valor recebido sempre como <strong>dado</strong>, nunca como parte do comando SQL – mesmo que o usuário digite algo parecido com um comando, ele será tratado como texto literal. É por isso que, ao longo de todo este livro, <strong>todo</strong> valor vindo do usuário será passado como parâmetro, nunca concatenado. (Guardar e comparar a senha em texto puro, como nesse exemplo, serve só para mostrar o ataque: no Capítulo 11, a senha passa a ser guardada como <em>hash</em> e conferida com o bcrypt.)"
   },
   {
    "t": "quadro",

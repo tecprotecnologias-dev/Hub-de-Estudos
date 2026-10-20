@@ -172,7 +172,15 @@
   },
   {
    "t": "p",
-   "html": "Usados para identificar um recurso específico, como <code>GET /livros/10</code>:"
+   "html": "Usados para identificar um recurso específico, como <code>GET /livros/10</code>. Primeiro, o <code>livroService</code> do Capítulo 8 ganha uma função que repassa a busca ao Model:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// src/services/livroService.js -- acrescente\nasync function buscarPorId(id) {\n    return await livroModel.buscarPorId(id);\n}\n\nmodule.exports = { listarLivros, cadastrarLivro, buscarPorId };"
+  },
+  {
+   "t": "p",
+   "html": "E a rota usa o valor que veio na URL:"
   },
   {
    "t": "codigo",

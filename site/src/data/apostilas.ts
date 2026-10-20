@@ -737,6 +737,9 @@ export const apostilas: Apostila[] = [
   // (capítulo 10 junta os arquivos 10a a 10d; sem as seções de Estudo de Caso e Resumo Visual)
   // Depois de converter, tire a assinatura "TecPro Tecnologia" do fim do capítulo 13: no site, a
   // TecPro só aparece no rodapé.
+  // Revisado e atualizado em 20/10/2026 direto nos JSON (Node.js 24 LTS, MySQL 9.7 LTS, Express 5.3): reconverter
+  // a partir do LaTeX desfaria as correções. O diagrama do Event Loop (capitulo-04_diagrama3.png) foi redesenhado:
+  // fonte em ferramentas/diagramas/capitulo-04_diagrama3.tex (pdflatex + pdftoppm -png -r 150 -singlefile).
   ...[
     ['Introdução ao Node.js', 'O que é o Node.js, por que foi criado, o que é um runtime, arquitetura, vantagens, limitações e o que é uma API.'],
     ['Preparando o Ambiente de Desenvolvimento Node.js', 'Instalação do Node.js e do VS Code, o primeiro projeto, package.json, package-lock.json, node_modules e o primeiro programa.'],

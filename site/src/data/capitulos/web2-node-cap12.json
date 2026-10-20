@@ -153,7 +153,7 @@
   },
   {
    "t": "p",
-   "html": "Não é preciso escrever testes para cada rota agora – o objetivo desta seção é só apresentar a ideia. À medida que a BibliotecaAPI crescer, cada nova funcionalidade importante ganha um teste próprio, que passa a rodar automaticamente antes de qualquer alteração ser aceita."
+   "html": "O Node.js também tem um executor de testes próprio, sem instalar nada (<code>node --test</code>); o Jest continua sendo o mais usado em projetos com Express, e é o que seguimos aqui. Não é preciso escrever testes para cada rota agora – o objetivo desta seção é só apresentar a ideia. À medida que a BibliotecaAPI crescer, cada nova funcionalidade importante ganha um teste próprio, que passa a rodar automaticamente antes de qualquer alteração ser aceita."
   },
   {
    "t": "h2",
@@ -200,7 +200,7 @@
    "t": "lista",
    "numerada": false,
    "itens": [
-    "Todas as consultas SQL usam <code>execute()</code> com parâmetros (Capítulo 8) – nunca concatenação.",
+    "Todo valor vindo do cliente entra no SQL por parâmetros <code>?</code> (com <code>execute()</code> ou <code>query()</code>) – nunca por concatenação (Capítulo 8).",
     "As regras de negócio estão na Service, não no Controller nem no Model (Capítulo 7).",
     "Rotas sensíveis passam por <code>autenticar</code> e, quando necessário, <code>autorizar</code> (Capítulo 11).",
     "Erros são encaminhados com <code>next(erro)</code> para o middleware global (Capítulo 9), não tratados individualmente em cada Controller.",

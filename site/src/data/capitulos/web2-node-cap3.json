@@ -283,6 +283,17 @@
    "html": "Essa organização facilita a reutilização e a manutenção do código."
   },
   {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "CommonJS e ES Modules",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O formato acima, com <code>require</code> e <code>module.exports</code>, se chama <strong>CommonJS</strong>. O Node.js também aceita o formato <strong>ES Modules</strong>, com <code>import</code> e <code>export</code>, o padrão do JavaScript moderno, usado no React e no Next.js. Este livro usa CommonJS, que continua sendo o formato da maior parte dos exemplos do Express e funciona em qualquer versão do Node.js. Para usar <code>import</code> num projeto Node.js, basta trocar, no <code>package.json</code>, o <code>\"type\": \"commonjs\"</code> por <code>\"type\": \"module\"</code>."
+    }
+   ]
+  },
+  {
    "t": "h2",
    "id": "3-10-boas-praticas",
    "texto": "3.10 Boas Práticas"
