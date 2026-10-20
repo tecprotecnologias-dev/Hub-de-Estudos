@@ -93,6 +93,10 @@
    "html": "A diretiva marca uma <strong>fronteira</strong>: os componentes importados por um Client Component também rodam no navegador, sem precisar repetir o <code>\"use client\"</code> em cada arquivo."
   },
   {
+   "t": "p",
+   "html": "\"Client Component\" não quer dizer \"só no navegador\". Para a página chegar com o HTML pronto, o Next.js também executa os Client Components no servidor, uma primeira vez; depois, no navegador, o React <strong>hidrata</strong> esse HTML, isto é, liga os eventos e o estado. Por isso, <code>window</code> e <code>localStorage</code>, que só existem no navegador, devem ser usados dentro de um <code>useEffect</code> ou de um evento (como o <code>onClick</code>), nunca direto no corpo do componente. E, como o código de um Client Component vai para o navegador, ele só enxerga as variáveis de ambiente com o prefixo <code>NEXT_PUBLIC_</code> (Módulo 1)."
+  },
+  {
    "t": "h2",
    "id": "5-4-misturando-server-e-client-components",
    "texto": "5.4 Misturando Server e Client Components"
@@ -169,6 +173,270 @@
      "Só exibir informação recebida por <em>props</em>",
      "Server (padrão)"
     ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Resumo das diferenças:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "",
+    "Server Component (padrão)",
+    "Client Component (<code>\"use client\"</code>)"
+   ],
+   "linhas": [
+    [
+     "Onde roda",
+     "Só no servidor",
+     "No servidor (HTML inicial) e no navegador"
+    ],
+    [
+     "JavaScript enviado ao navegador",
+     "Nenhum",
+     "O código do componente"
+    ],
+    [
+     "Pode ser <code>async</code>",
+     "Sim",
+     "Não"
+    ],
+    [
+     "<code>useState</code>, <code>useEffect</code>, <code>onClick</code>",
+     "Não",
+     "Sim"
+    ],
+    [
+     "<code>window</code>, <code>localStorage</code>",
+     "Não",
+     "Sim, em efeitos e eventos"
+    ],
+    [
+     "Variáveis de ambiente",
+     "Todas, inclusive as secretas",
+     "Só as <code>NEXT_PUBLIC_</code>"
+    ],
+    [
+     "Banco de dados e arquivos",
+     "Acesso direto",
+     "Só por meio de uma API"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-6-buscando-dados-fetch-cache-e-revalidacao",
+   "texto": "5.6 Buscando Dados: fetch, Cache e Revalidação"
+  },
+  {
+   "t": "p",
+   "html": "Num Server Component, buscar dados é só chamar <code>await fetch(...)</code> direto no componente: sem <code>useEffect</code> e sem estados de carregamento (o <code>loading.tsx</code> do Módulo 4 cuida da espera). No servidor, o Next.js acrescenta ao <code>fetch</code> opções de <strong>cache</strong>, que decidem se a resposta é guardada e reaproveitada, e por quanto tempo. É assim que cada página vira SSG, ISR ou SSR (seção 4.2)."
+  },
+  {
+   "t": "codigo",
+   "texto": "// Sempre busca de novo, a cada visita (SSR)\nconst r1 = await fetch(url, { cache: \"no-store\" });\n\n// Guarda a resposta e reaproveita (SSG)\nconst r2 = await fetch(url, { cache: \"force-cache\" });\n\n// Guarda, mas busca de novo depois de 60 segundos (ISR)\nconst r3 = await fetch(url, { next: { revalidate: 60 } });\n\n// Guarda com uma etiqueta, para limpar quando quiser\nconst r4 = await fetch(url, { next: { tags: [\"posts\"] } });"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Opção do <code>fetch</code>",
+    "Resultado",
+    "Quando usar"
+   ],
+   "linhas": [
+    [
+     "<code>cache: \"no-store\"</code>",
+     "Busca a cada visita (SSR)",
+     "Dados que mudam o tempo todo"
+    ],
+    [
+     "<code>cache: \"force-cache\"</code>",
+     "Busca uma vez e guarda (SSG)",
+     "Dados que quase nunca mudam"
+    ],
+    [
+     "<code>next: { revalidate: 60 }</code>",
+     "Guarda e renova a cada 60 s (ISR)",
+     "Dados que mudam aos poucos"
+    ],
+    [
+     "<code>next: { tags: [\"posts\"] }</code>",
+     "Guarda até alguém limpar a etiqueta",
+     "Dados que mudam quando o próprio site grava algo"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Usei o <code>fetch</code> sem nenhuma opção e a página nunca atualiza.\" – Sem opção, a resposta não é guardada, mas, se a página não usa nada da visita, ela mesma é gerada uma vez só, no <em>build</em>, e os dados ficam congelados até o próximo <em>build</em>. Para dados atualizados, escolha de propósito: <code>cache: \"no-store\"</code> ou <code>next: { revalidate: ... }</code>."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Uma página completa, que mostra os mesmos posts da seção 3.10:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/posts/page.tsx -- lista atualizada a cada hora (ISR)\ninterface Post {\n  id: number;\n  title: string;\n}\n\nexport default async function Posts() {\n  const res = await fetch(\n    \"https://jsonplaceholder.typicode.com/posts?_limit=5\",\n    { next: { revalidate: 3600 } }\n  );\n  if (!res.ok) throw new Error(\"Falha ao buscar os posts\");\n  const posts: Post[] = await res.json();\n\n  return (\n    <ul>\n      {posts.map((p) => <li key={p.id}>{p.title}</li>)}\n    </ul>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "Compare com o <code>ListaPosts</code> do Módulo 3: o resultado na tela é o mesmo, mas sem <code>useState</code>, <code>useEffect</code> nem <code>AbortController</code>, e o HTML já chega ao navegador com a lista. Se o <code>fetch</code> falhar, o <code>throw</code> mostra o <code>error.tsx</code> (seção 4.11)."
+  },
+  {
+   "t": "p",
+   "html": "Também dá para definir o comportamento da página inteira, de uma vez, exportando uma constante no topo do arquivo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// No topo de um page.tsx ou layout.tsx\nexport const revalidate = 60;            // a pagina toda vira ISR\n\n// ou\nexport const dynamic = \"force-dynamic\";  // sempre gerada a cada visita"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "A revalidação não deixa ninguém esperando: passados os 60 segundos, o próximo visitante ainda recebe a versão guardada, e o Next.js gera a nova em segundo plano, para os visitantes seguintes."
+    },
+    {
+     "t": "p",
+     "html": "Para limpar o cache na hora (depois de gravar um dado novo, por exemplo), use <code>revalidatePath(\"/posts\")</code> ou <code>revalidateTag(\"posts\", \"max\")</code>, de <code>next/cache</code>, dentro de uma Server Action (seção 5.8). No Next.js 16, o <code>revalidateTag</code> pede esse segundo argumento."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O Next.js 16 trouxe um modelo de cache novo e opcional, o <em>Cache Components</em>, ligado no <code>next.config.ts</code> e usado com a diretiva <code>\"use cache\"</code>. Esta apostila usa o modelo padrão, que é o que vale enquanto essa opção não é ligada."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-7-generatestaticparams-rotas-dinamicas-geradas-no-build",
+   "texto": "5.7 generateStaticParams: Rotas Dinâmicas Geradas no Build"
+  },
+  {
+   "t": "p",
+   "html": "Uma rota dinâmica como <code>/blog/[slug]</code> (seção 4.7) não sabe, no <em>build</em>, quais <code>slug</code> existem. Por isso, cada post é gerado só quando alguém o visita. A função <code>generateStaticParams</code> resolve isso: ela devolve a lista de valores, e o Next.js gera uma página para cada um já no <em>build</em> (são as rotas marcadas com <code>●</code> no <code>npm run build</code>)."
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/blog/[slug]/page.tsx\nimport { notFound } from \"next/navigation\";\n\nconst posts = [\n  { slug: \"primeiro-post\", titulo: \"Meu primeiro post\", texto: \"...\" },\n  { slug: \"novidades\", titulo: \"Novidades do Next.js\", texto: \"...\" },\n];\n\n// Roda no build: devolve um objeto para cada pagina a gerar\nexport async function generateStaticParams() {\n  return posts.map((post) => ({ slug: post.slug }));\n}\n\n// false = slug fora da lista vira 404 (o padrao e true)\nexport const dynamicParams = false;\n\nexport default async function Post({\n  params,\n}: {\n  params: Promise<{ slug: string }>;\n}) {\n  const { slug } = await params;\n  const post = posts.find((p) => p.slug === slug);\n  if (!post) notFound();\n\n  return (\n    <article>\n      <h1>{post.titulo}</h1>\n      <p>{post.texto}</p>\n    </article>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "Cada objeto devolvido tem uma chave para cada pasta entre colchetes (aqui, só <code>slug</code>). Num projeto real, a lista viria de uma API ou de um banco de dados. O <code>dynamicParams</code> decide o que acontece com um <code>slug</code> que não está na lista: com <code>true</code> (o padrão), a página é gerada na primeira visita e guardada; com <code>false</code>, o endereço responde com a página 404."
+  },
+  {
+   "t": "h2",
+   "id": "5-8-server-actions-gravando-dados-sem-criar-uma-api",
+   "texto": "5.8 Server Actions: Gravando Dados sem Criar uma API"
+  },
+  {
+   "t": "p",
+   "html": "Até aqui, os dados só eram lidos. Para <strong>gravar</strong> (criar, alterar, excluir), o caminho tradicional seria criar uma API e chamá-la com <code>fetch</code> no navegador. As <strong>Server Actions</strong> encurtam esse caminho: são funções <code>async</code>, marcadas com <code>\"use server\"</code>, que rodam no servidor e podem ser passadas direto para o <code>action</code> de um <code>&lt;form&gt;</code>. O Next.js cria sozinho a comunicação entre o navegador e o servidor."
+  },
+  {
+   "t": "p",
+   "html": "Para o exemplo não depender de um banco de dados, as tarefas ficam num arquivo JSON, lido e gravado com <code>fs/promises</code>, como no <code>tasks.js</code> do Módulo 1:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/tarefas.ts -- \"banco\" simples num arquivo JSON\nimport { readFile, writeFile } from \"fs/promises\";\n\nexport interface Tarefa {\n  id: number;\n  titulo: string;\n  feita: boolean;\n}\n\nconst ARQUIVO = \"tarefas.json\";\n\nexport async function lerTarefas(): Promise<Tarefa[]> {\n  try {\n    return JSON.parse(await readFile(ARQUIVO, \"utf-8\"));\n  } catch {\n    return [];   // o arquivo ainda nao existe\n  }\n}\n\nexport async function salvarTarefas(tarefas: Tarefa[]) {\n  await writeFile(ARQUIVO, JSON.stringify(tarefas, null, 2));\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/tarefas/actions.ts\n\"use server\";   // todas as funcoes deste arquivo sao Server Actions\n\nimport { revalidatePath } from \"next/cache\";\nimport { lerTarefas, salvarTarefas } from \"@/lib/tarefas\";\n\nexport async function criarTarefa(formData: FormData) {\n  const titulo = String(formData.get(\"titulo\") ?? \"\").trim();\n  if (!titulo) return;   // ignora titulo vazio\n\n  const tarefas = await lerTarefas();\n  // aqui nao e estado do React: pode alterar o array\n  tarefas.push({ id: Date.now(), titulo, feita: false });\n  await salvarTarefas(tarefas);\n  revalidatePath(\"/tarefas\");   // a pagina mostra a lista nova\n}\n\nexport async function marcarFeita(id: number) {\n  const tarefas = await lerTarefas();\n  const tarefa = tarefas.find((t) => t.id === id);\n  if (tarefa) tarefa.feita = true;\n  await salvarTarefas(tarefas);\n  revalidatePath(\"/tarefas\");\n}\n\nexport async function excluirTarefa(id: number) {\n  const tarefas = await lerTarefas();\n  await salvarTarefas(tarefas.filter((t) => t.id !== id));\n  revalidatePath(\"/tarefas\");\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/tarefas/page.tsx -- Server Component\nimport { lerTarefas } from \"@/lib/tarefas\";\nimport { criarTarefa, marcarFeita, excluirTarefa } from \"./actions\";\n\nexport const dynamic = \"force-dynamic\";   // le o arquivo a cada visita\n\nexport default async function Tarefas() {\n  const tarefas = await lerTarefas();\n\n  return (\n    <main>\n      <form action={criarTarefa}>\n        <input name=\"titulo\" placeholder=\"Nova tarefa\" required />\n        <button type=\"submit\">Adicionar</button>\n      </form>\n\n      <ul>\n        {tarefas.map((t) => (\n          <li key={t.id}>\n            {t.feita ? <s>{t.titulo}</s> : t.titulo}\n            <form action={marcarFeita.bind(null, t.id)}>\n              <button type=\"submit\">Feita</button>\n            </form>\n            <form action={excluirTarefa.bind(null, t.id)}>\n              <button type=\"submit\">Excluir</button>\n            </form>\n          </li>\n        ))}\n      </ul>\n    </main>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "O formulário de criação manda os campos para <code>criarTarefa</code> num objeto <code>FormData</code>: o <code>name=\"titulo\"</code> do <code>input</code> vira <code>formData.get(\"titulo\")</code>. Nos botões de cada tarefa, o <code>bind(null, t.id)</code> cria uma cópia da função com o <code>id</code> já preenchido. Depois de gravar, o <code>revalidatePath</code> manda o Next.js gerar a página de novo, e a lista aparece atualizada. Esse formulário funciona até antes de o JavaScript da página terminar de carregar, porque é um formulário HTML comum, enviado ao servidor."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma Server Action é um endereço público do seu site: qualquer pessoa pode chamá-la, com os dados que quiser, sem passar pelo formulário. Por isso, dentro da action, valide sempre os dados recebidos e, quando houver login, confira se o usuário tem permissão, como em qualquer API."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O arquivo <code>tarefas.json</code> serve só para estudar no seu computador. Em hospedagens como a Vercel, o servidor não guarda arquivos gravados pelo site; em produção, os dados ficam num banco de dados."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "5-9-formularios-com-server-actions-validacao-e-mensagens",
+   "texto": "5.9 Formulários com Server Actions: Validação e Mensagens"
+  },
+  {
+   "t": "p",
+   "html": "No exemplo anterior, um título vazio era só ignorado. Para mostrar mensagens (um erro de validação, um \"enviado com sucesso\") e desabilitar o botão durante o envio, o React 19 tem o Hook <code>useActionState</code>: ele liga um formulário a uma Server Action que <strong>devolve um resultado</strong>. Como é um Hook, o formulário fica num Client Component; a action continua rodando no servidor."
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/contato/actions.ts\n\"use server\";\n\nexport interface Resultado {\n  ok: boolean;\n  mensagem: string;\n}\n\nexport async function enviarMensagem(\n  anterior: Resultado | null,\n  formData: FormData\n): Promise<Resultado> {\n  const nome = String(formData.get(\"nome\") ?? \"\").trim();\n  const email = String(formData.get(\"email\") ?? \"\").trim();\n\n  // a validacao no servidor e a que vale: nao da para burlar\n  if (nome.length < 3) {\n    return { ok: false, mensagem: \"Informe o nome (minimo de 3 letras).\" };\n  }\n  if (!email.includes(\"@\")) {\n    return { ok: false, mensagem: \"Informe um e-mail valido.\" };\n  }\n\n  // aqui a mensagem seria salva no banco ou enviada por e-mail\n  return { ok: true, mensagem: `Obrigado, ${nome}! Mensagem recebida.` };\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/contato/FormContato.tsx\n\"use client\";\n\nimport { useActionState } from \"react\";\nimport { enviarMensagem } from \"./actions\";\n\nexport default function FormContato() {\n  const [resultado, acao, enviando] = useActionState(enviarMensagem, null);\n\n  return (\n    <form action={acao}>\n      <input name=\"nome\" placeholder=\"Nome\" />\n      <input name=\"email\" placeholder=\"E-mail\" />\n      <button type=\"submit\" disabled={enviando}>\n        {enviando ? \"Enviando...\" : \"Enviar\"}\n      </button>\n\n      {resultado && (\n        <p className={resultado.ok ? \"sucesso\" : \"erro\"}>\n          {resultado.mensagem}\n        </p>\n      )}\n    </form>\n  );\n}"
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/contato/page.tsx -- Server Component\nimport FormContato from \"./FormContato\";\n\nexport default function Contato() {\n  return (\n    <main>\n      <h1>Contato</h1>\n      <FormContato />\n    </main>\n  );\n}"
+  },
+  {
+   "t": "p",
+   "html": "O <code>useActionState(enviarMensagem, null)</code> recebe a action e o resultado inicial (<code>null</code>: nada enviado ainda) e devolve três itens: o resultado da última execução, a função que vai no <code>action</code> do formulário e um <code>true</code>/<code>false</code> que diz se o envio está em andamento. A action, por sua vez, recebe o resultado anterior como primeiro parâmetro e o <code>FormData</code> como segundo. A página continua Server Component: só o formulário é Client."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"Já validei no navegador (seção 3.7), preciso validar no servidor também?\" – Sim. A validação no navegador melhora a experiência, mas pode ser burlada; a do servidor é a que protege os dados."
+    }
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Depois de cada envio, o React 19 limpa os campos do formulário. Se quiser manter o que foi digitado quando há erro, a action pode devolver os valores recebidos, e cada <code>input</code> usa esses valores em <code>defaultValue</code>."
+    }
    ]
   }
  ]

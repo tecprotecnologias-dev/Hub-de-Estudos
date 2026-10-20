@@ -681,7 +681,7 @@ export const apostilas: Apostila[] = [
     titulo: 'Server e Client Components',
     disciplinaId: 'programacao-e-design-para-web-ii',
     descricao:
-      'Por que Server Components existem, a diretiva "use client", como misturar os dois tipos e como decidir entre server e client.',
+      'Por que Server Components existem, a diretiva "use client", como misturar e decidir entre os dois tipos, fetch com cache e revalidação, generateStaticParams, Server Actions e formulários com useActionState.',
   },
   {
     // COMANDOS GITHUB.docx, convertido com ferramentas/converter_word_comandos.py

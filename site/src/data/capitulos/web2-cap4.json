@@ -92,7 +92,7 @@
   },
   {
    "t": "p",
-   "html": "No App Router, a estratégia não é escolhida num arquivo de configuração: o Next.js decide <strong>página por página</strong>, olhando o que cada uma usa. Uma página que não depende de nada da visita (como a página \"Sobre\") é gerada no <em>build</em> (SSG). Se ela lê algo que só existe na hora da visita (<em>cookies</em>, os parâmetros da URL) ou pede dados sem cache, passa a ser gerada a cada visita (SSR). Com um tempo de revalidação, vira ISR. E os Client Components continuam fazendo CSR nas partes interativas. O cache e a revalidação ficam para o Módulo 5."
+   "html": "No App Router, a estratégia não é escolhida num arquivo de configuração: o Next.js decide <strong>página por página</strong>, olhando o que cada uma usa. Uma página que não depende de nada da visita (como a página \"Sobre\") é gerada no <em>build</em> (SSG). Se ela lê algo que só existe na hora da visita (<em>cookies</em>, os parâmetros da URL) ou pede dados com <code>cache: \"no-store\"</code>, passa a ser gerada a cada visita (SSR). Com um tempo de revalidação, vira ISR. E os Client Components continuam fazendo CSR nas partes interativas. O cache e a revalidação ficam para o Módulo 5."
   },
   {
    "t": "quadro",
@@ -101,7 +101,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "Para ver o que o Next.js decidiu, rode <code>npm run build</code>. Na lista de rotas, no final, <code>○</code> (<em>Static</em>) marca as páginas geradas no <em>build</em>, <code>ƒ</code> (<em>Dynamic</em>) as geradas a cada visita, e <code>●</code> as rotas dinâmicas geradas no <em>build</em> com <code>generateStaticParams</code> (Módulo 5)."
+     "html": "Para ver o que o Next.js decidiu, rode <code>npm run build</code>. Na lista de rotas, no final, <code>○</code> (<em>Static</em>) marca as páginas geradas no <em>build</em>, <code>ƒ</code> (<em>Dynamic</em>) as geradas a cada visita, e <code>●</code> as rotas dinâmicas geradas no <em>build</em> com <code>generateStaticParams</code> (Módulo 5). As páginas ISR aparecem com <code>○</code> e com o tempo de revalidação na coluna <em>Revalidate</em>."
     }
    ]
   },
