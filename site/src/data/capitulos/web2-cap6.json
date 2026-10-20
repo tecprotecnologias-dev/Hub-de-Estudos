@@ -1,0 +1,345 @@
+{
+ "numero": 6,
+ "titulo": "Banco de Dados com Prisma",
+ "blocos": [
+  {
+   "t": "h2",
+   "id": "6-1-por-que-um-banco-de-dados-e-o-que-e-um-orm",
+   "texto": "6.1 Por que um Banco de Dados (e o que é um ORM)"
+  },
+  {
+   "t": "p",
+   "html": "O arquivo <code>tarefas.json</code> do Módulo 5 serviu para estudar, mas tem limites sérios: a cada leitura o arquivo inteiro é carregado; se duas pessoas gravarem ao mesmo tempo, uma pode apagar o que a outra escreveu; e as hospedagens não guardam arquivos gravados pelo site. Um <strong>banco de dados</strong> resolve tudo isso: guarda os dados em tabelas, busca só o que foi pedido e cuida de várias gravações ao mesmo tempo."
+  },
+  {
+   "t": "p",
+   "html": "Para conversar com o banco, em vez de escrever SQL à mão, usamos um <strong>ORM</strong> (<em>Object-Relational Mapping</em>): uma biblioteca que transforma as tabelas em objetos do TypeScript, com autocompletar e verificação de tipos no editor. O ORM mais usado com Next.js é o <strong>Prisma</strong>."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "SQL",
+    "Prisma"
+   ],
+   "linhas": [
+    [
+     "<code>SELECT * FROM \"Tarefa\" ORDER BY \"criadaEm\" DESC</code>",
+     "<code>db.tarefa.findMany({ orderBy: { criadaEm: \"desc\" } })</code>"
+    ],
+    [
+     "<code>INSERT INTO \"Tarefa\" (\"titulo\") VALUES ('Estudar')</code>",
+     "<code>db.tarefa.create({ data: { titulo: \"Estudar\" } })</code>"
+    ],
+    [
+     "<code>UPDATE \"Tarefa\" SET \"feita\" = true WHERE \"id\" = 1</code>",
+     "<code>db.tarefa.update({ where: { id: 1 }, data: { feita: true } })</code>"
+    ],
+    [
+     "<code>DELETE FROM \"Tarefa\" WHERE \"id\" = 1</code>",
+     "<code>db.tarefa.delete({ where: { id: 1 } })</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Neste módulo, o banco é o <strong>SQLite</strong>: ele fica num arquivo dentro do próprio projeto, sem instalar um servidor de banco nem criar conta em nenhum serviço, o que é ótimo para aprender. Na Web III, o mesmo Prisma é usado com o <strong>PostgreSQL</strong>, um banco na nuvem; o código das consultas é o mesmo, mudam só a conexão e o adaptador."
+  },
+  {
+   "t": "h2",
+   "id": "6-2-instalando-o-prisma",
+   "texto": "6.2 Instalando o Prisma"
+  },
+  {
+   "t": "p",
+   "html": "No projeto Next.js dos Módulos 4 e 5, instale o Prisma e as bibliotecas de que ele precisa. O <code>@7</code> fixa a versão principal, para que os comandos desta apostila continuem valendo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npm install -D prisma@7\n$ npm install @prisma/client@7 @prisma/adapter-better-sqlite3 dotenv\n$ npx prisma init --datasource-provider sqlite --no-skills"
+  },
+  {
+   "t": "p",
+   "html": "O <code>prisma</code> é a ferramenta de linha de comando, usada só no desenvolvimento (por isso o <code>-D</code>). O <code>@prisma/client</code> é a biblioteca que o site usa para consultar o banco; o <code>@prisma/adapter-better-sqlite3</code> é o <strong>adaptador</strong> que faz a conexão com o SQLite, obrigatório a partir do Prisma 7; e o <code>dotenv</code> lê o arquivo <code>.env</code> para as ferramentas do Prisma. A opção <code>--no-skills</code> evita que o <code>init</code> crie pastas de instruções para assistentes de IA, que não serão usadas."
+  },
+  {
+   "t": "p",
+   "html": "O <code>init</code> cria três arquivos: <code>prisma/schema.prisma</code>, que descreve o banco; o arquivo de configuração do Prisma, que na versão 7.10 se chama <code>prisma7.config.ts</code> (o nome <code>prisma.config.ts</code>, usado em outras versões, também funciona); e o <code>.env</code>, com o endereço do banco:"
+  },
+  {
+   "t": "codigo",
+   "texto": "# .env -- NUNCA vai para o Git\nDATABASE_URL=\"file:./dev.db\""
+  },
+  {
+   "t": "p",
+   "html": "O <code>file:./dev.db</code> quer dizer: o banco é o arquivo <code>dev.db</code>, na raiz do projeto. Ele é criado na primeira migração (seção 6.3). O arquivo de configuração gerado já vem pronto e não precisa de mudança: a linha <code>import \"dotenv/config\"</code> dele carrega o <code>.env</code>, porque o Prisma 7 não lê esse arquivo sozinho."
+  },
+  {
+   "t": "h2",
+   "id": "6-3-o-esquema-e-a-primeira-migracao",
+   "texto": "6.3 O Esquema e a Primeira Migração"
+  },
+  {
+   "t": "p",
+   "html": "O <code>schema.prisma</code> descreve as tabelas numa linguagem própria, simples de ler. Substitua o conteúdo dele por este:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// prisma/schema.prisma\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\nmodel Tarefa {\n  id       Int      @id @default(autoincrement())\n  titulo   String\n  feita    Boolean  @default(false)\n  criadaEm DateTime @default(now())\n}"
+  },
+  {
+   "t": "p",
+   "html": "O bloco <code>generator</code> diz onde o Prisma gera o código do cliente: a pasta <code>app/generated/prisma</code>, o mesmo lugar usado na Web III. Cada <code>model</code> vira uma tabela, e cada linha dentro dele, uma coluna:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Símbolo",
+    "Significado"
+   ],
+   "linhas": [
+    [
+     "<code>@id</code>",
+     "Chave primária: identifica cada tarefa"
+    ],
+    [
+     "<code>@default(autoincrement())</code>",
+     "O banco numera sozinho: 1, 2, 3..."
+    ],
+    [
+     "<code>@default(false)</code>",
+     "Valor usado quando a tarefa é criada sem informar o campo"
+    ],
+    [
+     "<code>@default(now())</code>",
+     "Preenchido com a data e a hora da criação"
+    ],
+    [
+     "<code>String?</code>",
+     "O <code>?</code> torna o campo opcional (aceita vazio)"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Uma <strong>migração</strong> é um arquivo SQL que leva o banco de um estado a outro, como \"criar a tabela de tarefas\". Crie e aplique a primeira e, em seguida, gere o código do cliente:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ npx prisma migrate dev --name init\n$ npx prisma generate"
+  },
+  {
+   "t": "p",
+   "html": "O <code>migrate dev</code> compara o esquema com o banco, cria o arquivo <code>dev.db</code>, escreve o SQL em <code>prisma/migrations/&lt;data&gt;_init/migration.sql</code> e o executa:"
+  },
+  {
+   "t": "codigo",
+   "texto": "-- CreateTable\nCREATE TABLE \"Tarefa\" (\n    \"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n    \"titulo\" TEXT NOT NULL,\n    \"feita\" BOOLEAN NOT NULL DEFAULT false,\n    \"criadaEm\" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP\n);"
+  },
+  {
+   "t": "p",
+   "html": "O <code>generate</code> cria o código do cliente, com os tipos do TypeScript, em <code>app/generated/prisma</code>. No Prisma 7, ele não roda sozinho depois da migração: <strong>sempre que alterar o esquema, rode os dois comandos</strong>. Para ver e editar os dados numa tela, rode <code>npx prisma studio</code>: ele abre uma página no navegador com as tabelas do banco."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O <code>.env</code>, o banco <code>dev.db</code> e a pasta gerada <code>app/generated/prisma</code> não vão para o Git. Confira o <code>.gitignore</code>: o <code>init</code> acrescenta o <code>.env</code> e a pasta gerada, mas pode ter escrito outro caminho (como <code>/lib/generated/prisma</code>). Deixe assim:"
+    },
+    {
+     "t": "codigo",
+     "texto": ".env\n*.db\n/app/generated/prisma"
+    },
+    {
+     "t": "p",
+     "html": "Já a pasta <code>prisma/migrations</code> vai para o Git: é ela que permite a qualquer pessoa da equipe chegar exatamente ao mesmo banco."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-4-uma-conexao-para-o-projeto-todo",
+   "texto": "6.4 Uma Conexão para o Projeto Todo"
+  },
+  {
+   "t": "p",
+   "html": "Várias partes do site vão consultar o banco, e todas devem usar o mesmo cliente do Prisma. Crie o arquivo <code>lib/db.ts</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "// lib/db.ts -- uma unica conexao com o banco para o projeto todo\nimport { PrismaBetterSqlite3 } from \"@prisma/adapter-better-sqlite3\";\nimport { PrismaClient } from \"@/app/generated/prisma/client\";\n\nconst adapter = new PrismaBetterSqlite3({\n  url: process.env.DATABASE_URL ?? \"file:./dev.db\",\n});\n\n// Em desenvolvimento, o Next.js recarrega os arquivos a cada\n// alteracao; guardar o cliente em globalThis evita criar um\n// cliente novo a cada recarga.\nconst globalParaPrisma = globalThis as unknown as {\n  prisma?: PrismaClient;\n};\n\nexport const db =\n  globalParaPrisma.prisma ?? new PrismaClient({ adapter });\n\nif (process.env.NODE_ENV !== \"production\") {\n  globalParaPrisma.prisma = db;\n}"
+  },
+  {
+   "t": "p",
+   "html": "O cliente é importado da pasta gerada, <code>@/app/generated/prisma/client</code>, e não do pacote <code>@prisma/client</code>, como em versões antigas do Prisma. O adaptador recebe o endereço do banco, que o Next.js lê sozinho do <code>.env</code>. A parte do <code>globalThis</code> resolve um problema do desenvolvimento: a cada arquivo salvo, o Next.js recarrega os módulos, e cada recarga criaria um cliente novo. Guardando o cliente numa variável global, a recarga reaproveita o mesmo. Esse padrão, de ter um único objeto compartilhado, se chama <strong><em>singleton</em></strong>. O operador <code>??</code> quer dizer \"use o cliente guardado ou, se não houver, crie um\"."
+  },
+  {
+   "t": "h2",
+   "id": "6-5-das-server-actions-ao-banco",
+   "texto": "6.5 Das Server Actions ao Banco"
+  },
+  {
+   "t": "p",
+   "html": "Agora as Server Actions da seção 5.8 trocam o arquivo JSON pelo banco. Compare com a versão anterior: a estrutura é a mesma, e cada operação ficou com uma linha só."
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/tarefas/actions.ts -- agora gravando no banco\n\"use server\";\n\nimport { revalidatePath } from \"next/cache\";\nimport { db } from \"@/lib/db\";\n\nexport async function criarTarefa(formData: FormData) {\n  const titulo = String(formData.get(\"titulo\") ?? \"\").trim();\n  if (!titulo) return;\n\n  await db.tarefa.create({ data: { titulo } });\n  revalidatePath(\"/tarefas\");\n}\n\nexport async function marcarFeita(id: number) {\n  await db.tarefa.update({ where: { id }, data: { feita: true } });\n  revalidatePath(\"/tarefas\");\n}\n\nexport async function excluirTarefa(id: number) {\n  await db.tarefa.delete({ where: { id } });\n  revalidatePath(\"/tarefas\");\n}"
+  },
+  {
+   "t": "p",
+   "html": "Na página, só muda a leitura: <code>lerTarefas()</code> vira uma consulta ao banco. O resto do <code>page.tsx</code> da seção 5.8 continua igual, e o <code>lib/tarefas.ts</code> pode ser apagado."
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/tarefas/page.tsx -- o inicio do arquivo\nimport { db } from \"@/lib/db\";\nimport { criarTarefa, marcarFeita, excluirTarefa } from \"./actions\";\n\nexport const dynamic = \"force-dynamic\";   // le o banco a cada visita\n\nexport default async function Tarefas() {\n  const tarefas = await db.tarefa.findMany({\n    orderBy: { criadaEm: \"desc\" },\n  });\n  // ... o return com o formulario e a lista, igual ao da secao 5.8"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Método",
+    "O que faz"
+   ],
+   "linhas": [
+    [
+     "<code>findMany()</code>",
+     "Lista os registros (com <code>where</code>, <code>orderBy</code>, <code>take</code> para filtrar, ordenar e limitar)"
+    ],
+    [
+     "<code>findUnique({ where: { id } })</code>",
+     "Busca um registro pela chave; devolve <code>null</code> se não existir"
+    ],
+    [
+     "<code>create({ data })</code>",
+     "Cria um registro e devolve o registro criado, já com o <code>id</code>"
+    ],
+    [
+     "<code>update({ where, data })</code>",
+     "Altera os campos de <code>data</code> no registro encontrado"
+    ],
+    [
+     "<code>delete({ where })</code>",
+     "Exclui o registro encontrado"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Como os tipos vêm do esquema, o editor avisa na hora se você escrever <code>db.tarefa.create({ data: { nome: \"x\" } })</code>: o modelo <code>Tarefa</code> não tem o campo <code>nome</code>."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Erro Comum",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "\"<code>Cannot find module '@/app/generated/prisma/client'</code>\" ou \"a propriedade <code>tarefa</code> não existe\". – Faltou o <code>npx prisma generate</code> depois de criar ou mudar o esquema. Rode o comando e reinicie o <code>npm run dev</code>."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-6-route-handlers-uma-api-dentro-do-next-js",
+   "texto": "6.6 Route Handlers: uma API dentro do Next.js"
+  },
+  {
+   "t": "p",
+   "html": "As Server Actions servem para os formulários do próprio site. Quando <strong>outro programa</strong> precisa usar os dados (um aplicativo de celular, outro site, o Postman), o caminho é uma <strong>API</strong>. No App Router, ela é feita com um arquivo <code>route.ts</code>, o <strong>Route Handler</strong>: em vez de devolver uma página, ele devolve dados, normalmente em JSON."
+  },
+  {
+   "t": "codigo",
+   "texto": "// app/api/tarefas/route.ts -- endereco /api/tarefas\nimport { db } from \"@/lib/db\";\n\n// GET /api/tarefas -- lista as tarefas em JSON\nexport async function GET() {\n  const tarefas = await db.tarefa.findMany();\n  return Response.json(tarefas);\n}\n\n// POST /api/tarefas -- cria uma tarefa a partir do JSON recebido\nexport async function POST(request: Request) {\n  const corpo = await request.json();\n  const titulo = String(corpo.titulo ?? \"\").trim();\n  if (!titulo) {\n    return Response.json({ erro: \"Informe o titulo\" }, { status: 400 });\n  }\n  const tarefa = await db.tarefa.create({ data: { titulo } });\n  return Response.json(tarefa, { status: 201 });\n}"
+  },
+  {
+   "t": "p",
+   "html": "O endereço segue as pastas, como as páginas: <code>app/api/tarefas/route.ts</code> atende <code>/api/tarefas</code>. Cada função exportada tem o nome de um método HTTP (<code>GET</code>, <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>) e é chamada quando chega uma requisição com aquele método. O <code>Response.json</code> monta a resposta em JSON, e o <code>status</code> informa o resultado: <code>201</code> (criado) ou <code>400</code> (pedido com erro). Para testar, com o <code>npm run dev</code> rodando:"
+  },
+  {
+   "t": "codigo",
+   "texto": "$ curl http://localhost:3000/api/tarefas\n$ curl -X POST http://localhost:3000/api/tarefas -H \"Content-Type: application/json\" -d \"{\\\"titulo\\\":\\\"Estudar Prisma\\\"}\""
+  },
+  {
+   "t": "p",
+   "html": "O primeiro comando lista as tarefas; o segundo cria uma e devolve, por exemplo, <code>{\"id\":1,\"titulo\":\"Estudar Prisma\",\"feita\":false,...}</code>. No PowerShell, escreva <code>curl.exe</code> em vez de <code>curl</code>. O mesmo teste pode ser feito no Postman, sem digitar comandos."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Uma pasta não pode ter <code>page.tsx</code> e <code>route.ts</code> ao mesmo tempo, porque os dois responderiam ao mesmo endereço. Por isso as APIs costumam ficar dentro de <code>app/api/</code>."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "6-7-o-que-continua-na-web-iii",
+   "texto": "6.7 O que Continua na Web III"
+  },
+  {
+   "t": "p",
+   "html": "Este módulo mostrou o caminho completo, em versão curta: o esquema, a migração, a conexão, as gravações pelas Server Actions e uma API. A disciplina <strong>Programação e Design para Web III</strong> (5º período) parte exatamente daqui: o mesmo Next.js, o mesmo Prisma 7 e o mesmo <code>lib/db.ts</code>, agora com um banco PostgreSQL na nuvem e uma API completa. Os assuntos que ficaram de fora deste módulo estão lá:"
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "Assunto",
+    "Na apostila da Web III"
+   ],
+   "linhas": [
+    [
+     "O que é uma API, REST e os métodos HTTP",
+     "Cap. 1 APIs e Web Services e Cap. 2 Design RESTful e métodos HTTP"
+    ],
+    [
+     "Banco PostgreSQL na nuvem (Neon), tabelas relacionadas (usuário e tarefas) e dados de teste (seed)",
+     "Cap. 3 Preparando o projeto"
+    ],
+    [
+     "Route Handlers a fundo: ler a requisição, segmentos dinâmicos, códigos de status",
+     "Cap. 4 Roteamento e endpoints"
+    ],
+    [
+     "Validação dos dados recebidos com Zod",
+     "Cap. 6 Validação com Zod"
+    ],
+    [
+     "CRUD completo (GET, POST, PATCH, DELETE) com uma camada de serviço",
+     "Cap. 7 CRUD: manipulação de recursos"
+    ],
+    [
+     "Tratamento de erros e códigos HTTP",
+     "Cap. 8 Erros e códigos HTTP"
+    ],
+    [
+     "Cadastro, login e autenticação com JWT",
+     "Cap. 9 Autenticação com JWT"
+    ],
+    [
+     "Documentação da API e testes automatizados",
+     "Cap. 10 Documentação e Cap. 11 Testes de API"
+    ],
+    [
+     "Segurança e publicação (deploy)",
+     "Cap. 12 Segurança e deploy"
+    ]
+   ]
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O material da faculdade cita o <strong>NextAuth.js</strong> (hoje chamado Auth.js), uma biblioteca pronta de login. A Web III ensina a autenticação \"por dentro\", com senhas protegidas e tokens JWT: entendendo como funciona, fica fácil usar qualquer biblioteca de login depois."
+    }
+   ]
+  }
+ ]
+}

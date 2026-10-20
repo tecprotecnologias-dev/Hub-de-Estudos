@@ -47,7 +47,7 @@
   },
   {
    "t": "codigo",
-   "texto": "// app/projetos/page.tsx -- Server Component (padrao)\nasync function buscarProjetos() {\n  // simula uma busca (numa aplicacao real, seria uma consulta ao banco)\n  return [\n    { id: 1, titulo: \"Portfolio Pessoal\", tecnologias: [\"React\", \"Next.js\"] },\n  ];\n}\n\nexport default async function Projetos() {\n  const projetos = await buscarProjetos();\n\n  return (\n    <main>\n      <h1>Meus Projetos</h1>\n      {projetos.map((p) => (\n        <p key={p.id}>{p.titulo}</p>\n      ))}\n    </main>\n  );\n}"
+   "texto": "// app/projetos/page.tsx -- Server Component (padrao)\nasync function buscarProjetos() {\n  // simula uma busca (no Modulo 6, vira uma consulta ao banco)\n  return [\n    { id: 1, titulo: \"Portfolio Pessoal\", tecnologias: [\"React\", \"Next.js\"] },\n  ];\n}\n\nexport default async function Projetos() {\n  const projetos = await buscarProjetos();\n\n  return (\n    <main>\n      <h1>Meus Projetos</h1>\n      {projetos.map((p) => (\n        <p key={p.id}>{p.titulo}</p>\n      ))}\n    </main>\n  );\n}"
   },
   {
    "t": "p",
@@ -388,7 +388,7 @@
    "blocos": [
     {
      "t": "p",
-     "html": "O arquivo <code>tarefas.json</code> serve só para estudar no seu computador. Em hospedagens como a Vercel, o servidor não guarda arquivos gravados pelo site; em produção, os dados ficam num banco de dados."
+     "html": "O arquivo <code>tarefas.json</code> serve só para estudar no seu computador. Em hospedagens como a Vercel, o servidor não guarda arquivos gravados pelo site; em produção, os dados ficam num banco de dados, assunto do Módulo 6."
     }
    ]
   },

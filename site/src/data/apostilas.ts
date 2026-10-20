@@ -684,6 +684,18 @@ export const apostilas: Apostila[] = [
       'Por que Server Components existem, a diretiva "use client", como misturar e decidir entre os dois tipos, fetch com cache e revalidação, generateStaticParams, Server Actions e formulários com useActionState.',
   },
   {
+    // Escrito em 20/10/2026 a partir do Módulo 6 do Material_Didatico_Web_II.pdf, em versão curta (Prisma com
+    // SQLite ligado às Server Actions do Módulo 5 e um Route Handler); o resto continua na Web III.
+    // Gerado pelo script criar_web2_cap6.py; exemplos testados com Next.js 16.4 e Prisma 7.10.
+    id: 'web2-cap6',
+    capitulo: 6,
+    rotulo: 'Módulo',
+    titulo: 'Banco de Dados com Prisma',
+    disciplinaId: 'programacao-e-design-para-web-ii',
+    descricao:
+      'Por que um banco de dados e o que é um ORM, instalação do Prisma com SQLite, esquema e migração, a conexão única, Server Actions gravando no banco, um Route Handler e o que continua na Web III.',
+  },
+  {
     // COMANDOS GITHUB.docx, convertido com ferramentas/converter_word_comandos.py
     //   --remover-primeiro "Bem, nós iremos repassar" (parágrafo repetido fora do lugar)
     //   e --trocar para corrigir digitação nos títulos (bransh, CHECOUT, GIR, hitórico, seu commits)
