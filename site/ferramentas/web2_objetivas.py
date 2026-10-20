@@ -1,5 +1,5 @@
 """
-Questões objetivas de Programação e Design para Web II (módulos 1 a 5), no estilo de
+Questões objetivas de Programação e Design para Web II (módulos 1 a 6), no estilo de
 concursos públicos e exames nacionais: situação-problema, afirmativas I/II/III,
 asserção-razão, "assinale a incorreta" e leitura de código, sempre com 5 alternativas.
 
@@ -974,6 +974,179 @@ afirmativas(
 
 
 # =====================================================================================
+
+# =====================================================================================
+# Módulo 6: Banco de Dados com Prisma
+# =====================================================================================
+
+multipla(
+    6, 'facil',
+    'No contexto do desenvolvimento web, um ORM como o Prisma é',
+    'uma biblioteca que trata as tabelas do banco como objetos, para consultar e gravar dados sem escrever SQL.',
+    [
+        'um tipo de banco de dados que guarda as informações em arquivos JSON dentro do projeto, no lugar das tabelas.',
+        'um servidor web que substitui o Next.js na hora de responder às requisições dos navegadores e aplicativos.',
+        'um formato de arquivo usado para documentar as rotas de uma API, com os métodos e os códigos de status.',
+        'uma extensão do navegador que mostra o conteúdo das tabelas do banco durante o desenvolvimento do site.',
+    ],
+    'ORM (Object-Relational Mapping) é a camada que liga as tabelas do banco aos objetos do programa: '
+    'db.tarefa.findMany() faz o papel de um SELECT, e os tipos gerados permitem que o editor confira os campos. '
+    'O banco continua existindo; o ORM só é a forma de conversar com ele.',
+)
+
+multipla(
+    6, 'facil',
+    'Um estudante acrescentou um novo modelo ao arquivo schema.prisma de um projeto com Prisma 7. '
+    'Para criar a tabela no banco e atualizar o código do cliente, ele deve executar',
+    'npx prisma migrate dev --name <nome>, seguido de npx prisma generate.',
+    [
+        'apenas npm run dev, porque o Next.js aplica o esquema sozinho ao iniciar.',
+        'apenas npx prisma generate, porque ele também cria as tabelas no banco.',
+        'npx prisma init de novo, porque cada modelo exige um projeto Prisma próprio.',
+        'npm install @prisma/client, porque a instalação lê o esquema e cria as tabelas.',
+    ],
+    'O migrate dev compara o esquema com o banco, escreve o SQL da diferença em prisma/migrations e o executa. '
+    'No Prisma 7, o generate não roda sozinho depois da migração: é ele que recria o código do cliente, com os tipos do novo modelo.',
+)
+
+multipla(
+    6, 'facil',
+    'Em um projeto Next.js com App Router, o arquivo app/api/produtos/route.ts responde no endereço',
+    '/api/produtos',
+    [
+        '/app/api/produtos',
+        '/api/produtos/route',
+        '/produtos',
+        'Nenhum, até a rota ser registrada no next.config.ts.',
+    ],
+    'Os Route Handlers seguem as pastas, como as páginas: a pasta app não entra no endereço, e o nome do arquivo (route) também não. '
+    'Cada função exportada (GET, POST...) responde ao método HTTP de mesmo nome.',
+)
+
+afirmativas(
+    6, 'medio',
+    [
+        ('O atributo @id marca a chave primária do modelo.', True),
+        ('Com @default(autoincrement()), o banco numera os registros sozinho.', True),
+        ('O ponto de interrogação em titulo String? torna o campo obrigatório.', False),
+    ],
+    'I e II são verdadeiras. III é falsa: o ? torna o campo opcional, isto é, ele aceita ficar vazio (null).',
+    contexto=[
+        p('Considere o modelo abaixo, do arquivo schema.prisma.'),
+        codigo('''
+model Tarefa {
+  id       Int      @id @default(autoincrement())
+  titulo   String?
+  feita    Boolean  @default(false)
+  criadaEm DateTime @default(now())
+}
+'''),
+    ],
+)
+
+multipla(
+    6, 'medio',
+    'Com o modelo Tarefa da seção 6.3 (feita com @default(false) e id com autoincrement), o que o código exibe no console?',
+    'false number',
+    [
+        'undefined number',
+        'false string',
+        'null undefined',
+        'Nada: o create não devolve o registro criado.',
+    ],
+    'O create devolve o registro gravado, já com os valores preenchidos pelo banco: feita recebe o padrão false, '
+    'e o id, gerado pelo autoincrement, é um número (Int no esquema vira number no TypeScript).',
+    contexto=[codigo('''
+const t = await db.tarefa.create({ data: { titulo: "Estudar" } });
+console.log(t.feita, typeof t.id);
+''')],
+)
+
+assercao(
+    6, 'medio',
+    'Em desenvolvimento, o arquivo lib/db.ts guarda o PrismaClient em globalThis e reaproveita esse cliente quando ele já existe.',
+    'A cada arquivo salvo, o Next.js recarrega os módulos em desenvolvimento, e cada recarga criaria um cliente novo.',
+    0,
+    'As duas são verdadeiras, e a II explica a I. Sem o globalThis, cada recarga abriria um cliente (e conexões) novo. '
+    'Guardar um único objeto compartilhado é o padrão singleton; em produção não há recarga, por isso o código só guarda o cliente fora dela.',
+)
+
+multipla(
+    6, 'medio',
+    'Uma requisição POST para /api/tarefas é enviada com o corpo {"titulo": ""}. O que a API responde?',
+    'Status 400 e o JSON {"erro": "Informe o titulo"}.',
+    [
+        'Status 201 e a tarefa criada com o título vazio.',
+        'Status 404, porque não existe tarefa com título vazio.',
+        'Status 500, porque o Prisma não aceita textos vazios.',
+        'Status 200 e a lista de tarefas, porque o POST cai na função GET.',
+    ],
+    'Depois do trim, o título é uma string vazia, e o if devolve 400 (pedido com erro) antes de chegar ao create. '
+    'O 201 (criado) só acontece quando o título é válido; cada método HTTP chama a sua própria função.',
+    contexto=[codigo('''
+// app/api/tarefas/route.ts
+export async function POST(request: Request) {
+  const corpo = await request.json();
+  const titulo = String(corpo.titulo ?? "").trim();
+  if (!titulo) {
+    return Response.json({ erro: "Informe o titulo" }, { status: 400 });
+  }
+  const tarefa = await db.tarefa.create({ data: { titulo } });
+  return Response.json(tarefa, { status: 201 });
+}
+''')],
+)
+
+afirmativas(
+    6, 'dificil',
+    [
+        ('Server Actions são indicadas para os formulários do próprio site, que gravam dados sem precisar de uma API separada.', True),
+        ('Um Route Handler permite que outros programas, como um aplicativo de celular ou o Postman, usem os dados por HTTP.', True),
+        ('Uma mesma pasta pode ter page.tsx e route.ts, e o Next.js escolhe qual responder conforme o navegador.', False),
+    ],
+    'I e II são verdadeiras: as duas formas gravam no mesmo banco, mas atendem a públicos diferentes. III é falsa: '
+    'page.tsx e route.ts na mesma pasta responderiam ao mesmo endereço, o que o Next.js não permite; por isso as APIs costumam ficar em app/api/.',
+    contexto=[p('Uma equipe vai gravar tarefas no banco de um projeto Next.js e discute quando usar Server Actions e quando usar Route Handlers.')],
+)
+
+assercao(
+    6, 'dificil',
+    'A pasta prisma/migrations deve ser enviada ao repositório Git, enquanto o arquivo .env e o banco dev.db ficam de fora.',
+    'As migrações guardam o SQL que leva o banco de um estado a outro, o que permite a qualquer pessoa da equipe chegar ao mesmo banco.',
+    0,
+    'As duas são verdadeiras, e a II justifica a I. As migrações são a história do banco e precisam ser compartilhadas; '
+    'o .env guarda endereços e senhas, e o dev.db é o banco local de cada um, que pode ser recriado a partir das migrações.',
+)
+
+multipla(
+    6, 'dificil',
+    'A página abaixo foi publicada com npm run build. Depois disso, novas tarefas são gravadas no banco pela API. '
+    'O que os visitantes da página veem?',
+    'A lista do momento do build: sem o force-dynamic, a página foi gerada uma vez e não consulta o banco.',
+    [
+        'Sempre a lista atualizada, porque toda consulta feita com o Prisma é refeita automaticamente a cada visita.',
+        'Uma página de erro, porque Server Components não podem consultar o banco de dados diretamente no servidor.',
+        'Uma lista vazia, porque os dados do banco só podem ser lidos dentro de um useEffect, no navegador.',
+        'A lista atualizada a cada 60 segundos, porque esse é o tempo padrão de revalidação das páginas do Next.js.',
+    ],
+    'O Next.js não sabe que uma consulta ao banco depende do momento da visita. Como a página não usa nada da requisição, '
+    'ela é gerada no build (aparece com ○ no npm run build). Para mostrar dados novos, a página precisa de dynamic = "force-dynamic", '
+    'de um revalidate ou de um revalidatePath depois de cada gravação.',
+    contexto=[codigo('''
+// app/tarefas/page.tsx
+import { db } from "@/lib/db";
+
+export default async function Tarefas() {
+  const tarefas = await db.tarefa.findMany();
+  return (
+    <ul>
+      {tarefas.map((t) => <li key={t.id}>{t.titulo}</li>)}
+    </ul>
+  );
+}
+''')],
+)
+
 
 def validar():
     erros = []

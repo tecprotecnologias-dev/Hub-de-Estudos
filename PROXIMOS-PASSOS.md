@@ -7,10 +7,6 @@ O site está em https://estudos.tecprotecnologias.com.br (Cloudflare) e se atual
 
 ## Conteúdo
 
-- [ ] **Web II: revisão e complemento da apostila** (pedido em 20/10/2026). Roteiro da faculdade: `C:\Users\Neia\Downloads\Material_Didatico_Web_II.pdf`. A correção dos erros, os Módulos 3, 4 e 5 completos e o Módulo 6 curto (Prisma, ligado à Web III) já estão feitos.
-  - [ ] **← retomar aqui.** Decidir os exercícios do PDF: acrescentar aos que já existem (e levar ao simulado)
-  - [ ] Questões objetivas do Módulo 6 no simulado (os Módulos 1 a 5 têm 10 cada)
-  - [ ] Enviar ao GitHub o Módulo 6 (os Módulos 1 a 5 já estão no site desde 20/10/2026)
 - [ ] **Web III: exercícios e simulado** (pedido em 17/10/2026). Os 12 capítulos estão prontos. Falta uma seção de exercícios no fim de cada capítulo e o simulado da Web III no site com **os mesmos exercícios, no mesmo capítulo**, mais as objetivas no estilo de concurso. Regra geral: todo exercício da apostila também está no simulado.
   - Arquivos: `apostilas/web-iii` (LaTeX e PDF). Para retomar, basta dizer ao Claude "vamos continuar a apostila da Web III".
 - [ ] **Web I: apostila "Desenvolvimento Web Front-End: HTML, CSS, JavaScript e TypeScript"** (pedido em 17/10/2026). Os caps. 1 e 2 estão prontos. Só a base do front-end, sem repetir a Web II nem a Web III, e sem projeto acompanhando; exercícios e simulado depois dos 12 capítulos.

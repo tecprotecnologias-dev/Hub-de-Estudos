@@ -310,6 +310,104 @@
     ]
   },
   {
+    "id": "web2-cap3-e4",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Carrinho de compras: Crie um Custom Hook useCarrinho que guarde os itens do carrinho (produto e quantidade) e ofereça as funções adicionar, remover, alterarQuantidade e limpar, além do total de itens e do valor total. Use o hook numa tela com a lista de produtos, o carrinho e o total.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Criar o hook em um arquivo próprio (seção 3.14). O estado é um array de itens, e cada item guarda o produto e a quantidade. Todas as funções criam arrays novos, com spread, filter e map (seção 3.6):"
+      },
+      {
+        "t": "codigo",
+        "texto": "// src/useCarrinho.ts\nimport { useState } from \"react\";\n\nexport interface Produto {\n  id: number;\n  nome: string;\n  preco: number;\n}\n\ninterface Item {\n  produto: Produto;\n  quantidade: number;\n}\n\nexport function useCarrinho() {\n  const [itens, setItens] = useState<Item[]>([]);\n\n  function adicionar(produto: Produto) {\n    setItens((atual) => {\n      const existe = atual.find((i) => i.produto.id === produto.id);\n      if (existe) {\n        // ja esta no carrinho: soma 1 na quantidade\n        return atual.map((i) =>\n          i.produto.id === produto.id\n            ? { ...i, quantidade: i.quantidade + 1 }\n            : i\n        );\n      }\n      return [...atual, { produto, quantidade: 1 }];\n    });\n  }\n\n  function remover(id: number) {\n    setItens((atual) => atual.filter((i) => i.produto.id !== id));\n  }\n\n  function alterarQuantidade(id: number, quantidade: number) {\n    if (quantidade <= 0) {\n      remover(id);\n      return;\n    }\n    setItens((atual) =>\n      atual.map((i) => (i.produto.id === id ? { ...i, quantidade } : i))\n    );\n  }\n\n  function limpar() {\n    setItens([]);\n  }\n\n  // calculados a partir do estado: nao precisam de useState\n  const totalItens = itens.reduce((soma, i) => soma + i.quantidade, 0);\n  const valorTotal = itens.reduce(\n    (soma, i) => soma + i.produto.preco * i.quantidade,\n    0\n  );\n\n  return {\n    itens,\n    adicionar,\n    remover,\n    alterarQuantidade,\n    limpar,\n    totalItens,\n    valorTotal,\n  };\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Repare que totalItens e valorTotal não são estado: são calculados com reduce a partir dos itens a cada renderização. Guardar esses valores num useState à parte criaria o risco de eles ficarem diferentes dos itens."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. Usar o hook na tela. O componente não sabe como o carrinho funciona por dentro; ele só chama as funções que o hook devolve:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// src/Loja.tsx\nimport { useCarrinho, type Produto } from \"./useCarrinho\";\n\nconst produtos: Produto[] = [\n  { id: 1, nome: \"Caderno\", preco: 25 },\n  { id: 2, nome: \"Caneta\", preco: 4.5 },\n  { id: 3, nome: \"Mochila\", preco: 120 },\n];\n\nexport default function Loja() {\n  const carrinho = useCarrinho();\n\n  return (\n    <div style={{ display: \"flex\", gap: 32 }}>\n      <section>\n        <h2>Produtos</h2>\n        {produtos.map((p) => (\n          <p key={p.id}>\n            {p.nome} -- R$ {p.preco.toFixed(2)}{\" \"}\n            <button onClick={() => carrinho.adicionar(p)}>Adicionar</button>\n          </p>\n        ))}\n      </section>\n\n      <aside>\n        <h2>Carrinho ({carrinho.totalItens})</h2>\n        {carrinho.itens.map((i) => (\n          <p key={i.produto.id}>\n            {i.produto.nome}{\" \"}\n            <input\n              type=\"number\"\n              min={0}\n              value={i.quantidade}\n              onChange={(e) =>\n                carrinho.alterarQuantidade(i.produto.id, Number(e.target.value))\n              }\n            />\n            <button onClick={() => carrinho.remover(i.produto.id)}>x</button>\n          </p>\n        ))}\n        <p>Total: R$ {carrinho.valorTotal.toFixed(2)}</p>\n        <button onClick={carrinho.limpar}>Limpar carrinho</button>\n      </aside>\n    </div>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: em alterarQuantidade, uma quantidade 0 (ou negativa) remove o item, em vez de deixar no carrinho um produto com quantidade zero."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap3-e5",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Formulário em etapas: Crie um cadastro em 3 etapas (dados pessoais, endereço e confirmação). Guarde os dados e a etapa atual com useState, valide os campos de cada etapa antes de avançar e mostre as mensagens de erro embaixo de cada campo.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Três estados principais: a etapa (1, 2 ou 3), os dados de todas as etapas num único objeto (seção 3.5) e os erros. O tipo Erros usa Partial<Record<keyof Dados, string>>: um objeto que pode ter uma mensagem para cada campo de Dados, mas nenhum é obrigatório."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. A validação olha só os campos da etapa atual, e o botão Avançar só muda de etapa se ela passar. A etapa 3 mostra o resumo, e só ela tem o botão de enviar:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// src/Cadastro.tsx\nimport { useState } from \"react\";\n\ninterface Dados {\n  nome: string;\n  email: string;\n  cidade: string;\n  cep: string;\n}\n\ntype Erros = Partial<Record<keyof Dados, string>>;\n\nexport default function Cadastro() {\n  const [etapa, setEtapa] = useState(1);\n  const [dados, setDados] = useState<Dados>({\n    nome: \"\",\n    email: \"\",\n    cidade: \"\",\n    cep: \"\",\n  });\n  const [erros, setErros] = useState<Erros>({});\n  const [enviado, setEnviado] = useState(false);\n\n  function campo(nome: keyof Dados, valor: string) {\n    setDados({ ...dados, [nome]: valor });\n  }\n\n  // valida so os campos da etapa atual\n  function validarEtapa(): boolean {\n    const novos: Erros = {};\n    if (etapa === 1) {\n      if (dados.nome.trim().length < 3) novos.nome = \"Minimo de 3 letras\";\n      if (!dados.email.includes(\"@\")) novos.email = \"E-mail invalido\";\n    }\n    if (etapa === 2) {\n      if (!dados.cidade.trim()) novos.cidade = \"Informe a cidade\";\n      if (!/^\\d{5}-?\\d{3}$/.test(dados.cep)) novos.cep = \"CEP invalido\";\n    }\n    setErros(novos);\n    return Object.keys(novos).length === 0;\n  }\n\n  function avancar() {\n    if (validarEtapa()) setEtapa(etapa + 1);\n  }\n\n  if (enviado) return <p>Cadastro concluido, {dados.nome}!</p>;\n\n  return (\n    <form\n      onSubmit={(e) => {\n        e.preventDefault();\n        setEnviado(true);\n      }}\n    >\n      <p>Etapa {etapa} de 3</p>\n\n      {etapa === 1 && (\n        <>\n          <input\n            placeholder=\"Nome\"\n            value={dados.nome}\n            onChange={(e) => campo(\"nome\", e.target.value)}\n          />\n          {erros.nome && <span>{erros.nome}</span>}\n          <input\n            placeholder=\"E-mail\"\n            value={dados.email}\n            onChange={(e) => campo(\"email\", e.target.value)}\n          />\n          {erros.email && <span>{erros.email}</span>}\n        </>\n      )}\n\n      {etapa === 2 && (\n        <>\n          <input\n            placeholder=\"Cidade\"\n            value={dados.cidade}\n            onChange={(e) => campo(\"cidade\", e.target.value)}\n          />\n          {erros.cidade && <span>{erros.cidade}</span>}\n          <input\n            placeholder=\"CEP\"\n            value={dados.cep}\n            onChange={(e) => campo(\"cep\", e.target.value)}\n          />\n          {erros.cep && <span>{erros.cep}</span>}\n        </>\n      )}\n\n      {etapa === 3 && (\n        <ul>\n          <li>Nome: {dados.nome}</li>\n          <li>E-mail: {dados.email}</li>\n          <li>Cidade: {dados.cidade}</li>\n          <li>CEP: {dados.cep}</li>\n        </ul>\n      )}\n\n      {etapa > 1 && (\n        <button type=\"button\" onClick={() => setEtapa(etapa - 1)}>\n          Voltar\n        </button>\n      )}\n      {etapa < 3 && (\n        <button type=\"button\" onClick={avancar}>\n          Avancar\n        </button>\n      )}\n      {etapa === 3 && <button type=\"submit\">Confirmar</button>}\n    </form>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: os botões Voltar e Avançar têm type=\"button\". Dentro de um <form>, todo botão é de envio (submit) por padrão; sem o type=\"button\", clicar em Avançar enviaria o formulário na etapa 1. O <> ... </> (fragmento) agrupa vários elementos sem criar uma tag a mais na página."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap3-e6",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap3",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "useFetch completo: Melhore o useFetch da seção 3.14 com três recursos: uma função refetch, para buscar de novo quando o usuário pedir; um cache simples, que evita buscar de novo a mesma URL por 60 segundos; e um erro tipado, que diferencia erro do servidor (status HTTP) de falha de rede.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. O cache fica fora do hook, num Map compartilhado por todos os componentes: para cada URL, guarda a resposta e a hora em que ela chegou. Se a resposta tiver menos de 60 segundos, o hook a usa sem buscar."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. O erro tipado é uma união: { tipo: \"http\"; status } ou { tipo: \"rede\"; mensagem }. Quem usa o hook confere erro.tipo, e o TypeScript sabe qual dos dois campos existe em cada caso."
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. O refetch muda um estado que está no array de dependências do efeito, o que faz o efeito rodar de novo; um useRef (seção 3.11) avisa que essa busca deve ignorar o cache:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// src/useFetch.ts\nimport { useState, useEffect, useRef } from \"react\";\n\n// cache simples: a resposta de cada URL e a hora em que chegou\nconst cache = new Map<string, { dados: unknown; hora: number }>();\nconst VALIDADE = 60_000;   // 60 segundos, em milissegundos\n\nexport type ErroFetch =\n  | { tipo: \"http\"; status: number }\n  | { tipo: \"rede\"; mensagem: string };\n\nexport function useFetch<T>(url: string) {\n  const [dados, setDados] = useState<T | null>(null);\n  const [carregando, setCarregando] = useState(true);\n  const [erro, setErro] = useState<ErroFetch | null>(null);\n  const [pedido, setPedido] = useState(0);   // muda a cada refetch\n  const ignorarCache = useRef(false);\n\n  useEffect(() => {\n    const controle = new AbortController();\n\n    async function carregar() {\n      const guardado = cache.get(url);\n      const recente = guardado && Date.now() - guardado.hora < VALIDADE;\n      if (recente && !ignorarCache.current) {\n        setDados(guardado.dados as T);   // usa o cache, sem buscar\n        setCarregando(false);\n        return;\n      }\n      ignorarCache.current = false;\n      setCarregando(true);\n      setErro(null);\n      try {\n        const res = await fetch(url, { signal: controle.signal });\n        if (!res.ok) {\n          setErro({ tipo: \"http\", status: res.status });\n          return;\n        }\n        const json = (await res.json()) as T;\n        cache.set(url, { dados: json, hora: Date.now() });\n        setDados(json);\n      } catch (e) {\n        if (controle.signal.aborted) return;\n        const mensagem = e instanceof Error ? e.message : \"Falha de rede\";\n        setErro({ tipo: \"rede\", mensagem });\n      } finally {\n        if (!controle.signal.aborted) setCarregando(false);\n      }\n    }\n\n    carregar();\n    return () => controle.abort();\n  }, [url, pedido]);\n\n  // busca de novo, ignorando o cache\n  function refetch() {\n    ignorarCache.current = true;\n    setPedido((n) => n + 1);\n  }\n\n  return { dados, carregando, erro, refetch };\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 4. Usando o hook:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// src/Usuarios.tsx\nimport { useFetch } from \"./useFetch\";\n\ninterface Usuario {\n  id: number;\n  name: string;\n}\n\nexport default function Usuarios() {\n  const { dados, carregando, erro, refetch } = useFetch<Usuario[]>(\n    \"https://jsonplaceholder.typicode.com/users\"\n  );\n\n  if (carregando) return <p>Carregando...</p>;\n  if (erro) {\n    return (\n      <p>\n        {erro.tipo === \"http\"\n          ? `O servidor respondeu com o status ${erro.status}.`\n          : `Sem conexao: ${erro.mensagem}`}{\" \"}\n        <button onClick={refetch}>Tentar de novo</button>\n      </p>\n    );\n  }\n\n  return (\n    <div>\n      <button onClick={refetch}>Atualizar</button>\n      <ul>\n        {dados?.map((u) => <li key={u.id}>{u.name}</li>)}\n      </ul>\n    </div>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: o cache vive enquanto a página estiver aberta; ao recarregar a página, ele começa vazio. Para testar, abra e feche o componente várias vezes em menos de 60 segundos: só a primeira vez faz a busca."
+      }
+    ]
+  },
+  {
     "id": "web2-cap4-e1",
     "disciplinaId": "programacao-e-design-para-web-ii",
     "capituloId": "web2-cap4",
@@ -388,6 +486,136 @@
     ]
   },
   {
+    "id": "web2-cap4-e4",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Site de portfólio: Crie um projeto Next.js com as rotas / (início), /projetos (lista), /projetos/[id] (detalhe de um projeto) e /contato. O layout raiz deve ter um menu e um rodapé, e o site deve ter uma página 404 personalizada.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Guardar os projetos num arquivo próprio, para a lista e o detalhe usarem os mesmos dados:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// lib/projetos.ts -- os dados do portfolio\nexport const projetos = [\n  { id: 1, titulo: \"Lista de Tarefas\", descricao: \"React com useState.\" },\n  { id: 2, titulo: \"Clima Agora\", descricao: \"Consumo de API com fetch.\" },\n  { id: 3, titulo: \"Portfolio\", descricao: \"Este site, feito com Next.js.\" },\n];"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. O layout raiz (seção 4.10) ganha o menu e o rodapé, que aparecem em todas as páginas:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/layout.tsx -- menu e rodape em todas as paginas\nimport Link from \"next/link\";\nimport \"./globals.css\";\n\nexport default function RootLayout({\n  children,\n}: {\n  children: React.ReactNode;\n}) {\n  return (\n    <html lang=\"pt-BR\">\n      <body>\n        <nav>\n          <Link href=\"/\">Inicio</Link> <Link href=\"/projetos\">Projetos</Link>{\" \"}\n          <Link href=\"/contato\">Contato</Link>\n        </nav>\n        <main>{children}</main>\n        <footer>Feito com Next.js</footer>\n      </body>\n    </html>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. A lista de projetos, com um Link para cada um:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/projetos/page.tsx -- /projetos\nimport Link from \"next/link\";\nimport { projetos } from \"@/lib/projetos\";\n\nexport default function Projetos() {\n  return (\n    <>\n      <h1>Projetos</h1>\n      <ul>\n        {projetos.map((p) => (\n          <li key={p.id}>\n            <Link href={`/projetos/${p.id}`}>{p.titulo}</Link>\n          </li>\n        ))}\n      </ul>\n    </>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 4. O detalhe é uma rota dinâmica (seção 4.7). O id chega como texto, por isso o Number(id); se não existir projeto com esse id, o notFound() mostra a página 404:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/projetos/[id]/page.tsx -- /projetos/1, /projetos/2...\nimport Link from \"next/link\";\nimport { notFound } from \"next/navigation\";\nimport { projetos } from \"@/lib/projetos\";\n\nexport default async function Projeto({\n  params,\n}: {\n  params: Promise<{ id: string }>;\n}) {\n  const { id } = await params;\n  const projeto = projetos.find((p) => p.id === Number(id));\n  if (!projeto) notFound();\n\n  return (\n    <>\n      <h1>{projeto.titulo}</h1>\n      <p>{projeto.descricao}</p>\n      <Link href=\"/projetos\">Voltar para os projetos</Link>\n    </>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 5. A página 404 personalizada (seção 4.11), que vale para qualquer endereço inexistente:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/not-found.tsx -- a pagina 404 personalizada\nimport Link from \"next/link\";\n\nexport default function NaoEncontrada() {\n  return (\n    <>\n      <h1>Ops! Essa pagina nao existe.</h1>\n      <Link href=\"/\">Voltar para o inicio</Link>\n    </>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "As páginas / e /contato são um page.tsx simples em app/ e em app/contato/, como no Módulo 4. Teste /projetos/2, /projetos/99 e /qualquer-coisa."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap4-e5",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Blog simples: Crie as rotas /blog e /blog/[slug] com os posts vindos de um array local. O blog deve ter um layout próprio, com uma barra lateral de categorias, e cada post deve ter o seu próprio título na aba do navegador (metadata dinâmica).",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Os posts e as categorias num arquivo próprio. O new Set tira as categorias repetidas, e o spread (...) transforma o Set de volta em array:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// lib/posts.ts -- os posts do blog\nexport const posts = [\n  {\n    slug: \"comecando-com-react\",\n    titulo: \"Comecando com React\",\n    categoria: \"React\",\n    resumo: \"Componentes, props e estado.\",\n  },\n  {\n    slug: \"rotas-no-next\",\n    titulo: \"Rotas no Next.js\",\n    categoria: \"Next.js\",\n    resumo: \"Pastas, page.tsx e rotas dinamicas.\",\n  },\n  {\n    slug: \"hooks-essenciais\",\n    titulo: \"Hooks essenciais\",\n    categoria: \"React\",\n    resumo: \"useState, useEffect e useRef.\",\n  },\n];\n\n// as categorias, sem repeticao\nexport const categorias = [...new Set(posts.map((p) => p.categoria))];"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. O layout do blog (seção 4.10) envolve só as páginas dentro de app/blog/:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/blog/layout.tsx -- barra lateral so nas paginas do blog\nimport { categorias } from \"@/lib/posts\";\n\nexport default function BlogLayout({\n  children,\n}: {\n  children: React.ReactNode;\n}) {\n  return (\n    <div style={{ display: \"flex\", gap: 32 }}>\n      <aside>\n        <h3>Categorias</h3>\n        <ul>\n          {categorias.map((c) => <li key={c}>{c}</li>)}\n        </ul>\n      </aside>\n      <section>{children}</section>\n    </div>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. A lista de posts:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/blog/page.tsx -- /blog\nimport Link from \"next/link\";\nimport { posts } from \"@/lib/posts\";\n\nexport default function Blog() {\n  return (\n    <>\n      <h1>Blog</h1>\n      {posts.map((p) => (\n        <article key={p.slug}>\n          <h2>\n            <Link href={`/blog/${p.slug}`}>{p.titulo}</Link>\n          </h2>\n          <p>{p.resumo}</p>\n        </article>\n      ))}\n    </>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 4. A página de cada post, com o generateMetadata (seção 4.12) para o título da aba:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/blog/[slug]/page.tsx -- /blog/rotas-no-next...\nimport type { Metadata } from \"next\";\nimport { notFound } from \"next/navigation\";\nimport { posts } from \"@/lib/posts\";\n\ntype Props = { params: Promise<{ slug: string }> };\n\nexport async function generateMetadata({ params }: Props): Promise<Metadata> {\n  const { slug } = await params;\n  const post = posts.find((p) => p.slug === slug);\n  return {\n    title: post?.titulo ?? \"Post nao encontrado\",\n    description: post?.resumo,\n  };\n}\n\nexport default async function Post({ params }: Props) {\n  const { slug } = await params;\n  const post = posts.find((p) => p.slug === slug);\n  if (!post) notFound();\n\n  return (\n    <article>\n      <h1>{post.titulo}</h1>\n      <p>Categoria: {post.categoria}</p>\n      <p>{post.resumo}</p>\n    </article>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: o tipo Props foi declarado uma vez e usado nas duas funções, que recebem os mesmos params."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap4-e6",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap4",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Navegação ativa: Crie um menu que destaque o link da página atual usando usePathname() e uma className condicional. O link também deve ficar ativo nas páginas de dentro da seção (por exemplo, \"Projetos\" ativo em /projetos/2).",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. O menu é um Client Component, porque usa o Hook usePathname (seção 4.9). A comparação com startsWith deixa o link ativo também nas páginas de dentro; o \"/\" é um caso à parte, senão ele ficaria ativo em todas as páginas, já que todo endereço começa com \"/\":"
+      },
+      {
+        "t": "codigo",
+        "texto": "// components/Menu.tsx\n\"use client\";\n\nimport Link from \"next/link\";\nimport { usePathname } from \"next/navigation\";\n\nconst links = [\n  { href: \"/\", rotulo: \"Inicio\" },\n  { href: \"/projetos\", rotulo: \"Projetos\" },\n  { href: \"/blog\", rotulo: \"Blog\" },\n];\n\nexport default function Menu() {\n  const caminho = usePathname();\n\n  // \"/\" so vale para a inicial; os outros valem tambem\n  // para as paginas de dentro (/projetos/2 ativa \"Projetos\")\n  function estaAtivo(href: string) {\n    return href === \"/\" ? caminho === \"/\" : caminho.startsWith(href);\n  }\n\n  return (\n    <nav>\n      {links.map((link) => (\n        <Link\n          key={link.href}\n          href={link.href}\n          className={estaAtivo(link.href) ? \"ativo\" : undefined}\n        >\n          {link.rotulo}\n        </Link>\n      ))}\n    </nav>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. O CSS que destaca o link ativo:"
+      },
+      {
+        "t": "codigo",
+        "texto": "/* app/globals.css */\nnav a {\n  margin-right: 16px;\n  color: #555;\n  text-decoration: none;\n}\n\nnav a.ativo {\n  color: #000;\n  font-weight: bold;\n  border-bottom: 2px solid currentColor;\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. Colocar <Menu /> no layout raiz, no lugar dos links fixos do exercício do portfólio."
+      }
+    ]
+  },
+  {
     "id": "web2-cap5-e1",
     "disciplinaId": "programacao-e-design-para-web-ii",
     "capituloId": "web2-cap5",
@@ -458,6 +686,210 @@
       {
         "t": "p",
         "texto": "Atenção: Cada <BotaoCurtir /> tem seu próprio estado independente – clicar em \"Curtir\" num post não afeta os outros. Isso acontece porque cada instância do componente é uma \"cópia\" separada, com sua própria memória."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap5-e4",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Produtos com SSR e ISR: Crie a página /produtos, com a lista sempre atualizada (cache: \"no-store\"), e a página /produtos/[id], com o detalhe guardado por 1 hora (ISR). Use os dados da API pública https://fakestoreapi.com/products.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. A lista, buscada a cada visita (seção 5.6):"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/produtos/page.tsx -- sempre atualizada (SSR)\nimport Link from \"next/link\";\n\ninterface Produto {\n  id: number;\n  title: string;\n  price: number;\n}\n\nexport default async function Produtos() {\n  const res = await fetch(\"https://fakestoreapi.com/products\", {\n    cache: \"no-store\",\n  });\n  if (!res.ok) throw new Error(\"Falha ao buscar os produtos\");\n  const produtos: Produto[] = await res.json();\n\n  return (\n    <main>\n      <h1>Produtos</h1>\n      <ul>\n        {produtos.map((p) => (\n          <li key={p.id}>\n            <Link href={`/produtos/${p.id}`}>{p.title}</Link> -- US${\" \"}\n            {p.price.toFixed(2)}\n          </li>\n        ))}\n      </ul>\n    </main>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. O detalhe, com revalidate de 3600 segundos (1 hora):"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/produtos/[id]/page.tsx -- guardada por 1 hora (ISR)\nimport { notFound } from \"next/navigation\";\n\ninterface Produto {\n  id: number;\n  title: string;\n  price: number;\n  description: string;\n  image: string;\n}\n\nexport default async function Produto({\n  params,\n}: {\n  params: Promise<{ id: string }>;\n}) {\n  const { id } = await params;\n  const res = await fetch(`https://fakestoreapi.com/products/${id}`, {\n    next: { revalidate: 3600 },\n  });\n  // esta API responde 200 com o corpo vazio quando o id nao existe\n  const texto = res.ok ? await res.text() : \"\";\n  if (!texto) notFound();\n  const produto: Produto = JSON.parse(texto);\n\n  return (\n    <main>\n      <h1>{produto.title}</h1>\n      <img src={produto.image} alt={produto.title} width={200} />\n      <p>{produto.description}</p>\n      <p>US$ {produto.price.toFixed(2)}</p>\n    </main>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: cada API tem os seus costumes. Esta responde com status 200 e corpo vazio quando o id não existe, em vez de 404; por isso o código lê o texto antes e chama notFound() se ele vier vazio."
+      },
+      {
+        "t": "p",
+        "texto": "Rode npm run build: /produtos e /produtos/[id] aparecem como ƒ (geradas na visita). No detalhe, o id só é conhecido na hora da visita; o que fica guardado por 1 hora é a resposta da API, e as visitas seguintes ao mesmo produto não chamam a API de novo."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap5-e5",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Formulário de contato com Server Action: Crie um formulário de contato (nome, e-mail e mensagem) que envia os dados para uma Server Action, valida tudo no servidor, guarda a mensagem e mostra no navegador o aviso de sucesso ou de erro, sem apagar o que foi digitado quando há erro.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. A action valida os três campos e, se algo estiver errado, devolve a mensagem de erro junto com os valores recebidos. Por enquanto, as mensagens ficam num arquivo JSON:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/contato/actions.ts\n\"use server\";\n\nimport { readFile, writeFile } from \"fs/promises\";\n\nexport interface Resultado {\n  ok: boolean;\n  mensagem: string;\n  valores?: { nome: string; email: string; texto: string };\n}\n\nexport async function enviarMensagem(\n  anterior: Resultado | null,\n  formData: FormData\n): Promise<Resultado> {\n  const valores = {\n    nome: String(formData.get(\"nome\") ?? \"\").trim(),\n    email: String(formData.get(\"email\") ?? \"\").trim(),\n    texto: String(formData.get(\"texto\") ?? \"\").trim(),\n  };\n\n  // validacao no servidor; em caso de erro, devolve o que foi digitado\n  if (valores.nome.length < 3) {\n    return { ok: false, mensagem: \"Informe o nome (minimo de 3 letras).\", valores };\n  }\n  if (!valores.email.includes(\"@\")) {\n    return { ok: false, mensagem: \"Informe um e-mail valido.\", valores };\n  }\n  if (valores.texto.length < 10) {\n    return { ok: false, mensagem: \"Escreva uma mensagem (minimo de 10 letras).\", valores };\n  }\n\n  // guarda num arquivo JSON (no Modulo 6, vai para o banco)\n  let mensagens: unknown[] = [];\n  try {\n    mensagens = JSON.parse(await readFile(\"mensagens.json\", \"utf-8\"));\n  } catch {\n    // o arquivo ainda nao existe\n  }\n  mensagens.push({ ...valores, enviadaEm: new Date().toISOString() });\n  await writeFile(\"mensagens.json\", JSON.stringify(mensagens, null, 2));\n\n  return { ok: true, mensagem: `Obrigado, ${valores.nome}! Mensagem recebida.` };\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. O formulário usa o useActionState (seção 5.9). Cada campo recebe em defaultValue o valor que a action devolveu; assim, quando o React limpa o formulário depois do envio, os campos voltam com o que o usuário tinha digitado:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/contato/FormContato.tsx\n\"use client\";\n\nimport { useActionState } from \"react\";\nimport { enviarMensagem } from \"./actions\";\n\nexport default function FormContato() {\n  const [resultado, acao, enviando] = useActionState(enviarMensagem, null);\n  const v = resultado?.valores;\n\n  return (\n    <form action={acao}>\n      <input name=\"nome\" placeholder=\"Nome\" defaultValue={v?.nome} />\n      <input name=\"email\" placeholder=\"E-mail\" defaultValue={v?.email} />\n      <textarea name=\"texto\" placeholder=\"Mensagem\" defaultValue={v?.texto} />\n      <button type=\"submit\" disabled={enviando}>\n        {enviando ? \"Enviando...\" : \"Enviar\"}\n      </button>\n\n      {resultado && (\n        <p style={{ color: resultado.ok ? \"green\" : \"crimson\" }}>\n          {resultado.mensagem}\n        </p>\n      )}\n    </form>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. A página app/contato/page.tsx continua Server Component e só renderiza <FormContato />, como na seção 5.9. No Módulo 6, o exercício seguinte troca o arquivo JSON pelo banco de dados."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap5-e6",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap5",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Blog com generateStaticParams: Crie um blog com 5 posts escritos no próprio código. Use generateStaticParams para gerar a página de cada post no build e generateMetadata para o título de cada um. Um endereço de post que não existe deve mostrar a página 404.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Tudo fica no app/blog/[slug]/page.tsx: o array, o generateStaticParams (seção 5.7), o dynamicParams = false (para o 404) e o generateMetadata (seção 4.12):"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/blog/[slug]/page.tsx -- os 5 posts gerados no build\nimport type { Metadata } from \"next\";\nimport { notFound } from \"next/navigation\";\n\nconst posts = [\n  { slug: \"o-que-e-react\", titulo: \"O que e React\", texto: \"...\" },\n  { slug: \"jsx-na-pratica\", titulo: \"JSX na pratica\", texto: \"...\" },\n  { slug: \"props-e-estado\", titulo: \"Props e estado\", texto: \"...\" },\n  { slug: \"rotas-no-next\", titulo: \"Rotas no Next.js\", texto: \"...\" },\n  { slug: \"server-components\", titulo: \"Server Components\", texto: \"...\" },\n];\n\ntype Props = { params: Promise<{ slug: string }> };\n\nexport async function generateStaticParams() {\n  return posts.map((post) => ({ slug: post.slug }));\n}\n\nexport const dynamicParams = false;   // slug fora da lista: 404\n\nexport async function generateMetadata({ params }: Props): Promise<Metadata> {\n  const { slug } = await params;\n  const post = posts.find((p) => p.slug === slug);\n  return { title: post?.titulo };\n}\n\nexport default async function Post({ params }: Props) {\n  const { slug } = await params;\n  const post = posts.find((p) => p.slug === slug);\n  if (!post) notFound();\n\n  return (\n    <article>\n      <h1>{post.titulo}</h1>\n      <p>{post.texto}</p>\n    </article>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Rodar npm run build e conferir a lista de rotas: os 5 posts aparecem com ●, gerados no build."
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: com dynamicParams = false, um endereço como /blog/outro-post já responde 404 sem nem executar o componente; o if (!post) notFound() continua no código porque o TypeScript precisa saber que post existe antes de usar post.titulo."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap6-e1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap6",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "API de produtos: Acrescente ao esquema um modelo Produto (nome, preço e estoque) e crie uma API com GET /api/produtos (lista), POST /api/produtos (cria, com validação), GET /api/produtos/[id] (um produto, ou 404) e DELETE /api/produtos/[id] (exclui).",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Acrescentar o modelo ao schema.prisma e rodar npx prisma migrate dev --name produtos e npx prisma generate (seção 6.3):"
+      },
+      {
+        "t": "codigo",
+        "texto": "// prisma/schema.prisma -- acrescente o modelo\nmodel Produto {\n  id      Int    @id @default(autoincrement())\n  nome    String\n  preco   Float\n  estoque Int    @default(0)\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. A coleção, em app/api/produtos/route.ts (seção 6.6). O POST confere o nome e o preço antes de gravar; !(preco > 0) também pega o caso em que o preço não é um número (NaN):"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/api/produtos/route.ts -- /api/produtos\nimport { db } from \"@/lib/db\";\n\nexport async function GET() {\n  const produtos = await db.produto.findMany({ orderBy: { nome: \"asc\" } });\n  return Response.json(produtos);\n}\n\nexport async function POST(request: Request) {\n  const corpo = await request.json();\n  const nome = String(corpo.nome ?? \"\").trim();\n  const preco = Number(corpo.preco);\n  const estoque = Number(corpo.estoque ?? 0);\n\n  if (!nome) {\n    return Response.json({ erro: \"Informe o nome\" }, { status: 400 });\n  }\n  if (!(preco > 0)) {\n    return Response.json({ erro: \"O preco deve ser maior que zero\" }, { status: 400 });\n  }\n\n  const produto = await db.produto.create({ data: { nome, preco, estoque } });\n  return Response.json(produto, { status: 201 });\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. Um produto, em app/api/produtos/[id]/route.ts. Num Route Handler, os params chegam no segundo parâmetro da função, também como Promise:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/api/produtos/[id]/route.ts -- /api/produtos/1, /api/produtos/2...\nimport { db } from \"@/lib/db\";\n\ntype Contexto = { params: Promise<{ id: string }> };\n\nexport async function GET(request: Request, { params }: Contexto) {\n  const { id } = await params;\n  const produto = await db.produto.findUnique({ where: { id: Number(id) } });\n  if (!produto) {\n    return Response.json({ erro: \"Produto nao encontrado\" }, { status: 404 });\n  }\n  return Response.json(produto);\n}\n\nexport async function DELETE(request: Request, { params }: Contexto) {\n  const { id } = await params;\n  const produto = await db.produto.findUnique({ where: { id: Number(id) } });\n  if (!produto) {\n    return Response.json({ erro: \"Produto nao encontrado\" }, { status: 404 });\n  }\n  await db.produto.delete({ where: { id: produto.id } });\n  return new Response(null, { status: 204 });   // excluido, sem corpo\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 4. Testar (no PowerShell, use curl.exe):"
+      },
+      {
+        "t": "codigo",
+        "texto": "$ curl -X POST http://localhost:3000/api/produtos -H \"Content-Type: application/json\" -d \"{\\\"nome\\\":\\\"Caderno\\\",\\\"preco\\\":25}\"\n$ curl http://localhost:3000/api/produtos\n$ curl http://localhost:3000/api/produtos/1\n$ curl -X DELETE http://localhost:3000/api/produtos/1"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: o status 204 quer dizer \"deu certo, e não há nada para devolver\". Validação com Zod, PATCH e o CRUD completo estão nos caps. 6 e 7 da apostila da Web III."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap6-e2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap6",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "Contato no banco: Leve o formulário de contato do Módulo 5 para o banco de dados: crie o modelo Mensagem, troque o arquivo JSON por db.mensagem.create na Server Action e crie a página /mensagens, que lista as mensagens recebidas da mais nova para a mais antiga.",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. O modelo, seguido de npx prisma migrate dev --name mensagens e npx prisma generate:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// prisma/schema.prisma -- acrescente o modelo\nmodel Mensagem {\n  id        Int      @id @default(autoincrement())\n  nome      String\n  email     String\n  texto     String\n  enviadaEm DateTime @default(now())\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Na action do exercício do Módulo 5, sai a leitura e a gravação do mensagens.json e entra uma linha; o objeto valores já tem exatamente os campos nome, email e texto do modelo:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/contato/actions.ts -- no lugar do trecho do arquivo JSON\nimport { db } from \"@/lib/db\";\n\n// ... depois das validacoes:\nawait db.mensagem.create({ data: valores });\nreturn { ok: true, mensagem: `Obrigado, ${valores.nome}! Mensagem recebida.` };"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 3. A página que lista as mensagens. O campo enviadaEm chega como um Date do JavaScript, por isso dá para usar toLocaleString:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/mensagens/page.tsx -- lista o que chegou pelo formulario\nimport { db } from \"@/lib/db\";\n\nexport const dynamic = \"force-dynamic\";\n\nexport default async function Mensagens() {\n  const mensagens = await db.mensagem.findMany({\n    orderBy: { enviadaEm: \"desc\" },\n  });\n\n  return (\n    <main>\n      <h1>Mensagens recebidas ({mensagens.length})</h1>\n      {mensagens.map((m) => (\n        <article key={m.id}>\n          <h3>\n            {m.nome} ({m.email})\n          </h3>\n          <p>{m.texto}</p>\n          <small>{m.enviadaEm.toLocaleString(\"pt-BR\")}</small>\n        </article>\n      ))}\n    </main>\n  );\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Atenção: numa aplicação real, a página /mensagens só poderia ser vista depois de um login; a autenticação é assunto do cap. 9 da apostila da Web III."
+      }
+    ]
+  },
+  {
+    "id": "web2-cap6-e3",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap6",
+    "tipo": "discursiva",
+    "pratica": true,
+    "enunciado": "CRUD completo de tarefas: Complete a lista de tarefas da seção 6.5 com o que falta para o CRUD: editar o título de uma tarefa e desmarcar uma tarefa feita (o botão alterna entre \"Feita\" e \"Desmarcar\").",
+    "resolucao": [
+      {
+        "t": "p",
+        "texto": "Passo 1. Duas actions novas no actions.ts. A editarTitulo recebe o id pelo bind e o novo título pelo FormData; a alternarFeita busca a tarefa para saber o valor atual e grava o contrário:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/tarefas/actions.ts -- acrescente ao arquivo da secao 6.5\nexport async function editarTitulo(id: number, formData: FormData) {\n  const titulo = String(formData.get(\"titulo\") ?? \"\").trim();\n  if (!titulo) return;\n\n  await db.tarefa.update({ where: { id }, data: { titulo } });\n  revalidatePath(\"/tarefas\");\n}\n\nexport async function alternarFeita(id: number) {\n  const tarefa = await db.tarefa.findUnique({ where: { id } });\n  if (!tarefa) return;\n\n  await db.tarefa.update({ where: { id }, data: { feita: !tarefa.feita } });\n  revalidatePath(\"/tarefas\");\n}"
+      },
+      {
+        "t": "p",
+        "texto": "Passo 2. Na página, cada item ganha um formulário de edição, com o título atual em defaultValue, e o botão que alterna. Lembre de importar as duas actions novas:"
+      },
+      {
+        "t": "codigo",
+        "texto": "// app/tarefas/page.tsx -- cada item da lista\n<li key={t.id}>\n  <form action={editarTitulo.bind(null, t.id)}>\n    <input name=\"titulo\" defaultValue={t.titulo} />\n    <button type=\"submit\">Salvar</button>\n  </form>\n  <form action={alternarFeita.bind(null, t.id)}>\n    <button type=\"submit\">{t.feita ? \"Desmarcar\" : \"Feita\"}</button>\n  </form>\n  <form action={excluirTarefa.bind(null, t.id)}>\n    <button type=\"submit\">Excluir</button>\n  </form>\n</li>"
+      },
+      {
+        "t": "p",
+        "texto": "Com isso, a lista tem as quatro operações: criar (create), ler (findMany), alterar (update) e excluir (delete). É o CRUD que a Web III faz como API no cap. 7."
       }
     ]
   },
@@ -2269,5 +2701,233 @@
     ],
     "correta": 0,
     "resolucao": "I e II são verdadeiras: o Server Component vira HTML no servidor, onde pode acessar dados diretamente. III é falsa: o Client Component só recebe os dados prontos por props e cuida da parte interativa, sem precisar saber de onde vieram."
+  },
+  {
+    "id": "web2-cap6-o1",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap6",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "No contexto do desenvolvimento web, um ORM como o Prisma é",
+    "alternativas": [
+      "uma biblioteca que trata as tabelas do banco como objetos, para consultar e gravar dados sem escrever SQL.",
+      "um tipo de banco de dados que guarda as informações em arquivos JSON dentro do projeto, no lugar das tabelas.",
+      "um servidor web que substitui o Next.js na hora de responder às requisições dos navegadores e aplicativos.",
+      "um formato de arquivo usado para documentar as rotas de uma API, com os métodos e os códigos de status.",
+      "uma extensão do navegador que mostra o conteúdo das tabelas do banco durante o desenvolvimento do site."
+    ],
+    "correta": 0,
+    "resolucao": "ORM (Object-Relational Mapping) é a camada que liga as tabelas do banco aos objetos do programa: db.tarefa.findMany() faz o papel de um SELECT, e os tipos gerados permitem que o editor confira os campos. O banco continua existindo; o ORM só é a forma de conversar com ele."
+  },
+  {
+    "id": "web2-cap6-o2",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap6",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Um estudante acrescentou um novo modelo ao arquivo schema.prisma de um projeto com Prisma 7. Para criar a tabela no banco e atualizar o código do cliente, ele deve executar",
+    "alternativas": [
+      "npx prisma migrate dev --name <nome>, seguido de npx prisma generate.",
+      "apenas npm run dev, porque o Next.js aplica o esquema sozinho ao iniciar.",
+      "apenas npx prisma generate, porque ele também cria as tabelas no banco.",
+      "npx prisma init de novo, porque cada modelo exige um projeto Prisma próprio.",
+      "npm install @prisma/client, porque a instalação lê o esquema e cria as tabelas."
+    ],
+    "correta": 0,
+    "resolucao": "O migrate dev compara o esquema com o banco, escreve o SQL da diferença em prisma/migrations e o executa. No Prisma 7, o generate não roda sozinho depois da migração: é ele que recria o código do cliente, com os tipos do novo modelo."
+  },
+  {
+    "id": "web2-cap6-o3",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap6",
+    "tipo": "objetiva",
+    "nivel": "facil",
+    "enunciado": "Em um projeto Next.js com App Router, o arquivo app/api/produtos/route.ts responde no endereço",
+    "alternativas": [
+      "/api/produtos",
+      "/app/api/produtos",
+      "/api/produtos/route",
+      "/produtos",
+      "Nenhum, até a rota ser registrada no next.config.ts."
+    ],
+    "correta": 0,
+    "resolucao": "Os Route Handlers seguem as pastas, como as páginas: a pasta app não entra no endereço, e o nome do arquivo (route) também não. Cada função exportada (GET, POST...) responde ao método HTTP de mesmo nome."
+  },
+  {
+    "id": "web2-cap6-o4",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Considere o modelo abaixo, do arquivo schema.prisma."
+      },
+      {
+        "t": "codigo",
+        "texto": "model Tarefa {\n  id       Int      @id @default(autoincrement())\n  titulo   String?\n  feita    Boolean  @default(false)\n  criadaEm DateTime @default(now())\n}"
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. O atributo @id marca a chave primária do modelo.",
+      "II. Com @default(autoincrement()), o banco numera os registros sozinho.",
+      "III. O ponto de interrogação em titulo String? torna o campo obrigatório."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e II, apenas.",
+      "I, apenas.",
+      "II, apenas.",
+      "I e III, apenas.",
+      "II e III, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I e II são verdadeiras. III é falsa: o ? torna o campo opcional, isto é, ele aceita ficar vazio (null)."
+  },
+  {
+    "id": "web2-cap6-o5",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "const t = await db.tarefa.create({ data: { titulo: \"Estudar\" } });\nconsole.log(t.feita, typeof t.id);"
+      }
+    ],
+    "enunciado": "Com o modelo Tarefa da seção 6.3 (feita com @default(false) e id com autoincrement), o que o código exibe no console?",
+    "alternativas": [
+      "false number",
+      "undefined number",
+      "false string",
+      "null undefined",
+      "Nada: o create não devolve o registro criado."
+    ],
+    "correta": 0,
+    "resolucao": "O create devolve o registro gravado, já com os valores preenchidos pelo banco: feita recebe o padrão false, e o id, gerado pelo autoincrement, é um número (Int no esquema vira number no TypeScript)."
+  },
+  {
+    "id": "web2-cap6-o6",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. Em desenvolvimento, o arquivo lib/db.ts guarda o PrismaClient em globalThis e reaproveita esse cliente quando ele já existe.",
+      "PORQUE",
+      "II. A cada arquivo salvo, o Next.js recarrega os módulos em desenvolvimento, e cada recarga criaria um cliente novo."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II explica a I. Sem o globalThis, cada recarga abriria um cliente (e conexões) novo. Guardar um único objeto compartilhado é o padrão singleton; em produção não há recarga, por isso o código só guarda o cliente fora dela."
+  },
+  {
+    "id": "web2-cap6-o7",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap6",
+    "tipo": "objetiva",
+    "nivel": "medio",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "// app/api/tarefas/route.ts\nexport async function POST(request: Request) {\n  const corpo = await request.json();\n  const titulo = String(corpo.titulo ?? \"\").trim();\n  if (!titulo) {\n    return Response.json({ erro: \"Informe o titulo\" }, { status: 400 });\n  }\n  const tarefa = await db.tarefa.create({ data: { titulo } });\n  return Response.json(tarefa, { status: 201 });\n}"
+      }
+    ],
+    "enunciado": "Uma requisição POST para /api/tarefas é enviada com o corpo {\"titulo\": \"\"}. O que a API responde?",
+    "alternativas": [
+      "Status 400 e o JSON {\"erro\": \"Informe o titulo\"}.",
+      "Status 201 e a tarefa criada com o título vazio.",
+      "Status 404, porque não existe tarefa com título vazio.",
+      "Status 500, porque o Prisma não aceita textos vazios.",
+      "Status 200 e a lista de tarefas, porque o POST cai na função GET."
+    ],
+    "correta": 0,
+    "resolucao": "Depois do trim, o título é uma string vazia, e o if devolve 400 (pedido com erro) antes de chegar ao create. O 201 (criado) só acontece quando o título é válido; cada método HTTP chama a sua própria função."
+  },
+  {
+    "id": "web2-cap6-o8",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "p",
+        "texto": "Uma equipe vai gravar tarefas no banco de um projeto Next.js e discute quando usar Server Actions e quando usar Route Handlers."
+      }
+    ],
+    "caso": [
+      "Avalie as afirmativas a seguir.",
+      "I. Server Actions são indicadas para os formulários do próprio site, que gravam dados sem precisar de uma API separada.",
+      "II. Um Route Handler permite que outros programas, como um aplicativo de celular ou o Postman, usem os dados por HTTP.",
+      "III. Uma mesma pasta pode ter page.tsx e route.ts, e o Next.js escolhe qual responder conforme o navegador."
+    ],
+    "enunciado": "É correto o que se afirma em",
+    "alternativas": [
+      "I e II, apenas.",
+      "I, apenas.",
+      "II, apenas.",
+      "I e III, apenas.",
+      "II e III, apenas."
+    ],
+    "correta": 0,
+    "resolucao": "I e II são verdadeiras: as duas formas gravam no mesmo banco, mas atendem a públicos diferentes. III é falsa: page.tsx e route.ts na mesma pasta responderiam ao mesmo endereço, o que o Next.js não permite; por isso as APIs costumam ficar em app/api/."
+  },
+  {
+    "id": "web2-cap6-o9",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "caso": [
+      "Avalie as asserções a seguir e a relação proposta entre elas.",
+      "I. A pasta prisma/migrations deve ser enviada ao repositório Git, enquanto o arquivo .env e o banco dev.db ficam de fora.",
+      "PORQUE",
+      "II. As migrações guardam o SQL que leva o banco de um estado a outro, o que permite a qualquer pessoa da equipe chegar ao mesmo banco."
+    ],
+    "enunciado": "A respeito dessas asserções, assinale a opção correta.",
+    "alternativas": [
+      "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+      "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+      "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+      "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+      "As asserções I e II são proposições falsas."
+    ],
+    "correta": 0,
+    "resolucao": "As duas são verdadeiras, e a II justifica a I. As migrações são a história do banco e precisam ser compartilhadas; o .env guarda endereços e senhas, e o dev.db é o banco local de cada um, que pode ser recriado a partir das migrações."
+  },
+  {
+    "id": "web2-cap6-o10",
+    "disciplinaId": "programacao-e-design-para-web-ii",
+    "capituloId": "web2-cap6",
+    "tipo": "objetiva",
+    "nivel": "dificil",
+    "contexto": [
+      {
+        "t": "codigo",
+        "texto": "// app/tarefas/page.tsx\nimport { db } from \"@/lib/db\";\n\nexport default async function Tarefas() {\n  const tarefas = await db.tarefa.findMany();\n  return (\n    <ul>\n      {tarefas.map((t) => <li key={t.id}>{t.titulo}</li>)}\n    </ul>\n  );\n}"
+      }
+    ],
+    "enunciado": "A página abaixo foi publicada com npm run build. Depois disso, novas tarefas são gravadas no banco pela API. O que os visitantes da página veem?",
+    "alternativas": [
+      "A lista do momento do build: sem o force-dynamic, a página foi gerada uma vez e não consulta o banco.",
+      "Sempre a lista atualizada, porque toda consulta feita com o Prisma é refeita automaticamente a cada visita.",
+      "Uma página de erro, porque Server Components não podem consultar o banco de dados diretamente no servidor.",
+      "Uma lista vazia, porque os dados do banco só podem ser lidos dentro de um useEffect, no navegador.",
+      "A lista atualizada a cada 60 segundos, porque esse é o tempo padrão de revalidação das páginas do Next.js."
+    ],
+    "correta": 0,
+    "resolucao": "O Next.js não sabe que uma consulta ao banco depende do momento da visita. Como a página não usa nada da requisição, ela é gerada no build (aparece com ○ no npm run build). Para mostrar dados novos, a página precisa de dynamic = \"force-dynamic\", de um revalidate ou de um revalidatePath depois de cada gravação."
   }
 ]

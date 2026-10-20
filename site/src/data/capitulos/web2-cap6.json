@@ -190,7 +190,7 @@
   },
   {
    "t": "p",
-   "html": "Na página, só muda a leitura: <code>lerTarefas()</code> vira uma consulta ao banco. O resto do <code>page.tsx</code> da seção 5.8 continua igual, e o <code>lib/tarefas.ts</code> pode ser apagado."
+   "html": "Na página, só muda a leitura: <code>lerTarefas()</code> vira uma consulta ao banco. O resto do <code>page.tsx</code> da seção 5.8 continua igual, e o <code>lib/tarefas.ts</code> pode ser apagado. O <code>dynamic = \"force-dynamic\"</code> continua necessário: o Next.js não sabe que uma consulta ao banco depende do momento da visita e, sem essa linha, geraria a página uma vez só, no <em>build</em> (seção 5.6), com as tarefas daquele momento."
   },
   {
    "t": "codigo",
