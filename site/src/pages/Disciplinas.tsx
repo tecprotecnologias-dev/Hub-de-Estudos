@@ -21,16 +21,19 @@ export default function Disciplinas() {
         <p>Escolha sua disciplina para estudar pelas apostilas e praticar com simulados.</p>
       </section>
 
-      <div className="abas" role="tablist">
-        <button className={grupo === null ? 'aba ativa' : 'aba'} onClick={() => setGrupo(null)}>
-          Todos
-        </button>
-        {gruposDoPerfil.map((g) => (
-          <button key={g} className={grupo === g ? 'aba ativa' : 'aba'} onClick={() => setGrupo(g)}>
-            {nomeGrupo(g)}
+      {/* com um grupo só (aluno da educação básica, que vê só a sua série), as abas seriam repetitivas */}
+      {gruposDoPerfil.length > 1 && (
+        <div className="abas" role="tablist">
+          <button className={grupo === null ? 'aba ativa' : 'aba'} onClick={() => setGrupo(null)}>
+            Todos
           </button>
-        ))}
-      </div>
+          {gruposDoPerfil.map((g) => (
+            <button key={g} className={grupo === g ? 'aba ativa' : 'aba'} onClick={() => setGrupo(g)}>
+              {nomeGrupo(g)}
+            </button>
+          ))}
+        </div>
+      )}
 
       {visiveis.map((g) => (
         <section key={g} className="bloco-periodo">
