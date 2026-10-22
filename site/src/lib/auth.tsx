@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { authConfigurado, enderecoDoSite, supabase } from './supabase'
+import { NIVEL_PADRAO, type Nivel } from './niveis'
 
 // Quem está logado e com que perfil. Os dados do perfil vêm da tabela public.perfis
 // (supabase/esquema.sql); o login em si é do Supabase Auth, só com e-mail e senha
@@ -16,7 +17,9 @@ export interface Perfil {
   /** celular com DDI e DDD, só dígitos (ex.: 5521999998888); contas antigas podem não ter */
   telefone: string | null
   tipo: TipoPerfil
-  /** período do curso (1 a 5), informado no cadastro; só o administrador muda */
+  /** nível de ensino do aluno; contas antigas, sem nível, são da Graduação */
+  nivel: Nivel | null
+  /** ano ou período dentro do nível, informado no cadastro; só o administrador muda */
   periodo: number | null
   /** cadastro de professor aguardando a aprovação do administrador */
   solicita_professor: boolean
@@ -125,15 +128,17 @@ export function podeAcessar(perfil: Perfil | null, tipos?: TipoPerfil[]): boolea
 }
 
 /**
- * O perfil pode ver uma disciplina deste período? (periodo 0 = optativa)
- * Aluno: o próprio período e os anteriores, mais as optativas. Professor e administrador: tudo.
+ * O perfil pode ver esta disciplina? (periodo 0 = optativa)
+ * Aluno: só as disciplinas do seu nível, do ano/período atual e dos anteriores, mais as
+ * optativas do seu nível. Professor e administrador: tudo.
  */
-export function podeVerPeriodo(perfil: Perfil | null, periodoDisciplina: number): boolean {
+export function podeVerDisciplina(perfil: Perfil | null, d: { periodo: number; nivel?: Nivel }): boolean {
   if (!authConfigurado) return true
   if (!perfil || emAnalise(perfil)) return false
   if (perfil.tipo !== 'aluno') return true
-  if (periodoDisciplina === 0) return true
-  return perfil.periodo != null && periodoDisciplina <= perfil.periodo
+  if ((d.nivel ?? NIVEL_PADRAO) !== (perfil.nivel ?? NIVEL_PADRAO)) return false
+  if (d.periodo === 0) return true
+  return perfil.periodo != null && d.periodo <= perfil.periodo
 }
 
 // Ações de login, usadas pelas telas de acesso -------------------------------------
@@ -147,6 +152,8 @@ export interface DadosCadastro {
   nome: string
   /** opcional: em branco, a conta é criada sem matrícula */
   matricula: string
+  nivel: Nivel
+  /** ano ou período dentro do nível */
   periodo: number
   email: string
   /** opcional: null quando o celular não foi informado */
@@ -177,7 +184,7 @@ export function formatarTelefone(telefone: string | null): string {
 }
 
 /** Cadastro pela aba "Sou aluno": nome, e-mail, período e senha; matrícula e celular são opcionais. */
-export async function criarConta({ nome, matricula, periodo, email, telefone, senha }: DadosCadastro) {
+export async function criarConta({ nome, matricula, nivel, periodo, email, telefone, senha }: DadosCadastro) {
   // a matrícula continua única, mas só é conferida quando foi preenchida
   if (matricula.trim()) {
     const { data: emUso, error: erroBusca } = await supabase!.rpc('matricula_em_uso', { m: matricula.trim() })
@@ -197,6 +204,7 @@ export async function criarConta({ nome, matricula, periodo, email, telefone, se
       data: {
         nome: nome.trim(),
         matricula: matricula.trim(),
+        nivel,
         periodo: String(periodo),
         telefone: telefone ?? '',
         aceite_privacidade: 'true',

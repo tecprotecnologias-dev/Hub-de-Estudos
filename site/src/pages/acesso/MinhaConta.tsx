@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { emAnalise, formatarTelefone, NOMES_TIPO, normalizarTelefone, traduzirErro, useAuth } from '../../lib/auth'
 import { supabase } from '../../lib/supabase'
+import { dadosNivel, nomeEtapa, rotuloEtapa } from '../../lib/niveis'
 
 export default function MinhaConta() {
   const { perfil, recarregarPerfil, sair } = useAuth()
@@ -74,8 +75,12 @@ export default function MinhaConta() {
               </div>
             )}
             <div>
-              <dt>Período</dt>
-              <dd>{perfil.periodo ? `${perfil.periodo}º período` : '—'}</dd>
+              <dt>Nível de ensino</dt>
+              <dd>{dadosNivel(perfil.nivel).nome}</dd>
+            </div>
+            <div>
+              <dt>{rotuloEtapa(perfil.nivel)}</dt>
+              <dd>{perfil.periodo ? nomeEtapa(perfil.nivel, perfil.periodo) : '—'}</dd>
             </div>
           </>
         )}
@@ -90,8 +95,8 @@ export default function MinhaConta() {
       </dl>
       {perfil.tipo === 'aluno' && !perfil.solicita_professor && (
         <p className="dica pequena">
-          A matrícula e o período só podem ser alterados pela administração do site. Se o seu período mudou, peça a
-          atualização.
+          A matrícula, o nível e o ano ou período só podem ser alterados pela administração do site. Se algum deles
+          mudou, peça a atualização.
         </p>
       )}
 

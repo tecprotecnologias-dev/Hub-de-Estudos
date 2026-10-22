@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
 import { formatarTelefone, NOMES_TIPO, traduzirErro, useAuth, type Perfil, type TipoPerfil } from '../../lib/auth'
 import { supabase } from '../../lib/supabase'
+import { dadosNivel, NIVEIS, NIVEL_PADRAO, type Nivel } from '../../lib/niveis'
 
 // Área da administradora: ver os cadastros, mudar o perfil (aluno, professor,
-// administrador) e o período de cada pessoa, e avançar o período de vários alunos de uma
-// vez no começo do semestre. As regras do banco garantem que só um administrador consegue.
+// administrador), o nível de ensino e o ano/período de cada pessoa, e avançar o ano/período
+// de vários alunos de uma vez. As regras do banco garantem que só um administrador consegue.
 
 const TIPOS: TipoPerfil[] = ['aluno', 'professor', 'admin']
-const PERIODOS_CURSO = [1, 2, 3, 4, 5]
 
 export default function Administracao() {
   const { perfil: eu } = useAuth()
@@ -15,6 +15,7 @@ export default function Administracao() {
   const [carregando, setCarregando] = useState(true)
   const [busca, setBusca] = useState('')
   const [filtroTipo, setFiltroTipo] = useState('')
+  const [filtroNivel, setFiltroNivel] = useState('')
   const [filtroPeriodo, setFiltroPeriodo] = useState('')
   const [marcados, setMarcados] = useState<Set<string>>(new Set())
   const [aviso, setAviso] = useState<{ tipo: 'ok' | 'erro'; texto: string } | null>(null)
@@ -38,11 +39,15 @@ export default function Administracao() {
       (p) =>
         (!t || `${p.nome} ${p.matricula ?? ''} ${p.email} ${p.telefone ?? ''}`.toLowerCase().includes(t)) &&
         (!filtroTipo || p.tipo === filtroTipo) &&
+        (!filtroNivel || (p.nivel ?? NIVEL_PADRAO) === filtroNivel) &&
         (!filtroPeriodo || String(p.periodo) === filtroPeriodo),
     )
-  }, [pessoas, busca, filtroTipo, filtroPeriodo])
+  }, [pessoas, busca, filtroTipo, filtroNivel, filtroPeriodo])
 
-  async function atualizar(id: string, campos: Partial<Pick<Perfil, 'tipo' | 'periodo' | 'solicita_professor'>>) {
+  async function atualizar(
+    id: string,
+    campos: Partial<Pick<Perfil, 'tipo' | 'nivel' | 'periodo' | 'solicita_professor'>>,
+  ) {
     if (!supabase) return
     const { error } = await supabase.from('perfis').update(campos).eq('id', id)
     if (error) {
@@ -55,12 +60,16 @@ export default function Administracao() {
 
   async function avancarPeriodo() {
     if (!supabase) return
-    const alvos = pessoas.filter((p) => marcados.has(p.id) && p.tipo === 'aluno' && p.periodo && p.periodo < 5)
+    // só avança quem ainda não está no último ano/período do seu nível
+    const ultimo = (p: Perfil) => Math.max(...dadosNivel(p.nivel).etapas)
+    const alvos = pessoas.filter(
+      (p) => marcados.has(p.id) && p.tipo === 'aluno' && p.periodo && p.periodo < ultimo(p),
+    )
     if (alvos.length === 0) {
-      setAviso({ tipo: 'erro', texto: 'Marque alunos que ainda não estão no 5º período.' })
+      setAviso({ tipo: 'erro', texto: 'Marque alunos que ainda não estão no último ano ou período do seu nível.' })
       return
     }
-    if (!window.confirm(`Avançar ${alvos.length} aluno(s) para o período seguinte?`)) return
+    if (!window.confirm(`Avançar ${alvos.length} aluno(s) para o ano ou período seguinte?`)) return
     for (const p of alvos) {
       const { error } = await supabase.from('perfis').update({ periodo: p.periodo! + 1 }).eq('id', p.id)
       if (error) {
@@ -71,7 +80,7 @@ export default function Administracao() {
     }
     setMarcados(new Set())
     await carregar()
-    setAviso({ tipo: 'ok', texto: `${alvos.length} aluno(s) avançado(s) de período.` })
+    setAviso({ tipo: 'ok', texto: `${alvos.length} aluno(s) avançado(s) de ano ou período.` })
   }
 
   const todosMarcados = lista.length > 0 && lista.every((p) => marcados.has(p.id))
@@ -153,23 +162,44 @@ export default function Administracao() {
           </select>
         </label>
         <label>
-          Período
-          <select value={filtroPeriodo} onChange={(e) => setFiltroPeriodo(e.target.value)}>
+          Nível
+          <select
+            value={filtroNivel}
+            onChange={(e) => {
+              setFiltroNivel(e.target.value)
+              setFiltroPeriodo('')
+            }}
+          >
             <option value="">Todos</option>
-            {PERIODOS_CURSO.map((p) => (
-              <option key={p} value={p}>
-                {p}º período
+            {NIVEIS.map((n) => (
+              <option key={n.id} value={n.id}>
+                {n.nome}
               </option>
             ))}
+          </select>
+        </label>
+        <label>
+          Ano/período
+          <select value={filtroPeriodo} onChange={(e) => setFiltroPeriodo(e.target.value)}>
+            <option value="">Todos</option>
+            {[...new Set((filtroNivel ? [dadosNivel(filtroNivel as Nivel)] : NIVEIS).flatMap((n) => n.etapas))]
+              .sort((a, b) => a - b)
+              .map((p) => (
+                <option key={p} value={p}>
+                  {p}º
+                </option>
+              ))}
           </select>
         </label>
       </div>
 
       <div className="barra-acoes">
         <button onClick={avancarPeriodo} disabled={marcados.size === 0}>
-          Avançar período dos marcados ({marcados.size})
+          Avançar ano/período dos marcados ({marcados.size})
         </button>
-        <span className="dica pequena">Use no começo do semestre: cada aluno marcado sobe um período.</span>
+        <span className="dica pequena">
+          Use no começo do semestre ou do ano letivo: cada aluno marcado sobe um ano ou período, até o último do seu nível.
+        </span>
       </div>
 
       {aviso && (
@@ -192,7 +222,8 @@ export default function Administracao() {
                 <th>Matrícula</th>
                 <th>E-mail</th>
                 <th>Celular</th>
-                <th>Período</th>
+                <th>Nível</th>
+                <th>Ano/período</th>
                 <th>Perfil</th>
                 <th>Cadastro</th>
               </tr>
@@ -225,12 +256,29 @@ export default function Administracao() {
                   </td>
                   <td>
                     <select
-                      aria-label={`Período de ${p.nome}`}
+                      aria-label={`Nível de ${p.nome}`}
+                      value={p.nivel ?? NIVEL_PADRAO}
+                      onChange={(e) => {
+                        const novo = e.target.value as Nivel
+                        // ao trocar de nível, o ano/período passa para o primeiro do novo nível
+                        atualizar(p.id, { nivel: novo, periodo: p.periodo == null ? null : dadosNivel(novo).etapas[0] })
+                      }}
+                    >
+                      {NIVEIS.map((n) => (
+                        <option key={n.id} value={n.id}>
+                          {n.nome}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                  <td>
+                    <select
+                      aria-label={`Ano ou período de ${p.nome}`}
                       value={p.periodo ?? ''}
                       onChange={(e) => atualizar(p.id, { periodo: e.target.value ? Number(e.target.value) : null })}
                     >
                       <option value="">—</option>
-                      {PERIODOS_CURSO.map((n) => (
+                      {dadosNivel(p.nivel).etapas.map((n) => (
                         <option key={n} value={n}>
                           {n}º
                         </option>

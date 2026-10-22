@@ -102,7 +102,7 @@ export default function Apostilas() {
         <section key={d.id} className="bloco-apostila">
           <h2>
             <Link to={`/disciplina/${d.id}`}>{d.nome}</Link>
-            <span className="etiqueta">{nomePeriodo(d.periodo)}</span>
+            <span className="etiqueta">{nomePeriodo(d.periodo, d.nivel)}</span>
           </h2>
           {gruposDeApostila(apostilasDaDisciplina(d.id).filter(confere)).map(([grupo, itens]) => (
             <div key={grupo || 'principal'}>

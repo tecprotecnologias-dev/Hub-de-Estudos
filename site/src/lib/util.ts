@@ -1,12 +1,14 @@
 import { disciplinas } from '../data/disciplinas'
 import type { Disciplina, Questao } from '../data/tipos'
+import { nomeEtapa, type Nivel } from './niveis'
 
 export const LETRAS = ['A', 'B', 'C', 'D', 'E', 'F']
 
 export const PERIODOS = [...new Set(disciplinas.map((d) => d.periodo))].sort((a, b) => (a || 99) - (b || 99))
 
-export function nomePeriodo(p: number) {
-  return p === 0 ? 'Optativas' : `${p}º período`
+/** "3º período" na Graduação, "3º ano" nos outros níveis; 0 = optativas */
+export function nomePeriodo(p: number, nivel?: Nivel) {
+  return nomeEtapa(nivel, p)
 }
 
 const porId = new Map(disciplinas.map((d) => [d.id, d]))

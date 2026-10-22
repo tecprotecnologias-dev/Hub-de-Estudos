@@ -38,7 +38,7 @@ export default function PaginaDisciplina() {
       <Link to="/disciplinas" className="voltar">
         Todas as disciplinas
       </Link>
-      <p className="etiqueta">{nomePeriodo(d.periodo)}</p>
+      <p className="etiqueta">{nomePeriodo(d.periodo, d.nivel)}</p>
       <h1>{d.nome}</h1>
 
       {apresentacao && <Apresentacao texto={apresentacao} />}

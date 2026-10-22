@@ -2,14 +2,15 @@ import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { criarConta, criarContaProfessor, normalizarTelefone, useAuth } from '../../lib/auth'
 import { authConfigurado } from '../../lib/supabase'
+import { dadosNivel, NIVEIS, nomeEtapa, rotuloEtapa, type Nivel } from '../../lib/niveis'
 import { AvisoSemCadastro } from './AvisoSemCadastro'
 
-const PERIODOS_CURSO = [1, 2, 3, 4, 5]
 const MIN_SENHA = 8
 
 type Tipo = 'aluno' | 'professor'
 
-// Duas abas: o aluno informa nome, e-mail e período (que define as disciplinas liberadas);
+// Duas abas: o aluno informa nome, e-mail, nível de ensino e ano/período (que definem as
+// disciplinas liberadas);
 // o professor informa nome e e-mail, e o cadastro fica em análise até a administração
 // aprovar. Matrícula e celular aparecem no formulário, mas são opcionais (pedido de
 // 22/10/2026). Ninguém se cadastra como administrador.
@@ -19,6 +20,7 @@ export default function CriarConta() {
   const [tipo, setTipo] = useState<Tipo>('aluno')
   const [nome, setNome] = useState('')
   const [matricula, setMatricula] = useState('')
+  const [nivel, setNivel] = useState<Nivel | ''>('')
   const [periodo, setPeriodo] = useState('')
   const [email, setEmail] = useState('')
   const [telefone, setTelefone] = useState('')
@@ -62,7 +64,9 @@ export default function CriarConta() {
     e.preventDefault()
     setErro(null)
     if (nome.trim().split(/\s+/).length < 2) return setErro('Informe o seu nome completo (nome e sobrenome).')
-    if (tipo === 'aluno' && !periodo) return setErro('Escolha o período que você está cursando.')
+    if (tipo === 'aluno' && !nivel) return setErro('Escolha o seu nível de ensino.')
+    if (tipo === 'aluno' && !periodo)
+      return setErro(`Escolha o ${dadosNivel(nivel || null).rotulo} que você está cursando.`)
     // celular opcional: em branco, segue sem ele; preenchido, precisa ser válido
     const celular = telefone.trim() ? normalizarTelefone(telefone) : null
     if (telefone.trim() && !celular)
@@ -73,7 +77,15 @@ export default function CriarConta() {
     setEnviando(true)
     const r =
       tipo === 'aluno'
-        ? await criarConta({ nome, matricula, periodo: Number(periodo), email, telefone: celular, senha })
+        ? await criarConta({
+            nome,
+            matricula,
+            nivel: nivel as Nivel,
+            periodo: Number(periodo),
+            email,
+            telefone: celular,
+            senha,
+          })
         : await criarContaProfessor({ nome, email, telefone: celular, senha })
     setEnviando(false)
     if (r.erro) setErro(r.erro)
@@ -111,7 +123,7 @@ export default function CriarConta() {
       </div>
       <p className="dica">
         {tipo === 'aluno'
-          ? 'O seu período define as disciplinas que você acessa: as do seu período, as dos anteriores e as optativas.'
+          ? 'O seu nível e o seu ano ou período definem as disciplinas que você acessa: as do seu ano ou período e as dos anteriores, dentro do seu nível.'
           : 'O cadastro de professor é analisado pela administração do site antes de liberar o acesso.'}
       </p>
       <form onSubmit={enviar} className="formulario-acesso">
@@ -124,23 +136,44 @@ export default function CriarConta() {
           <input type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
         </label>
         {tipo === 'aluno' && (
-          <div className="linha-campos">
-            <label>
-              Período
-              <select required value={periodo} onChange={(e) => setPeriodo(e.target.value)}>
-                <option value="">Escolha…</option>
-                {PERIODOS_CURSO.map((p) => (
-                  <option key={p} value={p}>
-                    {p}º período
-                  </option>
-                ))}
-              </select>
-            </label>
+          <>
+            <div className="linha-campos">
+              <label>
+                Nível de ensino
+                <select
+                  required
+                  value={nivel}
+                  onChange={(e) => {
+                    setNivel(e.target.value as Nivel | '')
+                    setPeriodo('') // os anos/períodos mudam de um nível para outro
+                  }}
+                >
+                  <option value="">Escolha…</option>
+                  {NIVEIS.map((n) => (
+                    <option key={n.id} value={n.id}>
+                      {n.nome}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                {nivel ? rotuloEtapa(nivel) : 'Ano ou período'}
+                <select required disabled={!nivel} value={periodo} onChange={(e) => setPeriodo(e.target.value)}>
+                  <option value="">{nivel ? 'Escolha…' : 'Escolha o nível primeiro'}</option>
+                  {nivel &&
+                    dadosNivel(nivel).etapas.map((p) => (
+                      <option key={p} value={p}>
+                        {nomeEtapa(nivel, p)}
+                      </option>
+                    ))}
+                </select>
+              </label>
+            </div>
             <label>
               Matrícula (opcional)
               <input value={matricula} onChange={(e) => setMatricula(e.target.value)} />
             </label>
-          </div>
+          </>
         )}
         <label>
           Celular (WhatsApp), opcional

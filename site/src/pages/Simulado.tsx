@@ -113,7 +113,7 @@ function Capitulos({ disciplinaId }: { disciplinaId: string }) {
       <Link to="/simulado" className="voltar">
         Todas as disciplinas
       </Link>
-      <p className="etiqueta">{nomePeriodo(d.periodo)}</p>
+      <p className="etiqueta">{nomePeriodo(d.periodo, d.nivel)}</p>
       <h1>Simulados – {d.nome}</h1>
       <p className="dica">Escolha o capítulo e o tipo de questão.</p>
       <ul className="lista-simulado">

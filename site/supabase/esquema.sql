@@ -22,9 +22,13 @@ create table if not exists public.perfis (
   -- celular com DDI e DDD, só dígitos (ex.: 5521999998888), pronto para o WhatsApp
   telefone text,
   tipo text not null default 'aluno' check (tipo in ('aluno', 'professor', 'admin')),
-  -- período do curso (1 a 5) informado no cadastro: o aluno vê as disciplinas do seu
-  -- período e dos anteriores (as optativas, para todos). Só o administrador muda.
-  periodo smallint check (periodo between 1 and 5),
+  -- nível de ensino do aluno (desde 22/10/2026): fundamental1 (1º a 5º ano),
+  -- fundamental2 (6º a 9º ano), medio (1º a 3º ano) ou graduacao (1º a 5º período).
+  -- O aluno vê só as disciplinas do seu nível. Só o administrador muda.
+  nivel text check (nivel in ('fundamental1', 'fundamental2', 'medio', 'graduacao')),
+  -- ano ou período dentro do nível, informado no cadastro: o aluno vê as disciplinas do
+  -- seu ano/período e dos anteriores. Só o administrador muda.
+  periodo smallint check (periodo between 1 and 9),
   -- cadastro feito pela aba "Sou professor": fica em análise (sem acesso ao conteúdo)
   -- até o administrador aprovar, quando o tipo passa a professor
   solicita_professor boolean not null default false,
@@ -37,6 +41,23 @@ alter table public.perfis add column if not exists periodo smallint check (perio
 alter table public.perfis add column if not exists matricula text unique;
 alter table public.perfis add column if not exists solicita_professor boolean not null default false;
 alter table public.perfis add column if not exists telefone text;
+
+-- Níveis de ensino (22/10/2026). As contas que já existiam são todas da Graduação. O
+-- período passa a ir até 9 (o Fundamental II usa do 6º ao 9º ano), e cada nível só aceita
+-- os seus anos/períodos.
+alter table public.perfis add column if not exists nivel text
+  check (nivel in ('fundamental1', 'fundamental2', 'medio', 'graduacao'));
+update public.perfis set nivel = 'graduacao' where nivel is null and tipo = 'aluno';
+alter table public.perfis drop constraint if exists perfis_periodo_check;
+alter table public.perfis add constraint perfis_periodo_check check (periodo between 1 and 9);
+alter table public.perfis drop constraint if exists perfis_nivel_periodo_check;
+alter table public.perfis add constraint perfis_nivel_periodo_check check (
+  periodo is null or nivel is null
+  or (nivel = 'fundamental1' and periodo between 1 and 5)
+  or (nivel = 'fundamental2' and periodo between 6 and 9)
+  or (nivel = 'medio' and periodo between 1 and 3)
+  or (nivel = 'graduacao' and periodo between 1 and 5)
+);
 
 alter table public.perfis enable row level security;
 
@@ -93,6 +114,9 @@ begin
     if new.periodo is distinct from old.periodo then
       raise exception 'Só um administrador pode mudar o período.';
     end if;
+    if new.nivel is distinct from old.nivel then
+      raise exception 'Só um administrador pode mudar o nível de ensino.';
+    end if;
     if new.matricula is distinct from old.matricula then
       raise exception 'Só um administrador pode mudar a matrícula.';
     end if;
@@ -112,8 +136,9 @@ create trigger proteger_perfil
   for each row execute function public.proteger_perfil();
 
 -- Quando alguém se cadastra, o perfil é criado automaticamente, sempre como aluno.
--- Pela aba "Sou aluno": com o nome, o período e, se informados, a matrícula e o telefone
--- (opcionais desde 22/10/2026).
+-- Pela aba "Sou aluno": com o nome, o nível, o ano/período e, se informados, a matrícula e o
+-- telefone (opcionais desde 22/10/2026). Sem nível válido, o aluno fica na Graduação; um
+-- ano/período que não existe no nível fica vazio (a administração corrige).
 -- Pela aba "Sou professor": com o nome e, se informado, o telefone; o pedido fica em análise.
 -- Ninguém se cadastra como administrador: o administrador muda o perfil depois.
 create or replace function public.criar_perfil()
@@ -122,19 +147,35 @@ language plpgsql
 security definer
 set search_path = public
 as $$
+declare
+  professor boolean := coalesce((new.raw_user_meta_data ->> 'professor') = 'true', false);
+  v_nivel text;
+  v_periodo smallint;
 begin
-  insert into public.perfis (id, nome, matricula, email, telefone, periodo, solicita_professor, aceite_privacidade_em)
+  if not professor then
+    v_nivel := case when (new.raw_user_meta_data ->> 'nivel') in ('fundamental1', 'fundamental2', 'medio', 'graduacao')
+                    then new.raw_user_meta_data ->> 'nivel' else 'graduacao' end;
+    if (new.raw_user_meta_data ->> 'periodo') ~ '^[1-9]$' then
+      v_periodo := (new.raw_user_meta_data ->> 'periodo')::smallint;
+      if not ((v_nivel = 'fundamental1' and v_periodo between 1 and 5)
+           or (v_nivel = 'fundamental2' and v_periodo between 6 and 9)
+           or (v_nivel = 'medio' and v_periodo between 1 and 3)
+           or (v_nivel = 'graduacao' and v_periodo between 1 and 5)) then
+        v_periodo := null;
+      end if;
+    end if;
+  end if;
+
+  insert into public.perfis (id, nome, matricula, email, telefone, nivel, periodo, solicita_professor, aceite_privacidade_em)
   values (
     new.id,
     coalesce(nullif(new.raw_user_meta_data ->> 'nome', ''), split_part(new.email, '@', 1)),
-    case when (new.raw_user_meta_data ->> 'professor') = 'true' then null
-         else nullif(trim(new.raw_user_meta_data ->> 'matricula'), '') end,
+    case when professor then null else nullif(trim(new.raw_user_meta_data ->> 'matricula'), '') end,
     new.email,
     nullif(regexp_replace(coalesce(new.raw_user_meta_data ->> 'telefone', ''), '\D', '', 'g'), ''),
-    case when (new.raw_user_meta_data ->> 'professor') = 'true' then null
-         when (new.raw_user_meta_data ->> 'periodo') in ('1', '2', '3', '4', '5')
-         then (new.raw_user_meta_data ->> 'periodo')::smallint end,
-    coalesce((new.raw_user_meta_data ->> 'professor') = 'true', false),
+    v_nivel,
+    v_periodo,
+    professor,
     case when (new.raw_user_meta_data ->> 'aceite_privacidade') = 'true' then now() end
   )
   on conflict (id) do nothing;
