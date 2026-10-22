@@ -13,6 +13,13 @@ export function grupoDe(d: Disciplina): string {
   return nivel === 'graduacao' ? String(d.periodo) : `${nivel}:${d.periodo}`
 }
 
+/** Nível e ano/período de um grupo ("3" -> graduacao, 3; "medio:2" -> medio, 2) */
+export function partesDoGrupo(chave: string): { nivel: Nivel; etapa: number } {
+  if (/^\d+$/.test(chave)) return { nivel: 'graduacao', etapa: Number(chave) }
+  const [nivel, ano] = chave.split(':')
+  return { nivel: nivel as Nivel, etapa: Number(ano) }
+}
+
 /** "3º período", "Optativas" ou "Ensino Médio – 2º ano" */
 export function nomeGrupo(chave: string): string {
   if (/^\d+$/.test(chave)) return nomeEtapa('graduacao', Number(chave))
