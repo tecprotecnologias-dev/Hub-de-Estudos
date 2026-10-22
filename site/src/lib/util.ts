@@ -1,10 +1,33 @@
 import { disciplinas } from '../data/disciplinas'
 import type { Disciplina, Questao } from '../data/tipos'
-import { nomeEtapa, type Nivel } from './niveis'
+import { dadosNivel, NIVEIS, NIVEL_PADRAO, nomeEtapa, type Nivel } from './niveis'
 
 export const LETRAS = ['A', 'B', 'C', 'D', 'E', 'F']
 
-export const PERIODOS = [...new Set(disciplinas.map((d) => d.periodo))].sort((a, b) => (a || 99) - (b || 99))
+/**
+ * Grupo em que a disciplina aparece nas listas: na Graduação, o período ("1" a "5"; "0" =
+ * optativas); nos outros níveis, o próprio nível ("fundamental1", "medio"...), porque por
+ * enquanto cada disciplina da educação básica vale para todos os anos do nível.
+ */
+export function grupoDe(d: Disciplina): string {
+  const nivel = d.nivel ?? NIVEL_PADRAO
+  return nivel === 'graduacao' ? String(d.periodo) : nivel
+}
+
+/** "3º período", "Optativas" ou "Ensino Médio" */
+export function nomeGrupo(chave: string): string {
+  return /^\d+$/.test(chave) ? nomeEtapa('graduacao', Number(chave)) : dadosNivel(chave as Nivel).nome
+}
+
+/** Grupos na ordem das listas: os níveis da educação básica, depois os períodos da Graduação e as optativas. */
+export const GRUPOS: string[] = (() => {
+  const existentes = new Set(disciplinas.map(grupoDe))
+  const basicos = NIVEIS.map((n) => n.id as string).filter((id) => existentes.has(id))
+  const periodos = [...existentes]
+    .filter((g) => /^\d+$/.test(g))
+    .sort((a, b) => (Number(a) || 99) - (Number(b) || 99))
+  return [...basicos, ...periodos]
+})()
 
 /** "3º período" na Graduação, "3º ano" nos outros níveis; 0 = optativas */
 export function nomePeriodo(p: number, nivel?: Nivel) {
@@ -56,7 +79,7 @@ export function trocarLetras(texto: string, ordem?: number[]): string {
 }
 
 export interface Filtro {
-  /** '' = todos */
+  /** grupo da disciplina (período ou nível, ver grupoDe); '' = todos */
   periodo: string
   disciplinaId: string
   capituloId: string
@@ -68,7 +91,7 @@ export const FILTRO_VAZIO: Filtro = { periodo: '', disciplinaId: '', capituloId:
 export function filtrar(lista: Questao[], f: Filtro): Questao[] {
   return lista.filter(
     (q) =>
-      (!f.periodo || String(porId.get(q.disciplinaId)?.periodo) === f.periodo) &&
+      (!f.periodo || (porId.has(q.disciplinaId) && grupoDe(porId.get(q.disciplinaId)!) === f.periodo)) &&
       (!f.disciplinaId || q.disciplinaId === f.disciplinaId) &&
       (!f.capituloId || q.capituloId === f.capituloId) &&
       (!f.tipo || q.tipo === f.tipo),

@@ -1,6 +1,6 @@
 import { disciplinas } from '../data/disciplinas'
 import { apostilasDaDisciplina, questoesDaProva, rotuloApostila } from './capitulos'
-import { buscarDisciplina, nomePeriodo, PERIODOS, type Filtro } from './util'
+import { buscarDisciplina, GRUPOS, grupoDe, nomeGrupo, type Filtro } from './util'
 
 interface Props {
   valor: Filtro
@@ -12,7 +12,7 @@ const contar = (pred: (q: (typeof questoesDaProva)[number]) => boolean) => quest
 /** Filtros do banco de questões (usado no gerador de provas). */
 export default function Filtros({ valor, onChange }: Props) {
   const daTurma = disciplinas.filter(
-    (d) => (!valor.periodo || String(d.periodo) === valor.periodo) && apostilasDaDisciplina(d.id).length > 0,
+    (d) => (!valor.periodo || grupoDe(d) === valor.periodo) && apostilasDaDisciplina(d.id).length > 0,
   )
   const disciplina = buscarDisciplina(valor.disciplinaId)
   // só os capítulos da disciplina: material complementar não entra nas provas
@@ -21,15 +21,15 @@ export default function Filtros({ valor, onChange }: Props) {
   return (
     <div className="filtros">
       <label>
-        Período
+        Período ou nível
         <select
           value={valor.periodo}
           onChange={(e) => onChange({ ...valor, periodo: e.target.value, disciplinaId: '', capituloId: '' })}
         >
           <option value="">Todos</option>
-          {PERIODOS.map((p) => (
+          {GRUPOS.map((p) => (
             <option key={p} value={p}>
-              {nomePeriodo(p)}
+              {nomeGrupo(p)}
             </option>
           ))}
         </select>

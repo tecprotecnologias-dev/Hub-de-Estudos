@@ -3,7 +3,7 @@ import { apresentacoes } from '../data/apresentacoes'
 import Apresentacao from '../lib/Apresentacao'
 import { questoes } from '../data/questoes'
 import { apostilasDaDisciplina } from '../lib/capitulos'
-import { buscarDisciplina, nomePeriodo } from '../lib/util'
+import { buscarDisciplina, grupoDe, nomeGrupo } from '../lib/util'
 
 function Lista({ itens }: { itens: string[] }) {
   return (
@@ -38,7 +38,7 @@ export default function PaginaDisciplina() {
       <Link to="/disciplinas" className="voltar">
         Todas as disciplinas
       </Link>
-      <p className="etiqueta">{nomePeriodo(d.periodo, d.nivel)}</p>
+      <p className="etiqueta">{nomeGrupo(grupoDe(d))}</p>
       <h1>{d.nome}</h1>
 
       {apresentacao && <Apresentacao texto={apresentacao} />}

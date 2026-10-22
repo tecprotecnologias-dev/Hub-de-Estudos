@@ -5,7 +5,7 @@ import { disciplinas } from '../data/disciplinas'
 import type { Apostila } from '../data/tipos'
 import { apostilasDaDisciplina, gruposDeApostila, rotuloApostila } from '../lib/capitulos'
 import { useDisciplinaVisivel } from '../lib/Protegida'
-import { buscarDisciplina, nomePeriodo, PERIODOS } from '../lib/util'
+import { buscarDisciplina, GRUPOS, grupoDe, nomeGrupo } from '../lib/util'
 
 const url = (a: Apostila) => import.meta.env.BASE_URL + (a.arquivo ?? '')
 
@@ -13,7 +13,7 @@ export default function Apostilas() {
   // vindo da página da disciplina: /apostilas?disciplina=<id> já abre filtrado
   const [params] = useSearchParams()
   const inicial = buscarDisciplina(params.get('disciplina') ?? '')
-  const [periodo, setPeriodo] = useState(inicial ? String(inicial.periodo) : '')
+  const [periodo, setPeriodo] = useState(inicial ? grupoDe(inicial) : '')
   const [disciplinaId, setDisciplinaId] = useState(inicial?.id ?? '')
   const [busca, setBusca] = useState('')
   const [aberta, setAberta] = useState<Apostila | null>(null)
@@ -27,7 +27,7 @@ export default function Apostilas() {
   const comApostila = disciplinas.filter(
     (d) =>
       visivel(d.id) &&
-      (!periodo || String(d.periodo) === periodo) &&
+      (!periodo || grupoDe(d) === periodo) &&
       (!disciplinaId || d.id === disciplinaId) &&
       apostilasDaDisciplina(d.id).some(confere),
   )
@@ -56,7 +56,7 @@ export default function Apostilas() {
           <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Título ou assunto" />
         </label>
         <label>
-          Período
+          Período ou nível
           <select
             value={periodo}
             onChange={(e) => {
@@ -65,9 +65,9 @@ export default function Apostilas() {
             }}
           >
             <option value="">Todos</option>
-            {PERIODOS.filter((p) => disciplinas.some((d) => d.periodo === p && visivel(d.id))).map((p) => (
+            {GRUPOS.filter((p) => disciplinas.some((d) => grupoDe(d) === p && visivel(d.id))).map((p) => (
               <option key={p} value={p}>
-                {nomePeriodo(p)}
+                {nomeGrupo(p)}
               </option>
             ))}
           </select>
@@ -80,7 +80,7 @@ export default function Apostilas() {
               .filter(
                 (d) =>
                   visivel(d.id) &&
-                  (!periodo || String(d.periodo) === periodo) &&
+                  (!periodo || grupoDe(d) === periodo) &&
                   apostilasDaDisciplina(d.id).length > 0,
               )
               .map((d) => (
@@ -102,7 +102,7 @@ export default function Apostilas() {
         <section key={d.id} className="bloco-apostila">
           <h2>
             <Link to={`/disciplina/${d.id}`}>{d.nome}</Link>
-            <span className="etiqueta">{nomePeriodo(d.periodo, d.nivel)}</span>
+            <span className="etiqueta">{nomeGrupo(grupoDe(d))}</span>
           </h2>
           {gruposDeApostila(apostilasDaDisciplina(d.id).filter(confere)).map(([grupo, itens]) => (
             <div key={grupo || 'principal'}>

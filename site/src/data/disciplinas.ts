@@ -1,7 +1,9 @@
 import type { Disciplina } from './tipos'
+import { disciplinasEscola } from './disciplinas-escola'
 
-// Gerado a partir dos planos de ensino. Período 0 = optativa.
-export const disciplinas: Disciplina[] = [
+// Gerado a partir dos planos de ensino (Graduação). Período 0 = optativa.
+// As disciplinas da educação básica ficam em disciplinas-escola.ts e entram no fim da lista.
+const graduacao: Disciplina[] = [
   {
     "id": "algoritmos-e-linguagem-de-programacao-i",
     "periodo": 1,
@@ -2971,3 +2973,5 @@ export const disciplinas: Disciplina[] = [
     ]
   }
 ]
+
+export const disciplinas: Disciplina[] = [...graduacao, ...disciplinasEscola]

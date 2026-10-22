@@ -5,14 +5,14 @@ import { apresentacoes } from '../data/apresentacoes'
 import { disciplinas } from '../data/disciplinas'
 import { questoes } from '../data/questoes'
 import { useDisciplinaVisivel } from '../lib/Protegida'
-import { nomePeriodo, PERIODOS, resumoApresentacao } from '../lib/util'
+import { GRUPOS, grupoDe, nomeGrupo, resumoApresentacao } from '../lib/util'
 
-// Lista de disciplinas por período (antes ficava na página inicial)
+// Lista de disciplinas por período (Graduação) ou por nível (educação básica)
 export default function Disciplinas() {
-  const [periodo, setPeriodo] = useState<number | null>(null)
+  const [grupo, setGrupo] = useState<string | null>(null)
   const visivel = useDisciplinaVisivel()
-  const periodosDoPerfil = PERIODOS.filter((p) => disciplinas.some((d) => d.periodo === p && visivel(d.id)))
-  const visiveis = periodo === null ? periodosDoPerfil : [periodo]
+  const gruposDoPerfil = GRUPOS.filter((g) => disciplinas.some((d) => grupoDe(d) === g && visivel(d.id)))
+  const visiveis = grupo === null ? gruposDoPerfil : [grupo]
 
   return (
     <>
@@ -22,22 +22,22 @@ export default function Disciplinas() {
       </section>
 
       <div className="abas" role="tablist">
-        <button className={periodo === null ? 'aba ativa' : 'aba'} onClick={() => setPeriodo(null)}>
+        <button className={grupo === null ? 'aba ativa' : 'aba'} onClick={() => setGrupo(null)}>
           Todos
         </button>
-        {periodosDoPerfil.map((p) => (
-          <button key={p} className={periodo === p ? 'aba ativa' : 'aba'} onClick={() => setPeriodo(p)}>
-            {nomePeriodo(p)}
+        {gruposDoPerfil.map((g) => (
+          <button key={g} className={grupo === g ? 'aba ativa' : 'aba'} onClick={() => setGrupo(g)}>
+            {nomeGrupo(g)}
           </button>
         ))}
       </div>
 
-      {visiveis.map((p) => (
-        <section key={p} className="bloco-periodo">
-          <h2>{nomePeriodo(p)}</h2>
+      {visiveis.map((g) => (
+        <section key={g} className="bloco-periodo">
+          <h2>{nomeGrupo(g)}</h2>
           <div className="cartoes">
             {disciplinas
-              .filter((d) => d.periodo === p && visivel(d.id))
+              .filter((d) => grupoDe(d) === g && visivel(d.id))
               .map((d) => {
                 const nq = questoes.filter((q) => q.disciplinaId === d.id).length
                 const na = apostilas.filter((a) => a.disciplinaId === d.id).length
