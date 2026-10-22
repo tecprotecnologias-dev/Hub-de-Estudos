@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { criarConta, criarContaProfessor, useAuth } from '../../lib/auth'
+import { criarConta, criarContaProfessor, normalizarTelefone, useAuth } from '../../lib/auth'
 import { authConfigurado } from '../../lib/supabase'
 import { AvisoSemCadastro } from './AvisoSemCadastro'
 
@@ -10,16 +10,18 @@ const MIN_SENHA = 8
 type Tipo = 'aluno' | 'professor'
 
 // Duas abas: o aluno informa nome, e-mail e período (que define as disciplinas liberadas);
-// o professor informa só nome e e-mail, e o cadastro fica em análise até a administração
-// aprovar. Matrícula e celular não são pedidos (o celular pode ser informado depois, em
-// Minha conta). Ninguém se cadastra como administrador.
+// o professor informa nome e e-mail, e o cadastro fica em análise até a administração
+// aprovar. Matrícula e celular aparecem no formulário, mas são opcionais (pedido de
+// 22/10/2026). Ninguém se cadastra como administrador.
 export default function CriarConta() {
   const { sessao } = useAuth()
   const navegar = useNavigate()
   const [tipo, setTipo] = useState<Tipo>('aluno')
   const [nome, setNome] = useState('')
+  const [matricula, setMatricula] = useState('')
   const [periodo, setPeriodo] = useState('')
   const [email, setEmail] = useState('')
+  const [telefone, setTelefone] = useState('')
   const [senha, setSenha] = useState('')
   const [confirmar, setConfirmar] = useState('')
   const [aceite, setAceite] = useState(false)
@@ -61,14 +63,18 @@ export default function CriarConta() {
     setErro(null)
     if (nome.trim().split(/\s+/).length < 2) return setErro('Informe o seu nome completo (nome e sobrenome).')
     if (tipo === 'aluno' && !periodo) return setErro('Escolha o período que você está cursando.')
+    // celular opcional: em branco, segue sem ele; preenchido, precisa ser válido
+    const celular = telefone.trim() ? normalizarTelefone(telefone) : null
+    if (telefone.trim() && !celular)
+      return setErro('Confira o celular: informe com DDD, por exemplo (21) 99999-8888, ou deixe em branco.')
     if (senha.length < MIN_SENHA) return setErro(`A senha precisa ter pelo menos ${MIN_SENHA} caracteres.`)
     if (senha !== confirmar) return setErro('As duas senhas não são iguais.')
     if (!aceite) return setErro('Para criar a conta, é preciso aceitar a Política de Privacidade.')
     setEnviando(true)
     const r =
       tipo === 'aluno'
-        ? await criarConta({ nome, periodo: Number(periodo), email, senha })
-        : await criarContaProfessor({ nome, email, senha })
+        ? await criarConta({ nome, matricula, periodo: Number(periodo), email, telefone: celular, senha })
+        : await criarContaProfessor({ nome, email, telefone: celular, senha })
     setEnviando(false)
     if (r.erro) setErro(r.erro)
     else if (r.precisaConfirmar || tipo === 'professor') setConcluido({ precisaConfirmar: r.precisaConfirmar })
@@ -118,18 +124,35 @@ export default function CriarConta() {
           <input type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
         </label>
         {tipo === 'aluno' && (
-          <label>
-            Período
-            <select required value={periodo} onChange={(e) => setPeriodo(e.target.value)}>
-              <option value="">Escolha…</option>
-              {PERIODOS_CURSO.map((p) => (
-                <option key={p} value={p}>
-                  {p}º período
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className="linha-campos">
+            <label>
+              Período
+              <select required value={periodo} onChange={(e) => setPeriodo(e.target.value)}>
+                <option value="">Escolha…</option>
+                {PERIODOS_CURSO.map((p) => (
+                  <option key={p} value={p}>
+                    {p}º período
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Matrícula (opcional)
+              <input value={matricula} onChange={(e) => setMatricula(e.target.value)} />
+            </label>
+          </div>
         )}
+        <label>
+          Celular (WhatsApp), opcional
+          <input
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel-national"
+            placeholder="(21) 99999-8888"
+            value={telefone}
+            onChange={(e) => setTelefone(e.target.value)}
+          />
+        </label>
         <div className="linha-campos">
           <label>
             Senha

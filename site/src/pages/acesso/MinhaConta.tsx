@@ -90,7 +90,8 @@ export default function MinhaConta() {
       </dl>
       {perfil.tipo === 'aluno' && !perfil.solicita_professor && (
         <p className="dica pequena">
-          O período só pode ser alterado pela administração do site. Se o seu período mudou, peça a atualização.
+          A matrícula e o período só podem ser alterados pela administração do site. Se o seu período mudou, peça a
+          atualização.
         </p>
       )}
 
