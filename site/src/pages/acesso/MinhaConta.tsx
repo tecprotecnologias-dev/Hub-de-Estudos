@@ -14,8 +14,10 @@ export default function MinhaConta() {
   if (!perfil || !supabase) return null
   const cliente = supabase
 
-  const celular = normalizarTelefone(telefone)
-  const semMudanca = nome.trim() === perfil.nome && celular === perfil.telefone
+  // o celular é opcional: vazio vira null; preenchido, precisa ser válido
+  const semCelular = telefone.trim() === ''
+  const celular = semCelular ? null : normalizarTelefone(telefone)
+  const semMudanca = nome.trim() === perfil.nome && celular === (perfil.telefone ?? null)
 
   async function salvarDados(e: FormEvent) {
     e.preventDefault()
@@ -23,8 +25,8 @@ export default function MinhaConta() {
       setMensagem({ tipo: 'erro', texto: 'Informe o nome completo (nome e sobrenome).' })
       return
     }
-    if (!celular) {
-      setMensagem({ tipo: 'erro', texto: 'Informe o seu celular com DDD, por exemplo (21) 99999-8888.' })
+    if (!semCelular && !celular) {
+      setMensagem({ tipo: 'erro', texto: 'Confira o celular: informe com DDD, por exemplo (21) 99999-8888, ou deixe em branco.' })
       return
     }
     setSalvando(true)
@@ -65,10 +67,12 @@ export default function MinhaConta() {
       <dl className="dados-conta">
         {perfil.tipo === 'aluno' && !perfil.solicita_professor && (
           <>
-            <div>
-              <dt>Matrícula</dt>
-              <dd>{perfil.matricula ?? '—'}</dd>
-            </div>
+            {perfil.matricula && (
+              <div>
+                <dt>Matrícula</dt>
+                <dd>{perfil.matricula}</dd>
+              </div>
+            )}
             <div>
               <dt>Período</dt>
               <dd>{perfil.periodo ? `${perfil.periodo}º período` : '—'}</dd>
@@ -86,23 +90,17 @@ export default function MinhaConta() {
       </dl>
       {perfil.tipo === 'aluno' && !perfil.solicita_professor && (
         <p className="dica pequena">
-          A matrícula e o período só podem ser alterados pela administração do site. Se o seu período mudou, peça a
-          atualização.
+          O período só pode ser alterado pela administração do site. Se o seu período mudou, peça a atualização.
         </p>
       )}
 
-      {!perfil.telefone && (
-        <p className="erro-acesso" role="status">
-          Falta o seu celular no cadastro. Informe abaixo e clique em Salvar.
-        </p>
-      )}
       <form onSubmit={salvarDados} className="formulario-acesso">
         <label>
           Nome completo
           <input value={nome} onChange={(e) => setNome(e.target.value)} />
         </label>
         <label>
-          Celular (WhatsApp)
+          Celular (WhatsApp), opcional
           <input
             type="tel"
             inputMode="tel"

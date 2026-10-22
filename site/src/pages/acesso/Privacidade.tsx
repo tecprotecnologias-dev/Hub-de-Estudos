@@ -15,7 +15,8 @@ export default function Privacidade() {
       <h2>1. Quais dados coletamos</h2>
       <ul>
         <li>
-          <strong>No cadastro:</strong> nome completo, matrícula, período do curso, e-mail e celular.
+          <strong>No cadastro:</strong> nome completo, período do curso e e-mail. O celular é opcional e pode ser
+          informado depois, na página Minha conta.
         </li>
         <li>
           <strong>Senha:</strong> guardada de forma criptografada pelo serviço de autenticação. Ninguém da administração
@@ -37,8 +38,8 @@ export default function Privacidade() {
         <li>Liberar as disciplinas de acordo com o seu período: as do seu período, as dos anteriores e as optativas.</li>
         <li>Enviar mensagens necessárias para a conta, como a confirmação do e-mail e o link para criar nova senha.</li>
         <li>
-          Enviar avisos sobre o site e os estudos (novos materiais, simulados, prazos) por e-mail ou pelo WhatsApp, no
-          celular informado no cadastro.
+          Enviar avisos sobre o site e os estudos (novos materiais, simulados, prazos) por e-mail ou, se você informar o
+          celular, pelo WhatsApp.
         </li>
       </ul>
       <p>Não usamos os seus dados para publicidade e não os vendemos a ninguém.</p>
@@ -68,8 +69,8 @@ export default function Privacidade() {
           <strong>Consultar os seus dados:</strong> na página Minha conta.
         </li>
         <li>
-          <strong>Corrigir o nome e o celular:</strong> na página Minha conta. A matrícula e o período são corrigidos pela
-          administração do site, a seu pedido.
+          <strong>Corrigir o nome e o celular:</strong> na página Minha conta. O período é corrigido pela administração do site, a
+          seu pedido.
         </li>
         <li>
           <strong>Excluir a conta e os dados:</strong> a qualquer momento, pelo botão Excluir minha conta, na página

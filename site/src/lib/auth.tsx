@@ -145,10 +145,8 @@ export async function entrarComSenha(email: string, senha: string) {
 
 export interface DadosCadastro {
   nome: string
-  matricula: string
   periodo: number
   email: string
-  telefone: string
   senha: string
 }
 
@@ -174,15 +172,8 @@ export function formatarTelefone(telefone: string | null): string {
   return `(${d.slice(0, 2)}) ${d.slice(2, -4)}-${d.slice(-4)}`
 }
 
-export async function criarConta({ nome, matricula, periodo, email, telefone, senha }: DadosCadastro) {
-  const { data: emUso, error: erroBusca } = await supabase!.rpc('matricula_em_uso', { m: matricula.trim() })
-  if (erroBusca) return { erro: traduzirErro(erroBusca.message), precisaConfirmar: false }
-  if (emUso) {
-    return {
-      erro: 'Esta matrícula já tem uma conta. Se for a sua, entre com o seu e-mail ou recupere a senha.',
-      precisaConfirmar: false,
-    }
-  }
+/** Cadastro pela aba "Sou aluno": nome, e-mail, período e senha (matrícula e celular não são pedidos). */
+export async function criarConta({ nome, periodo, email, senha }: DadosCadastro) {
   const { data, error } = await supabase!.auth.signUp({
     email: email.trim(),
     password: senha,
@@ -190,9 +181,7 @@ export async function criarConta({ nome, matricula, periodo, email, telefone, se
       emailRedirectTo: enderecoDoSite(),
       data: {
         nome: nome.trim(),
-        matricula: matricula.trim(),
         periodo: String(periodo),
-        telefone,
         aceite_privacidade: 'true',
       },
     },
@@ -203,18 +192,13 @@ export async function criarConta({ nome, matricula, periodo, email, telefone, se
 }
 
 /** Cadastro pela aba "Sou professor": só nome, e-mail e senha; fica em análise até a aprovação. */
-export async function criarContaProfessor({
-  nome,
-  email,
-  telefone,
-  senha,
-}: Pick<DadosCadastro, 'nome' | 'email' | 'telefone' | 'senha'>) {
+export async function criarContaProfessor({ nome, email, senha }: Pick<DadosCadastro, 'nome' | 'email' | 'senha'>) {
   const { data, error } = await supabase!.auth.signUp({
     email: email.trim(),
     password: senha,
     options: {
       emailRedirectTo: enderecoDoSite(),
-      data: { nome: nome.trim(), telefone, professor: 'true', aceite_privacidade: 'true' },
+      data: { nome: nome.trim(), professor: 'true', aceite_privacidade: 'true' },
     },
   })
   if (error) return { erro: traduzirErro(error.message), precisaConfirmar: false }

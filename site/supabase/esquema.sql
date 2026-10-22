@@ -112,8 +112,9 @@ create trigger proteger_perfil
   for each row execute function public.proteger_perfil();
 
 -- Quando alguém se cadastra, o perfil é criado automaticamente, sempre como aluno.
--- Pela aba "Sou aluno": com o nome, a matrícula, o período e o telefone do formulário.
--- Pela aba "Sou professor": só com o nome e o telefone, e o pedido de professor fica em análise.
+-- Pela aba "Sou aluno": com o nome e o período do formulário (desde 22/10/2026, a matrícula e o
+-- telefone não são mais pedidos no cadastro; o telefone pode ser informado em Minha conta).
+-- Pela aba "Sou professor": só com o nome, e o pedido de professor fica em análise.
 -- Ninguém se cadastra como administrador: o administrador muda o perfil depois.
 create or replace function public.criar_perfil()
 returns trigger
