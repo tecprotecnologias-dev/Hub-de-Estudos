@@ -74,13 +74,23 @@ export function ProtegeDisciplina({ disciplinaId, children }: { disciplinaId: st
         children
       ) : (
         <section className="aviso-acesso">
-          <h1>{outroNivel ? 'Disciplina de outro nível' : 'Disciplina de outro período'}</h1>
+          <h1>
+            {outroNivel
+              ? 'Disciplina de outro nível'
+              : (d.nivel ?? NIVEL_PADRAO) === 'graduacao'
+                ? 'Disciplina de outro período'
+                : 'Disciplina de outra série'}
+          </h1>
           <p>
             {outroNivel
               ? `${d.nome} é do nível ${dadosNivel(d.nivel).nome}, e o seu cadastro é do nível ${dadosNivel(perfil?.nivel).nome}.`
-              : `${d.nome} é do ${nomeEtapa(d.nivel, d.periodo)}. Você tem acesso às disciplinas até o ${
-                  perfil?.periodo ? nomeEtapa(perfil.nivel, perfil.periodo) : 'seu ano ou período'
-                }.`}
+              : (d.nivel ?? NIVEL_PADRAO) === 'graduacao'
+                ? `${d.nome} é do ${nomeEtapa(d.nivel, d.periodo)}. Você tem acesso às disciplinas até o ${
+                    perfil?.periodo ? nomeEtapa(perfil.nivel, perfil.periodo) : 'seu período'
+                  }.`
+                : `Esta disciplina é do ${nomeEtapa(d.nivel, d.periodo)}. Você tem acesso às disciplinas do ${
+                    perfil?.periodo ? nomeEtapa(perfil.nivel, perfil.periodo) : 'seu ano'
+                  }.`}
           </p>
           <p className="dica">Se o seu nível ou o seu ano mudou, peça a atualização do cadastro à coordenação do site.</p>
           <Link to="/disciplinas" className="botao">

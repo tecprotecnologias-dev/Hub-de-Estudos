@@ -6,23 +6,24 @@ export const LETRAS = ['A', 'B', 'C', 'D', 'E', 'F']
 
 /**
  * Grupo em que a disciplina aparece nas listas: na Graduação, o período ("1" a "5"; "0" =
- * optativas); nos outros níveis, o próprio nível ("fundamental1", "medio"...), porque por
- * enquanto cada disciplina da educação básica vale para todos os anos do nível.
+ * optativas); na educação básica, o nível e a série ("fundamental1:3", "medio:2"...).
  */
 export function grupoDe(d: Disciplina): string {
   const nivel = d.nivel ?? NIVEL_PADRAO
-  return nivel === 'graduacao' ? String(d.periodo) : nivel
+  return nivel === 'graduacao' ? String(d.periodo) : `${nivel}:${d.periodo}`
 }
 
-/** "3º período", "Optativas" ou "Ensino Médio" */
+/** "3º período", "Optativas" ou "Ensino Médio – 2º ano" */
 export function nomeGrupo(chave: string): string {
-  return /^\d+$/.test(chave) ? nomeEtapa('graduacao', Number(chave)) : dadosNivel(chave as Nivel).nome
+  if (/^\d+$/.test(chave)) return nomeEtapa('graduacao', Number(chave))
+  const [nivel, ano] = chave.split(':')
+  return `${dadosNivel(nivel as Nivel).nome} – ${nomeEtapa(nivel as Nivel, Number(ano))}`
 }
 
-/** Grupos na ordem das listas: os níveis da educação básica, depois os períodos da Graduação e as optativas. */
+/** Grupos na ordem das listas: as séries da educação básica, depois os períodos da Graduação e as optativas. */
 export const GRUPOS: string[] = (() => {
   const existentes = new Set(disciplinas.map(grupoDe))
-  const basicos = NIVEIS.map((n) => n.id as string).filter((id) => existentes.has(id))
+  const basicos = NIVEIS.flatMap((n) => n.etapas.map((ano) => `${n.id}:${ano}`)).filter((g) => existentes.has(g))
   const periodos = [...existentes]
     .filter((g) => /^\d+$/.test(g))
     .sort((a, b) => (Number(a) || 99) - (Number(b) || 99))

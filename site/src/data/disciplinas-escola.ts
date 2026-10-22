@@ -2,9 +2,8 @@ import type { Disciplina } from './tipos'
 import type { Nivel } from '../lib/niveis'
 
 // Disciplinas da educação básica (pedido de 22/10/2026, lista provisória: "se for o caso,
-// depois mudamos"). Por enquanto, cada disciplina vale para o nível inteiro: o "periodo" é o
-// primeiro ano do nível, então o aluno de qualquer ano daquele nível a vê. Para separar por
-// ano depois, basta criar uma entrada por ano com o "periodo" do ano.
+// depois mudamos"). Cada disciplina existe uma vez por série (ano): o aluno da educação
+// básica vê somente as disciplinas da sua série (regra em podeVerDisciplina, lib/auth.tsx).
 
 const FUNDAMENTAL = [
   'Língua Portuguesa',
@@ -44,21 +43,24 @@ function slug(texto: string) {
     .replace(/^-|-$/g, '')
 }
 
-function criar(nivel: Nivel, prefixo: string, primeiroAno: number, nomes: string[]): Disciplina[] {
-  return nomes.map((nome) => ({
-    id: `${prefixo}-${slug(nome)}`,
-    nivel,
-    periodo: primeiroAno,
-    nome,
-    objetivos: [],
-    habilidades: [],
-    unidades: [],
-    tecnologias: [],
-  }))
+/** Uma disciplina para cada série: id como "fund1-3ano-matematica". */
+function criar(nivel: Nivel, prefixo: string, anos: number[], nomes: string[]): Disciplina[] {
+  return anos.flatMap((ano) =>
+    nomes.map((nome) => ({
+      id: `${prefixo}-${ano}ano-${slug(nome)}`,
+      nivel,
+      periodo: ano,
+      nome,
+      objetivos: [],
+      habilidades: [],
+      unidades: [],
+      tecnologias: [],
+    })),
+  )
 }
 
 export const disciplinasEscola: Disciplina[] = [
-  ...criar('fundamental1', 'fund1', 1, FUNDAMENTAL),
-  ...criar('fundamental2', 'fund2', 6, FUNDAMENTAL),
-  ...criar('medio', 'medio', 1, MEDIO),
+  ...criar('fundamental1', 'fund1', [1, 2, 3, 4, 5], FUNDAMENTAL),
+  ...criar('fundamental2', 'fund2', [6, 7, 8, 9], FUNDAMENTAL),
+  ...criar('medio', 'medio', [1, 2, 3], MEDIO),
 ]
