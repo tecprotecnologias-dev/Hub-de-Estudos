@@ -6,7 +6,16 @@ import { disciplinas } from '../data/disciplinas'
 import { questoes } from '../data/questoes'
 import CamposTurma from '../lib/CamposTurma'
 import { useDisciplinaVisivel } from '../lib/Protegida'
-import { confereTurma, GRUPOS, grupoDe, nomeGrupo, partesDoGrupo, resumoApresentacao, TURMA_VAZIA } from '../lib/util'
+import {
+  confereTurma,
+  GRUPOS,
+  grupoDe,
+  gruposDoFiltro,
+  nomeGrupo,
+  partesDoGrupo,
+  resumoApresentacao,
+  TURMA_VAZIA,
+} from '../lib/util'
 
 // Lista de disciplinas por série (educação básica) ou por curso e período (Graduação). Quem
 // vê mais de um grupo (professor e administração) filtra pelas caixas do cadastro: nível de
@@ -26,10 +35,11 @@ export default function Disciplinas() {
 
       {gruposDoPerfil.length > 1 && (
         <div className="filtros">
-          <CamposTurma valor={turma} onChange={setTurma} grupos={gruposDoPerfil} />
+          <CamposTurma valor={turma} onChange={setTurma} grupos={gruposDoFiltro(gruposDoPerfil)} />
         </div>
       )}
 
+      {visiveis.length === 0 && <p className="vazio">Ainda não há disciplinas cadastradas para esta escolha.</p>}
       {visiveis.map((g) => (
         <section key={g} className="bloco-periodo">
           <h2>{nomeGrupo(g)}</h2>

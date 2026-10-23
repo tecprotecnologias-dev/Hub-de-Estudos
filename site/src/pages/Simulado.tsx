@@ -15,6 +15,7 @@ import {
   embaralhar,
   embaralharAlternativas,
   GRUPOS,
+  gruposDoFiltro,
   grupoDe,
   LETRAS,
   nomeGrupo,
@@ -66,8 +67,11 @@ function ListaDisciplinas() {
       {/* professor e administração veem vários grupos: filtram como no cadastro */}
       {gruposDoPerfil.length > 1 && (
         <div className="filtros">
-          <CamposTurma valor={turma} onChange={setTurma} grupos={gruposDoPerfil} />
+          <CamposTurma valor={turma} onChange={setTurma} grupos={gruposDoFiltro(gruposDoPerfil)} />
         </div>
+      )}
+      {!gruposDoPerfil.some((g) => confereTurma(partesDoGrupo(g), turma)) && (
+        <p className="vazio">Ainda não há disciplinas cadastradas para esta escolha.</p>
       )}
       {gruposDoPerfil.filter((g) => confereTurma(partesDoGrupo(g), turma)).map((p) => {
         const doPeriodo = disciplinas.filter((d) => grupoDe(d) === p && visivel(d.id))

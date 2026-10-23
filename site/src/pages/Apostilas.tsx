@@ -11,6 +11,7 @@ import {
   buscarDisciplina,
   confereTurma,
   GRUPOS,
+  gruposDoFiltro,
   grupoDe,
   nomeGrupo,
   partesDaDisciplina,
@@ -78,7 +79,7 @@ export default function Apostilas() {
             setTurma(t)
             setDisciplinaId('')
           }}
-          grupos={GRUPOS.filter((g) => disciplinas.some((d) => grupoDe(d) === g && visivel(d.id)))}
+          grupos={gruposDoFiltro(GRUPOS.filter((g) => disciplinas.some((d) => grupoDe(d) === g && visivel(d.id))))}
         />
         <label className="largo">
           Disciplina

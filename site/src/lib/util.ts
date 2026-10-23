@@ -48,6 +48,15 @@ export const TODOS_GRUPOS: string[] = NIVEIS.flatMap((n) =>
     : n.etapas.map((etapa) => chaveGrupo({ nivel: n.id, curso: null, etapa })),
 )
 
+/**
+ * Grupos que as caixas de filtro oferecem: quem vê todas as disciplinas (professor e
+ * administração) escolhe entre todos os níveis, tipos, cursos e períodos, mesmo os que ainda
+ * não têm conteúdo (pedido de 23/10/2026); o aluno, só entre os seus.
+ */
+export function gruposDoFiltro(gruposDoPerfil: string[]): string[] {
+  return gruposDoPerfil.length === GRUPOS.length ? TODOS_GRUPOS : gruposDoPerfil
+}
+
 /** Filtro por turma, nas caixas Nível de ensino, Tipo de graduação e Curso (só na Graduação) e Ano/período; '' = todos. */
 export interface FiltroTurma {
   nivel: Nivel | ''

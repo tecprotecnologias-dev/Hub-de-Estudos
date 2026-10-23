@@ -1,7 +1,7 @@
 import { disciplinas } from '../data/disciplinas'
 import { apostilasDaDisciplina, questoesDaProva, rotuloApostila } from './capitulos'
 import CamposTurma from './CamposTurma'
-import { buscarDisciplina, confereTurma, GRUPOS, partesDaDisciplina, type Filtro } from './util'
+import { buscarDisciplina, confereTurma, partesDaDisciplina, TODOS_GRUPOS, type Filtro } from './util'
 
 interface Props {
   valor: Filtro
@@ -24,7 +24,7 @@ export default function Filtros({ valor, onChange }: Props) {
       <CamposTurma
         valor={valor.turma}
         onChange={(turma) => onChange({ ...valor, turma, disciplinaId: '', capituloId: '' })}
-        grupos={GRUPOS}
+        grupos={TODOS_GRUPOS}
       />
       <label className="largo">
         Disciplina
