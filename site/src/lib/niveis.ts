@@ -44,12 +44,48 @@ export function rotuloEtapa(nivel: Nivel | null | undefined): string {
 // são de Sistemas para Internet (o conteúdo que já existia). Para um curso novo, basta
 // acrescentá-lo aqui e marcar as disciplinas dele com `curso` em src/data/disciplinas.ts.
 
+export type TipoGraduacao = 'bacharelado' | 'licenciatura' | 'tecnologo'
+
+export const TIPOS_GRADUACAO: { id: TipoGraduacao; nome: string }[] = [
+  { id: 'bacharelado', nome: 'Bacharelado' },
+  { id: 'licenciatura', nome: 'Licenciatura' },
+  { id: 'tecnologo', nome: 'Tecnólogo' },
+]
+
 export interface DadosCurso {
   id: string
   nome: string
+  tipo: TipoGraduacao
 }
 
-export const CURSOS: DadosCurso[] = [{ id: 'sistemas-para-internet', nome: 'Sistemas para Internet' }]
+// O id é gravado no cadastro do aluno: não mude o id de um curso que já tem alunos.
+export const CURSOS: DadosCurso[] = [
+  { id: 'administracao', nome: 'Administração', tipo: 'bacharelado' },
+  { id: 'direito', nome: 'Direito', tipo: 'bacharelado' },
+  { id: 'medicina', nome: 'Medicina', tipo: 'bacharelado' },
+  { id: 'engenharia-civil', nome: 'Engenharia Civil', tipo: 'bacharelado' },
+  { id: 'psicologia', nome: 'Psicologia', tipo: 'bacharelado' },
+  { id: 'ciencia-da-computacao', nome: 'Ciência da Computação', tipo: 'bacharelado' },
+  { id: 'enfermagem', nome: 'Enfermagem', tipo: 'bacharelado' },
+  { id: 'pedagogia', nome: 'Pedagogia', tipo: 'licenciatura' },
+  { id: 'letras', nome: 'Letras', tipo: 'licenciatura' },
+  { id: 'matematica', nome: 'Matemática', tipo: 'licenciatura' },
+  { id: 'historia', nome: 'História', tipo: 'licenciatura' },
+  { id: 'biologia', nome: 'Biologia', tipo: 'licenciatura' },
+  { id: 'analise-e-desenvolvimento-de-sistemas', nome: 'Análise e Desenvolvimento de Sistemas', tipo: 'tecnologo' },
+  { id: 'gestao-de-recursos-humanos', nome: 'Gestão de Recursos Humanos', tipo: 'tecnologo' },
+  { id: 'gestao-financeira', nome: 'Gestão Financeira', tipo: 'tecnologo' },
+  { id: 'marketing', nome: 'Marketing', tipo: 'tecnologo' },
+  { id: 'logistica', nome: 'Logística', tipo: 'tecnologo' },
+  { id: 'sistemas-para-internet', nome: 'Sistemas para Internet', tipo: 'tecnologo' },
+]
+
+/** Cursos separados por tipo de graduação, para as caixas de seleção (<optgroup>). */
+export function cursosPorTipo(cursos: DadosCurso[] = CURSOS) {
+  return TIPOS_GRADUACAO.map((t) => ({ ...t, cursos: cursos.filter((c) => c.tipo === t.id) })).filter(
+    (t) => t.cursos.length > 0,
+  )
+}
 
 export const CURSO_PADRAO = 'sistemas-para-internet'
 

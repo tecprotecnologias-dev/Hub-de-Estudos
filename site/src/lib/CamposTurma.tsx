@@ -1,4 +1,4 @@
-import { CURSOS, NIVEIS, nomeEtapa, rotuloEtapa, type Nivel } from './niveis'
+import { CURSOS, cursosPorTipo, NIVEIS, nomeEtapa, rotuloEtapa, type DadosCurso, type Nivel } from './niveis'
 import { partesDoGrupo, type FiltroTurma } from './util'
 
 interface Props {
@@ -46,11 +46,7 @@ export default function CamposTurma({ valor, onChange, grupos }: Props) {
           Curso
           <select value={valor.curso} onChange={(e) => onChange({ ...valor, curso: e.target.value, etapa: '' })}>
             <option value="">Todos</option>
-            {cursos.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.nome}
-              </option>
-            ))}
+            <OpcoesCursos cursos={cursos} />
           </select>
         </label>
       )}
@@ -67,4 +63,17 @@ export default function CamposTurma({ valor, onChange, grupos }: Props) {
       </label>
     </>
   )
+}
+
+/** <option>s dos cursos, separados por tipo de graduação (Bacharelado, Licenciatura, Tecnólogo). */
+export function OpcoesCursos({ cursos = CURSOS }: { cursos?: DadosCurso[] }) {
+  return cursosPorTipo(cursos).map((t) => (
+    <optgroup key={t.id} label={t.nome}>
+      {t.cursos.map((c) => (
+        <option key={c.id} value={c.id}>
+          {c.nome}
+        </option>
+      ))}
+    </optgroup>
+  ))
 }

@@ -2,7 +2,8 @@ import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { criarConta, criarContaProfessor, normalizarTelefone, useAuth } from '../../lib/auth'
 import { authConfigurado } from '../../lib/supabase'
-import { CURSOS, dadosNivel, NIVEIS, nomeEtapa, rotuloEtapa, type Nivel } from '../../lib/niveis'
+import { dadosNivel, NIVEIS, nomeEtapa, rotuloEtapa, type Nivel } from '../../lib/niveis'
+import { OpcoesCursos } from '../../lib/CamposTurma'
 import { AvisoSemCadastro } from './AvisoSemCadastro'
 
 const MIN_SENHA = 8
@@ -164,11 +165,7 @@ export default function CriarConta() {
                 Curso
                 <select required value={curso} onChange={(e) => setCurso(e.target.value)}>
                   <option value="">Escolha…</option>
-                  {CURSOS.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.nome}
-                    </option>
-                  ))}
+                  <OpcoesCursos />
                 </select>
               </label>
             )}

@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import { formatarTelefone, NOMES_TIPO, traduzirErro, useAuth, type Perfil, type TipoPerfil } from '../../lib/auth'
 import { supabase } from '../../lib/supabase'
-import CamposTurma from '../../lib/CamposTurma'
+import CamposTurma, { OpcoesCursos } from '../../lib/CamposTurma'
 import { confereTurma, TODOS_GRUPOS, TURMA_VAZIA } from '../../lib/util'
-import { CURSO_PADRAO, CURSOS, dadosNivel, NIVEIS, NIVEL_PADRAO, nomeCurso, type Nivel } from '../../lib/niveis'
+import { CURSO_PADRAO, dadosNivel, NIVEIS, NIVEL_PADRAO, nomeCurso, type Nivel } from '../../lib/niveis'
 
 // Área da administradora: ver os cadastros, mudar o perfil (aluno, professor,
 // administrador), o nível de ensino, o curso (Graduação) e o ano/período de cada pessoa, e avançar o ano/período
@@ -269,11 +269,7 @@ export default function Administracao() {
                         value={p.curso ?? CURSO_PADRAO}
                         onChange={(e) => atualizar(p.id, { curso: e.target.value })}
                       >
-                        {CURSOS.map((c) => (
-                          <option key={c.id} value={c.id}>
-                            {c.nome}
-                          </option>
-                        ))}
+                        <OpcoesCursos />
                       </select>
                     ) : (
                       '—'
