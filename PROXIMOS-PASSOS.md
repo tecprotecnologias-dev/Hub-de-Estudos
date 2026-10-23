@@ -41,6 +41,15 @@ O site está em https://estudos.tecprotecnologias.com.br (Cloudflare) e se atual
 
 ## Segurança dos dados e do site (antes de liberar para os alunos)
 
+**← retomar aqui (pedido em 23/10/2026).** Em 23/10/2026 todas as contas passaram para o e-mail da empresa, **tecprotecnologias@gmail.com**: Supabase (dona da organização TecPro Tecnologias), GitHub (tecprotecnologias-dev), Cloudflare e o login de administradora do site; o compras.virtual2026@gmail.com saiu do Supabase. Ordem combinada:
+1. Verificação em duas etapas (2FA) no tecprotecnologias@gmail.com (Gmail), depois no GitHub, no Supabase e no Cloudflare (passo a passo com ela).
+2. Senha mais forte no cadastro e cabeçalhos de segurança no site (Claude).
+3. Security Advisor do Supabase (ela manda o print, ou o Claude roda direto se o conector do Supabase for reconectado com a organização TecPro Tecnologias).
+4. CAPTCHA (Cloudflare Turnstile) no cadastro e no login.
+5. E-mail próprio para a confirmação do cadastro (Brevo).
+6. Cópia de segurança semanal dos cadastros.
+
+
 ### Feito pela dona das contas (pedido em 12/10/2026)
 - [ ] Verificação em duas etapas (2FA) no GitHub, no Supabase, no Cloudflare e no e-mail usado neles.
 - [ ] Senhas fortes e diferentes em cada serviço, guardadas num gerenciador de senhas (ex.: Bitwarden).
