@@ -142,7 +142,7 @@ export default function CriarConta() {
       </div>
       <p className="dica">
         {tipo === 'aluno'
-          ? 'O seu nível e o seu ano ou período definem as disciplinas que você acessa: no Ensino Fundamental e no Médio, as da sua série; na Graduação, as do seu curso, do seu período e dos anteriores.'
+          ? 'O seu nível e o seu ano ou período definem as disciplinas que você acessa: no Ensino Fundamental e no Médio, as da sua série; na Graduação, as do seu curso e do seu período.'
           : 'O cadastro de professor é analisado pela administração do site antes de liberar o acesso.'}
       </p>
       <form onSubmit={enviar} className="formulario-acesso">

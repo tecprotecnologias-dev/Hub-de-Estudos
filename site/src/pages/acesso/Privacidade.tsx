@@ -37,7 +37,7 @@ export default function Privacidade() {
         <li>Identificar você e permitir o acesso ao conteúdo do site.</li>
         <li>
           Liberar as disciplinas de acordo com o seu nível: no Ensino Fundamental e no Médio, as da sua série; na
-          Graduação, as do seu curso, do seu período, dos anteriores e as optativas.
+          Graduação, as do seu curso e do seu período, mais as optativas do curso.
         </li>
         <li>Enviar mensagens necessárias para a conta, como a confirmação do e-mail e o link para criar nova senha.</li>
         <li>

@@ -1,6 +1,6 @@
 // Níveis de ensino do cadastro (pedido de 22/10/2026). Cada aluno escolhe o nível e o ano ou
-// período em que está; ele vê as disciplinas do seu nível, do ano/período atual e dos
-// anteriores. Disciplinas e contas sem nível são da Graduação (o conteúdo que já existia).
+// período em que está; ele vê somente as disciplinas do seu nível e do ano/período atual
+// (regra de acesso em podeVerDisciplina, lib/auth.tsx). Disciplinas e contas sem nível são da Graduação (o conteúdo que já existia).
 
 export type Nivel = 'fundamental1' | 'fundamental2' | 'medio' | 'graduacao'
 

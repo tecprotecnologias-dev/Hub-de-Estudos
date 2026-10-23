@@ -131,7 +131,8 @@ export function podeAcessar(perfil: Perfil | null, tipos?: TipoPerfil[]): boolea
 
 /**
  * O perfil pode ver esta disciplina? (periodo 0 = optativa)
- * Aluno da Graduação: do seu curso, o período atual e os anteriores, mais as optativas.
+ * Aluno da Graduação: do seu curso, somente o período atual, mais as optativas do curso
+ * (desde 23/10/2026: nem os períodos anteriores nem os seguintes).
  * Aluno da educação básica (Fundamental I e II, Médio): somente a sua série.
  * Professor e administrador: tudo.
  */
@@ -147,8 +148,7 @@ export function podeVerDisciplina(
   if (perfil.periodo == null) return false
   if (nivel !== 'graduacao') return d.periodo === perfil.periodo
   if ((d.curso ?? CURSO_PADRAO) !== (perfil.curso ?? CURSO_PADRAO)) return false
-  if (d.periodo === 0) return true
-  return d.periodo <= perfil.periodo
+  return d.periodo === 0 || d.periodo === perfil.periodo
 }
 
 // Ações de login, usadas pelas telas de acesso -------------------------------------
