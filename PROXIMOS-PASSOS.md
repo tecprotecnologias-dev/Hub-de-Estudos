@@ -76,5 +76,4 @@ O navegador precisa baixar o código do site para mostrá-lo, então **não exis
 
 - [ ] Revisar a Política de Privacidade (pedido em 12/10/2026).
 - [ ] Testar o fluxo de aprovação de professor (pedido em 12/10/2026).
-- [ ] Opcional: transferir o projeto do Supabase para a organização da TecPro; o endereço e a chave não mudam (pedido em 18/10/2026).
 - [ ] Opcional: desligar o site antigo no Netlify, que está parado desde 17/10/2026 (pedido em 18/10/2026).
