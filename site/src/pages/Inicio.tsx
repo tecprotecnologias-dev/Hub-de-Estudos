@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { podeAcessar, useAuth } from '../lib/auth'
+import { NIVEIS, type DadosNivel } from '../lib/niveis'
 
 const CAMINHOS: { titulo: string; texto: string; acao: string; para: string }[] = [
   {
@@ -41,12 +42,18 @@ const CAMINHOS: { titulo: string; texto: string; acao: string; para: string }[] 
   },
 ]
 
+/** "1º ao 5º ano" ou, na Graduação, os tipos de curso */
+function faixa(n: DadosNivel) {
+  if (n.id === 'graduacao') return 'Bacharelado, Licenciatura e Tecnólogo'
+  return `${n.etapas[0]}º ao ${n.etapas[n.etapas.length - 1]}º ano`
+}
+
 export default function Inicio() {
-  const { perfil } = useAuth()
+  const { perfil, sessao } = useAuth()
   // o Gerar prova é só para professores e administradores
   const caminhos = CAMINHOS.filter((c) => c.para !== '/gerar-prova' || podeAcessar(perfil, ['professor', 'admin']))
 
-  // Só a página inicial tem o fundo roxo profundo; as páginas de estudo continuam claras.
+  // marca a página inicial: o cabeçalho fica branco sólido sobre a abertura escura
   useEffect(() => {
     document.body.classList.add('pagina-inicial')
     return () => document.body.classList.remove('pagina-inicial')
@@ -55,58 +62,71 @@ export default function Inicio() {
   return (
     <>
       <section className="hero">
-        <div className="hero-texto">
-          <h1 className="hero-titulo">
-            Aprenda no seu ritmo.
-            <br />
-            <span>Pratique até dominar.</span>
-          </h1>
-          <p className="hero-sub">Apostilas completas, exercícios com gabarito e simulados.</p>
-        </div>
-        <div className="hero-codigo" aria-hidden="true">
-          <span>{'</>'}</span>
-          <span>{'{ }'}</span>
-          <span>if</span>
-          <span>for</span>
+        <div className="hero-interno">
+          <div className="hero-texto">
+            <h1 className="hero-titulo">Estudo organizado, do primeiro ano à graduação.</h1>
+            <p className="hero-sub">
+              Apostilas, exercícios com gabarito e simulados, separados por série, curso e período.
+            </p>
+            <div className="hero-acoes">
+              {sessao ? (
+                <Link to="/disciplinas" className="botao botao-latao">
+                  Ver minhas disciplinas
+                </Link>
+              ) : (
+                <>
+                  <Link to="/criar-conta" className="botao botao-latao">
+                    Criar conta
+                  </Link>
+                  <Link to="/entrar" className="botao botao-contorno">
+                    Entrar
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+          <dl className="hero-niveis" aria-label="Níveis de ensino atendidos">
+            {NIVEIS.map((n) => (
+              <div key={n.id}>
+                <dt>{n.nome}</dt>
+                <dd>{faixa(n)}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
       <section className="secao-inicio" aria-labelledby="titulo-caminhos">
         <h2 id="titulo-caminhos" className="titulo-secao">
-          Por onde você quer começar?
+          Por onde começar
         </h2>
-        <div className="caminhos">
-          {caminhos.map((c) => {
-            const conteudo = (
-              <>
-                <h3>{c.titulo}</h3>
-                <p>{c.texto}</p>
-                <span className="caminho-acao">{c.acao} →</span>
-              </>
-            )
-            return (
-              <Link key={c.titulo} to={c.para} className="caminho">
-                {conteudo}
+        <ul className="indice">
+          {caminhos.map((c) => (
+            <li key={c.titulo}>
+              <Link to={c.para} className="indice-item">
+                <span className="indice-titulo">{c.titulo}</span>
+                <span className="indice-texto">{c.texto}</span>
+                <span className="indice-acao">{c.acao}</span>
               </Link>
-            )
-          })}
-        </div>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="secao-inicio" aria-labelledby="titulo-como">
         <h2 id="titulo-como" className="titulo-secao">
-          Três passos para aprender e sair na frente
+          Como estudar aqui
         </h2>
         <ol className="passos">
           <li>
             <span className="passo-numero">1</span>
             <h3>Estude</h3>
-            <p>Leia o capítulo da apostila, com exemplos explicados e código que funciona.</p>
+            <p>Leia o capítulo da apostila, com exemplos explicados passo a passo.</p>
           </li>
           <li>
             <span className="passo-numero">2</span>
             <h3>Pratique</h3>
-            <p>Resolva os exercícios práticos no seu computador e compare com o gabarito no fim.</p>
+            <p>Resolva os exercícios e compare as suas respostas com o gabarito no fim da lista.</p>
           </li>
           <li>
             <span className="passo-numero">3</span>

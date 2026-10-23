@@ -1,26 +1,27 @@
 /*
- * Tema "Hub de Estudos": visual sóbrio e sofisticado. Fundo marfim, roxo berinjela
- * (o mesmo do logo) com detalhes em dourado, títulos em Fraunces (serifada), texto em
- * Inter e JetBrains Mono nos detalhes de código. Sem brilhos neon: sombras suaves e
- * linhas finas. Carregado depois do index.css: redefine as variáveis de cor e os
+ * Tema "Hub de Estudos": visual de prospecto de colégio (23/10/2026). Fundo porcelana
+ * (branco frio), berinjela profundo (o roxo do logo) na abertura da página inicial e no
+ * rodapé, detalhes finos em latão. Títulos em Libre Caslon (fonte clássica de livros e
+ * diplomas), texto em Instrument Sans e JetBrains Mono nos detalhes de código. Sem
+ * sombras pesadas: linhas finas e muito espaço. Carregado depois do index.css: redefine as variáveis de cor e os
  * acabamentos. Modo escuro em :root[data-tema='escuro'] (botão no cabeçalho, ver App.tsx).
  * A prova impressa (.folha) continua papel branco nos dois modos.
  */
 
 :root {
-  --fundo: #f8f6f1;
+  --fundo: #f5f4f8;
   --superficie: #ffffff;
-  --superficie-alta: #fbfaf7;
-  --texto: #1c1830;
-  --texto-suave: #5d586c;
-  --borda: #e7e2d8;
-  --borda-forte: #d6cfc2;
+  --superficie-alta: #faf9fc;
+  --texto: #1f1b2b;
+  --texto-suave: #5b5669;
+  --borda: #e4e1ec;
+  --borda-forte: #cdc8da;
   --primaria: #4b2a9e;
   --primaria-escura: #361c7a;
   --primaria-clara: #f0ebf8;
   --primaria-texto: #4b2a9e;
-  --ouro: #a87b25;
-  --ouro-claro: #d9b26a;
+  --ouro: #94702f;
+  --ouro-claro: #d2ad6b;
   --certa: #17794a;
   --certa-fundo: #e7f4ec;
   --errada: #b42b39;
@@ -30,15 +31,18 @@
   --destaque-prof: #8f5a0b;
   --resposta-fundo: #faf5ea;
   --codigo-inline: #43249a;
-  --topo-fundo: rgb(248 246 241 / 0.86);
+  --topo-fundo: rgb(255 255 255 / 0.9);
   --anel-foco: 0 0 0 3px rgb(75 42 158 / 0.18);
   /* mantida por compatibilidade: antes era o brilho neon, agora uma sombra discreta */
   --brilho: 0 10px 28px rgb(28 24 48 / 0.08);
-  --sombra-cartao: 0 1px 2px rgb(28 24 48 / 0.04), 0 6px 20px rgb(28 24 48 / 0.05);
-  --sombra-cartao-alta: 0 2px 4px rgb(28 24 48 / 0.05), 0 16px 36px rgb(28 24 48 / 0.09);
-  --serifada: 'Fraunces', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --sombra-cartao: none;
+  --sombra-cartao-alta: 0 12px 32px rgb(30 18 54 / 0.08);
+  --serifada: 'Libre Caslon Text', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --serifada-titulo: 'Libre Caslon Display', 'Libre Caslon Text', Georgia, serif;
+  /* berinjela profundo: abertura da página inicial e rodapé */
+  --tinta: #1e1236;
 
-  font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Instrument Sans', system-ui, 'Segoe UI', Roboto, sans-serif;
   color-scheme: light;
   -webkit-font-smoothing: antialiased;
 }
@@ -84,15 +88,17 @@ body {
 /* Títulos em serifada (a prova impressa mantém a fonte própria) */
 :is(h1, h2, h3):not(.folha *) {
   font-family: var(--serifada);
-  font-weight: 600;
-  font-optical-sizing: auto;
-  letter-spacing: -0.012em;
-  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.22;
 }
 
 h1:not(.folha *) {
-  font-size: clamp(1.75rem, 3.4vw, 2.25rem);
-  font-weight: 600;
+  font-family: var(--serifada-titulo);
+  font-size: clamp(2.1rem, 4vw, 2.85rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
 }
 
 a {
@@ -136,7 +142,8 @@ a {
   z-index: 10;
   background: var(--topo-fundo);
   backdrop-filter: saturate(140%) blur(12px);
-  border-bottom: 1px solid var(--borda);
+  /* fio de latão sob o cabeçalho */
+  border-bottom: 1px solid rgb(148 112 47 / 0.3);
 }
 
 .marca img {
@@ -150,7 +157,7 @@ a {
 
 .marca span {
   font-family: var(--serifada);
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: -0.01em;
   color: var(--texto);
 }
@@ -200,8 +207,8 @@ nav a.active::after {
 /* Rodapé: berinjela sólido com um fio dourado                            */
 /* ===================================================================== */
 .rodape {
-  margin-top: 3rem;
-  background: #1a1433;
+  margin-top: 4rem;
+  background: var(--tinta);
   border-top: 1px solid rgb(217 178 106 / 0.35);
   color: rgb(255 255 255 / 0.8);
   padding: 2.5rem 1rem 2rem;
@@ -257,189 +264,218 @@ nav a.active::after {
 }
 
 /* ===================================================================== */
-/* Página inicial                                                         */
+/* Página inicial: prospecto de colégio                                   */
 /* ===================================================================== */
+
+/* Abertura de ponta a ponta em berinjela profundo: o título à esquerda e, à direita, os
+   níveis de ensino atendidos pelo site, separados por fios de latão. */
 .hero {
   position: relative;
-  overflow: hidden;
-  margin: 0.5rem 0 3rem;
-  padding: 3.5rem 3rem;
-  border-radius: 20px;
-  color: #ffffff;
-  background:
-    radial-gradient(600px 320px at 100% 0%, rgb(217 178 106 / 0.12), transparent 65%),
-    linear-gradient(135deg, #2a1d5c 0%, #1d1440 60%, #160f30 100%);
-  border: 1px solid rgb(217 178 106 / 0.22);
-  box-shadow: 0 24px 60px rgb(22 15 48 / 0.28);
+  width: 100vw;
+  margin: -1.5rem 0 0 calc(50% - 50vw);
+  padding: clamp(3.5rem, 8vw, 6.5rem) 1rem clamp(3.5rem, 7vw, 5.5rem);
+  color: #f3eff9;
+  background: var(--tinta);
+  border-bottom: 1px solid rgb(210 173 107 / 0.35);
 }
 
-/* fio dourado acima do título */
-.hero-texto::before {
-  content: '';
-  display: block;
-  width: 56px;
-  height: 2px;
-  margin-bottom: 1.5rem;
-  background: var(--ouro-claro);
-}
-
-.hero-selo {
-  display: inline-block;
-  margin: 0 0 1rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ouro-claro);
+.hero-interno {
+  /* mesma largura útil do conteúdo abaixo (1000px menos o respiro lateral) */
+  max-width: 968px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: end;
 }
 
 .hero-titulo {
-  margin: 0 0 1rem;
-  font-family: var(--serifada);
-  font-size: clamp(2.1rem, 4.6vw, 3.4rem);
-  font-weight: 500;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-}
-
-.hero-titulo span {
-  font-style: italic;
+  margin: 0 0 1.4rem;
+  font-family: var(--serifada-titulo);
+  font-size: clamp(2.6rem, 6.2vw, 4.6rem);
   font-weight: 400;
-  color: var(--ouro-claro);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  text-wrap: balance;
 }
 
 .hero-sub {
+  margin: 0 0 2.2rem;
+  max-width: 30rem;
+  font-size: 1.12rem;
+  line-height: 1.65;
+  color: rgb(243 239 249 / 0.72);
+}
+
+.hero-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.hero-acoes .botao {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+/* botão principal em latão sobre o berinjela */
+.hero-acoes .botao-latao {
+  background: var(--ouro-claro);
+  border: 1px solid var(--ouro-claro);
+  color: var(--tinta);
+}
+
+.hero-acoes .botao-latao:hover {
+  background: #e2c48c;
+  border-color: #e2c48c;
+  box-shadow: none;
+}
+
+.hero-acoes .botao-contorno {
+  background: transparent;
+  border: 1px solid rgb(243 239 249 / 0.35);
+  color: #ffffff;
+}
+
+.hero-acoes .botao-contorno:hover {
+  border-color: var(--ouro-claro);
+  box-shadow: none;
+}
+
+/* níveis atendidos: lista com fios finos, como o índice de um prospecto */
+.hero-niveis {
   margin: 0;
-  max-width: 34rem;
-  font-size: 1.08rem;
-  line-height: 1.6;
-  color: rgb(255 255 255 / 0.75);
+  border-top: 1px solid rgb(210 173 107 / 0.45);
 }
 
-/* os símbolos de código flutuando saem: o destaque fica na tipografia */
-.hero-codigo {
-  display: none;
+.hero-niveis div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid rgb(243 239 249 / 0.12);
 }
 
-@media (max-width: 760px) {
-  .hero {
-    padding: 2.25rem 1.5rem;
+.hero-niveis dt {
+  font-family: var(--serifada);
+  font-size: 1.15rem;
+  color: #ffffff;
+}
+
+.hero-niveis dd {
+  margin: 0;
+  font-size: 0.9rem;
+  text-align: right;
+  color: var(--ouro-claro);
+}
+
+@media (max-width: 820px) {
+  .hero-interno {
+    grid-template-columns: 1fr;
+    align-items: start;
   }
 }
 
 .secao-inicio {
-  margin: 0 0 3rem;
+  margin: clamp(3.5rem, 7vw, 5rem) 0 0;
 }
 
 .titulo-secao {
-  font-size: clamp(1.45rem, 2.8vw, 1.9rem);
-  margin: 0.1rem 0 1.4rem;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  margin: 0 0 1.5rem;
 }
 
-.caminhos {
+/* "Por onde começar": índice em linhas, não cartões. Título em Caslon à esquerda, a
+   descrição no meio e a ação à direita; o fio de baixo vira latão ao passar o mouse. */
+.indice {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--borda-forte);
+}
+
+.indice-item {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.1rem;
-}
-
-.caminho {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.45rem;
-  text-align: left;
-  font: inherit;
+  /* colunas fixas: as descrições de todas as linhas começam no mesmo ponto */
+  grid-template-columns: 13rem minmax(0, 1fr) 10rem;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 1.35rem 0.25rem;
+  border-bottom: 1px solid var(--borda);
   color: var(--texto);
   text-decoration: none;
-  background: var(--superficie);
-  border: 1px solid var(--borda);
-  border-radius: 14px;
-  padding: 1.6rem 1.5rem 1.4rem;
-  box-shadow: var(--sombra-cartao);
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: border-color 0.2s, background-color 0.2s;
 }
 
-button.caminho {
+.indice-item:hover {
+  border-bottom-color: var(--ouro);
   background: var(--superficie);
 }
 
-.caminho:hover,
-button.caminho:hover:not(:disabled) {
-  background: var(--superficie);
-  transform: translateY(-2px);
-  border-color: var(--borda-forte);
-  box-shadow: var(--sombra-cartao-alta);
+.indice-titulo {
+  font-family: var(--serifada);
+  font-size: 1.4rem;
 }
 
-.caminho h3 {
-  margin: 0;
-  font-size: 1.3rem;
-}
-
-.caminho p {
-  margin: 0;
+.indice-texto {
   color: var(--texto-suave);
   line-height: 1.6;
-  flex: 1;
 }
 
-.caminho-acao {
-  margin-top: 0.8rem;
-  font-size: 0.82rem;
+.indice-acao {
+  font-size: 0.92rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: right;
   color: var(--primaria-texto);
 }
 
-.caminho:hover .caminho-acao {
-  text-decoration: none;
+.indice-item:hover .indice-acao {
   color: var(--ouro);
 }
 
+@media (max-width: 700px) {
+  .indice-item {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+}
+
+/* Três passos (é uma sequência de verdade): numerais grandes em latão, sem caixas */
 .passos {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.1rem;
-  counter-reset: none;
+  gap: clamp(1.5rem, 4vw, 3rem);
 }
 
 .passos li {
-  position: relative;
-  padding: 1.5rem 1.4rem 1.3rem;
-  border-radius: 14px;
-  background: var(--superficie);
-  border: 1px solid var(--borda);
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--borda-forte);
+}
+
+.passo-numero {
+  display: block;
+  font-family: var(--serifada-titulo);
+  font-size: 3.2rem;
+  line-height: 1;
+  color: var(--ouro);
 }
 
 .passos h3 {
-  margin: 0.75rem 0 0.3rem;
-  font-size: 1.25rem;
+  margin: 0.9rem 0 0.35rem;
+  font-size: 1.35rem;
 }
 
 .passos p {
   margin: 0;
   color: var(--texto-suave);
-  line-height: 1.6;
-}
-
-/* número em serifada dourada, dentro de um círculo de linha fina */
-.passo-numero {
-  display: inline-grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-family: var(--serifada);
-  font-size: 1.15rem;
-  font-weight: 500;
-  color: var(--ouro);
-  background: transparent;
-  border: 1px solid var(--ouro);
+  line-height: 1.65;
 }
 
 @media (max-width: 760px) {
@@ -448,79 +484,9 @@ button.caminho:hover:not(:disabled) {
   }
 }
 
-/*
- * A página inicial (vitrine) tem fundo berinjela de ponta a ponta. Ativado pela classe
- * .pagina-inicial no body (ver pages/Inicio.tsx); as outras páginas usam o fundo do tema.
- */
-:root:has(body.pagina-inicial) {
-  background: #120c26;
-}
-
-body.pagina-inicial {
-  background:
-    radial-gradient(1000px 520px at 85% 0%, rgb(217 178 106 / 0.08), transparent 60%),
-    linear-gradient(180deg, #171030 0%, #120c26 70%);
-  color: #eeeaf6;
-}
-
-.pagina-inicial .hero {
-  background:
-    radial-gradient(600px 320px at 100% 0%, rgb(217 178 106 / 0.12), transparent 65%),
-    linear-gradient(135deg, #2a1d5c 0%, #20164a 100%);
-  box-shadow: 0 30px 70px rgb(0 0 0 / 0.4);
-}
-
-.pagina-inicial .titulo-secao {
-  color: #ffffff;
-}
-
-.pagina-inicial .caminho,
-.pagina-inicial button.caminho,
-.pagina-inicial .passos li {
-  background: rgb(255 255 255 / 0.035);
-  border-color: rgb(255 255 255 / 0.09);
-  color: #ffffff;
-  box-shadow: none;
-}
-
-.pagina-inicial .caminho:hover,
-.pagina-inicial button.caminho:hover:not(:disabled) {
-  background: rgb(255 255 255 / 0.06);
-  border-color: rgb(217 178 106 / 0.45);
-  box-shadow: 0 18px 40px rgb(0 0 0 / 0.3);
-}
-
-.pagina-inicial .caminho p,
-.pagina-inicial .passos p {
-  color: rgb(238 234 246 / 0.68);
-}
-
-.pagina-inicial .caminho-acao {
-  color: #c9b8ff;
-}
-
-.pagina-inicial .caminho:hover .caminho-acao,
-.pagina-inicial .passo-numero {
-  color: var(--ouro-claro);
-}
-
-.pagina-inicial .passo-numero {
-  border-color: rgb(217 178 106 / 0.7);
-}
-
-.pagina-inicial .passos h3 {
-  color: #ffffff;
-}
-
-.pagina-inicial .rodape {
-  background: #0e0a1e;
-}
-
-/* sobre o fundo escuro, o cabeçalho fica sólido */
+/* o cabeçalho fica branco sólido sobre a abertura escura */
 .pagina-inicial .topo {
   background: var(--superficie);
-  border-bottom-color: transparent;
-  box-shadow: 0 1px 0 rgb(217 178 106 / 0.25), 0 8px 30px rgb(0 0 0 / 0.25);
 }
 
 /* ===================================================================== */
@@ -528,7 +494,7 @@ body.pagina-inicial {
 /* ===================================================================== */
 button,
 .botao {
-  border-radius: 10px;
+  border-radius: 6px;
   font-weight: 600;
   letter-spacing: 0.005em;
   transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
@@ -566,20 +532,20 @@ button.aba:hover:not(:disabled) {
 .lista-simulado li {
   background: var(--superficie);
   border: 1px solid var(--borda);
-  border-radius: 14px;
+  border-radius: 8px;
   box-shadow: var(--sombra-cartao);
 }
 
 .cartao {
-  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+/* ao passar o mouse: o contorno vira latão, sem o cartão "pular" */
 button.cartao:hover:not(:disabled),
 .cartao:hover {
   background: var(--superficie);
-  border-color: var(--borda-forte);
+  border-color: var(--ouro-claro);
   box-shadow: var(--sombra-cartao-alta);
-  transform: translateY(-2px);
 }
 
 .cartao h2,
@@ -591,13 +557,13 @@ button.cartao:hover:not(:disabled),
   transform: none;
 }
 
-/* Etiquetas (Capítulo 1, Fácil, 1º período): versalete discreto, sem caixa */
+/* Etiquetas (Capítulo 1, Fácil, 1º período): texto pequeno em latão, sem maiúsculas */
 .etiqueta {
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--primaria-texto);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ouro);
 }
 
 input,
@@ -1071,4 +1037,95 @@ button.perigo:hover:not(:disabled) {
 .topo nav a {
   padding: 0.4rem 0.6rem;
   font-size: 0.93rem;
+}
+
+/* ===================================================================== */
+/* Páginas de dentro: o mesmo acabamento de prospecto                    */
+/* ===================================================================== */
+
+/* abertura da página (título e frase) com um fio de latão embaixo */
+.destaque {
+  padding: 0.5rem 0 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--borda-forte);
+}
+
+.destaque h1 {
+  margin: 0 0 0.6rem;
+}
+
+.destaque p {
+  margin: 0;
+  max-width: 40rem;
+}
+
+/* títulos dos grupos (série, curso e período): Caslon, sem maiúsculas, com um fio fino */
+.bloco-periodo {
+  margin-bottom: 3rem;
+}
+
+.bloco-periodo > h2 {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 1.1rem;
+  font-size: 1.45rem;
+  text-transform: none;
+  letter-spacing: -0.005em;
+  color: var(--texto);
+}
+
+.bloco-periodo > h2::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--borda-forte);
+}
+
+/* cartões: título em Caslon, ação em latão ao passar o mouse */
+.cartao h3 {
+  font-size: 1.2rem;
+  line-height: 1.25;
+}
+
+.cartao .ver-mais {
+  color: var(--primaria-texto);
+}
+
+.cartao:hover .ver-mais {
+  color: var(--ouro);
+}
+
+.contagens,
+.contagens-simulado {
+  color: var(--texto-suave) !important;
+}
+
+/* nome da disciplina nas Apostilas */
+.bloco-apostila > h2 {
+  font-size: 1.5rem;
+}
+
+/* campos com o mesmo canto dos botões */
+input,
+select,
+textarea {
+  border-radius: 6px;
+}
+
+/* painel de filtros sem caixa: uma coluna limpa com um fio de latão no alto */
+.painel-filtros {
+  background: transparent;
+  border: none;
+  border-top: 2px solid var(--ouro-claro);
+  border-radius: 0;
+  padding: 1rem 0 0;
+}
+
+.painel-filtros h2 {
+  font-family: var(--serifada);
+  font-size: 1.25rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--texto);
 }
