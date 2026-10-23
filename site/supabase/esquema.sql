@@ -30,8 +30,8 @@ create table if not exists public.perfis (
   -- curso do aluno da Graduação (desde 23/10/2026), ex.: 'sistemas-para-internet'. Vazio
   -- nos outros níveis. Só o administrador muda.
   curso text,
-  -- ano ou período dentro do nível, informado no cadastro: o aluno vê as disciplinas do
-  -- seu ano/período e dos anteriores. Só o administrador muda.
+  -- ano ou período dentro do nível, informado no cadastro: o aluno vê só as disciplinas do
+  -- seu ano/período (desde 23/10/2026). Só o administrador muda.
   periodo smallint check (periodo between 1 and 10),
   -- cadastro feito pela aba "Sou professor": fica em análise (sem acesso ao conteúdo)
   -- até o administrador aprovar, quando o tipo passa a professor
