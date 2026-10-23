@@ -11,6 +11,8 @@ export interface Disciplina {
   periodo: number
   /** nível de ensino; sem nível = Graduação */
   nivel?: import('../lib/niveis').Nivel
+  /** curso da Graduação (veja CURSOS em lib/niveis.ts); sem curso = Sistemas para Internet */
+  curso?: string
   nome: string
   objetivos: string[]
   habilidades: string[]

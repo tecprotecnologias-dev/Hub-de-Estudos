@@ -2,15 +2,15 @@ import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { criarConta, criarContaProfessor, normalizarTelefone, useAuth } from '../../lib/auth'
 import { authConfigurado } from '../../lib/supabase'
-import { dadosNivel, NIVEIS, nomeEtapa, rotuloEtapa, type Nivel } from '../../lib/niveis'
+import { CURSOS, dadosNivel, NIVEIS, nomeEtapa, rotuloEtapa, type Nivel } from '../../lib/niveis'
 import { AvisoSemCadastro } from './AvisoSemCadastro'
 
 const MIN_SENHA = 8
 
 type Tipo = 'aluno' | 'professor'
 
-// Duas abas: o aluno informa nome, e-mail, nível de ensino e ano/período (que definem as
-// disciplinas liberadas);
+// Duas abas: o aluno informa nome, e-mail, nível de ensino, curso (só na Graduação) e
+// ano/período (que definem as disciplinas liberadas);
 // o professor informa nome e e-mail, e o cadastro fica em análise até a administração
 // aprovar. Matrícula e celular aparecem no formulário, mas são opcionais (pedido de
 // 22/10/2026). Ninguém se cadastra como administrador.
@@ -21,6 +21,7 @@ export default function CriarConta() {
   const [nome, setNome] = useState('')
   const [matricula, setMatricula] = useState('')
   const [nivel, setNivel] = useState<Nivel | ''>('')
+  const [curso, setCurso] = useState('')
   const [periodo, setPeriodo] = useState('')
   const [email, setEmail] = useState('')
   const [telefone, setTelefone] = useState('')
@@ -65,6 +66,7 @@ export default function CriarConta() {
     setErro(null)
     if (nome.trim().split(/\s+/).length < 2) return setErro('Informe o seu nome completo (nome e sobrenome).')
     if (tipo === 'aluno' && !nivel) return setErro('Escolha o seu nível de ensino.')
+    if (tipo === 'aluno' && nivel === 'graduacao' && !curso) return setErro('Escolha o curso que você está fazendo.')
     if (tipo === 'aluno' && !periodo)
       return setErro(`Escolha o ${dadosNivel(nivel || null).rotulo} que você está cursando.`)
     // celular opcional: em branco, segue sem ele; preenchido, precisa ser válido
@@ -81,6 +83,7 @@ export default function CriarConta() {
             nome,
             matricula,
             nivel: nivel as Nivel,
+            curso: nivel === 'graduacao' ? curso : null,
             periodo: Number(periodo),
             email,
             telefone: celular,
@@ -123,7 +126,7 @@ export default function CriarConta() {
       </div>
       <p className="dica">
         {tipo === 'aluno'
-          ? 'O seu nível e o seu ano ou período definem as disciplinas que você acessa: no Ensino Fundamental e no Médio, as da sua série; na Graduação, as do seu período e dos anteriores.'
+          ? 'O seu nível e o seu ano ou período definem as disciplinas que você acessa: no Ensino Fundamental e no Médio, as da sua série; na Graduação, as do seu curso, do seu período e dos anteriores.'
           : 'O cadastro de professor é analisado pela administração do site antes de liberar o acesso.'}
       </p>
       <form onSubmit={enviar} className="formulario-acesso">
@@ -137,38 +140,50 @@ export default function CriarConta() {
         </label>
         {tipo === 'aluno' && (
           <>
-            <div className="linha-campos">
+            <label>
+              Nível de ensino
+              <select
+                required
+                value={nivel}
+                onChange={(e) => {
+                  setNivel(e.target.value as Nivel | '')
+                  setPeriodo('') // os anos/períodos mudam de um nível para outro
+                  setCurso('')
+                }}
+              >
+                <option value="">Escolha…</option>
+                {NIVEIS.map((n) => (
+                  <option key={n.id} value={n.id}>
+                    {n.nome}
+                  </option>
+                ))}
+              </select>
+            </label>
+            {nivel === 'graduacao' && (
               <label>
-                Nível de ensino
-                <select
-                  required
-                  value={nivel}
-                  onChange={(e) => {
-                    setNivel(e.target.value as Nivel | '')
-                    setPeriodo('') // os anos/períodos mudam de um nível para outro
-                  }}
-                >
+                Curso
+                <select required value={curso} onChange={(e) => setCurso(e.target.value)}>
                   <option value="">Escolha…</option>
-                  {NIVEIS.map((n) => (
-                    <option key={n.id} value={n.id}>
-                      {n.nome}
+                  {CURSOS.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.nome}
                     </option>
                   ))}
                 </select>
               </label>
-              <label>
-                {nivel ? rotuloEtapa(nivel) : 'Ano ou período'}
-                <select required disabled={!nivel} value={periodo} onChange={(e) => setPeriodo(e.target.value)}>
-                  <option value="">{nivel ? 'Escolha…' : 'Escolha o nível primeiro'}</option>
-                  {nivel &&
-                    dadosNivel(nivel).etapas.map((p) => (
-                      <option key={p} value={p}>
-                        {nomeEtapa(nivel, p)}
-                      </option>
-                    ))}
-                </select>
-              </label>
-            </div>
+            )}
+            <label>
+              {nivel ? rotuloEtapa(nivel) : 'Ano ou período'}
+              <select required disabled={!nivel} value={periodo} onChange={(e) => setPeriodo(e.target.value)}>
+                <option value="">{nivel ? 'Escolha…' : 'Escolha o nível primeiro'}</option>
+                {nivel &&
+                  dadosNivel(nivel).etapas.map((p) => (
+                    <option key={p} value={p}>
+                      {nomeEtapa(nivel, p)}
+                    </option>
+                  ))}
+              </select>
+            </label>
             <label>
               Matrícula (opcional)
               <input value={matricula} onChange={(e) => setMatricula(e.target.value)} />

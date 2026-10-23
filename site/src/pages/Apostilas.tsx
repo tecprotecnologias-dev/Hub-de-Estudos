@@ -2,18 +2,34 @@ import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { apostilas } from '../data/apostilas'
 import { disciplinas } from '../data/disciplinas'
-import type { Apostila } from '../data/tipos'
+import type { Apostila, Disciplina } from '../data/tipos'
 import { apostilasDaDisciplina, gruposDeApostila, rotuloApostila } from '../lib/capitulos'
 import { useDisciplinaVisivel } from '../lib/Protegida'
-import { buscarDisciplina, GRUPOS, grupoDe, nomeGrupo } from '../lib/util'
+import CamposTurma from '../lib/CamposTurma'
+import {
+  buscarDisciplina,
+  confereTurma,
+  GRUPOS,
+  grupoDe,
+  nomeGrupo,
+  partesDaDisciplina,
+  TURMA_VAZIA,
+  type FiltroTurma,
+} from '../lib/util'
 
 const url = (a: Apostila) => import.meta.env.BASE_URL + (a.arquivo ?? '')
+
+/** Filtro já preenchido com o nível, o curso e o ano/período da disciplina. */
+function turmaDa(d: Disciplina): FiltroTurma {
+  const p = partesDaDisciplina(d)
+  return { nivel: p.nivel, curso: p.curso ?? '', etapa: String(p.etapa) }
+}
 
 export default function Apostilas() {
   // vindo da página da disciplina: /apostilas?disciplina=<id> já abre filtrado
   const [params] = useSearchParams()
   const inicial = buscarDisciplina(params.get('disciplina') ?? '')
-  const [periodo, setPeriodo] = useState(inicial ? grupoDe(inicial) : '')
+  const [turma, setTurma] = useState(inicial ? turmaDa(inicial) : TURMA_VAZIA)
   const [disciplinaId, setDisciplinaId] = useState(inicial?.id ?? '')
   const [busca, setBusca] = useState('')
   const [aberta, setAberta] = useState<Apostila | null>(null)
@@ -27,7 +43,7 @@ export default function Apostilas() {
   const comApostila = disciplinas.filter(
     (d) =>
       visivel(d.id) &&
-      (!periodo || grupoDe(d) === periodo) &&
+      confereTurma(partesDaDisciplina(d), turma) &&
       (!disciplinaId || d.id === disciplinaId) &&
       apostilasDaDisciplina(d.id).some(confere),
   )
@@ -55,23 +71,14 @@ export default function Apostilas() {
           Buscar
           <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Título ou assunto" />
         </label>
-        <label>
-          Período ou nível
-          <select
-            value={periodo}
-            onChange={(e) => {
-              setPeriodo(e.target.value)
-              setDisciplinaId('')
-            }}
-          >
-            <option value="">Todos</option>
-            {GRUPOS.filter((p) => disciplinas.some((d) => grupoDe(d) === p && visivel(d.id))).map((p) => (
-              <option key={p} value={p}>
-                {nomeGrupo(p)}
-              </option>
-            ))}
-          </select>
-        </label>
+        <CamposTurma
+          valor={turma}
+          onChange={(t) => {
+            setTurma(t)
+            setDisciplinaId('')
+          }}
+          grupos={GRUPOS.filter((g) => disciplinas.some((d) => grupoDe(d) === g && visivel(d.id)))}
+        />
         <label className="largo">
           Disciplina
           <select value={disciplinaId} onChange={(e) => setDisciplinaId(e.target.value)}>
@@ -80,7 +87,7 @@ export default function Apostilas() {
               .filter(
                 (d) =>
                   visivel(d.id) &&
-                  (!periodo || grupoDe(d) === periodo) &&
+                  confereTurma(partesDaDisciplina(d), turma) &&
                   apostilasDaDisciplina(d.id).length > 0,
               )
               .map((d) => (

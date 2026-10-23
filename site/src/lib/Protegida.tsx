@@ -3,7 +3,7 @@ import { Link, Navigate, useLocation } from 'react-router-dom'
 import { disciplinas } from '../data/disciplinas'
 import { authConfigurado } from './supabase'
 import { emAnalise, podeAcessar, podeVerDisciplina, useAuth, type TipoPerfil } from './auth'
-import { dadosNivel, NIVEL_PADRAO, nomeEtapa } from './niveis'
+import { CURSO_PADRAO, dadosNivel, NIVEL_PADRAO, nomeCurso, nomeEtapa } from './niveis'
 
 // Portões das áreas restritas. Sem o Supabase configurado (site/.env.local), tudo passa:
 // o site funciona aberto, como antes do cadastro.
@@ -68,6 +68,8 @@ export function ProtegeDisciplina({ disciplinaId, children }: { disciplinaId: st
   const { perfil } = useAuth()
   const d = disciplinas.find((x) => x.id === disciplinaId)
   const outroNivel = !!d && (d.nivel ?? NIVEL_PADRAO) !== (perfil?.nivel ?? NIVEL_PADRAO)
+  const outroCurso =
+    !!d && !outroNivel && (d.nivel ?? NIVEL_PADRAO) === 'graduacao' && (d.curso ?? CURSO_PADRAO) !== (perfil?.curso ?? CURSO_PADRAO)
   return (
     <Protegida>
       {!d || podeVerDisciplina(perfil, d) ? (
@@ -77,14 +79,18 @@ export function ProtegeDisciplina({ disciplinaId, children }: { disciplinaId: st
           <h1>
             {outroNivel
               ? 'Disciplina de outro nível'
-              : (d.nivel ?? NIVEL_PADRAO) === 'graduacao'
+              : outroCurso
+                ? 'Disciplina de outro curso'
+                : (d.nivel ?? NIVEL_PADRAO) === 'graduacao'
                 ? 'Disciplina de outro período'
                 : 'Disciplina de outra série'}
           </h1>
           <p>
             {outroNivel
               ? `${d.nome} é do nível ${dadosNivel(d.nivel).nome}, e o seu cadastro é do nível ${dadosNivel(perfil?.nivel).nome}.`
-              : (d.nivel ?? NIVEL_PADRAO) === 'graduacao'
+              : outroCurso
+                ? `${d.nome} é do curso ${nomeCurso(d.curso)}, e o seu cadastro é do curso ${nomeCurso(perfil?.curso)}.`
+                : (d.nivel ?? NIVEL_PADRAO) === 'graduacao'
                 ? `${d.nome} é do ${nomeEtapa(d.nivel, d.periodo)}. Você tem acesso às disciplinas até o ${
                     perfil?.periodo ? nomeEtapa(perfil.nivel, perfil.periodo) : 'seu período'
                   }.`
@@ -92,7 +98,7 @@ export function ProtegeDisciplina({ disciplinaId, children }: { disciplinaId: st
                     perfil?.periodo ? nomeEtapa(perfil.nivel, perfil.periodo) : 'seu ano'
                   }.`}
           </p>
-          <p className="dica">Se o seu nível ou o seu ano mudou, peça a atualização do cadastro à coordenação do site.</p>
+          <p className="dica">Se o seu nível, curso ou ano mudou, peça a atualização do cadastro à coordenação do site.</p>
           <Link to="/disciplinas" className="botao">
             Ver as minhas disciplinas
           </Link>

@@ -38,3 +38,21 @@ export function rotuloEtapa(nivel: Nivel | null | undefined): string {
   const r = dadosNivel(nivel).rotulo
   return r.charAt(0).toUpperCase() + r.slice(1)
 }
+
+// Cursos da Graduação (pedido de 23/10/2026). O aluno da Graduação escolhe o curso no
+// cadastro e vê só as disciplinas dele. Contas e disciplinas da Graduação sem curso gravado
+// são de Sistemas para Internet (o conteúdo que já existia). Para um curso novo, basta
+// acrescentá-lo aqui e marcar as disciplinas dele com `curso` em src/data/disciplinas.ts.
+
+export interface DadosCurso {
+  id: string
+  nome: string
+}
+
+export const CURSOS: DadosCurso[] = [{ id: 'sistemas-para-internet', nome: 'Sistemas para Internet' }]
+
+export const CURSO_PADRAO = 'sistemas-para-internet'
+
+export function nomeCurso(curso: string | null | undefined): string {
+  return CURSOS.find((c) => c.id === (curso ?? CURSO_PADRAO))?.nome ?? curso ?? '—'
+}

@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { formatarTelefone, NOMES_TIPO, traduzirErro, useAuth, type Perfil, type TipoPerfil } from '../../lib/auth'
 import { supabase } from '../../lib/supabase'
-import { dadosNivel, NIVEIS, NIVEL_PADRAO, type Nivel } from '../../lib/niveis'
+import CamposTurma from '../../lib/CamposTurma'
+import { confereTurma, TODOS_GRUPOS, TURMA_VAZIA } from '../../lib/util'
+import { CURSO_PADRAO, CURSOS, dadosNivel, NIVEIS, NIVEL_PADRAO, nomeCurso, type Nivel } from '../../lib/niveis'
 
 // Área da administradora: ver os cadastros, mudar o perfil (aluno, professor,
-// administrador), o nível de ensino e o ano/período de cada pessoa, e avançar o ano/período
+// administrador), o nível de ensino, o curso (Graduação) e o ano/período de cada pessoa, e avançar o ano/período
 // de vários alunos de uma vez. As regras do banco garantem que só um administrador consegue.
 
 const TIPOS: TipoPerfil[] = ['aluno', 'professor', 'admin']
@@ -15,8 +17,7 @@ export default function Administracao() {
   const [carregando, setCarregando] = useState(true)
   const [busca, setBusca] = useState('')
   const [filtroTipo, setFiltroTipo] = useState('')
-  const [filtroNivel, setFiltroNivel] = useState('')
-  const [filtroPeriodo, setFiltroPeriodo] = useState('')
+  const [turma, setTurma] = useState(TURMA_VAZIA)
   const [marcados, setMarcados] = useState<Set<string>>(new Set())
   const [aviso, setAviso] = useState<{ tipo: 'ok' | 'erro'; texto: string } | null>(null)
 
@@ -37,16 +38,28 @@ export default function Administracao() {
     const t = busca.trim().toLowerCase()
     return pessoas.filter(
       (p) =>
-        (!t || `${p.nome} ${p.matricula ?? ''} ${p.email} ${p.telefone ?? ''}`.toLowerCase().includes(t)) &&
+        (!t ||
+          `${p.nome} ${p.matricula ?? ''} ${p.email} ${p.telefone ?? ''} ${p.curso ? nomeCurso(p.curso) : ''}`
+            .toLowerCase()
+            .includes(t)) &&
         (!filtroTipo || p.tipo === filtroTipo) &&
-        (!filtroNivel || (p.nivel ?? NIVEL_PADRAO) === filtroNivel) &&
-        (!filtroPeriodo || String(p.periodo) === filtroPeriodo),
+        // quem não tem nível (professor, administrador) só aparece com o nível em "Todos"
+        (!turma.nivel ||
+          (!!p.nivel &&
+            confereTurma(
+              {
+                nivel: p.nivel,
+                curso: p.nivel === 'graduacao' ? (p.curso ?? CURSO_PADRAO) : null,
+                etapa: p.periodo ?? -1,
+              },
+              turma,
+            ))),
     )
-  }, [pessoas, busca, filtroTipo, filtroNivel, filtroPeriodo])
+  }, [pessoas, busca, filtroTipo, turma])
 
   async function atualizar(
     id: string,
-    campos: Partial<Pick<Perfil, 'tipo' | 'nivel' | 'periodo' | 'solicita_professor'>>,
+    campos: Partial<Pick<Perfil, 'tipo' | 'nivel' | 'curso' | 'periodo' | 'solicita_professor'>>,
   ) {
     if (!supabase) return
     const { error } = await supabase.from('perfis').update(campos).eq('id', id)
@@ -161,36 +174,8 @@ export default function Administracao() {
             ))}
           </select>
         </label>
-        <label>
-          Nível
-          <select
-            value={filtroNivel}
-            onChange={(e) => {
-              setFiltroNivel(e.target.value)
-              setFiltroPeriodo('')
-            }}
-          >
-            <option value="">Todos</option>
-            {NIVEIS.map((n) => (
-              <option key={n.id} value={n.id}>
-                {n.nome}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Ano/período
-          <select value={filtroPeriodo} onChange={(e) => setFiltroPeriodo(e.target.value)}>
-            <option value="">Todos</option>
-            {[...new Set((filtroNivel ? [dadosNivel(filtroNivel as Nivel)] : NIVEIS).flatMap((n) => n.etapas))]
-              .sort((a, b) => a - b)
-              .map((p) => (
-                <option key={p} value={p}>
-                  {p}º
-                </option>
-              ))}
-          </select>
-        </label>
+        {/* as optativas não são um período: o aluno não fica nelas */}
+        <CamposTurma valor={turma} onChange={setTurma} grupos={TODOS_GRUPOS.filter((g) => !g.endsWith(':0'))} />
       </div>
 
       <div className="barra-acoes">
@@ -223,6 +208,7 @@ export default function Administracao() {
                 <th>E-mail</th>
                 <th>Celular</th>
                 <th>Nível</th>
+                <th>Curso</th>
                 <th>Ano/período</th>
                 <th>Perfil</th>
                 <th>Cadastro</th>
@@ -260,8 +246,13 @@ export default function Administracao() {
                       value={p.nivel ?? NIVEL_PADRAO}
                       onChange={(e) => {
                         const novo = e.target.value as Nivel
-                        // ao trocar de nível, o ano/período passa para o primeiro do novo nível
-                        atualizar(p.id, { nivel: novo, periodo: p.periodo == null ? null : dadosNivel(novo).etapas[0] })
+                        // ao trocar de nível, o ano/período passa para o primeiro do novo nível; o
+                        // curso só existe na Graduação
+                        atualizar(p.id, {
+                          nivel: novo,
+                          curso: novo === 'graduacao' ? (p.curso ?? CURSO_PADRAO) : null,
+                          periodo: p.periodo == null ? null : dadosNivel(novo).etapas[0],
+                        })
                       }}
                     >
                       {NIVEIS.map((n) => (
@@ -270,6 +261,23 @@ export default function Administracao() {
                         </option>
                       ))}
                     </select>
+                  </td>
+                  <td>
+                    {p.tipo === 'aluno' && (p.nivel ?? NIVEL_PADRAO) === 'graduacao' ? (
+                      <select
+                        aria-label={`Curso de ${p.nome}`}
+                        value={p.curso ?? CURSO_PADRAO}
+                        onChange={(e) => atualizar(p.id, { curso: e.target.value })}
+                      >
+                        {CURSOS.map((c) => (
+                          <option key={c.id} value={c.id}>
+                            {c.nome}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      '—'
+                    )}
                   </td>
                   <td>
                     <select

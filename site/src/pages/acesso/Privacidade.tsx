@@ -15,7 +15,7 @@ export default function Privacidade() {
       <h2>1. Quais dados coletamos</h2>
       <ul>
         <li>
-          <strong>No cadastro:</strong> nome completo, período do curso e e-mail. A matrícula e o celular são
+          <strong>No cadastro:</strong> nome completo, e-mail, nível de ensino, ano ou período e, na Graduação, o curso. A matrícula e o celular são
           opcionais.
         </li>
         <li>
@@ -35,7 +35,10 @@ export default function Privacidade() {
       <h2>2. Para que usamos os dados</h2>
       <ul>
         <li>Identificar você e permitir o acesso ao conteúdo do site.</li>
-        <li>Liberar as disciplinas de acordo com o seu período: as do seu período, as dos anteriores e as optativas.</li>
+        <li>
+          Liberar as disciplinas de acordo com o seu nível: no Ensino Fundamental e no Médio, as da sua série; na
+          Graduação, as do seu curso, do seu período, dos anteriores e as optativas.
+        </li>
         <li>Enviar mensagens necessárias para a conta, como a confirmação do e-mail e o link para criar nova senha.</li>
         <li>
           Enviar avisos sobre o site e os estudos (novos materiais, simulados, prazos) por e-mail ou, se você informar o
@@ -69,7 +72,7 @@ export default function Privacidade() {
           <strong>Consultar os seus dados:</strong> na página Minha conta.
         </li>
         <li>
-          <strong>Corrigir o nome e o celular:</strong> na página Minha conta. A matrícula e o período são corrigidos pela
+          <strong>Corrigir o nome e o celular:</strong> na página Minha conta. A matrícula, o nível, o curso e o ano ou período são corrigidos pela
           administração do site, a seu pedido.
         </li>
         <li>

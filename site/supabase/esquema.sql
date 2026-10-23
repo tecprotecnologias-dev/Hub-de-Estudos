@@ -26,6 +26,9 @@ create table if not exists public.perfis (
   -- fundamental2 (6º a 9º ano), medio (1º a 3º ano) ou graduacao (1º a 5º período).
   -- O aluno vê só as disciplinas do seu nível. Só o administrador muda.
   nivel text check (nivel in ('fundamental1', 'fundamental2', 'medio', 'graduacao')),
+  -- curso do aluno da Graduação (desde 23/10/2026), ex.: 'sistemas-para-internet'. Vazio
+  -- nos outros níveis. Só o administrador muda.
+  curso text,
   -- ano ou período dentro do nível, informado no cadastro: o aluno vê as disciplinas do
   -- seu ano/período e dos anteriores. Só o administrador muda.
   periodo smallint check (periodo between 1 and 9),
@@ -57,6 +60,16 @@ alter table public.perfis add constraint perfis_nivel_periodo_check check (
   or (nivel = 'fundamental2' and periodo between 6 and 9)
   or (nivel = 'medio' and periodo between 1 and 3)
   or (nivel = 'graduacao' and periodo between 1 and 5)
+);
+
+-- Cursos da Graduação (23/10/2026). Os alunos da Graduação que já existiam são todos de
+-- Sistemas para Internet. Só a Graduação tem curso.
+alter table public.perfis add column if not exists curso text;
+update public.perfis set curso = 'sistemas-para-internet'
+  where curso is null and tipo = 'aluno' and nivel = 'graduacao';
+alter table public.perfis drop constraint if exists perfis_curso_check;
+alter table public.perfis add constraint perfis_curso_check check (
+  curso is null or (nivel = 'graduacao' and curso ~ '^[a-z0-9-]{1,60}$')
 );
 
 alter table public.perfis enable row level security;
@@ -117,6 +130,9 @@ begin
     if new.nivel is distinct from old.nivel then
       raise exception 'Só um administrador pode mudar o nível de ensino.';
     end if;
+    if new.curso is distinct from old.curso then
+      raise exception 'Só um administrador pode mudar o curso.';
+    end if;
     if new.matricula is distinct from old.matricula then
       raise exception 'Só um administrador pode mudar a matrícula.';
     end if;
@@ -136,7 +152,8 @@ create trigger proteger_perfil
   for each row execute function public.proteger_perfil();
 
 -- Quando alguém se cadastra, o perfil é criado automaticamente, sempre como aluno.
--- Pela aba "Sou aluno": com o nome, o nível, o ano/período e, se informados, a matrícula e o
+-- Pela aba "Sou aluno": com o nome, o nível, o curso (só na Graduação; sem curso válido,
+-- Sistemas para Internet), o ano/período e, se informados, a matrícula e o
 -- telefone (opcionais desde 22/10/2026). Sem nível válido, o aluno fica na Graduação; um
 -- ano/período que não existe no nível fica vazio (a administração corrige).
 -- Pela aba "Sou professor": com o nome e, se informado, o telefone; o pedido fica em análise.
@@ -150,11 +167,16 @@ as $$
 declare
   professor boolean := coalesce((new.raw_user_meta_data ->> 'professor') = 'true', false);
   v_nivel text;
+  v_curso text;
   v_periodo smallint;
 begin
   if not professor then
     v_nivel := case when (new.raw_user_meta_data ->> 'nivel') in ('fundamental1', 'fundamental2', 'medio', 'graduacao')
                     then new.raw_user_meta_data ->> 'nivel' else 'graduacao' end;
+    if v_nivel = 'graduacao' then
+      v_curso := case when (new.raw_user_meta_data ->> 'curso') ~ '^[a-z0-9-]{1,60}$'
+                      then new.raw_user_meta_data ->> 'curso' else 'sistemas-para-internet' end;
+    end if;
     if (new.raw_user_meta_data ->> 'periodo') ~ '^[1-9]$' then
       v_periodo := (new.raw_user_meta_data ->> 'periodo')::smallint;
       if not ((v_nivel = 'fundamental1' and v_periodo between 1 and 5)
@@ -166,7 +188,7 @@ begin
     end if;
   end if;
 
-  insert into public.perfis (id, nome, matricula, email, telefone, nivel, periodo, solicita_professor, aceite_privacidade_em)
+  insert into public.perfis (id, nome, matricula, email, telefone, nivel, curso, periodo, solicita_professor, aceite_privacidade_em)
   values (
     new.id,
     coalesce(nullif(new.raw_user_meta_data ->> 'nome', ''), split_part(new.email, '@', 1)),
@@ -174,6 +196,7 @@ begin
     new.email,
     nullif(regexp_replace(coalesce(new.raw_user_meta_data ->> 'telefone', ''), '\D', '', 'g'), ''),
     v_nivel,
+    v_curso,
     v_periodo,
     professor,
     case when (new.raw_user_meta_data ->> 'aceite_privacidade') = 'true' then now() end

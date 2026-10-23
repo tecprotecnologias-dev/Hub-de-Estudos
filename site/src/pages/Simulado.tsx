@@ -8,7 +8,19 @@ import { apostilasDaDisciplina, rotuloApostila } from '../lib/capitulos'
 import EnunciadoQuestao, { Resolucao } from '../lib/EnunciadoQuestao'
 import { useDisciplinaVisivel } from '../lib/Protegida'
 import { verificarCodigo } from '../lib/verificarCodigo'
-import { buscarDisciplina, embaralhar, embaralharAlternativas, GRUPOS, grupoDe, LETRAS, nomeGrupo } from '../lib/util'
+import CamposTurma from '../lib/CamposTurma'
+import {
+  buscarDisciplina,
+  confereTurma,
+  embaralhar,
+  embaralharAlternativas,
+  GRUPOS,
+  grupoDe,
+  LETRAS,
+  nomeGrupo,
+  partesDoGrupo,
+  TURMA_VAZIA,
+} from '../lib/util'
 
 // Estrutura da aba:
 //   /simulado                                  -> disciplinas
@@ -45,13 +57,20 @@ function NaoEncontrado() {
 
 function ListaDisciplinas() {
   const visivel = useDisciplinaVisivel()
+  const [turma, setTurma] = useState(TURMA_VAZIA)
+  const gruposDoPerfil = GRUPOS.filter((g) => disciplinas.some((d) => grupoDe(d) === g && visivel(d.id)))
   return (
     <>
       <h1>Simulados</h1>
       <p className="dica">Escolha a disciplina. As questões estão organizadas pelos capítulos da apostila.</p>
-      {GRUPOS.map((p) => {
+      {/* professor e administração veem vários grupos: filtram como no cadastro */}
+      {gruposDoPerfil.length > 1 && (
+        <div className="filtros">
+          <CamposTurma valor={turma} onChange={setTurma} grupos={gruposDoPerfil} />
+        </div>
+      )}
+      {gruposDoPerfil.filter((g) => confereTurma(partesDoGrupo(g), turma)).map((p) => {
         const doPeriodo = disciplinas.filter((d) => grupoDe(d) === p && visivel(d.id))
-        if (!doPeriodo.length) return null
         return (
           <section key={p} className="bloco-periodo">
             <h2>{nomeGrupo(p)}</h2>

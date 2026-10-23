@@ -1,40 +1,79 @@
 import { disciplinas } from '../data/disciplinas'
 import type { Disciplina, Questao } from '../data/tipos'
-import { dadosNivel, NIVEIS, NIVEL_PADRAO, nomeEtapa, type Nivel } from './niveis'
+import { CURSO_PADRAO, CURSOS, dadosNivel, NIVEIS, NIVEL_PADRAO, nomeCurso, nomeEtapa, type Nivel } from './niveis'
 
 export const LETRAS = ['A', 'B', 'C', 'D', 'E', 'F']
 
 /**
- * Grupo em que a disciplina aparece nas listas: na Graduação, o período ("1" a "5"; "0" =
- * optativas); na educação básica, o nível e a série ("fundamental1:3", "medio:2"...).
+ * Grupo em que a disciplina aparece nas listas: na educação básica, o nível e a série
+ * ("fundamental1:3", "medio:2"...); na Graduação, também o curso
+ * ("graduacao:sistemas-para-internet:3"; período 0 = optativas).
  */
 export function grupoDe(d: Disciplina): string {
-  const nivel = d.nivel ?? NIVEL_PADRAO
-  return nivel === 'graduacao' ? String(d.periodo) : `${nivel}:${d.periodo}`
+  return chaveGrupo({ nivel: d.nivel ?? NIVEL_PADRAO, curso: d.curso ?? null, etapa: d.periodo })
 }
 
-/** Nível e ano/período de um grupo ("3" -> graduacao, 3; "medio:2" -> medio, 2) */
-export function partesDoGrupo(chave: string): { nivel: Nivel; etapa: number } {
-  if (/^\d+$/.test(chave)) return { nivel: 'graduacao', etapa: Number(chave) }
-  const [nivel, ano] = chave.split(':')
-  return { nivel: nivel as Nivel, etapa: Number(ano) }
+export interface PartesGrupo {
+  nivel: Nivel
+  /** só na Graduação; null nos outros níveis */
+  curso: string | null
+  etapa: number
 }
 
-/** "3º período", "Optativas" ou "Ensino Médio – 2º ano" */
+export function chaveGrupo({ nivel, curso, etapa }: PartesGrupo): string {
+  return nivel === 'graduacao' ? `${nivel}:${curso ?? CURSO_PADRAO}:${etapa}` : `${nivel}:${etapa}`
+}
+
+/** Nível, curso e ano/período de um grupo ("medio:2" -> medio, null, 2) */
+export function partesDoGrupo(chave: string): PartesGrupo {
+  const partes = chave.split(':')
+  if (partes.length === 3) return { nivel: partes[0] as Nivel, curso: partes[1], etapa: Number(partes[2]) }
+  return { nivel: partes[0] as Nivel, curso: null, etapa: Number(partes[1]) }
+}
+
+/** "Ensino Médio – 2º ano" ou "Sistemas para Internet – 3º período" */
 export function nomeGrupo(chave: string): string {
-  if (/^\d+$/.test(chave)) return nomeEtapa('graduacao', Number(chave))
-  const [nivel, ano] = chave.split(':')
-  return `${dadosNivel(nivel as Nivel).nome} – ${nomeEtapa(nivel as Nivel, Number(ano))}`
+  const { nivel, curso, etapa } = partesDoGrupo(chave)
+  const antes = nivel === 'graduacao' ? nomeCurso(curso) : dadosNivel(nivel).nome
+  return `${antes} – ${nomeEtapa(nivel, etapa)}`
 }
 
-/** Grupos na ordem das listas: as séries da educação básica, depois os períodos da Graduação e as optativas. */
+/**
+ * Todos os grupos possíveis, na ordem das listas: as séries da educação básica, depois, para
+ * cada curso da Graduação, os períodos e as optativas.
+ */
+export const TODOS_GRUPOS: string[] = NIVEIS.flatMap((n) =>
+  n.id === 'graduacao'
+    ? CURSOS.flatMap((c) => [...n.etapas, 0].map((etapa) => chaveGrupo({ nivel: n.id, curso: c.id, etapa })))
+    : n.etapas.map((etapa) => chaveGrupo({ nivel: n.id, curso: null, etapa })),
+)
+
+/** Filtro por turma, nas caixas Nível de ensino, Curso (só na Graduação) e Ano/período; '' = todos. */
+export interface FiltroTurma {
+  nivel: Nivel | ''
+  curso: string
+  etapa: string
+}
+
+export const TURMA_VAZIA: FiltroTurma = { nivel: '', curso: '', etapa: '' }
+
+export function partesDaDisciplina(d: Disciplina): PartesGrupo {
+  return partesDoGrupo(grupoDe(d))
+}
+
+/** A disciplina (ou a pessoa) com estas partes passa no filtro? */
+export function confereTurma(p: PartesGrupo, f: FiltroTurma): boolean {
+  return (
+    (!f.nivel || p.nivel === f.nivel) &&
+    (!f.curso || p.curso === f.curso) &&
+    (!f.etapa || String(p.etapa) === f.etapa)
+  )
+}
+
+/** Só os grupos que têm disciplina, na mesma ordem. */
 export const GRUPOS: string[] = (() => {
   const existentes = new Set(disciplinas.map(grupoDe))
-  const basicos = NIVEIS.flatMap((n) => n.etapas.map((ano) => `${n.id}:${ano}`)).filter((g) => existentes.has(g))
-  const periodos = [...existentes]
-    .filter((g) => /^\d+$/.test(g))
-    .sort((a, b) => (Number(a) || 99) - (Number(b) || 99))
-  return [...basicos, ...periodos]
+  return TODOS_GRUPOS.filter((g) => existentes.has(g))
 })()
 
 /** "3º período" na Graduação, "3º ano" nos outros níveis; 0 = optativas */
@@ -87,19 +126,19 @@ export function trocarLetras(texto: string, ordem?: number[]): string {
 }
 
 export interface Filtro {
-  /** grupo da disciplina (período ou nível, ver grupoDe); '' = todos */
-  periodo: string
+  /** nível, curso e ano/período da disciplina */
+  turma: FiltroTurma
   disciplinaId: string
   capituloId: string
   tipo: string
 }
 
-export const FILTRO_VAZIO: Filtro = { periodo: '', disciplinaId: '', capituloId: '', tipo: '' }
+export const FILTRO_VAZIO: Filtro = { turma: TURMA_VAZIA, disciplinaId: '', capituloId: '', tipo: '' }
 
 export function filtrar(lista: Questao[], f: Filtro): Questao[] {
   return lista.filter(
     (q) =>
-      (!f.periodo || (porId.has(q.disciplinaId) && grupoDe(porId.get(q.disciplinaId)!) === f.periodo)) &&
+      (porId.has(q.disciplinaId) ? confereTurma(partesDaDisciplina(porId.get(q.disciplinaId)!), f.turma) : !f.turma.nivel) &&
       (!f.disciplinaId || q.disciplinaId === f.disciplinaId) &&
       (!f.capituloId || q.capituloId === f.capituloId) &&
       (!f.tipo || q.tipo === f.tipo),
