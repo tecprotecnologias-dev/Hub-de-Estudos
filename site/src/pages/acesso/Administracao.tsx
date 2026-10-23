@@ -14,6 +14,7 @@ import {
   NIVEIS,
   NIVEL_PADRAO,
   nomeCurso,
+  nomeEtapa,
   type Nivel,
 } from '../../lib/niveis'
 
@@ -331,12 +332,8 @@ export default function Administracao() {
                 <th>
                   <input type="checkbox" aria-label="Marcar todos" checked={todosMarcados} onChange={marcarTodos} />
                 </th>
-                <th>Nome e e-mail</th>
-                <th>Matrícula</th>
-                <th>Celular</th>
-                <th>Nível</th>
-                <th>Curso</th>
-                <th>Ano/período</th>
+                <th>Pessoa</th>
+                <th>Nível, curso e período</th>
                 <th>Perfil</th>
                 <th>Cadastro</th>
               </tr>
@@ -352,15 +349,15 @@ export default function Administracao() {
                       onChange={() => marcar(p.id)}
                     />
                   </td>
+                  {/* nome, e-mail, matrícula e celular numa coluna só, para a tabela caber ao lado dos filtros */}
                   <td className="celula-pessoa">
                     <strong>{p.nome}</strong>
                     {p.tipo === 'aluno' && p.solicita_professor && <span className="selo-pendente">em análise</span>}
                     <span className="dica">{p.email}</span>
-                  </td>
-                  <td>{p.matricula ?? '—'}</td>
-                  <td>
-                    {p.telefone ? (
+                    {p.matricula && <span className="dica">Matrícula {p.matricula}</span>}
+                    {p.telefone && (
                       <a
+                        className="dica"
                         href={`https://wa.me/${p.telefone}`}
                         target="_blank"
                         rel="noreferrer"
@@ -368,81 +365,71 @@ export default function Administracao() {
                       >
                         {formatarTelefone(p.telefone)}
                       </a>
-                    ) : (
-                      '—'
                     )}
                   </td>
-                  {/* nível, curso e ano/período só existem para aluno (professor e administrador: —) */}
+                  {/* nível, curso e ano/período, um embaixo do outro; só existem para aluno */}
                   <td>
                     {ehAluno(p) ? (
-                      <select
-                        aria-label={`Nível de ${p.nome}`}
-                        value={p.nivel ?? NIVEL_PADRAO}
-                        onChange={(e) => {
-                          const novo = e.target.value as Nivel
-                          // ao trocar de nível, o ano/período passa para o primeiro do novo nível; o
-                          // curso só existe na Graduação
-                          atualizar(p.id, {
-                            nivel: novo,
-                            curso: novo === 'graduacao' ? (p.curso ?? CURSO_PADRAO) : null,
-                            periodo: p.periodo == null ? null : dadosNivel(novo).etapas[0],
-                          })
-                        }}
-                      >
-                        {NIVEIS.map((n) => (
-                          <option key={n.id} value={n.id}>
-                            {n.nome}
-                          </option>
-                        ))}
-                      </select>
-                    ) : (
-                      '—'
-                    )}
-                  </td>
-                  <td>
-                    {ehAluno(p) && (p.nivel ?? NIVEL_PADRAO) === 'graduacao' ? (
-                      <select
-                        aria-label={`Curso de ${p.nome}`}
-                        value={p.curso ?? CURSO_PADRAO}
-                        onChange={(e) => {
-                          // de um Bacharelado (até o 10º) para um Tecnólogo (até o 5º), o período
-                          // passa a ser o último do curso novo
-                          const novo = e.target.value
-                          const ultimoNovo = Math.max(...etapasDe('graduacao', novo))
-                          atualizar(p.id, {
-                            curso: novo,
-                            periodo: p.periodo != null && p.periodo > ultimoNovo ? ultimoNovo : p.periodo,
-                          })
-                        }}
-                      >
-                        {cursosPorTipo().map((t) => (
-                          <optgroup key={t.id} label={t.nome}>
-                            {t.cursos.map((c) => (
-                              <option key={c.id} value={c.id}>
-                                {c.nome}
-                              </option>
+                      <div className="celula-turma">
+                        <select
+                          aria-label={`Nível de ${p.nome}`}
+                          value={p.nivel ?? NIVEL_PADRAO}
+                          onChange={(e) => {
+                            const novo = e.target.value as Nivel
+                            // ao trocar de nível, o ano/período passa para o primeiro do novo nível; o
+                            // curso só existe na Graduação
+                            atualizar(p.id, {
+                              nivel: novo,
+                              curso: novo === 'graduacao' ? (p.curso ?? CURSO_PADRAO) : null,
+                              periodo: p.periodo == null ? null : dadosNivel(novo).etapas[0],
+                            })
+                          }}
+                        >
+                          {NIVEIS.map((n) => (
+                            <option key={n.id} value={n.id}>
+                              {n.nome}
+                            </option>
+                          ))}
+                        </select>
+                        {(p.nivel ?? NIVEL_PADRAO) === 'graduacao' && (
+                          <select
+                            aria-label={`Curso de ${p.nome}`}
+                            value={p.curso ?? CURSO_PADRAO}
+                            onChange={(e) => {
+                              // de um Bacharelado (até o 10º) para um Tecnólogo (até o 5º), o período
+                              // passa a ser o último do curso novo
+                              const novo = e.target.value
+                              const ultimoNovo = Math.max(...etapasDe('graduacao', novo))
+                              atualizar(p.id, {
+                                curso: novo,
+                                periodo: p.periodo != null && p.periodo > ultimoNovo ? ultimoNovo : p.periodo,
+                              })
+                            }}
+                          >
+                            {cursosPorTipo().map((t) => (
+                              <optgroup key={t.id} label={t.nome}>
+                                {t.cursos.map((c) => (
+                                  <option key={c.id} value={c.id}>
+                                    {c.nome}
+                                  </option>
+                                ))}
+                              </optgroup>
                             ))}
-                          </optgroup>
-                        ))}
-                      </select>
-                    ) : (
-                      '—'
-                    )}
-                  </td>
-                  <td>
-                    {ehAluno(p) ? (
-                      <select
-                        aria-label={`Ano ou período de ${p.nome}`}
-                        value={p.periodo ?? ''}
-                        onChange={(e) => atualizar(p.id, { periodo: e.target.value ? Number(e.target.value) : null })}
-                      >
-                        <option value="">—</option>
-                        {etapasDe(p.nivel, p.curso).map((n) => (
-                          <option key={n} value={n}>
-                            {n}º
-                          </option>
-                        ))}
-                      </select>
+                          </select>
+                        )}
+                        <select
+                          aria-label={`Ano ou período de ${p.nome}`}
+                          value={p.periodo ?? ''}
+                          onChange={(e) => atualizar(p.id, { periodo: e.target.value ? Number(e.target.value) : null })}
+                        >
+                          <option value="">Sem {dadosNivel(p.nivel).rotulo}</option>
+                          {etapasDe(p.nivel, p.curso).map((n) => (
+                            <option key={n} value={n}>
+                              {nomeEtapa(p.nivel, n)}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     ) : (
                       '—'
                     )}

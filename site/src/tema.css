@@ -1259,3 +1259,15 @@ textarea {
   display: block;
   font-size: 0.82rem;
 }
+
+.celula-turma {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 12.5rem;
+}
+
+.celula-turma select {
+  width: 100%;
+  max-width: none;
+}
