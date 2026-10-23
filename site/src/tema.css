@@ -1238,3 +1238,43 @@ textarea {
 .pedido-admin {
   gap: 0.2rem;
 }
+
+/* Administração: página mais larga (a tabela tem muitas colunas) e nome com o e-mail embaixo */
+.pagina-larga {
+  width: min(1360px, calc(100vw - 2rem));
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pagina-larga .filtros {
+  flex-wrap: nowrap;
+}
+
+.pagina-larga .tabela-admin select {
+  /* nomes longos de curso não podem alargar a tabela */
+  max-width: 12.5rem;
+}
+
+.celula-pessoa strong {
+  font-weight: 600;
+}
+
+.celula-pessoa .dica {
+  display: block;
+  font-size: 0.82rem;
+}
+
+@media (max-width: 1000px) {
+  .pagina-larga .filtros {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 800px) {
+  .pagina-larga {
+    width: auto;
+    left: 0;
+    transform: none;
+  }
+}

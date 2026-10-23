@@ -181,7 +181,8 @@ export default function Administracao() {
   }
 
   return (
-    <>
+    // página mais larga que as outras: a tabela tem muitas colunas
+    <div className="pagina-larga">
       <h1>Administração</h1>
       <p className="dica">
         {pessoas.length} cadastro(s): {contagem('aluno')} aluno(s), {contagem('professor')} professor(es) e{' '}
@@ -317,9 +318,8 @@ export default function Administracao() {
                 <th>
                   <input type="checkbox" aria-label="Marcar todos" checked={todosMarcados} onChange={marcarTodos} />
                 </th>
-                <th>Nome</th>
+                <th>Nome e e-mail</th>
                 <th>Matrícula</th>
-                <th>E-mail</th>
                 <th>Celular</th>
                 <th>Nível</th>
                 <th>Curso</th>
@@ -339,12 +339,12 @@ export default function Administracao() {
                       onChange={() => marcar(p.id)}
                     />
                   </td>
-                  <td>
-                    {p.nome}
+                  <td className="celula-pessoa">
+                    <strong>{p.nome}</strong>
                     {p.tipo === 'aluno' && p.solicita_professor && <span className="selo-pendente">em análise</span>}
+                    <span className="dica">{p.email}</span>
                   </td>
                   <td>{p.matricula ?? '—'}</td>
-                  <td>{p.email}</td>
                   <td>
                     {p.telefone ? (
                       <a
@@ -457,6 +457,6 @@ export default function Administracao() {
           {lista.length === 0 && <p className="vazio">Nenhum cadastro encontrado.</p>}
         </div>
       )}
-    </>
+    </div>
   )
 }
