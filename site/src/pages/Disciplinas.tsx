@@ -5,6 +5,7 @@ import { apresentacoes } from '../data/apresentacoes'
 import { disciplinas } from '../data/disciplinas'
 import { questoes } from '../data/questoes'
 import CamposTurma from '../lib/CamposTurma'
+import ComFiltrosAoLado from '../lib/ComFiltrosAoLado'
 import { useDisciplinaVisivel } from '../lib/Protegida'
 import {
   confereTurma,
@@ -26,19 +27,15 @@ export default function Disciplinas() {
   const gruposDoPerfil = GRUPOS.filter((g) => disciplinas.some((d) => grupoDe(d) === g && visivel(d.id)))
   const visiveis = gruposDoPerfil.filter((g) => confereTurma(partesDoGrupo(g), turma))
 
-  return (
+  const cabecalho = (
+    <section className="destaque">
+      <h1>Disciplinas</h1>
+      <p>Escolha sua disciplina para estudar pelas apostilas e praticar com simulados.</p>
+    </section>
+  )
+
+  const lista = (
     <>
-      <section className="destaque">
-        <h1>Disciplinas</h1>
-        <p>Escolha sua disciplina para estudar pelas apostilas e praticar com simulados.</p>
-      </section>
-
-      {gruposDoPerfil.length > 1 && (
-        <div className="filtros">
-          <CamposTurma valor={turma} onChange={setTurma} grupos={gruposDoFiltro(gruposDoPerfil)} />
-        </div>
-      )}
-
       {visiveis.length === 0 && <p className="vazio">Ainda não há disciplinas cadastradas para esta escolha.</p>}
       {visiveis.map((g) => (
         <section key={g} className="bloco-periodo">
@@ -68,6 +65,24 @@ export default function Disciplinas() {
           </div>
         </section>
       ))}
+    </>
+  )
+
+  return (
+    <>
+      {gruposDoPerfil.length > 1 ? (
+        <ComFiltrosAoLado
+          filtros={<CamposTurma valor={turma} onChange={setTurma} grupos={gruposDoFiltro(gruposDoPerfil)} />}
+        >
+          {cabecalho}
+          {lista}
+        </ComFiltrosAoLado>
+      ) : (
+        <>
+          {cabecalho}
+          {lista}
+        </>
+      )}
     </>
   )
 }

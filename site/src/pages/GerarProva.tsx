@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { NOMES_NIVEL, type Questao } from '../data/tipos'
+import ComFiltrosAoLado from '../lib/ComFiltrosAoLado'
 import Filtros from '../lib/Filtros'
 import { embaralhar, embaralharAlternativas, filtrar, FILTRO_VAZIO, LETRAS, nomeDisciplina, type Filtro } from '../lib/util'
 import { apostilas } from '../data/apostilas'
@@ -250,7 +251,17 @@ export default function GerarProva() {
   }
 
   return (
-    <>
+    <ComFiltrosAoLado
+      filtros={
+        <Filtros
+          valor={filtro}
+          onChange={(f) => {
+            setFiltro(f)
+            if (f.disciplinaId && !cab.disciplina) setCab({ ...cab, disciplina: nomeDisciplina(f.disciplinaId) })
+          }}
+        />
+      }
+    >
       <h1>Gerar prova</h1>
 
       <section className="painel">
@@ -306,13 +317,7 @@ export default function GerarProva() {
 
       <section className="painel">
         <h2>2. Questões ({selecionadas.length} selecionadas)</h2>
-        <Filtros
-          valor={filtro}
-          onChange={(f) => {
-            setFiltro(f)
-            if (f.disciplinaId && !cab.disciplina) setCab({ ...cab, disciplina: nomeDisciplina(f.disciplinaId) })
-          }}
-        />
+        <p className="dica">Use os filtros à esquerda para escolher o nível, o curso, a disciplina e o capítulo.</p>
         <div className="barra-acoes">
           <label className="inline">
             Sortear
@@ -406,6 +411,6 @@ export default function GerarProva() {
       {!selecionadas.length && (
         <p className="dica">Marque pelo menos uma questão na etapa 2, ou use o botão Sortear, para liberar o botão.</p>
       )}
-    </>
+    </ComFiltrosAoLado>
   )
 }

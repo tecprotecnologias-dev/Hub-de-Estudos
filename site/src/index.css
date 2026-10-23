@@ -1612,3 +1612,71 @@ kbd,
   color: var(--certa);
   font-weight: 600;
 }
+
+/* Filtros numa coluna à esquerda e o conteúdo no centro (ComFiltrosAoLado). A página fica
+   mais larga que o normal para os cartões não ficarem apertados. */
+.com-filtros-ao-lado {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+  width: min(1200px, calc(100vw - 2rem));
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.painel-filtros {
+  position: sticky;
+  top: 5.5rem;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 1rem 1.1rem 1.1rem;
+}
+
+.painel-filtros h2 {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+.painel-filtros .filtros {
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+.painel-filtros .filtros label {
+  flex: none;
+}
+
+/* nomes longos de curso não podem alargar a coluna */
+.painel-filtros select {
+  width: 100%;
+  min-width: 0;
+}
+
+.conteudo-ao-lado > .destaque:first-child {
+  padding-top: 0;
+}
+
+.conteudo-ao-lado > h1:first-child,
+.conteudo-ao-lado > .destaque:first-child h1 {
+  margin-top: 0;
+}
+
+@media (max-width: 800px) {
+  .com-filtros-ao-lado {
+    display: block;
+    width: auto;
+    left: 0;
+    transform: none;
+  }
+
+  .painel-filtros {
+    position: static;
+    margin-bottom: 1.25rem;
+  }
+}

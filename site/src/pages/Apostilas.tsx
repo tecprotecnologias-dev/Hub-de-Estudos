@@ -6,6 +6,7 @@ import type { Apostila, Disciplina } from '../data/tipos'
 import { apostilasDaDisciplina, gruposDeApostila, rotuloApostila } from '../lib/capitulos'
 import { useDisciplinaVisivel } from '../lib/Protegida'
 import CamposTurma from '../lib/CamposTurma'
+import ComFiltrosAoLado from '../lib/ComFiltrosAoLado'
 import { tipoDoCurso } from '../lib/niveis'
 import {
   buscarDisciplina,
@@ -66,41 +67,43 @@ export default function Apostilas() {
   }
 
   return (
-    <>
+    <ComFiltrosAoLado
+      filtros={
+        <>
+            <label>
+              Buscar
+              <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Título ou assunto" />
+            </label>
+            <CamposTurma
+              valor={turma}
+              onChange={(t) => {
+                setTurma(t)
+                setDisciplinaId('')
+              }}
+              grupos={gruposDoFiltro(GRUPOS.filter((g) => disciplinas.some((d) => grupoDe(d) === g && visivel(d.id))))}
+            />
+            <label className="largo">
+              Disciplina
+              <select value={disciplinaId} onChange={(e) => setDisciplinaId(e.target.value)}>
+                <option value="">Todas</option>
+                {disciplinas
+                  .filter(
+                    (d) =>
+                      visivel(d.id) &&
+                      confereTurma(partesDaDisciplina(d), turma) &&
+                      apostilasDaDisciplina(d.id).length > 0,
+                  )
+                  .map((d) => (
+                    <option key={d.id} value={d.id}>
+                      {d.nome}
+                    </option>
+                  ))}
+              </select>
+            </label>
+        </>
+      }
+    >
       <h1>Apostilas</h1>
-      <div className="filtros">
-        <label>
-          Buscar
-          <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Título ou assunto" />
-        </label>
-        <CamposTurma
-          valor={turma}
-          onChange={(t) => {
-            setTurma(t)
-            setDisciplinaId('')
-          }}
-          grupos={gruposDoFiltro(GRUPOS.filter((g) => disciplinas.some((d) => grupoDe(d) === g && visivel(d.id))))}
-        />
-        <label className="largo">
-          Disciplina
-          <select value={disciplinaId} onChange={(e) => setDisciplinaId(e.target.value)}>
-            <option value="">Todas</option>
-            {disciplinas
-              .filter(
-                (d) =>
-                  visivel(d.id) &&
-                  confereTurma(partesDaDisciplina(d), turma) &&
-                  apostilasDaDisciplina(d.id).length > 0,
-              )
-              .map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.nome}
-                </option>
-              ))}
-          </select>
-        </label>
-      </div>
-
       {apostilas.length === 0 ? (
         <p className="vazio">As apostilas ainda estão sendo publicadas.</p>
       ) : (
@@ -140,6 +143,6 @@ export default function Apostilas() {
           ))}
         </section>
       ))}
-    </>
+    </ComFiltrosAoLado>
   )
 }

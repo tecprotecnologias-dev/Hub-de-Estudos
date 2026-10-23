@@ -9,6 +9,7 @@ import EnunciadoQuestao, { Resolucao } from '../lib/EnunciadoQuestao'
 import { useDisciplinaVisivel } from '../lib/Protegida'
 import { verificarCodigo } from '../lib/verificarCodigo'
 import CamposTurma from '../lib/CamposTurma'
+import ComFiltrosAoLado from '../lib/ComFiltrosAoLado'
 import {
   buscarDisciplina,
   confereTurma,
@@ -61,15 +62,16 @@ function ListaDisciplinas() {
   const [turma, setTurma] = useState(TURMA_VAZIA)
   const gruposDoPerfil = GRUPOS.filter((g) => disciplinas.some((d) => grupoDe(d) === g && visivel(d.id)))
   return (
-    <>
+    // professor e administração veem vários grupos: filtram como no cadastro
+    <ComFiltrosAoLado
+      filtros={
+        gruposDoPerfil.length > 1 && (
+          <CamposTurma valor={turma} onChange={setTurma} grupos={gruposDoFiltro(gruposDoPerfil)} />
+        )
+      }
+    >
       <h1>Simulados</h1>
       <p className="dica">Escolha a disciplina. As questões estão organizadas pelos capítulos da apostila.</p>
-      {/* professor e administração veem vários grupos: filtram como no cadastro */}
-      {gruposDoPerfil.length > 1 && (
-        <div className="filtros">
-          <CamposTurma valor={turma} onChange={setTurma} grupos={gruposDoFiltro(gruposDoPerfil)} />
-        </div>
-      )}
       {!gruposDoPerfil.some((g) => confereTurma(partesDoGrupo(g), turma)) && (
         <p className="vazio">Ainda não há disciplinas cadastradas para esta escolha.</p>
       )}
@@ -117,7 +119,7 @@ function ListaDisciplinas() {
           </section>
         )
       })}
-    </>
+    </ComFiltrosAoLado>
   )
 }
 
