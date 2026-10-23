@@ -10,7 +10,7 @@
    "t": "imagem",
    "src": "apostilas/web2/como-o-react-funciona.png",
    "grande": true,
-   "alt": "Infográfico \"Como o React funciona\". O componente retorna JSX, que gera a Virtual DOM (objeto JavaScript em memória); na primeira renderização ela vira o DOM real. Uma interação do usuário chama setState, o componente roda de novo e gera uma nova Virtual DOM; o diffing compara a nova com a antiga e aplica no DOM real só as diferenças. Exemplo: entre a Virtual DOM antiga (contador 3) e a nova (contador 4), a única diferença é o número do contador, então só esse texto é atualizado na tela."
+   "alt": "Infográfico \"Como o React funciona\". O componente retorna JSX, que gera a Virtual DOM (objeto JavaScript em memória); na primeira renderização ela vira o DOM real. Uma interação do usuário chama setContador (a função do useState), o componente roda de novo e gera uma nova Virtual DOM; o diffing compara a nova com a antiga e aplica no DOM real só as diferenças. Exemplo: entre a Virtual DOM antiga (um parágrafo com \"Cliques: 3\") e a nova (\"Cliques: 4\"), a única diferença é o texto, então só esse texto é atualizado na tela."
   }
  ]
 }

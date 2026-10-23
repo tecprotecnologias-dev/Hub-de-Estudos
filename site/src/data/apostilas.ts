@@ -710,6 +710,8 @@ export const apostilas: Apostila[] = [
   {
     // "Como funciona o react.png" (infográfico da professora), com o rodapé do nome recortado, publicado em
     // public/apostilas/web2/como-o-react-funciona.png; página em src/data/capitulos/web2-react.json
+    // Corrigido em 23/10/2026 (scratchpad corrigir_react.py): "em dois momentos", o exemplo do contador
+    // com a diferença dentro da Virtual DOM ('Cliques: 3' -> 'Cliques: 4') e setContador (useState).
     id: 'web2-react',
     rotulo: 'Infográfico',
     grupo: 'Material complementar',

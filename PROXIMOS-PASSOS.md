@@ -38,8 +38,6 @@ O site está em https://estudos.tecprotecnologias.com.br (Cloudflare) e se atual
     5. Senha com `#` no `.env`: sem aspas, o dotenv corta o que vem depois do `#` e a conexão falha com "Access denied"; um aviso de uma linha.
   - [ ] Revisar os serviços citados (Railway sem plano gratuito, Thunder Client pago) e o MySQL Workbench com o MySQL 9.7.
   - [ ] Levar as correções do site de volta para o LaTeX do livro (pasta Guia NODES.js), antes de publicar.
-- [ ] **Material complementar da Web II** (anotado em 20/10/2026). Já revisados: o guia de Prompt (sem erros), o livro de Node.js e o guia de Git e GitHub (reescrito em 23/10/2026). Falta:
-  - [ ] Infográfico do React (opcional, imagem da professora): "duas vezes" → "dois momentos"; o contador aparece só num comentário.
 
 ## Segurança dos dados e do site (antes de liberar para os alunos)
 
