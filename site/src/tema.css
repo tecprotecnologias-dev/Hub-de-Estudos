@@ -1239,21 +1239,16 @@ textarea {
   gap: 0.2rem;
 }
 
-/* Administração: página mais larga (a tabela tem muitas colunas) e nome com o e-mail embaixo */
-.pagina-larga {
-  width: min(1360px, calc(100vw - 2rem));
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
+/* Administração: filtros à esquerda numa página mais larga que as outras (a tabela tem muitas
+   colunas) e o nome com o e-mail embaixo */
+.com-filtros-ao-lado.largo {
+  width: min(1480px, calc(100vw - 2rem));
+  grid-template-columns: 220px minmax(0, 1fr);
 }
 
-.pagina-larga .filtros {
-  flex-wrap: nowrap;
-}
-
-.pagina-larga .tabela-admin select {
+.com-filtros-ao-lado.largo .tabela-admin select {
   /* nomes longos de curso não podem alargar a tabela */
-  max-width: 12.5rem;
+  max-width: 12rem;
 }
 
 .celula-pessoa strong {
@@ -1263,18 +1258,4 @@ textarea {
 .celula-pessoa .dica {
   display: block;
   font-size: 0.82rem;
-}
-
-@media (max-width: 1000px) {
-  .pagina-larga .filtros {
-    flex-wrap: wrap;
-  }
-}
-
-@media (max-width: 800px) {
-  .pagina-larga {
-    width: auto;
-    left: 0;
-    transform: none;
-  }
 }

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { formatarTelefone, NOMES_TIPO, traduzirErro, useAuth, type Perfil, type TipoPerfil } from '../../lib/auth'
 import { supabase } from '../../lib/supabase'
 import CamposTurma from '../../lib/CamposTurma'
+import ComFiltrosAoLado from '../../lib/ComFiltrosAoLado'
 import type { PedidoDisciplina } from '../../lib/PedidosDisciplina'
 import { disciplinas } from '../../data/disciplinas'
 import { confereTurma, grupoDe, nomeGrupo, TODOS_GRUPOS, TURMA_VAZIA } from '../../lib/util'
@@ -181,8 +182,31 @@ export default function Administracao() {
   }
 
   return (
-    // página mais larga que as outras: a tabela tem muitas colunas
-    <div className="pagina-larga">
+    // filtros à esquerda e a página mais larga que as outras: a tabela tem muitas colunas
+    <ComFiltrosAoLado
+      largo
+      filtros={
+        <>
+          <label>
+            Buscar
+            <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Nome, matrícula ou e-mail" />
+          </label>
+          <label>
+            Perfil
+            <select value={filtroTipo} onChange={(e) => setFiltroTipo(e.target.value)}>
+              <option value="">Todos</option>
+              {TIPOS.map((t) => (
+                <option key={t} value={t}>
+                  {NOMES_TIPO[t]}
+                </option>
+              ))}
+            </select>
+          </label>
+          {/* as optativas não são um período: o aluno não fica nelas */}
+          <CamposTurma valor={turma} onChange={setTurma} grupos={TODOS_GRUPOS.filter((g) => !g.endsWith(':0'))} />
+        </>
+      }
+    >
       <h1>Administração</h1>
       <p className="dica">
         {pessoas.length} cadastro(s): {contagem('aluno')} aluno(s), {contagem('professor')} professor(es) e{' '}
@@ -271,26 +295,6 @@ export default function Administracao() {
           </ul>
         </details>
       )}
-
-      <div className="filtros">
-        <label>
-          Buscar
-          <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Nome, matrícula ou e-mail" />
-        </label>
-        <label>
-          Perfil
-          <select value={filtroTipo} onChange={(e) => setFiltroTipo(e.target.value)}>
-            <option value="">Todos</option>
-            {TIPOS.map((t) => (
-              <option key={t} value={t}>
-                {NOMES_TIPO[t]}
-              </option>
-            ))}
-          </select>
-        </label>
-        {/* as optativas não são um período: o aluno não fica nelas */}
-        <CamposTurma valor={turma} onChange={setTurma} grupos={TODOS_GRUPOS.filter((g) => !g.endsWith(':0'))} />
-      </div>
 
       <div className="barra-acoes">
         <button onClick={avancarPeriodo} disabled={marcados.size === 0}>
@@ -457,6 +461,6 @@ export default function Administracao() {
           {lista.length === 0 && <p className="vazio">Nenhum cadastro encontrado.</p>}
         </div>
       )}
-    </div>
+    </ComFiltrosAoLado>
   )
 }
