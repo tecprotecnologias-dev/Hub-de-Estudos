@@ -72,8 +72,8 @@ export default function Privacidade() {
           <strong>Consultar os seus dados:</strong> na página Minha conta.
         </li>
         <li>
-          <strong>Corrigir o nome e o celular:</strong> na página Minha conta. A matrícula, o nível, o curso e o ano ou período são corrigidos pela
-          administração do site, a seu pedido.
+          <strong>Corrigir o nome e o celular:</strong> na página Minha conta. O nível, o curso, o ano ou período e a matrícula não mudam depois do
+          cadastro: se algum deles mudar, exclua a conta e crie uma nova.
         </li>
         <li>
           <strong>Excluir a conta e os dados:</strong> a qualquer momento, pelo botão Excluir minha conta, na página

@@ -101,7 +101,7 @@ export function ProtegeDisciplina({ disciplinaId, children }: { disciplinaId: st
           <p className="dica">
             {!outroNivel && !outroCurso && (d.nivel ?? NIVEL_PADRAO) === 'graduacao'
               ? 'Se você cursa esta disciplina, peça acesso no fim da página Disciplinas; a administração do site aprova o pedido.'
-              : 'Se o seu nível, curso ou ano mudou, peça a atualização do cadastro à coordenação do site.'}
+              : 'Se o seu nível, curso ou ano mudou, exclua a conta em Minha conta e crie uma nova com os dados de agora.'}
           </p>
           <Link to="/disciplinas" className="botao">
             Ver as minhas disciplinas

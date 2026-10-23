@@ -8,17 +8,17 @@ import { disciplinas } from '../../data/disciplinas'
 import { confereTurma, grupoDe, nomeGrupo, TODOS_GRUPOS, TURMA_VAZIA } from '../../lib/util'
 import {
   CURSO_PADRAO,
-  cursosPorTipo,
   dadosNivel,
-  etapasDe,
   NIVEL_PADRAO,
   nomeCurso,
   nomeEtapa,
 } from '../../lib/niveis'
 
-// Área da administradora: ver os cadastros, mudar o perfil (aluno, professor,
-// administrador), o curso (Graduação) e o ano/período de cada aluno (o nível vem do cadastro e não muda), e avançar o ano/período
-// de vários alunos de uma vez. As regras do banco garantem que só um administrador consegue.
+// Área da administradora: ver os cadastros, mudar o perfil (aluno, professor, administrador),
+// aprovar professores e os pedidos de disciplinas de outros períodos. O nível, o curso e o
+// período do aluno só aparecem: o cadastro é definitivo e, se algo mudar, o aluno exclui a
+// conta e cria outra (pedido de 23/10/2026). As regras do banco garantem que só um
+// administrador muda os perfis.
 
 const TIPOS: TipoPerfil[] = ['aluno', 'professor', 'admin']
 
@@ -32,7 +32,6 @@ export default function Administracao() {
   const [busca, setBusca] = useState('')
   const [filtroTipo, setFiltroTipo] = useState('')
   const [turma, setTurma] = useState(TURMA_VAZIA)
-  const [marcados, setMarcados] = useState<Set<string>>(new Set())
   const [aviso, setAviso] = useState<{ tipo: 'ok' | 'erro'; texto: string } | null>(null)
   // pedidos de alunos da Graduação para disciplinas de outros períodos
   const [pedidos, setPedidos] = useState<PedidoDisciplina[]>([])
@@ -122,47 +121,6 @@ export default function Administracao() {
     }
     setPessoas((ps) => ps.map((p) => (p.id === id ? { ...p, ...campos } : p)))
     setAviso({ tipo: 'ok', texto: 'Alteração salva.' })
-  }
-
-  async function avancarPeriodo() {
-    if (!supabase) return
-    // só avança quem ainda não está no último ano/período do seu nível
-    const ultimo = (p: Perfil) => Math.max(...etapasDe(p.nivel, p.curso))
-    const alvos = pessoas.filter((p) => marcados.has(p.id) && p.tipo === 'aluno' && p.periodo && p.periodo < ultimo(p))
-    if (alvos.length === 0) {
-      setAviso({ tipo: 'erro', texto: 'Marque alunos que ainda não estão no último ano ou período do seu nível.' })
-      return
-    }
-    if (!window.confirm(`Avançar ${alvos.length} aluno(s) para o ano ou período seguinte?`)) return
-    for (const p of alvos) {
-      const { error } = await supabase
-        .from('perfis')
-        .update({ periodo: p.periodo! + 1 })
-        .eq('id', p.id)
-      if (error) {
-        setAviso({ tipo: 'erro', texto: `Erro ao atualizar ${p.nome}: ${traduzirErro(error.message)}` })
-        await carregar()
-        return
-      }
-    }
-    setMarcados(new Set())
-    await carregar()
-    setAviso({ tipo: 'ok', texto: `${alvos.length} aluno(s) avançado(s) de ano ou período.` })
-  }
-
-  const todosMarcados = lista.length > 0 && lista.every((p) => marcados.has(p.id))
-
-  function marcarTodos() {
-    setMarcados(todosMarcados ? new Set() : new Set(lista.map((p) => p.id)))
-  }
-
-  function marcar(id: string) {
-    setMarcados((m) => {
-      const n = new Set(m)
-      if (n.has(id)) n.delete(id)
-      else n.add(id)
-      return n
-    })
   }
 
   const contagem = (tipo: TipoPerfil) => pessoas.filter((p) => p.tipo === tipo).length
@@ -304,16 +262,6 @@ export default function Administracao() {
         </details>
       )}
 
-      <div className="barra-acoes">
-        <button onClick={avancarPeriodo} disabled={marcados.size === 0}>
-          Avançar ano/período dos marcados ({marcados.size})
-        </button>
-        <span className="dica pequena">
-          Use no começo do semestre ou do ano letivo: cada aluno marcado sobe um ano ou período, até o último do seu
-          nível.
-        </span>
-      </div>
-
       {aviso && (
         <p className={aviso.tipo === 'ok' ? 'ok-acesso' : 'erro-acesso'} role="status">
           {aviso.texto}
@@ -327,9 +275,6 @@ export default function Administracao() {
           <table className="tabela-admin">
             <thead>
               <tr>
-                <th>
-                  <input type="checkbox" aria-label="Marcar todos" checked={todosMarcados} onChange={marcarTodos} />
-                </th>
                 <th>Pessoa</th>
                 <th>Nível, curso e período</th>
                 <th>Perfil</th>
@@ -339,14 +284,6 @@ export default function Administracao() {
             <tbody>
               {lista.map((p) => (
                 <tr key={p.id}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      aria-label={`Marcar ${p.nome}`}
-                      checked={marcados.has(p.id)}
-                      onChange={() => marcar(p.id)}
-                    />
-                  </td>
                   {/* nome, e-mail, matrícula e celular numa coluna só, para a tabela caber ao lado dos filtros */}
                   <td className="celula-pessoa">
                     <strong>{p.nome}</strong>
@@ -365,50 +302,14 @@ export default function Administracao() {
                       </a>
                     )}
                   </td>
-                  {/* nível (fixo), curso e ano/período, um embaixo do outro; só existem para aluno */}
+                  {/* o cadastro do aluno é definitivo (pedido de 23/10/2026): nível, curso e período só
+                      aparecem; se algo mudar, o aluno exclui a conta e cria outra */}
                   <td>
                     {ehAluno(p) ? (
                       <div className="celula-turma">
-                        {/* o nível vem do cadastro do aluno e não muda; só o curso e o período */}
                         <span className="nivel-fixo">{dadosNivel(p.nivel).nome}</span>
-                        {(p.nivel ?? NIVEL_PADRAO) === 'graduacao' && (
-                          <select
-                            aria-label={`Curso de ${p.nome}`}
-                            value={p.curso ?? CURSO_PADRAO}
-                            onChange={(e) => {
-                              // de um Bacharelado (até o 10º) para um Tecnólogo (até o 5º), o período
-                              // passa a ser o último do curso novo
-                              const novo = e.target.value
-                              const ultimoNovo = Math.max(...etapasDe('graduacao', novo))
-                              atualizar(p.id, {
-                                curso: novo,
-                                periodo: p.periodo != null && p.periodo > ultimoNovo ? ultimoNovo : p.periodo,
-                              })
-                            }}
-                          >
-                            {cursosPorTipo().map((t) => (
-                              <optgroup key={t.id} label={t.nome}>
-                                {t.cursos.map((c) => (
-                                  <option key={c.id} value={c.id}>
-                                    {c.nome}
-                                  </option>
-                                ))}
-                              </optgroup>
-                            ))}
-                          </select>
-                        )}
-                        <select
-                          aria-label={`Ano ou período de ${p.nome}`}
-                          value={p.periodo ?? ''}
-                          onChange={(e) => atualizar(p.id, { periodo: e.target.value ? Number(e.target.value) : null })}
-                        >
-                          <option value="">Sem {dadosNivel(p.nivel).rotulo}</option>
-                          {etapasDe(p.nivel, p.curso).map((n) => (
-                            <option key={n} value={n}>
-                              {nomeEtapa(p.nivel, n)}
-                            </option>
-                          ))}
-                        </select>
+                        {(p.nivel ?? NIVEL_PADRAO) === 'graduacao' && <span>{nomeCurso(p.curso)}</span>}
+                        <span>{p.periodo ? nomeEtapa(p.nivel, p.periodo) : '—'}</span>
                       </div>
                     ) : (
                       '—'

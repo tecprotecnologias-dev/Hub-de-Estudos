@@ -107,8 +107,8 @@ export default function MinhaConta() {
       </dl>
       {perfil.tipo === 'aluno' && !perfil.solicita_professor && (
         <p className="dica pequena">
-          A matrícula, o nível, o curso e o ano ou período só podem ser alterados pela administração do site. Se algum deles
-          mudou, peça a atualização.
+          O nível, o curso, o ano ou período e a matrícula não mudam depois do cadastro. Se algum deles mudou (por
+          exemplo, você passou para o período seguinte), exclua esta conta no fim da página e crie uma nova.
         </p>
       )}
 
