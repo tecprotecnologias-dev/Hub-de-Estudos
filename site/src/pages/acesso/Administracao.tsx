@@ -11,15 +11,13 @@ import {
   cursosPorTipo,
   dadosNivel,
   etapasDe,
-  NIVEIS,
   NIVEL_PADRAO,
   nomeCurso,
   nomeEtapa,
-  type Nivel,
 } from '../../lib/niveis'
 
 // Área da administradora: ver os cadastros, mudar o perfil (aluno, professor,
-// administrador), o nível de ensino, o curso (Graduação) e o ano/período de cada pessoa, e avançar o ano/período
+// administrador), o curso (Graduação) e o ano/período de cada aluno (o nível vem do cadastro e não muda), e avançar o ano/período
 // de vários alunos de uma vez. As regras do banco garantem que só um administrador consegue.
 
 const TIPOS: TipoPerfil[] = ['aluno', 'professor', 'admin']
@@ -367,30 +365,12 @@ export default function Administracao() {
                       </a>
                     )}
                   </td>
-                  {/* nível, curso e ano/período, um embaixo do outro; só existem para aluno */}
+                  {/* nível (fixo), curso e ano/período, um embaixo do outro; só existem para aluno */}
                   <td>
                     {ehAluno(p) ? (
                       <div className="celula-turma">
-                        <select
-                          aria-label={`Nível de ${p.nome}`}
-                          value={p.nivel ?? NIVEL_PADRAO}
-                          onChange={(e) => {
-                            const novo = e.target.value as Nivel
-                            // ao trocar de nível, o ano/período passa para o primeiro do novo nível; o
-                            // curso só existe na Graduação
-                            atualizar(p.id, {
-                              nivel: novo,
-                              curso: novo === 'graduacao' ? (p.curso ?? CURSO_PADRAO) : null,
-                              periodo: p.periodo == null ? null : dadosNivel(novo).etapas[0],
-                            })
-                          }}
-                        >
-                          {NIVEIS.map((n) => (
-                            <option key={n.id} value={n.id}>
-                              {n.nome}
-                            </option>
-                          ))}
-                        </select>
+                        {/* o nível vem do cadastro do aluno e não muda; só o curso e o período */}
+                        <span className="nivel-fixo">{dadosNivel(p.nivel).nome}</span>
                         {(p.nivel ?? NIVEL_PADRAO) === 'graduacao' && (
                           <select
                             aria-label={`Curso de ${p.nome}`}
