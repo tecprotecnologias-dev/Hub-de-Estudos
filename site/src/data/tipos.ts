@@ -7,7 +7,7 @@ export interface Unidade {
 
 export interface Disciplina {
   id: string
-  /** ano ou período (1 a 9); 0 = optativa */
+  /** ano ou período (1 a 10); 0 = optativa */
   periodo: number
   /** nível de ensino; sem nível = Graduação */
   nivel?: import('../lib/niveis').Nivel

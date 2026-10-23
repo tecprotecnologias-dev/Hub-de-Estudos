@@ -6,6 +6,7 @@ import type { Apostila, Disciplina } from '../data/tipos'
 import { apostilasDaDisciplina, gruposDeApostila, rotuloApostila } from '../lib/capitulos'
 import { useDisciplinaVisivel } from '../lib/Protegida'
 import CamposTurma from '../lib/CamposTurma'
+import { tipoDoCurso } from '../lib/niveis'
 import {
   buscarDisciplina,
   confereTurma,
@@ -22,7 +23,7 @@ const url = (a: Apostila) => import.meta.env.BASE_URL + (a.arquivo ?? '')
 /** Filtro já preenchido com o nível, o curso e o ano/período da disciplina. */
 function turmaDa(d: Disciplina): FiltroTurma {
   const p = partesDaDisciplina(d)
-  return { nivel: p.nivel, curso: p.curso ?? '', etapa: String(p.etapa) }
+  return { nivel: p.nivel, tipo: tipoDoCurso(p.curso) ?? '', curso: p.curso ?? '', etapa: String(p.etapa) }
 }
 
 export default function Apostilas() {

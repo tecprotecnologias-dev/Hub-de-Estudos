@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import { formatarTelefone, NOMES_TIPO, traduzirErro, useAuth, type Perfil, type TipoPerfil } from '../../lib/auth'
 import { supabase } from '../../lib/supabase'
-import CamposTurma, { OpcoesCursos } from '../../lib/CamposTurma'
+import CamposTurma from '../../lib/CamposTurma'
 import { confereTurma, TODOS_GRUPOS, TURMA_VAZIA } from '../../lib/util'
-import { CURSO_PADRAO, dadosNivel, NIVEIS, NIVEL_PADRAO, nomeCurso, type Nivel } from '../../lib/niveis'
+import { CURSO_PADRAO, cursosPorTipo, dadosNivel, etapasDe, NIVEIS, NIVEL_PADRAO, nomeCurso, type Nivel } from '../../lib/niveis'
 
 // Área da administradora: ver os cadastros, mudar o perfil (aluno, professor,
 // administrador), o nível de ensino, o curso (Graduação) e o ano/período de cada pessoa, e avançar o ano/período
@@ -74,7 +74,7 @@ export default function Administracao() {
   async function avancarPeriodo() {
     if (!supabase) return
     // só avança quem ainda não está no último ano/período do seu nível
-    const ultimo = (p: Perfil) => Math.max(...dadosNivel(p.nivel).etapas)
+    const ultimo = (p: Perfil) => Math.max(...etapasDe(p.nivel, p.curso))
     const alvos = pessoas.filter(
       (p) => marcados.has(p.id) && p.tipo === 'aluno' && p.periodo && p.periodo < ultimo(p),
     )
@@ -267,9 +267,26 @@ export default function Administracao() {
                       <select
                         aria-label={`Curso de ${p.nome}`}
                         value={p.curso ?? CURSO_PADRAO}
-                        onChange={(e) => atualizar(p.id, { curso: e.target.value })}
+                        onChange={(e) => {
+                          // de um Bacharelado (até o 10º) para um Tecnólogo (até o 5º), o período
+                          // passa a ser o último do curso novo
+                          const novo = e.target.value
+                          const ultimoNovo = Math.max(...etapasDe('graduacao', novo))
+                          atualizar(p.id, {
+                            curso: novo,
+                            periodo: p.periodo != null && p.periodo > ultimoNovo ? ultimoNovo : p.periodo,
+                          })
+                        }}
                       >
-                        <OpcoesCursos />
+                        {cursosPorTipo().map((t) => (
+                          <optgroup key={t.id} label={t.nome}>
+                            {t.cursos.map((c) => (
+                              <option key={c.id} value={c.id}>
+                                {c.nome}
+                              </option>
+                            ))}
+                          </optgroup>
+                        ))}
                       </select>
                     ) : (
                       '—'
@@ -282,7 +299,7 @@ export default function Administracao() {
                       onChange={(e) => atualizar(p.id, { periodo: e.target.value ? Number(e.target.value) : null })}
                     >
                       <option value="">—</option>
-                      {dadosNivel(p.nivel).etapas.map((n) => (
+                      {etapasDe(p.nivel, p.curso).map((n) => (
                         <option key={n} value={n}>
                           {n}º
                         </option>

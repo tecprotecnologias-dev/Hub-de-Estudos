@@ -1,6 +1,6 @@
 import { disciplinas } from '../data/disciplinas'
 import type { Disciplina, Questao } from '../data/tipos'
-import { CURSO_PADRAO, CURSOS, dadosNivel, NIVEIS, NIVEL_PADRAO, nomeCurso, nomeEtapa, type Nivel } from './niveis'
+import { CURSO_PADRAO, CURSOS, dadosNivel, NIVEIS, NIVEL_PADRAO, nomeCurso, nomeEtapa, etapasDoCurso, tipoDoCurso, type Nivel, type TipoGraduacao } from './niveis'
 
 export const LETRAS = ['A', 'B', 'C', 'D', 'E', 'F']
 
@@ -44,18 +44,20 @@ export function nomeGrupo(chave: string): string {
  */
 export const TODOS_GRUPOS: string[] = NIVEIS.flatMap((n) =>
   n.id === 'graduacao'
-    ? CURSOS.flatMap((c) => [...n.etapas, 0].map((etapa) => chaveGrupo({ nivel: n.id, curso: c.id, etapa })))
+    ? CURSOS.flatMap((c) => [...etapasDoCurso(c.id), 0].map((etapa) => chaveGrupo({ nivel: n.id, curso: c.id, etapa })))
     : n.etapas.map((etapa) => chaveGrupo({ nivel: n.id, curso: null, etapa })),
 )
 
-/** Filtro por turma, nas caixas Nível de ensino, Curso (só na Graduação) e Ano/período; '' = todos. */
+/** Filtro por turma, nas caixas Nível de ensino, Tipo de graduação e Curso (só na Graduação) e Ano/período; '' = todos. */
 export interface FiltroTurma {
   nivel: Nivel | ''
+  /** tipo de graduação: bacharelado, licenciatura ou tecnologo */
+  tipo: TipoGraduacao | ''
   curso: string
   etapa: string
 }
 
-export const TURMA_VAZIA: FiltroTurma = { nivel: '', curso: '', etapa: '' }
+export const TURMA_VAZIA: FiltroTurma = { nivel: '', tipo: '', curso: '', etapa: '' }
 
 export function partesDaDisciplina(d: Disciplina): PartesGrupo {
   return partesDoGrupo(grupoDe(d))
@@ -65,6 +67,7 @@ export function partesDaDisciplina(d: Disciplina): PartesGrupo {
 export function confereTurma(p: PartesGrupo, f: FiltroTurma): boolean {
   return (
     (!f.nivel || p.nivel === f.nivel) &&
+    (!f.tipo || tipoDoCurso(p.curso) === f.tipo) &&
     (!f.curso || p.curso === f.curso) &&
     (!f.etapa || String(p.etapa) === f.etapa)
   )

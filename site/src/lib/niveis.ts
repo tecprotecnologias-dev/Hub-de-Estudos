@@ -17,7 +17,8 @@ export const NIVEIS: DadosNivel[] = [
   { id: 'fundamental1', nome: 'Ensino Fundamental I', etapas: [1, 2, 3, 4, 5], rotulo: 'ano' },
   { id: 'fundamental2', nome: 'Ensino Fundamental II', etapas: [6, 7, 8, 9], rotulo: 'ano' },
   { id: 'medio', nome: 'Ensino Médio', etapas: [1, 2, 3], rotulo: 'ano' },
-  { id: 'graduacao', nome: 'Graduação', etapas: [1, 2, 3, 4, 5], rotulo: 'período' },
+  // na Graduação, o número de períodos depende do tipo do curso (veja etapasDoCurso)
+  { id: 'graduacao', nome: 'Graduação', etapas: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], rotulo: 'período' },
 ]
 
 /** Nível de quem não tem nível gravado (contas e disciplinas anteriores aos níveis). */
@@ -79,6 +80,21 @@ export const CURSOS: DadosCurso[] = [
   { id: 'logistica', nome: 'Logística', tipo: 'tecnologo' },
   { id: 'sistemas-para-internet', nome: 'Sistemas para Internet', tipo: 'tecnologo' },
 ]
+
+export function tipoDoCurso(curso: string | null | undefined): TipoGraduacao | null {
+  return CURSOS.find((c) => c.id === curso)?.tipo ?? null
+}
+
+/** Períodos do curso: Tecnólogo até o 5º; Bacharelado e Licenciatura até o 10º (pedido de 23/10/2026). */
+export function etapasDoCurso(curso: string | null | undefined): number[] {
+  const ultimo = tipoDoCurso(curso ?? CURSO_PADRAO) === 'tecnologo' ? 5 : 10
+  return Array.from({ length: ultimo }, (_, i) => i + 1)
+}
+
+/** Anos ou períodos possíveis para o nível (e, na Graduação, para o curso). */
+export function etapasDe(nivel: Nivel | null | undefined, curso: string | null | undefined): number[] {
+  return (nivel ?? NIVEL_PADRAO) === 'graduacao' ? etapasDoCurso(curso) : dadosNivel(nivel).etapas
+}
 
 /** Cursos separados por tipo de graduação, para as caixas de seleção (<optgroup>). */
 export function cursosPorTipo(cursos: DadosCurso[] = CURSOS) {

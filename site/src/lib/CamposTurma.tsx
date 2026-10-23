@@ -1,4 +1,4 @@
-import { CURSOS, cursosPorTipo, NIVEIS, nomeEtapa, rotuloEtapa, type DadosCurso, type Nivel } from './niveis'
+import { CURSOS, NIVEIS, nomeEtapa, rotuloEtapa, TIPOS_GRADUACAO, tipoDoCurso, type Nivel, type TipoGraduacao } from './niveis'
 import { partesDoGrupo, type FiltroTurma } from './util'
 
 interface Props {
@@ -9,17 +9,24 @@ interface Props {
 }
 
 /**
- * Caixas de filtro na mesma ordem do cadastro: Nível de ensino, Curso (só na Graduação) e
- * Ano/período. Vão dentro de um <div className="filtros">.
+ * Caixas de filtro na mesma ordem do cadastro: Nível de ensino, Tipo de graduação e Curso
+ * (só na Graduação) e Ano/período. Vão dentro de um <div className="filtros">.
  */
 export default function CamposTurma({ valor, onChange, grupos }: Props) {
   const partes = grupos.map(partesDoGrupo)
   const niveis = NIVEIS.filter((n) => partes.some((p) => p.nivel === n.id))
-  const cursos = CURSOS.filter((c) => partes.some((p) => p.nivel === 'graduacao' && p.curso === c.id))
+  const cursosComGrupo = CURSOS.filter((c) => partes.some((p) => p.nivel === 'graduacao' && p.curso === c.id))
+  const tipos = TIPOS_GRADUACAO.filter((t) => cursosComGrupo.some((c) => c.tipo === t.id))
+  const cursos = cursosComGrupo.filter((c) => !valor.tipo || c.tipo === valor.tipo)
   const etapas = [
     ...new Set(
       partes
-        .filter((p) => p.nivel === valor.nivel && (!valor.curso || p.curso === valor.curso))
+        .filter(
+          (p) =>
+            p.nivel === valor.nivel &&
+            (!valor.tipo || tipoDoCurso(p.curso) === valor.tipo) &&
+            (!valor.curso || p.curso === valor.curso),
+        )
         .map((p) => p.etapa),
     ),
   ]
@@ -30,8 +37,8 @@ export default function CamposTurma({ valor, onChange, grupos }: Props) {
         Nível de ensino
         <select
           value={valor.nivel}
-          // o curso e os anos/períodos mudam de um nível para outro
-          onChange={(e) => onChange({ nivel: e.target.value as Nivel | '', curso: '', etapa: '' })}
+          // o tipo, o curso e os anos/períodos mudam de um nível para outro
+          onChange={(e) => onChange({ nivel: e.target.value as Nivel | '', tipo: '', curso: '', etapa: '' })}
         >
           <option value="">Todos</option>
           {niveis.map((n) => (
@@ -42,13 +49,33 @@ export default function CamposTurma({ valor, onChange, grupos }: Props) {
         </select>
       </label>
       {valor.nivel === 'graduacao' && (
-        <label>
-          Curso
-          <select value={valor.curso} onChange={(e) => onChange({ ...valor, curso: e.target.value, etapa: '' })}>
-            <option value="">Todos</option>
-            <OpcoesCursos cursos={cursos} />
-          </select>
-        </label>
+        <>
+          <label>
+            Tipo de graduação
+            <select
+              value={valor.tipo}
+              onChange={(e) => onChange({ ...valor, tipo: e.target.value as TipoGraduacao | '', curso: '', etapa: '' })}
+            >
+              <option value="">Todos</option>
+              {tipos.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {t.nome}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Curso
+            <select value={valor.curso} onChange={(e) => onChange({ ...valor, curso: e.target.value, etapa: '' })}>
+              <option value="">Todos</option>
+              {cursos.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.nome}
+                </option>
+              ))}
+            </select>
+          </label>
+        </>
       )}
       <label>
         {valor.nivel ? rotuloEtapa(valor.nivel) : 'Ano ou período'}
@@ -63,17 +90,4 @@ export default function CamposTurma({ valor, onChange, grupos }: Props) {
       </label>
     </>
   )
-}
-
-/** <option>s dos cursos, separados por tipo de graduação (Bacharelado, Licenciatura, Tecnólogo). */
-export function OpcoesCursos({ cursos = CURSOS }: { cursos?: DadosCurso[] }) {
-  return cursosPorTipo(cursos).map((t) => (
-    <optgroup key={t.id} label={t.nome}>
-      {t.cursos.map((c) => (
-        <option key={c.id} value={c.id}>
-          {c.nome}
-        </option>
-      ))}
-    </optgroup>
-  ))
 }

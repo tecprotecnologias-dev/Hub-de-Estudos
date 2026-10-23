@@ -2,15 +2,25 @@ import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { criarConta, criarContaProfessor, normalizarTelefone, useAuth } from '../../lib/auth'
 import { authConfigurado } from '../../lib/supabase'
-import { dadosNivel, NIVEIS, nomeEtapa, rotuloEtapa, type Nivel } from '../../lib/niveis'
-import { OpcoesCursos } from '../../lib/CamposTurma'
+import {
+  CURSOS,
+  dadosNivel,
+  etapasDe,
+  NIVEIS,
+  nomeEtapa,
+  rotuloEtapa,
+  TIPOS_GRADUACAO,
+  type Nivel,
+  type TipoGraduacao,
+} from '../../lib/niveis'
 import { AvisoSemCadastro } from './AvisoSemCadastro'
 
 const MIN_SENHA = 8
 
 type Tipo = 'aluno' | 'professor'
 
-// Duas abas: o aluno informa nome, e-mail, nível de ensino, curso (só na Graduação) e
+// Duas abas: o aluno informa nome, e-mail, nível de ensino, tipo de graduação e curso (só
+// na Graduação) e
 // ano/período (que definem as disciplinas liberadas);
 // o professor informa nome e e-mail, e o cadastro fica em análise até a administração
 // aprovar. Matrícula e celular aparecem no formulário, mas são opcionais (pedido de
@@ -22,6 +32,7 @@ export default function CriarConta() {
   const [nome, setNome] = useState('')
   const [matricula, setMatricula] = useState('')
   const [nivel, setNivel] = useState<Nivel | ''>('')
+  const [tipoGraduacao, setTipoGraduacao] = useState<TipoGraduacao | ''>('')
   const [curso, setCurso] = useState('')
   const [periodo, setPeriodo] = useState('')
   const [email, setEmail] = useState('')
@@ -32,6 +43,9 @@ export default function CriarConta() {
   const [erro, setErro] = useState<string | null>(null)
   const [enviando, setEnviando] = useState(false)
   const [concluido, setConcluido] = useState<{ precisaConfirmar: boolean } | null>(null)
+
+  // na Graduação, os períodos dependem do curso
+  const podeEscolherEtapa = !!nivel && (nivel !== 'graduacao' || !!curso)
 
   if (!authConfigurado) return <AvisoSemCadastro />
   if (sessao && !concluido) return <Navigate to="/" replace />
@@ -67,6 +81,7 @@ export default function CriarConta() {
     setErro(null)
     if (nome.trim().split(/\s+/).length < 2) return setErro('Informe o seu nome completo (nome e sobrenome).')
     if (tipo === 'aluno' && !nivel) return setErro('Escolha o seu nível de ensino.')
+    if (tipo === 'aluno' && nivel === 'graduacao' && !tipoGraduacao) return setErro('Escolha o tipo de graduação.')
     if (tipo === 'aluno' && nivel === 'graduacao' && !curso) return setErro('Escolha o curso que você está fazendo.')
     if (tipo === 'aluno' && !periodo)
       return setErro(`Escolha o ${dadosNivel(nivel || null).rotulo} que você está cursando.`)
@@ -149,6 +164,7 @@ export default function CriarConta() {
                 onChange={(e) => {
                   setNivel(e.target.value as Nivel | '')
                   setPeriodo('') // os anos/períodos mudam de um nível para outro
+                  setTipoGraduacao('')
                   setCurso('')
                 }}
               >
@@ -161,20 +177,47 @@ export default function CriarConta() {
               </select>
             </label>
             {nivel === 'graduacao' && (
-              <label>
-                Curso
-                <select required value={curso} onChange={(e) => setCurso(e.target.value)}>
-                  <option value="">Escolha…</option>
-                  <OpcoesCursos />
-                </select>
-              </label>
+              <div className="linha-campos">
+                <label>
+                  Tipo de graduação
+                  <select
+                    required
+                    value={tipoGraduacao}
+                    onChange={(e) => {
+                      setTipoGraduacao(e.target.value as TipoGraduacao | '')
+                      setCurso('')
+                      setPeriodo('') // Tecnólogo vai até o 5º período; os outros, até o 10º
+                    }}
+                  >
+                    <option value="">Escolha…</option>
+                    {TIPOS_GRADUACAO.map((t) => (
+                      <option key={t.id} value={t.id}>
+                        {t.nome}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Curso
+                  <select required disabled={!tipoGraduacao} value={curso} onChange={(e) => setCurso(e.target.value)}>
+                    <option value="">{tipoGraduacao ? 'Escolha…' : 'Escolha o tipo primeiro'}</option>
+                    {CURSOS.filter((c) => c.tipo === tipoGraduacao).map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.nome}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
             )}
             <label>
               {nivel ? rotuloEtapa(nivel) : 'Ano ou período'}
-              <select required disabled={!nivel} value={periodo} onChange={(e) => setPeriodo(e.target.value)}>
-                <option value="">{nivel ? 'Escolha…' : 'Escolha o nível primeiro'}</option>
-                {nivel &&
-                  dadosNivel(nivel).etapas.map((p) => (
+              <select required disabled={!podeEscolherEtapa} value={periodo} onChange={(e) => setPeriodo(e.target.value)}>
+                <option value="">
+                  {podeEscolherEtapa ? 'Escolha…' : nivel ? 'Escolha o curso primeiro' : 'Escolha o nível primeiro'}
+                </option>
+                {podeEscolherEtapa &&
+                  etapasDe(nivel, curso).map((p) => (
                     <option key={p} value={p}>
                       {nomeEtapa(nivel, p)}
                     </option>

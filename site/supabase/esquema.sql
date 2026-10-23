@@ -23,7 +23,8 @@ create table if not exists public.perfis (
   telefone text,
   tipo text not null default 'aluno' check (tipo in ('aluno', 'professor', 'admin')),
   -- nível de ensino do aluno (desde 22/10/2026): fundamental1 (1º a 5º ano),
-  -- fundamental2 (6º a 9º ano), medio (1º a 3º ano) ou graduacao (1º a 5º período).
+  -- fundamental2 (6º a 9º ano), medio (1º a 3º ano) ou graduacao (1º a 10º período;
+  -- desde 23/10/2026: Tecnólogo até o 5º, Bacharelado e Licenciatura até o 10º).
   -- O aluno vê só as disciplinas do seu nível. Só o administrador muda.
   nivel text check (nivel in ('fundamental1', 'fundamental2', 'medio', 'graduacao')),
   -- curso do aluno da Graduação (desde 23/10/2026), ex.: 'sistemas-para-internet'. Vazio
@@ -31,7 +32,7 @@ create table if not exists public.perfis (
   curso text,
   -- ano ou período dentro do nível, informado no cadastro: o aluno vê as disciplinas do
   -- seu ano/período e dos anteriores. Só o administrador muda.
-  periodo smallint check (periodo between 1 and 9),
+  periodo smallint check (periodo between 1 and 10),
   -- cadastro feito pela aba "Sou professor": fica em análise (sem acesso ao conteúdo)
   -- até o administrador aprovar, quando o tipo passa a professor
   solicita_professor boolean not null default false,
@@ -52,14 +53,14 @@ alter table public.perfis add column if not exists nivel text
   check (nivel in ('fundamental1', 'fundamental2', 'medio', 'graduacao'));
 update public.perfis set nivel = 'graduacao' where nivel is null and tipo = 'aluno';
 alter table public.perfis drop constraint if exists perfis_periodo_check;
-alter table public.perfis add constraint perfis_periodo_check check (periodo between 1 and 9);
+alter table public.perfis add constraint perfis_periodo_check check (periodo between 1 and 10);
 alter table public.perfis drop constraint if exists perfis_nivel_periodo_check;
 alter table public.perfis add constraint perfis_nivel_periodo_check check (
   periodo is null or nivel is null
   or (nivel = 'fundamental1' and periodo between 1 and 5)
   or (nivel = 'fundamental2' and periodo between 6 and 9)
   or (nivel = 'medio' and periodo between 1 and 3)
-  or (nivel = 'graduacao' and periodo between 1 and 5)
+  or (nivel = 'graduacao' and periodo between 1 and 10)
 );
 
 -- Cursos da Graduação (23/10/2026). Os alunos da Graduação que já existiam são todos de
@@ -177,12 +178,12 @@ begin
       v_curso := case when (new.raw_user_meta_data ->> 'curso') ~ '^[a-z0-9-]{1,60}$'
                       then new.raw_user_meta_data ->> 'curso' else 'sistemas-para-internet' end;
     end if;
-    if (new.raw_user_meta_data ->> 'periodo') ~ '^[1-9]$' then
+    if (new.raw_user_meta_data ->> 'periodo') ~ '^([1-9]|10)$' then
       v_periodo := (new.raw_user_meta_data ->> 'periodo')::smallint;
       if not ((v_nivel = 'fundamental1' and v_periodo between 1 and 5)
            or (v_nivel = 'fundamental2' and v_periodo between 6 and 9)
            or (v_nivel = 'medio' and v_periodo between 1 and 3)
-           or (v_nivel = 'graduacao' and v_periodo between 1 and 5)) then
+           or (v_nivel = 'graduacao' and v_periodo between 1 and 10)) then
         v_periodo := null;
       end if;
     end if;

@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { emAnalise, formatarTelefone, NOMES_TIPO, normalizarTelefone, traduzirErro, useAuth } from '../../lib/auth'
 import { supabase } from '../../lib/supabase'
-import { dadosNivel, NIVEL_PADRAO, nomeCurso, nomeEtapa, rotuloEtapa } from '../../lib/niveis'
+import { dadosNivel, NIVEL_PADRAO, nomeCurso, nomeEtapa, rotuloEtapa, TIPOS_GRADUACAO, CURSO_PADRAO, tipoDoCurso } from '../../lib/niveis'
 
 export default function MinhaConta() {
   const { perfil, recarregarPerfil, sair } = useAuth()
@@ -79,10 +79,16 @@ export default function MinhaConta() {
               <dd>{dadosNivel(perfil.nivel).nome}</dd>
             </div>
             {(perfil.nivel ?? NIVEL_PADRAO) === 'graduacao' && (
-              <div>
-                <dt>Curso</dt>
-                <dd>{nomeCurso(perfil.curso)}</dd>
-              </div>
+              <>
+                <div>
+                  <dt>Tipo de graduação</dt>
+                  <dd>{TIPOS_GRADUACAO.find((t) => t.id === tipoDoCurso(perfil.curso ?? CURSO_PADRAO))?.nome ?? '—'}</dd>
+                </div>
+                <div>
+                  <dt>Curso</dt>
+                  <dd>{nomeCurso(perfil.curso)}</dd>
+                </div>
+              </>
             )}
             <div>
               <dt>{rotuloEtapa(perfil.nivel)}</dt>
