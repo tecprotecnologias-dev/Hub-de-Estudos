@@ -193,7 +193,14 @@ export default function Administracao() {
           </label>
           <label>
             Perfil
-            <select value={filtroTipo} onChange={(e) => setFiltroTipo(e.target.value)}>
+            <select
+              value={filtroTipo}
+              onChange={(e) => {
+                setFiltroTipo(e.target.value)
+                // professor e administrador não têm nível, curso nem período
+                if (e.target.value && e.target.value !== 'aluno') setTurma(TURMA_VAZIA)
+              }}
+            >
               <option value="">Todos</option>
               {TIPOS.map((t) => (
                 <option key={t} value={t}>
@@ -203,7 +210,9 @@ export default function Administracao() {
             </select>
           </label>
           {/* as optativas não são um período: o aluno não fica nelas */}
-          <CamposTurma valor={turma} onChange={setTurma} grupos={TODOS_GRUPOS.filter((g) => !g.endsWith(':0'))} />
+          {(!filtroTipo || filtroTipo === 'aluno') && (
+            <CamposTurma valor={turma} onChange={setTurma} grupos={TODOS_GRUPOS.filter((g) => !g.endsWith(':0'))} />
+          )}
         </>
       }
     >
