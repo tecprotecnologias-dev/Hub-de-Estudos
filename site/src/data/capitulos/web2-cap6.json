@@ -42,7 +42,7 @@
   },
   {
    "t": "p",
-   "html": "Neste módulo, o banco é o <strong>SQLite</strong>: ele fica num arquivo dentro do próprio projeto, sem instalar um servidor de banco nem criar conta em nenhum serviço, o que é ótimo para aprender. Na Web III, o mesmo Prisma é usado com o <strong>PostgreSQL</strong>, um banco na nuvem; o código das consultas é o mesmo, mudam só a conexão e o adaptador."
+   "html": "Neste módulo, o banco é o <strong>SQLite</strong>: ele fica num arquivo dentro do próprio projeto, sem instalar um servidor de banco nem criar conta em nenhum serviço, o que é ótimo para aprender. Em projetos maiores, o mesmo Prisma funciona com bancos como o <strong>PostgreSQL</strong>; o código das consultas é o mesmo, mudam só a conexão e o adaptador."
   },
   {
    "t": "h2",
@@ -88,7 +88,7 @@
   },
   {
    "t": "p",
-   "html": "O bloco <code>generator</code> diz onde o Prisma gera o código do cliente: a pasta <code>app/generated/prisma</code>, o mesmo lugar usado na Web III. Cada <code>model</code> vira uma tabela, e cada linha dentro dele, uma coluna:"
+   "html": "O bloco <code>generator</code> diz onde o Prisma gera o código do cliente: a pasta <code>app/generated/prisma</code>. Cada <code>model</code> vira uma tabela, e cada linha dentro dele, uma coluna:"
   },
   {
    "t": "tabela",
