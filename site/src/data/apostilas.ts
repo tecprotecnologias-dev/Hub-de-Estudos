@@ -758,7 +758,7 @@ export const apostilas: Apostila[] = [
     ([titulo, descricao], i): Apostila => ({
       id: `web2-node-cap${i + 1}`,
       capitulo: i + 1,
-      grupo: 'Material complementar: Node.js, Express e MySQL',
+      grupo: 'Livro autoral: Node.js, Express e MySQL',
       titulo,
       disciplinaId: 'programacao-e-design-para-web-ii',
       descricao,
@@ -767,7 +767,7 @@ export const apostilas: Apostila[] = [
   {
     id: 'web2-node-apa',
     rotulo: 'Apêndice A',
-    grupo: 'Material complementar: Node.js, Express e MySQL',
+    grupo: 'Livro autoral: Node.js, Express e MySQL',
     titulo: 'Referência Rápida',
     disciplinaId: 'programacao-e-design-para-web-ii',
     descricao: 'Os comandos SQL, npm, mysql2, métodos e status HTTP, JavaScript moderno e autenticação mais usados no livro, para consulta.',
@@ -775,7 +775,7 @@ export const apostilas: Apostila[] = [
   {
     id: 'web2-node-apb',
     rotulo: 'Apêndice B',
-    grupo: 'Material complementar: Node.js, Express e MySQL',
+    grupo: 'Livro autoral: Node.js, Express e MySQL',
     titulo: 'Guia de Arquivos e Pacotes da BibliotecaAPI',
     disciplinaId: 'programacao-e-design-para-web-ii',
     descricao: 'Para que serve cada arquivo e pasta do projeto, o fluxo de uma requisição, os pacotes usados e o que nunca fazer.',
