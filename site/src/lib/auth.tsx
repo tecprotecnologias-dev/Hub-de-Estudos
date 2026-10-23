@@ -40,6 +40,8 @@ interface ContextoAuth {
   pronto: boolean
   sessao: Session | null
   perfil: Perfil | null
+  /** disciplinas de outros períodos liberadas pela administração para este aluno (ids) */
+  liberadas: Set<string>
   /** a pessoa chegou pelo link de "esqueci minha senha" e precisa escolher uma nova */
   recuperandoSenha: boolean
   recarregarPerfil: () => Promise<void>
@@ -68,15 +70,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [pronto, setPronto] = useState(!authConfigurado)
   const [sessao, setSessao] = useState<Session | null>(null)
   const [perfil, setPerfil] = useState<Perfil | null>(null)
+  const [liberadas, setLiberadas] = useState<Set<string>>(new Set())
   const [recuperandoSenha, setRecuperandoSenha] = useState(false)
 
   const buscarPerfil = useCallback(async (s: Session | null) => {
     if (!supabase || !s) {
       setPerfil(null)
+      setLiberadas(new Set())
       return
     }
-    const { data } = await supabase.from('perfis').select('*').eq('id', s.user.id).maybeSingle()
+    const [{ data }, { data: pedidos }] = await Promise.all([
+      supabase.from('perfis').select('*').eq('id', s.user.id).maybeSingle(),
+      // pedidos aprovados de disciplinas de outros períodos (sem a tabela ainda, vem vazio)
+      supabase.from('pedidos_disciplina').select('disciplina_id').eq('aluno_id', s.user.id).eq('situacao', 'aprovado'),
+    ])
     setPerfil((data as Perfil | null) ?? null)
+    setLiberadas(new Set(((pedidos as { disciplina_id: string }[] | null) ?? []).map((p) => p.disciplina_id)))
   }, [])
 
   useEffect(() => {
@@ -106,11 +115,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const sair = useCallback(async () => {
     await supabase?.auth.signOut()
     setPerfil(null)
+    setLiberadas(new Set())
     setSessao(null)
   }, [])
 
   return (
-    <Contexto.Provider value={{ pronto, sessao, perfil, recuperandoSenha, recarregarPerfil, sair }}>
+    <Contexto.Provider value={{ pronto, sessao, perfil, liberadas, recuperandoSenha, recarregarPerfil, sair }}>
       {children}
     </Contexto.Provider>
   )
@@ -134,15 +144,18 @@ export function podeAcessar(perfil: Perfil | null, tipos?: TipoPerfil[]): boolea
  * Aluno da Graduação: do seu curso, somente o período atual, mais as optativas do curso
  * (desde 23/10/2026: nem os períodos anteriores nem os seguintes).
  * Aluno da educação básica (Fundamental I e II, Médio): somente a sua série.
+ * Aluno da Graduação: também as de outros períodos que a administração liberou (`liberadas`).
  * Professor e administrador: tudo.
  */
 export function podeVerDisciplina(
   perfil: Perfil | null,
-  d: { periodo: number; nivel?: Nivel; curso?: string },
+  d: { id?: string; periodo: number; nivel?: Nivel; curso?: string },
+  liberadas?: Set<string>,
 ): boolean {
   if (!authConfigurado) return true
   if (!perfil || emAnalise(perfil)) return false
   if (perfil.tipo !== 'aluno') return true
+  if (d.id && liberadas?.has(d.id)) return true
   const nivel = perfil.nivel ?? NIVEL_PADRAO
   if ((d.nivel ?? NIVEL_PADRAO) !== nivel) return false
   if (perfil.periodo == null) return false

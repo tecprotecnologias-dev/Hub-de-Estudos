@@ -65,14 +65,14 @@ export function Protegida({
  * Graduação, do seu curso, mais as optativas dele).
  */
 export function ProtegeDisciplina({ disciplinaId, children }: { disciplinaId: string; children: ReactNode }) {
-  const { perfil } = useAuth()
+  const { perfil, liberadas } = useAuth()
   const d = disciplinas.find((x) => x.id === disciplinaId)
   const outroNivel = !!d && (d.nivel ?? NIVEL_PADRAO) !== (perfil?.nivel ?? NIVEL_PADRAO)
   const outroCurso =
     !!d && !outroNivel && (d.nivel ?? NIVEL_PADRAO) === 'graduacao' && (d.curso ?? CURSO_PADRAO) !== (perfil?.curso ?? CURSO_PADRAO)
   return (
     <Protegida>
-      {!d || podeVerDisciplina(perfil, d) ? (
+      {!d || podeVerDisciplina(perfil, d, liberadas) ? (
         children
       ) : (
         <section className="aviso-acesso">
@@ -98,7 +98,11 @@ export function ProtegeDisciplina({ disciplinaId, children }: { disciplinaId: st
                     perfil?.periodo ? nomeEtapa(perfil.nivel, perfil.periodo) : 'seu ano'
                   }.`}
           </p>
-          <p className="dica">Se o seu nível, curso ou ano mudou, peça a atualização do cadastro à coordenação do site.</p>
+          <p className="dica">
+            {!outroNivel && !outroCurso && (d.nivel ?? NIVEL_PADRAO) === 'graduacao'
+              ? 'Se você cursa esta disciplina, peça acesso no fim da página Disciplinas; a administração do site aprova o pedido.'
+              : 'Se o seu nível, curso ou ano mudou, peça a atualização do cadastro à coordenação do site.'}
+          </p>
           <Link to="/disciplinas" className="botao">
             Ver as minhas disciplinas
           </Link>
@@ -110,9 +114,9 @@ export function ProtegeDisciplina({ disciplinaId, children }: { disciplinaId: st
 
 /** Filtro para listas: a disciplina aparece para este perfil? */
 export function useDisciplinaVisivel() {
-  const { perfil } = useAuth()
+  const { perfil, liberadas } = useAuth()
   return (disciplinaId: string) => {
     const d = disciplinas.find((x) => x.id === disciplinaId)
-    return !d || podeVerDisciplina(perfil, d)
+    return !d || podeVerDisciplina(perfil, d, liberadas)
   }
 }

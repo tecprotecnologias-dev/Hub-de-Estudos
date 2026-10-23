@@ -2,7 +2,9 @@ import { useEffect, useMemo, useState } from 'react'
 import { formatarTelefone, NOMES_TIPO, traduzirErro, useAuth, type Perfil, type TipoPerfil } from '../../lib/auth'
 import { supabase } from '../../lib/supabase'
 import CamposTurma from '../../lib/CamposTurma'
-import { confereTurma, TODOS_GRUPOS, TURMA_VAZIA } from '../../lib/util'
+import type { PedidoDisciplina } from '../../lib/PedidosDisciplina'
+import { disciplinas } from '../../data/disciplinas'
+import { confereTurma, grupoDe, nomeGrupo, TODOS_GRUPOS, TURMA_VAZIA } from '../../lib/util'
 import { CURSO_PADRAO, cursosPorTipo, dadosNivel, etapasDe, NIVEIS, NIVEL_PADRAO, nomeCurso, type Nivel } from '../../lib/niveis'
 
 // Área da administradora: ver os cadastros, mudar o perfil (aluno, professor,
@@ -20,15 +22,47 @@ export default function Administracao() {
   const [turma, setTurma] = useState(TURMA_VAZIA)
   const [marcados, setMarcados] = useState<Set<string>>(new Set())
   const [aviso, setAviso] = useState<{ tipo: 'ok' | 'erro'; texto: string } | null>(null)
+  // pedidos de alunos da Graduação para disciplinas de outros períodos
+  const [pedidos, setPedidos] = useState<PedidoDisciplina[]>([])
 
   async function carregar() {
     if (!supabase) return
     setCarregando(true)
-    const { data, error } = await supabase.from('perfis').select('*').order('nome')
+    const [{ data, error }, { data: dadosPedidos }] = await Promise.all([
+      supabase.from('perfis').select('*').order('nome'),
+      supabase.from('pedidos_disciplina').select('*').order('criado_em'),
+    ])
     setCarregando(false)
     if (error) setAviso({ tipo: 'erro', texto: traduzirErro(error.message) })
     else setPessoas((data as Perfil[]) ?? [])
+    setPedidos((dadosPedidos as PedidoDisciplina[] | null) ?? [])
   }
+
+  async function decidir(p: PedidoDisciplina, situacao: 'aprovado' | 'recusado' | null) {
+    if (!supabase) return
+    // null = retirar uma disciplina já liberada (apaga o pedido)
+    const { error } =
+      situacao == null
+        ? await supabase.from('pedidos_disciplina').delete().eq('id', p.id)
+        : await supabase
+            .from('pedidos_disciplina')
+            .update({ situacao, decidido_em: new Date().toISOString() })
+            .eq('id', p.id)
+    if (error) return setAviso({ tipo: 'erro', texto: traduzirErro(error.message) })
+    setPedidos((ps) => (situacao == null ? ps.filter((x) => x.id !== p.id) : ps.map((x) => (x.id === p.id ? { ...x, situacao } : x))))
+    setAviso({
+      tipo: 'ok',
+      texto: situacao === 'aprovado' ? 'Disciplina liberada.' : situacao === 'recusado' ? 'Pedido recusado.' : 'Acesso retirado.',
+    })
+  }
+
+  const nomeDaPessoa = (id: string) => pessoas.find((x) => x.id === id)
+  const descreverDisciplina = (id: string) => {
+    const d = disciplinas.find((x) => x.id === id)
+    return d ? `${d.nome} (${nomeGrupo(grupoDe(d))})` : id
+  }
+  const pedidosPendentes = pedidos.filter((p) => p.situacao === 'pendente')
+  const pedidosAprovados = pedidos.filter((p) => p.situacao === 'aprovado')
 
   useEffect(() => {
     carregar()
@@ -156,6 +190,57 @@ export default function Administracao() {
             ))}
           </ul>
         </section>
+      )}
+
+      {pedidosPendentes.length > 0 && (
+        <section className="pendentes">
+          <h2>Pedidos de disciplinas de outros períodos ({pedidosPendentes.length})</h2>
+          <ul>
+            {pedidosPendentes.map((p) => {
+              const aluno = nomeDaPessoa(p.aluno_id)
+              return (
+                <li key={p.id}>
+                  <div>
+                    <strong>{descreverDisciplina(p.disciplina_id)}</strong>
+                    <span className="dica">
+                      {aluno?.nome ?? 'Aluno'}
+                      {aluno?.periodo ? `, ${aluno.periodo}º período` : ''}
+                      {aluno?.curso ? ` de ${nomeCurso(aluno.curso)}` : ''}. Pedido em{' '}
+                      {new Date(p.criado_em).toLocaleDateString('pt-BR')}
+                    </span>
+                  </div>
+                  <div className="botoes-pendente">
+                    <button onClick={() => decidir(p, 'aprovado')}>Aprovar</button>
+                    <button className="perigo" onClick={() => decidir(p, 'recusado')}>
+                      Recusar
+                    </button>
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        </section>
+      )}
+
+      {pedidosAprovados.length > 0 && (
+        <details className="liberadas-admin">
+          <summary>Disciplinas de outros períodos já liberadas ({pedidosAprovados.length})</summary>
+          <ul>
+            {pedidosAprovados.map((p) => (
+              <li key={p.id}>
+                <span>
+                  <strong>{nomeDaPessoa(p.aluno_id)?.nome ?? 'Aluno'}</strong>: {descreverDisciplina(p.disciplina_id)}
+                </span>
+                <button
+                  className="secundario"
+                  onClick={() => window.confirm('Retirar o acesso a esta disciplina?') && decidir(p, null)}
+                >
+                  Retirar
+                </button>
+              </li>
+            ))}
+          </ul>
+        </details>
       )}
 
       <div className="filtros">

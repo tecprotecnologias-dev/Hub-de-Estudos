@@ -1156,3 +1156,80 @@ textarea {
   text-transform: none;
   color: var(--texto);
 }
+
+/* Pedido de disciplina de outro período (aluno da Graduação, fim da página Disciplinas) */
+.pedidos-disciplina {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--borda-forte);
+  max-width: 46rem;
+}
+
+.pedidos-disciplina h2 {
+  font-size: 1.45rem;
+  margin: 0 0 0.4rem;
+}
+
+.pedir-disciplina {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.pedir-disciplina label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1 1 18rem;
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+
+.lista-pedidos,
+.liberadas-admin ul {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--borda);
+}
+
+.lista-pedidos li,
+.liberadas-admin li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--borda);
+}
+
+.lista-pedidos li > span:first-child {
+  flex: 1 1 16rem;
+}
+
+.situacao-pedido {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ouro);
+}
+
+.situacao-pedido.aprovado {
+  color: var(--certa);
+}
+
+.situacao-pedido.recusado {
+  color: var(--errada);
+}
+
+.liberadas-admin {
+  margin: 0 0 1.5rem;
+}
+
+.liberadas-admin summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--primaria-texto);
+}

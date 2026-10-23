@@ -6,6 +6,7 @@ import { disciplinas } from '../data/disciplinas'
 import { questoes } from '../data/questoes'
 import CamposTurma from '../lib/CamposTurma'
 import ComFiltrosAoLado from '../lib/ComFiltrosAoLado'
+import PedidosDisciplina from '../lib/PedidosDisciplina'
 import { useDisciplinaVisivel } from '../lib/Protegida'
 import {
   confereTurma,
@@ -65,6 +66,7 @@ export default function Disciplinas() {
           </div>
         </section>
       ))}
+      <PedidosDisciplina />
     </>
   )
 

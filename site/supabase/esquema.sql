@@ -240,5 +240,44 @@ $$;
 
 grant execute on function public.matricula_em_uso(text) to anon, authenticated;
 
+-- Disciplinas de outros períodos (23/10/2026). O aluno da Graduação vê as disciplinas do
+-- seu período; se cursa alguma de outro período (dependência ou adiantamento), pede acesso
+-- pelo site e o administrador aprova ou recusa. Só as aprovadas aparecem para ele.
+create table if not exists public.pedidos_disciplina (
+  id bigint generated always as identity primary key,
+  aluno_id uuid not null references public.perfis (id) on delete cascade,
+  -- id da disciplina no site (src/data/disciplinas.ts), ex.: 'programacao-e-design-para-web-ii'
+  disciplina_id text not null check (disciplina_id ~ '^[a-z0-9-]{1,100}$'),
+  situacao text not null default 'pendente' check (situacao in ('pendente', 'aprovado', 'recusado')),
+  criado_em timestamptz not null default now(),
+  decidido_em timestamptz,
+  unique (aluno_id, disciplina_id)
+);
+
+alter table public.pedidos_disciplina enable row level security;
+grant select, insert, update, delete on public.pedidos_disciplina to authenticated;
+revoke all on public.pedidos_disciplina from anon;
+
+-- O aluno vê os seus pedidos; o administrador vê todos.
+drop policy if exists "ver pedidos" on public.pedidos_disciplina;
+create policy "ver pedidos" on public.pedidos_disciplina
+  for select using (aluno_id = auth.uid() or public.eh_admin());
+
+-- O aluno só cria pedido para si, sempre como pendente (não se aprova sozinho).
+drop policy if exists "aluno pede" on public.pedidos_disciplina;
+create policy "aluno pede" on public.pedidos_disciplina
+  for insert with check (aluno_id = auth.uid() and situacao = 'pendente' and decidido_em is null);
+
+-- Só o administrador aprova ou recusa.
+drop policy if exists "administrador decide" on public.pedidos_disciplina;
+create policy "administrador decide" on public.pedidos_disciplina
+  for update using (public.eh_admin()) with check (public.eh_admin());
+
+-- O aluno apaga um pedido ainda não aprovado (cancelar ou limpar um recusado); o
+-- administrador apaga qualquer um (retirar o acesso).
+drop policy if exists "apagar pedido" on public.pedidos_disciplina;
+create policy "apagar pedido" on public.pedidos_disciplina
+  for delete using ((aluno_id = auth.uid() and situacao <> 'aprovado') or public.eh_admin());
+
 -- Avisa a API do Supabase que o esquema mudou (colunas novas passam a valer na hora).
 notify pgrst, 'reload schema';
