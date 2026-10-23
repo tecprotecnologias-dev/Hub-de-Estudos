@@ -693,7 +693,7 @@ export const apostilas: Apostila[] = [
     titulo: 'Banco de Dados com Prisma',
     disciplinaId: 'programacao-e-design-para-web-ii',
     descricao:
-      'Por que um banco de dados e o que é um ORM, instalação do Prisma com SQLite, esquema e migração, a conexão única, Server Actions gravando no banco, um Route Handler e o que continua na Web III.',
+      'Por que um banco de dados e o que é um ORM, instalação do Prisma com SQLite, esquema e migração, a conexão única, Server Actions gravando no banco e um Route Handler (uma API dentro do Next.js).',
   },
   {
     // COMANDOS GITHUB.docx, convertido com ferramentas/converter_word_comandos.py
