@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { authConfigurado, enderecoDoSite, supabase } from './supabase'
-import { CURSO_PADRAO, NIVEL_PADRAO, type Nivel } from './niveis'
+import { CURSO_PADRAO, NIVEL_PADRAO, PERIODO_DAS_OPTATIVAS, type Nivel } from './niveis'
 
 // Quem está logado e com que perfil. Os dados do perfil vêm da tabela public.perfis
 // (supabase/esquema.sql); o login em si é do Supabase Auth, só com e-mail e senha
@@ -141,8 +141,9 @@ export function podeAcessar(perfil: Perfil | null, tipos?: TipoPerfil[]): boolea
 
 /**
  * O perfil pode ver esta disciplina? (periodo 0 = optativa)
- * Aluno da Graduação: do seu curso, somente o período atual, mais as optativas do curso
- * (desde 23/10/2026: nem os períodos anteriores nem os seguintes).
+ * Aluno da Graduação: do seu curso, somente o período atual (desde 23/10/2026: nem os
+ * períodos anteriores nem os seguintes); as optativas, no período em que a matriz as coloca
+ * (PERIODO_DAS_OPTATIVAS).
  * Aluno da educação básica (Fundamental I e II, Médio): somente a sua série.
  * Aluno da Graduação: também as de outros períodos que a administração liberou (`liberadas`).
  * Professor e administrador: tudo.
@@ -161,7 +162,11 @@ export function podeVerDisciplina(
   if (perfil.periodo == null) return false
   if (nivel !== 'graduacao') return d.periodo === perfil.periodo
   if ((d.curso ?? CURSO_PADRAO) !== (perfil.curso ?? CURSO_PADRAO)) return false
-  return d.periodo === 0 || d.periodo === perfil.periodo
+  if (d.periodo === 0) {
+    const periodoOptativas = PERIODO_DAS_OPTATIVAS[d.curso ?? CURSO_PADRAO]
+    return periodoOptativas == null || periodoOptativas === perfil.periodo
+  }
+  return d.periodo === perfil.periodo
 }
 
 // Ações de login, usadas pelas telas de acesso -------------------------------------

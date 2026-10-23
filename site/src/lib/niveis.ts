@@ -85,6 +85,15 @@ export function tipoDoCurso(curso: string | null | undefined): TipoGraduacao | n
   return CURSOS.find((c) => c.id === curso)?.tipo ?? null
 }
 
+/**
+ * Em que período o aluno cursa as optativas de cada curso (pela matriz; em Sistemas para
+ * Internet, a "Optativa I" fica no 4º período). Só os alunos desse período veem as
+ * optativas; os outros podem pedir acesso. Curso sem período aqui: optativas para todos.
+ */
+export const PERIODO_DAS_OPTATIVAS: Record<string, number> = {
+  'sistemas-para-internet': 4,
+}
+
 /** Períodos do curso: Tecnólogo até o 5º; Bacharelado e Licenciatura até o 10º (pedido de 23/10/2026). */
 export function etapasDoCurso(curso: string | null | undefined): number[] {
   const ultimo = tipoDoCurso(curso ?? CURSO_PADRAO) === 'tecnologo' ? 5 : 10

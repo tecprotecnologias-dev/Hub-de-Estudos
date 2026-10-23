@@ -2619,6 +2619,24 @@ const graduacao: Disciplina[] = [
     "tecnologias": []
   },
   {
+    "id": "laboratorio-de-projeto-integrador-ii",
+    "periodo": 5,
+    "nome": "Laboratório de Projeto Integrador II",
+    "objetivos": [],
+    "habilidades": [],
+    "unidades": [],
+    "tecnologias": []
+  },
+  {
+    "id": "projeto-de-extensao-iii",
+    "periodo": 5,
+    "nome": "Projeto de Extensão III",
+    "objetivos": [],
+    "habilidades": [],
+    "unidades": [],
+    "tecnologias": []
+  },
+  {
     "id": "arquitetura-da-informacao-wireframe",
     "periodo": 0,
     "nome": "Arquitetura da Informação - Wireframe",

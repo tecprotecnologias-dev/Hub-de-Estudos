@@ -1,6 +1,6 @@
 import { disciplinas } from '../data/disciplinas'
 import type { Disciplina, Questao } from '../data/tipos'
-import { CURSO_PADRAO, CURSOS, dadosNivel, NIVEIS, NIVEL_PADRAO, nomeCurso, nomeEtapa, etapasDoCurso, tipoDoCurso, type Nivel, type TipoGraduacao } from './niveis'
+import { CURSO_PADRAO, CURSOS, dadosNivel, NIVEIS, NIVEL_PADRAO, nomeCurso, nomeEtapa, etapasDoCurso, PERIODO_DAS_OPTATIVAS, tipoDoCurso, type Nivel, type TipoGraduacao } from './niveis'
 
 export const LETRAS = ['A', 'B', 'C', 'D', 'E', 'F']
 
@@ -35,6 +35,9 @@ export function partesDoGrupo(chave: string): PartesGrupo {
 export function nomeGrupo(chave: string): string {
   const { nivel, curso, etapa } = partesDoGrupo(chave)
   const antes = nivel === 'graduacao' ? nomeCurso(curso) : dadosNivel(nivel).nome
+  // optativas com período na matriz: "Sistemas para Internet – Optativas do 4º período"
+  const periodoOptativas = etapa === 0 ? PERIODO_DAS_OPTATIVAS[curso ?? CURSO_PADRAO] : undefined
+  if (periodoOptativas) return `${antes} – Optativas do ${nomeEtapa(nivel, periodoOptativas)}`
   return `${antes} – ${nomeEtapa(nivel, etapa)}`
 }
 

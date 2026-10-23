@@ -27,4 +27,6 @@ export const PRE_REQUISITOS: Record<string, string[]> = {
   // 5º período
   'programacao-e-design-para-web-iii': ['programacao-e-design-para-web-ii', 'programacao-cliente-servidor'],
   'projeto-integrador-ii': ['projeto-integrador-i'],
+  'laboratorio-de-projeto-integrador-ii': ['projeto-integrador-i'],
+  'projeto-de-extensao-iii': ['projeto-de-extensao-ii'],
 }

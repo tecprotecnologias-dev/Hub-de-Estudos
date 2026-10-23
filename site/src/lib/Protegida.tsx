@@ -91,7 +91,7 @@ export function ProtegeDisciplina({ disciplinaId, children }: { disciplinaId: st
               : outroCurso
                 ? `${d.nome} é do curso ${nomeCurso(d.curso)}, e o seu cadastro é do curso ${nomeCurso(perfil?.curso)}.`
                 : (d.nivel ?? NIVEL_PADRAO) === 'graduacao'
-                ? `${d.nome} é do ${nomeEtapa(d.nivel, d.periodo)}. Você tem acesso às disciplinas do ${
+                ? `${d.nome} ${d.periodo === 0 ? 'é optativa' : `é do ${nomeEtapa(d.nivel, d.periodo)}`}. Você tem acesso às disciplinas do ${
                     perfil?.periodo ? nomeEtapa(perfil.nivel, perfil.periodo) : 'seu período'
                   }.`
                 : `Esta disciplina é do ${nomeEtapa(d.nivel, d.periodo)}. Você tem acesso às disciplinas do ${
