@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { disciplinas } from '../data/disciplinas'
+import { PRE_REQUISITOS } from '../data/prerequisitos'
 import { podeVerDisciplina, traduzirErro, useAuth } from './auth'
 import { CURSO_PADRAO, NIVEL_PADRAO } from './niveis'
 import { supabase } from './supabase'
@@ -7,7 +8,10 @@ import { grupoDe, nomeGrupo } from './util'
 
 // Aluno da Graduação que cursa disciplina de outro período (dependência ou adiantamento):
 // ele pede acesso aqui e a administração aprova na página Administração (pedido de
-// 23/10/2026). Só disciplinas do próprio curso. A tabela é public.pedidos_disciplina.
+// 23/10/2026). Só disciplinas do próprio curso e que ele já pode cursar pela matriz: todos os
+// pré-requisitos (data/prerequisitos.ts) precisam ser de períodos anteriores ao dele, que
+// ele já cursou. Ex.: quem está no 2º período, cursando a Web I, não vê a Web II. A tabela é
+// public.pedidos_disciplina.
 
 export type SituacaoPedido = 'pendente' | 'aprovado' | 'recusado'
 
@@ -49,13 +53,17 @@ export default function PedidosDisciplina() {
   if (!supabase || !perfil || perfil.tipo !== 'aluno' || (perfil.nivel ?? NIVEL_PADRAO) !== 'graduacao') return null
   const cliente = supabase
 
-  // do mesmo curso, fora do período do aluno e ainda sem pedido
+  // pré-requisito cumprido = disciplina de um período anterior ao do aluno
+  const periodoDe = (id: string) => disciplinas.find((d) => d.id === id)?.periodo ?? 0
+  const cumpriu = (id: string) => perfil.periodo != null && periodoDe(id) < perfil.periodo
+  // do mesmo curso, fora do período do aluno, com os pré-requisitos cumpridos e ainda sem pedido
   const pedidas = new Set(pedidos.map((p) => p.disciplina_id))
   const candidatas = disciplinas.filter(
     (d) =>
       (d.nivel ?? NIVEL_PADRAO) === 'graduacao' &&
       (d.curso ?? CURSO_PADRAO) === (perfil.curso ?? CURSO_PADRAO) &&
       !podeVerDisciplina(perfil, d) &&
+      (PRE_REQUISITOS[d.id] ?? []).every(cumpriu) &&
       !pedidas.has(d.id),
   )
 
@@ -83,7 +91,8 @@ export default function PedidosDisciplina() {
     <section className="pedidos-disciplina" aria-labelledby="titulo-pedidos">
       <h2 id="titulo-pedidos">Cursa disciplina de outro período?</h2>
       <p className="dica">
-        Escolha a disciplina e peça acesso. Depois que a administração aprovar, ela aparece na sua lista de disciplinas.
+        Aparecem só as disciplinas que você já pode cursar pela matriz do curso (com os pré-requisitos cumpridos).
+        Escolha a disciplina e peça acesso; depois que a administração aprovar, ela aparece na sua lista.
       </p>
       {candidatas.length > 0 && (
         <div className="pedir-disciplina">

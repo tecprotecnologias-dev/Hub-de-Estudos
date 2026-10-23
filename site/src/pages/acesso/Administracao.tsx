@@ -200,13 +200,18 @@ export default function Administracao() {
               const aluno = nomeDaPessoa(p.aluno_id)
               return (
                 <li key={p.id}>
-                  <div>
-                    <strong>{descreverDisciplina(p.disciplina_id)}</strong>
+                  <div className="pedido-admin">
+                    <span>
+                      <strong>{aluno?.nome ?? 'Aluno não encontrado'}</strong>
+                      {aluno && <span className="dica"> ({aluno.email})</span>}
+                    </span>
                     <span className="dica">
-                      {aluno?.nome ?? 'Aluno'}
-                      {aluno?.periodo ? `, ${aluno.periodo}º período` : ''}
+                      Está no {aluno?.periodo ? `${aluno.periodo}º período` : 'período não informado'}
                       {aluno?.curso ? ` de ${nomeCurso(aluno.curso)}` : ''}. Pedido em{' '}
-                      {new Date(p.criado_em).toLocaleDateString('pt-BR')}
+                      {new Date(p.criado_em).toLocaleDateString('pt-BR')}.
+                    </span>
+                    <span>
+                      Pede acesso a: <strong>{descreverDisciplina(p.disciplina_id)}</strong>
                     </span>
                   </div>
                   <div className="botoes-pendente">
@@ -229,7 +234,8 @@ export default function Administracao() {
             {pedidosAprovados.map((p) => (
               <li key={p.id}>
                 <span>
-                  <strong>{nomeDaPessoa(p.aluno_id)?.nome ?? 'Aluno'}</strong>: {descreverDisciplina(p.disciplina_id)}
+                  <strong>{nomeDaPessoa(p.aluno_id)?.nome ?? 'Aluno não encontrado'}</strong>
+                  <span className="dica"> ({nomeDaPessoa(p.aluno_id)?.email})</span>: {descreverDisciplina(p.disciplina_id)}
                 </span>
                 <button
                   className="secundario"
