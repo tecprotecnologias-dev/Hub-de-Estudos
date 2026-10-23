@@ -696,16 +696,16 @@ export const apostilas: Apostila[] = [
       'Por que um banco de dados e o que é um ORM, instalação do Prisma com SQLite, esquema e migração, a conexão única, Server Actions gravando no banco e um Route Handler (uma API dentro do Next.js).',
   },
   {
-    // COMANDOS GITHUB.docx, convertido com ferramentas/converter_word_comandos.py
-    //   --remover-primeiro "Bem, nós iremos repassar" (parágrafo repetido fora do lugar)
-    //   e --trocar para corrigir digitação nos títulos (bransh, CHECOUT, GIR, hitórico, seu commits)
+    // Partiu do COMANDOS GITHUB.docx (convertido com ferramentas/converter_word_comandos.py) e foi
+    // reescrito em 23/10/2026: erros corrigidos, atualizado para o Git 2.56 (main, git switch,
+    // git restore, login pelo navegador) e com o envio para o GitHub. Não converter o .docx de novo.
     id: 'web2-git',
     rotulo: 'Guia',
     grupo: 'Material complementar',
     titulo: 'Git e GitHub: Comandos Essenciais',
     disciplinaId: 'programacao-e-design-para-web-ii',
     descricao:
-      'Instalação e configuração no Windows, criação do repositório, add, commit, reset, branch, merge, stash, tag, fetch, pull, push e outros comandos.',
+      'Instalação no Windows, o primeiro repositório, o dia a dia (status, add, commit, log), como desfazer, branches e conflitos, e o envio do projeto para o GitHub com login pelo navegador.',
   },
   {
     // "Como funciona o react.png" (infográfico da professora), com o rodapé do nome recortado, publicado em

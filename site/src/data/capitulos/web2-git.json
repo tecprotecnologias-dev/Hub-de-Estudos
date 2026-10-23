@@ -1,173 +1,175 @@
 {
  "numero": null,
- "titulo": "GIT E GITHUB",
+ "titulo": "Git e GitHub: Comandos Essenciais",
  "blocos": [
   {
    "t": "h2",
-   "id": "instalando-e-configurando-no-windows",
-   "texto": "Instalando e Configurando no WINDOWS"
+   "id": "1-instalacao-e-configuracao-no-windows",
+   "texto": "1. Instalação e configuração no Windows"
   },
   {
    "t": "h3",
-   "texto": "INSTALAÇÃO"
+   "texto": "Instalação"
   },
   {
    "t": "p",
-   "html": "Instalar o Git no Windows é muito fácil. O projeto msysgit tem um dos procedimentos mais simples de instalação. Simplesmente baixe o arquivo exe do instalador a partir da página do GitHub e execute-o:"
+   "html": "Baixe o instalador oficial do Git para Windows em <a href=\"https://git-scm.com/install/windows\" target=\"_blank\" rel=\"noreferrer\">git-scm.com/install/windows</a> e execute. As opções que já vêm marcadas servem. Na tela <strong>\"Adjusting the name of the initial branch\"</strong>, escolha <strong>\"Override the default branch name for new repositories\"</strong> e deixe <code>main</code>."
   },
   {
    "t": "p",
-   "html": "https://msysgit.github.com/"
+   "html": "O instalador traz o <strong>Git Bash</strong>, um terminal para digitar os comandos deste guia (o terminal do VS Code também serve), e o <strong>Git Credential Manager</strong>, que faz o login no GitHub pelo navegador. Para conferir a instalação, abra um terminal novo e digite:"
+  },
+  {
+   "t": "codigo",
+   "texto": "git --version"
+  },
+  {
+   "t": "p",
+   "html": "A resposta é parecida com <code>git version 2.56.0.windows.2</code>."
   },
   {
    "t": "h3",
-   "texto": "CONFIGURAÇÃO- git config"
+   "texto": "Sua identidade: git config"
   },
   {
    "t": "p",
-   "html": "Após concluir a instalação, você terá tanto uma versão command line (linha de comando, incluindo um cliente SSH que será útil depois) e uma GUI padrão."
-  },
-  {
-   "t": "p",
-   "estilo": "destaque",
-   "html": "Sua Identidade"
-  },
-  {
-   "t": "p",
-   "html": "A primeira coisa que você deve fazer quando instalar o Git é definir o seu nome de usuário e endereço de e-mail. Isso é importante porque todos os commits no Git utilizam essas informações, e está imutavelmente anexado nos commits que você realiza:"
+   "html": "Antes do primeiro commit, informe o seu nome e o seu e-mail. Eles ficam gravados em cada commit que você fizer:"
   },
   {
    "t": "codigo",
-   "texto": "git config --global user.name \"John Doe\"\ngit config --global user.email johndoe@example.com"
+   "texto": "git config --global user.name \"Maria Silva\"\ngit config --global user.email \"maria@exemplo.com\""
   },
   {
-   "t": "p",
-   "estilo": "destaque",
-   "html": "Ativando Cores"
-  },
-  {
-   "t": "p",
-   "html": "Para ativar as cores nas respostas de comandos, você pode utilizar o seguinte comando:"
-  },
-  {
-   "t": "codigo",
-   "texto": "git config --global color.ui true"
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Use o mesmo e-mail da sua conta do GitHub. Assim os seus commits aparecem no seu perfil."
+    }
+   ]
   },
   {
    "t": "h3",
-   "texto": "OBTER AJUDA – git help"
+   "texto": "O nome do branch principal"
   },
   {
    "t": "p",
-   "html": "Se você precisar de ajuda ao usar Git, existem três maneiras de obter a ajuda para qualquer um dos comandos Git:"
+   "html": "O branch principal de um projeto se chama <code>main</code> (em materiais antigos aparece <code>master</code>). O GitHub usa <code>main</code> desde 2020, e o Git passa a usar <code>main</code> por padrão a partir da versão 3.0. Se você não escolheu <code>main</code> na instalação, configure agora:"
   },
   {
    "t": "codigo",
-   "texto": "git help {comando}\ngit {comando} --help\nman git- {comando}"
+   "texto": "git config --global init.defaultBranch main"
+  },
+  {
+   "t": "p",
+   "html": "As cores nas respostas dos comandos já vêm ligadas nas versões atuais; não é preciso configurar."
+  },
+  {
+   "t": "h3",
+   "texto": "Obter ajuda: git help"
+  },
+  {
+   "t": "p",
+   "html": "O primeiro comando abre a página de ajuda completa no navegador; o segundo mostra um resumo das opções no próprio terminal:"
+  },
+  {
+   "t": "codigo",
+   "texto": "git help commit\ngit commit -h"
   },
   {
    "t": "h2",
-   "id": "criando-o-projeto-comandos-git",
-   "texto": "Criando o projeto - COMANDOS GIT"
+   "id": "2-criando-o-projeto",
+   "texto": "2. Criando o projeto"
   },
   {
    "t": "h3",
-   "texto": "REPOSITÓRIO GIT - git init"
+   "texto": "Novo repositório: git init"
   },
   {
    "t": "p",
-   "html": "Você pode obter um projeto Git utilizando duas formas principais. A primeira faz uso de um projeto ou diretório existente e o importa para o Git. A segunda clona um repositório Git existente a partir de outro servidor."
-  },
-  {
-   "t": "p",
-   "estilo": "destaque",
-   "html": "Inicializando um Repositório em um Diretório Existente"
-  },
-  {
-   "t": "p",
-   "html": "Caso você esteja iniciando o monitoramento de um projeto existente com Git, você precisa ir para o diretório do projeto e digitar."
+   "html": "Entre na pasta do projeto e transforme-a num repositório:"
   },
   {
    "t": "codigo",
-   "texto": "git init"
+   "texto": "cd meu-projeto\ngit init"
   },
   {
    "t": "p",
-   "html": "Isso cria um subdiretório chamado .git que contém todos os arquivos necessários de seu repositório — um esqueleto de repositório Git. Neste ponto, nada em seu projeto é monitorado."
-  },
-  {
-   "t": "p",
-   "estilo": "destaque",
-   "html": "Primeira Versão"
-  },
-  {
-   "t": "p",
-   "html": "Caso você queira começar a controlar o versionamento dos arquivos existentes (diferente de um diretório vazio), você provavelmente deve começar a monitorar esses arquivos e fazer um commit inicial. Você pode realizar isso com poucos comandos"
-  },
-  {
-   "t": "codigo",
-   "texto": "touch .gitignore\ngit add .gitignore\ngit commit -m \"Versão inicial do projeto\""
-  },
-  {
-   "t": "p",
-   "html": "Bem, nós iremos repassar esses comandos em um momento. Neste ponto, você tem um repositório Git com arquivos monitorados e um commit inicial."
+   "html": "Isso cria a pasta oculta <code>.git</code>, onde o Git guarda todo o histórico. Por enquanto, nenhum arquivo está sendo monitorado."
   },
   {
    "t": "h3",
-   "texto": "GIT CLONE – clonando um repositório existente"
+   "texto": "O que não vai para o repositório: .gitignore"
   },
   {
    "t": "p",
-   "html": "Você clona um repositório com <strong>git clone [url]</strong>. Por exemplo, caso você queira clonar a biblioteca Git do Ruby chamada Grit, você pode fazê-lo da seguinte forma:"
+   "html": "Crie na pasta do projeto um arquivo chamado <code>.gitignore</code> com o que o Git deve ignorar. Num projeto Node.js, por exemplo:"
   },
   {
    "t": "codigo",
-   "texto": "git clone git://github.com/schacon/grit.git"
+   "texto": "node_modules/\n.env"
   },
   {
    "t": "p",
-   "html": "Se você entrar no novo diretório grit, você verá todos os arquivos do projeto nele, pronto para serem editados ou utilizados. Caso você queira clonar o repositório em um diretório diferente de grit, é possível especificar esse diretório utilizando a opção abaixo:"
-  },
-  {
-   "t": "codigo",
-   "texto": "git clone git://github.com/schacon/grit.git mygrit"
-  },
-  {
-   "t": "p",
-   "html": "Este comando faz exatamente a mesma coisa que o anterior, mas o diretório alvo será chamado <strong>mygrit</strong>."
+   "html": "A pasta <code>node_modules</code> é grande e pode ser baixada de novo com <code>npm install</code>; o arquivo <code>.env</code> guarda senhas e não pode ser publicado."
   },
   {
    "t": "h3",
-   "texto": "GIT ADD - adicionando alterações"
-  },
-  {
-   "t": "p",
-   "html": "Quando um repositório é inicialmente clonado, todos os seus arquivos estarão monitorados e inalterados porque você simplesmente os obteve e ainda não os editou. Conforme você edita esses arquivos, o Git passa a vê-los como modificados, porque você os alterou desde seu último commit. Você seleciona esses arquivos modificados e então faz o commit de todas as alterações selecionadas e o ciclo se repete."
-  },
-  {
-   "t": "p",
-   "estilo": "destaque",
-   "html": "Monitorando Novos Arquivos"
-  },
-  {
-   "t": "p",
-   "html": "Para passar a monitorar um novo arquivo, use o comando <strong>git add</strong>. Para monitorar o arquivo <strong>README</strong>, você pode rodar isso:"
+   "texto": "O primeiro commit"
   },
   {
    "t": "codigo",
-   "texto": "git add README"
+   "texto": "git add .\ngit commit -m \"Primeira versão do projeto\""
   },
   {
    "t": "p",
-   "html": "Se você rodar o comando <strong>git status</strong>, você pode ver que o seu arquivo <strong>README</strong> agora está sendo monitorado. Os arquivos monitorados serão os que faram parte do commit."
+   "html": "O <code>git add .</code> seleciona todos os arquivos da pasta (menos os do <code>.gitignore</code>), e o <code>git commit</code> grava essa versão no histórico. Os dois comandos são explicados na parte 3."
   },
   {
    "t": "h3",
-   "texto": "GIT STATUS – verificando status"
+   "texto": "Copiar um projeto que já existe: git clone"
   },
   {
    "t": "p",
-   "html": "A principal ferramenta utilizada para determinar quais arquivos estão em quais estados é o comando:"
+   "html": "Para baixar um repositório do GitHub, copie o endereço no botão <strong>Code</strong> da página do projeto e use:"
+  },
+  {
+   "t": "codigo",
+   "texto": "git clone https://github.com/usuario/projeto.git"
+  },
+  {
+   "t": "p",
+   "html": "O projeto é baixado numa pasta com o nome dele (<code>projeto</code>). Para escolher outro nome de pasta, informe-o no fim:"
+  },
+  {
+   "t": "codigo",
+   "texto": "git clone https://github.com/usuario/projeto.git minha-pasta"
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Endereços que começam com <code>git://</code>, comuns em materiais antigos, não funcionam mais no GitHub desde 2022. Use o endereço com <code>https://</code>."
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "id": "3-o-dia-a-dia-status-add-diff-commit-e-log",
+   "texto": "3. O dia a dia: status, add, diff, commit e log"
+  },
+  {
+   "t": "p",
+   "html": "O trabalho com o Git segue um ciclo: você altera arquivos, <strong>seleciona</strong> as alterações que quer gravar (a área de seleção, ou <em>stage</em>) e grava uma versão com o <strong>commit</strong>."
+  },
+  {
+   "t": "h3",
+   "texto": "Ver a situação: git status"
   },
   {
    "t": "codigo",
@@ -175,302 +177,384 @@
   },
   {
    "t": "p",
-   "html": "O comando lhe mostra em qual branch você se encontra. Vamos dizer que você adicione um novo arquivo em seu projeto, um simples arquivo <strong>README</strong>. Caso o arquivo não exista e você execute <strong>git status</strong>, você verá o arquivo não monitorado dessa forma:"
+   "html": "Mostra em que branch você está e o estado dos arquivos. Com um arquivo novo, <code>README.md</code>, ainda não monitorado, a resposta é:"
   },
   {
    "t": "codigo",
-   "texto": "# On branch master\n# Untracked files:\n# (use \"git add {file}...\" to include in what will be committed)\n#\n# README\nnothing added to commit but untracked files present (use \"git add\" to track)"
+   "texto": "On branch main\nUntracked files:\n  (use \"git add <file>...\" to include in what will be committed)\n\tREADME.md\n\nnothing added to commit but untracked files present (use \"git add\" to track)"
   },
   {
    "t": "p",
-   "html": "Você pode ver que o seu novo arquivo <strong>README</strong> não está sendo monitorado, pois está listado sob o cabeçalho <strong>\"Untracked files\"</strong> na saída do comando status. Não monitorado significa basicamente que o Git está vendo um arquivo que não existia na última captura (commit); o Git não vai incluí-lo nas suas capturas de commit até que você o diga explicitamente que assim o faça. Ele faz isso para que você não inclua acidentalmente arquivos binários gerados, ou outros arquivos que você não têm a intenção de incluir. Digamos, que você queira incluir o arquivo <strong>README</strong>, portanto vamos começar a monitorar este arquivo."
+   "html": "<strong>Untracked files</strong> são arquivos que o Git vê na pasta, mas ainda não monitora: eles só entram no próximo commit se você mandar."
   },
   {
    "t": "h3",
-   "texto": "GIT DIFF - Verificando Mudanças"
-  },
-  {
-   "t": "p",
-   "html": "Se o comando git status for muito vago — você quer saber exatamente o que você alterou, não apenas quais arquivos foram alterados — você pode utilizar o comando."
+   "texto": "Selecionar alterações: git add"
   },
   {
    "t": "codigo",
-   "texto": "git diff"
+   "texto": "git add README.md\ngit add ."
   },
   {
    "t": "p",
-   "html": "Apesar do comando git status responder essas duas perguntas de maneira geral, o git diff mostra as linhas exatas que foram adicionadas e removidas — o patch, por assim dizer."
-  },
-  {
-   "t": "p",
-   "html": "Se você quer ver o que selecionou que irá no seu próximo commit, pode utilizar:"
-  },
-  {
-   "t": "codigo",
-   "texto": "git diff --cached"
+   "html": "O primeiro seleciona um arquivo; o segundo, tudo o que mudou na pasta. Depois do <code>git add</code>, o <code>git status</code> mostra o arquivo em <strong>\"Changes to be committed\"</strong>."
   },
   {
    "t": "h3",
-   "texto": "GIT COMMIT"
-  },
-  {
-   "t": "p",
-   "html": "Armazena o conteúdo atual do índice em um novo commit, juntamente com uma mensagem de registro do usuário que descreve as mudanças.<br>Se usa o commit depois de já ter feito o <strong>git add</strong>, para fazer o commit:"
+   "texto": "Ver o que mudou: git diff"
   },
   {
    "t": "codigo",
-   "texto": "git commit -m \"Mensagem\""
+   "texto": "git diff\ngit diff --staged"
   },
   {
    "t": "p",
-   "html": "Para commitar também os arquivos versionados mesmo não estando no Stage basta adicionar o parâmetro -a"
-  },
-  {
-   "t": "codigo",
-   "texto": "git commit -a -m \"Mensagem\""
-  },
-  {
-   "t": "p",
-   "html": "Refazendo commit quando esquecer de adicionar um arquivo no Stage:"
-  },
-  {
-   "t": "codigo",
-   "texto": "git commit -m \"Mensagem\" --amend"
-  },
-  {
-   "t": "p",
-   "html": "O amend é destrutivo e só deve ser utilizado antes do commit ter sido enviado ao servidor remoto."
+   "html": "O <code>git diff</code> mostra, linha a linha, o que você alterou e ainda não selecionou; o <code>git diff --staged</code> mostra o que já está selecionado e vai entrar no próximo commit."
   },
   {
    "t": "h3",
-   "texto": "GIT RESET – desfazendo coisas"
-  },
-  {
-   "t": "p",
-   "html": "Em qualquer fase, você pode querer desfazer alguma coisa. Aqui, veremos algumas ferramentas básicas para desfazer modificações que você fez. Cuidado, porque você não pode desfazer algumas dessas mudanças. Essa é uma das poucas áreas no Git onde você pode perder algum trabalho se fizer errado.<br>Para voltar ao último commit:"
+   "texto": "Gravar uma versão: git commit"
   },
   {
    "t": "codigo",
-   "texto": "git reset --hard HEAD~1"
+   "texto": "git commit -m \"Formulário de contato com validação\""
   },
   {
    "t": "p",
-   "html": "Para voltar ao último commit e mantém os últimos arquivos no Stage:"
+   "html": "Escreva na mensagem o que a versão traz, de um jeito que você entenda daqui a um mês. Para selecionar e gravar de uma vez os arquivos que <strong>já eram monitorados</strong> (os novos continuam precisando do <code>git add</code>):"
   },
   {
    "t": "codigo",
-   "texto": "git reset --soft HEAD~1"
+   "texto": "git commit -am \"Corrige o cálculo do total\""
   },
   {
    "t": "p",
-   "html": "Volta para o commit com a hash XXXXXXXXXXX:"
+   "html": "Esqueceu um arquivo ou errou a mensagem do último commit? Selecione o que faltou e refaça o commit:"
   },
   {
    "t": "codigo",
-   "texto": "git reset --hard XXXXXXXXXXX"
+   "texto": "git add arquivo-esquecido.js\ngit commit --amend -m \"Mensagem certa\""
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O <code>--amend</code> troca o último commit por outro. Use só antes de enviar o commit ao GitHub."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Ver o histórico: git log"
+  },
+  {
+   "t": "codigo",
+   "texto": "git log\ngit log --oneline\ngit log --oneline --graph --all"
   },
   {
    "t": "p",
-   "estilo": "destaque",
-   "html": "Recuperando commit apagado pelo git reset"
+   "html": "O <code>git log</code> mostra os commits com autor, data e mensagem (aperte <code>q</code> para sair). O <code>--oneline</code> mostra um commit por linha, com o código curto (o <em>hash</em>), e o <code>--graph --all</code> desenha os branches."
+  },
+  {
+   "t": "h2",
+   "id": "4-desfazendo-coisas",
+   "texto": "4. Desfazendo coisas"
   },
   {
    "t": "p",
-   "html": "Para visualizar os hashs"
+   "html": "Cada situação tem o seu comando. Leia a tabela com atenção: alguns deles apagam trabalho que não pode ser recuperado."
+  },
+  {
+   "t": "tabela",
+   "cabecalho": [
+    "O que você quer",
+    "Comando"
+   ],
+   "linhas": [
+    [
+     "Tirar um arquivo da seleção (desfazer o <code>git add</code>)",
+     "<code>git restore --staged arquivo</code>"
+    ],
+    [
+     "Descartar as alterações de um arquivo e voltar à versão do último commit",
+     "<code>git restore arquivo</code>"
+    ],
+    [
+     "Desfazer o último commit e manter as alterações selecionadas",
+     "<code>git reset --soft HEAD~1</code>"
+    ],
+    [
+     "Desfazer o último commit e manter as alterações nos arquivos, fora da seleção",
+     "<code>git reset HEAD~1</code>"
+    ],
+    [
+     "Apagar o último commit <strong>e</strong> as alterações dele",
+     "<code>git reset --hard HEAD~1</code>"
+    ],
+    [
+     "Voltar o projeto inteiro para um commit antigo, apagando tudo o que veio depois",
+     "<code>git reset --hard a1b2c3d</code>"
+    ],
+    [
+     "Desfazer um commit que já foi enviado ao GitHub",
+     "<code>git revert a1b2c3d</code>"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "html": "<code>HEAD~1</code> quer dizer \"o commit anterior ao atual\"; <code>a1b2c3d</code> é o código curto de um commit, que aparece no <code>git log --oneline</code>."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "O <code>git restore arquivo</code> e o <code>git reset --hard</code> jogam fora as alterações que não estavam num commit, e elas não voltam. Em commits que já foram enviados ao GitHub, não use o <code>reset</code>: use o <code>git revert</code>, que cria um commit novo desfazendo o antigo, sem apagar o histórico."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Recuperar um commit apagado pelo reset: git reflog"
+  },
+  {
+   "t": "p",
+   "html": "O Git anota por onde o seu projeto passou, inclusive os commits que o <code>reset</code> tirou do histórico:"
   },
   {
    "t": "codigo",
    "texto": "git reflog"
   },
   {
+   "t": "codigo",
+   "texto": "3f9c2e1 HEAD@{0}: reset: moving to HEAD~1\na1b2c3d HEAD@{1}: commit: Formulário de contato com validação"
+  },
+  {
    "t": "p",
-   "html": "E para aplicar:"
+   "html": "Encontre o commit perdido (no exemplo, <code>a1b2c3d</code>) e escolha uma das formas de trazê-lo de volta:"
   },
   {
    "t": "codigo",
-   "texto": "git merge {hash}"
-  },
-  {
-   "t": "h3",
-   "texto": "GIT RM- removendo arquivos"
+   "texto": "git reset --hard a1b2c3d\ngit branch recuperado a1b2c3d"
   },
   {
    "t": "p",
-   "html": "Para remover um arquivo do Git, você tem que removê-lo dos arquivos que estão sendo monitorados (mais precisamente, removê-lo da sua área de seleção) e então fazer o commit. O comando <strong>git rm</strong> faz isso e remove o arquivo do seu diretório para você não ver ele como arquivo não monitorado (untracked file) na próxima vez."
-  },
-  {
-   "t": "codigo",
-   "texto": "git rm -f {arquivo}"
-  },
-  {
-   "t": "p",
-   "html": "Se você modificou o arquivo e já o adicionou na área de seleção, você deve forçar a remoção com a opção <strong>-f</strong>. Essa é uma funcionalidade de segurança para prevenir remoções acidentais de dados que ainda não foram gravados em um snapshot e não podem ser recuperados do Git."
-  },
-  {
-   "t": "h3",
-   "texto": "GIT MV – Movendo arquivos"
-  },
-  {
-   "t": "p",
-   "html": "Diferente de muitos sistemas VCS, o Git não monitora explicitamente arquivos movidos.<br>É um pouco confuso que o Git tenha um comando <strong>mv</strong>. Se você quiser renomear um arquivo no Git, você pode fazer isso com"
-  },
-  {
-   "t": "codigo",
-   "texto": "git mv arquivo_origem arquivo_destino"
-  },
-  {
-   "t": "p",
-   "html": "e funciona. De fato, se você fizer algo desse tipo e consultar o status, você verá que o Git considera que o arquivo foi renomeado."
-  },
-  {
-   "t": "p",
-   "html": "No entanto, isso é equivalente a rodar algo como:"
-  },
-  {
-   "t": "codigo",
-   "texto": "mv README.txt README\ngit rm README.txt\ngit add README"
-  },
-  {
-   "t": "p",
-   "html": "O Git descobre que o arquivo foi renomeado implicitamente, então ele não se importa se você renomeou por este caminho ou com o comando <strong>mv</strong>. A única diferença real é que o comando <strong>mv</strong> é mais conveniente, executa três passos de uma vez. O mais importante, você pode usar qualquer ferramenta para renomear um arquivo, e usar add/rm depois, antes de consolidar com o commit."
-  },
-  {
-   "t": "h3",
-   "texto": "GIT BRANCH – branch básico"
-  },
-  {
-   "t": "p",
-   "html": "Um branch no Git é simplesmente um leve ponteiro móvel para um dos commits. O nome do branch padrão no Git é master. Como você inicialmente fez commits, você tem um branch principal (<strong>master branch</strong>) que aponta para o último commit que você fez. Cada vez que você faz um commit ele avança automaticamente.<br>O que acontece se você criar um branch? Bem, isso cria um ponteiro para que você possa se mover. Vamos dizer que você crie um branch chamado testing. Você faz isso com o comando <strong>git branch</strong>:"
-  },
-  {
-   "t": "codigo",
-   "texto": "git branch testing"
-  },
-  {
-   "t": "p",
-   "html": "Isso cria um ponteiro para o mesmo commit em que você está no momento.<br>Para mudar para um branch existente, você executa o comando <strong>git checkout</strong>. Vamos mudar para o novo branch testing:"
-  },
-  {
-   "t": "codigo",
-   "texto": "git checkout testing"
-  },
-  {
-   "t": "p",
-   "html": "Isto move o HEAD para apontar para o branch testing."
-  },
-  {
-   "t": "h3",
-   "texto": "GIT CHECKOUT – mudando de branch"
-  },
-  {
-   "t": "p",
-   "html": "Com o <strong>git checkout</strong> você pode mudar de branch, caso a branch ainda não exista você poderá passar o parâmetro <strong>-b</strong> para criar."
-  },
-  {
-   "t": "codigo",
-   "texto": "git checkout -b {nome_da_branch}"
-  },
-  {
-   "t": "h3",
-   "texto": "GIT MERGE – merge básico"
-  },
-  {
-   "t": "p",
-   "html": "Suponha que você decidiu que o trabalho na tarefa #53 está completo e pronto para ser feito o merge no branch <strong>master</strong>. Para fazer isso, você fará o merge do seu branch <strong>iss53</strong>, bem como o merge do branch <strong>hotfix</strong> de antes. Tudo que você tem a fazer é executar o checkout do branch para onde deseja fazer o merge e então rodar o comando <strong>git merge</strong>:"
-  },
-  {
-   "t": "codigo",
-   "texto": "git checkout master\ngit merge iss53"
-  },
-  {
-   "t": "h3",
-   "texto": "GIT MERGETOOL – resolvendo conflitos"
-  },
-  {
-   "t": "p",
-   "html": "Se você quer usar uma ferramenta gráfica para resolver esses problemas, você pode executar o seguinte comando que abre uma ferramenta visual de merge adequada e percorre os conflitos."
-  },
-  {
-   "t": "codigo",
-   "texto": "git mergetool"
-  },
-  {
-   "t": "p",
-   "estilo": "destaque",
-   "html": "Arquivos Temporários"
-  },
-  {
-   "t": "p",
-   "html": "<strong>git mergetool</strong> cria <strong>* .orig</strong> arquivos de backup ao resolver fusões. Estes são seguros para remover uma vez que um arquivo foi fundida e sua <strong>git mergetool</strong> sessão foi concluída."
-  },
-  {
-   "t": "h3",
-   "texto": "GIT LOG – histórico de commits"
-  },
-  {
-   "t": "p",
-   "html": "Depois que você tiver criado vários commits, ou se clonou um repositório com um histórico de commits existente, você provavelmente vai querer ver o que aconteceu. A ferramente mais básica e poderosa para fazer isso é o comando:"
-  },
-  {
-   "t": "codigo",
-   "texto": "git log"
-  },
-  {
-   "t": "h3",
-   "texto": "GIT STASH – fazendo stash"
-  },
-  {
-   "t": "p",
-   "html": "Muitas vezes, quando você está trabalhando em uma parte do seu projeto, as coisas estão em um estado confuso e você quer mudar de branch por um tempo para trabalhar em outra coisa. O problema é, você não quer fazer o commit de um trabalho incompleto somente para voltar a ele mais tarde. A resposta para esse problema é o comando <strong>git stash</strong>.<br>Você quer mudar de branch, mas não quer fazer o commit do que você ainda está trabalhando; você irá fazer o stash das modificações. Para fazer um novo stash na sua pilha, execute:"
-  },
-  {
-   "t": "codigo",
-   "texto": "git stash"
-  },
-  {
-   "t": "p",
-   "html": "Seu diretório de trabalho estará limpo.<br>Neste momento, você pode facilmente mudar de branch e trabalhar em outra coisa; suas alterações estão armazenadas na sua pilha. Para ver as stashes que você guardou, você pode usar"
-  },
-  {
-   "t": "codigo",
-   "texto": "git stash list"
-  },
-  {
-   "t": "p",
-   "html": "Você pode aplicar aquele que acabou de fazer o stash com o comando mostrado na saída de ajuda do comando stash original: <strong>git stash apply</strong>. Se você quer aplicar um dos stashes mais antigos, você pode especificá-lo, assim: <strong>git stash apply stash@{2}</strong>. Se você não especificar um stash, Git assume que é o stash mais recente e tenta aplicá-lo."
-  },
-  {
-   "t": "h3",
-   "texto": "GIT TAG"
-  },
-  {
-   "t": "p",
-   "html": "Git tem a habilidade de criar tags em pontos específicos na história do código como pontos importantes. Geralmente as pessoas usam esta funcionalidade para marcar pontos de release (v1.0, e por aí vai). Nesta seção, você aprenderá como listar as tags disponíveis, como criar tags, e quais são os tipos diferentes de tags.<br>Para listar as <strong>tags</strong> execute:"
-  },
-  {
-   "t": "codigo",
-   "texto": "git tag"
-  },
-  {
-   "t": "p",
-   "html": "Para criar uma <strong>tag</strong> basta executar o seguinte comando, caso não queira criar a <strong>tag</strong> anotada, somente retire os parâmetros <strong>-a</strong> e <strong>-m</strong>."
-  },
-  {
-   "t": "codigo",
-   "texto": "git tag -a v1.4 -m 'my version 1.4'"
+   "html": "O primeiro comando volta o branch atual para o commit (cuidado: descarta o que não estiver em commit); o segundo cria um branch novo, <code>recuperado</code>, com o commit, sem mexer no que você está fazendo."
   },
   {
    "t": "h2",
-   "id": "compartilhar-e-atualizar-projetos",
-   "texto": "Compartilhar e Atualizar Projetos"
+   "id": "5-removendo-e-renomeando-arquivos",
+   "texto": "5. Removendo e renomeando arquivos"
   },
   {
    "t": "h3",
-   "texto": "GIT FETCH – fazendo fetch"
+   "texto": "Remover: git rm"
+  },
+  {
+   "t": "codigo",
+   "texto": "git rm arquivo.txt"
   },
   {
    "t": "p",
-   "html": "Para pegar dados dos seus projetos remotos, você pode executar:"
+   "html": "Apaga o arquivo da pasta e já deixa a remoção selecionada para o próximo commit. Se o arquivo tem alterações selecionadas que ainda não foram para um commit, o Git recusa, para você não perder trabalho; para remover assim mesmo, use <code>git rm -f arquivo.txt</code>."
+  },
+  {
+   "t": "p",
+   "html": "Para o Git <strong>parar de monitorar</strong> um arquivo, mas mantê-lo na sua pasta (por exemplo, um <code>.env</code> que foi para o repositório por engano), use <code>--cached</code> e coloque o arquivo no <code>.gitignore</code>:"
+  },
+  {
+   "t": "codigo",
+   "texto": "git rm --cached .env\ngit commit -m \"Tira o .env do repositório\""
+  },
+  {
+   "t": "h3",
+   "texto": "Renomear ou mover: git mv"
+  },
+  {
+   "t": "codigo",
+   "texto": "git mv antigo.js novo.js"
+  },
+  {
+   "t": "p",
+   "html": "Renomeia o arquivo e deixa a mudança selecionada. É o mesmo que renomear pelo Explorador de Arquivos e depois rodar <code>git add .</code>: nos dois casos, o Git percebe que é o mesmo arquivo com outro nome."
+  },
+  {
+   "t": "h2",
+   "id": "6-branches",
+   "texto": "6. Branches"
+  },
+  {
+   "t": "p",
+   "html": "Um <strong>branch</strong> é uma linha de trabalho separada. Você cria um branch para uma tarefa nova (uma tela, uma correção), trabalha nele sem mexer no <code>main</code> e, quando a tarefa fica pronta, junta tudo no <code>main</code>."
+  },
+  {
+   "t": "codigo",
+   "texto": "git branch\ngit branch formulario-contato\ngit switch formulario-contato\ngit switch -c formulario-contato\ngit branch -d formulario-contato"
+  },
+  {
+   "t": "p",
+   "html": "Na ordem: lista os branches (o atual aparece com <code>*</code>); cria um branch; muda para ele; cria e já muda, num comando só; e apaga um branch que já foi juntado ao <code>main</code>."
+  },
+  {
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Nota",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Em materiais mais antigos, para mudar de branch aparece <code>git checkout</code> (e <code>git checkout -b</code> para criar e mudar). Ele ainda funciona, mas o <code>git switch</code>, criado em 2019, é mais simples e faz só isso."
+    }
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Juntar um branch ao main: git merge"
+  },
+  {
+   "t": "p",
+   "html": "Terminou o formulário de contato? Volte para o <code>main</code> e traga o trabalho do branch:"
+  },
+  {
+   "t": "codigo",
+   "texto": "git switch main\ngit merge formulario-contato"
+  },
+  {
+   "t": "h3",
+   "texto": "Resolvendo conflitos"
+  },
+  {
+   "t": "p",
+   "html": "Se os dois branches alteraram as mesmas linhas, o Git não tem como escolher sozinho: ele para o merge e marca o trecho no arquivo:"
+  },
+  {
+   "t": "codigo",
+   "texto": "<<<<<<< HEAD\n<h1>Fale conosco</h1>\n=======\n<h1>Contato</h1>\n>>>>>>> formulario-contato"
+  },
+  {
+   "t": "p",
+   "html": "Acima do <code>=======</code> está a versão do <code>main</code>; abaixo, a do branch. Edite o arquivo, deixe só o que deve ficar, apague as três linhas de marcação e conclua:"
+  },
+  {
+   "t": "codigo",
+   "texto": "git add index.html\ngit commit"
+  },
+  {
+   "t": "p",
+   "html": "O VS Code mostra botões acima de cada conflito para escolher uma das versões ou as duas. Quem prefere uma ferramenta visual própria pode usar <code>git mergetool</code>; se ela deixar arquivos <code>.orig</code> de cópia na pasta, desligue-os com <code>git config --global mergetool.keepBackup false</code>."
+  },
+  {
+   "t": "h3",
+   "texto": "Guardar o trabalho sem commit: git stash"
+  },
+  {
+   "t": "p",
+   "html": "Você está no meio de uma alteração e precisa mudar de branch, mas não quer fazer um commit de algo pela metade. O <code>stash</code> guarda as alterações numa pilha e deixa a pasta limpa:"
+  },
+  {
+   "t": "codigo",
+   "texto": "git stash\ngit stash list\ngit stash pop"
+  },
+  {
+   "t": "p",
+   "html": "Na ordem: guarda as alterações; lista o que está guardado; e devolve as últimas alterações guardadas, tirando-as da pilha. O <code>git stash apply</code> devolve sem tirar da pilha, e <code>git stash apply stash@{2}</code> devolve uma guardada antes. Arquivos novos, ainda não monitorados, só entram no stash com <code>git stash -u</code>."
+  },
+  {
+   "t": "h2",
+   "id": "7-marcando-versoes-git-tag",
+   "texto": "7. Marcando versões: git tag"
+  },
+  {
+   "t": "p",
+   "html": "Uma <strong>tag</strong> dá nome a um commit importante, em geral uma versão entregue (<code>v1.0</code>, <code>v1.1</code>...)."
+  },
+  {
+   "t": "codigo",
+   "texto": "git tag\ngit tag -a v1.0 -m \"Versão 1.0\""
+  },
+  {
+   "t": "p",
+   "html": "O primeiro lista as tags; o segundo cria uma tag com mensagem no commit atual. As tags não vão para o GitHub no <code>git push</code> comum: envie com <code>git push origin v1.0</code>, ou todas de uma vez com <code>git push origin --tags</code>."
+  },
+  {
+   "t": "h2",
+   "id": "8-enviando-o-projeto-para-o-github",
+   "texto": "8. Enviando o projeto para o GitHub"
+  },
+  {
+   "t": "h3",
+   "texto": "Criar o repositório no GitHub"
+  },
+  {
+   "t": "lista",
+   "numerada": true,
+   "itens": [
+    "Entre em <a href=\"https://github.com\" target=\"_blank\" rel=\"noreferrer\">github.com</a> e clique em <strong>New repository</strong> (o botão <strong>+</strong> no alto da página).",
+    "Dê um nome ao repositório (por exemplo, <code>meu-projeto</code>) e escolha se ele é público ou privado.",
+    "Como o projeto já existe no seu computador, <strong>não marque</strong> as opções de criar README, .gitignore ou licença: o repositório precisa começar vazio.",
+    "Clique em <strong>Create repository</strong> e copie o endereço que termina em <code>.git</code>."
+   ]
+  },
+  {
+   "t": "h3",
+   "texto": "Ligar o projeto ao GitHub e enviar: git remote e git push"
+  },
+  {
+   "t": "p",
+   "html": "Na pasta do projeto, com pelo menos um commit feito:"
+  },
+  {
+   "t": "codigo",
+   "texto": "git remote add origin https://github.com/seu-usuario/meu-projeto.git\ngit branch -M main\ngit push -u origin main"
+  },
+  {
+   "t": "p",
+   "html": "O <code>git remote add</code> guarda o endereço do GitHub com o apelido <code>origin</code>; o <code>git branch -M main</code> garante que o branch se chama <code>main</code>; e o <code>git push -u</code> envia os commits e liga o seu <code>main</code> ao do GitHub. Depois disso, para enviar os próximos commits, basta:"
+  },
+  {
+   "t": "codigo",
+   "texto": "git push"
+  },
+  {
+   "t": "h3",
+   "texto": "O login no GitHub"
+  },
+  {
+   "t": "p",
+   "html": "O GitHub não aceita a senha da conta no terminal desde 2021. No Windows, no primeiro <code>git push</code> abre uma janela do <strong>Git Credential Manager</strong>: escolha entrar pelo navegador e autorize o acesso. O Windows guarda a autorização, e os próximos envios não pedem login."
+  },
+  {
+   "t": "p",
+   "html": "Se a janela não aparecer, use um <strong>token</strong> no lugar da senha: no GitHub, em <strong>Settings</strong> &gt; <strong>Developer settings</strong> &gt; <strong>Personal access tokens</strong>, crie um token com acesso ao repositório e cole-o quando o terminal pedir a senha."
+  },
+  {
+   "t": "quadro",
+   "tipo": "atencao",
+   "titulo": "Atenção",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Nunca envie senhas para o GitHub. Coloque o <code>.env</code> no <code>.gitignore</code> antes do primeiro commit. Se ele já foi enviado, tire-o do repositório com <code>git rm --cached .env</code> e <strong>troque as senhas</strong>: o histórico continua guardando a versão antiga do arquivo."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "html": "Para conferir a que repositório o projeto está ligado:"
+  },
+  {
+   "t": "codigo",
+   "texto": "git remote -v"
+  },
+  {
+   "t": "h2",
+   "id": "9-atualizando-o-projeto-fetch-e-pull",
+   "texto": "9. Atualizando o projeto: fetch e pull"
   },
   {
    "t": "codigo",
@@ -478,112 +562,76 @@
   },
   {
    "t": "p",
-   "html": "Esse comando vai até o projeto remoto e pega todos os dados que você ainda não tem. Depois de fazer isso, você deve ter referências para todos os branches desse remoto, onde você pode fazer o merge ou inspecionar a qualquer momento."
-  },
-  {
-   "t": "h3",
-   "texto": "GIT PULL – atualizando local"
-  },
-  {
-   "t": "p",
-   "html": "Incorpora as alterações de um repositório remoto no branch atual. Em seu modo padrão, <strong>git pull</strong> é uma abreviação para <strong>git fetch</strong> seguido de git merge <strong>FETCH_HEAD</strong>. Por exemplo, se eu estiver em uma branch chamada <strong>develop</strong> e quiser atualizar caso haja atualizações remotamente:"
+   "html": "Baixa do GitHub os commits que você ainda não tem, sem misturar com o seu trabalho: você pode olhar antes (por exemplo, com <code>git log --oneline origin/main</code>) e decidir o que fazer."
   },
   {
    "t": "codigo",
-   "texto": "git pull origin develop"
-  },
-  {
-   "t": "h3",
-   "texto": "GIT PUSH – empurrando seus commits"
+   "texto": "git pull"
   },
   {
    "t": "p",
-   "html": "é o comando em que você transfere commits a partir do seu repositório local para um repositório remoto. É a contrapartida do <strong>git fetch</strong>, que busca importações e comprometem as agências locais, utilizando o <strong>git push</strong> as exportações comprometem as filiais remotas. Para fazer isso, você executa <strong>git push [nome_do_repositório_remoto] [nome_da_sua_branch_local]</strong>, que vai tentar fazer que o <strong>[nome_do_repositório_remoto]</strong> receba a sua branch <strong>[nome_da_sua_branch_local]</strong> contendo todos seus commits com alterações. Por exemplo:"
+   "html": "Baixa e já junta ao branch atual: é um <code>git fetch</code> seguido de um <code>git merge</code>. Quando mais de uma pessoa trabalha no projeto, rode o <code>git pull</code> antes de começar."
   },
   {
-   "t": "codigo",
-   "texto": "git push origin develop"
+   "t": "quadro",
+   "tipo": "nota",
+   "titulo": "Nota",
+   "blocos": [
+    {
+     "t": "p",
+     "html": "Se o <code>git push</code> for recusado com a mensagem <strong>\"rejected... fetch first\"</strong>, é porque o GitHub tem commits que você ainda não baixou. Rode <code>git pull</code>, resolva os conflitos, se houver, e envie de novo."
+    }
+   ]
   },
   {
    "t": "h2",
-   "id": "outros-comandos",
-   "texto": "Outros comandos"
+   "id": "10-outros-comandos-uteis",
+   "texto": "10. Outros comandos úteis"
   },
   {
-   "t": "codigo",
-   "texto": "git remote\ngit submodule"
-  },
-  {
-   "t": "p",
-   "estilo": "destaque",
-   "html": "Inspeção e Comparação"
-  },
-  {
-   "t": "codigo",
-   "texto": "git show\ngit log\ngit diff\ngit shortlog\ngit describe"
-  },
-  {
-   "t": "p",
-   "estilo": "destaque",
-   "html": "Pacotes"
-  },
-  {
-   "t": "codigo",
-   "texto": "git apply\ngit cherry-pick\ngit diff\ngit rebase\ngit revert"
-  },
-  {
-   "t": "p",
-   "estilo": "destaque",
-   "html": "Debugando"
-  },
-  {
-   "t": "codigo",
-   "texto": "git bisect\ngit blame\ngit grep"
-  },
-  {
-   "t": "p",
-   "estilo": "destaque",
-   "html": "Email"
-  },
-  {
-   "t": "codigo",
-   "texto": "git am\ngit apply\ngit format-patch\ngit send-email\ngit request-pull"
-  },
-  {
-   "t": "p",
-   "estilo": "destaque",
-   "html": "Sistemas Externos"
-  },
-  {
-   "t": "codigo",
-   "texto": "git svn\ngit fast-import"
-  },
-  {
-   "t": "p",
-   "estilo": "destaque",
-   "html": "Administração"
-  },
-  {
-   "t": "codigo",
-   "texto": "git clean\ngit gc\ngit fsck\ngit reflog\ngit filter-branch\ngit instaweb\ngit archive"
-  },
-  {
-   "t": "p",
-   "estilo": "destaque",
-   "html": "Servidor"
-  },
-  {
-   "t": "codigo",
-   "texto": "git daemon\ngit update-server-info"
-  },
-  {
-   "t": "p",
-   "estilo": "destaque",
-   "html": "Canalização de Código"
-  },
-  {
-   "t": "codigo",
-   "texto": "git cat-file\ngit commit-tree\ngit count-objects\ngit diff-index\ngit for-each-ref\ngit hash-object\ngit merge-base\ngit read-tree\ngit rev-list\ngit rev-parse\ngit show-ref\ngit symbolic-ref\ngit update-index\ngit update-ref\ngit verify-pack\ngit write-tree"
+   "t": "tabela",
+   "cabecalho": [
+    "Comando",
+    "Para que serve"
+   ],
+   "linhas": [
+    [
+     "<code>git show a1b2c3d</code>",
+     "Mostra o que mudou num commit."
+    ],
+    [
+     "<code>git blame arquivo</code>",
+     "Mostra, linha por linha, quem alterou o arquivo e em qual commit."
+    ],
+    [
+     "<code>git revert a1b2c3d</code>",
+     "Desfaz um commit criando outro; seguro para o que já foi enviado."
+    ],
+    [
+     "<code>git cherry-pick a1b2c3d</code>",
+     "Copia um commit de outro branch para o branch atual."
+    ],
+    [
+     "<code>git rebase main</code>",
+     "Reaplica os commits do branch atual depois dos últimos do <code>main</code>. Não use em branch que outras pessoas também usam."
+    ],
+    [
+     "<code>git bisect</code>",
+     "Procura, dividindo o histórico ao meio a cada passo, o commit que fez um erro aparecer."
+    ],
+    [
+     "<code>git grep \"texto\"</code>",
+     "Procura um texto nos arquivos monitorados."
+    ],
+    [
+     "<code>git clean -n</code> e <code>git clean -f</code>",
+     "Lista e, depois, apaga os arquivos não monitorados da pasta."
+    ],
+    [
+     "<code>git shortlog -sn</code>",
+     "Conta os commits de cada autor."
+    ]
+   ]
   }
  ]
 }
