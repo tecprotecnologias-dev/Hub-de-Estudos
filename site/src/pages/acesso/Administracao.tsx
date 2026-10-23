@@ -5,13 +5,25 @@ import CamposTurma from '../../lib/CamposTurma'
 import type { PedidoDisciplina } from '../../lib/PedidosDisciplina'
 import { disciplinas } from '../../data/disciplinas'
 import { confereTurma, grupoDe, nomeGrupo, TODOS_GRUPOS, TURMA_VAZIA } from '../../lib/util'
-import { CURSO_PADRAO, cursosPorTipo, dadosNivel, etapasDe, NIVEIS, NIVEL_PADRAO, nomeCurso, type Nivel } from '../../lib/niveis'
+import {
+  CURSO_PADRAO,
+  cursosPorTipo,
+  dadosNivel,
+  etapasDe,
+  NIVEIS,
+  NIVEL_PADRAO,
+  nomeCurso,
+  type Nivel,
+} from '../../lib/niveis'
 
 // Área da administradora: ver os cadastros, mudar o perfil (aluno, professor,
 // administrador), o nível de ensino, o curso (Graduação) e o ano/período de cada pessoa, e avançar o ano/período
 // de vários alunos de uma vez. As regras do banco garantem que só um administrador consegue.
 
 const TIPOS: TipoPerfil[] = ['aluno', 'professor', 'admin']
+
+/** Aluno de verdade (o professor em análise também é 'aluno' no banco, mas não estuda aqui). */
+const ehAluno = (p: Perfil) => p.tipo === 'aluno' && !p.solicita_professor
 
 export default function Administracao() {
   const { perfil: eu } = useAuth()
@@ -49,10 +61,17 @@ export default function Administracao() {
             .update({ situacao, decidido_em: new Date().toISOString() })
             .eq('id', p.id)
     if (error) return setAviso({ tipo: 'erro', texto: traduzirErro(error.message) })
-    setPedidos((ps) => (situacao == null ? ps.filter((x) => x.id !== p.id) : ps.map((x) => (x.id === p.id ? { ...x, situacao } : x))))
+    setPedidos((ps) =>
+      situacao == null ? ps.filter((x) => x.id !== p.id) : ps.map((x) => (x.id === p.id ? { ...x, situacao } : x)),
+    )
     setAviso({
       tipo: 'ok',
-      texto: situacao === 'aprovado' ? 'Disciplina liberada.' : situacao === 'recusado' ? 'Pedido recusado.' : 'Acesso retirado.',
+      texto:
+        situacao === 'aprovado'
+          ? 'Disciplina liberada.'
+          : situacao === 'recusado'
+            ? 'Pedido recusado.'
+            : 'Acesso retirado.',
     })
   }
 
@@ -109,16 +128,17 @@ export default function Administracao() {
     if (!supabase) return
     // só avança quem ainda não está no último ano/período do seu nível
     const ultimo = (p: Perfil) => Math.max(...etapasDe(p.nivel, p.curso))
-    const alvos = pessoas.filter(
-      (p) => marcados.has(p.id) && p.tipo === 'aluno' && p.periodo && p.periodo < ultimo(p),
-    )
+    const alvos = pessoas.filter((p) => marcados.has(p.id) && p.tipo === 'aluno' && p.periodo && p.periodo < ultimo(p))
     if (alvos.length === 0) {
       setAviso({ tipo: 'erro', texto: 'Marque alunos que ainda não estão no último ano ou período do seu nível.' })
       return
     }
     if (!window.confirm(`Avançar ${alvos.length} aluno(s) para o ano ou período seguinte?`)) return
     for (const p of alvos) {
-      const { error } = await supabase.from('perfis').update({ periodo: p.periodo! + 1 }).eq('id', p.id)
+      const { error } = await supabase
+        .from('perfis')
+        .update({ periodo: p.periodo! + 1 })
+        .eq('id', p.id)
       if (error) {
         setAviso({ tipo: 'erro', texto: `Erro ao atualizar ${p.nome}: ${traduzirErro(error.message)}` })
         await carregar()
@@ -177,7 +197,8 @@ export default function Administracao() {
                 <div>
                   <strong>{p.nome}</strong>
                   <span className="dica">
-                    {p.email} · {formatarTelefone(p.telefone)} · pedido em {new Date(p.criado_em).toLocaleDateString('pt-BR')}
+                    {p.email} · {formatarTelefone(p.telefone)} · pedido em{' '}
+                    {new Date(p.criado_em).toLocaleDateString('pt-BR')}
                   </span>
                 </div>
                 <div className="botoes-pendente">
@@ -235,7 +256,8 @@ export default function Administracao() {
               <li key={p.id}>
                 <span>
                   <strong>{nomeDaPessoa(p.aluno_id)?.nome ?? 'Aluno não encontrado'}</strong>
-                  <span className="dica"> ({nomeDaPessoa(p.aluno_id)?.email})</span>: {descreverDisciplina(p.disciplina_id)}
+                  <span className="dica"> ({nomeDaPessoa(p.aluno_id)?.email})</span>:{' '}
+                  {descreverDisciplina(p.disciplina_id)}
                 </span>
                 <button
                   className="secundario"
@@ -274,7 +296,8 @@ export default function Administracao() {
           Avançar ano/período dos marcados ({marcados.size})
         </button>
         <span className="dica pequena">
-          Use no começo do semestre ou do ano letivo: cada aluno marcado sobe um ano ou período, até o último do seu nível.
+          Use no começo do semestre ou do ano letivo: cada aluno marcado sobe um ano ou período, até o último do seu
+          nível.
         </span>
       </div>
 
@@ -324,37 +347,47 @@ export default function Administracao() {
                   <td>{p.email}</td>
                   <td>
                     {p.telefone ? (
-                      <a href={`https://wa.me/${p.telefone}`} target="_blank" rel="noreferrer" title="Abrir no WhatsApp">
+                      <a
+                        href={`https://wa.me/${p.telefone}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        title="Abrir no WhatsApp"
+                      >
                         {formatarTelefone(p.telefone)}
                       </a>
                     ) : (
                       '—'
                     )}
                   </td>
+                  {/* nível, curso e ano/período só existem para aluno (professor e administrador: —) */}
                   <td>
-                    <select
-                      aria-label={`Nível de ${p.nome}`}
-                      value={p.nivel ?? NIVEL_PADRAO}
-                      onChange={(e) => {
-                        const novo = e.target.value as Nivel
-                        // ao trocar de nível, o ano/período passa para o primeiro do novo nível; o
-                        // curso só existe na Graduação
-                        atualizar(p.id, {
-                          nivel: novo,
-                          curso: novo === 'graduacao' ? (p.curso ?? CURSO_PADRAO) : null,
-                          periodo: p.periodo == null ? null : dadosNivel(novo).etapas[0],
-                        })
-                      }}
-                    >
-                      {NIVEIS.map((n) => (
-                        <option key={n.id} value={n.id}>
-                          {n.nome}
-                        </option>
-                      ))}
-                    </select>
+                    {ehAluno(p) ? (
+                      <select
+                        aria-label={`Nível de ${p.nome}`}
+                        value={p.nivel ?? NIVEL_PADRAO}
+                        onChange={(e) => {
+                          const novo = e.target.value as Nivel
+                          // ao trocar de nível, o ano/período passa para o primeiro do novo nível; o
+                          // curso só existe na Graduação
+                          atualizar(p.id, {
+                            nivel: novo,
+                            curso: novo === 'graduacao' ? (p.curso ?? CURSO_PADRAO) : null,
+                            periodo: p.periodo == null ? null : dadosNivel(novo).etapas[0],
+                          })
+                        }}
+                      >
+                        {NIVEIS.map((n) => (
+                          <option key={n.id} value={n.id}>
+                            {n.nome}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      '—'
+                    )}
                   </td>
                   <td>
-                    {p.tipo === 'aluno' && (p.nivel ?? NIVEL_PADRAO) === 'graduacao' ? (
+                    {ehAluno(p) && (p.nivel ?? NIVEL_PADRAO) === 'graduacao' ? (
                       <select
                         aria-label={`Curso de ${p.nome}`}
                         value={p.curso ?? CURSO_PADRAO}
@@ -384,18 +417,22 @@ export default function Administracao() {
                     )}
                   </td>
                   <td>
-                    <select
-                      aria-label={`Ano ou período de ${p.nome}`}
-                      value={p.periodo ?? ''}
-                      onChange={(e) => atualizar(p.id, { periodo: e.target.value ? Number(e.target.value) : null })}
-                    >
-                      <option value="">—</option>
-                      {etapasDe(p.nivel, p.curso).map((n) => (
-                        <option key={n} value={n}>
-                          {n}º
-                        </option>
-                      ))}
-                    </select>
+                    {ehAluno(p) ? (
+                      <select
+                        aria-label={`Ano ou período de ${p.nome}`}
+                        value={p.periodo ?? ''}
+                        onChange={(e) => atualizar(p.id, { periodo: e.target.value ? Number(e.target.value) : null })}
+                      >
+                        <option value="">—</option>
+                        {etapasDe(p.nivel, p.curso).map((n) => (
+                          <option key={n} value={n}>
+                            {n}º
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      '—'
+                    )}
                   </td>
                   <td>
                     <select
