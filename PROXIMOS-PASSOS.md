@@ -7,6 +7,8 @@ O site está em https://estudos.tecprotecnologias.com.br (Cloudflare) e se atual
 
 ## Conteúdo
 
+- [ ] **Disciplinas dos outros cursos da Graduação** (pedido em 23/10/2026). Só Sistemas para Internet tem disciplinas; os outros 17 cursos (Bacharelado e Licenciatura até o 10º período, Tecnólogo até o 5º) aparecem nos filtros, mas sem cartões. Duas opções: ela manda a grade de cada curso, ou o Claude monta uma grade provisória com as disciplinas mais comuns (começando por um curso para ela conferir). Cada disciplina leva `curso` (id em `CURSOS`, `src/lib/niveis.ts`).
+
 - [ ] **Web III: exercícios e simulado** (pedido em 17/10/2026). Os 12 capítulos estão prontos. Falta uma seção de exercícios no fim de cada capítulo e o simulado da Web III no site com **os mesmos exercícios, no mesmo capítulo**, mais as objetivas no estilo de concurso. Regra geral: todo exercício da apostila também está no simulado.
   - Arquivos: `apostilas/web-iii` (LaTeX e PDF). Para retomar, basta dizer ao Claude "vamos continuar a apostila da Web III".
 - [ ] **Web I: apostila "Desenvolvimento Web Front-End: HTML, CSS, JavaScript e TypeScript"** (pedido em 17/10/2026). Os caps. 1 e 2 estão prontos. Só a base do front-end, sem repetir a Web II nem a Web III, e sem projeto acompanhando; exercícios e simulado depois dos 12 capítulos.
